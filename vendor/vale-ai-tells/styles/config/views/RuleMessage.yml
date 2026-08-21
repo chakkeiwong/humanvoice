@@ -1,0 +1,5 @@
+---
+engine: dasel
+scopes:
+  - expr: message
+    type: md

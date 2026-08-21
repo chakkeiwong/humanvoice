@@ -1,0 +1,66 @@
+- name: "bug: unconfirmed"
+  description: A bug that needs to be reproduced.
+  color: 6C1010
+- name: "bug: irreproducible"
+  description: A bug that has not been successfully reproduced, despite efforts
+  color: EEEEEE
+- name: "bug: confirmed"
+  description: A bug that has been confirmed in triage
+  color: F80000
+- name: "bug: fixed"
+  description: A bug that has been fixed in a release
+  color: FF8383
+- name: "bug: fixed-in-next"
+  description: Bugs present in the current release but fixed on the main branch
+  color: 36080A
+- name: "type: feat"
+  description: A new feature
+  color: 26E9FF
+- name: "type: fix"
+  description: A bug fix
+  color: D71F1F
+- name: "type: style"
+  description: A change that does not affect the functionality of project code
+  color: FFD1DC
+- name: "type: refactor"
+  description: A change that does not fix a bug or add a feature
+  color: FFFF00
+- name: "type: perf"
+  description: Improve performance
+  color: FFFF00
+- name: "type: test"
+  description: Add or correct tests
+  color: FFFF00
+- name: "type: build"
+  description: A change to the build system and external dependencies
+  color: FFFF00
+- name: "type: ci"
+  description: A change to CI configuration and scripts
+  color: FFFF00
+- name: "type: chore"
+  description: A change unrelated to project code
+  color: FFFF00
+- name: "type: revert"
+  description: Undo previous changes
+  color: FFFF00
+- name: "version: breaking"
+  description: PRs with breaking changes, requiring a major release
+  color: 9A35BE
+- name: "status: needs-help"
+  description: Issues that require assistance
+  color: 128A0C
+- name: "cat: rfc"
+  description: Feature requests and general proposals
+  color: FCFCFC
+- name: "cat: qna"
+  description: A user question
+  color: FCFCFC
+- name: "cat: deps"
+  description: A dependency upgrade
+  color: FCFCFC
+- name: "cat: new-check"
+  description: Extraction and implementation of, or a request for, a new check
+  color: FCFCFC
+- name: "cat: false-positive"
+  description: False-positives in checks
+  color: CD2026

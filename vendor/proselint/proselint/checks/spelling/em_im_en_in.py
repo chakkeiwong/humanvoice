@@ -1,0 +1,63 @@
+"""Em vs. im, en vs. in."""
+
+from proselint.registry.checks import Check, types
+
+check = Check(
+    check_type=types.PreferredFormsSimple(
+        items={
+            "imbalm": "embalm",
+            "imbark": "embark",
+            "imbed": "embed",
+            "imbitter": "embitter",
+            "imblaze": "emblaze",
+            "imbody": "embody",
+            "imbolden": "embolden",
+            "imbosom": "embosom",
+            "imbower": "embower",
+            "imbrown": "embrown",
+            "impanel": "empanel",
+            "impower": "empower",
+            "incage": "encage",
+            "incapsulate": "encapsulate",
+            "incase": "encase",
+            "inclasp": "enclasp",
+            "incumber": "encumber",
+            "incumbrance": "encumbrance",
+            "indow": "endow",
+            "indowment": "endowment",
+            "indue": "endue",
+            "infold": "enfold",
+            "ingraft": "engraft",
+            "ingulf": "engulf",
+            "inlace": "enlace",
+            "inmesh": "enmesh",
+            "insheathe": "ensheathe",
+            "inshrine": "enshrine",
+            "insnare": "ensnare",
+            "insoul": "ensoul",
+            "insphere": "ensphere",
+            "inthrall": "enthrall",
+            "inthrone": "enthrone",
+            "intitle": "entitle",
+            "intomb": "entomb",
+            "intreat": "entreat",
+            "intrench": "entrench",
+            "intrust": "entrust",
+            "intwine": "entwine",
+            "intwist": "entwist",
+            "inwind": "enwind",
+            "inwrap": "enwrap",
+            "inwreathe": "enwreathe",
+            "embrue": "imbrue",
+            "empale": "impale",
+            "empoverish": "impoverish",
+            "enflame": "inflame",
+            "engrain": "ingrain",
+            "enure": "inure",
+        }
+    ),
+    path="spelling.em_im_en_in",
+    message="em-, im-, en-, and in-. '{}' is the preferred spelling.",
+)
+
+__register__ = (check,)

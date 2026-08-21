@@ -1,0 +1,6 @@
+---
+extends: script
+message: "AI monotony: too many sentences in this section start with the same word. Vary your sentence openings."
+level: warning
+scope: raw
+script: SentenceStartRepetition.tengo

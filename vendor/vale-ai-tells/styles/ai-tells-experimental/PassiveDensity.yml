@@ -1,0 +1,12 @@
+---
+# Section-level passive voice density. Occasional passive voice is
+# ordinary English; sustained passive voice across a section is the
+# fingerprint of AI formal register. Flags a section when at least
+# three sentences, and more than 35 percent of them, contain a passive
+# construction. Complements the per-instance PassiveVoice rules the
+# way TricolonDensityDocument complements VerbTricolon.
+extends: script
+message: "AI passive density: too many sentences in this section use passive voice. Name the actor in each and use active verbs."
+level: warning
+scope: raw
+script: PassiveDensity.tengo

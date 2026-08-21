@@ -1,0 +1,7 @@
+- id: proselint
+  name: A linter for prose
+  description: This hook checks language usage and style in text files.
+  entry: proselint
+  language: python
+  types_or: [html, markdown, plain-text, tex]
+  args: [check]

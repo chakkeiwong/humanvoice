@@ -1,0 +1,18 @@
+---
+# Passive voice with no gap between the auxiliary and the participle:
+# "was eaten," "is called," "has been made," "will be rejected."
+# Sequence-based so the participle slot requires a VBN tag. Predicate
+# adjectives ("the results were mixed," "the talk was indeed useful,"
+# "the color is red") tag as JJ and stay clean, unlike the regex rules
+# in Google and write-good. Ambiguous participles ("was tired," "is
+# excited") tag VBN and fire; that is deliberate. No exceptions: the
+# rule flags every grammatical passive, including conventional ones
+# ("is deprecated," "is required"). Users decide what to except.
+# PassiveVoiceAdverb covers the adverb-gap shape ("was never used").
+extends: sequence
+message: "AI passive voice: '%[1]s %[2]s'. Name the actor and use an active verb."
+level: warning
+tokens:
+  - pattern: \b(?:am|is|are|was|were|be|been|being)\b
+    tag: VBZ|VBP|VBD|VB|VBN|VBG
+  - tag: VBN

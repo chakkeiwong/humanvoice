@@ -1,0 +1,170 @@
+"""
+Misspellings.
+
+---
+layout:     post
+source:     Garner's Modern American Usage
+source_url: http://bit.ly/1T4alrY
+title:      misspellings
+date:       2014-06-10 12:31:19
+categories: writing
+---
+
+Points out misspellings.
+
+"""
+
+from proselint.registry.checks import Check, Padding, types
+
+CHECK_PATH = "spelling.misc"
+CHECK_MESSAGE = "Misspelling. '{}' is the preferred spelling."
+
+check = Check(
+    check_type=types.PreferredFormsSimple(
+        items={
+            "alot": "a lot",
+            "accomodatable": "accommodable",
+            "analingus": "anilingus",
+            "amn't i": "aren't i",
+            "an't i": "aren't i",
+            "bob wire": "barbed wire",
+            "chargable": "chargeable",
+            "chiffonnier": "chiffonier",
+            "chinchy": "chintzy",
+            "chipolte": "chipotle",
+            "chlorophyl": "chlorophyll",
+            "chronical": "chronicle",
+            "chronicals": "chronicles",
+            "coldslaw": "coleslaw",
+            "choosey": "choosy",
+            "kummerbund": "cummerbund",
+            "financable": "financeable",
+            "flourescent": "fluorescent",
+            "flouridation": "fluoridation",
+            "flouride": "fluoride",
+            "forclose": "foreclose",
+            "foreswear": "forswear",
+            "free reign": "free rein",
+            "jist": "gist",
+            "glamor": "glamour",
+            "grandad": "granddad",
+            "granpa": "grandpa",
+            "highfaluting": "highfalutin",
+            "highfalutin'": "highfalutin",
+            "hifalutin": "highfalutin",
+            "hypocratic": "Hippocratic",
+            "hireable": "hirable",
+            "wholistic": "holistic",
+            "idealogy": "ideology",
+            "ideosyncracy": "idiosyncrasy",
+            "improvize": "improvise",
+            "incurment": "incurrence",
+            "inevitableness": "inevitability",
+            "inovate": "innovate",
+            "innoculation": "inoculation",
+            "inocculation": "inoculation",
+            "intergral": "integral",
+            "innundate": "inundate",
+            "innundated": "inundated",
+            "innundates": "inundates",
+            "innundating": "inundating",
+            "irridescent": "iridescent",
+            "irrevelant": "irrelevant",
+            "jiujutsu": "jujitsu",
+            "kaleidascope": "kaleidoscope",
+            "knicknack": "knickknack",
+            "lassoes": "lassos",
+            "leasee": "lessee",
+            "leasor": "lessor",
+            "liason": "liaison",
+            "laison": "liaison",
+            "lightening rod": "lightning rod",
+            "struck by lightening": "struck by lightning",
+            "liquify": "liquefy",
+            "loathesome": "loathsome",
+            "loadstar": "lodestar",
+            "to make due": "to make do",
+            "madamoiselle": "mademoiselle",
+            "marshall arts": "martial arts",
+            "court marshall": "court-martial",
+            "court-marshall": "court-martial",
+            "maelstorm": "maelstrom",
+            "maffia": "mafia",
+            "mafiosos": "mafiosi",
+            "mangos": "mangoes",
+            "marihuana": "marijuana",
+            "marshmellow": "marshmallow",
+            "marshall law": "martial law",
+            "massacering": "massacring",
+            "massacreing": "massacring",
+            "measels": "measles",
+            "momento": "memento",
+            "miniscule": "minuscule",
+            "milage": "mileage",
+            "mileau": "milieu",
+            "millenium": "millennium",
+            "millenia": "millennia",
+            "milleniums": "millenniums",
+            "millepede": "millipede",
+            "millionnaire": "millionaire",
+            "milktoast": "milquetoast",
+            "mimiced": "mimicked",
+            "mimicing": "mimicking",
+            "mispelling": "misspelling",
+            "mischievious": "mischievous",
+            "mocasin": "moccasin",
+            "moccassin": "moccasin",
+            "mocassin": "moccasin",
+            "monolog": "monologue",
+            "monologist": "monologuist",
+            "naptha": "naphtha",
+            "naval orange": "navel orange",
+            "neckware": "neckwear",
+            "newstand": "newsstand",
+            "non sequiter": "non sequitur",
+            "non sequitar": "non sequitur",
+            "non sequitor": "non sequitur",
+            "nouveau rich": "nouveau riche",
+            "occured": "occurred",
+            "planter fascitis": "plantar fasciitis",
+            "planter fasciitis": "plantar fasciitis",
+            "plantar fascitis": "plantar fasciitis",
+            "pledgable": "pledgeable",
+            "pledgeble": "pledgeable",
+            "portentuous": "portentous",
+            "portentious": "portentous",
+            "preying mantis": "praying mantis",
+            "prestablished": "preestablished",
+            "prexisting": "preexisting",
+            "presumptious": "presumptuous",
+            "rarify": "rarefy",
+            "wreckless": "reckless",
+            "renumeration": "remuneration",
+            "restauranteur": "restaurateur",
+            "revery": "reverie",
+            "spicey": "spicy",
+            "stupify": "stupefy",
+            "subtley": "subtly",
+            "tenderbox": "tinderbox",
+            "tympani": "timpani",
+            "a timpano": "a timpani",
+            "umteenth": "umpteenth",
+            "verbage": "verbiage",
+        }
+    ),
+    path=CHECK_PATH,
+    message=CHECK_MESSAGE,
+)
+
+check_regex = Check(
+    check_type=types.PreferredForms(
+        items={
+            r"\B'till?\b": "till",
+        },
+        padding=Padding.RAW,
+    ),
+    path=CHECK_PATH,
+    message=CHECK_MESSAGE,
+)
+
+__register__ = (check, check_regex)

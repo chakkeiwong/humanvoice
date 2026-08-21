@@ -1,0 +1,107 @@
+[project]
+name = "proselint"
+description = "A linter for prose."
+version = "0.16.0"
+license = { file = "LICENSE.md" }
+authors = [{ name = "Amperser Labs", email = "hello@amperser.com" }]
+readme = "README.md"
+classifiers = [
+	"Programming Language :: Python :: Implementation :: CPython",
+	"Programming Language :: Python :: 3",
+	"Programming Language :: Python :: 3.10",
+	"Programming Language :: Python :: 3.11",
+	"Programming Language :: Python :: 3.12",
+	"Programming Language :: Python :: 3.13",
+	"Programming Language :: Python :: 3.14",
+]
+requires-python = ">=3.10"
+dependencies = ["google-re2>=1.1.20251105", "google-re2-stubs>=0.1.1"]
+
+[project.urls]
+Homepage = "https://github.com/amperser/proselint"
+Repository = "https://github.com/amperser/proselint"
+Issues = "https://github.com/amperser/proselint/issues"
+
+[project.scripts]
+proselint = "proselint.command_line:main"
+
+[build-system]
+requires = ["pdm-backend>=2.0.0"]
+build-backend = "pdm.backend"
+
+[tool.poe.tasks]
+test = "pytest"
+test-cover = "pytest --cov=proselint --cov-report=lcov"
+lint = "ruff check proselint tests"
+format = "ruff format --preview proselint tests"
+
+[dependency-groups]
+test = [
+	"hypothesis>=6.135.11",
+	"pytest>=8.4.1",
+	"pytest-cov>=6.2.1",
+	"rstr>=3.2.2",
+]
+dev = ["ruff>=0.1.14", "poethepoet>=0.34.0"]
+web = ["slowapi>=0.1.9", "fastapi>=0.124.4", "uvicorn[standard]>=0.38.0"]
+
+[tool.pdm.build]
+includes = ["proselint/"]
+source-includes = ["tests/"]
+
+[tool.ruff]
+line-length = 80
+
+[tool.ruff.lint]
+select = [
+	"A",    # flake8-builtins
+	"ANN",  # flake8-annotations
+	"ARG",  # flake8-unused-arguments
+	"B",    # Bugbear
+	"COM",  # flake8-commas
+	"C4",   # flake8-comprehensions
+	"DTZ",  # flake8-datetimez
+	"D",    # pydocstyle
+	"E",    # pycodestyle errors
+	"F",    # pyflakes
+	"FA",   # flake8-future-annotations
+	"FBT",  # boolean traps
+	"FLY",  # flynt
+	"FURB", # refurb
+	"G",    # flake8-logging-format
+	"I",    # incomplete isort
+	"INP",  # flake8-no-pep420
+	"LOG",  # flake8-logging
+	"N",    # naming
+	"NPY",  # NumPy-specific rules
+	"PD",   # pandas-vet
+	"PERF", # Perflint
+	"PL",   # Pylint
+	"PTH",  # flake8-use-pathlib
+	"PYI",  # flake8-pyi
+	"RET",  # flake8-return
+	"RUF",  # Ruff-specific rules
+	"S",    # bandit, security
+	"SLF",  # flake8-self
+	"SIM",  # flake8-simplify
+	"TID",  # flake8-tidy-imports
+	"TCH",  # flake8-type-checking
+	"T10",  # flake8-print
+	"UP",   # pyupgrade
+	"W",    # pycodestyle warnings
+	"YTT",  # flake8-2020
+]
+ignore = [
+	"COM812", # trailing comma -> done by formatter
+	"D203",   # no blank lines between classes and documentation
+	"D212",   # consistent start level for multi-line edocumentation
+	"D415",   # first line of docs should end with a period
+]
+preview = true
+
+[tool.ruff.lint.per-file-ignores]
+"tests/**" = ["S101", "SLF001", "PLC2701"]
+"proselint/checks/**" = ["RUF001"]
+"proselint/registry/checks/engine.py" = [
+	"D102",
+] # docs are inherited from base classes

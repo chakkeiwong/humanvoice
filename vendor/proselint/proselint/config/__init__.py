@@ -1,0 +1,117 @@
+"""Configuration for proselint."""
+
+import json
+from collections.abc import Hashable, Mapping
+from importlib.resources import files
+from itertools import chain
+from pathlib import Path
+from typing import TypeAlias, TypedDict, TypeVar, cast
+
+from proselint import config
+from proselint.config import paths
+
+
+class Config(TypedDict):
+    """
+    Configuration for proselint.
+
+    Keys:
+    - `max_errors`: the maximum allowable number of errors proselint can output
+    - `checks`: a dictionary of check modules to enable or disable
+    - `per_file_checks`: a dictionary of dictionaries of check modules to enable
+      or disable on a per-file basis. the keys of this dictionary are parsed as
+      a non-recursive glob (see `pathlib.PurePath.match`).
+    """
+
+    max_errors: int
+    checks: dict[str, bool]
+    per_file_checks: dict[str, dict[str, bool]]
+
+
+DEFAULT = cast(
+    "Config", json.loads((files(config) / "default.json").read_text())
+)
+
+Checks: TypeAlias = Mapping[str, "bool | Checks"]
+KT_co = TypeVar("KT_co", bound=Hashable, covariant=True)
+VT_co = TypeVar("VT_co", covariant=True)
+
+
+def _deepmerge_dicts(
+    base: dict[KT_co, VT_co], overrides: dict[KT_co, VT_co]
+) -> dict[KT_co, VT_co]:
+    # fmt: off
+    return base | overrides | {
+        key: (
+            _deepmerge_dicts(b_value, o_value)  # pyright: ignore[reportUnknownArgumentType]
+            if isinstance(b_value := base[key], dict)
+            else o_value
+        )
+        for key in set(base) & set(overrides)
+        if isinstance(o_value := overrides[key], dict)
+    }
+
+
+def _flatten_checks(checks: Checks, prefix: str = "") -> dict[str, bool]:
+    return dict(
+        chain.from_iterable(
+            [(full_key, value)]
+            if isinstance(value, bool)
+            else _flatten_checks(value, full_key).items()
+            for key, value in checks.items()
+            for full_key in [f"{prefix}.{key}" if prefix else key]
+        )
+    )
+
+
+def _sort_by_specificity(checks: dict[str, bool]) -> dict[str, bool]:
+    """Sort selected checks by depth (specificity) in descending order."""
+    return dict(
+        sorted(
+            checks.items(),
+            key=lambda x: x[0].count("."),
+            reverse=True,
+        )
+    )
+
+
+def file_config_for(config: Config, file: Path) -> dict[str, bool]:
+    """
+    Return file-specific check config if available.
+
+    If there is no applicable file-specific check config, return the user's
+    given global check config (`config["checks"]`).
+    """
+    try:
+        key = next(filter(file.match, config.get("per_file_checks", {})))
+    except StopIteration:
+        return config["checks"]
+    return config["per_file_checks"][key]
+
+
+def load_from(config_path: Path | None = None) -> Config:
+    """
+    Read various config paths, allowing user overrides.
+
+    NOTE: This assumes that a `config_path` is valid if one is provided.
+    """
+    config_paths = ([config_path] if config_path else []) + paths.config_paths
+    try:
+        result = cast(
+            "Config",
+            json.loads(next(filter(Path.is_file, config_paths)).read_text()),
+        )
+    except StopIteration:
+        return DEFAULT
+
+    checks = _sort_by_specificity(_flatten_checks(result.get("checks", {})))
+    return Config(
+        max_errors=result.get("max_errors", 0),
+        checks=checks,
+        per_file_checks={
+            name: _deepmerge_dicts(
+                checks, _sort_by_specificity(_flatten_checks(file_config))
+            )
+            for name, file_config in result.get("per_file_checks", {}).items()
+        },
+    )

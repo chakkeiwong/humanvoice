@@ -1,0 +1,359 @@
+# Test Document: AI Tells in Commit Messages
+
+This document contains examples of AI-generated commit message patterns for testing the Commit* Vale rules. Each section corresponds to a rule.
+
+## CommitSelfReference
+
+This commit adds a new authentication middleware to handle JWT tokens.
+
+This change introduces a caching layer for improved query performance.
+
+This PR addresses the race condition in the user data fetching module.
+
+These changes ensure proper error handling across all API endpoints.
+
+This update resolves the memory leak in the WebSocket connection handler.
+
+This patch fixes the off-by-one error in the pagination logic.
+
+In this commit, we refactor the database connection pooling logic.
+
+In this PR, we introduce a new approach to handling rate limiting.
+
+## CommitTrailingJustification
+
+Add null check to prevent crashes, ensuring consistency across the codebase.
+
+Refactor the auth module, improving readability and maintainability.
+
+Update the error handler, enhancing the overall developer experience.
+
+Extract shared logic into a helper, providing a more robust solution.
+
+Migrate to the new API client, maintaining backwards compatibility.
+
+Switch to prepared statements, which ensures that SQL injection is prevented.
+
+Add retry logic to the HTTP client, which allows for graceful degradation.
+
+Update TypeScript config for better type safety.
+
+Consolidate duplicate validators for improved maintainability.
+
+Rewrite the parser for better performance.
+
+Add index on user_id for greater clarity in query plans.
+
+## CommitBuzzwords
+
+Add comprehensive tests for the authentication module.
+
+Implement robust error handling for the payment flow.
+
+Ensure proper validation of all user input fields.
+
+Update relevant components to use the new design system.
+
+Add appropriate error messages for form validation.
+
+Make necessary changes to support the new API version.
+
+Fix various issues with the date picker component.
+
+Improve overall performance of the dashboard queries.
+
+Update corresponding tests for the refactored module.
+
+Apply necessary adjustments to the CI pipeline configuration.
+
+Add comprehensive e2e test coverage for the checkout flow.
+
+The refactoring resulted in a more robust implementation.
+
+## CommitHedging
+
+This should fix the race condition in concurrent writes.
+
+This should resolve the flaky test in the CI pipeline.
+
+This may help with the memory consumption issues in production.
+
+This might fix the issue users are reporting with OAuth.
+
+This helps to ensure that connections are properly cleaned up.
+
+This helps to prevent duplicate entries in the queue.
+
+The new timeout seems to fix the intermittent failures.
+
+The updated regex appears to resolve the parsing errors.
+
+This should help with the slow query times on the dashboard.
+
+Rework mutex so the deadlock seems to be fixed
+
+Negative case (should not fire — diagnostic, not hedging the fix):
+
+- Note the root cause seems to be a race condition
+
+## CommitEmoji
+
+✨ feat: add user authentication middleware
+
+🐛 fix: resolve race condition in data fetching
+
+♻️ refactor: extract shared validation logic
+
+📝 docs: update API reference for new endpoints
+
+⚡ perf: optimize database query for dashboard
+
+✅ test: add integration tests for payment flow
+
+🔧 chore: update ESLint configuration
+
+🔥 remove: delete deprecated legacy endpoints
+
+🚀 deploy: update production configuration
+
+🎨 style: format code with prettier
+
+🩹 fix: patch null pointer in edge case
+
+📦 build: upgrade webpack to v6
+
+## CommitOverexplanation
+
+As part of this change, we also update the related test fixtures.
+
+As part of this refactor, the configuration loading was simplified.
+
+This is necessary because the old endpoint is being deprecated.
+
+This was needed to ensure compatibility with the new SDK version.
+
+Along with corresponding test updates for the new behavior.
+
+Along with necessary documentation changes.
+
+The following changes were made to support the new feature flag system.
+
+Summary of changes: updated the middleware, added tests, and fixed types.
+
+The goal of this change is to reduce coupling between the modules.
+
+The purpose of this commit is to improve startup time.
+
+The rationale behind this is to avoid the N+1 query problem.
+
+The motivation for this change is to support horizontal scaling.
+
+## CommitTestEnumeration
+
+All 47 tests passing
+
+Tests: 12 passed, 0 failed
+
+Coverage: 87%
+
+100% test coverage
+
+47/47 tests pass
+
+All tests green after the migration.
+
+Update CI report showing 3 passed, 1 failed
+
+Negative cases (should not fire — single count, no passed/failed pair):
+
+- Retry the 3 failed uploads after network timeout
+- Skip the 2 passed health checks on restart
+
+## CommitAttribution
+
+🤖 Generated with [Claude Code](https://claude.com/claude-code)
+
+Co-Authored-By: Claude <noreply@anthropic.com>
+
+Co-Authored-By: Claude Opus 4.6 <noreply@anthropic.com>
+
+Generated with GitHub Copilot
+
+Generated by Cursor
+
+## CommitPastTense
+
+The CommitPastTense rule anchors at the start of the input (`\A` with `scope: raw`), so it only fires on the first line — the subject. The cases below are documentation; they exercise the verb list but are validated per-commit via the smoke-test loop in the development notes, not by linting this corpus file.
+
+Positive cases (should fire on subject line 1):
+
+- `Added rate limiting middleware`
+- `Fixed off-by-one in iterator`
+- `feat: Added rate limiting`
+- `fix(auth): Fixed session expiry`
+- `Refactoring the parser`
+
+Negative cases (should not fire):
+
+- `Add rate limiting middleware`
+- `fix: Resolve race condition in scheduler`
+- `feat(auth): Drop legacy session check`
+- Body line `Updated the docs in a follow-up` after a non-past subject
+
+## CommitChangelogStyle
+
+The cases below use fenced code blocks so the changelog-style headings live inside a commit-body example rather than as real document headings. Vale sees the raw text either way because the rule uses `scope: raw`.
+
+```text
+### Added
+
+- New rate-limiter wired through the auth path.
+
+## Fixed
+
+- Off-by-one in the iterator.
+
+### Breaking Changes
+
+- Renamed the public ConfigLoader API.
+```
+
+Negative cases (should not fire — legitimate body sections):
+
+```text
+## Why
+
+Customers hit the rate limit on cold-start.
+
+### Testing
+
+Bench harness in benchmarks/ratelimit.txt.
+```
+
+## CommitMarketingAdjectives
+
+Add production-ready caching layer.
+
+Implement enterprise-grade authentication.
+
+Build battle-tested retry logic.
+
+Make the release pipeline production-ready
+
+Negative cases (should not fire):
+
+- Add caching layer with TTL eviction.
+- Implement OIDC authentication via go-oidc.
+- Add first-class support for async handlers
+
+## CommitUnquantifiedClaims
+
+Make parser significantly faster.
+
+Dramatically improves cold-start time.
+
+Blazingly fast hot path.
+
+Huge performance win on the auth path.
+
+Much faster than before.
+
+Rewrite loop to run significantly faster
+
+Negative cases (should not fire — quantified or evidence-backed):
+
+- Reduce parser hot path from 200ms to 50ms.
+- Improve cold-start by ~40%.
+- Cache token validation; see benchmarks/auth.txt.
+
+## CommitFileListing
+
+Three or more consecutive bullets that look like file paths should fire:
+
+- src/auth/login.ts
+- src/auth/session.ts
+- tests/auth/login.test.ts
+
+Backticked paths, the agent's usual dressing, should fire:
+
+- `src/auth/login.ts`
+- `src/auth/session.ts`
+- `tests/auth/login.test.ts`
+
+Paths with trailing annotations should fire:
+
+- src/auth/login.ts: add the retry handler
+- **src/auth/session.ts**: pool the connections
+- src/auth/api.ts - route the callback
+
+Reorganized module bullets with trailing annotations should fire:
+
+- src/app.ts: add handler
+- src/util.ts: tweak helper
+- lib/parse.go: fix parser
+
+Negative cases (should not fire):
+
+A single file bullet:
+
+- src/foo.go
+
+A bullet that mentions a file path mid-sentence:
+
+- We need to update src/foo.go
+
+A bullet list of conceptual changes:
+
+- Refactor the auth path
+- Drop the legacy session check
+- Add the rate limiter
+
+## Realistic commit messages
+
+Multi-paragraph commits that exercise several rules at once.
+
+```text
+This commit implements comprehensive validation for the new auth flow,
+ensuring proper handling of edge cases and improving overall security.
+
+🤖 Generated with [Claude Code](https://claude.com/claude-code)
+```
+
+```text
+✨ feat: Added battle-tested rate limiter
+
+This change introduces a production-ready rate limiter that significantly
+improves the auth path. All 12 tests passing.
+
+Co-Authored-By: Claude <noreply@anthropic.com>
+```
+
+```text
+fix(parser): Updated the tokenizer for better performance
+
+The new tokenizer is blazingly fast. Coverage: 92%.
+
+- src/parser/tokenizer.ts
+- src/parser/lexer.ts
+- tests/parser/tokenizer.test.ts
+```
+
+## CommitFigurativeVerbs
+
+The fix arrived in the release. The change arrives with the next tag. The hook fires for want of a better trigger.
+
+The setting carries the value through. The draft carried the trailer order. The scripts hold their drafts.
+
+The file survives the rebase untouched. Markdown loses one correction. The config lives in the manifest now.
+
+The message was hand-edited before the commit. Correcting it by hand takes a moment. The setting was hand-authored.
+
+The reviewer never sees the diff. Both drafts join the same directory. These files answer to the commit scope.
+
+The recipe names the failing gate. The gate demands a clean run. The guard hands the merge a fresh start.
+
+## CommitGitJargon
+
+The workflow starts from an empty tree. Every path in the tree resolves.
+
+The tree is red after that push. The index still holds the old blob.

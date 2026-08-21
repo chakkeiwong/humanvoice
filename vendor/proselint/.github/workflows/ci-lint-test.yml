@@ -1,0 +1,85 @@
+name: "CI: Lint & Test"
+
+on: [push, pull_request]
+
+jobs:
+  lint:
+    name: Lint
+    if: "!(contains(github.event.head_commit.message, '[skip_ci]'))"
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: "[INIT] Checkout repository"
+        uses: actions/checkout@v7
+
+      - name: "[INIT] Install Nix"
+        uses: cachix/install-nix-action@v31
+        with:
+          nix_path: nixpkgs=channel:nixos-unstable
+
+      - name: "[INIT] Setup Cachix"
+        uses: cachix/cachix-action@v17
+        with:
+          name: amperser
+          authToken: ${{ secrets.CACHIX_AUTH_TOKEN }}
+
+      - name: "[EXEC] Lint"
+        run: nix develop --command ruff check proselint tests
+
+  test-cover:
+    name: Test & Cover
+    if: "!(contains(github.event.head_commit.message, '[skip_ci]'))"
+    runs-on: ${{ matrix.os }}
+    permissions:
+      id-token: write
+    strategy:
+      matrix:
+        python: ["3.10", "3.11", "3.12", "3.13", "3.14"]
+        os: [ubuntu-latest, macos-latest, windows-latest]
+
+    steps:
+      - name: "[INIT] Checkout repository"
+        uses: actions/checkout@v7
+
+      - name: "[INIT] Install Nix (Unix)"
+        if: runner.os != 'Windows'
+        uses: cachix/install-nix-action@v31
+        with:
+          nix_path: nixpkgs=channel:nixos-unstable
+
+      - name: "[INIT] Setup Cachix (Unix)"
+        if: runner.os != 'Windows'
+        uses: cachix/cachix-action@v17
+        with:
+          name: amperser
+          authToken: ${{ secrets.CACHIX_AUTH_TOKEN }}
+
+      - name: "[INIT] Install uv (Windows)"
+        if: runner.os == 'Windows'
+        uses: astral-sh/setup-uv@v8.2.0
+        with:
+          python-version: ${{ matrix.python }}
+          enable-cache: true
+
+      - name: "[INIT] Install dependencies (Windows)"
+        if: runner.os == 'Windows'
+        run: uv sync --locked --all-extras --dev --group test
+
+      - name: "[EXEC] Test & Coverage (Windows)"
+        if: runner.os == 'Windows'
+        run: uv run poe test-cover
+        env:
+          PYTHON_VERSION: ${{ matrix.python }}
+
+      - name: "[EXEC] Test & Coverage (Unix)"
+        if: runner.os != 'Windows'
+        run: nix develop --command uv run poe test-cover
+        env:
+          PYTHON_VERSION: ${{ matrix.python }}
+
+      - name: "[EXEC] Upload coverage to Codecov"
+        uses: codecov/codecov-action@v7
+        with:
+          fail_ci_if_error: true
+          flags: ${{ matrix.os }},py${{ matrix.python }}
+          use_oidc: true

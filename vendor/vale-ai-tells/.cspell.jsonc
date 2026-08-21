@@ -1,0 +1,46 @@
+{
+  "language": "en",
+  "ignorePaths": [
+    "**/*.log",
+    // Agent primitives, mostly deployed from tbhb/repotools and pinned
+    // by content hash in apm.lock.yaml. Shell builtins and awk variables
+    // carry a vocabulary of their own that upstream owns, and the same
+    // scope is exempt from the prose rules in .vale.ini.
+    ".claude/hooks/**/*",
+    ".claude/skills/**/*",
+    ".claude/worktrees/**/*",
+    // The vendored repotools payload. Its comments answer to the
+    // publisher's dictionary, not this repo's.
+    ".config/mise/conf.d/**/*",
+    ".repotools/**/*",
+    ".rumdl_cache/**/*",
+    ".vale-config/**/*",
+    "LICENSE",
+    "node_modules/**/*",
+    "pkg/**/*",
+    "styles/Google/**/*",
+    "styles/proselint/**/*",
+    "styles/write-good/**/*",
+    "tmp/**/*"
+  ],
+  "overrides": [
+    {
+      "filename": [
+        "styles/**/*.yml",
+        "styles/config/vocabularies/**/accept.txt"
+      ],
+      // Rule tokens split words across character classes ("optimi[sz]e"),
+      // which cspell reads as two unknown fragments. Drop the class so the
+      // surrounding fragments never need dictionary entries of their own.
+      "ignoreRegExpList": ["/\\[[A-Z][a-z]\\]\\w+/g"]
+    }
+  ],
+  "dictionaryDefinitions": [
+    {
+      "name": "vale-ai-tells",
+      "path": "./.cspell-words.txt",
+      "addWords": true
+    }
+  ],
+  "dictionaries": ["vale-ai-tells"]
+}

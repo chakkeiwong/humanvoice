@@ -1,0 +1,6 @@
+---
+extends: script
+message: "AI tricolon: too many enumerated lists in this document use exactly three items. Mix in pairs and longer lists."
+level: warning
+scope: raw
+script: TricolonDensityDocument.tengo
