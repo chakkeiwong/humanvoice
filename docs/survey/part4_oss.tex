@@ -1,0 +1,527 @@
+% Part 4: open-source tools, reviewed in detail
+\section{Open-source tools, reviewed}
+\label{sec:oss}
+
+We evaluated fourteen open-source projects: the four named in the project
+brief and ten found by searching for AI-tell skills, prose linters,
+detectors, and LaTeX-aware writing tools. Every project was cloned and read
+at the level of its actual pattern lists, prompts, rules, and code, not its
+README; the runnable ones were run on our own documents. The clones are
+pinned under \path{humanvoice/vendor/} with a commit
+manifest.\footnote{\path{humanvoice/vendor/MANIFEST.md} records the twelve
+cloned repositories with their commit hashes as of 21 August 2026; two
+further tools (TeXtidote, textlint) were surveyed without cloning.}
+This section reviews each tool in enough detail to defend its verdict:
+what it contains, how it behaves, what is good, what is wrong, and what
+adopting it would concretely mean. Table~\ref{tab:oss} at the end collects
+the verdicts.
+
+\subsection{A calibration experiment first}
+\label{sec:oss-calibration}
+
+One experiment frames every review that follows. sloptrim
+(Section~\ref{sec:oss-sloptrim}) is the best deterministic AI-tell scorer we
+found: 0--100, fully local, documented patterns. We ran it on three
+documents whose human verdicts we know. Table~\ref{tab:calibration} shows
+the result.
+
+\begin{table}[t]
+\centering
+\small
+\begin{tabular}{@{}lccl@{}}
+\toprule
+Document & Score & Band & Human verdict \\
+\midrule
+ZLB survey, internal markdown (pre-rescue) & 45 & mixed & rejected (register) \\
+ZLB survey, final LaTeX (post-rescue) & 25 & light tells & \textbf{accepted} \\
+This survey, first version & 10 & clean & rejected (does not teach) \\
+\bottomrule
+\end{tabular}
+\caption{sloptrim v0.9.2 scores versus human verdicts. Lower scores mean
+fewer mechanical tells. The scorer correctly separates the ZLB rescue's
+before and after, and rates the rejected first version of this survey
+cleaner than the accepted manuscript.}
+\label{tab:calibration}
+\end{table}
+
+Read the table twice. First reading: the scorer works on its own layer. It
+separated the ZLB before (45, driven by boldface density and inline header
+lists, the markdown-era register) from the ZLB after (25), in the right
+direction, deterministically, in about a second. That is real value:
+regressions on this layer become visible without a human. Second reading:
+the layer is not the one that decides acceptance. The first version of this
+survey scored 10, the cleanest of the three, and was the most decisively
+rejected, because its failure, density without explanation, lives above the
+mechanical layer. This is our record's layered-masking lesson
+(Section~\ref{sec:lessons}) reproduced by instrument. Every tool below
+should be read against this calibration: the question is never ``does it
+certify quality'' (nothing here does) but ``which layer does it measure, and
+how honestly.''
+
+\subsection{blader/humanizer: the canonical pattern list}
+\label{sec:oss-humanizer}
+
+\emph{One markdown skill, 457 lines; MIT; 36.8k stars; active. Verdict:
+adopted, already installed; we are current with upstream.}
+
+humanizer is Wikipedia's ``Signs of AI writing'' operationalized as an
+editing skill: 35 numbered patterns in six groups (content, language and
+grammar, style, chatbot artifacts, filler and hedging, plus late additions),
+each with words to watch and a before-and-after pair. The content patterns
+cover inflated importance, name-dropping, \mbox{-ing}-phrase pseudo-analysis,
+sales language, vague sources, and formulaic outlook sections; the style
+patterns cover dashes, bold density, list formatting, title case; the
+chatbot patterns cover residue like ``I hope this helps''; the late
+patterns, 34 and 35, name two register defects our record knows well,
+answering objections nobody raised and rejecting alternatives nobody
+proposed, which makes the list unusually aligned with our
+defensive-qualification class.
+
+Two design features separate it from its many imitators. It has a serious
+false-positive section, ``What not to flag'': em dashes alone prove
+nothing, formal vocabulary is not a tell, scope statements and genuine
+disclaimers stay, secondhand text (quotes, titles, discussed examples) is
+never rewritten. And it has a fact-preservation rule: the rewrite may not
+add or drop a claim, number, date, quote, or citation, with any unsupported
+addition counted as an error. Those two sections are why our installation
+(Section~\ref{sec:tool-humanizer}) could be made safe with one precedence
+header; a list without them cannot be made safe at all.
+
+Its one dangerous rule is pattern 14: a flat ban on em and en dashes unless
+the writer's sample uses them, with a mandated final search for both
+characters. Applied to scholarly LaTeX it would strip mandatory typography,
+en dashes in numeric ranges and name compounds (``Nash--Cournot''). Our
+precedence header already overrides it to proportionate application; the
+configuration layer of Section~\ref{sec:proposal} will enforce the override
+mechanically. We diffed our vendored copy against upstream: upstream
+\texttt{main} is at the same content version (2.11.2; the version bump since
+the last tag was a README-only change), so no update action is needed.
+
+\subsection{hardikpandya/stop-slop: sharper, narrower, wrong register}
+\label{sec:oss-stopslop}
+
+\emph{One 68-line skill plus three reference files; MIT; 16k stars; last
+substantive commit March 2026. Verdict: mine for patterns; do not install.}
+
+stop-slop is an essayist's de-slopping skill: eight core rules, a quick
+checklist, and a five-dimension 1--10 self-scoring rubric (directness,
+rhythm, trust, authenticity, density; below 35 of 50, revise). Its
+distinctive material is genuinely distinctive. \emph{False agency}: ``the
+data tells us,'' ``the decision emerges,'' an inanimate subject performing a
+human verb where a person should be named. \emph{Negative listing}: ``It
+wasn't X. It wasn't Y. It was Z,'' the multi-sentence teaser stack.
+\emph{Narrator-from-a-distance} and the interrogative-opener crutch. None of
+these appear in humanizer, all of them appear in our agents' drafts, and all
+three transfer to our catalogue, with one carve-out: ``the data tell us'' and
+``the model implies'' are ordinary, correct econometric usage, so the false-agency
+rule needs a domain exemption list before it goes anywhere near a manuscript.
+
+Installing the skill itself is ruled out by its register assumptions. ``Kill
+all adverbs. No -ly words'' would delete ``approximately,''
+``asymptotically,'' and ``conditionally'' from an econometrics paper. ``No
+passive constructions'' conflicts with methods prose where the actor is
+irrelevant by design. ```You' beats `People''' and ``put the reader in the
+room'' import a blog voice that scholarly writing correctly refuses. ``Two
+items beat three'' and the ban on ``every/always/never'' collide with
+quantifier language. These are not flaws for its intended genre; they are a
+genre boundary, and it is on the wrong side of ours.
+
+\subsection{leonxlnx/taste-skill: not a writing tool}
+\label{sec:oss-taste}
+
+\emph{Thirteen skill files, 6{,}670 lines; MIT; 78.6k stars; active.
+Verdict: skip.}
+
+Despite surfacing in every search for writing skills, taste-skill is a
+frontend design pack: landing pages, brand kits, image-generation prompting,
+redesign checklists. The writing content it does contain is
+marketing-copy hygiene for web pages (register locks for button text, bans
+on fake-precise numbers and ``Quietly trusted by''), not prose craft. We
+keep it in the record for one sociological observation. Its em-dash rule is
+an absolute zero, and the maintainer's comment explains why: the agent
+``historically ignored em-dash limits when phrased as `use sparingly'.''
+Proportionate instructions decay into non-compliance; flat bans survive
+because they are checkable. That is an argument for putting proportionality
+into a machine-checked configuration (where ``at most $n$ per section,
+except in math'' is enforceable) rather than into prose instructions, and it
+is the last time we will be surprised that every popular skill bans dashes
+outright.
+
+\subsection{itallstartedwithaidea/writing-agent: rejected on both counts}
+\label{sec:oss-writingagent}
+
+\emph{Node.js multi-agent framework with a 40-check QA runner and a
+200-phrase blacklist; MIT; 20 stars. Verdict: skip.}
+
+writing-agent is the one evaluated project whose goal conflicts with ours.
+Its framing is detector evasion: checks are named ``Watermark Stripping,''
+``Model Attribution Evasion,'' ``False Positive Rate Exploitation,'' and
+``Non-Native Bias Exploit,'' the last being the deliberate exploitation of
+the bias documented by \citet{liang2023detectors}. Section
+\ref{sec:lit-econ} settled our position: quality under disclosure norms,
+never evasion, so this orientation alone disqualifies it as a dependency.
+
+Its engineering would disqualify it anyway, and it is worth one example
+because ``40-point QA'' sounds substantial until read. Check 19, ``Watermark
+Stripping,'' begins with the comment: ``SynthID watermarks are token-level
+statistical patterns. We can't detect them directly, but we check that
+content was substantially rewritten,'' and returns a pass with an
+aspirational message. Roughly a third of the forty checks are of this kind,
+unconditional passes wearing serious names. The ``perplexity'' check is an
+uncommon-word ratio against a 200-word stoplist. The blacklist flat-bans
+``moreover,'' ``furthermore,'' and ``in conclusion,'' legitimate scholarly
+connectives whose clustering, not existence, is the tell. The few sound
+numeric ideas inside (sentence-length standard deviation targets,
+paragraph-length variation, type-token ratio) exist in better-engineered
+form in sloptrim and vale-ai-tells. Nothing here needs mining.
+
+\subsection{Vale plus tbhb/vale-ai-tells: the CI measurement host}
+\label{sec:oss-vale}
+
+\emph{Vale: markup-aware prose linter in Go; MIT; 6k stars; very active.
+vale-ai-tells: a Vale rule package, 111 prose rules, 15 commit-message
+rules, 18 experimental structural metrics; MIT; 73 stars; active, with a
+false-positive test corpus in CI. Verdict: adopt with a curated
+configuration.}
+
+Vale is the standard way to run prose rules in CI: rules are YAML files
+grouped into styles, findings come back with file, line, severity, and
+count, and per-format configuration can enable, disable, or downgrade any
+rule for any file glob. That last property is the point for us. Our
+policy-precedence principle, ``diagnostics subordinate to domain
+correctness,'' becomes an ordinary configuration file: a rule that is wrong
+for LaTeX is switched off for \texttt{*.tex} without touching the rule.
+
+vale-ai-tells is the rule package that makes Vale worth adopting now, and
+its engineering quality is visible in the rule bodies. Three examples show
+the range. A vocabulary-class rule is a token list with a message; a
+structural rule is a formula; a defensive-register rule is a set of shape
+patterns. Respectively:
+
+\begin{quote}\small
+\texttt{DefensiveHedges.yml}: flags shapes like ``This is more of X than Y,
+but\ldots,'' ``It's not the most X, but\ldots,'' ``This may seem X,
+but\ldots,'' with the message ``State your point directly without
+pre-defending it.''
+
+\texttt{Average\-Sentence\-Length.yml}: a metric rule whose formula is
+words over sentences and whose condition is ``greater than 25,'' with a
+message noting AI text tends toward uniformly long sentences.
+
+\texttt{SentenceStartEntropy.yml}: \texttt{extends: script}, running a
+small Tengo program that computes the entropy of sentence-opener
+distribution per section and warns on monotony.
+\end{quote}
+
+Where the package earns adoption is its experimental style, the
+measurable-diagnostics collection our case study asked for: sentence-length variance, sentence-start entropy and
+repetition, paragraph-length variance, passive density, contraction
+avoidance, transition repetition, and document-level tricolon density, all
+as counts with thresholds. About forty ``Figurative*'' rules implement
+stop-slop's false-agency idea programmatically (inanimate subjects with
+human verbs, one verb family per rule so each span produces one alert). A
+separate commit-message style (``This commit adds\ldots,''
+``\ldots ensuring consistency'') transfers directly to our multi-agent
+commit hygiene.
+
+Four stock rules are destructive for our use and must be disabled or
+downgraded for LaTeX, and it is worth recording exactly why.
+\texttt{EmDashUsage} fires at error level on every em \emph{and} en dash,
+so every numeric range fails. \texttt{DoubleHyphen} flags literal
+\texttt{--}, which in LaTeX source is the correct en-dash syntax; it would
+flag \texttt{1990--2020} in every bibliography. \texttt{FormalRegister}
+bans, at error level, a token list including ``utilize,'' ``facilitate,''
+and ``implement,'' and in the same list ``minimize'' relatives; an estimator
+that minimizes an objective cannot be discussed under that rule.
+\texttt{FormalTransitions} fights the existence of
+``moreover/furthermore'' when the tell is clustering. All four are two
+lines each in \texttt{.vale.ini}, which is precisely the precedence
+mechanism as configuration.
+
+The one real gap is LaTeX itself. Vale has no native \texttt{.tex} parser
+(verified in its format registry, which lists markdown, HTML, reST,
+AsciiDoc, and friends, but not TeX). The workable options are mapping
+\texttt{tex} to the markdown parser with block-ignore regexes for math
+environments, running Vale over detexed text at the cost of line fidelity,
+or hosting rules in a genuinely LaTeX-aware tool
+(Section~\ref{sec:oss-latex}). Piloting that choice is an explicit early
+task in WP2.
+
+\subsection{seyedehsanhadi/sloptrim: the deterministic scorer}
+\label{sec:oss-sloptrim}
+
+\emph{Single-file Python detector (2{,}223 lines, standard library only)
+plus Claude Code hooks; Apache-2.0; 178 stars; active, 119 tests in CI on
+three platforms. Verdict: adopt.}
+
+sloptrim is the tool from Table~\ref{tab:calibration}. Its detector reads a
+file (twenty formats, including \texttt{.tex}, \texttt{.docx}, and
+\texttt{.ipynb}; prose is extracted, code is skipped), scores the first
+256\,KB against its pattern catalogue, and emits JSON: per-pattern counts
+with sample spans, structural metrics (sentence-length coefficient of
+variation, paragraph monotony, opener repetition, hedge stacking, synonym
+cycling, transition clusters, cadence zigzag), and a 0--100 score in five
+bands with a word-count-aware confidence label; a flag adds bootstrap
+confidence intervals. The hook layer wires the detector into Claude Code so
+every file saved through the editing tools is scored on save and flagged
+spans are surfaced to the agent; a documented blind spot is that files
+written by shell redirection bypass the hooks.
+
+Two properties earn the adopt verdict beyond the score itself. The pattern
+accounting is honest: 71 documented patterns, 62 with detectors, and only 50
+allowed to move the score, because the project measured the other 12 against
+human formal writing and found they mark register rather than authorship,
+demoting them to advice. That is our precedence principle, discovered
+independently by measurement, inside the tool. And the project publishes its
+own limits: a benchmark with ROC-AUC by arm (0.76--0.95), an explicit
+statement that it is not an authorship classifier, and an ethics file
+warning against consequential use.
+
+Observed behavior on LaTeX, from our runs: equation environments and inline
+math pass through unmolested (the \texttt{--clean} mode touches characters
+only, never wording), which is the property we most needed. Two artifacts
+to correct for: pattern words inside \verb|\text{...}| are scanned as
+prose, and on raw \texttt{.tex} the opener-repetition metric can count
+command sequences as sentence openers (our run flagged ``\verb|\item|
+\verb|\textbf|'' repetition in a list). Scoring detexed text alongside raw
+source removes both. The tool slots into \hv{} as the on-save scorer and
+the first layer of \texttt{hv rhythm}, with the calibration of
+Table~\ref{tab:calibration} rerun whenever its pattern set updates.
+
+\subsection{AIScientists-Dev/academic-humanizer: the missing academic layer}
+\label{sec:oss-academic}
+
+\emph{One 261-line skill plus examples; MIT; 1.1k stars; last push July
+2026. Verdict: adapt, by merging its content into our policy layer.}
+
+This is the one evaluated project written for our genre, and it opens with
+the sentence our whole stack is organized around: ``academic writing
+already has a correct human voice: neutral, precise, third-person plural
+(`we'), every claim tied to its evidence.'' No personality injection, no
+casualization, explicitly ``not for evading AI-use disclosure.'' Its value
+is three layers our installed humanizer does not have.
+
+Layer 2 is an academic-specific tell catalogue, and its examples are chosen
+well enough to quote. Over-claiming verbs: ``We prove that our method
+significantly outperforms all prior approaches'' becomes ``Our method
+improves held-out accuracy by 4--7 points over the strongest prior approach
+(Table 3); the gain is significant at $p<0.01$ by a paired test.''
+Significance hype (``paves the way,'' ``sheds light on''), empty
+intensifiers (``extensive experiments on a wide range of datasets'' becomes
+``we evaluate on three datasets, named''), novelty padding (``to the best
+of our knowledge''), formulaic openers (``In recent years, X has attracted
+increasing attention''), connective \emph{clustering} (the correct
+formulation, against consecutive-sentence connectives rather than the words
+themselves), citation dumping, contribution-list clich\'es, and, notably,
+clause-stacked sentences past thirty words, with the instruction to split.
+Every one of these appears in our agents' drafts; none is in Wikipedia's
+catalogue.
+
+Layer 3 is a preserve-list that functions as a built-in precedence header:
+keep evidence-tied hedging (``suggests,'' ``is consistent with''), and it
+names the failure mode of general humanizers, ``fixing'' a calibrated hedge
+into an over-claim; keep passives where the actor is irrelevant; keep
+``we''; keep definitions, notation, and equations verbatim; never alter a
+number or citation key. Layer 4, claim-evidence discipline, checks every
+empirical claim for a backing number, figure, or citation and downgrades
+any verb stronger than its evidence, preferring attributed ranges to bare
+averages. This is our non-evasion policy meeting our meaning-ledger skill,
+written independently. Layer 6 is a funding-proposal mode with a different
+register contract (vision plus feasibility, aims that survive their
+siblings' failure), useful whenever the group writes grants.
+
+Weaknesses, for the record: a flat em-dash removal rule (though its own
+examples use LaTeX en dashes correctly); no diagnostics of any kind, so
+everything rides on the editing model's compliance; machine-learning
+flavored examples rather than economics; and a single-file young project.
+None of that argues for running it as a second skill beside humanizer,
+which would create rule-conflict ambiguity; all of it argues for merging
+Layers 2--4 into our policy stack as the scholarly layer, with examples
+transposed to econometrics. That merge is a WP1 task.
+
+\subsection{conorbronsdon/avoid-ai-writing: three ideas worth taking}
+\label{sec:oss-avoid}
+
+\emph{An 813-line skill with 62 pattern categories plus measurement
+scripts; MIT; 3.2k stars; active. Verdict: mine for patterns.}
+
+avoid-ai-writing is the most engineering-minded of the general skills: it
+ships false-positive measurement against public human/AI corpora and a CI
+check on its own pattern count. Three of its ideas transfer.
+
+First, the tier system. Its 112-entry word table splits ``always replace''
+into two bands with different \emph{meanings}: 1A are frequency markers
+(``delve,'' ``tapestry'') whose clustering is evidence about how a passage
+was produced; 1B are clarity edits (``utilize,'' ``commence'') that improve
+any prose but, measured against 257 paragraphs of verified pre-2023 human
+writing, fire on ordinary formal prose at a meaningful rate, so the
+detector ``weights them like Tier 2 and excludes them from the
+dense-AI-vocabulary signal so a wordiness fix can never push a document
+toward an AI classification.'' Same edit, different evidentiary weight.
+Our diagnostics should copy this distinction exactly.
+
+Second, the injection boundary. In its file-editing mode, text under audit
+that addresses its editor (``ignore the rules above,'' ``don't flag this
+section'') is flagged rather than obeyed, with instructions accepted only
+from the invoking writer. Any multi-agent editing pipeline needs this rule
+stated, and ours will state it.
+
+Third, flag-don't-fix zones: quotes, code, tables, and text attributed to
+others are reported but never rewritten, with the nice observation that a
+tell inside a table cell is not worth the risk to the data the table
+carries. Combined with a genuinely careful treatment of weak signals
+(curly quotes and flawless typography are ``corroborating, never
+conclusive,'' and when editing a human's casual text, preserve their typos,
+since smoothing erases the fingerprint that marks the text as theirs), the
+skill shows what falsification-aware pattern work looks like. We still do
+not install it: its context profiles run from LinkedIn to investor emails
+with no academic register, and its dash policy (``Target: zero'') is wrong
+for us. The three ideas come; the skill stays.
+
+\subsection{NulightJens/humanizer-stack: the structural thesis}
+\label{sec:oss-stack}
+
+\emph{Two chained skills (surface pass, structural pass) plus two small
+deterministic scanners; MIT; 226 stars. Verdict: mine for patterns.}
+
+humanizer-stack's premise is the StoryScope result reported in
+Section~\ref{sec:lit-fingerprint}: word-level tells are the decaying,
+easily-fixed half of the fingerprint, and discourse structure is the
+durable half, so run a surface pass (its first skill is a humanizer
+variant) and then a structural pass. The structural skill audits six
+discourse habits with human-versus-AI base rates quoted from the study:
+themes stated and moralized rather than left to land, single-track tidy
+arcs with everything resolved, no digressions, unbroken linearity, and,
+its deepest point, \emph{shape convergence}: all five models it examined
+occupy one tight region of structural space while human pieces are
+dispersed. Its operating instruction follows: pick one or two structural
+interventions per piece and vary them across pieces, because a fleet of
+documents fixed the same way converges on a new detectable cluster.
+
+For our genre the six audits mostly do not transfer; a methods section is
+supposed to be tidy and linear, and IMRaD structure is a feature. Two
+things transfer anyway. The anti-convergence warning is directly relevant
+to \hv{}, which will edit every manuscript the group produces with one
+toolkit; measuring cross-document structural similarity is the guard, and
+it enters the design as part of \texttt{hv drift}. And the two scanners
+(\texttt{copy\_scan.py}, \texttt{structural\_scan.py}) are small clean
+reference implementations of deterministic tell-counting, worth reading if
+not importing. The skills themselves stay out: their genre calibration is
+narrative and marketing, and their base rates do not describe scholarly
+prose.
+
+\subsection{Corpus instruments: slop-forensics and fast-detect-gpt}
+\label{sec:oss-corpus}
+
+\emph{sam-paech/slop-forensics: Python toolkit for deriving
+over-representation lists from model output; MIT; 369 stars. Verdict:
+adapt, corpus-level. baoguangsheng/fast-detect-gpt: research code for the
+ICLR 2024 detector; MIT; 424 stars. Verdict: adapt, aggregate-only, under
+guardrails.}
+
+slop-forensics inverts the stale-ban-list problem. Instead of consuming
+someone's 2024 word list, it takes a corpus of model outputs, compares
+word, bigram, and trigram frequencies against human baselines (via
+\texttt{wordfreq} and NLTK), computes vocabulary-complexity and slop-index
+metrics, and emits the over-representation list for \emph{your} models on
+\emph{your} tasks; it can even cluster models phylogenetically by slop
+profile. Pointed at our own agents' drafts with a pre-2022 economics
+baseline instead of general English (its stock baseline would flag
+``heterogeneous'' and ``endogeneity'' as anomalies), it becomes a
+self-updating tell list, which matters because the tells decay: ``delve''
+is already fading as vendors patch it, and yesterday's list quietly loses
+power. This is the Kobak method of
+equations~\eqref{eq:kobak-p}--\eqref{eq:kobak-q} as maintained software,
+minus the counterfactual projection, which we add ourselves in \texttt{hv
+drift}.
+
+fast-detect-gpt's repository contains clean reference implementations of
+the curvature statistic of equation~\eqref{eq:fdg}, including a local
+inference script that runs with small surrogate models on CPU. Under
+Section~\ref{sec:lit-detection}'s findings, its only legitimate role here
+is as an aggregate drift instrument: a quarterly curvature distribution
+over detexed manuscript prose, watched for trend, never reported
+per-document, never attached to a name, and interpreted with the standing
+caveat that polished scholarly register inflates false positives by
+construction. If that discipline ever feels burdensome, the correct
+response is to drop the instrument, not the discipline. (Binoculars, the
+other zero-shot detector we cloned for comparison, is stale since 2024 and
+needs a heavier model pair; fast-detect-gpt supersedes it for local use.)
+
+\subsection{The LaTeX question: TeXtidote and textlint}
+\label{sec:oss-latex}
+
+\emph{TeXtidote: LaTeX-aware grammar and style checker wrapping
+LanguageTool; GPL-3; 1.1k stars; active. textlint: pluggable prose linter
+with a LaTeX AST plugin; MIT; 3.2k stars core, plugin small; active.
+Verdict for both: pilot.}
+
+Section~\ref{sec:oss-vale} left one problem open: none of the AI-tell rule
+hosts parses LaTeX natively. Two tools do. TeXtidote reads \texttt{.tex}
+directly, skips math environments, maps every finding back to source
+lines, and wraps LanguageTool, whose custom-rule mechanism (XML regex
+rules) could host simple tells with real LaTeX awareness; GPL-3 is fine
+for internal use. textlint is the opposite trade: a first-class custom-rule
+ecosystem in JavaScript with a true LaTeX parser plugin
+(\texttt{textlint-plugin-latex2e}), but no existing AI-tell rule pack, so
+everything we want would be written by us. The pragmatic WP2 sequence is:
+start with Vale over detexed text plus sloptrim on raw source (both work
+today), and pilot TeXtidote as the line-accurate LaTeX layer; move rules
+into textlint only if the pilot shows the detex mapping loses too much.
+
+\subsection{proselint, and the rest}
+\label{sec:oss-rest}
+
+proselint (BSD-3, 4.6k stars) is the classic usage linter, 87 checks
+distilled from Garner and the style canon: archaisms, clich\'es,
+redundancy, weasel words. It predates LLMs, contains no AI-tell content,
+and, decisively, has no custom-rule mechanism, so extending it means
+forking it; since a Vale-compatible re-implementation exists, anything we
+want from it arrives through the Vale configuration for free. Skip, and
+inherit via Vale if ever wanted. The remaining survey finds were language
+ports of humanizer (a 15.8k-star Chinese localization among them), smaller
+Vale slop styles superseded by vale-ai-tells, and academic humanizer
+variants less developed than the one reviewed above; none changes a
+verdict.
+
+\subsection{Verdicts, and what adoption means}
+\label{sec:oss-verdicts}
+
+\begin{table}[t]
+\centering
+\small
+\begin{tabularx}{\textwidth}{@{}l l L@{}}
+\toprule
+Project & Verdict & What the verdict means in practice \\
+\midrule
+blader/humanizer & adopted & keep vendored copy; precedence header stays; enforce dash override in config \\
+tbhb/vale-ai-tells + Vale & adopt & CI linter; disable four rules for \texttt{.tex}; enable structural metrics; take commit rules \\
+seyedehsanhadi/sloptrim & adopt & on-save scorer and rhythm layer; recalibrate per Table~\ref{tab:calibration} on updates \\
+AIScientists-Dev/academic-humanizer & adapt & merge Layers 2--4 into our policy as the scholarly layer, examples transposed to economics \\
+sam-paech/slop-forensics & adapt & derive our own tell lists against a pre-2022 economics baseline \\
+baoguangsheng/fast-detect-gpt & adapt & aggregate drift metric only; never per-document \\
+conorbronsdon/avoid-ai-writing & mine & take 1A/1B weighting, injection boundary, flag-don't-fix zones \\
+hardikpandya/stop-slop & mine & take false agency (with econ carve-out), negative listing, Wh-openers \\
+NulightJens/humanizer-stack & mine & take the anti-convergence diagnostic; skills stay out \\
+sylvainhalle/textidote & pilot & candidate line-accurate LaTeX layer \\
+textlint + latex2e & pilot & fallback host if detex mapping proves lossy \\
+amperser/proselint & skip & no custom rules; content reachable via Vale \\
+leonxlnx/taste-skill & skip & frontend pack; one sociological lesson retained \\
+itallstartedwithaidea/writing-agent & skip & evasion-framed; weak checks; nothing to mine \\
+\bottomrule
+\end{tabularx}
+\caption{Verdicts over the evaluated open-source field, with the concrete
+action each verdict implies.}
+\label{tab:oss}
+\end{table}
+
+Put together: humanizer stays as the installed general diagnostic;
+academic-humanizer's content becomes our scholarly layer; sloptrim and a
+curated Vale configuration become the measurement floor; slop-forensics
+and the mixture estimator keep the measurements current; three skills
+contribute patterns without being installed; two LaTeX-aware hosts get a
+pilot; and three projects are set aside for cause. Nothing in the field
+does what Sections~\ref{sec:record} and~\ref{sec:tools} showed we need
+most, reader-based acceptance testing and behavioral evaluation of writing
+doctrine, which is why the proposal builds those two things and mostly
+configures the rest.

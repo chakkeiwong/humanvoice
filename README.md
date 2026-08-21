@@ -10,18 +10,23 @@ showed was missing.
 
 ## Start here
 
-`docs/survey/humanvoice_survey.pdf` — the founding document. It contains:
+`docs/survey/humanvoice_survey.pdf` — the founding document (40 pages,
+revised 22 August 2026 after the sixteen-page first version was rejected for
+density; the rejection itself became evidence, see its Section 1.2). It
+contains:
 
-1. The failure record across five projects, read in sequence, with a
-   ten-point summary of what the record adds up to (Section 2).
-2. An inventory of the tools we already have and the gaps (Section 3).
-3. A survey of the research literature on why language models write this
-   way and what interventions have evidence (Section 4).
-4. An evaluation of fourteen open-source projects, with verdicts (Section 5,
-   Table 1). Evaluated code is pinned under `vendor/` (see
+1. The failure record across five projects, told in sequence with real
+   before/after repair examples and a defect taxonomy (Section 2).
+2. A review of each existing tool with merits and issues (Section 3).
+3. The research literature explained at method level, with the formulas a
+   builder needs (Section 4).
+4. Detailed reviews of fourteen open-source projects, including a
+   calibration experiment run on our own documents (Section 5; verdicts in
+   Table 4). Evaluated code is pinned under `vendor/` (see
    `vendor/MANIFEST.md` for commits).
-5. The proposal: eight design principles, the repository shape, the `hv`
-   diagnostic CLI, and five work packages WP1-WP5 (Section 6).
+5. Design requirements traced to evidence (Section 6, Table 5) and the
+   proposal: the `hv` diagnostic CLI specified per command, and work
+   packages WP1-WP5 with replay-based acceptance tests (Section 7).
 
 Rebuild with `pdflatex + bibtex` from `docs/survey/humanvoice_survey.tex`.
 

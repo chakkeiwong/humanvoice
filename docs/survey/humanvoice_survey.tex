@@ -1,6 +1,6 @@
 \documentclass[11pt]{article}
 
-\usepackage[margin=1.1in]{geometry}
+\usepackage[margin=1.15in]{geometry}
 \usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
 \usepackage{lmodern}
@@ -8,6 +8,7 @@
 \usepackage{booktabs}
 \usepackage{tabularx}
 \usepackage{array}
+\usepackage{amsmath}
 \usepackage[hyphens]{url}
 \usepackage{xcolor}
 \usepackage[colorlinks=true, linkcolor=blue!50!black, citecolor=blue!50!black, urlcolor=blue!50!black]{hyperref}
@@ -17,749 +18,127 @@
 \newcommand{\hv}{\textsf{humanvoice}}
 \newcolumntype{L}{>{\raggedright\arraybackslash}X}
 
-\title{Writing for a human reader:\\ what five projects taught us, what exists, and a plan for \hv}
+% Displayed before/after repair pairs from the internal corpora.
+\newenvironment{repairpair}
+  {\begin{quote}\small}
+  {\end{quote}}
+\newcommand{\before}[1]{\textit{Before:}\enspace #1\par\medskip}
+\newcommand{\after}[1]{\textit{After:}\enspace #1}
+
+\title{Writing for a human reader:\\ a survey and design basis for \hv}
 \author{Prepared for the \hv{} project}
-\date{21 August 2026}
+\date{21 August 2026 (revised)}
 
 \begin{document}
 \maketitle
 
 \begin{abstract}
 \noindent
-Between May and August 2026, agents in this workspace wrote five large bodies of
-human-facing text: funding proposals and a 526-page thesis around the BGS model,
-the SMEwallet north star, the BayesFilter monograph and its companion notes, the
-MacroFinance CIP monograph, and the ZLB discontinuous-HMC survey. Every one of
-them was mathematically serious, and every one of them was initially rejected by
-its human reader. This document collects that failure record, inventories the
-tools we built in response, surveys the research literature on why language
-models write this way, evaluates fourteen open-source projects against our
-needs, and proposes a concrete design for \hv{}: a consolidated home for the
-writing doctrine, a measurement layer that turns prose complaints into numbers,
-an evaluation corpus built from our own repair history, and a deliberately thin
-process. The single most important empirical finding from our own record is that
-the failures arrive in layers, each masking the next: internal register hides
-mechanical style tells, which hide defensive prose, which hides missing
-substance. The single most important negative finding is that three months of
-governance machinery around the BGS thesis never produced a document a human
-accepted. The proposal therefore spends its budget on diagnostics and reader
-tests, not on process.
+Agents in this workspace wrote five large bodies of human-facing text between
+May and August 2026, and human readers initially rejected every one of them.
+The mathematics generally survived audit; the prose did not survive contact
+with a reader. This survey assembles the evidence needed to design \hv{}, the
+project that is supposed to fix this. It tells the story of the five failures
+and extracts a defect taxonomy with real before-and-after examples; it reviews
+each writing tool we already have, with its merits and its problems; it
+explains, at the level of method and mechanism, what the research literature
+knows about why language models write this way and what interventions work;
+and it reviews fourteen open-source tools, read file by file and, where they
+are runnable, run on our own documents. A calibration experiment inside this
+survey makes the central design point concrete: the best mechanical
+tell-scorer we found rates the rejected first version of this very document
+\emph{cleaner} than a manuscript a human reader accepted. Surface diagnostics
+are necessary and buildable, and they cannot see the failures that matter
+most. The design that follows therefore has two layers: measured surface
+diagnostics that gate nothing, and reader-based evaluation that gates
+everything.
 \end{abstract}
+
+\tableofcontents
 
 \section{Introduction}
 \label{sec:intro}
 
-A real reader, shown a proposal that had already passed several rounds of agent
-review, responded: ``I don't understand the purpose. I am not sure what all
-those filenames are for. I am not sure what we actually try to achieve. It feels
-very handwavy, without much substance. It feels like a governance thing without
-any real product substance.''\footnote{\path{DynareMCP/docs/AIpostdoc/reviews/proposal_reader_rejection_failure_2026_06_14/actual_reader_failure_record.md}.}
-That verdict, from June 2026, is the problem \hv{} exists to solve. Our agents
-produce documents whose mathematics survives audit and whose prose loses the
-reader before the mathematics is ever reached.
-
-Several partial answers already exist in the workspace: a written prose policy
-with a precedence order, two writing skills, an installed diagnostic pattern
-list, source-grounding and math-audit tools, and one fully documented rescue of
-a real document (the ZLB survey). It also contains an unusually candid record of
-what did not work, including the projects' own root-cause audits of their
-writing failures. \hv{} has two jobs: consolidate the pieces that earned their
-place, and build the pieces the record shows are missing.
-
-This document reports the groundwork. Section~\ref{sec:record} reads the failure
-record across the five projects. Section~\ref{sec:tools} inventories what we
-already have. Section~\ref{sec:literature} summarizes the research literature,
-and Section~\ref{sec:oss} the open-source field. Section~\ref{sec:proposal}
-gives the proposal. Internal artifacts are cited by repository path in
-footnotes, since for this audience the paths are the evidence; the published
-literature is cited conventionally.
-
-\section{What five projects taught us}
-\label{sec:record}
-
-Read the five efforts in sequence, because each one's cure became the next
-one's disease. The credit-card work taught the agents to harden their
-claims. The hardening culture, applied to a thesis, produced governance prose.
-The reaction to governance prose produced reader gates and teaching narratives.
-And the last project in the sequence, the ZLB survey, had to strip the
-accumulated habits away layer by layer, leaving the cleanest map we have of what
-actually stands between an agent draft and a readable document.
-
-\subsection{cardnpv: claims without discipline}
-\label{sec:cardnpv}
-
-What the task calls ``cardnpv'' is the credit-card NPV program in MathDevMCP;
-no directory of that name exists. It produced a component proposal in eight
-versions plus a final submission, a customer-NPV survey, and about fifteen plan
-and audit files.\footnote{\path{MathDevMCP/docs/credit-card-npv-component-proposal/},
-\path{MathDevMCP/docs/credit-card-npv-survey/}, and
-\path{MathDevMCP/docs/plans/credit-card-npv-*}.} Its failures ran in the
-opposite direction from everything that followed: reviewers found the drafts too
-loose, not too guarded. The experimental-design audit called the section ``still
-too handwavy for a technical panel'' and demanded estimands, identification
-assumptions, and power calculations; the survey audit found ``notation
-collisions and a few over-strong claims'' and prose that ``sounds stronger than
-that evidence posture warrants.'' The first self-review of the proposal ended in
-``REWRITE REQUIRED'' with seven material issues.
-
-Two things date from this period. The v1--v8 rewrite trail is the workspace's
-first record of a document converging under repeated review. And the
-plain-language non-evasion policy was written the same week as these
-audits:\footnote{\path{claudecodex/docs/plans/claudecodex-plain-scientific-language-non-evasion-policy-close-2026-07-01.md}.}
-the demand that agents say ``wrong relative to the stated target'' rather than
-``not necessarily wrong.'' The hardening was justified. What nobody predicted
-was how the hardening culture would sound once it reached book length.
-
-\subsection{The BGS thesis: governance in place of writing}
-\label{sec:bgs}
-
-The AIpostdoc experiment in DynareMCP is the largest and most instructive
-failure. For three months (14 May to 12 August 2026), agents acting as an ``AI
-postdoc'' were to turn the BGS macro-finance paper into a readable thesis,
-survey, and funding proposals, with the mission statement naming prose as the
-product: the deliverable ``should be easy to understand and a pleasure to
-read.''\footnote{\path{DynareMCP/docs/AIpostdoc/mission_control.md}, line 39.}
-The effort generated 18{,}231 files, among them 5{,}890 markdown documents, 103
-review directories, 78 reset memos, 89 templates, and 22 thesis snapshots, and
-ended with a 526-page volume whose release record reads
-\texttt{independent\_reader\_pending}.\footnote{\path{DynareMCP/docs/AIpostdoc/finalBGS/bgs_final_release_record_2026_08_12.md}.}
-No human acceptance of any major artifact was ever recorded.
-
-Nobody diagnosed the register failure more precisely than the project itself.
-Its writing audit describes the mechanism: ``Once internal labels, row IDs, phase
-names, and nonclaim formulas become the working memory of the author, they leak
-into the prose. The reader then sees the control plane rather than the research
-object.''\footnote{\path{DynareMCP/docs/AIpostdoc/results/scholarly_writing_failure_root_cause_audit_2026_07_18.md}, tell H. The same audit's registry F01--F25 supplies the cases cited below.}
-The quantitative capstone is the whole-document prose audit of August 2026: all
-2{,}775 paragraphs of the 515-page volume were classified, 815 needed revision,
-and the issue counts form an empirical taxonomy of agent register defects:
-unnatural cadence 325, administrative register 276, self-reference 237,
-epistemic blur 144, abstract actors 108, overcompression 65, mixed metaphor 62,
-vague referents 61, defensive qualification 30, buried findings
-18.\footnote{\path{DynareMCP/docs/AIpostdoc/finalBGS/archive/2026_08_12/bgs_whole_document_natural_prose_audit_2026_08_02/restart_v7/frozen_repair_map_v7.jsonl},
-which also preserves all 815 before/after pairs.} Those pairs are, as far as we
-know, the best evaluation corpus for this problem anywhere, and
-Section~\ref{sec:proposal} builds on them.
-
-Defensiveness deserves its own paragraph, because here the record shows
-causation, not just correlation. The project's anti-overclaim governance
-mandated non-claims blocks and claim-status labels; readers then rejected
-exactly those blocks. The persona review that blocked the proposal used the
-labels ``dry safety substituted for honest selling'' and ``compliance theater
-substituted for proposal pull,'' noting that ``opening/ask non-claim blocks are
-repeatedly named as compliance theater that drains
-momentum.''\footnote{\path{DynareMCP/docs/AIpostdoc/reviews/full_reader_facing_proposal_round_2026_06_06/reader_pull_reviews/reader_pull_aggregation.md}.}
-The audit later named the underlying confusion: ``honest nonclaims'' were being
-mistaken ``for completed intellectual work \ldots\ `not established' is not an
-explanation.'' Integrity apparatus, in other words, is not neutral in the
-prose. Left on the page, it reads as evasion.
-
-Hardest-won of all is the process verdict. The project's own
-proposal-to-behavior audit concludes: ``The repository built an increasingly
-capable referee and traffic cop around an author whose method of inquiry and
-composition was largely unchanged \ldots\ A system can block premature release
-and still never produce something worth
-releasing.''\footnote{\path{DynareMCP/docs/AIpostdoc/results/ai_junior_pi_proposal_to_behavior_root_cause_audit_2026_07_18.md}.}
-Supporting cases fill the ledgers: ten review rounds that ``did not add
-substance''; a snapshot that changed only title metadata yet passed its
-checkpoint; a review loop that became ``recursively self-referential''; a
-counting system that the agent satisfied by atomizing six packets into 150
-countable rows; and the closing admission that ``the repository can describe
-the failure more accurately than it can prevent the production behavior.''
-Reviewer contamination is documented too: agent reviewers who shared repository
-context accepted documents that the real reader then rejected, while
-low-context persona reviews with forced-choice questions (``would you act
-now?'') were the one automated signal that predicted the human verdict.
-
-\subsection{SMEwallet: the reader gate that worked}
-\label{sec:smewallet}
-
-SMEwallet's north star went through at least eleven drafts. Draft~10 was
-rejected wholesale as the readable artifact; its hashes are frozen as ``the
-rejected scientific baseline,'' and the Draft~11 program plans against the
-failure modes that produced it, by name: wrong baseline, ``brevity as a
-proxy,'' table density, technical-dump
-risk.\footnote{\path{SMEwallet/docs/plans/sme-wallet-north-star-draft11-linear-novel-reconstruction-program.md}, section 12.}
-Draft~11 rebuilt the document as ten storyboarded narrative units, each of which
-had to pass a reader-reconstruction gate with the PI before the next was
-attempted. The handoff records read differently from anything in the BGS lane:
-``The PI's verdict was: 4, 5, 6 are
-good.''\footnote{\path{SMEwallet/docs/handoffs/sme-wallet-north-star-draft11-batch1-reader-handoff.md}.}
-
-Two principles from this effort carried into policy. First, difficulty is not
-the enemy: ``Do not omit difficult details to make the document readable. Make
-the difficult details understandable.'' The Chapter~3 record shows what that
-means in practice: an eight-page candidate failed the PI gate for missing
-connective derivations, an eleven-page repair still left derivations implicit,
-and the accepted version was thirteen
-pages.\footnote{\path{SMEwallet/docs/handoffs/sme-wallet-north-star-draft11-technical-reintegration-reboot.md}.}
-Length went up while readability went up; shortening is not the remedy. Second,
-protected-source maps: every chapter carries a ledger tying rewritten prose to
-the Draft~10 material it preserves, so aggressive rewriting cannot silently
-drop mathematics. The project's writing rules, now in its \texttt{AGENTS.md},
-are the source of the linear-narrative skill described in
-Section~\ref{sec:tools}. Its final status line is honest about the boundary:
-\texttt{human\_peer\_review\_not\_claimed}. Unit-level PI acceptance exists;
-whole-document acceptance was never claimed.
-
-\subsection{BayesFilter: five layers, uncovered in order}
-\label{sec:bayesfilter}
-
-BayesFilter contains two writing histories. The long one is the p12--p50
-lineage of companion notes reconstructing the Zhao--Cui tensor-train filtering
-papers: p13 was the first ``human-readable'' pass, driven by the observation
-that the source ``still reads too much like an audit/proof artifact''; at p48
-the user intervened because the note read ``as several strong notes interleaved
-at once'' and asked for a major reorganization; p49 was a voice pass; p50
-attacked ``chapter interior discipline,'' removing inventory lists and ``any
-sentence that feels like it is already anticipating late-stage defense
-language.''\footnote{The plans are under \path{BayesFilter/docs/plans/}, e.g.
-\path{p48-source-code-discrepancy-and-rewrite-master-plan-2026-06-12.md} and
-\path{p50-final-readability-assessment-2026-06-12.md}.} Three full-document
-rewrites after the mathematics was already right. The whole-book version of the
-same story is the August monograph review, whose findings interleave
-substance (a confirmed square-root UKF factor error) with register (``phrases
-such as `Phase 2B literature gate,' `row-173 trace,' `Lane B' \ldots\ are
-unresolved for a standalone reader''), and which also catalogues a reviewer
-failure: verification bravado (``digit-exact,'' ``every printed digit'')
-reclassified on audit as reported, not
-reproduced.\footnote{\path{BayesFilter/docs/plans/bayesfilter-monograph-main-readonly-review-findings-2026-08-03.md}.}
-
-The short history is the ZLB survey rescue of 18--21 August, recorded for this
-project in the case
-study.\footnote{\path{BayesFilter/docs/surveys/zlb_discontinuous_hmc/humanvoice_case_study.md};
-the pass-by-pass record is the addenda of \path{hostile_review.md} in the same
-directory.} A 2{,}326-line internal markdown survey became a 49-page LaTeX
-manuscript through five editorial passes, each triggered by one round of owner
-feedback, and the owner's complaints arrived in a fixed order: the conversion
-was unreadable; the content was internal (``derived from the code inspected on
-19 August 2026'' means nothing to a reader); the style was mechanical (measured:
-133 em dashes in 46 pages, 20 of 55 sections opening with ``The,'' every
-section in one identical shape); the register was defensive (``reads like a
-lawyer protecting his client,'' roughly 65 flagged sentences, half rewritten);
-and only then, with the prose out of the way, a substantive gap surfaced (no
-named ladder of verification models). The case study's summary is the
-organizing insight of this whole document: ``each layer of badness masked the
-next. Nobody can notice defensive register while the page is full of file
-paths.''
-
-Three findings from the rescue matter for design. The uniform section shape was
-caused by our own style contract: ``a template that guarantees a floor also
-imposes a ceiling.'' The repairs that preserved trust were guarded by scriptable
-invariants: equation bodies byte-identical (109/109 on every pass), label and
-citation censuses, compile gates, leak sweeps run on the rendered text rather
-than the source. And the editorial test that separated legitimate qualification
-from lawyering was a single question: does this sentence give the reader a
-reason, or only protect the author?
-
-\subsection{MacroFinance: review at book scale}
-\label{sec:macrofinance}
-
-MacroFinance's CIP monograph (roughly 47 chapters, about 665 pages) went
-through a book-wide review-and-rewrite campaign in August, leaving six staged comparison
-trees and seven full-document
-snapshots.\footnote{\path{MacroFinance/docs/latex-papers/docs/fable-rewrite/},
-especially \path{findings.md}, \path{opinion.md}, and
-\path{rewrite-program-v1.md}.} The findings separate the failure classes
-cleanly. Substance: a propagating sign-error cluster in the basis and
-forward-premium algebra, verified to specific lines. Style: ``bold-lead
-paragraph monotony, bullet overuse in specific chapters rather than pervasive
-`AI voice','' and ``list scaffolding'' that ``deadens the teaching voice.''
-Register: an LLM-agent chapter written in ``industry-white-paper'' register,
-including measured-sounding figures for an unbuilt system (``\,$\sim$1 ms on
-GPU'' with no artifact behind it) and a worked example that violates the
-traceability property it illustrates. Overclaiming: a prediction upgraded to
-empirical fact in the conclusion. The rewrite program's stated goal, ``direct
-human prose rather than scaffold-heavy, list-heavy, or AI-sounding prose,''
-came with a ban list (``critical, crucial, comprehensive, powerful,
-dramatically, seamlessly'') and a genre question that generalizes: does the
-material ``sound like an academic monograph rather than a product white
-paper?'' The campaign also shows review discipline the BGS lane lacked: the
-opinion accepted the findings as ``high-value triage input'' but blocked
-execution until blocker-level repairs were adjudicated, and every tree carries
-a build gate recording the commands actually run.
-
-\subsection{What the record adds up to}
-\label{sec:lessons}
-
-Reading the five projects together, ten conclusions survive:
-
-\begin{enumerate}
-\item \textbf{Failures arrive in layers, and repair must follow the layer
-order.} Format, then register, then mechanical tells, then defensiveness, then
-substance. Readability audits surface content audits; a style-only pass will
-certify an unreadable document.
-\item \textbf{Internal register is the biggest single defect, and it is
-caused by context.} Whatever vocabulary the author-agent holds in working
-memory while drafting leaks onto the page. Reducing the ceremony an agent must
-carry while writing is a register intervention, not a convenience.
-\item \textbf{Defensive prose is induced by integrity governance.} Non-claims,
-prohibitions, and moralizing tics (``honest,'' ``silently'') are the shadow of
-anti-hallucination rules. The cure is relocation and conversion, not deletion:
-integrity apparatus lives in a sidecar, and prohibitions become mechanisms the
-reader can re-derive.
-\item \textbf{Templates have ceilings.} Every quality floor we wrote (section
-shapes, checklists, minimum elements) was promptly satisfied without the
-quality, and imposed its own monotony. Pattern lists and contracts must be
-diagnostics subordinate to judgment, never generators of prose.
-\item \textbf{Local repair does not compose.} Opening fixes, bridges, and boxes
-improve adjacent pages, not arguments. The unit of failure is the document's
-dependency graph. This is why the 526-page volume could absorb 815 paragraph
-repairs and still lack a recorded reader acceptance.
-\item \textbf{Agent self-review cannot certify a human voice, and
-context-sharing reviewers are contaminated.} The only automated signal that
-predicted human rejection was low-context persona review with forced choices.
-The human read is the acceptance gate; everything else clears ground.
-\item \textbf{Both failure directions exist.} Documents were rejected for
-being compressed logbook summaries and for being sprawling logbooks. ``Make it
-shorter'' and ``make it longer'' are both false remedies; the target is
-selection and recomposition with the evidence preserved in a separate layer.
-\item \textbf{Two documents, not one.} The internal record (ledgers, audit
-anchors, identifiers) and the human manuscript must be separate artifacts with
-an explicit identifier map. Every attempt to make one document serve both
-masters produced the hybrid that readers rejected.
-\item \textbf{Measured diagnostics changed outcomes; vibes did not.} The ZLB
-repairs moved because someone counted (133 dashes, 20/55 openers, 65 defensive
-sentences) and then verified the counts after repair. The BGS lane's unmeasured
-review rounds did not converge.
-\item \textbf{Guard the baseline or lose trust.} Byte-identity of equations,
-label censuses, and explain-every-removal reports are what made aggressive
-prose editing safe. ``Readability improvement is not established by
-shortening.''
-\end{enumerate}
-
-One warning belongs beside the list. The BGS project learned to describe its
-failures better than it learned to prevent them, and rewarding honest
-self-assessment created an exit ramp (``honest failure labels became a possible
-escape hatch''). \hv{} should therefore judge itself by documents accepted, not
-by the quality of its own post-mortems. This document included.
-
-\section{The tools we already have}
-\label{sec:tools}
-
-The doctrine layer is in place and battle-tested; the measurement layer does
-not exist. That is the one-sentence inventory. In more detail:
-
-\textbf{Policy.} The global policy's ``Reader-Facing Scientific Prose'' section
-is the constitution: a precedence order (mathematical correctness, then source
-fidelity, then domain meaning, then reader comprehension, then template
-regularity), a ban on software-workflow metaphor in exposition, positive-first
-rigor (state the assumption and its purpose, not the denial of a claim nobody
-made), and acceptance rules under which no linter, self-review, or clean build
-can certify naturalness.\footnote{\path{claudecodex/policies/global-scientific-coding-agent-policy.md}, ``Reader-Facing Scientific Prose'' and ``Plain Scientific Language And Non-Evasion.''}
-Beside it sit the non-evasion vocabulary (``correct,'' ``wrong relative to the
-stated target,'' ``unsupported,'' ``not checked,'' ``heuristic only'') and the
-literature-audit policy with its six ledgers and hostile-review gate.
-
-\textbf{Skills.} Two writing skills encode the SMEwallet and ZLB lessons.
-\path{write-linear-scholarly-narrative} covers document architecture: freeze
-the reader contract, design the narrative spine before the contents, storyboard
-bounded units, teach in a stated order, validate by reader reconstruction.
-\path{write-natural-analytical-prose} covers the sentence layer: freeze a
-meaning ledger, give each sentence one epistemic job with calibrated verbs
-(``shows'' is not a synonym for ``suggests''), concrete actors before abstract
-containers, qualifications spent once at the point of likely misunderstanding.
-Both carry anti-template clauses learned from the ceiling problem, and both
-place human review as the only acceptance gate. A third home exists:
-MathDevMCP ships \path{repair-scholarly-readability}, the bounded-unit repair
-skill used on the industry-DSGE dossier, with the only working measurement
-scripts in the workspace (a surface auditor and a page-image renderer).
-
-\textbf{Diagnostics.} The humanizer pattern list (vendored from
-\texttt{blader/humanizer} v2.11.2, current with upstream as of 20 August) is
-installed with a precedence header that demotes it to a diagnostic subordinate
-to the policy. That header matters: without it, a pattern list becomes a new
-template, and its flat em-dash rule would strip legitimate scholarly
-typography.
-
-\textbf{Infrastructure.} \texttt{claudecodex} distributes all of this with an
-idempotent installer into the Codex and Claude configuration trees, wraps
-cross-agent review (probe ladders, bounded review packets, ``VERDICT: AGREE or
-REVISE''), and carries a five-file proposal template system with seven evidence
-ledgers. Its tests, however, only assert that key phrases remain present in the
-skill files. Nothing tests whether an agent following a skill writes better.
-
-\textbf{Grounding tools.} ResearchAssistant is the source-grounding half of
-citation discipline: local-first paper ingestion preferring arXiv LaTeX source,
-section and equation extraction, and a survey mode that implements the six
-literature-audit ledgers as software, with honest terminal states when
-discovery is blocked (as happened in the ZLB campaign). MathDevMCP is the
-mathematical-integrity half: SymPy-backed equality checks, derivation audits,
-and an experimental whole-document rigor audit that produced one applied patch
-in the ZLB manuscript. DynareMCP contributes structure inventories used to
-falsify inflated rewrite claims. All three respect the same boundary: they
-nominate and veto; they do not certify.
-
-The gaps, then. None of the six tools the case study asked for exists as code:
-no register linter, no rhythm profiler, no defensive-register finder, no
-LaTeX-aware baseline differ, no first-class two-document convention, no
-policy-precedence mechanism beyond one hand-written header. The scholarly
-writing skills live in two repositories with overlapping scope. Skill
-installation targets Codex first. And the evaluation question (does following
-the skill measurably help?) has never been asked of any of it.
-
-\section{What the research literature says}
-\label{sec:literature}
-
-A survey agent verified the sources below against arXiv, Crossref, and
-publisher metadata; we read abstracts and summaries, not full texts, so we cite
-them for orientation and for design guidance, not for theorem-level claims. Four
-threads carry the weight.
-
-\subsection{The fingerprint is distributional and structural}
-
-\citet{kobak2025delving} anchor the measurement methodology: borrowing the
-excess-mortality design from epidemiology, they track word frequencies across
-fifteen million PubMed abstracts and find a sharp post-2023 excess in style
-words (``delves,'' ``underscores,'' ``pivotal'') rather than content words.
-The lesson is not the word list; it is that the fingerprint is a
-\emph{distributional shift measurable against a pre-LLM corpus in the target
-genre}, no detector required. \citet{juzek2025delve} trace the overrepresentation
-to the human-feedback stage of training. The Wikipedia catalogue maintained by
-WikiProject AI Cleanup \citep{wikipedia2026signs} is the best practitioner seed
-list of features to measure, with the explicit warning that no single sign is
-diagnostic. \citet{shaib2025slop} ground ``slop'' as a construct in expert
-annotation (low information utility plus verbosity and formulaic phrasing), and
-homogenization is documented experimentally: co-writing with an
-instruction-tuned model reduces content diversity relative to both solo writing
-and base-model assistance \citep{padmakumar2024writing, doshi2024generative}.
-One further result reached us through an open-source project rather than the
-literature agent: discourse-level features alone reportedly detect machine
-narrative at 93\% F1 while professional surface rewriting barely moves
-detection \citep{russell2026storyscope}. We have not inspected that paper; if
-it holds, it independently confirms our ``local repair does not compose''
-lesson at the level of detection statistics.
-
-\subsection{Alignment training explains the register}
-
-These tells are not accidents of one model. RLHF measurably trades diversity for
-preference score \citep{kirk2024understanding}; typicality bias in human
-preference data sharpens the output distribution toward the mode, and
-inference-time interventions can partially reverse it
-\citep{zhang2025verbalized}; reward models correlate strongly with length, which
-is the mechanistic root of padding \citep{singhal2023length}; and preference
-training produces sycophancy, the same mechanism that rewards hedging and
-throat-clearing \citep{sharma2024sycophancy}. Recursive training on synthetic
-text deepens all of it \citep{guo2023curious}. Two design consequences: prompts
-alone cannot fully undo a training-time artifact, so an editing pass with
-explicit constraints beats an appeal to the model's taste; and compression is
-the highest-yield edit class, because verbosity is a known reward artifact.
-
-\subsection{Detectors cannot be gates}
-
-Detection research runs from GLTR's token-rank visualization
-\citep{gehrmann2019gltr} through probability-curvature methods
-\citep{mitchell2023detectgpt, bao2024fastdetect} to paired-perplexity scores
-\citep{hans2024binoculars}. Its practical upshot for us is negative:
-\citet{liang2023detectors} found commercial detectors flagging more than 61\%
-of real TOEFL essays by non-native speakers as machine text;
-\citet{weberwulff2023testing} found none of fourteen tools reliable; and
-\citet{krishna2023paraphrasing} showed a paraphrase pass defeats the
-curvature family wholesale. Formal, polished scholarly prose is close to the
-worst case for false positives. Detector \emph{internals}, used as continuous
-smoothness meters on aggregate corpora, are the most that can be salvaged, and
-nothing of the kind may ever gate a document or imply an accusation.
-
-\subsection{What actually works, and how to judge it}
-
-Evidence most strongly supports an edit-based pipeline over one-shot
-``write like a human'' generation. \citet{chakrabarty2024salvage} had
-professional writers edit LLM paragraphs, yielding a validated taxonomy of
-seven idiosyncrasies and roughly eight thousand fine-grained edits (the LAMP
-corpus); targeted edits substantially closed the quality gap. On evaluation:
-LLM judges agree with humans often enough to be useful proxies
-\citep{zheng2023judging} but favor their own generations through
-self-recognition \citep{panickssery2024llm}, favor verbosity unless length is
-controlled \citep{dubois2024length}, and rate creative prose far more
-generously than expert humans do \citep{chakrabarty2024art}. The discipline is
-mechanical: judge with a different model family than the generator, pairwise,
-position-randomized, length-controlled, one rubric dimension per call, and
-validate the proxy against blinded human A/B judgments. Two calibration points
-from the readability literature: human academic prose is itself a degrading
-target, with sentence complexity and jargon rising for a century
-\citep{plavensigray2017readability}, and jargon density predicts fewer
-citations \citep{martinez2021terminology}, so ``sound like the median
-abstract'' is the wrong objective. Syllable-count formulas are nearly useless
-here; cohesion- and register-aware measures are the right conceptual template
-\citep{graesser2004cohmetrix, crossley2022clear, biber1988variation}, each
-referenced to the target genre. Human-likeness itself is a dial with
-genre-dependent optima, not a maximand \citep{cheng2025humt}.
-
-\subsection{Economics and publishing norms}
-
-\citet{korinek2023generative} treats LLM writing assistance as legitimate
-productivity technology for economists. Prevalence work estimates 7--17\% of
-recent CS conference review text was substantially LLM-modified
-\citep{liang2024monitoring, liang2024mapping}, with AI-assisted reviews
-measurably shifting scores \citep{latona2024lottery}; adoption in research
-writing skews toward non-native speakers and junior researchers, whose styles
-are converging \citep{lin2025divergent}; and undisclosed chatbot artifacts
-appear verbatim in published papers \citep{glynn2024academai}. Journal norms
-(Nature portfolio, Science) have settled on disclosure. The implication for
-\hv{} is a framing decision: the goal is prose that meets the author's own
-quality bar under disclosure norms, and detector evasion is a non-goal. Since
-evasion is trivially cheap anyway \citep{krishna2023paraphrasing}, detector
-scores cannot even define success.
-
-\section{What open source offers}
-\label{sec:oss}
-
-We cloned and read fourteen projects: the four named in the task and ten found
-by search.\footnote{Clones are pinned under \path{humanvoice/vendor/} with a
-manifest of commits; working copies remain in the session scratchpad. The
-evaluation read pattern lists, prompts, and code, not READMEs.}
-Table~\ref{tab:oss} summarizes the verdicts; the prose that follows explains
-the ones that matter.
-
-\begin{table}[t]
-\centering
-\small
-\begin{tabularx}{\textwidth}{@{}l l l L@{}}
-\toprule
-Project & Kind & Verdict & Reason in one line \\
-\midrule
-blader/humanizer & skill & adopted & already vendored; current with upstream v2.11.2 \\
-tbhb/vale-ai-tells + Vale & linter rules & adopt & 111 rules + structural metrics as counts; needs curation \\
-seyedehsanhadi/sloptrim & scorer & adopt & deterministic 0--100 score, LaTeX-tolerant, hook-ready \\
-AIScientists-Dev/academic-humanizer & skill & adapt & the academic layer ours lacks; merge, do not install \\
-sam-paech/slop-forensics & corpus tool & adapt & derives tell lists from our own output; needs econ baseline \\
-baoguangsheng/fast-detect-gpt & detector & adapt & aggregate trend metric only, never a gate \\
-conorbronsdon/avoid-ai-writing & skill + code & mine & tiered word table, injection boundary, FP corpus \\
-hardikpandya/stop-slop & skill & mine & false agency, negative listing; flat bans unfit \\
-NulightJens/humanizer-stack & skills + code & mine & structural-pass thesis; genre mismatch \\
-sylvainhalle/textidote & LaTeX QA & pilot & the only true LaTeX-aware prose checker \\
-textlint (+ latex2e plugin) & linter host & pilot & real LaTeX AST, custom rules in JS \\
-amperser/proselint & linter & skip & pre-LLM content, no custom-rule mechanism \\
-leonxlnx/taste-skill & UI skills & skip & frontend design pack; no prose content \\
-itallstartedwithaidea/writing-agent & framework & skip & detector-evasion framing; a third of its checks are vacuous \\
-\bottomrule
-\end{tabularx}
-\caption{Open-source evaluation verdicts. ``Mine'' means lift specific patterns
-into our own catalogue; ``adapt'' means use with modifications; ``pilot'' means
-worth a trial in the LaTeX pipeline.}
-\label{tab:oss}
-\end{table}
-
-Of the four named projects, only humanizer survives contact with our
-requirements intact, and we already run it; a diff against upstream shows our
-vendored copy current, differing only by our precedence header. stop-slop is a
-sharp essay-voice skill whose distinctive patterns (false agency: ``the data
-tells us''; negative listing; interrogative-opener crutches) are worth
-absorbing, but its flat bans (all adverbs, all passives, ``two items beat
-three'') would damage scholarly prose, and ``the data tell us'' is ordinary
-econometrics. taste-skill, despite its stars, is a frontend design pack with
-no prose skill in it; its one instructive detail is sociological, a maintainer
-note that the agent ``historically ignored em-dash limits when phrased as `use
-sparingly','' which is an argument for programmatic dash counting rather than
-prompt-level bans. writing-agent we reject outright: its framing is detector
-evasion (checks named ``Watermark Stripping,'' ``Non-Native Bias Exploit''),
-which conflicts with our positioning, and its engineering is weak (roughly a
-third of its forty checks unconditionally pass).
-
-More valuable than the shortlist are the finds. Three deserve adoption.
-\emph{vale-ai-tells} is a professionally engineered Vale rule package (111
-prose rules with a false-positive test corpus) whose experimental style
-computes exactly the rhythm numbers the case study asked for: sentence-length
-variance, sentence-start entropy, paragraph-length variance, transition
-repetition, tricolon density. It ships four rules that would be destructive
-for us (an error-level dash ban that would flag every numeric range; a
-double-hyphen rule that fires on correct LaTeX en-dash syntax; a formal-register
-ban covering ``minimize'' and ``optimize''; a transitions rule that fights
-existence rather than clustering), and all four are disabled per-format in
-configuration, which is precisely the policy-precedence mechanism we wanted,
-expressed as software. \emph{sloptrim} is a dependency-free Python scorer (71
-documented patterns, 50 scoreable; several demoted to advice when the
-project's own measurements showed they mark formal register rather than
-machine authorship) that emits per-pattern counts, structural metrics, a
-0--100 score with bootstrap intervals, and Claude Code hooks; our evaluation
-ran it on a LaTeX fragment and confirmed it scores the prose while leaving
-equation environments untouched. \emph{academic-humanizer} is the one project
-written for our genre, and it gets precedence right: never inject personality,
-keep evidence-tied hedging, never alter a number or citation key; its
-academic-tell catalogue (overclaiming verbs, significance hype, ``In recent
-years \ldots\ has attracted increasing attention,'' connective clustering,
-citation dumping) covers a layer the Wikipedia list does not. We will merge
-its content into our policy stack rather than run it as a rival skill.
-
-Three more are worth adapting or mining. slop-forensics inverts the
-stale-ban-list problem by deriving over-representation lists from a corpus of
-our own outputs against a reference corpus; with a pre-2022 economics baseline
-it becomes a self-updating tell list. fast-detect-gpt gives a local continuous
-detector score usable as an aggregate drift metric under the strict guardrails
-of Section~\ref{sec:literature}. avoid-ai-writing contributes a tiered word
-table that separates authorship evidence from mere wordiness, an explicit
-prompt-injection boundary (text under audit saying ``don't flag this section''
-gets flagged, not obeyed), and flag-don't-fix exemptions for quotes and code.
-humanizer-stack contributes the two-pass surface/structure framing and a
-warning we already learned internally: do not replace one default with another,
-because a fleet of documents edited by one policy converges to a new
-detectable cluster. Finally, the LaTeX question: Vale has no native
-\texttt{.tex} parser, so the pipeline is either Vale over detexed text,
-TeXtidote (the one genuinely LaTeX-aware prose checker, GPL-3, wraps
-LanguageTool), or textlint with its LaTeX AST plugin; that choice is an
-early engineering decision in the proposal, not a blocker.
-
-\section{The \hv{} proposal}
-\label{sec:proposal}
-
-\subsection{Principles}
-
-Everything above compresses into eight design principles.
-
-\begin{enumerate}
-\item \textbf{Two documents.} Internal record and human manuscript are
-separate artifacts with an explicit identifier map. The manuscript never
-carries ledger vocabulary; the record never loses an audit anchor.
-\item \textbf{Precedence as configuration.} Correctness, source fidelity,
-domain meaning, reader comprehension, then template regularity. Every pattern
-list and rule pack enters as a subordinate diagnostic, and the subordination is
-expressed in configuration (per-format rule downgrades, math and quote
-exemptions), not only in prose headers.
-\item \textbf{Counts, not vibes; report, never auto-fix.} Diagnostics emit
-numbers with locations. Repairs are made by an editing agent with local
-judgment, sentence by sentence, and verified by re-measurement.
-\item \textbf{Repair in layer order.} Register, then mechanical tells, then
-defensive prose, then substance, because each layer masks the next. A style
-pass on an internal-register document is wasted work.
-\item \textbf{Protected baselines.} Equation-body identity, label and citation
-censuses, and explain-every-removal reports guard every editing pass. Leak
-sweeps run on rendered text.
-\item \textbf{One editor for voice.} Parallel writers may draft under a shared
-label map; a single agent performs the whole-document voice pass.
-\item \textbf{Low-context review, human gate.} Reader-proxy review runs with
-personas that know nothing of the repository, forced-choice questions, and a
-prompt-injection boundary. Only a human read promotes a document. Diagnostics
-and proxy reviews are negative controls: they can block, never certify.
-\item \textbf{Thin process.} One plan and one result note per work package. No
-mission-control state files, no milestone registries, no review packets that
-authorize review packets. The BGS record is the justification; process
-vocabulary in the author's context is itself a register contaminant.
-\end{enumerate}
-
-Evasion is a non-goal throughout: \hv{} improves prose under disclosure norms
-and never optimizes against a detector.
-
-\subsection{Shape of the repository}
-
-\hv{} consolidates into five trees. \texttt{policies/} becomes the single home
-for the writing doctrine: the prose policy, the two writing skills (moved from
-claudecodex, which keeps distribution), the humanizer pattern list, and a new
-scholarly layer merged from academic-humanizer's academic tells and our own
-additions (false agency with an econometrics carve-out, negative listing, the
-defensive-register catalogue from the ZLB and BGS records).
-\texttt{diagnostics/} is the measurement layer, a small CLI (working name
-\texttt{hv}) wrapping curated external tools plus our own checks.
-\texttt{corpus/} holds the evaluation assets: the 815 BGS before/after pairs,
-the ZLB pass snapshots with their measured counts, the SMEwallet
-draft-10/draft-11 units with recorded PI verdicts, and a pre-2022 economics
-reference corpus for excess-frequency statistics. \texttt{harness/} holds
-reader-proxy review templates (descended from the AIpostdoc reader-pull
-personas, the one automated signal that predicted human rejection) and the
-behavioral tests. \texttt{vendor/} pins the adopted external projects with a
-commit manifest.
-
-Most of the case study's wishlist becomes configuration rather than new code
-inside the \texttt{hv} CLI:
-
-\begin{itemize}
-\item \texttt{hv leak}: register linter; project-configurable banned
-vocabulary, path, date, and identifier patterns; runs on rendered text.
-\item \texttt{hv rhythm}: dash density, opener distribution, section-shape
-clustering, transition counts, sentence-length variance and burstiness
-(sloptrim and the vale-ai-tells experimental metrics, curated).
-\item \texttt{hv defensive}: candidate-sentence finder for negative
-definitions, prohibitions without mechanisms, moralizing tics, and unraised
-objections, emitting each sentence with context and the editorial question
-(``reason or protection?'') for an editing model.
-\item \texttt{hv diff}: LaTeX-aware baseline differ; equation-body identity,
-label, citation, and reference censuses; an explain-every-removal report.
-\item \texttt{hv gate}: compile gate plus rendered-page image sampling, since
-text extraction lies about layout.
-\item \texttt{hv drift}: corpus-level trend metrics (slop-forensics
-over our own output against the economics baseline; optionally a
-detector-internals smoothness score, aggregate only).
-\end{itemize}
-
-\subsection{Work packages}
-
-\textbf{WP1, consolidation.} Move the writing doctrine into
-\texttt{humanvoice/policies/}, merge the academic layer, keep claudecodex as
-the installer with \hv{} as source of truth, add Claude-native skill
-installation beside the Codex path, and absorb or cross-reference MathDevMCP's
-repair skill so scholarly readability has one home. Acceptance: one install
-command produces both agent setups; the existing phrase-level regression tests
-pass against the new layout.
-
-\textbf{WP2, measurement layer.} Build \texttt{hv} as above. The acceptance
-test is historical replay: run against the preserved ZLB pass~2 snapshot,
-\texttt{hv rhythm} must reproduce the recorded numbers (133 em dashes, 20/55
-``The'' openers), and against the final manuscript, zero and four
-respectively; \texttt{hv diff} must confirm 109/109 equation identity across
-the recorded passes. Tools that cannot reproduce the history do not ship.
-
-\textbf{WP3, evaluation corpus and behavioral tests.} Assemble
-\texttt{corpus/} and answer, for the first time, whether the skills work:
-generate matched rewrites with and without each skill, score with \texttt{hv},
-and judge pairwise with a cross-family, position-randomized, length-controlled
-model judge validated against the recorded human verdicts in the corpus.
-Deliverable: a one-page scorecard per skill. This also gives us regression
-protection against the convergence trap: cross-document similarity is measured
-alongside per-document quality.
-
-\textbf{WP4, workflow.} Codify the editorial pipeline as one skill: two-document
-setup with identifier map, layer-ordered repair, one-editor voice pass,
-per-agent drop reports, protected-baseline checks at every pass, reader-proxy
-review, human gate. Most of the content exists in the style contract and the
-case study; the work is consolidation and the removal of everything
-ceremonial.
-
-\textbf{WP5, pilot.} Apply the full pipeline to one live document (the next
-BayesFilter companion note, or one CIP monograph part), with the ZLB rescue as
-the benchmark: five feedback passes to acceptance. The pilot's question is
-whether the toolkit reduces the number of human-feedback rounds, which is the
-only metric the record justifies caring about.
-
-WP1 and WP2 are independent and can start immediately; WP3 needs WP2;
-WP4 needs nothing but benefits from WP2; WP5 needs all of them. Each package
-gets one plan and one result note, and any package that begins generating
-governance artifacts beyond that pair is, by the BGS lesson, failing.
-
-\subsection{Risks, and what is not established}
-
-Four risks have known shapes. A new template ceiling: one toolkit editing every
-manuscript will converge the fleet toward a new detectable cluster; WP3's
-cross-document similarity metric exists to catch this, and every diagnostic
-reports rather than auto-fixes for the same reason. Gate ossification: any
-floor we enforce will be satisfied without the quality; diagnostics therefore
-remain negative controls, and promotion authority stays with the human read.
-Measurement theater: a project about writing tools can spend itself on its own
-instrumentation; the one-plan-one-note cap and the WP5 pilot metric are the
-controls. Detector misuse: any per-document authorship score would be wrong on
-exactly the writers detectors already harm; \texttt{hv drift} is
-corpus-aggregate only and carries no per-document mode.
-
-What this proposal does not claim: that any tool here, ours or adopted,
-improves human acceptance. The record contains unit-level PI acceptances
-(SMEwallet) and one document accepted after five tool-assisted passes (ZLB),
-but no controlled comparison. WP3 and WP5 are designed to produce that
-evidence, and until they do, the toolkit's status is: measured, plausible,
-unproven. The literature coverage is abstract-level and cited for orientation;
-the StoryScope result reached us secondhand and awaits inspection; sloptrim's
-accuracy figures are its own benchmark, not ours.
+\subsection{What this document is for}
+
+You should come away from this survey able to do three things. First, explain
+each class of writing failure our agents commit, with a concrete example in
+hand, well enough to recognize it in a new document. Second, defend every
+adopt, adapt, or skip verdict in the tool reviews, because the review gives
+you the tool's actual content and observed behavior, not just a conclusion.
+Third, implement the proposal's first two work packages without repeating the
+research, because the diagnostics are specified down to formulas, thresholds,
+and the historical numbers they must reproduce.
+
+Two readers are intended: the project owner, who decides whether and how to
+build \hv{}, and whoever implements it. Both know economics and econometrics.
+Neither should need to open the source repositories to follow the argument,
+which is why the evidence is quoted and explained here rather than pointed at.
+Repository paths appear in footnotes as anchors, since this is an internal
+document and the paths are where the evidence lives.
+
+\subsection{A short history of this document}
+
+The first version of this survey, sixteen pages long, was rejected by the
+project owner with a diagnosis worth preserving: it did not explain, it was
+dense, it quoted papers without saying what the papers did, and it asserted
+tool verdicts without reviewing the tools. The rejection is itself a data
+point, and an uncomfortable one, because the first version had passed every
+mechanical check this project knows how to run. It compiled cleanly. It
+contained no em dashes, no stock AI vocabulary in its own voice, and no
+monotone section openers. A dedicated AI-tell scorer, sloptrim, rated it 10 on
+a 0--100 scale, band ``clean,'' with high confidence. For comparison, the same
+scorer rates a manuscript that a human reader actually accepted, the ZLB
+survey of Section~\ref{sec:bayesfilter}, at 25.
+
+So a document can be mechanically immaculate and still fail completely,
+because the checks measure the surface and the reader needs teaching. Our own
+failure record says exactly this, several times over, and the first version of
+this survey ignored the record it was summarizing. The rewrite you are reading
+follows the record's advice instead: explain first, show worked examples,
+review tools by their contents and behavior, and treat mechanical diagnostics
+as necessary scaffolding that certifies nothing.
+
+\subsection{How the survey is organized}
+
+Section~\ref{sec:record} reads the failure record of the five projects and
+ends with the lessons that survive. Section~\ref{sec:tools} reviews the tools
+the workspace already has, one at a time, each with merits and problems.
+Section~\ref{sec:literature} explains the research literature: what each study
+did, what it found, and what that implies for our design.
+Section~\ref{sec:oss} reviews the open-source field the same way, including
+the tools we ran. Section~\ref{sec:design} converts all of it into design
+requirements, each traced to its evidence, and Section~\ref{sec:proposal}
+gives the work packages. Section~\ref{sec:conclusion} closes with what this
+survey does and does not establish.
+
+\input{part1_failures}
+\input{part2_existing_tools}
+\input{part3_literature}
+\input{part4_oss}
+\input{part5_proposal}
 
 \section{Conclusion}
 \label{sec:conclusion}
 
-The workspace spent three months learning that review machinery cannot write,
-one month learning that a reader gate can, and four days learning that the
-distance from a correct internal document to a readable public one is five
-ordered layers of repair. The doctrine that survived is written down and
-installed; what is missing is measurement, evaluation, and consolidation, and
-each has a concrete work package above. The immediate next actions are
-mechanical: stand up the \texttt{hv} skeleton against the ZLB replay test
-(WP2), and move the policies into their single home (WP1). The first real test
-of \hv{} is the pilot: one live manuscript, and a count of how many rounds of
-human feedback it takes to reach ``good.''
+The record, the literature, and the tool field agree on more than we had any
+right to expect. Our five projects learned by expensive trial and error that
+writing failures arrive in layers and that review machinery cannot write; the
+research literature explains why the models write this way and shows that
+targeted editing, population-level measurement, and disciplined judging work
+where detection and word bans do not; and the open-source field has
+independently converged on the same division of labor, with pattern lists for
+editors, deterministic counters for pipelines, and honest warnings against
+using any of it as an authorship verdict.
+
+What no source establishes, including this one, is that the assembled toolkit
+reduces the number of human-feedback rounds a document needs. That is the
+only outcome worth the project's budget, it is measurable, and work packages
+three and five exist to measure it. The survey's own history sets the
+benchmark and the caution in one stroke: its first version passed every
+mechanical check we have and failed its only reader. The reader remains the
+gate. Everything this proposal builds is machinery for wasting less of the
+reader's time.
 
 \bibliography{humanvoice_survey}
 

@@ -1,0 +1,217 @@
+% Part 5: design synthesis and proposal
+\section{What the evidence implies for the design}
+\label{sec:design}
+
+Everything above now compresses without loss. The failure record says the
+defects are layered and the deep layers decide acceptance; the literature
+says the shallow layers are measurable and the deep ones are only reachable
+by editing and by readers; the tool field supplies the shallow measurements
+nearly for free and supplies nothing for the deep layers. So \hv{} is a
+two-layer design. A \emph{measurement layer} of deterministic diagnostics
+runs constantly, reports numbers with locations, and gates nothing. An
+\emph{acceptance layer} of context-starved reader proxies and, finally, the
+human reader gates everything. Between them sits an editing workflow that
+repairs in layer order under protected baselines.
+
+Table~\ref{tab:requirements} states the requirements this survey commits the
+design to, each with its evidence. They are numbered for reference from the
+work packages; none is aspirational, in the sense that every one of them
+traces to a failure we paid for or a result we verified.
+
+\begin{table}[t]
+\centering
+\small
+\begin{tabularx}{\textwidth}{@{}l L l@{}}
+\toprule
+\# & Requirement & Evidence \\
+\midrule
+R1 & Two documents: internal record and human manuscript, tied by an identifier map; ledger vocabulary never crosses & \S\ref{sec:bgs-rejection}, \S\ref{sec:zlb} \\
+R2 & Precedence as configuration: every pattern source enters as a subordinate diagnostic, with per-format overrides in config, not prose headers & \S\ref{sec:tool-humanizer}, \S\ref{sec:oss-vale} \\
+R3 & Diagnostics report counts with locations and never auto-fix; repairs are made by an editing agent and verified by re-measurement & \S\ref{sec:lessons}(9), \S\ref{sec:oss-taste} \\
+R4 & Repair follows the layer order: register, mechanical tells, defensive prose, substance & \S\ref{sec:zlb} \\
+R5 & Protected baselines on every pass: equation-body identity, label and citation censuses, explain-every-removal & \S\ref{sec:lessons}(10), \S\ref{sec:smewallet} \\
+R6 & All corpus statistics are referenced to pre-2022 economics text; excess frequency per eqs.~\eqref{eq:kobak-p}--\eqref{eq:kobak-q}; prevalence per eq.~\eqref{eq:mixture} & \S\ref{sec:lit-fingerprint}, \S\ref{sec:lit-detection} \\
+R7 & The editor is span-diagnose-then-edit with categories; expected span precision near 0.5; flags adjudicated, not auto-applied & \S\ref{sec:lit-editing} \\
+R8 & Model judging is pairwise, order-randomized, length-controlled, cross-family, one dimension per call, validated against recorded human verdicts & \S\ref{sec:lit-judging} \\
+R9 & Behavioral evaluation of every skill against the corpus before it is called an improvement & \S\ref{sec:tool-claudecodex} \\
+R10 & Thin process: one plan and one result note per work package; no mission-control state; ceremony is a register contaminant & \S\ref{sec:bgs-process} \\
+R11 & No per-document authorship scores, ever; population statistics only, firewalled from attribution & \S\ref{sec:lit-detection} \\
+R12 & Cross-document convergence is monitored, so the toolkit does not become the new template & \S\ref{sec:lessons}(4), \S\ref{sec:oss-stack} \\
+\bottomrule
+\end{tabularx}
+\caption{Design requirements with their evidence. Section references point
+to where this survey establishes each one.}
+\label{tab:requirements}
+\end{table}
+
+One requirement deserves a paragraph rather than a row, because it is the
+one a tooling project most easily forgets. The acceptance metric for \hv{}
+itself is the number of human-feedback rounds a document needs before its
+reader accepts it. The ZLB rescue took five. SMEwallet's units took one to
+three each. The BGS volume never arrived. Every work package below either
+reduces that number or exists to measure whether something else did; any
+proposed activity that does neither is out of scope by construction, which
+is the practical meaning of R10.
+
+\section{The proposal}
+\label{sec:proposal}
+
+\subsection{Shape of the repository}
+
+\hv{} consolidates into five trees, all under the existing repository.
+\path{policies/} becomes the single home of the writing doctrine: the prose
+policy's reader-facing sections, the two claudecodex skills, MathDevMCP's
+repair skill, the installed humanizer list, and a new scholarly layer
+merged from academic-humanizer's Layers 2--4 with examples transposed to
+economics (R2 makes claudecodex the distributor, no longer a source of
+truth). \path{diagnostics/} is the measurement layer, one CLI named
+\texttt{hv}. \path{corpus/} holds the evaluation assets. \path{harness/}
+holds reader-proxy templates and the behavioral tests. \path{vendor/}
+stays as the pinned external tools with their manifest.
+
+\subsection{The \texttt{hv} commands, specified}
+
+Each command below lists what it consumes, what it emits, what it is built
+from, and how we will know it works. All of them obey R3: numbers out,
+no edits in.
+
+\paragraph{\texttt{hv leak}} consumes rendered text (pdftotext output) plus
+the manuscript source; emits counts and locations of internal-register
+leakage: file paths, dates-as-scoping, identifiers, and a
+project-configurable banned-vocabulary map seeded from the ZLB style
+contract's ban list and the BGS audit's administrative-register examples.
+Built as a small matcher over per-project YAML config. Acceptance: on the
+ZLB pre-rescue markdown it must fire heavily; on the accepted final PDF
+text it must report zero, reproducing the recorded leak-sweep result.
+
+\paragraph{\texttt{hv rhythm}} consumes source and detexed text; emits the
+mechanical-tell profile: dash counts, sentence-opener and
+paragraph-opener distributions, section-shape clustering, transition-phrase
+counts, sentence-length mean and coefficient of variation, paragraph
+monotony, tricolon density. Built by orchestrating sloptrim and the curated
+vale-ai-tells experimental metrics, with the four destructive rules
+disabled for \texttt{.tex} (R2) and the detex path handling the artifacts
+observed in Section~\ref{sec:oss-sloptrim}. Acceptance is historical
+replay: on the preserved ZLB pass-two snapshot it must reproduce the
+recorded numbers, 133 em dashes and 20 of 55 sections opening with ``The'';
+on the final manuscript, 0 and at most 4 per opener word; on the three
+calibration documents, sloptrim's 45/25/10 within tolerance.
+
+\paragraph{\texttt{hv defensive}} consumes detexed text; emits candidate
+sentences with surrounding context for the defensive-register classes:
+negative definitions without mechanisms, prohibitions without consequences,
+the moralizing tics, unraised-objection answers (humanizer patterns 34--35,
+the DefensiveHedges shapes, and the BGS defensive-qualification examples as
+seeds). Each candidate is emitted with the editorial question attached,
+``does this sentence give the reader a reason, or only protect the
+author?'', for an editing model or human to adjudicate (R7: flags, not
+fixes). Acceptance: on the preserved ZLB pass-three text it must recover a
+majority of the ~65 sentences the manual diagnostic found, and its
+false-positive rate on the accepted final text must be low enough that an
+editor reviews its output without resentment; both measured, with the
+corpus, in WP3.
+
+\paragraph{\texttt{hv diff}} consumes two versions of a manuscript; emits
+the protected-baseline report: equation bodies byte-compared, label,
+citation, and reference censuses, and an explain-every-removal list of
+substantive deletions (R5). Built on LaTeX-aware extraction, piloted per
+Section~\ref{sec:oss-latex}. Acceptance: replaying the five ZLB passes must
+show 109 of 109 equations identical at every step and flag the deliberate
+reference additions of the final pass and nothing else.
+
+\paragraph{\texttt{hv gate}} consumes the manuscript; emits the compile
+gate (N-pass build, unresolved references, overfull-box budget) and
+rendered page images for the title, a math-dense page, and every table,
+institutionalizing rendered-page inspection. Built from the repair skill's
+two scripts (Section~\ref{sec:tool-repair}). Acceptance: reproduces the
+recorded ZLB build-gate outcomes.
+
+\paragraph{\texttt{hv drift}} consumes a corpus of our manuscripts plus the
+references; emits quarterly population statistics: excess-vocabulary
+profiles against the pre-2022 economics baseline
+(eqs.~\eqref{eq:kobak-p}--\eqref{eq:kobak-q}, via adapted slop-forensics),
+the mixture-estimated machine-typical fraction $\hat{\alpha}$ of
+eq.~\eqref{eq:mixture} with $Q$ estimated from our own agents' raw drafts,
+cross-document structural similarity (R12), and optionally an aggregate
+curvature distribution. It has no per-document mode, by construction
+(R11): the command refuses single-file input. Acceptance: on a synthetic
+mixture of known composition, $\hat{\alpha}$ within the validation error
+reported by \citet{liang2024monitoring}.
+
+\subsection{Work packages}
+
+\paragraph{WP1: consolidation.} Move the doctrine into \path{policies/},
+merge the scholarly layer, convert the humanizer precedence header into
+diagnostic configuration, add Claude-native skill installation beside the
+Codex path, and leave claudecodex as pure distribution. Deliverable: one
+install command produces both agent environments from the \hv{} source of
+truth; the existing phrase-lock tests pass against the new layout.
+Effort: small; risk: low; unblocked today.
+
+\paragraph{WP2: the measurement layer.} Build the six commands above, in
+the order leak, rhythm, diff, gate, defensive, drift, because the first
+four are configuration and replay while the last two need corpus work.
+Includes the LaTeX-host pilot (Vale-on-detex versus TeXtidote). The
+acceptance tests are the historical replays listed per command; a tool
+that cannot reproduce the recorded history does not ship. Unblocked
+today; the replay fixtures (ZLB snapshots) already exist in the BayesFilter
+repository.
+
+\paragraph{WP3: corpus and behavioral evidence.} Assemble \path{corpus/}:
+the 815 BGS repair pairs with their taxonomy labels, the ZLB pass
+snapshots with their measured counts and final acceptance, the SMEwallet
+draft-10/draft-11 units with recorded PI verdicts, and a pre-2022
+economics reference corpus. Then run the experiment the stack has never
+had (R9): matched rewrites of corpus units with and without each skill,
+scored by \texttt{hv}, judged pairwise under the R8 protocol, the judge
+itself validated against the recorded human verdicts. Deliverable: a
+scorecard per skill stating what it measurably changes, plus the
+convergence baseline for R12. Needs WP2's scorers.
+
+\paragraph{WP4: the editorial workflow.} One skill codifying the pipeline
+the record validated: two-document setup with identifier map (R1), a
+drafting contract in the ZLB style-contract form, repair in layer order
+(R4) with \texttt{hv} measurements before and after each pass, a single
+voice editor after any parallel drafting, per-agent drop reports,
+protected baselines via \texttt{hv diff} (R5), then low-context
+reader-proxy review descended from the AIpostdoc reader-pull personas with
+forced choices and the injection boundary, and the human read as the only
+promotion (R8's proxy explicitly cannot promote). Mostly consolidation of
+existing text; the work is deleting the ceremony from it (R10).
+
+\paragraph{WP5: the pilot.} Apply the full pipeline to one live document,
+the next BayesFilter companion note or one CIP monograph part, with the
+ZLB rescue as benchmark: five feedback rounds to acceptance. The pilot's
+single question is whether the toolkit reduces that count. Its result
+note, one page, states the count, what consumed the rounds, and which
+tools earned their place. Needs WP1, WP2, WP4; WP3 can run concurrently.
+
+WP1 and WP2 start immediately and independently. Per R10, each package
+carries one plan and one result note; a package that begins generating
+review packets, milestone registries, or state files is failing by
+definition, and the correct repair is deletion, not documentation.
+
+\subsection{Risks, stated with their controls}
+
+Four risks have known shapes, because we have watched each one happen.
+The toolkit becomes the new template and the fleet converges on a
+detectable house style: R12's convergence monitoring exists for this, and
+R3 (report, never auto-fix) keeps a human or editing agent's judgment in
+every repair. The gates ossify and get gamed, the BGS checkpoint story:
+diagnostics here gate nothing, so there is nothing to game except the
+human read, which cannot be gamed, only failed. The project spends itself
+on instrumentation, the BGS process story: the WP budget is the one-page
+plan-and-result cap, and the pilot metric is the only scoreboard. And the
+drift instruments get misused for attribution: R11 firewalls them, the
+drift command refuses per-document input, and if the discipline ever
+slips, the instrument goes, not the firewall.
+
+What this proposal does not claim, so that nobody reads more into it than
+the evidence holds: no tool here, ours or adopted, has yet been shown to
+reduce human-feedback rounds; that is exactly what WP3 and WP5 measure.
+The literature's load-bearing results were verified at method level, the
+supporting ones at abstract level, and StoryScope remains secondhand. The
+sloptrim accuracy figures are its own benchmark. And the reader-proxy
+reviews, however well they predicted one human rejection, are proxies:
+the record contains one case of proxy-predicts-human, not a validation
+study, which is another thing WP3's corpus makes testable.

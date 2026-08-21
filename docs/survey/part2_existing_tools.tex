@@ -1,0 +1,292 @@
+% Part 2: review of existing internal tools
+\section{The tools we already have}
+\label{sec:tools}
+
+Our answer to the failure record so far is a doctrine stack: one policy,
+three skills, one vendored pattern list, two grounding tools, and a
+distribution mechanism. This section reviews each piece the way a designer
+needs it reviewed: what it is, how it actually works, what evidence exists
+that it helped, what its merits are, and where it falls short. The summary
+judgment, argued piece by piece below, is that the doctrine layer is mature
+and consistent while three things are missing entirely: executable
+measurement, behavioral evidence, and a single home.
+
+\subsection{The prose policy}
+\label{sec:tool-policy}
+
+The constitution of the stack is the ``Reader-Facing Scientific Prose''
+section of the global agent policy, roughly 150 lines inside the 618-line
+policy file installed into every agent's
+context.\footnote{\path{claudecodex/policies/global-scientific-coding-agent-policy.md}. The companion section ``Plain Scientific Language And Non-Evasion'' supplies the verdict vocabulary discussed below.}
+Its load-bearing device is a precedence order. When rules conflict, an agent
+resolves them in this sequence: mathematical and scientific correctness
+first, then source and evidentiary fidelity, then domain-appropriate meaning,
+then reader comprehension and natural expression, and only then template
+regularity. The order is what keeps a pattern list from doing damage. A rule
+like ``remove em dashes'' sits at the lowest level, so it can never justify
+deleting a numeric range from a theorem statement; a readability preference
+can never justify dropping an assumption.
+
+Three of its rules encode the failure record directly. The register rule
+forbids software and workflow vocabulary as metaphor in exposition:
+``artifact,'' ``pipeline,'' ``gate,'' and ``handoff'' are reserved for actual
+software, which is precisely the administrative-register defect of
+Table~\ref{tab:bgs-taxonomy} written as a prohibition. The rigor rule demands
+positive statements over defensive ones, with a worked example: prefer ``We
+assume log utility in this example because it keeps the first-order condition
+simple'' to ``We are not claiming that households literally have logarithmic
+utility.'' That is the defensive-qualification repair from
+Section~\ref{sec:bgs-audit}, generalized. And the acceptance rule states that
+``author self-review, model review, policy installation, checklist
+completion, a style score, or successful compilation cannot certify a human
+voice,'' which Section~\ref{sec:lessons} showed the hard way. Beside the
+prose section sits the non-evasion vocabulary: a claim is ``correct,''
+``wrong relative to the stated target,'' ``unsupported,'' ``not checked,'' or
+``heuristic only,'' and softening words may not blur which one applies.
+
+Merits: the policy is complete in the sense that every failure class in
+Section~\ref{sec:record} has a corresponding clause, and the precedence order
+resolves the conflicts that sank naive rule-following elsewhere. Problems:
+it is prose all the way down. Nothing in it executes, so compliance is
+whatever the drafting agent happens to retain from 618 lines of context, and
+the one thing the policy cannot do is notice that it is being ignored. The
+ZLB rescue's third pass began with the admission that the policy ``had not
+been consulted.'' A policy that must be remembered is a policy that will
+sometimes not be.
+
+\subsection{The narrative skill}
+\label{sec:tool-linear}
+
+\path{write-linear-scholarly-narrative} is the document-architecture skill,
+distilled from the SMEwallet Draft~11 method.\footnote{\path{claudecodex/skills/write-linear-scholarly-narrative/SKILL.md}, with a 259-line companion, \path{references/teaching-contract.md}, defining the comprehension standard.}
+It instructs an agent to do, in order, the things Draft~11 did. Freeze a
+human contract first: the target reader, their prerequisites, and what they
+must be able to explain afterward without hunting elsewhere. Design the plot
+before the contents, choosing the smallest narrative spine that makes the
+argument accumulate, and deriving chapter order from explanatory dependencies
+rather than from the source material's order. Storyboard one bounded unit at
+a time, recording what the unit reactivates, the one question it opens, the
+smallest new idea, and the tension carried forward. Draft in a teaching
+order: eleven steps from ``return to the running case'' through ``introduce
+notation only after the need is felt'' to ``make the next question feel
+necessary.'' Then validate by reader reconstruction: a human reads the unit
+and must be able to rebuild why it began, every turn, what the equation was
+for, and why the next unit follows.
+
+Its most valuable property is self-awareness about
+Section~\ref{sec:lessons}'s fourth lesson. Nearly every rule carries an
+anti-template clause; the drafting sequence is offered ``as a menu,'' with
+the instruction not to fill slots mechanically and not to add a caveat or
+transition merely because the template has a place for one. The
+working-memory budget (about four live conceptual items) is labeled a
+diagnostic threshold, not a law. Whoever wrote it had watched a floor become
+a ceiling.
+
+Evidence of effect is real but bounded: Draft~11's units passed their PI
+gates one by one, which no earlier method achieved. Problems: the skill has
+no examples inside it, so an agent meets its abstractions (``narrative
+spine,'' ``reactivate'') without a single worked instance; it has no tooling,
+so storyboards and contracts live or die by agent diligence; and its
+acceptance step needs a human per unit, which priced it out of the BGS lane's
+volume. Nothing tests whether an agent following it writes measurably better
+than an agent that has never seen it, a gap Section~\ref{sec:proposal}'s
+third work package exists to close.
+
+\subsection{The sentence-level skill}
+\label{sec:tool-natural}
+
+\path{write-natural-analytical-prose} is the sentence-and-paragraph
+companion.\footnote{\path{claudecodex/skills/write-natural-analytical-prose/SKILL.md}, with before/after contrasts in \path{references/prose-patterns.md}.}
+Its core is a two-sided safety mechanism. Before any rewrite, the agent
+freezes a meaning ledger: the facts, attributed claims, deductions, live
+uncertainties, author judgments, and exact numbers that must survive. After
+the rewrite, it diffs the result against the ledger, and a smoother sentence
+that changed a claim counts as a failure, not an improvement. Between those
+two steps sit the craft rules: give each sentence one epistemic job, with a
+calibrated verb table in which ``shows'' is not a synonym for ``suggests''
+and ``reproduces'' is not a synonym for ``validates''; put concrete actors in
+subject position (``the regime test rejects the authors' path,'' not ``the
+evidence indicates''); state the finding before its qualifications; and spend
+each qualification once, at the point of likely misunderstanding, rather than
+re-attaching it to every positive sentence.
+
+This is the skill that operationalizes the epistemic-blur and abstract-actor
+rows of Table~\ref{tab:bgs-taxonomy}, and its meaning-ledger loop is the
+sentence-scale version of the protected-baseline invariant. Its problems
+mirror the narrative skill's: no automation, so the ledger diff is manual;
+verification by ``read it aloud''; and hard prohibitions that depend entirely
+on the drafting agent noticing its own violations. The skill is also, like
+everything in this stack, tested only by phrase-lock (see
+Section~\ref{sec:tool-claudecodex}): the test suite asserts that certain
+sentences still appear in the skill file, not that the skill changes any
+output.
+
+\subsection{The humanizer pattern list, as installed}
+\label{sec:tool-humanizer}
+
+On 20~August the workspace vendored \texttt{blader/humanizer} v2.11.2 into
+the policy tree, as
+\path{humanizer-ai-writing-patterns.md}.\footnote{\path{claudecodex/policies/humanizer-ai-writing-patterns.md}. Section~\ref{sec:oss-humanizer} reviews the upstream project; this subsection reviews our installation of it.}
+The list itself is 35 numbered AI-writing patterns derived from Wikipedia's
+``Signs of AI writing'' catalogue, each with words to watch and a
+before-and-after pair; Section~\ref{sec:oss-humanizer} walks through its
+content. What matters here is the installation decision. The file carries a
+locally written precedence header that demotes the whole list to ``a
+DIAGNOSTIC pattern list, subordinate to
+global-scientific-coding-agent-policy.md,'' spells out the order of
+authority, and singles out the one rule that would otherwise do damage: the
+flat dash ban of its pattern~14 is to be applied ``proportionately rather
+than as a ban,'' and no pattern may be satisfied ``by deleting mathematics,
+assumptions, or qualifications.''
+
+That header exists because of a live incident. During the ZLB rescue the
+list was consulted without a precedence frame, and the case study records
+the realization that without one, ``a pattern list becomes a new template and
+you trade one uniformity for another.'' The header is currently the only
+policy-precedence mechanism in the workspace, and it is a comment in a
+markdown file. It governs an agent exactly as far as the agent reads and
+honors it. Turning this from a comment into configuration, per-format rule
+downgrades in the diagnostic layer itself, is one of the cleaner design
+requirements to come out of this review
+(Section~\ref{sec:design}, R2).
+
+\subsection{The repair skill and the only working scripts}
+\label{sec:tool-repair}
+
+MathDevMCP ships its own scholarly-writing skill,
+\path{repair-scholarly-readability}, and it is the only piece of the stack
+with executable parts.\footnote{\path{MathDevMCP/skills/repair-scholarly-readability/SKILL.md}, with three reference rubrics and two scripts under the same directory.}
+Where the narrative skill teaches drafting, this one teaches repair of an
+existing LaTeX document, and its structure encodes two ideas the rest of the
+stack lacks. The first is four separate ledgers: reader comprehension,
+mathematical integrity, source fidelity, and typography, with the explicit
+rule that ``evidence in one ledger cannot certify another.'' A clean compile
+is typography evidence only; a passed equation audit says nothing about
+motivation. The second is bounded repair: one mechanism chapter or 6--12
+rendered pages at a time, against a preserved baseline, ending in a
+cold-reader test with prespecified questions and a four-ledger decision
+table.
+
+Both scripts matter beyond their modest size.
+\path{scripts/scholarly_surface_audit.py} emits JSON and markdown surface
+diagnostics for a .tex/.pdf pair, and \path{scripts/render_review_pages.sh}
+renders page images for visual inspection, institutionalizing the ZLB
+rescue's discovery that text extraction lies about layout. These are the
+embryo of the \texttt{hv gate} command in Section~\ref{sec:proposal}.
+
+Evidence of effect: the skill's bounded method took the opening of the BGS
+industry-DSGE dossier through a repair that passed five prespecified
+cold-reader questions, the strongest automated-plus-human result in the BGS
+lane. The same result file records the limit: later chapters ``remain dry,''
+and the project's audit concluded the skill ``generalizes locally, not across
+a corpus-sized argument,'' which is lesson five of
+Section~\ref{sec:lessons} observed in the field. The other problem is
+organizational: this skill overlaps the claudecodex narrative skill in scope
+while living in a different repository with different reference rubrics.
+Scholarly readability currently has two homes and no owner.
+
+\subsection{ResearchAssistant}
+\label{sec:tool-ra}
+
+ResearchAssistant is the source-grounding half of citation discipline: a
+local-first tool that ingests papers (preferring arXiv LaTeX source over PDF,
+because the LaTeX parses reliably and the PDF does not), extracts sections,
+equations, labels, and bibliographies, tracks provenance and review status,
+and exposes a read-only MCP surface plus a
+CLI.\footnote{\path{research-assistant/}; the checked-in MCP configuration targets Claude Code and VS Code. Python 3.11 only.}
+For this survey its relevant property is precedent: its \texttt{ra survey}
+subcommands are the one place where a piece of workspace writing policy
+became software. The literature-audit policy demands six ledgers (source
+support, citation metadata, backward and forward snowballing, claim support,
+omitted-paper risk); \texttt{ra survey central-papers} writes exactly those
+ledgers and returns per-paper dispositions.
+
+Its behavior under failure is the part worth copying. In the ZLB campaign
+the tool's public-discovery bootstrap was unavailable, and instead of
+degrading silently it closed the mission as
+\texttt{terminal\_blocked\_bootstrap\_unavailable}, leaving the ledgers to be
+maintained by hand. A tool that reports its own incapacity honestly is rarer
+than it should be. Its limits for \hv{} are equally clear: it grounds
+sources, not prose; its equation extraction from PDFs is explicitly marked
+unreliable (arXiv LaTeX is the reliable path); and its discovery pipeline
+depends on external metadata services that were down when most needed.
+
+\subsection{The mathematics side: MathDevMCP and DynareMCP}
+\label{sec:tool-math}
+
+Two more tools border the writing problem without being writing tools.
+MathDevMCP's mathematical layer provides SymPy-backed equality checking,
+derivation audits, and an experimental whole-document rigor audit over
+LaTeX. Its one recorded contribution to a manuscript is instructive about
+scale: the ZLB audit produced per-equation issue ledgers and exactly one
+applied exposition patch (an invertibility condition stated before a
+displayed inverse), tagged
+``candidate\_exposition\_patch\_not\_certificate.''\footnote{\path{BayesFilter/docs/surveys/zlb_discontinuous_hmc/mathdevmcp_audit_20260819.md}.}
+That is the correct division of labor, mathematics tools nominating exposition
+fixes without certifying prose, and \hv{} should preserve it rather than
+absorb it. DynareMCP, the macro-model execution server, contributes structure
+inventories that were used to falsify inflated rewrite claims (counting
+inherited words and relocated blocks), a niche but genuinely useful
+falsification tool for ``we rewrote it'' assertions.
+
+\subsection{Distribution, and what the tests actually test}
+\label{sec:tool-claudecodex}
+
+claudecodex is the delivery mechanism. Its installer splices the global
+policy into marked blocks in each agent's configuration files idempotently,
+merges approval rules, and copies the skills into the Codex skill
+tree.\footnote{\path{claudecodex/install_global_agent_policy.py}; templates and review-gate scripts under \path{claudecodex/docs/templates} and \path{claudecodex/scripts}.}
+Around it sit the cross-agent review plumbing (bounded review packets, probe
+ladders, a gate script that parses ``VERDICT: AGREE or REVISE'') and a
+five-file proposal template system with seven evidence ledgers. The
+machinery works and is in daily use.
+
+Its test suite deserves a hard look because of what it teaches about the
+stack's blind spot. There are real behavioral tests for the review gate (a
+fake worker exercises the probe-and-fallback paths) and for the installer.
+For the writing skills there are only phrase locks:
+\path{test_natural_analytical_prose_skill.py} asserts that certain sentences
+still occur in the skill file and that banned phrasings do not. Phrase locks
+prevent silent regression of the doctrine's text. They say nothing about
+whether the doctrine changes what an agent writes. As of today, no experiment
+anywhere in the workspace has compared documents produced with and without
+any of these skills. The doctrine is plausible, consistent, and untested.
+
+Two further gaps are administrative but consequential. Installation is
+Codex-first; Claude Code agents receive the policy but not a native skill
+installation. And the writing doctrine now lives in three places, the
+claudecodex policy tree, the claudecodex skills, and the MathDevMCP skill,
+with cross-references in prose instead of a shared source of truth.
+
+\subsection{The gap, stated precisely}
+\label{sec:tool-gap}
+
+Table~\ref{tab:tool-gap} compresses this section. Reading its last column
+top to bottom gives the build list: the six diagnostics the ZLB case study
+asked for exist nowhere as code (register linter, rhythm profiler,
+defensive-register finder, LaTeX-aware baseline differ, first-class
+two-document support, and a precedence mechanism that is configuration rather
+than a comment); the doctrine has no behavioral evidence; and consolidation
+is overdue. That is what Sections~\ref{sec:design}
+and~\ref{sec:proposal} are for.
+
+\begin{table}[t]
+\centering
+\small
+\begin{tabularx}{\textwidth}{@{}l L L@{}}
+\toprule
+Piece & What it reliably provides & What it cannot do \\
+\midrule
+Prose policy & complete doctrine; precedence order & execute, or notice being ignored \\
+Narrative skill & Draft-11 method; anti-template clauses & show examples; run without a human per unit \\
+Sentence skill & meaning-ledger safety loop; verb calibration & automate the ledger diff \\
+Humanizer (installed) & 35-pattern diagnostic with FP guards & bind its own precedence outside prose \\
+Repair skill & four-ledger repair; the only scripts & compose beyond 6--12-page units \\
+ResearchAssistant & source grounding; ledgers as software & anything about prose \\
+MathDevMCP/DynareMCP & equation audits; structure inventories & certify exposition \\
+claudecodex & idempotent install; review plumbing & test writing behavior; reach Claude natively \\
+\bottomrule
+\end{tabularx}
+\caption{The existing stack, by what each piece does and does not provide.}
+\label{tab:tool-gap}
+\end{table}

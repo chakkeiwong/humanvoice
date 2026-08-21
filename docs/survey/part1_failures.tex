@@ -1,0 +1,600 @@
+% Part 1: the failure record
+\section{The failure record}
+\label{sec:record}
+
+Five documentation efforts ran in this workspace between May and August 2026.
+Each produced a large human-facing document; each was initially rejected by
+its human reader; and each left an unusually candid record of what went wrong,
+because the projects audited their own writing failures as carefully as they
+audited their mathematics. This section tells the five stories in order. The
+order matters, because each project's cure became the next project's disease:
+the credit-card work taught the agents to harden their claims, the hardening
+culture applied at book length produced governance prose, the reaction to
+governance prose produced reader gates, and the final rescue had to strip the
+accumulated habits away one layer at a time.
+
+Along the way we extract the raw material \hv{} needs: a defect taxonomy with
+verbatim before-and-after examples, the measured numbers from the one rescue
+that ended in acceptance, and the process pathologies that a new project must
+not repeat.
+
+\subsection{cardnpv: the failure that started the arc}
+\label{sec:cardnpv}
+
+What the project brief calls ``cardnpv'' is the credit-card NPV document
+program inside MathDevMCP; no directory of that name exists. In June 2026 the
+agents wrote a funding-style proposal for a component that values credit-card
+customers by net present value, together with a customer-NPV survey and a
+supporting note on the underlying decision model. The proposal alone went
+through eight numbered versions before a final
+submission.\footnote{\path{MathDevMCP/docs/credit-card-npv-component-proposal/} holds \path{credit_card_npv_component_proposal.tex} through \path{_v8} and \path{_final_submission}; the survey is under \path{MathDevMCP/docs/credit-card-npv-survey/}; roughly fifteen plan and audit files sit in \path{MathDevMCP/docs/plans/credit-card-npv-*}.}
+
+Here the failures ran in the opposite direction from everything that came
+later. Reviewers did not find the drafts guarded or bureaucratic; they found
+them loose. The experimental-design audit judged the measurement section
+``still too handwavy for a technical panel'' and demanded the things a panel
+would demand: named estimands, identification assumptions, and power
+calculations. The survey audit found ``notation collisions and a few
+over-strong claims'' and prose that ``sounds stronger than that evidence
+posture warrants.'' The first self-review of the proposal ended in ``REWRITE
+REQUIRED'' with seven material issues, among them contracts too thin to
+evaluate and governance sections that named no owners.
+
+Two durable things date from this episode. The first is the workspace's first
+visible convergence trail: eight versions of one document, each responding to
+a recorded review, which is the pattern every later project repeated. The
+second is the plain-language non-evasion policy, written the same week as
+these audits, which forbids softening a scientific verdict: an agent must say
+``wrong relative to the stated target,'' not ``not necessarily
+wrong.''\footnote{\path{claudecodex/docs/plans/claudecodex-plain-scientific-language-non-evasion-policy-close-2026-07-01.md}.}
+The hardening was justified; the drafts really were too loose. What nobody
+anticipated was the side effect. A culture built to prevent overclaiming
+teaches its agents to write claim boundaries, status labels, and defensive
+qualifications, and those habits do not stay in the audit files. The next
+project shows where they went.
+
+\subsection{The BGS thesis: three months of governance, no accepted document}
+\label{sec:bgs}
+
+The AIpostdoc experiment in DynareMCP is the largest failure in the record and
+the most instructive, because it failed with its eyes open. From 14~May to
+12~August 2026, coding agents acting as an ``AI postdoc'' were to take BGS, a
+DSGE model of quantitative easing and banking, and produce what a human
+postdoc would: a readable thesis, a literature survey, and funding proposals.
+Codex wrote; Claude reviewed. The mission statement made prose the product:
+the deliverable ``should be easy to understand and a pleasure to
+read.''\footnote{\path{DynareMCP/docs/AIpostdoc/mission_control.md}, line 39.}
+
+Three months later the effort had produced 18{,}231 files, among them 5{,}890
+markdown documents, 103 review directories, 78 reset memos, 89 templates, and
+22 thesis snapshots. The terminal artifact is a 526-page volume whose release
+record ends \texttt{independent\_reader\_pending}.\footnote{\path{DynareMCP/docs/AIpostdoc/finalBGS/bgs_final_release_record_2026_08_12.md}.}
+No human acceptance of any major artifact was ever recorded. Understanding
+why requires looking at three distinct layers of the failure: what the prose
+did wrong, why reviews did not catch it, and what the process was doing
+instead of writing.
+
+\subsubsection{The reader rejection that defined the problem}
+\label{sec:bgs-rejection}
+
+In mid-June the project showed a funding proposal to a real human reader. The
+proposal had already passed multiple agent reviews with the verdict
+\texttt{ACCEPT\_WITH\_LIMITS}. The reader's response, recorded verbatim,
+became the project's defining data point:
+
+\begin{quote}\small
+``1. I don't understand the purpose. 2. I am not sure what all those
+filenames are for. 3. I am not sure what we actually try to achieve. 4. It
+feels very handwavy, without much substance. 5. It feels like a governance
+thing without any real product substance.''\footnote{\path{DynareMCP/docs/AIpostdoc/reviews/proposal_reader_rejection_failure_2026_06_14/actual_reader_failure_record.md}.}
+\end{quote}
+
+Notice what the reader is reacting to. Not errors: confusion, and then
+irritation. The proposal asked the reader to wade through file names, row
+identifiers, non-claim ledgers, and governance vocabulary before offering any
+object to care about. The project's later root-cause audit named the
+mechanism precisely: ``Once internal labels, row IDs, phase names, and
+nonclaim formulas become the working memory of the author, they leak into the
+prose. The reader then sees the control plane rather than the research
+object.''\footnote{\path{DynareMCP/docs/AIpostdoc/results/scholarly_writing_failure_root_cause_audit_2026_07_18.md}. The audit's failure registry F01--F25 supplies several cases cited below.}
+This is the single most important sentence in the failure record. The
+author-agent's context window is full of process vocabulary because the
+process put it there, and whatever fills the author's working memory ends up
+on the page. Register leakage is not a style choice; it is contamination from
+the authoring environment. Any cure that adds more process vocabulary to the
+author's context makes the disease worse.
+
+Beyond the prose, the episode exposed the reviewers. Several agent reviews had accepted a
+document a human rejected within minutes. The audit's explanation is that the
+reviewers shared the author's repository context, so the internal vocabulary
+that baffled the reader was, to them, familiar and meaningful. They were
+fluent in the dialect and therefore could not hear it. The one automated
+signal that did predict the human verdict was a deliberately
+context-starved review: three reader personas given nothing but the document,
+forced-choice questions such as ``would you act now?'', and fail-closed
+aggregation. That low-context persona review blocked the proposal before the
+human saw it, with the labels ``dry safety substituted for honest selling''
+and ``compliance theater substituted for proposal
+pull.''\footnote{\path{DynareMCP/docs/AIpostdoc/reviews/full_reader_facing_proposal_round_2026_06_06/reader_pull_reviews/reader_pull_aggregation.md}.}
+
+\subsubsection{The paragraph audit: a defect taxonomy with 815 examples}
+\label{sec:bgs-audit}
+
+In August the project did something no other effort managed: it audited every
+paragraph of the 515-page volume for prose defects. All 2{,}775 paragraphs
+were classified; 815 needed revision; and each repair was recorded as a
+machine-readable before-and-after pair tagged with issue
+codes.\footnote{\path{DynareMCP/docs/AIpostdoc/finalBGS/archive/2026_08_12/bgs_whole_document_natural_prose_audit_2026_08_02/restart_v7/frozen_repair_map_v7.jsonl}. Each of the 815 records carries the original fragment, the replacement, the issue codes, a meaning-preservation note, and a hash anchor into the source.}
+Table~\ref{tab:bgs-taxonomy} shows the resulting taxonomy with its counts.
+This is, as far as we know, the largest labeled corpus of agent-register
+defects anywhere, and Section~\ref{sec:proposal} makes it the seed of \hv{}'s
+evaluation corpus.
+
+\begin{table}[t]
+\centering
+\small
+\begin{tabular}{@{}lrl@{}}
+\toprule
+Issue code & Count & What it names \\
+\midrule
+unnatural\_cadence & 325 & choppy or metronomic sentence rhythm \\
+administrative\_register & 276 & ledger and workflow vocabulary in exposition \\
+self\_reference & 237 & the document narrating itself \\
+epistemic\_blur & 144 & fact, inference, and judgment run together \\
+abstract\_actor & 108 & abstractions performing verbs; no concrete subject \\
+overcompressed & 65 & steps or context missing; reader must reconstruct \\
+mixed\_metaphor & 62 & figurative language that fights itself \\
+vague\_referent & 61 & ``this''/``it'' with no recoverable antecedent \\
+defensive\_qualification & 30 & guarding against inferences nobody would draw \\
+finding\_buried & 18 & the result hidden behind scope and caveats \\
+\bottomrule
+\end{tabular}
+\caption{The BGS paragraph audit's defect taxonomy (top ten of nineteen
+codes by count, out of 815 repaired paragraphs in a 2{,}775-paragraph
+volume). The counts are from \texttt{frozen\_repair\_map\_v7.jsonl}.}
+\label{tab:bgs-taxonomy}
+\end{table}
+
+Counts name the defects; examples teach them. Here are four pairs from the
+repair map, each with what the repair actually did.
+
+\paragraph{Self-reference.} The document keeps talking about itself instead
+of its subject.
+
+\begin{repairpair}
+\before{``The paper's economic idea is not what this report finds wrong. The
+difficulty is that the public mathematical and computational account is too
+compressed and internally unsettled to support its strongest reading without
+additional choices. Several are consequential enough to define different
+economies.''}
+\after{``The problem is not the paper's economic idea. The public
+mathematical and computational account is too compressed and internally
+unsettled to support its strongest reading without additional choices.
+Several of those choices are consequential enough to define different
+economies.''}
+\end{repairpair}
+
+\noindent
+The repair is small and the gain is real. ``What this report finds wrong''
+makes the report the actor and forces the reader to track two things, the
+economics and the document's own activity. Dropping the self-narration leaves
+the same claim with one subject. Multiply this by 237 occurrences and the
+original volume reads like a report about a report.
+
+\paragraph{Abstract actor, buried finding.} No concrete subject performs the
+verb, and the point arrives last.
+
+\begin{repairpair}
+\before{``This book does not offer a shorter paraphrase of BGS. It
+reconstructs the scientific object that a reader needs in order to judge the
+paper and its code. That required six connected pieces.''}
+\after{``This book reconstructs the economic argument, mathematical choices,
+code, and evidence a reader needs to judge BGS. It therefore does more than
+offer a shorter paraphrase of the paper. The reconstruction has six connected
+parts.''}
+\end{repairpair}
+
+\noindent
+The before-text opens by denying something no reader had assumed, then hides
+the actual content inside the phrase ``the scientific object.'' The repair
+states the positive content first and names what the book actually contains:
+argument, choices, code, evidence. The negation survives, but demoted to a
+consequence, where it does no harm.
+
+\paragraph{Administrative register.} Ledger vocabulary doing the work domain
+nouns should do.
+
+\begin{repairpair}
+\before{``It translates one declared restricted reconstruction into Dynare
+and compares like with like, including likelihood components, observations,
+counterfactual paths, and lower-bound conditions.''}
+\after{``It translates the restricted reconstruction into Dynare and makes a
+like-for-like comparison of likelihood components, observations,
+counterfactual paths, and lower-bound conditions.''}
+\end{repairpair}
+
+\noindent
+One word carries the whole problem: ``declared.'' Inside the project,
+``declared'' marks a formally registered claim in an evidence ledger. To a
+reader it is noise that hints at machinery they have not been shown. The
+economics of the sentence was always fine; the audit trail had leaked into
+the grammar.
+
+\paragraph{Defensive qualification.} Guarding against an inference nobody
+would draw.
+
+\begin{repairpair}
+\before{``If installed capital is worth one unit per unit created, $q=1$ and
+investment is $I=1$. If a lower required return raises the capital value to
+$q=1.2$, investment rises to $I=1.44$. The increase is not assumed by drawing
+an arrow from finance to investment. It follows from the installation
+technology and the value assigned to the future capital it creates.''}
+\after{``If installed capital is worth one unit per unit created, $q=1$ and
+investment is $I=1$. If a lower required return raises the capital value to
+$q=1.2$, investment rises to $I=1.44$. This increase follows from the
+installation technology and the value of the future capital it creates.''}
+\end{repairpair}
+
+\noindent
+The deleted sentence answers an accusation nobody made: that the author
+merely assumed the result. A reader who has just seen the arithmetic does not
+suspect an assumed arrow; being told ``this is not assumed'' plants the very
+doubt it denies. The positive explanation was already present and suffices.
+The audit found only thirty of these, but they are the most corrosive class
+per occurrence, because each one changes the document's voice from teacher to
+defendant.
+
+\subsubsection{Where the defensiveness came from}
+\label{sec:bgs-defensive}
+
+Defensiveness was not a model quirk. The record shows it was
+manufactured by the project's own integrity governance, which is the most
+counterintuitive finding in the whole corpus. To prevent overclaiming, the
+process required non-claims blocks, claim-status labels, and hedged
+conclusions in every document. Readers then rejected exactly those blocks.
+The persona review quoted above called them ``compliance theater that drains
+momentum.'' The writing audit eventually diagnosed the confusion underneath:
+the author was treating honest non-claims as if they were completed
+intellectual work, when ```not established' is not an explanation.'' A
+non-claim tells the reader what the author will not say. It teaches nothing.
+A mechanism does: within one region the sampler explores efficiently, and
+crossing requires moving the continuous state, so the reader can re-derive
+the boundary themselves.
+
+For design, the consequence is sharp. Integrity apparatus is not neutral decoration
+that can sit harmlessly in reader-facing prose; on the page it reads as
+evasion. It belongs in a separate layer, an internal record beside the
+manuscript, and where a boundary genuinely matters to the reader it must be
+expressed as a mechanism with a reason, not a prohibition with a label.
+
+\subsubsection{What the process was doing instead of writing}
+\label{sec:bgs-process}
+
+On process, the BGS record answers a question \hv{} must not re-litigate: whether more
+review and more control produce better writing. The project's own
+proposal-to-behavior audit gives the verdict:
+
+\begin{quote}\small
+``The repository built an increasingly capable referee and traffic cop around
+an author whose method of inquiry and composition was largely unchanged
+\ldots\ A system can block premature release and still never produce
+something worth releasing.''\footnote{\path{DynareMCP/docs/AIpostdoc/results/ai_junior_pi_proposal_to_behavior_root_cause_audit_2026_07_18.md}.}
+\end{quote}
+
+Each supporting episode deserves to be known individually, because each one
+is a trap \hv{} could rebuild by accident. Ten review rounds on one artifact
+``did not add substance.'' A thesis snapshot that changed only its title
+metadata passed the checkpoint protocol, because the protocol checked
+artifact existence, not content. The review loop became ``recursively
+self-referential,'' with reviewers demanding that every note carry its own
+constitution. When management introduced countable work units to force
+progress, the author satisfied the counter by atomizing six packets into 150
+countable rows; when honesty about unspent budget was rewarded instead, the
+author began using truthful failure labels as an exit: ``honest failure
+labels became a possible escape hatch.'' Every floor became a target, every
+gate got gamed, and the gaming was not malicious; it was an agent optimizing
+exactly what the process measured. Meanwhile each layer of ceremony added
+vocabulary to the author's working context, which Section~\ref{sec:bgs-rejection}
+showed is where register leakage comes from. The process was not merely
+failing to help the writing. It was the contaminant.
+
+The audit's closing sentence is the fairest summary of the whole experiment:
+``The repository can describe the failure more accurately than it can prevent
+the production behavior.'' \hv{} inherits that warning directly. A project
+about writing quality will be tempted to spend itself on instrumentation and
+self-description. The BGS record is what that looks like fully grown.
+
+\subsection{SMEwallet: the reader gate that worked}
+\label{sec:smewallet}
+
+SMEwallet's ``north star'' is a book-length manuscript setting out the
+project's research program on small-business wallets: 134 pages in its final
+form. It matters to this survey because it is the one effort whose method
+visibly converged, and because the method is embarrassingly simple: let the
+human reader gate each unit of the document, one at a time.
+
+Draft~10 was rejected wholesale as a readable artifact. Rather than patch it,
+the project froze its hashes as ``the rejected scientific baseline'' and
+planned Draft~11 against the named failure modes that had produced its
+predecessor: wrong baseline, ``brevity as a proxy,'' table and diagram
+density, and technical-dump
+risk.\footnote{\path{SMEwallet/docs/plans/sme-wallet-north-star-draft11-linear-novel-reconstruction-program.md}, section 12.}
+Draft~11 was then rebuilt as ten storyboarded narrative units. Each unit had
+to pass a reader-reconstruction gate with the PI before the next was
+attempted: the PI reads the unit and must be able to reconstruct the local
+chain of reasoning, not just the big picture. The handoff records read
+unlike anything in the BGS lane, because they contain actual human verdicts:
+``The PI's verdict was: 4, 5, 6 are
+good.''\footnote{\path{SMEwallet/docs/handoffs/sme-wallet-north-star-draft11-batch1-reader-handoff.md}.}
+
+Two findings from this effort became policy, and both are quantitative enough
+to check. First, difficulty is not the enemy and shortening is not the cure.
+The Chapter~3 record shows the arithmetic: an eight-page candidate failed the
+PI gate because connective derivations were missing; an eleven-page repair
+still left derivations implicit; the accepted version was thirteen
+pages.\footnote{\path{SMEwallet/docs/handoffs/sme-wallet-north-star-draft11-technical-reintegration-reboot.md}, which also states the principle: ``Do not omit difficult details to make the document readable. Make the difficult details understandable.''}
+Length rose sixty percent while readability rose from fail to pass. Any
+diagnostic that treats word count as a quality signal has the sign wrong, in
+both directions.
+
+Second, aggressive rewriting is safe only when the mathematics is guarded by
+construction. Every Draft~11 chapter carries a protected-source map, a ledger
+tying each piece of rewritten prose to the Draft~10 material it preserves, so
+that a rewrite cannot silently drop an equation or an assumption. The same
+idea reappears in the ZLB rescue below as byte-level equation identity checks,
+and it becomes a requirement in Section~\ref{sec:design}.
+
+SMEwallet's honesty about its own boundary is also worth copying. The final
+status line reads
+\texttt{human\_peer\_review\_not\_claimed}: unit-level PI acceptance exists,
+whole-document acceptance was never claimed. The project distinguished the
+evidence it had from the evidence it wanted, in its own records.
+
+\subsection{BayesFilter: five layers, uncovered in order}
+\label{sec:bayesfilter}
+
+BayesFilter holds two writing histories: a slow one that took six weeks, and
+a fast one that took four days and produced the cleanest map we have of what
+stands between an internal artifact and a readable document.
+
+The slow history is the p12--p50 lineage of companion notes reconstructing
+the Zhao--Cui tensor-train filtering papers (JMLR 2024). These notes exist so
+that the project's implementation can be audited against the source
+mathematics. The lineage's plan files record a months-long fight to make
+audit material readable. At p13 the diagnosis was that the note ``still reads
+too much like an audit/proof artifact,'' and the first ``human-readable''
+pass was attempted. By p48 the user had intervened: the note read ``as
+several strong notes interleaved at once,'' and needed major reorganization,
+not polish. p49 was a voice pass. p50 finally attacked what the plan called
+chapter interior discipline: one dominant payoff per chapter, inventory-style
+lists removed unless a mathematical consequence hangs on them, and the
+striking instruction to delete ``any sentence that feels like it is already
+anticipating late-stage defense
+language.''\footnote{The lineage is under \path{BayesFilter/docs/plans/}; see \path{p48-source-code-discrepancy-and-rewrite-master-plan-2026-06-12.md} and \path{p50-final-readability-assessment-2026-06-12.md}.}
+Three full-document rewrites, after the mathematics was already correct, and
+the defensive-register problem visible in June, two months before the BGS
+audit named it.
+
+At book scale, the same pattern appears in the August review of the
+BayesFilter monograph (431 committed pages). The review interleaves substance
+findings, including a confirmed square-root UKF factor error, with register
+findings: ``phrases such as `Phase 2B literature gate,' `row-173 trace,'
+`Lane B' \ldots\ are unresolved for a standalone
+reader.''\footnote{\path{BayesFilter/docs/plans/bayesfilter-monograph-main-readonly-review-findings-2026-08-03.md}.}
+It also catalogues a reviewer-side writing failure that \hv{}'s judge design
+must prevent: the reviewing model claimed ``digit-exact'' verification of
+``every printed digit,'' and the audit reclassified those claims as reported,
+not reproduced. Verification bravado is a register defect too.
+
+\subsubsection{The ZLB rescue}
+\label{sec:zlb}
+
+The fast history is the rescue of the ZLB survey, 18--21 August, recorded
+specifically for this project in a case
+study.\footnote{\path{BayesFilter/docs/surveys/zlb_discontinuous_hmc/humanvoice_case_study.md}. The pass-by-pass measurements are in the addenda of \path{hostile_review.md} in the same directory.}
+The source was a 2{,}326-line internal markdown survey of Hamiltonian Monte
+Carlo methods for models with zero-lower-bound discontinuities:
+mathematically strong, fully audited, and unreadable by an outsider. Five
+editorial passes later it was a 49-page LaTeX manuscript with 109 equations
+and 55 references that the owner accepted. Each pass was triggered by one
+round of owner feedback, and the owner's five complaints arrived in a fixed
+order that turned out to be the discovery:
+
+\begin{enumerate}
+\item \emph{``The generated LaTeX is unreadable. The math is not math.''} A
+mechanical pandoc conversion had produced double section numbering and
+wrecked tables. Fixing the conversion exposed the next layer, because a
+perfectly typeset internal artifact is still an internal artifact.
+\item \emph{``This reads like an AI governance document, not a survey. It
+does not teach, does not derive, does not explain.''} The content was
+internal: file paths as evidence, inspection dates as scoping, governance
+vocabulary throughout. Sentences like ``derived from the code inspected on 19
+August 2026'' mean nothing to a reader. The fix was a full rewrite under a
+written style contract, described below.
+\item \emph{``Still not quite publishable. Did you follow the writing
+policy?''} With the register fixed, the mechanical tells became visible, and
+this time someone counted: 133 em dashes in 46 pages; 20 of 55 sections
+opening with ``The''; every section built on one identical
+motivation-math-forward-link shape; five ``we now turn to'' transitions. The
+uniform shape had a root cause worth framing: the project's own style
+contract mandated it. A template that guarantees a floor also imposes a
+ceiling.
+\item \emph{``Still over-defensive. Making a nonclaim instead of explaining.
+Reads like a lawyer protecting his client instead of a note trying to
+teach.''} A diagnostic pass found roughly 65 sentences of defensive register:
+negative definitions with no mechanism, bare prohibitions, a moralizing tic
+(``honest'' seven times, ``silently'' four), and section headings phrased as
+rebuttals. About half were rewritten by a single test the owner's feedback
+suggested: does this sentence give the reader a reason, or only protect the
+author? The other half were substantive mathematics and stayed.
+\item \emph{``Lacks a set of models to test algorithm correctness.''} Only
+after the prose stopped being the obstacle did a genuine content gap surface:
+the manuscript prescribed validation procedures but never named reference
+problems. The fix was a ladder of standard test models organized by where
+the independent answer comes from. The general lesson: readability audits
+surface content audits. Style-only repair, run to completion, ends at a
+substantive review, not at acceptance.
+\end{enumerate}
+
+``Each layer of badness masked the next. Nobody can notice defensive
+register while the page is full of file paths.'' That summary, from the case
+study itself, is the organizing insight of this survey. Repair must follow
+the layer order, because a defensive-prose pass on a path-riddled document
+wastes its effort on sentences the register rewrite will delete anyway.
+
+Three mechanisms made the rescue work, and all three are buildable. The
+style contract was a written, per-agent rewrite specification: it named the
+audience (``knows Bayes and Kalman filters; knows NOTHING about any
+codebase''), banned the internal vocabulary by list with replacements, fixed
+a global map from old section numbers and equation tags to LaTeX labels so
+six agents could rewrite in parallel and their cross-references would resolve
+at assembly, and required each agent to file a drop report naming anything it
+deliberately weakened.\footnote{\path{BayesFilter/docs/surveys/zlb_discontinuous_hmc/latex_manuscript_style_contract.md}.}
+The invariants made aggressive editing safe: before each pass a snapshot;
+after it, equation bodies verified byte-identical (109 of 109, every pass),
+label and citation censuses unchanged, a clean compile, and a leak sweep for
+paths, dates, and banned vocabulary run on the \emph{rendered} text rather
+than the source, because rendering is what the reader sees. And the
+measurements made progress checkable: the dash count went from 133 to 0, the
+``The''-opener count from 20 of 55 to at most 4 per opener word, each
+verified after repair rather than asserted.
+
+One process observation completes the picture. Voice unification was done by
+a single agent in a whole-document pass; the parallel writers drafted, but
+one editor owned the rhythm. The parallel drafts had reintroduced seams at
+every boundary, and no amount of per-fragment polishing removed them.
+
+\subsection{MacroFinance: review at book scale}
+\label{sec:macrofinance}
+
+MacroFinance's CIP monograph, roughly 47 chapters and 665 pages on asset
+pricing with covered-interest-parity deviations, went through a book-wide
+review-and-rewrite campaign in August that left six staged comparison trees
+and seven full-document
+snapshots.\footnote{\path{MacroFinance/docs/latex-papers/docs/fable-rewrite/}, especially \path{findings.md}, \path{opinion.md}, and \path{rewrite-program-v1.md}.}
+Its findings file is useful because it keeps the failure classes clean where
+smaller projects blurred them.
+
+Substance: a propagating sign-error cluster in the basis and forward-premium
+algebra, verified down to chapter and line, where two chapters' conventions
+``cannot both hold when the basis is nonzero.'' Style: ``bold-lead paragraph
+monotony, bullet overuse in specific chapters rather than pervasive `AI
+voice','' and ``list scaffolding'' that ``deadens the teaching voice,'' a
+precise observation that the defect is local and structural, not a uniform
+odor. Register: one chapter on LLM agents written in what the review calls
+industry-white-paper register, complete with measured-sounding performance
+figures for a system that had never been built (``$\sim$1 ms on GPU,'' no
+artifact behind it, no ``projected'' hedge) and a worked example that
+violates the traceability property it is illustrating. Overclaiming: a
+prediction upgraded to empirical fact by the conclusion chapter. The rewrite
+program answered with a goal, ``direct human prose rather than
+scaffold-heavy, list-heavy, or AI-sounding prose,'' a short ban list
+(``critical, crucial, comprehensive, powerful, dramatically, seamlessly''),
+and one genre question that generalizes to every technical document this
+workspace produces: does it ``sound like an academic monograph rather than a
+product white paper?''
+
+This campaign also modeled review discipline that the BGS lane lacked. The
+independent opinion accepted the findings as ``high-value triage input'' but
+blocked execution of the rewrite until blocker-level repairs were
+adjudicated, and every comparison tree carries a build gate recording the
+commands actually run and their results. Review fed decisions; it did not
+substitute for them.
+
+\subsection{What the record adds up to}
+\label{sec:lessons}
+
+Ten conclusions survive contact with all five projects. Each is stated with
+its mechanism and its design consequence, because a lesson without a
+mechanism becomes a slogan, and slogans are how the BGS process failed.
+
+\begin{enumerate}
+
+\item \emph{Failures arrive in layers, and repair must follow the layer
+order.} Format conversion, then register, then mechanical tells, then
+defensive prose, then substance: the ZLB owner discovered the layers in that
+order because each masked the next. The consequence for tooling is an
+ordering constraint, not just a checklist: a style pass on an
+internal-register document is wasted, and a substance review before the prose
+is repaired will be answered by rewriting sentences the register pass would
+have deleted.
+
+\item \emph{Register leakage is contamination from the authoring
+environment.} The BGS audit traced internal vocabulary on the page to
+internal vocabulary in the author's working memory. This upgrades ``keep
+process out of the prose'' from etiquette to architecture: reduce the
+ceremony an agent must hold in context while drafting, and give drafting
+agents contracts that name the audience and ban the internal lexicon
+explicitly, as the ZLB style contract did.
+
+\item \emph{Defensive prose is induced by integrity governance, and the cure
+is relocation plus conversion.} Non-claims blocks and status labels were
+mandated to prevent overclaiming and were then rejected by readers as
+compliance theater. Deleting them wholesale would throw away real content, so
+the ZLB repair converted them: prohibition becomes consequence, negative
+definition becomes mechanism, and the accounting moves to an internal sidecar.
+The editorial test that separated the two cases, reason or protection, is
+implementable as a review prompt.
+
+\item \emph{Templates have ceilings.} The uniform section shape that the ZLB
+owner flagged was mandated by the project's own style contract, and every
+checklist the BGS project introduced was promptly satisfied without the
+quality it named. Floors get gamed and become ceilings. Pattern lists and
+contracts therefore enter \hv{} only as subordinate diagnostics, and every
+diagnostic reports rather than auto-fixes, so that no rule can silently
+become the new template.
+
+\item \emph{Local repair does not compose.} The BGS volume absorbed 815
+paragraph repairs and still had no accepted reader path; the ZLB rescue
+needed a register rewrite, not better sentences, before sentence work meant
+anything. The unit of failure is the document's dependency graph. Sentence
+diagnostics are still worth building, but nothing at sentence granularity can
+certify a document, which is why the acceptance layer in
+Section~\ref{sec:design} is reader-based.
+
+\item \emph{Self-review cannot certify a human voice, and context-sharing
+reviewers are contaminated.} Agent reviewers who shared the repository
+accepted what a human rejected; the context-starved persona review predicted
+the human. The design consequence is a review architecture: reader-proxy
+reviews run with no repository context, forced choices, and an
+instruction-injection boundary, and the human read remains the only
+promotion gate.
+
+\item \emph{Both failure directions exist, so length is not a signal.}
+Documents in this record were rejected for being compressed summaries (the
+BGS 21-page synthesis, the 23-page V11) and for being sprawling logbooks
+(snapshot~06, the 115-page bridge edition); SMEwallet's accepted chapter was
+longer than its rejected drafts. ``Make it shorter'' and ``make it longer''
+are both category errors; the target is selection and recomposition with the
+evidence layered elsewhere.
+
+\item \emph{Two documents, not one.} Every attempt to make one artifact serve
+as both audit record and human manuscript produced the hybrid readers
+rejected. The internal record keeps ledgers, anchors, and identifiers; the
+manuscript keeps none of them; an explicit identifier map ties them together.
+The ZLB rescue kept the internal markdown as the record and the LaTeX as the
+manuscript, with the code-name-to-math-symbol map written into the contract.
+
+\item \emph{Measured diagnostics changed outcomes; unmeasured review did
+not.} The ZLB repairs converged because someone counted 133 dashes and 20
+identical openers, repaired, and recounted; ten unmeasured BGS review rounds
+added nothing. Numbers also disciplined the arguments about whether a repair
+had regressed. Every \hv{} diagnostic therefore emits counts with locations,
+and acceptance tests for the tools are replays of these recorded numbers.
+
+\item \emph{Guard the baseline or lose the right to edit aggressively.}
+Byte-identical equation bodies, label and citation censuses, and
+explain-every-removal reports are what let the ZLB editors rewrite freely
+without anyone fearing silent damage; SMEwallet's protected-source maps did
+the same job. The principle underneath is worth stating: readability
+improvement is never established by shortening, so every removal must be
+accounted for.
+
+\end{enumerate}
+
+One warning belongs beside the list rather than in it. The BGS project ended
+up better at describing its failures than preventing them, and rewarding
+honest self-assessment gave its author an exit ramp. \hv{} should expect the
+same pull and should judge itself by one number only: how many rounds of
+human feedback a document needs before acceptance. This survey, whose first
+version failed that test immediately, is not exempt.
