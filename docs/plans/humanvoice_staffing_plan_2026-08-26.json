@@ -1,0 +1,21 @@
+{
+  "staffing_plan_id": "HV-STAFFING-2026-08-26",
+  "status": "unassigned",
+  "g0_readiness": "blocked",
+  "rule": "A role is staffed only when an assignee, allocation, and availability interval are recorded. Tooling agents do not count as human decision owners or independent reviewers.",
+  "roles": [
+    {"role": "product engineer", "assignee": null, "allocation_fte": null, "available_from": null, "available_to": null, "conflicts": []},
+    {"role": "evaluation lead", "assignee": null, "allocation_fte": null, "available_from": null, "available_to": null, "conflicts": []},
+    {"role": "domain editor and writing reviewer", "assignee": null, "allocation_fte": null, "available_from": null, "available_to": null, "conflicts": []},
+    {"role": "document owner or author", "assignee": null, "allocation_fte": null, "available_from": null, "available_to": null, "conflicts": []},
+    {"role": "security or policy owner", "assignee": null, "allocation_fte": null, "available_from": null, "available_to": null, "conflicts": []},
+    {"role": "independent coding reviewer", "assignee": null, "allocation_fte": null, "available_from": null, "available_to": null, "conflicts": []},
+    {"role": "independent reader", "assignee": null, "allocation_fte": null, "available_from": null, "available_to": null, "conflicts": []},
+    {"role": "sponsor or project owner", "assignee": null, "allocation_fte": null, "available_from": null, "available_to": null, "conflicts": []}
+  ],
+  "separation_rules": [
+    "The product engineer may not serve as the independent coding reviewer for the same gate.",
+    "The document owner may participate in evaluation design but may not replace the independent reader.",
+    "The security or policy owner retains an unoverridable veto on trust-boundary failures."
+  ]
+}

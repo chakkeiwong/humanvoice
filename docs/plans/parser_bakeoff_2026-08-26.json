@@ -1,0 +1,37 @@
+{
+  "fixture": "fixtures/synthetic/register/001.tex",
+  "results": [
+    {
+      "parser": "pylatexenc",
+      "verdict": "primary",
+      "recall": 0.0,
+      "abstention": false,
+      "round_trip": true,
+      "parse_seconds": 0.0014846324920654297,
+      "notes": "Found 0 equations, 0 citations; good position tracking"
+    },
+    {
+      "parser": "TexSoup",
+      "verdict": "candidate",
+      "recall": 0.0,
+      "abstention": false,
+      "round_trip": false,
+      "parse_seconds": 0.003345966339111328,
+      "notes": "Found 0 equations, 0 citations; weak position tracking"
+    },
+    {
+      "parser": "LaTeXML",
+      "verdict": "fallback",
+      "recall": 0.0,
+      "abstention": true,
+      "round_trip": false,
+      "parse_seconds": 0.7136428356170654,
+      "notes": "XML output with 0 equations, 0 citations; semantic but not round-trip"
+    }
+  ],
+  "recommendation": {
+    "primary": "pylatexenc",
+    "fallback": "LaTeXML",
+    "rationale": "Round-trip capability prioritized for protected-object preservation"
+  }
+}
