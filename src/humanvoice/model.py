@@ -33,6 +33,58 @@ except ImportError:
 PROFILE_PATH = Path(__file__).resolve().parents[2] / "security" / "inference_profile.json"
 
 
+class BudgetExceeded(Exception):
+    """Raised when token budget is exceeded."""
+    pass
+
+
+class BudgetTracker:
+    """
+    Track cumulative token usage against budget caps.
+
+    Per inference_profile.json budget section:
+    - max_document_input_tokens: 250000
+    - max_document_output_tokens: 50000
+    - Exceeding budget is a hard failure (exit code 5), not silent continuation
+    """
+
+    def __init__(self, max_input: int, max_output: int):
+        self.max_input = max_input
+        self.max_output = max_output
+        self.input_used = 0
+        self.output_used = 0
+
+    def check_and_record(self, input_tokens: int, output_tokens: int):
+        """
+        Record token usage and raise BudgetExceeded if over limit.
+
+        Called after each model invocation. Tracks cumulative usage across
+        all plan/draft/repair calls in a single document run.
+        """
+        self.input_used += input_tokens
+        self.output_used += output_tokens
+
+        if self.input_used > self.max_input:
+            raise BudgetExceeded(
+                f"Input token budget exceeded: {self.input_used}/{self.max_input}"
+            )
+        if self.output_used > self.max_output:
+            raise BudgetExceeded(
+                f"Output token budget exceeded: {self.output_used}/{self.max_output}"
+            )
+
+    def get_usage(self) -> dict:
+        """Return current usage for recording in manifest."""
+        return {
+            "input_used": self.input_used,
+            "output_used": self.output_used,
+            "input_budget": self.max_input,
+            "output_budget": self.max_output,
+            "input_remaining": max(0, self.max_input - self.input_used),
+            "output_remaining": max(0, self.max_output - self.output_used),
+        }
+
+
 @dataclass
 class ModelConfig:
     """Model runtime configuration."""
@@ -104,11 +156,17 @@ class ModelAdapter:
 
     T4 verification: Model output is delimited JSON with no tool authority.
     All outputs pass through JSON schema validation before use.
+
+    Blocker 3: Logs all API transmissions for the "unauthorized external
+    transmission" never-except gate. Each invoke() call records a transmission
+    event (destination, purpose, content hash) to support release-time audit.
     """
 
-    def __init__(self, config: ModelConfig, mock_mode: bool = False):
+    def __init__(self, config: ModelConfig, mock_mode: bool = False, snapshot_dir: Optional[Path] = None, budget_tracker: Optional['BudgetTracker'] = None):
         self.config = config
         self.mock_mode = mock_mode
+        self.snapshot_dir = snapshot_dir
+        self.budget_tracker = budget_tracker
 
         if not mock_mode and anthropic is None:
             raise ImportError("anthropic package required for non-mock mode; install from requirements-dev.txt")
@@ -121,6 +179,7 @@ class ModelAdapter:
         prompt: str,
         system_prompt: Optional[str] = None,
         schema: Optional[Dict[str, Any]] = None,
+        purpose: str = "unspecified",
     ) -> ModelResponse:
         """
         Invoke model with prompt.
@@ -148,6 +207,42 @@ class ModelAdapter:
             response_text, input_tokens, output_tokens, request_id = self._invoke_api(
                 prompt, system_prompt
             )
+
+            # Blocker 3: log the transmission. Content itself is never logged --
+            # only its hash -- so the log can be audited without re-exposing the
+            # prompt. Mock mode transmits nothing, so it is not logged.
+            if self.snapshot_dir is not None:
+                try:
+                    from humanvoice.transmission import log_transmission
+                    log_transmission(
+                        snapshot_dir=self.snapshot_dir,
+                        action="api_invocation",
+                        destination=self.config.api_endpoint,
+                        purpose=purpose,
+                        content_summary=f"sha256:{prompt_hash[:16]} ({input_tokens} in / {output_tokens} out)",
+                        authorized_by="operator",
+                    )
+                except Exception as e:
+                    # Logging must not break the command; the release gate will
+                    # block on a missing log rather than silently proceeding.
+                    print(f"Warning: transmission logging failed: {e}", file=sys.stderr)
+
+        # Check budget after recording token usage
+        if self.budget_tracker is not None:
+            try:
+                self.budget_tracker.check_and_record(input_tokens, output_tokens)
+            except BudgetExceeded as e:
+                # Budget exceeded - return as abstention with budget details
+                return ModelResponse(
+                    text="",
+                    prompt_hash=prompt_hash,
+                    model_version=self.config.model_version,
+                    input_tokens=input_tokens,
+                    output_tokens=output_tokens,
+                    temperature=self.config.temperature,
+                    request_id=request_id,
+                    abstention=f"Budget exceeded: {e}"
+                )
 
         # Validate against schema if provided
         if schema:
@@ -315,7 +410,10 @@ PLAN_SCHEMA = {
                             "title": {"type": "string"},
                             "purpose": {"type": "string"},
                             "evidence_needed": {"type": "array", "items": {"type": "string"}},
-                            "word_budget": {"type": "number"}
+                            "word_budget": {"type": "number"},
+                            "source_file": {"type": "string"},
+                            "source_start_line": {"type": "integer", "minimum": 1},
+                            "source_end_line": {"type": "integer", "minimum": 1}
                         },
                         "required": ["title", "purpose"]
                     }

@@ -13,13 +13,15 @@ Per contract 1.1.0:
 """
 
 import json
+import re
 import sys
 from datetime import datetime, timezone
 from hashlib import sha256
 from pathlib import Path
-from typing import Dict, Any
+from typing import Dict, Any, List
 
 from humanvoice.model import ModelAdapter, ModelConfig, PLAN_SCHEMA
+from humanvoice.paths import new_run_dir, mint_run_id
 
 
 def _load_brief(brief_path: Path) -> Dict[str, Any]:
@@ -41,6 +43,53 @@ def _load_brief(brief_path: Path) -> Dict[str, Any]:
     return brief
 
 
+def _extract_section_structure(source_text: str, source_file: str) -> List[Dict[str, Any]]:
+    """
+    Parse \\section{...} from LaTeX source, compute line ranges.
+
+    Returns list of dicts with keys: title, start_line, end_line, source_file.
+    If the source has no \\section{} blocks, returns a single implicit section
+    covering the entire file.
+    """
+    lines = source_text.split('\n')
+    sections = []
+
+    for i, line in enumerate(lines, start=1):
+        m = re.search(r'\\section\{([^}]+)\}', line)
+        if m:
+            sections.append({
+                'title': m.group(1).strip(),
+                'start_line': i,
+                'source_file': source_file,
+            })
+
+    # Compute end_line: next section's start - 1, or EOF
+    for idx, sec in enumerate(sections):
+        if idx + 1 < len(sections):
+            sec['end_line'] = sections[idx + 1]['start_line'] - 1
+        else:
+            sec['end_line'] = len(lines)
+
+    # Front matter (abstract, preamble equations/citations) sits before the first
+    # \section{}. Without this, those protected objects belong to no section, are
+    # never routed into any draft's evidence, and count as missing in the
+    # correspondence gate -- sinking the preservation rate on any document with an
+    # abstract. Extend the first section back to line 1 so coverage is total.
+    if sections:
+        sections[0]['start_line'] = 1
+
+    # If no sections found, treat entire file as one implicit section
+    if not sections:
+        sections.append({
+            'title': '(entire file)',
+            'start_line': 1,
+            'end_line': len(lines),
+            'source_file': source_file,
+        })
+
+    return sections
+
+
 def _load_snapshot_manifest(snapshot_dir: Path) -> Dict[str, Any]:
     """Load snapshot manifest created by hv init."""
     manifest_path = snapshot_dir / "manifest.json"
@@ -50,8 +99,12 @@ def _load_snapshot_manifest(snapshot_dir: Path) -> Dict[str, Any]:
     return json.loads(manifest_path.read_text())
 
 
-def _build_plan_prompt(brief: Dict[str, Any], evidence_files: list[str]) -> str:
-    """Build prompt for plan generation."""
+def _build_plan_prompt(
+    brief: Dict[str, Any],
+    evidence_files: list[str],
+    snapshot_dir: Path
+) -> str:
+    """Build prompt for plan generation, including source structure."""
 
     # Extract key constraints from brief
     reader = brief.get("reader", "expert technical reader")
@@ -60,6 +113,34 @@ def _build_plan_prompt(brief: Dict[str, Any], evidence_files: list[str]) -> str:
     max_words = brief.get("max_words", 5000)
     known_vocab = brief.get("known_vocabulary", [])
     protected = brief.get("protected_objects", [])
+
+    # Extract section structure from source files
+    all_sections = []
+    for rel_path in evidence_files:
+        abs_path = snapshot_dir / rel_path
+        if abs_path.exists() and abs_path.suffix == '.tex':
+            source_text = abs_path.read_text(encoding='utf-8', errors='ignore')
+            file_sections = _extract_section_structure(source_text, rel_path)
+            all_sections.extend(file_sections)
+
+    # Build source structure text for prompt
+    structure_text = ""
+    if all_sections:
+        structure_text = "\n**Source Structure:**\n\n"
+        structure_text += (
+            "The evidence files contain the following sectional divisions. Each blueprint section\n"
+            "you create should map to one or more of these source regions so that protected objects\n"
+            "(equations, labels, citations) can be correctly routed. Include \"source_file\",\n"
+            "\"source_start_line\", and \"source_end_line\" fields in each blueprint section to\n"
+            "specify which source lines it draws from.\n\n"
+        )
+        current_file = None
+        for sec in all_sections:
+            if sec['source_file'] != current_file:
+                current_file = sec['source_file']
+                structure_text += f"File: {current_file}\n"
+            structure_text += f"  - \"{sec['title']}\" (lines {sec['start_line']}-{sec['end_line']})\n"
+        structure_text += "\n"
 
     prompt = f"""Generate a narrative blueprint for a {genre}.
 
@@ -71,7 +152,7 @@ def _build_plan_prompt(brief: Dict[str, Any], evidence_files: list[str]) -> str:
 {chr(10).join(f"- {ef}" for ef in evidence_files[:20])}
 {"... (truncated)" if len(evidence_files) > 20 else ""}
 
-**Constraints:**
+{structure_text}**Constraints:**
 - The reader knows: {', '.join(known_vocab[:10]) if known_vocab else 'general technical vocabulary'}
 - Protected objects that must be preserved exactly: {len(protected)} items
 - Register: third-person technical exposition, no first-person claims
@@ -91,10 +172,14 @@ Return JSON matching this schema:
         "title": "Section title",
         "purpose": "What this section accomplishes for the reader",
         "evidence_needed": ["source/intro.tex"],
-        "word_budget": 500
+        "word_budget": 500,
+        "source_file": "source/intro.tex",
+        "source_start_line": 1,
+        "source_end_line": 50
       }}
     ],
     "total_words": {max_words}
+  }}
   }}
 }}
 
@@ -138,7 +223,10 @@ def _write_blueprint(
         "record_id": f"plan-{datetime.now(timezone.utc).isoformat()}",
         "run_id": output_dir.name,
         "created_at": datetime.now(timezone.utc).isoformat(),
-        "mode": "inference",
+        # Mock runs transmit nothing, so they must not be recorded as inference:
+        # the release transmission gate counts inference runs and blocks when
+        # they are not matched by transmission-log entries.
+        "mode": response_metadata.get("mode", "inference"),
         "compiler": {
             "name": "none",
             "version": "n/a",
@@ -212,12 +300,14 @@ def run(args) -> int:
             )
             return 3
 
-        # Create run directory
-        run_id = f"run-{datetime.now(timezone.utc).strftime('%Y%m%d-%H%M%S')}"
-        output_dir = Path.cwd() / ".humanvoice" / "runs" / run_id
+        # Create run directory under the snapshot (canonical location).
+        # An explicit run_id lets an orchestrator (hv pipeline) place every
+        # stage's records in one run directory instead of one per command.
+        run_id = getattr(args, "run_id", None) or mint_run_id()
+        output_dir = new_run_dir(snapshot_dir, run_id)
 
         # Build prompt
-        prompt = _build_plan_prompt(brief, evidence_files)
+        prompt = _build_plan_prompt(brief, evidence_files, snapshot_dir)
         system_prompt = (
             "You are a technical writing assistant. Your task is to generate "
             "a structured blueprint for a technical document. Respond with valid "
@@ -228,13 +318,18 @@ def run(args) -> int:
         # Load model config and invoke
         print("Loading model configuration...", file=sys.stderr)
         config = ModelConfig.from_profile()
-        adapter = ModelAdapter(config, mock_mode=args.mock if hasattr(args, 'mock') else False)
+        adapter = ModelAdapter(
+            config,
+            mock_mode=args.mock if hasattr(args, 'mock') else False,
+            snapshot_dir=snapshot_dir,
+        )
 
         print(f"Generating blueprint with {config.model_version}...", file=sys.stderr)
         response = adapter.invoke(
             prompt=prompt,
             system_prompt=system_prompt,
-            schema=PLAN_SCHEMA
+            schema=PLAN_SCHEMA,
+            purpose="plan_generation",
         )
 
         # Check for abstention
@@ -264,6 +359,7 @@ def run(args) -> int:
                     "request_id": response.request_id,
                     "input_tokens": response.input_tokens,
                     "output_tokens": response.output_tokens,
+                    "mode": "mock" if args.mock else "inference",
                 }
             )
 
@@ -276,6 +372,38 @@ def run(args) -> int:
         except json.JSONDecodeError as e:
             print(f"Error: Model output is not valid JSON: {e}", file=sys.stderr)
             return 4
+
+        # Validate and clamp section bounds
+        sections = blueprint.get("blueprint", {}).get("sections", [])
+        for sec in sections:
+            source_file = sec.get("source_file")
+            start_line = sec.get("source_start_line")
+            end_line = sec.get("source_end_line")
+
+            # Skip sections without bounds (partial coverage allowed)
+            if start_line is None or end_line is None:
+                continue
+
+            # Validate source_file is in the manifest
+            if source_file and source_file not in evidence_files:
+                print(
+                    f"Warning: section '{sec.get('title', 'Untitled')}' references "
+                    f"unknown source_file '{source_file}'; defaulting to first evidence file",
+                    file=sys.stderr
+                )
+                sec["source_file"] = evidence_files[0] if evidence_files else None
+
+            # Clamp bounds to actual file length
+            if source_file:
+                abs_path = snapshot_dir / source_file
+                if abs_path.exists():
+                    file_lines = len(abs_path.read_text(encoding='utf-8', errors='ignore').split('\n'))
+                    sec["source_start_line"] = max(1, min(start_line, file_lines))
+                    sec["source_end_line"] = max(1, min(end_line, file_lines))
+
+                    # Swap if reversed
+                    if sec["source_start_line"] > sec["source_end_line"]:
+                        sec["source_start_line"], sec["source_end_line"] = sec["source_end_line"], sec["source_start_line"]
 
         # Write output
         brief_hash = sha256(brief_path.read_bytes()).hexdigest()
@@ -292,6 +420,7 @@ def run(args) -> int:
                 "request_id": response.request_id,
                 "input_tokens": response.input_tokens,
                 "output_tokens": response.output_tokens,
+                "mode": "mock" if args.mock else "inference",
             }
         )
 

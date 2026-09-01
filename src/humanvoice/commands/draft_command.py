@@ -18,9 +18,11 @@ import sys
 from datetime import datetime, timezone
 from hashlib import sha256
 from pathlib import Path
-from typing import Dict, Any, List
+from typing import Dict, Any, List, Optional, Tuple
 
 from humanvoice.model import ModelAdapter, ModelConfig, DRAFT_SCHEMA
+from humanvoice.paths import new_run_dir, mint_run_id
+from humanvoice.protected_objects import ProtectedManifest
 
 
 def _load_blueprint(blueprint_path: Path) -> Dict[str, Any]:
@@ -45,6 +47,23 @@ def _load_brief(brief_path: Path) -> Dict[str, Any]:
         raise ValueError(f"Brief not found: {brief_path}")
 
     return json.loads(brief_path.read_text())
+
+
+def _load_source_manifest(snapshot_dir: Path) -> Optional[ProtectedManifest]:
+    """
+    Load the source protected manifest from snapshot.
+
+    Returns None if manifest doesn't exist (extraction failed or wasn't run).
+    """
+    manifest_path = snapshot_dir / ".humanvoice" / "protected_objects" / "source_manifest.json"
+    if not manifest_path.exists():
+        return None
+
+    # A manifest that exists but cannot be parsed is a different failure from one
+    # that is absent: absence means extraction never ran, corruption means the
+    # correspondence record is unreliable. Both must be visible, and neither may
+    # be silently treated as "no protected objects to preserve".
+    return ProtectedManifest.from_json(json.loads(manifest_path.read_text()))
 
 
 def _load_evidence_content(snapshot_dir: Path, evidence_files: List[str]) -> str:
@@ -93,12 +112,94 @@ def _load_evidence_content(snapshot_dir: Path, evidence_files: List[str]) -> str
     return "\n".join(content_parts)
 
 
+def _prepare_section_evidence(
+    section: Dict[str, Any],
+    source_content: str,
+    source_manifest: Optional[ProtectedManifest],
+    evidence_files: List[str],
+    snapshot_dir: Path,
+) -> Tuple[str, List[Dict[str, Any]]]:
+    """
+    Prepare evidence for a section, routing protected objects by line number.
+
+    Returns:
+        (evidence_text, protected_objects_in_section)
+
+    evidence_text includes:
+      - Full text of supplementary evidence files (not the source .tex)
+      - Excerpts from source showing each protected object with context
+
+    protected_objects_in_section is a list of objects with type/hash/content.
+    """
+    # Load supplementary evidence (papers, data, external docs)
+    supplementary_evidence = _load_evidence_content(snapshot_dir, evidence_files)
+
+    # Filter out the placeholder sentinel
+    if supplementary_evidence == "[No evidence files available]":
+        supplementary_evidence = ""
+
+    # If no manifest or no source bounds, return supplementary only
+    if not source_manifest:
+        return supplementary_evidence if supplementary_evidence else "[No evidence available]", []
+
+    start_line = section.get("source_start_line")
+    end_line = section.get("source_end_line")
+    section_source_file = section.get("source_file")
+
+    if start_line is None or end_line is None:
+        return supplementary_evidence if supplementary_evidence else "[No evidence available]", []
+
+    # Select protected objects in this section's line range
+    section_objects = []
+    for obj in (source_manifest.equations + source_manifest.labels +
+                source_manifest.citations + source_manifest.displaymath +
+                source_manifest.tables):
+        # Multi-file snapshots: obj.source_file is absolute, section_source_file is relative.
+        # Match if obj's path ends with the section's relative path.
+        file_match = (section_source_file is None or
+                      str(obj.source_file).endswith(section_source_file))
+
+        if obj.line_number is not None and start_line <= obj.line_number <= end_line and file_match:
+            # Convert to dict for manifest emission
+            section_objects.append({
+                "object_type": obj.object_type,
+                "hash": obj.hash,
+                "content": obj.content,
+                "line_number": obj.line_number,
+                "context_before": obj.context_before,
+                "context_after": obj.context_after,
+            })
+
+    # Build evidence text: supplementary + per-object excerpts from source
+    evidence_parts = []
+
+    if supplementary_evidence.strip():
+        evidence_parts.append("=== Supplementary Evidence ===\n" + supplementary_evidence)
+
+    if section_objects:
+        evidence_parts.append("=== Protected Objects in This Section ===")
+        for obj in section_objects:
+            excerpt = f"""
+Object type: {obj['object_type']}
+Hash: {obj['hash']}
+Line: {obj['line_number']}
+Content: {obj['content']}
+Context before: {obj['context_before']}
+Context after: {obj['context_after']}
+"""
+            evidence_parts.append(excerpt.strip())
+
+    evidence_text = "\n\n".join(evidence_parts) if evidence_parts else "[No evidence available]"
+    return evidence_text, section_objects
+
+
 def _build_draft_prompt(
     section: Dict[str, Any],
     brief: Dict[str, Any],
-    evidence_content: str
+    evidence_content: str,
+    protected_objects: List[Dict[str, Any]]
 ) -> str:
-    """Build prompt for draft generation."""
+    """Build prompt for draft generation with protected object tracking."""
 
     title = section.get("title", "Untitled Section")
     purpose = section.get("purpose", "")
@@ -107,7 +208,6 @@ def _build_draft_prompt(
 
     reader = brief.get("reader", "expert technical reader")
     known_vocab = brief.get("known_vocabulary", [])
-    protected = brief.get("protected_objects", [])
 
     prompt = f"""Generate a LaTeX draft for this section of a technical document.
 
@@ -118,21 +218,27 @@ def _build_draft_prompt(
 **Reader knows:** {', '.join(known_vocab[:10]) if known_vocab else 'general technical vocabulary'}
 
 **Evidence available:**
-{evidence_content[:3000]}
-{"...(truncated for length)" if len(evidence_content) > 3000 else ""}
+{evidence_content}
 
-**Evidence requirements from blueprint:**
-{chr(10).join(f"- {ef}" for ef in evidence_needed[:10])}
+**Protected objects that must be preserved exactly:**
+"""
 
-**Constraints:**
-- Register: third-person technical exposition, no first-person claims unless evidence is first-person data
-- Protected objects must be preserved exactly: {len(protected)} items
-- LaTeX: use standard commands (\\section, \\subsection, \\emph, \\textbf, \\cite)
-- Do not include \\documentclass or \\begin{{document}} - section content only
-- Citations: use \\cite{{key}} where evidence is cited, list keys in citations_needed
+    if protected_objects:
+        prompt += f"{len(protected_objects)} objects in this section:\n"
+        for obj in protected_objects:
+            prompt += f"  - {obj['object_type']} [hash: {obj['hash']}]: {obj['content'][:80]}\n"
+    else:
+        prompt += "None in this section.\n"
 
-**Task:**
-Write LaTeX prose that fulfills the section purpose using the evidence provided.
+    prompt += """
+**Requirements:**
+- Write in third-person technical register (no "I", "we", "our" unless quoting evidence)
+- Preserve all protected objects exactly as shown (equations, labels, citations, displaymath, tables)
+- Stay within word budget (±20%)
+- Use LaTeX commands appropriate for the reader's vocabulary
+- If evidence is insufficient or contradictory, abstain with explanation
+
+**Output format:**
 
 Return JSON matching this schema:
 {{
@@ -239,7 +345,10 @@ def _write_draft(
         "record_id": f"draft-{section_title}-{datetime.now(timezone.utc).isoformat()}",
         "run_id": output_dir.name,
         "created_at": datetime.now(timezone.utc).isoformat(),
-        "mode": "inference",
+        # Mock runs transmit nothing. Recording them as "inference" makes the
+        # release transmission gate count them as unlogged API calls, so the
+        # mode has to reflect what actually ran.
+        "mode": response_metadata.get("mode", "inference"),
         "compiler": {
             "name": "none",
             "version": "n/a",
@@ -269,6 +378,83 @@ def _write_draft(
     manifest_path.write_text(json.dumps(manifest, indent=2))
 
     return latex_path
+
+
+def _emit_draft_manifest(
+    output_dir: Path,
+    section_title: str,
+    source_manifest: Optional[ProtectedManifest],
+    protected_objects_in_section: List[Dict[str, Any]],
+    draft_latex: str,
+) -> Path:
+    """
+    Emit per-section draft correspondence manifest.
+
+    Tracks which protected objects from source appear in draft, which are missing,
+    and provides dispositions slot for human approval of omissions.
+    """
+    from humanvoice.protected_objects import extract_protected_objects_from_text
+
+    # Extract protected objects from draft
+    draft_manifest = extract_protected_objects_from_text(
+        draft_latex,
+        source_file=Path("draft"),
+        parent_artifact_hash=source_manifest.source_file_hash if source_manifest else None
+    )
+
+    # Collect all draft objects (these are ProtectedObject dataclass instances)
+    draft_objects = (draft_manifest.equations + draft_manifest.labels +
+                     draft_manifest.citations + draft_manifest.displaymath +
+                     draft_manifest.tables)
+
+    # Build hash sets for comparison
+    source_hashes = {obj["hash"] for obj in protected_objects_in_section}
+    draft_hashes = {obj.hash for obj in draft_objects}
+
+    # Categorize correspondence
+    preserved = [obj for obj in protected_objects_in_section if obj["hash"] in draft_hashes]
+    missing = [obj for obj in protected_objects_in_section if obj["hash"] not in draft_hashes]
+    added = [{"type": obj.object_type, "hash": obj.hash, "content": obj.content}
+             for obj in draft_objects if obj.hash not in source_hashes]
+
+    # Calculate retention rate
+    retention_rate = len(preserved) / len(protected_objects_in_section) if protected_objects_in_section else 1.0
+
+    manifest = {
+        "record_type": "DraftCorrespondenceManifest",
+        "schema_version": "HV-SCHEMA-1.0",
+        "section_title": section_title,
+        "parent_artifact_hash": source_manifest.source_file_hash if source_manifest else None,
+        "extraction_timestamp": datetime.now(timezone.utc).isoformat(),
+        "correspondence_to_source": {
+            "preserved": [{"type": obj["object_type"], "hash": obj["hash"], "content": obj["content"]} for obj in preserved],
+            "missing": [{"type": obj["object_type"], "hash": obj["hash"], "content": obj["content"]} for obj in missing],
+            "added": added,
+        },
+        "retention_rate": retention_rate,
+        "dispositions": {
+            "omitted_objects": [
+                {
+                    "hash": obj["hash"],
+                    "type": obj["object_type"],
+                    "reason": None,  # Must be filled: "not_relevant" | "merged" | "superseded" | "manual_exception"
+                    "human_approved": False,  # Must be True for release
+                    "approver": None,
+                    "approval_timestamp": None,
+                }
+                for obj in missing
+            ]
+        }
+    }
+
+    # Write manifest
+    safe_title = "".join(c if c.isalnum() or c in (' ', '_') else '_'
+                         for c in section_title.lower())
+    safe_title = safe_title.replace(' ', '_')[:50]
+    manifest_path = output_dir / f"draft_correspondence_{safe_title}.json"
+    manifest_path.write_text(json.dumps(manifest, indent=2))
+
+    return manifest_path
 
 
 def run(args) -> int:
@@ -305,16 +491,49 @@ def run(args) -> int:
 
         section = sections[section_index]
 
-        # Load evidence content
-        evidence_files = section.get("evidence_needed", [])
-        evidence_content = _load_evidence_content(snapshot_dir, evidence_files)
+        # Load the source protected manifest so protected objects can be routed
+        # to this section by line number instead of truncating evidence blindly.
+        source_manifest = _load_source_manifest(snapshot_dir)
+        if source_manifest is None:
+            print(
+                "Warning: No source protected manifest found; drafting without "
+                "protected-object routing (correspondence gates will block release)",
+                file=sys.stderr,
+            )
 
-        # Create run directory
-        run_id = f"run-{datetime.now(timezone.utc).strftime('%Y%m%d-%H%M%S')}"
-        output_dir = Path.cwd() / ".humanvoice" / "runs" / run_id
+        # Route evidence and protected objects for this section
+        evidence_files = section.get("evidence_needed", [])
+        evidence_content, protected_objects = _prepare_section_evidence(
+            section,
+            source_content="",
+            source_manifest=source_manifest,
+            evidence_files=evidence_files,
+            snapshot_dir=snapshot_dir,
+        )
+
+        if source_manifest is not None:
+            if section.get("source_start_line") is None or section.get("source_end_line") is None:
+                print(
+                    f"Warning: Section '{section['title']}' has no source line bounds; "
+                    "no protected objects routed to this section",
+                    file=sys.stderr,
+                )
+            else:
+                print(
+                    f"Routed {len(protected_objects)} protected objects to "
+                    f"'{section['title']}' (lines {section['source_start_line']}-"
+                    f"{section['source_end_line']})",
+                    file=sys.stderr,
+                )
+
+        # Create run directory under the snapshot (canonical location).
+        # An explicit run_id lets an orchestrator (hv pipeline) place every
+        # section's records in one run directory instead of one per command.
+        run_id = getattr(args, "run_id", None) or mint_run_id()
+        output_dir = new_run_dir(snapshot_dir, run_id)
 
         # Build prompt
-        prompt = _build_draft_prompt(section, brief, evidence_content)
+        prompt = _build_draft_prompt(section, brief, evidence_content, protected_objects)
         system_prompt = (
             "You are a technical writing assistant. Generate LaTeX prose for the "
             "specified section using the evidence provided. Respond with valid JSON "
@@ -325,14 +544,19 @@ def run(args) -> int:
         # Load model config and invoke
         print(f"Loading model configuration...", file=sys.stderr)
         config = ModelConfig.from_profile()
-        adapter = ModelAdapter(config, mock_mode=args.mock if hasattr(args, 'mock') else False)
+        adapter = ModelAdapter(
+            config,
+            mock_mode=args.mock if hasattr(args, 'mock') else False,
+            snapshot_dir=snapshot_dir,
+        )
 
         print(f"Generating draft for '{section['title']}' with {config.model_version}...",
               file=sys.stderr)
         response = adapter.invoke(
             prompt=prompt,
             system_prompt=system_prompt,
-            schema=DRAFT_SCHEMA
+            schema=DRAFT_SCHEMA,
+            purpose="draft_generation",
         )
 
         # Check for abstention
@@ -357,8 +581,18 @@ def run(args) -> int:
                 print(f"  - {v}", file=sys.stderr)
             return 1
 
-        # Check word budget (±20% variance allowed)
+        # A zero-word draft is a missing unit, not a budget variance. Writing it
+        # starves downstream repair (which has no text to edit) and lets an empty
+        # section reach release.
         word_count = draft["draft"].get("word_count", 0)
+        if word_count == 0 or not latex_content.strip():
+            print(
+                "Error: Draft contains no prose (word_count=0); nothing written",
+                file=sys.stderr,
+            )
+            return 1
+
+        # Check word budget (±20% variance allowed)
         target = section.get("word_budget", 500)
         if word_count < target * 0.8 or word_count > target * 1.2:
             print(f"Warning: Word count {word_count} outside target range "
@@ -370,6 +604,7 @@ def run(args) -> int:
             section["title"],
             draft,
             {
+                "mode": "mock" if args.mock else "inference",
                 "runtime_type": config.runtime_type,
                 "model_version": config.model_version,
                 "prompt_template_hash": config.prompt_template_hash,
@@ -380,6 +615,27 @@ def run(args) -> int:
                 "output_tokens": response.output_tokens,
             }
         )
+
+        # Emit draft correspondence manifest
+        if source_manifest is not None and protected_objects:
+            manifest_path = _emit_draft_manifest(
+                output_dir,
+                section["title"],
+                source_manifest,
+                protected_objects,
+                latex_content,
+            )
+            # Read back to report retention rate
+            manifest_data = json.loads(manifest_path.read_text())
+            retention_rate = manifest_data.get("retention_rate", 0.0)
+            preserved_count = len(manifest_data["correspondence_to_source"]["preserved"])
+            missing_count = len(manifest_data["correspondence_to_source"]["missing"])
+            print(
+                f"Protected object retention: {preserved_count}/{len(protected_objects)} "
+                f"({retention_rate:.1%}), {missing_count} missing",
+                file=sys.stderr,
+            )
+            print(f"Draft correspondence manifest: {manifest_path}", file=sys.stderr)
 
         # Report success
         citations = draft["draft"].get("citations_needed", [])
