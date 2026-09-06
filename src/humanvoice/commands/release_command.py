@@ -38,6 +38,81 @@ from humanvoice.transmission import get_transmission_log
 SUFFICIENT_APPRAISAL_STATES = frozenset({"sufficient", "verified", "accepted"})
 
 
+def check_assembly_gaps(snapshot_dir: Path) -> Optional[dict]:
+    """
+    Block release when the assembled document is missing sections.
+
+    Assembly is partial-tolerant by design: it records missing sections as gaps
+    and exits 0 so that a 100-unit document makes convergent progress instead of
+    restarting whenever one unit fails. That trade is only safe because this gate
+    exists. Assembly records; release refuses.
+
+    Fail-closed on absence and on corruption. A missing assembly_gaps.json means
+    assembly either never ran or ran under a version that did not record gaps --
+    neither is evidence of completeness. Reading absence as "no gaps" would
+    reproduce the v1.1 failure where gates reported "pass" over known violations.
+
+    Never-except: an incomplete document is not a risk judgement an operator can
+    accept, so no exception path is offered.
+
+    Returns a block dict if release must be refused, None if the document is
+    complete.
+    """
+    gaps_path = (
+        snapshot_dir / ".humanvoice" / "revisions" / "assembled" / "assembly_gaps.json"
+    )
+
+    if not gaps_path.exists():
+        return {
+            "gate": "assembly_gaps",
+            "never_except": True,
+            "detail": (
+                f"Assembly gap record not found at {gaps_path.name}. Release cannot "
+                "confirm the document is complete. Run hv assemble to produce the "
+                "record."
+            ),
+        }
+
+    try:
+        gaps = json.loads(gaps_path.read_text())
+    except (json.JSONDecodeError, OSError) as exc:
+        return {
+            "gate": "assembly_gaps",
+            "never_except": True,
+            "detail": (
+                f"Assembly gap record at {gaps_path.name} is unreadable ({exc}). "
+                "A corrupt record is not evidence of completeness."
+            ),
+        }
+
+    if not isinstance(gaps, list):
+        return {
+            "gate": "assembly_gaps",
+            "never_except": True,
+            "detail": (
+                f"Assembly gap record has unexpected shape ({type(gaps).__name__}); "
+                "expected a list of gap records."
+            ),
+        }
+
+    if not gaps:
+        return None
+
+    # Name the sections. A count alone does not tell the operator what to draft.
+    named = ", ".join(
+        f"{g.get('title', 'Untitled')} (section {g.get('section_index', '?')})"
+        for g in gaps
+    )
+    return {
+        "gate": "assembly_gaps",
+        "never_except": True,
+        "detail": (
+            f"Assembled document is missing {len(gaps)} section(s): {named}. "
+            "Draft each missing section, then re-assemble."
+        ),
+    }
+
+
 def check_unresolved_author_choice(snapshot_dir: Path) -> Optional[dict]:
     """
     Check for unresolved_author_choice.json blocking release.
@@ -850,7 +925,17 @@ def run(args):
     else:
         gate_results["unauthorized_transmission"] = "pass"
 
-    # Never-except gate 5: unresolved deterministic preflight findings
+    # Never-except gate 5: assembled document missing sections.
+    # Assembly is partial-tolerant so that large documents converge; this is the
+    # fail-closed counterpart that keeps an incomplete document unpublishable.
+    gap_block = check_assembly_gaps(snapshot_dir)
+    if gap_block:
+        blocks.append(gap_block)
+        gate_results["assembly_gaps"] = "blocked"
+    else:
+        gate_results["assembly_gaps"] = "pass"
+
+    # Never-except gate 6: unresolved deterministic preflight findings
     preflight_block = check_preflight_findings(snapshot_dir)
     if preflight_block:
         blocks.append({

@@ -361,6 +361,23 @@ class ModelAdapter:
                 f"stop_reason: {message.stop_reason}"
             )
 
+        # Budget exhaustion must name itself. A response stopped at the ceiling is
+        # cut off mid-token: its JSON never closes and no code fence is emitted, so
+        # downstream schema validation fails with a parse error at char 0 and the
+        # unit is recorded as a model abstention. That reads as the model having
+        # declined the task, when in fact the unit was simply too large for the
+        # per-unit output budget. The two demand opposite remedies -- decompose the
+        # unit versus revise the prompt -- so they must never share a diagnostic.
+        if message.stop_reason == "max_tokens":
+            raise RuntimeError(
+                f"Model output truncated at the {self.config.max_tokens}-token "
+                f"per-unit output ceiling ({output_tokens} tokens emitted). "
+                f"The unit is too large to draft in one call: split it into "
+                f"smaller subsections, or raise max_output_tokens_per_unit in "
+                f"the inference profile. "
+                f"Message ID: {message.id}"
+            )
+
         # Extract JSON from markdown code fences if present
         response_text = self._extract_json_from_markdown(response_text)
 
