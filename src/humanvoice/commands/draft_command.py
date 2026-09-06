@@ -509,7 +509,7 @@ def _emit_draft_manifest(
     # Categorize correspondence
     preserved = [obj for obj in protected_objects_in_section if obj["hash"] in draft_hashes]
     missing = [obj for obj in protected_objects_in_section if obj["hash"] not in draft_hashes]
-    added = [{"type": obj.object_type, "hash": obj.hash, "content": obj.content}
+    added = [{"type": obj.object_type, "hash": obj.hash}
              for obj in draft_objects if obj.hash not in source_hashes]
 
     # Calculate retention rate
@@ -522,8 +522,8 @@ def _emit_draft_manifest(
         "parent_artifact_hash": source_manifest.source_file_hash if source_manifest else None,
         "extraction_timestamp": datetime.now(timezone.utc).isoformat(),
         "correspondence_to_source": {
-            "preserved": [{"type": obj["object_type"], "hash": obj["hash"], "content": obj["content"]} for obj in preserved],
-            "missing": [{"type": obj["object_type"], "hash": obj["hash"], "content": obj["content"]} for obj in missing],
+            "preserved": [{"type": obj["object_type"], "hash": obj["hash"]} for obj in preserved],
+            "missing": [{"type": obj["object_type"], "hash": obj["hash"]} for obj in missing],
             "added": added,
         },
         "retention_rate": retention_rate,

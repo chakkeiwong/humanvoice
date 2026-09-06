@@ -563,10 +563,17 @@ def _emit_assembly_correspondence(
     for section in drafted:
         draft_objects.update(_extract_hashes(section["content"], f"draft_{section['index']}"))
 
-    preserved_from_drafts = [o for h, o in draft_objects.items() if h in assembled_objects]
-    lost_in_assembly = [o for h, o in draft_objects.items() if h not in assembled_objects]
+    preserved_from_drafts = [
+        {"type": o["type"], "hash": o["hash"]}
+        for h, o in draft_objects.items() if h in assembled_objects
+    ]
+    lost_in_assembly = [
+        {"type": o["type"], "hash": o["hash"]}
+        for h, o in draft_objects.items() if h not in assembled_objects
+    ]
     added_in_assembly = [
-        o for h, o in assembled_objects.items() if h not in draft_objects
+        {"type": o["type"], "hash": o["hash"]}
+        for h, o in assembled_objects.items() if h not in draft_objects
     ]
 
     retention_vs_drafts = (
@@ -581,9 +588,12 @@ def _emit_assembly_correspondence(
         h: o for h, o in source_index.items() if h not in approved_omissions
     }
 
-    preserved_from_source = [o for h, o in expected_from_source.items() if h in assembled_objects]
+    preserved_from_source = [
+        {"type": o.get("type"), "hash": o["hash"]}
+        for h, o in expected_from_source.items() if h in assembled_objects
+    ]
     missing_from_source = [
-        {"type": o.get("type"), "hash": o["hash"], "content": o.get("content", "")}
+        {"type": o.get("type"), "hash": o["hash"]}
         for h, o in expected_from_source.items() if h not in assembled_objects
     ]
     retention_vs_source = (
@@ -607,7 +617,7 @@ def _emit_assembly_correspondence(
         # correspondence shape for both stages.
         "correspondence_to_source": {
             "preserved": [
-                {"type": o.get("type"), "hash": o["hash"], "content": o.get("content", "")}
+                {"type": o.get("type"), "hash": o["hash"]}
                 for o in preserved_from_source
             ],
             "missing": missing_from_source,

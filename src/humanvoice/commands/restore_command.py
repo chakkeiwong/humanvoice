@@ -27,6 +27,34 @@ from typing import Optional
 from humanvoice.protected_objects import _compute_file_hash
 
 
+def _dereference_content(obj_hash: str, source_manifest_path: Path) -> Optional[str]:
+    """
+    Look up object content from source manifest by hash.
+
+    Issue 7: Correspondence manifests now store only hash+type to avoid
+    duplicating content across 5+ manifests. Content is dereferenced from the
+    source manifest on demand.
+
+    Backward compat: legacy manifests that still embed 'content' are handled
+    by the caller checking obj.get("content") before calling this.
+    """
+    try:
+        manifest = json.loads(source_manifest_path.read_text())
+        all_objects = (
+            manifest.get("equations", []) +
+            manifest.get("labels", []) +
+            manifest.get("citations", []) +
+            manifest.get("displaymath", []) +
+            manifest.get("tables", [])
+        )
+        for obj in all_objects:
+            if obj.get("hash") == obj_hash:
+                return obj.get("content")
+        return None
+    except Exception:
+        return None
+
+
 def find_missing_objects(snapshot_dir: Path) -> dict:
     """
     Analyze assembly correspondence and identify missing protected objects.
@@ -172,7 +200,10 @@ def propose_repairs(snapshot_dir: Path, missing_objects: list) -> list:
     for obj in missing_objects:
         obj_hash = obj.get("hash")
         obj_type = obj.get("type")
+        # Backward compat: legacy manifests embed content, new ones don't
         content = obj.get("content")
+        if content is None and source_manifest_path.exists():
+            content = _dereference_content(obj_hash, source_manifest_path)
         line = obj.get("source_line")
 
         if line is None or line < 1 or line > len(source_lines):
