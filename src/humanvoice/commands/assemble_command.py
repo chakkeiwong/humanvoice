@@ -689,11 +689,28 @@ def run(args) -> int:
             print("Abstention: No blueprint found; run hv plan first", file=sys.stderr)
             return 2
 
-        if "blueprint" not in blueprint or "sections" not in blueprint["blueprint"]:
+        if "blueprint" not in blueprint:
             print("Abstention: Blueprint missing required structure", file=sys.stderr)
             return 2
 
-        sections = blueprint["blueprint"]["sections"]
+        bp = blueprint["blueprint"]
+
+        # Issue 4: Support both legacy sections[] and new chapters[].subsections[]
+        # Flatten chapters into sections for assembly, which concatenates sequentially
+        if "sections" in bp:
+            sections = bp["sections"]
+        elif "chapters" in bp:
+            sections = []
+            for chapter_idx, chapter in enumerate(bp["chapters"]):
+                for subsection_idx, subsection in enumerate(chapter.get("subsections", [])):
+                    subsection["chapter_index"] = chapter_idx
+                    subsection["chapter_title"] = chapter.get("title", f"Chapter {chapter_idx}")
+                    subsection["subsection_index"] = subsection_idx
+                    sections.append(subsection)
+        else:
+            print("Abstention: Blueprint must have 'sections' or 'chapters'", file=sys.stderr)
+            return 2
+
         runs_dir = snapshot_dir / ".humanvoice" / "runs"
 
         if not runs_dir.exists():

@@ -121,7 +121,14 @@ def _find_undrafted_sections(
 
 
 def _load_blueprint(blueprint_path: Path) -> Dict[str, Any]:
-    """Load blueprint from hv plan output."""
+    """
+    Load blueprint from hv plan output.
+
+    Issue 4: Supports both legacy flat sections[] and new chapters[].subsections[]
+    hierarchy. The two-level form is the standard output of `hv plan` for large
+    documents, but this command works on units (subsections or legacy sections),
+    so it flattens the hierarchy on load.
+    """
     if not blueprint_path.exists():
         raise ValueError(f"Blueprint not found: {blueprint_path}")
 
@@ -130,10 +137,32 @@ def _load_blueprint(blueprint_path: Path) -> Dict[str, Any]:
     except json.JSONDecodeError as e:
         raise ValueError(f"Blueprint is not valid JSON: {e}")
 
-    if "blueprint" not in blueprint or "sections" not in blueprint["blueprint"]:
+    if "blueprint" not in blueprint:
         raise ValueError("Blueprint missing required structure")
 
-    return blueprint
+    bp = blueprint["blueprint"]
+
+    # Legacy format: sections[] directly under blueprint
+    if "sections" in bp:
+        return blueprint
+
+    # New format: chapters[].subsections[]
+    if "chapters" in bp:
+        # Flatten to sections[] for draft_command, which works per-unit
+        sections = []
+        for chapter_idx, chapter in enumerate(bp["chapters"]):
+            for subsection_idx, subsection in enumerate(chapter.get("subsections", [])):
+                # Annotate each unit with its chapter context for assembly
+                subsection["chapter_index"] = chapter_idx
+                subsection["chapter_title"] = chapter.get("title", f"Chapter {chapter_idx}")
+                subsection["subsection_index"] = subsection_idx
+                sections.append(subsection)
+
+        # Replace chapters[] with flattened sections[]
+        blueprint["blueprint"]["sections"] = sections
+        return blueprint
+
+    raise ValueError("Blueprint must have 'sections' (legacy) or 'chapters' (new)")
 
 
 def _load_brief(brief_path: Path) -> Dict[str, Any]:
