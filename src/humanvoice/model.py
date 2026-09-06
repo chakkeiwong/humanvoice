@@ -92,7 +92,12 @@ class ModelConfig:
     model_version: str = "claude-opus-5"
     api_endpoint: str = "https://api.anthropic.com/v1/messages"
     temperature: float = 0.0  # Lowest variance for behavioral consistency
-    max_tokens: int = 2000
+    # Ceiling for a single unit's output. Raised from 2000 after the ZLB run:
+    # section 2 needed ~4160 output tokens and truncated, which was misreported
+    # as a model abstention. Per-unit ceilings are normally derived from the
+    # unit's own word budget (draft_command._output_ceiling_tokens) and are far
+    # below this; this value is the profile-level cap that no unit may exceed.
+    max_tokens: int = 8192
     timeout_seconds: int = 300
     prompt_template_hash: Optional[str] = None  # SHA256 from profile, required for non-mock invocation
 
@@ -231,20 +236,7 @@ class ModelAdapter:
 
         # Check budget after recording token usage
         if self.budget_tracker is not None:
-            try:
-                self.budget_tracker.check_and_record(input_tokens, output_tokens)
-            except BudgetExceeded as e:
-                # Budget exceeded - return as abstention with budget details
-                return ModelResponse(
-                    text="",
-                    prompt_hash=prompt_hash,
-                    model_version=self.config.model_version,
-                    input_tokens=input_tokens,
-                    output_tokens=output_tokens,
-                    temperature=self.config.temperature,
-                    request_id=request_id,
-                    abstention=f"Budget exceeded: {e}"
-                )
+            self.budget_tracker.check_and_record(input_tokens, output_tokens)
 
         # Validate against schema if provided
         if schema:

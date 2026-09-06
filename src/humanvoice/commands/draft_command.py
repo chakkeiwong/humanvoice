@@ -20,7 +20,14 @@ from hashlib import sha256
 from pathlib import Path
 from typing import Dict, Any, List, Optional, Tuple
 
-from humanvoice.model import ModelAdapter, ModelConfig, DRAFT_SCHEMA
+from humanvoice.model import (
+    ModelAdapter,
+    ModelConfig,
+    DRAFT_SCHEMA,
+    BudgetTracker,
+    BudgetExceeded,
+    PROFILE_PATH,
+)
 from humanvoice.paths import new_run_dir, mint_run_id
 from humanvoice.protected_objects import ProtectedManifest
 
@@ -61,6 +68,31 @@ def _output_ceiling_tokens(section: Dict[str, Any]) -> int:
     # draft that lands inside the accepted range is never cut off mid-sentence.
     allowed_words = budget_words * 1.2
     return max(MIN_OUTPUT_CEILING_TOKENS, int(allowed_words * WORDS_TO_TOKENS))
+
+
+def _load_budget_tracker() -> BudgetTracker:
+    """
+    Build a document-level budget tracker from the inference profile.
+
+    The profile has always declared max_document_input_tokens and
+    max_document_output_tokens, but nothing read them: BudgetTracker existed and
+    was never instantiated, so the budget block was documentation rather than
+    enforcement. The ZLB run recorded 37,002 input tokens for one section against
+    a declared per-unit cap of 12,000 and no one was told.
+
+    Falls back to the declared defaults when the profile omits the block, so a
+    malformed profile bounds the run rather than removing the bound.
+    """
+    try:
+        profile = json.loads(PROFILE_PATH.read_text())
+        budget_block = profile.get("budget", {})
+    except Exception:
+        budget_block = {}
+
+    return BudgetTracker(
+        max_input=budget_block.get("max_document_input_tokens", 250000),
+        max_output=budget_block.get("max_document_output_tokens", 50000),
+    )
 
 
 def _find_undrafted_sections(
@@ -600,6 +632,18 @@ def run(args) -> int:
         # Load model config once (shared across all drafts in batch mode)
         config = ModelConfig.from_profile()
 
+        # Document-level budget, shared across every unit in this invocation.
+        #
+        # The per-unit ceiling stops one unit from running away; this stops the
+        # document from doing so. Without it a 60-unit run could spend 20x the
+        # declared budget and nothing would say so until the bill arrived: the
+        # profile's budget block was documentation rather than enforcement.
+        #
+        # In --missing and --all mode one tracker spans all units, so the cap is
+        # a document cap rather than a per-unit one. In --section mode it spans a
+        # single unit; the pipeline aggregates across invocations separately.
+        budget = _load_budget_tracker()
+
         for section_index in sections_to_draft:
             section = sections[section_index]
             section_title = section.get("title", f"Section {section_index}")
@@ -649,6 +693,7 @@ def run(args) -> int:
                     config,
                     mock_mode=args.mock if hasattr(args, 'mock') else False,
                     snapshot_dir=snapshot_dir,
+                    budget_tracker=budget,
                 )
 
                 # Size the output ceiling to this unit rather than letting every
@@ -763,6 +808,16 @@ def run(args) -> int:
                 print(f"  Tokens: {response.input_tokens} input / {response.output_tokens} output")
 
                 successes.append(section_index)
+
+            except BudgetExceeded as e:
+                # Budget exceeded is terminal in all modes: continuing would spend
+                # more tokens against a budget that is already exhausted.
+                print(f"✗ Budget exceeded during section {section_index} '{section_title}'",
+                      file=sys.stderr)
+                print(f"  {e}", file=sys.stderr)
+                print(f"  Drafted {len(successes)}/{len(sections_to_draft)} sections before limit.",
+                      file=sys.stderr)
+                return 5
 
             except Exception as e:
                 error_msg = str(e)

@@ -32,10 +32,94 @@ from typing import Optional
 
 from humanvoice.paths import runs_dir as _canonical_runs_dir
 from humanvoice.transmission import get_transmission_log
+from humanvoice.model import PROFILE_PATH
 
 # Appraisal states that count as sufficient for a load-bearing claim.
 # Anything else -- including absent or null -- is treated as unappraised.
 SUFFICIENT_APPRAISAL_STATES = frozenset({"sufficient", "verified", "accepted"})
+
+
+def check_document_budget(snapshot_dir: Path) -> Optional[dict]:
+    """
+    Block release when the document's cumulative token spend exceeded its budget.
+
+    draft_command carries a BudgetTracker across the units of one invocation, so
+    a single `hv draft --all` stops when the cap is hit. That is not sufficient
+    on its own: a large document is drafted over many invocations (`--section` a
+    few at a time, `--missing` after failures), and each of those starts a fresh
+    tracker. Nothing accumulates across them.
+
+    This gate does that accumulation, reading the per-unit token counts that
+    every draft already records in its runtime manifest. It is the only place
+    that sees the whole document's spend.
+
+    Distinct from the never-except gates. A budget overrun is a cost fact, not a
+    correctness one: the document may be perfectly good and simply have cost more
+    than planned, which is a judgement the operator is entitled to make. So this
+    blocks but is exception-releasable, and names the numbers needed to decide.
+    """
+    try:
+        budget_block = json.loads(PROFILE_PATH.read_text()).get("budget", {})
+    except Exception:
+        budget_block = {}
+
+    max_output = budget_block.get("max_document_output_tokens", 50000)
+    max_input = budget_block.get("max_document_input_tokens", 250000)
+
+    runs_dir = _canonical_runs_dir(snapshot_dir)
+    if not runs_dir.exists():
+        # Absence of runs is handled by other gates; this one has nothing to add.
+        return None
+
+    total_input = 0
+    total_output = 0
+    units = 0
+
+    for run_dir in runs_dir.iterdir():
+        if not run_dir.is_dir():
+            continue
+        for rm_file in run_dir.glob("**/runtime_manifest*.json"):
+            try:
+                rm = json.loads(rm_file.read_text())
+            except Exception:
+                continue
+            # Mock runs spend nothing.
+            if rm.get("mode") != "inference":
+                continue
+            total_input += rm.get("input_tokens") or 0
+            total_output += rm.get("output_tokens") or 0
+            units += 1
+
+    over_output = total_output > max_output
+    over_input = total_input > max_input
+
+    if not (over_output or over_input):
+        return None
+
+    exceeded = []
+    if over_output:
+        exceeded.append(
+            f"output {total_output:,}/{max_output:,} (+{total_output - max_output:,})"
+        )
+    if over_input:
+        exceeded.append(
+            f"input {total_input:,}/{max_input:,} (+{total_input - max_input:,})"
+        )
+
+    return {
+        "reason": "document_budget_exceeded",
+        "units_counted": units,
+        "total_input_tokens": total_input,
+        "total_output_tokens": total_output,
+        "max_input_tokens": max_input,
+        "max_output_tokens": max_output,
+        "detail": (
+            f"Document exceeded its token budget across {units} unit(s): "
+            + "; ".join(exceeded)
+            + ". Reduce the target word count, split units into smaller "
+            "subsections, or raise the profile's budget with justification."
+        ),
+    }
 
 
 def check_blackline_present(snapshot_dir: Path) -> Optional[dict]:
@@ -1090,6 +1174,18 @@ def run(args):
         gate_results["author_convergence"] = "blocked"
     else:
         gate_results["author_convergence"] = "pass"
+
+    # Ordinary gate: document-level budget
+    budget_overrun = check_document_budget(snapshot_dir)
+    if budget_overrun:
+        blocks.append({
+            "gate": "document_budget",
+            "never_except": False,
+            "detail": budget_overrun,
+        })
+        gate_results["document_budget"] = "blocked"
+    else:
+        gate_results["document_budget"] = "pass"
 
     # Decide status
     never_except_blocks = [b for b in blocks if b["never_except"]]
