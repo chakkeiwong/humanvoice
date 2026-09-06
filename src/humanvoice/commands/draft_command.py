@@ -25,6 +25,31 @@ from humanvoice.paths import new_run_dir, mint_run_id
 from humanvoice.protected_objects import ProtectedManifest
 
 
+def _find_undrafted_sections(
+    snapshot_dir: Path, sections: List[Dict[str, Any]]
+) -> List[int]:
+    """
+    Return the indices of blueprint sections that have no draft on disk.
+
+    This is what `--missing` drafts and what makes a large run convergent: after a
+    partial run the operator re-invokes once and only the outstanding units are
+    attempted.
+
+    Draft discovery is delegated to assemble_command._find_section_draft rather
+    than reimplemented. The two must agree exactly -- if resume considered a unit
+    drafted while assembly did not, `--missing` would report success and assembly
+    would still record a gap for the same unit, and the run would never converge.
+    """
+    from humanvoice.commands.assemble_command import _find_section_draft
+
+    runs_dir = snapshot_dir / ".humanvoice" / "runs"
+    return [
+        i
+        for i, section in enumerate(sections)
+        if _find_section_draft(runs_dir, i, section.get("title", "Untitled")) is None
+    ]
+
+
 def _load_blueprint(blueprint_path: Path) -> Dict[str, Any]:
     """Load blueprint from hv plan output."""
     if not blueprint_path.exists():
@@ -461,12 +486,21 @@ def run(args) -> int:
     """
     Execute hv draft command.
 
+    Three modes:
+      --section N      draft section N only (single-shot)
+      --missing        draft only sections that have no draft on disk (resume)
+      --all            draft every section, continuing past failures (full sweep)
+
     Exit codes:
-      0 - draft generated successfully
-      1 - register violation or structural failure
-      2 - model abstained
+      0 - draft(s) generated successfully
+      1 - register violation or structural failure in --section mode
+      2 - model abstained in --section mode
       3 - invalid input or brief
       4 - internal error
+
+    In --missing and --all modes, per-unit failures are reported but do not stop
+    the run: the exit code reflects only fatal setup errors (missing files, parse
+    failures), not individual draft outcomes. A partial success exits 0.
     """
 
     try:
@@ -474,7 +508,6 @@ def run(args) -> int:
         blueprint_path = args.blueprint
         brief_path = args.brief
         snapshot_dir = args.snapshot
-        section_index = args.section
 
         if not snapshot_dir.exists():
             print(f"Error: Snapshot directory not found: {snapshot_dir}", file=sys.stderr)
@@ -484,15 +517,36 @@ def run(args) -> int:
         brief = _load_brief(brief_path)
 
         sections = blueprint["blueprint"]["sections"]
-        if section_index < 0 or section_index >= len(sections):
-            print(f"Error: Section index {section_index} out of range (0-{len(sections)-1})",
-                  file=sys.stderr)
+
+        # Determine which sections to draft based on mode
+        if args.section is not None:
+            # Single-section mode
+            section_index = args.section
+            if section_index < 0 or section_index >= len(sections):
+                print(f"Error: Section index {section_index} out of range (0-{len(sections)-1})",
+                      file=sys.stderr)
+                return 3
+            sections_to_draft = [section_index]
+            batch_mode = False
+        elif args.missing:
+            # Resume mode: draft only sections without a draft on disk
+            sections_to_draft = _find_undrafted_sections(snapshot_dir, sections)
+            if not sections_to_draft:
+                print("All sections have been drafted. Nothing to do.")
+                return 0
+            print(f"Resume mode: drafting {len(sections_to_draft)} sections without drafts on disk.")
+            batch_mode = True
+        elif args.all:
+            # Full sweep mode: draft every section regardless of prior state
+            sections_to_draft = list(range(len(sections)))
+            print(f"Full sweep mode: drafting all {len(sections)} sections.")
+            batch_mode = True
+        else:
+            # Should never reach here due to mutually_exclusive_group(required=True)
+            print("Error: One of --section, --missing, or --all is required.", file=sys.stderr)
             return 3
 
-        section = sections[section_index]
-
-        # Load the source protected manifest so protected objects can be routed
-        # to this section by line number instead of truncating evidence blindly.
+        # Load shared context once
         source_manifest = _load_source_manifest(snapshot_dir)
         if source_manifest is None:
             print(
@@ -501,148 +555,175 @@ def run(args) -> int:
                 file=sys.stderr,
             )
 
-        # Route evidence and protected objects for this section
-        evidence_files = section.get("evidence_needed", [])
-        evidence_content, protected_objects = _prepare_section_evidence(
-            section,
-            source_content="",
-            source_manifest=source_manifest,
-            evidence_files=evidence_files,
-            snapshot_dir=snapshot_dir,
-        )
+        # Draft each section
+        failures = []
+        successes = []
 
-        if source_manifest is not None:
-            if section.get("source_start_line") is None or section.get("source_end_line") is None:
-                print(
-                    f"Warning: Section '{section['title']}' has no source line bounds; "
-                    "no protected objects routed to this section",
-                    file=sys.stderr,
-                )
-            else:
-                print(
-                    f"Routed {len(protected_objects)} protected objects to "
-                    f"'{section['title']}' (lines {section['source_start_line']}-"
-                    f"{section['source_end_line']})",
-                    file=sys.stderr,
-                )
-
-        # Create run directory under the snapshot (canonical location).
-        # An explicit run_id lets an orchestrator (hv pipeline) place every
-        # section's records in one run directory instead of one per command.
-        run_id = getattr(args, "run_id", None) or mint_run_id()
-        output_dir = new_run_dir(snapshot_dir, run_id)
-
-        # Build prompt
-        prompt = _build_draft_prompt(section, brief, evidence_content, protected_objects)
-        system_prompt = (
-            "You are a technical writing assistant. Generate LaTeX prose for the "
-            "specified section using the evidence provided. Respond with valid JSON "
-            "matching the requested schema. Maintain third-person technical register "
-            "unless evidence itself is first-person data."
-        )
-
-        # Load model config and invoke
-        print(f"Loading model configuration...", file=sys.stderr)
+        # Load model config once (shared across all drafts in batch mode)
         config = ModelConfig.from_profile()
-        adapter = ModelAdapter(
-            config,
-            mock_mode=args.mock if hasattr(args, 'mock') else False,
-            snapshot_dir=snapshot_dir,
-        )
 
-        print(f"Generating draft for '{section['title']}' with {config.model_version}...",
-              file=sys.stderr)
-        response = adapter.invoke(
-            prompt=prompt,
-            system_prompt=system_prompt,
-            schema=DRAFT_SCHEMA,
-            purpose="draft_generation",
-        )
+        for section_index in sections_to_draft:
+            section = sections[section_index]
+            section_title = section.get("title", f"Section {section_index}")
 
-        # Check for abstention
-        if response.abstention:
-            print(f"Model abstained: {response.abstention}", file=sys.stderr)
-            return 2
+            try:
+                # Route evidence and protected objects for this section
+                evidence_files = section.get("evidence_needed", [])
+                evidence_content, protected_objects = _prepare_section_evidence(
+                    section,
+                    source_content="",
+                    source_manifest=source_manifest,
+                    evidence_files=evidence_files,
+                    snapshot_dir=snapshot_dir,
+                )
 
-        # Parse and validate draft
-        try:
-            draft = json.loads(response.text)
-        except json.JSONDecodeError as e:
-            print(f"Error: Model output is not valid JSON: {e}", file=sys.stderr)
-            return 4
+                if source_manifest is not None:
+                    if section.get("source_start_line") is None or section.get("source_end_line") is None:
+                        print(
+                            f"Warning: Section '{section_title}' has no source line bounds; "
+                            "no protected objects routed to this section",
+                            file=sys.stderr,
+                        )
+                    else:
+                        print(
+                            f"Routed {len(protected_objects)} protected objects to "
+                            f"'{section_title}' (lines {section['source_start_line']}-"
+                            f"{section['source_end_line']})",
+                            file=sys.stderr,
+                        )
 
-        # Check register compliance
-        latex_content = draft["draft"].get("latex", "")
-        violations = _check_register_violations(latex_content, brief)
+                # Create run directory under the snapshot (canonical location).
+                # An explicit run_id lets an orchestrator (hv pipeline) place every
+                # section's records in one run directory instead of one per command.
+                run_id = getattr(args, "run_id", None) or mint_run_id()
+                output_dir = new_run_dir(snapshot_dir, run_id)
 
-        if violations:
-            print("Register violations detected:", file=sys.stderr)
-            for v in violations:
-                print(f"  - {v}", file=sys.stderr)
-            return 1
+                # Build prompt
+                prompt = _build_draft_prompt(section, brief, evidence_content, protected_objects)
+                system_prompt = (
+                    "You are a technical writing assistant. Generate LaTeX prose for the "
+                    "specified section using the evidence provided. Respond with valid JSON "
+                    "matching the requested schema. Maintain third-person technical register "
+                    "unless evidence itself is first-person data."
+                )
 
-        # A zero-word draft is a missing unit, not a budget variance. Writing it
-        # starves downstream repair (which has no text to edit) and lets an empty
-        # section reach release.
-        word_count = draft["draft"].get("word_count", 0)
-        if word_count == 0 or not latex_content.strip():
-            print(
-                "Error: Draft contains no prose (word_count=0); nothing written",
-                file=sys.stderr,
-            )
-            return 1
+                adapter = ModelAdapter(
+                    config,
+                    mock_mode=args.mock if hasattr(args, 'mock') else False,
+                    snapshot_dir=snapshot_dir,
+                )
 
-        # Check word budget (±20% variance allowed)
-        target = section.get("word_budget", 500)
-        if word_count < target * 0.8 or word_count > target * 1.2:
-            print(f"Warning: Word count {word_count} outside target range "
-                  f"[{int(target*0.8)}, {int(target*1.2)}]", file=sys.stderr)
+                print(f"Generating draft for '{section_title}' with {config.model_version}...",
+                      file=sys.stderr)
+                response = adapter.invoke(
+                    prompt=prompt,
+                    system_prompt=system_prompt,
+                    schema=DRAFT_SCHEMA,
+                    purpose="draft_generation",
+                )
 
-        # Write output
-        latex_path = _write_draft(
-            output_dir,
-            section["title"],
-            draft,
-            {
-                "mode": "mock" if args.mock else "inference",
-                "runtime_type": config.runtime_type,
-                "model_version": config.model_version,
-                "prompt_template_hash": config.prompt_template_hash,
-                "temperature": config.temperature,
-                "api_endpoint": config.api_endpoint,
-                "request_id": response.request_id,
-                "input_tokens": response.input_tokens,
-                "output_tokens": response.output_tokens,
-            }
-        )
+                # Check for abstention
+                if response.abstention:
+                    raise ValueError(f"Model abstained: {response.abstention}")
 
-        # Emit draft correspondence manifest
-        if source_manifest is not None and protected_objects:
-            manifest_path = _emit_draft_manifest(
-                output_dir,
-                section["title"],
-                source_manifest,
-                protected_objects,
-                latex_content,
-            )
-            # Read back to report retention rate
-            manifest_data = json.loads(manifest_path.read_text())
-            retention_rate = manifest_data.get("retention_rate", 0.0)
-            preserved_count = len(manifest_data["correspondence_to_source"]["preserved"])
-            missing_count = len(manifest_data["correspondence_to_source"]["missing"])
-            print(
-                f"Protected object retention: {preserved_count}/{len(protected_objects)} "
-                f"({retention_rate:.1%}), {missing_count} missing",
-                file=sys.stderr,
-            )
-            print(f"Draft correspondence manifest: {manifest_path}", file=sys.stderr)
+                # Parse and validate draft
+                try:
+                    draft = json.loads(response.text)
+                except json.JSONDecodeError as e:
+                    raise ValueError(f"Model output is not valid JSON: {e}")
 
-        # Report success
-        citations = draft["draft"].get("citations_needed", [])
-        print(f"Draft generated: {word_count} words, {len(citations)} citations needed")
-        print(f"Output: {latex_path}")
-        print(f"Tokens: {response.input_tokens} input / {response.output_tokens} output")
-        print(f"Request ID: {response.request_id}")
+                # Check register compliance
+                latex_content = draft["draft"].get("latex", "")
+                violations = _check_register_violations(latex_content, brief)
+
+                if violations:
+                    raise ValueError(f"Register violations: {', '.join(violations)}")
+
+                # A zero-word draft is a missing unit, not a budget variance. Writing it
+                # starves downstream repair (which has no text to edit) and lets an empty
+                # section reach release.
+                word_count = draft["draft"].get("word_count", 0)
+                if word_count == 0 or not latex_content.strip():
+                    raise ValueError("Draft contains no prose (word_count=0)")
+
+                # Check word budget (±20% variance allowed)
+                target = section.get("word_budget", 500)
+                if word_count < target * 0.8 or word_count > target * 1.2:
+                    print(f"Warning: Word count {word_count} outside target range "
+                          f"[{int(target*0.8)}, {int(target*1.2)}]", file=sys.stderr)
+
+                # Write output
+                latex_path = _write_draft(
+                    output_dir,
+                    section["title"],
+                    draft,
+                    {
+                        "mode": "mock" if args.mock else "inference",
+                        "runtime_type": config.runtime_type,
+                        "model_version": config.model_version,
+                        "prompt_template_hash": config.prompt_template_hash,
+                        "temperature": config.temperature,
+                        "api_endpoint": config.api_endpoint,
+                        "request_id": response.request_id,
+                        "input_tokens": response.input_tokens,
+                        "output_tokens": response.output_tokens,
+                    }
+                )
+
+                # Emit draft correspondence manifest
+                if source_manifest is not None and protected_objects:
+                    manifest_path = _emit_draft_manifest(
+                        output_dir,
+                        section["title"],
+                        source_manifest,
+                        protected_objects,
+                        latex_content,
+                    )
+                    # Read back to report retention rate
+                    manifest_data = json.loads(manifest_path.read_text())
+                    retention_rate = manifest_data.get("retention_rate", 0.0)
+                    preserved_count = len(manifest_data["correspondence_to_source"]["preserved"])
+                    missing_count = len(manifest_data["correspondence_to_source"]["missing"])
+                    print(
+                        f"Protected object retention: {preserved_count}/{len(protected_objects)} "
+                        f"({retention_rate:.1%}), {missing_count} missing",
+                        file=sys.stderr,
+                    )
+                    print(f"Draft correspondence manifest: {manifest_path}", file=sys.stderr)
+
+                # Report success
+                citations = draft["draft"].get("citations_needed", [])
+                print(f"✓ Section {section_index} '{section_title}': {word_count} words, "
+                      f"{len(citations)} citations needed")
+                print(f"  Output: {latex_path}")
+                print(f"  Tokens: {response.input_tokens} input / {response.output_tokens} output")
+
+                successes.append(section_index)
+
+            except Exception as e:
+                error_msg = str(e)
+                print(f"✗ Section {section_index} '{section_title}' failed: {error_msg}",
+                      file=sys.stderr)
+                failures.append((section_index, section_title, error_msg))
+
+                # In single-section mode, a failure is terminal
+                if not batch_mode:
+                    if "abstained" in error_msg.lower():
+                        return 2
+                    elif "register violation" in error_msg.lower() or "word_count=0" in error_msg:
+                        return 1
+                    else:
+                        return 4
+
+        # Batch mode: report summary
+        if batch_mode:
+            print(f"\n{'='*60}")
+            print(f"Batch draft complete: {len(successes)}/{len(sections_to_draft)} succeeded")
+            if failures:
+                print(f"\nFailed sections ({len(failures)}):")
+                for idx, title, error in failures:
+                    print(f"  Section {idx} '{title}': {error}")
+            print(f"{'='*60}")
 
         return 0
 
