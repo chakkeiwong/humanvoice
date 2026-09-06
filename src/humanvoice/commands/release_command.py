@@ -38,6 +38,104 @@ from humanvoice.transmission import get_transmission_log
 SUFFICIENT_APPRAISAL_STATES = frozenset({"sufficient", "verified", "accepted"})
 
 
+def check_blackline_present(snapshot_dir: Path) -> Optional[dict]:
+    """
+    Block release when the blacklined comparison is absent.
+
+    The blackline is what the reader was promised: a static document showing net
+    differences between the snapshot source and the assembled draft. A release
+    packet without it is missing its deliverable, not merely missing a
+    diagnostic.
+
+    Assembly records why the blackline is or is not present, and this gate reads
+    that status so the refusal can name the cause. Three absences are possible
+    and all block, but for different reasons the operator needs distinguished:
+
+      tool_unavailable    -- latexdiff is not installed on this machine
+      skipped_by_operator -- --skip-blackline was passed, which is fine for
+                             draft review and not fine for release
+      (absent manifest)   -- assembly has not run, so nothing is known
+
+    Never-except: a missing deliverable is not a risk judgement to accept.
+
+    Returns a block dict if release must be refused, None if a blackline exists.
+    """
+    manifest_path = (
+        snapshot_dir / ".humanvoice" / "revisions" / "assembled" / "assembly_manifest.json"
+    )
+
+    if not manifest_path.exists():
+        return {
+            "gate": "blackline_present",
+            "never_except": True,
+            "detail": (
+                f"Assembly manifest not found at {manifest_path.name}; no blackline "
+                "can be confirmed. Run hv assemble before releasing."
+            ),
+        }
+
+    try:
+        assembly_manifest = json.loads(manifest_path.read_text())
+    except (json.JSONDecodeError, OSError) as exc:
+        return {
+            "gate": "blackline_present",
+            "never_except": True,
+            "detail": f"Assembly manifest is unreadable ({exc}); blackline unverifiable.",
+        }
+
+    blacklined_file = assembly_manifest.get("blacklined_file")
+    status = assembly_manifest.get("blackline_status")
+
+    if blacklined_file:
+        # Recorded present. Confirm the file is actually there rather than
+        # trusting the record: a manifest naming a file that was moved or never
+        # written would otherwise pass.
+        blackline_path = snapshot_dir / blacklined_file
+        if not blackline_path.exists():
+            return {
+                "gate": "blackline_present",
+                "never_except": True,
+                "detail": (
+                    f"Assembly manifest names {blacklined_file} but that file does "
+                    "not exist in the snapshot."
+                ),
+            }
+        return None
+
+    if status == "skipped_by_operator":
+        return {
+            "gate": "blackline_present",
+            "never_except": True,
+            "detail": (
+                "Blackline was skipped at assembly time (--skip-blackline). That is "
+                "acceptable for draft review but not for release. Re-run hv assemble "
+                "without --skip-blackline."
+            ),
+        }
+
+    if status == "tool_unavailable":
+        return {
+            "gate": "blackline_present",
+            "never_except": True,
+            "detail": (
+                "Blackline was not generated because latexdiff was unavailable at "
+                "assembly time. Install latexdiff (texlive-extra-utils) and re-run "
+                "hv assemble."
+            ),
+        }
+
+    # No file and no recorded reason -- an older manifest, or one written by a
+    # path that did not record status. Fail closed rather than infer.
+    return {
+        "gate": "blackline_present",
+        "never_except": True,
+        "detail": (
+            "Assembly manifest records no blackline and no reason for its absence. "
+            "Re-run hv assemble to produce the comparison and its status."
+        ),
+    }
+
+
 def check_assembly_gaps(snapshot_dir: Path) -> Optional[dict]:
     """
     Block release when the assembled document is missing sections.
@@ -935,7 +1033,17 @@ def run(args):
     else:
         gate_results["assembly_gaps"] = "pass"
 
-    # Never-except gate 6: unresolved deterministic preflight findings
+    # Never-except gate 6: blacklined comparison missing.
+    # The blackline is the reader's deliverable, not a diagnostic; a packet
+    # without it is incomplete regardless of how clean every other gate is.
+    blackline_block = check_blackline_present(snapshot_dir)
+    if blackline_block:
+        blocks.append(blackline_block)
+        gate_results["blackline_present"] = "blocked"
+    else:
+        gate_results["blackline_present"] = "pass"
+
+    # Never-except gate 7: unresolved deterministic preflight findings
     preflight_block = check_preflight_findings(snapshot_dir)
     if preflight_block:
         blocks.append({

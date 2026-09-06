@@ -75,6 +75,8 @@ def build_parser():
     assemble_parser.add_argument('--brief', type=Path, required=True, help='Reader brief (JSON)')
     assemble_parser.add_argument('--output', type=Path, default=None,
                                  help='Output directory (default: <snapshot>/.humanvoice/revisions/assembled)')
+    assemble_parser.add_argument('--skip-blackline', action='store_true',
+                                 help='Skip blacklined comparison (draft review only; release will block)')
 
     # hv preflight
     preflight_parser = subparsers.add_parser('preflight', help='Run independent critics and structural checks')

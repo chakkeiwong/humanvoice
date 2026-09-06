@@ -183,10 +183,22 @@ def setup_minimal_runs(snapshot_dir):
     assembled_file = assembled_dir / "assembled.tex"
     assembled_file.write_text(r"\documentclass{article}\begin{document}Test assembled\end{document}")
 
+    # The blackline is the reader's deliverable, so the blackline_present gate
+    # blocks when it is absent. A releasable snapshot therefore carries one, plus
+    # the status field recording how it came to exist.
+    blackline_file = assembled_dir / "blacklined_comparison.tex"
+    blackline_file.write_text(
+        r"\documentclass{article}"
+        "\n\\providecommand{\\DIFadd}[1]{{\\color{blue}#1}}\n"
+        r"\begin{document}\DIFadd{Test assembled}\end{document}"
+    )
+
     assembly_manifest = {
         "record_type": "AssemblyManifest",
         "assembled_at": "2026-01-01T00:00:00Z",
         "assembled_file": str(assembled_file.relative_to(snapshot_dir)),
+        "blacklined_file": str(blackline_file.relative_to(snapshot_dir)),
+        "blackline_status": "generated",
         "sections": [{"section_index": 0, "title": "Test", "source": "test.tex", "word_count": 2}],
         "total_word_count": 2,
     }

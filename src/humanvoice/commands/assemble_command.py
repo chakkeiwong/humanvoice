@@ -17,6 +17,7 @@ import json
 import re
 import subprocess
 import sys
+import tempfile
 from datetime import datetime, timezone
 from hashlib import sha256
 from pathlib import Path
@@ -246,43 +247,206 @@ def _check_latexdiff_available() -> bool:
         return False
 
 
+# Seconds allowed per chapter diff. The previous implementation allowed 60s for
+# the entire document, which is optimistic for hundreds of pages of dense
+# mathematics. Budgeting per chapter makes the total scale with chapter count
+# rather than with document length, so a longer document takes proportionally
+# longer instead of failing.
+DIFF_TIMEOUT_PER_CHAPTER_SECONDS = 120
+
+
+def _extract_chapters(latex_doc: str) -> List[str]:
+    """
+    Split a document at \\chapter or \\section boundaries.
+
+    Concatenating the result reproduces the input exactly. That property is what
+    makes per-chapter diffing safe: a splitter that dropped or duplicated text
+    would surface in the blackline as authored changes that nobody made.
+
+    Text before the first heading (front matter, preamble prose) is returned as
+    its own part rather than discarded, so it still participates in the diff.
+    """
+    pattern = r'(\\(?:chapter|section)\{)'
+    parts = re.split(pattern, latex_doc)
+
+    if len(parts) == 1:
+        # No headings at all -- the whole document is one unit.
+        return [latex_doc]
+
+    chapters: List[str] = []
+
+    # parts[0] is whatever preceded the first heading. Keep it when non-empty.
+    if parts[0]:
+        chapters.append(parts[0])
+
+    # re.split with one capture group yields [pre, delim, body, delim, body, ...]
+    for i in range(1, len(parts) - 1, 2):
+        chapters.append(parts[i] + parts[i + 1])
+
+    return chapters
+
+
 def _generate_blacklined_diff(
     original_path: Path,
     assembled_path: Path,
-    output_path: Path
-) -> bool:
+    output_path: Path,
+) -> Tuple[bool, List[str]]:
     """
-    Generate blacklined diff using latexdiff.
+    Generate a blacklined comparison, one latexdiff invocation per chapter.
 
-    Returns True if successful, False otherwise.
+    Returns (ok, errors). `errors` is empty on success and otherwise names each
+    chapter that failed, so the caller can report which parts of the document
+    could not be compared rather than only that something went wrong.
+
+    The blackline is the deliverable, so a failure here is reported to the caller
+    for abstention rather than warned about and skipped. The prior behaviour --
+    print a warning, return False, let assembly exit 0 with a null blackline --
+    is the fail-open shape this project has already shipped once.
     """
-    try:
-        result = subprocess.run(
-            [
-                'latexdiff',
-                str(original_path),
-                str(assembled_path)
-            ],
-            capture_output=True,
-            timeout=60,
-            text=True
+    original_content = original_path.read_text()
+    assembled_content = assembled_path.read_text()
+
+    # Extract document structure to wrap each chapter as a valid LaTeX document
+    preamble = _extract_preamble(original_content)
+    postamble = _extract_postamble(original_content)
+
+    # Split the body only, not the full file (which would include preamble in chunk 0)
+    original_body = _extract_document_body(original_content)
+    assembled_body = _extract_document_body(assembled_content)
+
+    original_chapters = _extract_chapters(original_body)
+    assembled_chapters = _extract_chapters(assembled_body)
+
+    if len(original_chapters) != len(assembled_chapters):
+        # Structural divergence is expected: assembly may add or drop sections
+        # relative to source. Diff the common prefix pairwise and let the
+        # remainder be handled as whole-part additions or deletions by diffing
+        # against an empty counterpart.
+        print(
+            f"Note: source has {len(original_chapters)} part(s), assembled has "
+            f"{len(assembled_chapters)}; diffing pairwise and treating the "
+            "remainder as added or removed",
+            file=sys.stderr,
         )
 
-        if result.returncode == 0:
-            output_path.write_text(result.stdout)
-            return True
-        else:
-            print(f"Warning: latexdiff failed with code {result.returncode}", file=sys.stderr)
-            if result.stderr:
-                print(f"  {result.stderr[:200]}", file=sys.stderr)
-            return False
+    errors: List[str] = []
+    diffs: List[str] = []
 
-    except subprocess.TimeoutExpired:
-        print("Warning: latexdiff timed out", file=sys.stderr)
-        return False
-    except Exception as e:
-        print(f"Warning: latexdiff error: {e}", file=sys.stderr)
-        return False
+    total = max(len(original_chapters), len(assembled_chapters))
+    with tempfile.TemporaryDirectory(prefix="hv-blackline-") as tmp:
+        tmp_dir = Path(tmp)
+
+        for index in range(total):
+            original_part = (
+                original_chapters[index] if index < len(original_chapters) else ""
+            )
+            assembled_part = (
+                assembled_chapters[index] if index < len(assembled_chapters) else ""
+            )
+
+            # latexdiff requires each input to be a complete LaTeX document: it
+            # refuses a fragment that carries \begin{document} without its
+            # \end{document}, or neither. Splitting a real document at section
+            # boundaries produces exactly those fragments, so each chunk is
+            # wrapped in the source's own preamble before diffing and unwrapped
+            # afterwards.
+            original_chunk = tmp_dir / f"orig_{index:04d}.tex"
+            assembled_chunk = tmp_dir / f"asm_{index:04d}.tex"
+            original_chunk.write_text(_wrap_as_document(original_part, preamble, postamble))
+            assembled_chunk.write_text(_wrap_as_document(assembled_part, preamble, postamble))
+
+            label = _chapter_label(original_part or assembled_part, index)
+
+            try:
+                result = subprocess.run(
+                    ['latexdiff', str(original_chunk), str(assembled_chunk)],
+                    capture_output=True,
+                    timeout=DIFF_TIMEOUT_PER_CHAPTER_SECONDS,
+                    text=True,
+                )
+            except subprocess.TimeoutExpired:
+                errors.append(
+                    f"{label}: timed out after {DIFF_TIMEOUT_PER_CHAPTER_SECONDS}s"
+                )
+                continue
+            except Exception as exc:
+                errors.append(f"{label}: {exc}")
+                continue
+
+            if result.returncode != 0:
+                detail = (result.stderr or "").strip().splitlines()
+                first_line = detail[0] if detail else f"exit {result.returncode}"
+                errors.append(f"{label}: {first_line}")
+                continue
+
+            # latexdiff injects \DIF* command definitions into its output's
+            # preamble. Stripping them and reassembling the bodies under the
+            # original preamble produces a document with markup that references
+            # undefined commands. Instead, preserve the first diff's preamble
+            # (which carries all the DIF definitions) and strip only the bodies
+            # of subsequent diffs.
+            if not diffs:
+                # First diff: keep the full output, which includes the extended preamble
+                diffs.append(result.stdout)
+            else:
+                # Subsequent diffs: extract only the body
+                diff_body = _extract_document_body(result.stdout)
+                diffs.append(diff_body)
+
+    if errors:
+        return False, errors
+
+    # The first diff is a complete document with the extended preamble. Subsequent
+    # diffs are bodies only. Insert them before \end{document} of the first diff.
+    if not diffs:
+        return False, ["no chapters diffed successfully"]
+
+    first_diff = diffs[0]
+    additional_bodies = diffs[1:]
+
+    if additional_bodies:
+        end_doc_match = re.search(r'\\end\{document\}', first_diff)
+        if end_doc_match:
+            insertion_point = end_doc_match.start()
+            full_diff = (
+                first_diff[:insertion_point]
+                + "\n".join(additional_bodies)
+                + "\n"
+                + first_diff[insertion_point:]
+            )
+        else:
+            # Fallback: concatenate all (shouldn't happen with valid latexdiff output)
+            full_diff = "\n".join(diffs)
+    else:
+        full_diff = first_diff
+
+    output_path.write_text(full_diff)
+    return True, []
+
+
+def _wrap_as_document(body: str, preamble: str, postamble: str) -> str:
+    """Wrap a document body in preamble and postamble for latexdiff."""
+    return f"{preamble}\n\\begin{{document}}\n{body}\n\\end{{document}}\n{postamble}"
+
+
+def _extract_document_body(latex: str) -> str:
+    """Extract content between \\begin{document} and \\end{document}."""
+    begin_match = re.search(r'\\begin\{document\}', latex)
+    end_match = re.search(r'\\end\{document\}', latex)
+
+    if begin_match and end_match:
+        return latex[begin_match.end():end_match.start()].strip()
+
+    # Fallback if markers not found (shouldn't happen with valid latexdiff output)
+    return latex
+
+
+def _chapter_label(chunk: str, index: int) -> str:
+    """Human-readable identifier for a chapter chunk, for error reporting."""
+    match = re.search(r'\\(?:chapter|section)\{([^}]*)\}', chunk)
+    if match:
+        return f"'{match.group(1)}' (part {index})"
+    return f"part {index}"
 
 
 ASSEMBLY_RETENTION_THRESHOLD = 0.99
@@ -638,13 +802,38 @@ def run(args) -> int:
 
         # Generate blacklined diff if latexdiff available
         blacklined_file = None
+        blackline_status = None
         diff_tool = None
         diff_tool_version = None
 
-        if _check_latexdiff_available():
+        # Blackline generation is controlled by --skip-blackline. When absent
+        # from the argparse namespace (tests that predate the flag), default to
+        # attempting generation.
+        if getattr(args, 'skip_blackline', False):
+            blackline_status = "skipped_by_operator"
+            print(
+                "Note: --skip-blackline passed; blacklined comparison not generated",
+                file=sys.stderr,
+            )
+        elif not _check_latexdiff_available():
+            blackline_status = "tool_unavailable"
+            print(
+                "Note: latexdiff not available; blacklined comparison not generated",
+                file=sys.stderr,
+            )
+            print(
+                "  Install with: apt-get install latexdiff (or your package manager)",
+                file=sys.stderr,
+            )
+        else:
             blacklined_path = output_dir / "blacklined_comparison.tex"
-            if _generate_blacklined_diff(source_path, assembled_path, blacklined_path):
+            ok, errors = _generate_blacklined_diff(
+                source_path, assembled_path, blacklined_path
+            )
+
+            if ok:
                 blacklined_file = str(blacklined_path.relative_to(snapshot_dir))
+                blackline_status = "generated"
                 diff_tool = "latexdiff"
 
                 # Get version
@@ -653,16 +842,29 @@ def run(args) -> int:
                         ['latexdiff', '--version'],
                         capture_output=True,
                         timeout=5,
-                        text=True
+                        text=True,
                     )
-                    version_match = re.search(r'(\d+\.\d+[.\d]*)', version_result.stdout)
+                    version_match = re.search(
+                        r'(\d+\.\d+[.\d]*)', version_result.stdout
+                    )
                     if version_match:
                         diff_tool_version = version_match.group(1)
                 except Exception:
                     pass
-        else:
-            print("Note: latexdiff not available; blacklined comparison not generated", file=sys.stderr)
-            print("  Install with: apt-get install latexdiff (or your package manager)", file=sys.stderr)
+            else:
+                # Diff failure with the tool present is an abstention. The blackline
+                # is the deliverable, so its absence is not something to warn about
+                # and proceed from -- it is a reason to refuse the assembly entirely.
+                #
+                # This is the fail-open case Issue 8 exists to close: the prior code
+                # printed a warning and exited 0, leaving blacklined_file null in a
+                # way that was indistinguishable from a missing tool. A release gate
+                # could not tell whether the operator had latexdiff or whether the
+                # diff simply failed, so it could not refuse appropriately.
+                print("Abstention: Blackline generation failed:", file=sys.stderr)
+                for error in errors:
+                    print(f"  {error}", file=sys.stderr)
+                return 2
 
         # Write assembly manifest
         assembly_id = f"assembly-{datetime.now(timezone.utc).strftime('%Y%m%d-%H%M%S')}"
@@ -689,6 +891,10 @@ def run(args) -> int:
             "assembled_file": str(assembled_path.relative_to(snapshot_dir)),
             "assembled_hash": assembled_hash,
             "blacklined_file": blacklined_file,
+            # Why the blackline is or is not present. A bare null could not
+            # distinguish "no latexdiff on this machine" from "operator asked to
+            # skip it", and the release gate needs to name the reason it refuses.
+            "blackline_status": blackline_status,
             "original_source": source_files[0],
             "assembly_method": "sequential_concatenation",
             "preamble_source": "original",
