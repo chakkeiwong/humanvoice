@@ -1,0 +1,715 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+\PassOptionsToPackage{dvipsnames,svgnames*,x11names*}{xcolor}
+%
+\documentclass[
+  11pt,
+  english,
+]{article}
+\usepackage{lmodern}
+\usepackage{amssymb,amsmath}
+\usepackage{ifxetex,ifluatex}
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math}
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\hypersetup{
+  pdftitle={Humanvoice},
+  pdfauthor={Product proposal},
+  pdflang={en},
+  colorlinks=true,
+  linkcolor=blue,
+  filecolor=Maroon,
+  citecolor=Blue,
+  urlcolor=blue,
+  pdfcreator={LaTeX via pandoc}}
+\urlstyle{same} % disable monospaced font for URLs
+\usepackage[margin=1.05in]{geometry}
+\usepackage{longtable,booktabs}
+% Correct order of tables after \paragraph or \subparagraph
+\usepackage{etoolbox}
+\makeatletter
+\patchcmd\longtable{\par}{\if@noskipsec\mbox{}\fi\par}{}{}
+\makeatother
+% Allow footnotes in longtable head/foot
+\IfFileExists{footnotehyper.sty}{\usepackage{footnotehyper}}{\usepackage{footnote}}
+\makesavenoteenv{longtable}
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\ifxetex
+  % Load polyglossia as late as possible: uses bidi with RTL langages (e.g. Hebrew, Arabic)
+  \usepackage{polyglossia}
+  \setmainlanguage[]{english}
+\else
+  \usepackage[shorthands=off,main=english]{babel}
+\fi
+\usepackage[]{natbib}
+\bibliographystyle{plainnat}
+
+\title{Humanvoice}
+\usepackage{etoolbox}
+\makeatletter
+\providecommand{\subtitle}[1]{% add subtitle to \maketitle
+  \apptocmd{\@title}{\par {\large #1 \par}}{}{}
+}
+\makeatother
+\subtitle{A reader-first revision system for technical writing}
+\author{Product proposal}
+\date{23 August 2026}
+
+\begin{document}
+\maketitle
+\begin{abstract}
+Technical authors now have abundant help generating and polishing prose,
+but they still lack a reliable way to move a complex document from
+locally fluent to understood and accepted. Humanvoice is a revision
+system for that gap. It locates diagnosable problems without rewriting
+automatically, protects equations, numbers, citations, and claims during
+revision, and ends with a decision from a named human reader. This
+proposal requests a bounded twelve-week MVP and one-document feasibility
+run. The build will establish whether the workflow is usable and
+measurable; it will not be presented as evidence that the product
+improves expert writing. A later comparative study must earn that claim.
+\end{abstract}
+
+\hypertarget{decision-in-brief}{%
+\section{Decision in brief}\label{decision-in-brief}}
+
+Build humanvoice as a reader-first revision system for technical
+documents. The product should help an author find where a draft loses
+its reader, revise without silently changing its substance, and learn
+whether the next version actually reduced the work required for
+acceptance.
+
+The immediate decision is deliberately bounded. Authorize a twelve-week
+MVP, an evaluation corpus, and one live-document feasibility run. At the
+end of that work, decide whether to fund a comparative study against the
+tools and review process already in use. Do not authorize general
+deployment, and do not claim that humanvoice improves writing before
+that comparison is complete.
+
+The MVP can be built by one product engineer and one research and
+evaluation lead, with a part-time domain reviewer. The primary outcome
+for the eventual study is the number of human-feedback rounds required
+to reach reader acceptance, provided that reader time and
+meaning-preservation failures do not increase. If the product cannot
+improve that outcome, it has not earned a place in the writing process.
+
+\hypertarget{the-problem-worth-solving}{%
+\section{The problem worth solving}\label{the-problem-worth-solving}}
+
+A technical document can be correct, compile without warnings, and
+survive several agent reviews while failing in its first few minutes
+with a human reader. One funding proposal in this workspace did exactly
+that. Its reader could not state the purpose, did not know why internal
+file names appeared in the argument, and could not tell what action was
+being requested. The document had not failed because of a typo. It had
+transferred the work of constructing the argument from the author to a
+scarce expert reader.\footnote{The full case record, including the
+  reader's response and the later repair history, is preserved in
+  \href{part1_failures.tex}{the survey's internal evidence appendix}. It
+  is used here as a motivating case, not as external efficacy evidence.}
+
+That transfer has an economic cost. A rejected draft begins another
+cycle of diagnosis, revision, and rereading. Senior readers spend time
+rediscovering the same kinds of problems: private project language in
+public exposition, repetitive paragraph structure, qualifications that
+never explain a mechanism, unsupported specificity, and missing links
+between an equation and the decision it is supposed to inform. The cost
+is not simply author time. Every cycle consumes the attention of the
+person whose judgment the document was written to support.
+
+Current tools make only parts of this cycle cheaper. Grammar checkers
+and prose linters find local surface defects. General language models
+can draft, rewrite, and comment. Citation services can confirm that a
+DOI exists. Version control can show that text changed. None of these
+tells us that the intended reader can now reconstruct the argument, and
+none protects every substantive object while a large passage is
+recomposed.
+
+Humanvoice is aimed at this missing middle: the journey from a plausible
+draft to a document a named reader understands and accepts.
+
+\hypertarget{why-the-obvious-alternative-stops-short}{%
+\section{Why the obvious alternative stops
+short}\label{why-the-obvious-alternative-stops-short}}
+
+The strongest rival is not another specialist writing product. It is the
+combination most authors can assemble today: an ordinary prose linter, a
+general LLM editor, version control, and manual review. Humanvoice
+should reuse those components where they work and compete on the
+connection between them.
+
+\begin{longtable}[]{@{}lll@{}}
+\toprule
+\begin{minipage}[b]{0.30\columnwidth}\raggedright
+Revision job\strut
+\end{minipage} & \begin{minipage}[b]{0.30\columnwidth}\raggedright
+Ordinary toolchain\strut
+\end{minipage} & \begin{minipage}[b]{0.30\columnwidth}\raggedright
+Humanvoice\strut
+\end{minipage}\tabularnewline
+\midrule
+\endhead
+\begin{minipage}[t]{0.30\columnwidth}\raggedright
+Find local style and grammar problems\strut
+\end{minipage} & \begin{minipage}[t]{0.30\columnwidth}\raggedright
+Strong\strut
+\end{minipage} & \begin{minipage}[t]{0.30\columnwidth}\raggedright
+Reuses replaceable linters and adds project-register diagnostics\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.30\columnwidth}\raggedright
+Explain which issue matters most\strut
+\end{minipage} & \begin{minipage}[t]{0.30\columnwidth}\raggedright
+Inconsistent, often presented as fluent commentary\strut
+\end{minipage} & \begin{minipage}[t]{0.30\columnwidth}\raggedright
+Ranks located findings and leaves the editorial decision visible\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.30\columnwidth}\raggedright
+Protect equations, numbers, citations, and claims\strut
+\end{minipage} & \begin{minipage}[t]{0.30\columnwidth}\raggedright
+Depends on manual comparison\strut
+\end{minipage} & \begin{minipage}[t]{0.30\columnwidth}\raggedright
+Treats them as protected content and requires an explanation for
+substantive change\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.30\columnwidth}\raggedright
+Determine whether the revision helped\strut
+\end{minipage} & \begin{minipage}[t]{0.30\columnwidth}\raggedright
+Surface scores or an uncalibrated model judgment\strut
+\end{minipage} & \begin{minipage}[t]{0.30\columnwidth}\raggedright
+Compares reader reconstruction, review burden, and acceptance\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.30\columnwidth}\raggedright
+Learn across documents\strut
+\end{minipage} & \begin{minipage}[t]{0.30\columnwidth}\raggedright
+Prompt history and scattered review notes\strut
+\end{minipage} & \begin{minipage}[t]{0.30\columnwidth}\raggedright
+Retains bounded, privacy-aware revision and reader outcomes\strut
+\end{minipage}\tabularnewline
+\bottomrule
+\end{longtable}
+
+The distinction matters because the evidence for AI assistance is
+conditional. In a preregistered experiment, generative assistance
+reduced completion time and improved evaluated output on
+occupation-specific writing tasks \citep{noy2023experimental}. Field
+evidence also reports time or productivity gains in workplace settings
+\citep{dillon2025shifting, brynjolfsson2025work}. These studies
+establish that assistance can change work. They do not estimate the
+value of this workflow for expert economics writing, and the average
+effects hide differences by task and worker experience. Assistance can
+also reduce correctness when a task lies outside the model's capability
+frontier \citep{dellacqua2026jagged}.
+
+The appropriate product claim is therefore modest and testable:
+humanvoice may reduce wasted revision and rereading by connecting
+diagnosis, protected editing, and reader evidence. The feasibility build
+is designed to learn whether that mechanism can work. It is not a
+demonstration that it already does.
+
+\hypertarget{the-product-in-use}{%
+\section{The product in use}\label{the-product-in-use}}
+
+Humanvoice sits beside the author's existing editor and repository. It
+does not replace either. A document moves through four observable steps.
+
+First, the author opens a LaTeX or Markdown draft and chooses the
+intended reader and decision. Humanvoice parses the document into
+ordinary prose and protected content. Equations, numbers, labels,
+citations, quotations, and declared claims retain their source
+locations.
+
+Second, the system presents a short, ranked set of findings. Some are
+fully deterministic: a private path appears in the manuscript, five
+consecutive sections open the same way, a citation has mismatched
+metadata, or a number changed between versions. Others are editorial
+questions attached to a span: does this qualification prevent a real
+misunderstanding, or does it merely protect the author? Is the paragraph
+missing the mechanism that makes its conclusion follow? Findings remain
+findings. Humanvoice does not silently edit the source.
+
+Third, the author or an explicitly chosen editor revises the draft. A
+protected comparison explains what changed and calls attention to any
+altered equation, number, citation, quotation, or claim. The author may
+make a substantive change, but it cannot disappear inside a smoother
+sentence.
+
+Finally, a low-context reviewer receives the rendered document without
+the repository history that made its private language seem familiar. The
+reviewer answers questions tied to the document's purpose: What problem
+is being solved? What is proposed? Why is the obvious alternative
+insufficient? What evidence matters? What decision is requested? A named
+human remains the final authority. A missing answer sends the document
+back for substantive revision, not another round of synonym replacement.
+
+\hypertarget{revision-flow}{%
+\subsection{Revision flow}\label{revision-flow}}
+
+\begin{verbatim}
+source -> format-aware parse -> located findings -> author revises
+                 |                                  |
+                 +-> protected content -------------+
+                                                    |
+                                           protected comparison
+                                                    |
+                                   low-context read -> human decision
+\end{verbatim}
+
+This design keeps two records for good reason. The reader sees only the
+document. The project retains the minimum provenance needed to reproduce
+a diagnostic, understand a revision, and evaluate the workflow. Internal
+IDs, search administration, and review machinery never become manuscript
+prose.
+
+\hypertarget{what-the-evidence-changes}{%
+\section{What the evidence changes}\label{what-the-evidence-changes}}
+
+The literature does not point toward an autonomous rewriting system. It
+points toward a bounded editor with direct evaluation of the resulting
+revision.
+
+\hypertarget{feedback-must-be-judged-by-the-next-draft}{%
+\subsection{Feedback must be judged by the next
+draft}\label{feedback-must-be-judged-by-the-next-draft}}
+
+Writing feedback can sound specific while missing the most important
+problem. On a test set of 1,300 deliberately corrupted stories, models
+often produced accurate local comments but failed to identify the
+central defect or choose appropriately between criticism and praise
+\citep{rashkin2025story}. Work on an economic essay task similarly
+evaluates feedback through the revisions it induces rather than through
+the fluency of the comment itself \citep{nair2024closing}. Humanvoice
+therefore links each finding to a source span, records whether the
+writer acted on it, and evaluates what changed in the next version.
+
+Two recent systematic reviews reinforce the boundary. Across their
+respective evidence bases, benefits are more consistent for grammar,
+process, coherence, and surface accuracy than for argumentation,
+discourse organization, or creativity
+\citep{meng2026systematic, abudalfa2026awe}. Humanvoice can automate
+some measurements at the surface. It must measure higher-order
+understanding with the intended readers.
+
+\hypertarget{model-judgments-need-calibration}{%
+\subsection{Model judgments need
+calibration}\label{model-judgments-need-calibration}}
+
+Model judges are useful screening instruments, but their preferences
+change with answer order, length, and model family
+\citep{zheng2023judging, panickssery2024llm, dubois2024length}. They
+also tend to be more generous than expert writers when judging creative
+prose \citep{chakrabarty2024art}. Any model-assisted review in
+humanvoice will therefore address one construct at a time, randomize
+pair order, control for length, use a different model family from the
+editor, and report calibration against human labels. It may direct
+attention. It may not accept a document.
+
+\hypertarget{assistance-can-change-trust-and-voice}{%
+\subsection{Assistance can change trust and
+voice}\label{assistance-can-change-trust-and-voice}}
+
+Disclosure of AI assistance can affect reader ratings and increase
+disagreement among readers \citep{li2024disclosure}. Assistance can also
+increase individual performance while reducing the diversity of a
+collection \citep{doshi2024generative, padmakumar2024writing}. These are
+product outcomes, not matters of cosmetic style. Humanvoice will retain
+the disclosure condition used in evaluation and monitor convergence
+across a sufficiently large corpus. It will never infer authorship from
+an individual document or optimize text to evade a detector.
+
+\hypertarget{citation-identity-is-not-claim-support}{%
+\subsection{Citation identity is not claim
+support}\label{citation-identity-is-not-claim-support}}
+
+Generated scholarly references can be nonexistent or mismatched
+\citep{mugaanyi2024citation}. A metadata service can establish that a
+paper and DOI match. Only inspection of the paper can establish that it
+supports the sentence in which it is cited. Humanvoice separates those
+jobs: automatic identity resolution followed by a human source-to-claim
+check for important claims.
+
+These findings narrow the design and the promise. They justify local
+measurement, protected revision, explicit uncertainty, and direct reader
+outcomes. They do not justify a single quality score, an automatic
+rewrite, an authorship detector, or an efficacy claim before the pilot.
+
+\hypertarget{what-we-will-build}{%
+\section{What we will build}\label{what-we-will-build}}
+
+The MVP has four product capabilities and one evaluation asset.
+
+The document core reads LaTeX and Markdown while preserving source
+locations and protected regions. Pandoc and pylatexenc are the first
+parser candidates because they expose structured documents through
+mature, documented interfaces \citep{pandoc2026filters, pylatexenc2026}.
+They will be tested on unknown macros, nested environments, comments,
+mathematics, citations, malformed input, and round-trip preservation. A
+parser is selected only after those fixtures pass.
+
+The diagnostic layer locates private project register, structural
+repetition, defensive prose candidates, citation identity problems, and
+build or rendering defects. Vale and existing local rules are plausible
+hosts for deterministic prose checks \citep{vale2026docs}. Every result
+carries its source span and a clear question or measurement. No
+diagnostic command mutates its input.
+
+The protected comparison reports changed equations, numbers, labels,
+citations, quotations, and declared claims. latexdiff may provide a
+useful rendered comparison, but the invariant check remains structural
+\citep{latexdiff2026}. An unexplained protected change stops that
+revision from being presented to a reader.
+
+The review workspace shows a clean rendered draft, asks a short
+document- specific rubric, and records the minimum decision evidence. It
+does not expose the author's plans or audit records. Model-generated
+suggestions are optional, identified, and reversible.
+
+The evaluation corpus begins with existing rejected and repaired
+documents for which reader verdicts or revision histories are already
+available. It will add adjudicated labels for defect location, issue
+importance, protected changes, and acceptance. Tuning and held-out
+documents will be separated before package or model results are
+reported.
+
+The detailed command contracts and sixteen implementation requirements
+remain available in the
+\href{humanvoice_product_requirements.csv}{requirements trace}. They are
+engineering inputs, not the public explanation of the product.
+
+\hypertarget{how-we-will-know-whether-it-works}{%
+\section{How we will know whether it
+works}\label{how-we-will-know-whether-it-works}}
+
+The evaluation has two stages because feasibility and efficacy answer
+different questions.
+
+The first live document tests whether the pieces work together. Can the
+parser protect the document? Do findings point to the right source
+spans? Can an author understand and dismiss a false positive? Does the
+comparison expose meaning changes? Can a reader complete the rubric
+without seeing private project machinery? Does the workflow respect
+privacy and disclosure choices? One document can reveal integration
+failures and unacceptable burden. It cannot estimate an effect.
+
+If feasibility passes, the project will preregister a paired or stepped
+comparison against the current workflow: existing linters, ordinary LLM
+editing where the author already uses it, version control, and manual
+review. Documents will be selected before outcomes are known. Reader
+blinding will be used where practical. The sample size will be chosen by
+simulating power or precision from the observed distribution of baseline
+revision rounds and reader clustering, not by choosing a convenient
+number of documents.
+
+The primary estimand is
+
+\[
+\Delta r = E[r_{\text{humanvoice}} - r_{\text{current}}],
+\]
+
+where \(r\) is the number of human-feedback rounds to acceptance.
+Deployment requires evidence that \(\Delta r < 0\) without an increase
+in meaning- preservation failures or total reader time. Reader
+reconstruction accuracy, substantive revision rate, false-positive
+burden, editing time, suggestion acceptance, and cross-document
+convergence are explanatory outcomes. None may replace the primary
+endpoint.
+
+Results will be reported separately by writer experience, document
+genre, and reader role. This is not optional subgroup decoration. Field
+evidence shows that average assistance effects can conceal smaller gains
+or harm among the most experienced workers \citep{brynjolfsson2025work}.
+
+The project stops or changes direction when any of the following occurs:
+
+\begin{itemize}
+\tightlist
+\item
+  unexplained changes to protected content exceed the prespecified
+  tolerance;
+\item
+  diagnostic false positives consume more review time than they save;
+\item
+  privacy or disclosure requirements cannot be met;
+\item
+  a feasibility user cannot understand or control the workflow; or
+\item
+  reader acceptance does not improve, or becomes slower, after two
+  comparative pilot cycles.
+\end{itemize}
+
+\hypertarget{delivery-and-investment}{%
+\section{Delivery and investment}\label{delivery-and-investment}}
+
+The twelve-week program ends with a working feasibility system, not a
+claim of market readiness.
+
+\begin{longtable}[]{@{}rll@{}}
+\toprule
+\begin{minipage}[b]{0.37\columnwidth}\raggedleft
+Weeks\strut
+\end{minipage} & \begin{minipage}[b]{0.27\columnwidth}\raggedright
+Work\strut
+\end{minipage} & \begin{minipage}[b]{0.27\columnwidth}\raggedright
+Reader-visible result\strut
+\end{minipage}\tabularnewline
+\midrule
+\endhead
+\begin{minipage}[t]{0.37\columnwidth}\raggedleft
+1--2\strut
+\end{minipage} & \begin{minipage}[t]{0.27\columnwidth}\raggedright
+Freeze the baseline corpus, reader rubric, protected-content model, and
+parser fixtures\strut
+\end{minipage} & \begin{minipage}[t]{0.27\columnwidth}\raggedright
+One representative document parses and renders with protected spans
+intact\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.37\columnwidth}\raggedleft
+2--5\strut
+\end{minipage} & \begin{minipage}[t]{0.27\columnwidth}\raggedright
+Implement located diagnostics, citation identity checks, and protected
+comparison\strut
+\end{minipage} & \begin{minipage}[t]{0.27\columnwidth}\raggedright
+An author can inspect findings and revise without hidden source
+mutation\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.37\columnwidth}\raggedleft
+3--7\strut
+\end{minipage} & \begin{minipage}[t]{0.27\columnwidth}\raggedright
+Label tuning and held-out documents; benchmark parser and diagnostic
+candidates\strut
+\end{minipage} & \begin{minipage}[t]{0.27\columnwidth}\raggedright
+Package decisions are supported by observed behavior rather than
+popularity\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.37\columnwidth}\raggedleft
+6--9\strut
+\end{minipage} & \begin{minipage}[t]{0.27\columnwidth}\raggedright
+Integrate the author and reader workflow with local-first data
+handling\strut
+\end{minipage} & \begin{minipage}[t]{0.27\columnwidth}\raggedright
+One document can move from source through revision to a recorded reader
+response\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.37\columnwidth}\raggedleft
+9--12\strut
+\end{minipage} & \begin{minipage}[t]{0.27\columnwidth}\raggedright
+Run the live feasibility document, measure burden and failures, and
+price the next study\strut
+\end{minipage} & \begin{minipage}[t]{0.27\columnwidth}\raggedright
+Proceed, revise, or stop recommendation with a preregisterable efficacy
+design\strut
+\end{minipage}\tabularnewline
+\bottomrule
+\end{longtable}
+
+The planning assumption is one product engineer, one research and
+evaluation lead, and a part-time economics or scholarly-writing
+reviewer. Twelve weeks covers the MVP and feasibility case. The efficacy
+study's duration depends on the required precision and the arrival rate
+of suitable live documents.
+
+The investment case should be calculated from project data. Let \(r_0\)
+and \(r_1\) be revision rounds under the current and proposed workflows,
+\(t_0\) and \(t_1\) the expert-reader hours per round, \(c_r\) the
+loaded cost of that time, \(N\) the annual number of relevant documents,
+and \(C\) the annualized build and maintenance cost. The measurable
+reader-time component of annual value is
+
+\[
+V = N(r_0t_0-r_1t_1)c_r-C.
+\]
+
+Quality, author time, and avoided meaning failures may add value, but
+they should enter the decision only when the pilot measures them. No
+published study supplies the project-specific inputs to this equation.
+
+\hypertarget{risks-and-limits}{%
+\section{Risks and limits}\label{risks-and-limits}}
+
+The most serious product risk is meaning drift. Smoother prose is a loss
+if it changes a model, number, source, or conclusion. Protected
+comparison and human source checks are therefore part of the core, not
+later compliance features.
+
+A second risk is alert fatigue. A diagnostic that is technically correct
+but rarely useful can make the workflow slower and teach authors to
+ignore it. The held-out benchmark will report precision by category and
+the time required to review findings. Low-value rules will be removed
+rather than defended by their coverage.
+
+A third risk is convergence on a house style. Humanvoice is not meant to
+make every economist sound alike. It reports patterns and asks
+questions; it does not automatically normalize wording. Aggregate
+monitoring will look for loss of lexical and structural diversity, while
+individual documents will never receive authorship labels.
+
+Privacy and disclosure create a fourth boundary. Protected manuscripts
+remain local by default. Any remote model use must identify the
+provider, purpose, retention terms, and approved content. The reader
+study must use the disclosure condition intended for actual use because
+disclosure itself can affect reader response.
+
+Finally, the supporting evidence is not yet a completed systematic
+review. The current audit has broad public discovery and verified
+bibliographic identities, but independent screening, specialist database
+coverage, full-text verification, critical appraisal, held-out package
+benchmarks, and external review remain incomplete. The detailed status
+is reported in the \href{humanvoice_product_proposal_audit.md}{evidence
+audit}. This limitation blocks strong literature and efficacy claims. It
+does not prevent a reversible build whose purpose is to measure
+feasibility.
+
+\hypertarget{decision-requested}{%
+\section{Decision requested}\label{decision-requested}}
+
+Authorize the twelve-week MVP and one live-document feasibility run
+under the resource assumptions and stop rules above. The authorized
+deliverables are:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  a local-first revision system for LaTeX and Markdown;
+\item
+  located, non-mutating diagnostics and protected comparison;
+\item
+  a small adjudicated corpus with frozen tuning and held-out partitions;
+\item
+  one end-to-end feasibility result, including burden and failure
+  evidence;
+\item
+  a costed, power-justified design for the comparative study; and
+\item
+  a recommendation to proceed, revise, or stop.
+\end{enumerate}
+
+This decision does not authorize autonomous rewriting, authorship
+detection, general deployment, or a claim that humanvoice improves
+expert writing. It authorizes the smallest build that can determine
+whether those further investments are warranted.
+
+\hypertarget{technical-appendix}{%
+\section{Technical appendix}\label{technical-appendix}}
+
+\hypertarget{product-boundary}{%
+\subsection{Product boundary}\label{product-boundary}}
+
+The MVP accepts local LaTeX and Markdown sources and emits findings,
+protected comparisons, rendered review material, and bounded evaluation
+events. It does not generate claims or citations, classify authorship,
+evade detectors, upload manuscripts without approval, or accept a
+document on behalf of its reader.
+
+The stable CLI concepts from the founding survey remain useful
+implementation interfaces:
+
+\begin{longtable}[]{@{}ll@{}}
+\toprule
+\begin{minipage}[b]{0.47\columnwidth}\raggedright
+Command\strut
+\end{minipage} & \begin{minipage}[b]{0.47\columnwidth}\raggedright
+Contract\strut
+\end{minipage}\tabularnewline
+\midrule
+\endhead
+\begin{minipage}[t]{0.47\columnwidth}\raggedright
+\texttt{hv\ leak}\strut
+\end{minipage} & \begin{minipage}[t]{0.47\columnwidth}\raggedright
+Locate private project register and disclosure problems without
+editing\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.47\columnwidth}\raggedright
+\texttt{hv\ rhythm}\strut
+\end{minipage} & \begin{minipage}[t]{0.47\columnwidth}\raggedright
+Report sentence, paragraph, and section-shape measurements against genre
+configuration\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.47\columnwidth}\raggedright
+\texttt{hv\ defensive}\strut
+\end{minipage} & \begin{minipage}[t]{0.47\columnwidth}\raggedright
+Return contextualized candidate passages and editorial questions\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.47\columnwidth}\raggedright
+\texttt{hv\ diff}\strut
+\end{minipage} & \begin{minipage}[t]{0.47\columnwidth}\raggedright
+Explain changes to protected content between document versions\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.47\columnwidth}\raggedright
+\texttt{hv\ cite}\strut
+\end{minipage} & \begin{minipage}[t]{0.47\columnwidth}\raggedright
+Resolve bibliographic identity and prepare a separate source-to-claim
+review queue\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.47\columnwidth}\raggedright
+\texttt{hv\ gate}\strut
+\end{minipage} & \begin{minipage}[t]{0.47\columnwidth}\raggedright
+Build and render the document, report reference and layout failures, and
+expose pages for inspection\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.47\columnwidth}\raggedright
+\texttt{hv\ drift}\strut
+\end{minipage} & \begin{minipage}[t]{0.47\columnwidth}\raggedright
+Measure population-level convergence on sufficiently large corpora;
+refuse individual attribution\strut
+\end{minipage}\tabularnewline
+\bottomrule
+\end{longtable}
+
+The names are less important than the shared contracts: immutable input,
+stable source locations, structured output, no silent source mutation,
+and no diagnostic promotion of a document.
+
+\hypertarget{core-records}{%
+\subsection{Core records}\label{core-records}}
+
+Implementation needs six small records: a document version with
+protected spans; a located diagnostic finding; an explained change; a
+citation identity and claim anchor; a reader response tied to one
+rendered version; and a privacy-bounded interaction event. Their
+complete fields and evidence links are maintained in the
+machine-readable requirements rather than repeated in the main proposal.
+
+\hypertarget{supporting-scholarship-and-audit}{%
+\subsection{Supporting scholarship and
+audit}\label{supporting-scholarship-and-audit}}
+
+The full literature and software treatment is in
+\href{humanvoice_survey.pdf}{the supporting survey}. Search histories,
+screening queues, evidence extraction, package inventory, manifests, and
+unresolved review work remain under
+\href{audit/latest/}{\texttt{docs/survey/audit/latest/}}. Those records
+protect the product's claims and implementation choices. They are not
+the product proposal's narrative.
+
+  \bibliography{humanvoice_survey}
+
+\end{document}

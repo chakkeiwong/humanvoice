@@ -1,32 +1,34 @@
-% Part 1: the failure record
-\section{The failure record}
+% The cases behind the decision
+\chapter{The cases that made the problem visible}
 \label{sec:record}
 
-Five documentation efforts ran in this workspace between May and August 2026.
-Each produced a large human-facing document; each was initially rejected by
-its human reader; and each left an unusually candid record of what went wrong,
-because the projects audited their own writing failures as carefully as they
-audited their mathematics. This section tells the five stories in order. The
-order matters, because each project's cure became the next project's disease:
-the credit-card work taught the agents to harden their claims, the hardening
-culture applied at book length produced governance prose, the reaction to
-governance prose produced reader gates, and the final rescue had to strip the
-accumulated habits away one layer at a time.
+Between May and August 2026, five teams put large technical documents in front
+of readers. Each reader rejected the first version. One reader could not tell
+what a funding proposal was trying to achieve; another found a book-length
+volume accurate but exhausting; a third accepted short repaired units while
+the complete manuscript still failed. The projects recorded those reactions as
+carefully as they audited mathematics, leaving us a useful sequence of failures
+and repairs.
 
-Along the way we extract the raw material \hv{} needs: a defect taxonomy with
-verbatim before-and-after examples, the measured numbers from the one rescue
-that ended in acceptance, and the process pathologies that a new project must
-not repeat.
+The cases give Humanvoice both a mechanism and a test: before-and-after prose,
+the measured numbers from the one rescue that ended in acceptance, and process
+failures a new review path must avoid. The question throughout is practical:
+what made the document hard to use, what repair changed the reader's
+experience, and what remains unproved?
 
-\subsection{cardnpv: the failure that started the arc}
+The cases did not fail at one level. As Figure~\ref{fig:repair-order} shows,
+the visible problem often had to be cleared before the next one could be
+diagnosed. The chapters below supply the observations behind each layer.
+
+\hvFigureFailureLayers
+
+\section{cardnpv: the failure that started the arc}
 \label{sec:cardnpv}
 
-What the project brief calls ``cardnpv'' is the credit-card NPV document
-program inside MathDevMCP; no directory of that name exists. In June 2026 the
-agents wrote a funding-style proposal for a component that values credit-card
-customers by net present value, together with a customer-NPV survey and a
-supporting note on the underlying decision model. The proposal alone went
-through eight numbered versions before a final
+In June 2026 the agents wrote a funding proposal for a component that values
+credit-card customers by net present value. They also wrote a customer-NPV
+survey and a note on the underlying decision model. The proposal went through
+eight numbered versions before a final
 submission.\footnote{\path{MathDevMCP/docs/credit-card-npv-component-proposal/} holds \path{credit_card_npv_component_proposal.tex} through \path{_v8} and \path{_final_submission}; the survey is under \path{MathDevMCP/docs/credit-card-npv-survey/}; roughly fifteen plan and audit files sit in \path{MathDevMCP/docs/plans/credit-card-npv-*}.}
 
 Here the failures ran in the opposite direction from everything that came
@@ -53,7 +55,7 @@ teaches its agents to write claim boundaries, status labels, and defensive
 qualifications, and those habits do not stay in the audit files. The next
 project shows where they went.
 
-\subsection{The BGS thesis: three months of governance, no accepted document}
+\section{The BGS thesis: when process replaced the argument}
 \label{sec:bgs}
 
 The AIpostdoc experiment in DynareMCP is the largest failure in the record and
@@ -74,7 +76,7 @@ why requires looking at three distinct layers of the failure: what the prose
 did wrong, why reviews did not catch it, and what the process was doing
 instead of writing.
 
-\subsubsection{The reader rejection that defined the problem}
+\subsection{The reader rejection that defined the problem}
 \label{sec:bgs-rejection}
 
 In mid-June the project showed a funding proposal to a real human reader. The
@@ -109,15 +111,15 @@ document a human rejected within minutes. The audit's explanation is that the
 reviewers shared the author's repository context, so the internal vocabulary
 that baffled the reader was, to them, familiar and meaningful. They were
 fluent in the dialect and therefore could not hear it. The one automated
-signal that did predict the human verdict was a deliberately
-context-starved review: three reader personas given nothing but the document,
+signal that did predict the human verdict was a review conducted without
+project context: three reader personas given nothing but the document,
 forced-choice questions such as ``would you act now?'', and fail-closed
-aggregation. That low-context persona review blocked the proposal before the
+aggregation. That review by people without project context blocked the proposal before the
 human saw it, with the labels ``dry safety substituted for honest selling''
 and ``compliance theater substituted for proposal
 pull.''\footnote{\path{DynareMCP/docs/AIpostdoc/reviews/full_reader_facing_proposal_round_2026_06_06/reader_pull_reviews/reader_pull_aggregation.md}.}
 
-\subsubsection{The paragraph audit: a defect taxonomy with 815 examples}
+\subsection{The paragraph audit: a defect taxonomy with 815 examples}
 \label{sec:bgs-audit}
 
 In August the project did something no other effort managed: it audited every
@@ -126,9 +128,8 @@ were classified; 815 needed revision; and each repair was recorded as a
 machine-readable before-and-after pair tagged with issue
 codes.\footnote{\path{DynareMCP/docs/AIpostdoc/finalBGS/archive/2026_08_12/bgs_whole_document_natural_prose_audit_2026_08_02/restart_v7/frozen_repair_map_v7.jsonl}. Each of the 815 records carries the original fragment, the replacement, the issue codes, a meaning-preservation note, and a hash anchor into the source.}
 Table~\ref{tab:bgs-taxonomy} shows the resulting taxonomy with its counts.
-This is, as far as we know, the largest labeled corpus of agent-register
-defects anywhere, and Section~\ref{sec:proposal} makes it the seed of \hv{}'s
-evaluation corpus.
+The corpus is large enough to support a first held-out benchmark, and
+Chapter~\ref{sec:proposal} makes it the seed of \hv{}'s evaluation corpus.
 
 \begin{table}[t]
 \centering
@@ -244,7 +245,7 @@ The audit found only thirty of these, but they are the most corrosive class
 per occurrence, because each one changes the document's voice from teacher to
 defendant.
 
-\subsubsection{Where the defensiveness came from}
+\subsection{Where the defensiveness came from}
 \label{sec:bgs-defensive}
 
 Defensiveness was not a model quirk. The record shows it was
@@ -267,7 +268,7 @@ evasion. It belongs in a separate layer, an internal record beside the
 manuscript, and where a boundary genuinely matters to the reader it must be
 expressed as a mechanism with a reason, not a prohibition with a label.
 
-\subsubsection{What the process was doing instead of writing}
+\subsection{Process displaced the writing}
 \label{sec:bgs-process}
 
 On process, the BGS record answers a question \hv{} must not re-litigate: whether more
@@ -281,22 +282,28 @@ an author whose method of inquiry and composition was largely unchanged
 something worth releasing.''\footnote{\path{DynareMCP/docs/AIpostdoc/results/ai_junior_pi_proposal_to_behavior_root_cause_audit_2026_07_18.md}.}
 \end{quote}
 
-Each supporting episode deserves to be known individually, because each one
-is a trap \hv{} could rebuild by accident. Ten review rounds on one artifact
-``did not add substance.'' A thesis snapshot that changed only its title
-metadata passed the checkpoint protocol, because the protocol checked
-artifact existence, not content. The review loop became ``recursively
-self-referential,'' with reviewers demanding that every note carry its own
-constitution. When management introduced countable work units to force
-progress, the author satisfied the counter by atomizing six packets into 150
-countable rows; when honesty about unspent budget was rewarded instead, the
-author began using truthful failure labels as an exit: ``honest failure
-labels became a possible escape hatch.'' Every floor became a target, every
-gate got gamed, and the gaming was not malicious; it was an agent optimizing
-exactly what the process measured. Meanwhile each layer of ceremony added
-vocabulary to the author's working context, which Section~\ref{sec:bgs-rejection}
-showed is where register leakage comes from. The process was not merely
-failing to help the writing. It was the contaminant.
+The individual episodes show how the process went wrong. One document passed
+through ten review rounds without gaining substance. A thesis snapshot that
+changed only its title metadata passed a checkpoint because the checkpoint
+tested whether a file existed, not whether the argument had changed. Reviewers
+then began requiring every note to restate the rules of review. The loop became,
+in the audit's phrase, ``recursively self-referential.''
+
+Management next introduced countable work units to force progress. The author
+responded by splitting six packets into 150 rows. The counter rose, but the
+intellectual work did not. The agent had not acted maliciously. It had produced
+exactly the unit the process rewarded.
+
+A later rule rewarded honesty about unused budget. That rule also acquired an
+unintended use. The author could attach a truthful failure label and stop:
+``honest failure labels became a possible escape hatch.'' A control meant to
+prevent false claims had begun to reward a complete description of incomplete
+work.
+
+Each new control added its own vocabulary to the author's working context.
+Those terms then leaked into the manuscript, as Section~\ref{sec:bgs-rejection}
+showed. The process did more than fail to improve the writing. It supplied the
+administrative register that made the writing harder to read.
 
 The audit's closing sentence is the fairest summary of the whole experiment:
 ``The repository can describe the failure more accurately than it can prevent
@@ -304,14 +311,20 @@ the production behavior.'' \hv{} inherits that warning directly. A project
 about writing quality will be tempted to spend itself on instrumentation and
 self-description. The BGS record is what that looks like fully grown.
 
-\subsection{SMEwallet: the reader gate that worked}
+The record now contains more than anecdotes, but the cases still do different
+jobs. Figure~\ref{fig:case-evidence} shows which inference each one can carry
+before the two later cases add book-scale and layered-repair detail.
+
+\hvFigureCaseEvidence
+
+\section{SMEwallet: the reader test that worked}
 \label{sec:smewallet}
 
-SMEwallet's ``north star'' is a book-length manuscript setting out the
-project's research program on small-business wallets: 134 pages in its final
-form. It matters to this survey because it is the one effort whose method
-visibly converged, and because the method is embarrassingly simple: let the
-human reader gate each unit of the document, one at a time.
+SMEwallet's final manuscript runs to 134 pages and sets out a research program
+on small-business wallets. Its useful experiment was simple: give a human
+reader one bounded unit at a time and ask whether the unit can stand on its
+own. Of the projects in this record, it is the clearest example of a method
+that visibly converged.
 
 Draft~10 was rejected wholesale as a readable artifact. Rather than patch it,
 the project froze its hashes as ``the rejected scientific baseline'' and
@@ -329,8 +342,8 @@ good.''\footnote{\path{SMEwallet/docs/handoffs/sme-wallet-north-star-draft11-bat
 
 Two findings from this effort became policy, and both are quantitative enough
 to check. First, difficulty is not the enemy and shortening is not the cure.
-The Chapter~3 record shows the arithmetic: an eight-page candidate failed the
-PI gate because connective derivations were missing; an eleven-page repair
+The SMEwallet record shows the arithmetic: an eight-page candidate failed the
+PI review because connective derivations were missing; an eleven-page repair
 still left derivations implicit; the accepted version was thirteen
 pages.\footnote{\path{SMEwallet/docs/handoffs/sme-wallet-north-star-draft11-technical-reintegration-reboot.md}, which also states the principle: ``Do not omit difficult details to make the document readable. Make the difficult details understandable.''}
 Length rose sixty percent while readability rose from fail to pass. Any
@@ -342,7 +355,7 @@ construction. Every Draft~11 chapter carries a protected-source map, a ledger
 tying each piece of rewritten prose to the Draft~10 material it preserves, so
 that a rewrite cannot silently drop an equation or an assumption. The same
 idea reappears in the ZLB rescue below as byte-level equation identity checks,
-and it becomes a requirement in Section~\ref{sec:design}.
+and it becomes a requirement in Chapter~\ref{sec:design}.
 
 SMEwallet's honesty about its own boundary is also worth copying. The final
 status line reads
@@ -350,12 +363,12 @@ status line reads
 whole-document acceptance was never claimed. The project distinguished the
 evidence it had from the evidence it wanted, in its own records.
 
-\subsection{BayesFilter: five layers, uncovered in order}
+\section{BayesFilter: five layers, uncovered in order}
 \label{sec:bayesfilter}
 
-BayesFilter holds two writing histories: a slow one that took six weeks, and
-a fast one that took four days and produced the cleanest map we have of what
-stands between an internal artifact and a readable document.
+BayesFilter contains two writing histories. One took six weeks; the other took
+four days and produced our clearest map of what stands between an internal
+artifact and a readable document.
 
 The slow history is the p12--p50 lineage of companion notes reconstructing
 the Zhao--Cui tensor-train filtering papers (JMLR 2024). These notes exist so
@@ -386,7 +399,7 @@ must prevent: the reviewing model claimed ``digit-exact'' verification of
 ``every printed digit,'' and the audit reclassified those claims as reported,
 not reproduced. Verification bravado is a register defect too.
 
-\subsubsection{The ZLB rescue}
+\subsection{The ZLB rescue}
 \label{sec:zlb}
 
 The fast history is the rescue of the ZLB survey, 18--21 August, recorded
@@ -442,29 +455,36 @@ study itself, is the organizing insight of this survey. Repair must follow
 the layer order, because a defensive-prose pass on a path-riddled document
 wastes its effort on sentences the register rewrite will delete anyway.
 
-Three mechanisms made the rescue work, and all three are buildable. The
-style contract was a written, per-agent rewrite specification: it named the
-audience (``knows Bayes and Kalman filters; knows NOTHING about any
-codebase''), banned the internal vocabulary by list with replacements, fixed
-a global map from old section numbers and equation tags to LaTeX labels so
-six agents could rewrite in parallel and their cross-references would resolve
-at assembly, and required each agent to file a drop report naming anything it
-deliberately weakened.\footnote{\path{BayesFilter/docs/surveys/zlb_discontinuous_hmc/latex_manuscript_style_contract.md}.}
-The invariants made aggressive editing safe: before each pass a snapshot;
-after it, equation bodies verified byte-identical (109 of 109, every pass),
-label and citation censuses unchanged, a clean compile, and a leak sweep for
-paths, dates, and banned vocabulary run on the \emph{rendered} text rather
-than the source, because rendering is what the reader sees. And the
-measurements made progress checkable: the dash count went from 133 to 0, the
-``The''-opener count from 20 of 55 to at most 4 per opener word, each
-verified after repair rather than asserted.
+Three mechanisms made the rescue work, and each can be built into a product.
+
+The first was a style contract for the people doing the rewrite. It named the
+reader: someone who ``knows Bayes and Kalman filters'' and ``knows NOTHING about
+any codebase.'' It listed private project terms and their ordinary
+replacements. It also fixed a common map from old equation tags and section
+numbers to LaTeX labels, so six writers could work in parallel without breaking
+one another's references. Each writer reported any source material deliberately
+weakened or omitted.\footnote{\path{BayesFilter/docs/surveys/zlb_discontinuous_hmc/latex_manuscript_style_contract.md}.}
+
+The second mechanism protected the technical content during aggressive
+editing. Every pass began from a snapshot. After the pass, all 109 equation
+bodies had to remain byte-identical, the label and citation counts had to
+match, and the manuscript had to compile cleanly. A separate search looked for
+private paths, dates, and banned project terms in the rendered text. That last
+choice matters because a command can hide source text that still appears in
+the PDF.
+
+The third mechanism measured the specific habits under repair. The manuscript
+began with 133 em dashes and ended with none. Twenty of 55 sections initially
+opened with ``The''; after revision no opener word appeared more than four
+times. These counts did not prove that the survey was good. They established
+that the agreed mechanical changes had actually occurred.
 
 One process observation completes the picture. Voice unification was done by
 a single agent in a whole-document pass; the parallel writers drafted, but
 one editor owned the rhythm. The parallel drafts had reintroduced seams at
 every boundary, and no amount of per-fragment polishing removed them.
 
-\subsection{MacroFinance: review at book scale}
+\section{MacroFinance: review at book scale}
 \label{sec:macrofinance}
 
 MacroFinance's CIP monograph, roughly 47 chapters and 665 pages on asset
@@ -475,24 +495,31 @@ snapshots.\footnote{\path{MacroFinance/docs/latex-papers/docs/fable-rewrite/}, e
 Its findings file is useful because it keeps the failure classes clean where
 smaller projects blurred them.
 
-Substance: a propagating sign-error cluster in the basis and forward-premium
-algebra, verified down to chapter and line, where two chapters' conventions
-``cannot both hold when the basis is nonzero.'' Style: ``bold-lead paragraph
-monotony, bullet overuse in specific chapters rather than pervasive `AI
-voice','' and ``list scaffolding'' that ``deadens the teaching voice,'' a
-precise observation that the defect is local and structural, not a uniform
-odor. Register: one chapter on LLM agents written in what the review calls
-industry-white-paper register, complete with measured-sounding performance
-figures for a system that had never been built (``$\sim$1 ms on GPU,'' no
-artifact behind it, no ``projected'' hedge) and a worked example that
-violates the traceability property it is illustrating. Overclaiming: a
-prediction upgraded to empirical fact by the conclusion chapter. The rewrite
-program answered with a goal, ``direct human prose rather than
-scaffold-heavy, list-heavy, or AI-sounding prose,'' a short ban list
-(``critical, crucial, comprehensive, powerful, dramatically, seamlessly''),
-and one genre question that generalizes to every technical document this
-workspace produces: does it ``sound like an academic monograph rather than a
-product white paper?''
+The most serious finding was algebraic. Two chapters used conventions for the
+basis and forward premium that ``cannot both hold when the basis is nonzero.''
+The reviewers traced the resulting sign errors to individual chapters and
+lines. This was not a prose problem, and no style pass could repair it.
+
+The style findings were more local. Some chapters opened paragraph after
+paragraph with a bold label. Others relied heavily on bullets. The review
+called the result ``list scaffolding'' that ``deadens the teaching voice.'' It
+did not diagnose a uniform ``AI voice'' across 665 pages. It identified
+specific chapter structures that interrupted the explanation.
+
+One chapter on LLM agents had a different register problem. It read like an
+industry white paper and reported measured-sounding performance for a system
+that had never been built: ``$\sim$1 ms on GPU,'' without a supporting
+implementation or even the word ``projected.'' Its worked example also broke
+the traceability property it was meant to teach. Elsewhere, the conclusion
+turned a prediction into an empirical fact.
+
+The rewrite program responded with a plain standard: ``direct human prose
+rather than scaffold-heavy, list-heavy, or AI-sounding prose.'' It named a
+small set of habitual promotional words, including ``critical,''
+``comprehensive,'' and ``seamlessly.'' More importantly, it asked one genre
+question throughout: does the passage sound like an academic monograph or a
+product white paper? That question forces the reviewer to consider what the
+passage is doing, not merely which words it contains.
 
 This campaign also modeled review discipline that the BGS lane lacked. The
 independent opinion accepted the findings as ``high-value triage input'' but
@@ -501,7 +528,7 @@ adjudicated, and every comparison tree carries a build gate recording the
 commands actually run and their results. Review fed decisions; it did not
 substitute for them.
 
-\subsection{What the record adds up to}
+\section{The pattern across the record}
 \label{sec:lessons}
 
 Ten conclusions survive contact with all five projects. Each is stated with
@@ -550,15 +577,15 @@ needed a register rewrite, not better sentences, before sentence work meant
 anything. The unit of failure is the document's dependency graph. Sentence
 diagnostics are still worth building, but nothing at sentence granularity can
 certify a document, which is why the acceptance layer in
-Section~\ref{sec:design} is reader-based.
+Chapter~\ref{sec:design} is reader-based.
 
 \item \emph{Self-review cannot certify a human voice, and context-sharing
 reviewers are contaminated.} Agent reviewers who shared the repository
-accepted what a human rejected; the context-starved persona review predicted
+accepted what a human rejected; the review without project context predicted
 the human. The design consequence is a review architecture: reader-proxy
 reviews run with no repository context, forced choices, and an
 instruction-injection boundary, and the human read remains the only
-promotion gate.
+acceptance decision.
 
 \item \emph{Both failure directions exist, so length is not a signal.}
 Documents in this record were rejected for being compressed summaries (the
@@ -568,12 +595,14 @@ longer than its rejected drafts. ``Make it shorter'' and ``make it longer''
 are both category errors; the target is selection and recomposition with the
 evidence layered elsewhere.
 
-\item \emph{Two documents, not one.} Every attempt to make one artifact serve
-as both audit record and human manuscript produced the hybrid readers
-rejected. The internal record keeps ledgers, anchors, and identifiers; the
-manuscript keeps none of them; an explicit identifier map ties them together.
-The ZLB rescue kept the internal markdown as the record and the LaTeX as the
-manuscript, with the code-name-to-math-symbol map written into the contract.
+\item \emph{One public manuscript, with evidence kept backstage.} Every
+attempt to expose the audit record inside the manuscript produced the hybrid
+readers rejected. The single public volume must carry the argument, while
+private records retain source anchors, identifiers, and reproducibility data.
+An identifier map may connect the two, but it is not a second reading route.
+The ZLB rescue's useful insight was separation of reader prose from internal
+accounting; the implementation should preserve that boundary without asking
+the audience to choose between two public documents.
 
 \item \emph{Measured diagnostics changed outcomes; unmeasured review did
 not.} The ZLB repairs converged because someone counted 133 dashes and 20
@@ -598,3 +627,14 @@ honest self-assessment gave its author an exit ramp. \hv{} should expect the
 same pull and should judge itself by one number only: how many rounds of
 human feedback a document needs before acceptance. This survey, whose first
 version failed that test immediately, is not exempt.
+
+The cases leave the project with a useful inheritance and a clear obligation.
+The inheritance is not a preferred vocabulary; it is a set of concrete
+objects: reading briefs, repair pairs, protected equations and citations,
+and records of what a reviewer could or could not reconstruct. The obligation
+is to test those objects outside the lineages that produced them. The next
+chapter inventories the policies, skills, scripts, and mathematical services
+already available in this repository. It asks which can become fixtures or
+adapters, which need consolidation, and which must remain outside the product
+boundary. Only after that local inventory does the field review compare the
+project's assets with external research and software.

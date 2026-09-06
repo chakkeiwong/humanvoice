@@ -149,9 +149,21 @@ class StubModel:
         }
         self.repair_changes = repair_changes if repair_changes is not None else []
         self.purposes = []
+        self.max_tokens_seen = []
 
-    def __call__(self, prompt, system_prompt=None, schema=None, purpose="unspecified"):
+    def __call__(
+        self,
+        prompt,
+        system_prompt=None,
+        schema=None,
+        purpose="unspecified",
+        max_tokens=None,
+    ):
+        # max_tokens is accepted and recorded rather than ignored: draft_command
+        # now sizes the ceiling per unit, and a stub that silently dropped it
+        # would hide a caller passing the wrong value.
         self.purposes.append(purpose)
+        self.max_tokens_seen.append(max_tokens)
 
         if purpose == "plan_generation":
             payload = {"blueprint": {

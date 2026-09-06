@@ -1,0 +1,17 @@
+{
+  "test_name": "word_budget_bounds",
+  "timestamp": "2026-08-29T17:24:26.747731+00:00",
+  "model_version": "claude-opus-5",
+  "input_hash": "ec606a8c01898c003b524fb7614f882ab8b0acb5f5f46187dfadaac968a0c8bb",
+  "input_fixture": {
+    "task": "plan",
+    "word_target": 300,
+    "max_sections": 3
+  },
+  "output": {
+    "text": "{\n  \"blueprint\": {\n    \"sections\": [],\n    \"total_words\": 0,\n    \"abstention\": \"mock_abstention\"\n  }\n}",
+    "abstention": null
+  },
+  "verdict": "pass",
+  "observation": "Mock response with structural conformance"
+}

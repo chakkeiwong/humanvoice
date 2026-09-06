@@ -1,0 +1,33 @@
+{
+  "fixture_id": "F-CITATION-001",
+  "answer_key_version": "1.0",
+  "expected_objects": [
+    {
+      "object_type": "citation",
+      "cite_key": "smith2020",
+      "macro": "cite"
+    },
+    {
+      "object_type": "citation",
+      "cite_key": "jones2021,brown2022",
+      "macro": "citep"
+    },
+    {
+      "object_type": "citation",
+      "cite_key": "smith2020",
+      "macro": "citet"
+    },
+    {
+      "object_type": "citation",
+      "cite_key": "jones2021",
+      "macro": "citeauthor"
+    },
+    {
+      "object_type": "citation",
+      "cite_key": "jones2021",
+      "macro": "citeyear"
+    }
+  ],
+  "expected_abstention": null,
+  "minimum_object_count": 5
+}

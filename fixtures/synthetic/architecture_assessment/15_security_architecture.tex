@@ -1,0 +1,71 @@
+\section{Security Architecture and Threat Model}
+
+The decomposition into twelve services expands the attack surface and introduces new threat vectors. This section characterizes the security implications of the architectural change and the controls required to maintain the current security posture.
+
+\subsection{Threat Model Changes}
+
+The monolithic architecture presented a single external attack surface: the load balancer endpoint. Internal communication occurred via function calls within a single process, not subject to network-based attacks. Authentication and authorization occurred once per request at the application boundary.
+
+The microservices architecture presents twelve external endpoints, plus internal service-to-service communication across the network. Each service-to-service call becomes a potential attack vector if an attacker can position themselves on the network path. The threat model must now account for compromised services: if an attacker gains code execution in one service, what lateral movement is possible?
+
+Four threat scenarios were modeled in detail. Compromised application instance: an attacker exploits a vulnerability in one service instance, gaining the ability to execute arbitrary code within that container. Compromised service account: an attacker obtains credentials for one service's identity, enabling them to make authenticated API calls to other services. Network man-in-the-middle: an attacker intercepts traffic between services, reading or modifying messages in transit. Supply chain compromise: an attacker injects malicious code into a dependency, which is then deployed to production via the normal pipeline.
+
+\subsection{Service Mesh Security}
+
+The service mesh provides the foundation for service-to-service security through mutual TLS: every connection between services is encrypted and authenticated. Each service instance receives a unique certificate signed by the mesh's certificate authority. When Service A calls Service B, both parties verify the other's certificate before exchanging application data. This defeats network man-in-the-middle attacks and provides cryptographic proof of caller identity.
+
+Certificate rotation occurs automatically every 24 hours. Each service maintains two valid certificates during rotation: the expiring certificate and its replacement. Connections established with the old certificate remain valid until they close; new connections use the new certificate. This zero-downtime rotation avoids the service disruption that would occur if all certificates expired simultaneously.
+
+The mesh's certificate authority is the highest-value target. Compromise of the CA's signing key would allow an attacker to forge certificates for any service, impersonating it to all other services. The CA runs on a hardened three-node cluster with the signing key stored in a hardware security module. Access to the CA cluster is restricted to two administrators via two-factor authentication, and all access is logged to Audit Logger. An annual external security audit of the CA configuration is a contractual requirement.
+
+\subsection{Authorization Between Services}
+
+Mutual TLS proves identity but does not enforce authorization. Authorization is implemented through allow-lists: each service declares which other services may call each of its endpoints. The declaration is stored in Configuration Manager and enforced by the service mesh, which rejects requests from unauthorized callers before they reach the application code.
+
+Allow-lists are maintained as code in the service's repository, reviewed during code review, and tested in integration tests. The default policy is deny: if an endpoint is not explicitly listed in an allow-list, no service may call it. This is a fail-closed design; the alternative fail-open design (permit by default, deny explicitly) was rejected because it would allow unanticipated communication paths.
+
+Changes to allow-lists follow the same deployment pipeline as code changes. This couples authorization changes to deployment cadence, which has been acceptable in the pilot but may become a friction point at scale. The alternative of storing allow-lists in Configuration Manager with dynamic updates was considered but rejected because it would create a path for authorization changes to bypass code review.
+
+The authorization model does not provide per-request attribute-based access control. If Service A is permitted to call endpoint X on Service B, it may call that endpoint for any account, any operation type, any time. Application-level authorization checks within Service B are still required. The service mesh authorization prevents attacks where an attacker compromises Service C (which should not call Service B at all) and uses it to pivot to Service B. It does not prevent attacks where an attacker compromises Service A and abuses its legitimate permission to call Service B.
+
+\subsection{Secrets Management}
+
+Each service requires credentials: database passwords, API keys for external systems, encryption keys for sensitive data. In the monolith, secrets were stored in environment variables read at startup. This approach does not scale to twelve services with independent deployment and rotation requirements.
+
+The design uses a centralized secrets management service accessed via the service mesh. Each service retrieves its secrets from the vault at startup, using its mesh identity as authentication. Secrets are cached in memory for the lifetime of the process and are never written to disk. Rotation is manual: an operator updates the secret in the vault, then triggers a rolling restart of the service to pick up the new value.
+
+Secret sprawl is the operational challenge. The monolith had 7 secrets; the twelve services collectively have 41. Each requires separate rotation procedures and impact analysis. Password rotation policy requires 90-day rotation for all credentials; tracking this manually would be error-prone. Automated tooling monitors secret age and creates rotation tickets seven days before expiration. Compliance in the pilot was 94\%: three secrets exceeded rotation deadline by 2, 5, and 11 days respectively due to oncall handoff gaps.
+
+The vault itself becomes a single point of failure and a high-value target. The vault cluster runs in active-passive configuration across three availability zones with automatic failover. The vault's encryption keys are split across five operator key-shares with a three-of-five threshold, following Shamir's secret sharing. Starting the vault after a full cluster restart requires three operators to provide their key-shares, a ceremony that occurs during maintenance windows and has a documented 15-minute SLA.
+
+\subsection{Data Encryption}
+
+Data encryption requirements differ by service. Ledger and Audit Logger store sensitive financial data and must provide encryption at rest and in transit. Balance Tracker stores account identifiers but not transaction details; transit encryption is required but at-rest encryption is optional. Reporting Aggregator stores aggregates only; no encryption is required because aggregates are not considered sensitive.
+
+Encryption at rest is implemented at the storage layer. Each service's database uses full-disk encryption with keys managed by the cloud provider's key management service. This provides defense against physical media theft but does not protect against attacks where an attacker gains access to the running database process. Application-level encryption, where sensitive fields are encrypted before writing to the database, was evaluated but not implemented due to complexity and performance impact.
+
+The performance impact of encryption is measurable but acceptable. Full-disk encryption adds approximately 3\% CPU overhead and 8\% latency overhead on database writes. Throughput decreases by approximately 5\%. These figures are from vendor documentation and were not independently verified in the pilot, flagged as a risk for Phase 3.
+
+\subsection{Compliance and Audit Requirements}
+
+The system must comply with PCI-DSS requirements for payment card data, SOX requirements for financial reporting, and GDPR requirements for personal data. Each imposes specific technical controls.
+
+PCI-DSS requires that cardholder data is encrypted in transit and at rest, that access is logged, that logs are immutable, and that security configurations are reviewed quarterly. The architecture satisfies these requirements through mutual TLS, full-disk encryption, Audit Logger with Merkle chaining, and automated configuration scanning. The quarterly review is manual, consuming approximately 16 person-hours per quarter.
+
+SOX requires that financial data is tamper-evident, that changes are authorized and traceable, and that separation of duties is enforced. Ledger's append-only design with cryptographic chaining satisfies tamper-evidence. Change authorization is enforced through code review and deployment approvals. Separation of duties is implemented by requiring that different individuals perform development, review, and production deployment approval roles.
+
+GDPR requires that personal data can be exported on request and deleted on request. Export is straightforward: query Audit Logger for all events related to an account, format as JSON, deliver to the customer. Deletion is problematic: the append-only event store cannot delete records without breaking the cryptographic chain. The implemented solution is logical deletion: a deletion event is written to the stream, and queries filter out events for deleted accounts. The original events remain physically present but are not disclosed. GDPR permits this approach if the data is "put beyond use," which legal counsel has opined applies here. An external audit has not yet validated this opinion.
+
+\subsection{Incident Response Procedures}
+
+Security incidents in a distributed system require coordinated response across multiple services. The incident response plan defines four severity levels with corresponding escalation and communication procedures.
+
+Severity 1: active compromise with data exfiltration in progress. Immediate response: isolate the compromised service by removing it from the service mesh, revoking its credentials, and terminating all instances. Containment time target is under 5 minutes from detection. Post-containment forensics determine lateral movement extent. If other services are compromised, they are similarly isolated. Estimated business impact of isolating one service ranges from "degraded performance" for non-critical services to "complete outage" for Authorization Engine.
+
+Severity 2: compromise without confirmed data exfiltration, or vulnerability with known exploit but no evidence of exploitation. Response within 30 minutes: deploy patches, rotate credentials, review logs for indicators of compromise. If a vulnerability is found during deployment pipeline security scans, deployment is blocked until the vulnerability is remediated or an exception is approved by the security team.
+
+Severity 3: vulnerability without known exploit, or security misconfiguration. Response within 4 hours: create remediation plan, schedule deployment, update security baseline. These are tracked but do not require emergency response.
+
+Severity 4: security improvement opportunities identified during reviews. Response within 30 days: evaluate, prioritize, schedule with regular development work.
+
+The pilot experienced one Severity 2 incident: a dependency vulnerability in a JSON parsing library was announced with a proof-of-concept exploit. The vulnerable dependency was used by five services. Patches were deployed to all five within 90 minutes of the announcement. Post-incident review found no evidence of exploitation but identified that the response time target of 30 minutes was not met, leading to a revised procedure where security patches are deployed via an expedited pipeline that skips integration tests if unit tests pass.

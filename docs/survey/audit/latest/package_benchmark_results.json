@@ -1,0 +1,1412 @@
+[
+  {
+    "cases": 0,
+    "package": "fast-detect-gpt",
+    "reason": "use --execute-tools after reviewing the corpus and command policy",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "slop-forensics",
+    "reason": "use --execute-tools after reviewing the corpus and command policy",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "sloptrim",
+    "reason": "use --execute-tools after reviewing the corpus and command policy",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "stop-slop",
+    "reason": "use --execute-tools after reviewing the corpus and command policy",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "GROBID",
+    "reason": "use --execute-tools after reviewing the corpus and command policy",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "111-2-Text-Analysis-App",
+    "reason": "use --execute-tools after reviewing the corpus and command policy",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "6f02d74f-ai-writing-coach-chrome-extens",
+    "reason": "use --execute-tools after reviewing the corpus and command policy",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "AI-Academic-Reviewer-Comments-Helper",
+    "reason": "use --execute-tools after reviewing the corpus and command policy",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "AI-Writing-Coach-Chatbot-",
+    "reason": "use --execute-tools after reviewing the corpus and command policy",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "AI-writing-feedback",
+    "reason": "use --execute-tools after reviewing the corpus and command policy",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "AIprep",
+    "reason": "use --execute-tools after reviewing the corpus and command policy",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "Academic_Writing_Feedback",
+    "reason": "use --execute-tools after reviewing the corpus and command policy",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "Automated-Writing-Evaluation",
+    "reason": "use --execute-tools after reviewing the corpus and command policy",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "BhashaBuddy",
+    "reason": "use --execute-tools after reviewing the corpus and command policy",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "Book-Writing-AI-Agent",
+    "reason": "use --execute-tools after reviewing the corpus and command policy",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "CELPIP-Writing-tool",
+    "reason": "use --execute-tools after reviewing the corpus and command policy",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "Cautious-octo-Veli-Mahlangu",
+    "reason": "use --execute-tools after reviewing the corpus and command policy",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "Cognitive_Mirror",
+    "reason": "use --execute-tools after reviewing the corpus and command policy",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "DAR-N400-AI-Resistance",
+    "reason": "use --execute-tools after reviewing the corpus and command policy",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "Democtratizing_AI_Writing_Support",
+    "reason": "use --execute-tools after reviewing the corpus and command policy",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "Digital-Lab-Coach-v0.1.0",
+    "reason": "use --execute-tools after reviewing the corpus and command policy",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "English-Language-Learning-Prediction-with-AI-and-Machine-Learning",
+    "reason": "use --execute-tools after reviewing the corpus and command policy",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "English_essay_review",
+    "reason": "use --execute-tools after reviewing the corpus and command policy",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "EssayMate",
+    "reason": "use --execute-tools after reviewing the corpus and command policy",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "Evaluating-Cross-Linguistic-Fairness-in-LLM-Generated-Writing-Feedback",
+    "reason": "use --execute-tools after reviewing the corpus and command policy",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "ExpressionParser",
+    "reason": "use --execute-tools after reviewing the corpus and command policy",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "HCI-Academic-Writing",
+    "reason": "use --execute-tools after reviewing the corpus and command policy",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "HTML-to-Latex-Converter",
+    "reason": "use --execute-tools after reviewing the corpus and command policy",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "Human-AI-Collaborative-Writing",
+    "reason": "use --execute-tools after reviewing the corpus and command policy",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "Human-AI-Cowriters-Survey-Analysis",
+    "reason": "use --execute-tools after reviewing the corpus and command policy",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "IELTS-Preparation-System",
+    "reason": "use --execute-tools after reviewing the corpus and command policy",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "IELTS-Writing-Examinier",
+    "reason": "use --execute-tools after reviewing the corpus and command policy",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "IELTS-Writing-Practice",
+    "reason": "use --execute-tools after reviewing the corpus and command policy",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "IELTSCLI",
+    "reason": "use --execute-tools after reviewing the corpus and command policy",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "Ink-Gateway",
+    "reason": "use --execute-tools after reviewing the corpus and command policy",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "Interactive_Story_Generator",
+    "reason": "use --execute-tools after reviewing the corpus and command policy",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "ItalianWritingSamples",
+    "reason": "use --execute-tools after reviewing the corpus and command policy",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "Keystroke2",
+    "reason": "use --execute-tools after reviewing the corpus and command policy",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "LSP-ltex-plus",
+    "reason": "use --execute-tools after reviewing the corpus and command policy",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "LaTeX-to-HTML-Compiler",
+    "reason": "use --execute-tools after reviewing the corpus and command policy",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "Language-Analyzer",
+    "reason": "use --execute-tools after reviewing the corpus and command policy",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "Language_Learning_Bot",
+    "reason": "use --execute-tools after reviewing the corpus and command policy",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "Lucen",
+    "reason": "use --execute-tools after reviewing the corpus and command policy",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "Mira",
+    "reason": "use --execute-tools after reviewing the corpus and command policy",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "MyGrammarly",
+    "reason": "use --execute-tools after reviewing the corpus and command policy",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "OpenIELTS-AI",
+    "reason": "use --execute-tools after reviewing the corpus and command policy",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "PaperWritingLLM",
+    "reason": "use --execute-tools after reviewing the corpus and command policy",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "Practice-IELTS",
+    "reason": "use --execute-tools after reviewing the corpus and command policy",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "ReadabilityAnalysis",
+    "reason": "use --execute-tools after reviewing the corpus and command policy",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "ReferenceChecker",
+    "reason": "use --execute-tools after reviewing the corpus and command policy",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "Research-Pilot",
+    "reason": "use --execute-tools after reviewing the corpus and command policy",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "SublimeLinter-contrib-proselint",
+    "reason": "use --execute-tools after reviewing the corpus and command policy",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "SublimeLinter-contrib-write-good",
+    "reason": "use --execute-tools after reviewing the corpus and command policy",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "Text-Analysis",
+    "reason": "use --execute-tools after reviewing the corpus and command policy",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "Text-Analysis",
+    "reason": "use --execute-tools after reviewing the corpus and command policy",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "Text-Analysis-NLP",
+    "reason": "use --execute-tools after reviewing the corpus and command policy",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "Text-Analysis-Project-Sentiment-Readability-Analysis",
+    "reason": "use --execute-tools after reviewing the corpus and command policy",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "Text-Analytics-Sentimental-Analysis",
+    "reason": "use --execute-tools after reviewing the corpus and command policy",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "Text-Sentiment-Analysis",
+    "reason": "use --execute-tools after reviewing the corpus and command policy",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "TextAnalysis",
+    "reason": "use --execute-tools after reviewing the corpus and command policy",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "TextConverter",
+    "reason": "use --execute-tools after reviewing the corpus and command policy",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "TextInsight-Web-Data-Wizard",
+    "reason": "use --execute-tools after reviewing the corpus and command policy",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "TextSight-CLI-NLP",
+    "reason": "use --execute-tools after reviewing the corpus and command policy",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "Text_Analysis-SentimentalAnalysis",
+    "reason": "use --execute-tools after reviewing the corpus and command policy",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "Textalyzer",
+    "reason": "use --execute-tools after reviewing the corpus and command policy",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "WebLaTex",
+    "reason": "use --execute-tools after reviewing the corpus and command policy",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "Write-Ace",
+    "reason": "use --execute-tools after reviewing the corpus and command policy",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "academic-review-ui",
+    "reason": "use --execute-tools after reviewing the corpus and command policy",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "academic-writing-polisher",
+    "reason": "use --execute-tools after reviewing the corpus and command policy",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "academic_paper_writing",
+    "reason": "use --execute-tools after reviewing the corpus and command policy",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "agentic_essay_writer",
+    "reason": "use --execute-tools after reviewing the corpus and command policy",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "ai-evaluation-portfolio",
+    "reason": "use --execute-tools after reviewing the corpus and command policy",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "ai-feedback-assistant",
+    "reason": "use --execute-tools after reviewing the corpus and command policy",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "ai-ielts-writing-evaluator",
+    "reason": "use --execute-tools after reviewing the corpus and command policy",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "ai-ielts-writing-evalution",
+    "reason": "use --execute-tools after reviewing the corpus and command policy",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "ai-seo-system",
+    "reason": "use --execute-tools after reviewing the corpus and command policy",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "ai-thesis-reviewer",
+    "reason": "use --execute-tools after reviewing the corpus and command policy",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "ai-writing-coach",
+    "reason": "use --execute-tools after reviewing the corpus and command policy",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "ai-writing-critiquer",
+    "reason": "use --execute-tools after reviewing the corpus and command policy",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "ai-writing-feedback-api",
+    "reason": "use --execute-tools after reviewing the corpus and command policy",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "ai-writing-skill",
+    "reason": "use --execute-tools after reviewing the corpus and command policy",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "al-resume-ats-checker",
+    "reason": "use --execute-tools after reviewing the corpus and command policy",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "arc-proselint",
+    "reason": "use --execute-tools after reviewing the corpus and command policy",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "ast-calculus",
+    "reason": "use --execute-tools after reviewing the corpus and command policy",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "auralscript",
+    "reason": "use --execute-tools after reviewing the corpus and command policy",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "blog-writing-ai-human-pair",
+    "reason": "use --execute-tools after reviewing the corpus and command policy",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "case-report-feedback-system",
+    "reason": "use --execute-tools after reviewing the corpus and command policy",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "citelearn",
+    "reason": "use --execute-tools after reviewing the corpus and command policy",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "claude_scribe_infrastructure",
+    "reason": "use --execute-tools after reviewing the corpus and command policy",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "cnsenti",
+    "reason": "use --execute-tools after reviewing the corpus and command policy",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "coauthor-nlp-analysis",
+    "reason": "use --execute-tools after reviewing the corpus and command policy",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "content-os-2.0",
+    "reason": "use --execute-tools after reviewing the corpus and command policy",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "coverletter_wiz",
+    "reason": "use --execute-tools after reviewing the corpus and command policy",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "cybergym-e2e",
+    "reason": "use --execute-tools after reviewing the corpus and command policy",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "danger-prose",
+    "reason": "use --execute-tools after reviewing the corpus and command policy",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "deslopper",
+    "reason": "use --execute-tools after reviewing the corpus and command policy",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "desmos-latex-parser",
+    "reason": "use --execute-tools after reviewing the corpus and command policy",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "deutsch-essay-evaluator",
+    "reason": "use --execute-tools after reviewing the corpus and command policy",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "dissertation-writing-tool-frontend",
+    "reason": "use --execute-tools after reviewing the corpus and command policy",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "docs",
+    "reason": "use --execute-tools after reviewing the corpus and command policy",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "dutch-essay-helper",
+    "reason": "use --execute-tools after reviewing the corpus and command policy",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "editing-agent",
+    "reason": "use --execute-tools after reviewing the corpus and command policy",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "editorial",
+    "reason": "use --execute-tools after reviewing the corpus and command policy",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "emacs-ltex-plus",
+    "reason": "use --execute-tools after reviewing the corpus and command policy",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "engineering-reflection-assessor",
+    "reason": "use --execute-tools after reviewing the corpus and command policy",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "essay-feedback-app",
+    "reason": "use --execute-tools after reviewing the corpus and command policy",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "eval-data",
+    "reason": "use --execute-tools after reviewing the corpus and command policy",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "evo_blog_public",
+    "reason": "use --execute-tools after reviewing the corpus and command policy",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "flywrite",
+    "reason": "use --execute-tools after reviewing the corpus and command policy",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "formula-to-latex",
+    "reason": "use --execute-tools after reviewing the corpus and command policy",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "friction",
+    "reason": "use --execute-tools after reviewing the corpus and command policy",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "futuring-machines",
+    "reason": "use --execute-tools after reviewing the corpus and command policy",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "grammar.el",
+    "reason": "use --execute-tools after reviewing the corpus and command policy",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "grammarFormatTranslator",
+    "reason": "use --execute-tools after reviewing the corpus and command policy",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "grammar_checker",
+    "reason": "use --execute-tools after reviewing the corpus and command policy",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "grammargraph-ast-generator",
+    "reason": "use --execute-tools after reviewing the corpus and command policy",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "gre-awa-grader",
+    "reason": "use --execute-tools after reviewing the corpus and command policy",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "humanly",
+    "reason": "use --execute-tools after reviewing the corpus and command policy",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "ielts-study-assistant",
+    "reason": "use --execute-tools after reviewing the corpus and command policy",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "ielts-writing-pro",
+    "reason": "use --execute-tools after reviewing the corpus and command policy",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "iterate",
+    "reason": "use --execute-tools after reviewing the corpus and command policy",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "joodalint",
+    "reason": "use --execute-tools after reviewing the corpus and command policy",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "knowrite",
+    "reason": "use --execute-tools after reviewing the corpus and command policy",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "kol-ops-suite",
+    "reason": "use --execute-tools after reviewing the corpus and command policy",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "langchain-multi-agent-writer",
+    "reason": "use --execute-tools after reviewing the corpus and command policy",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "laravel-prose-linter",
+    "reason": "use --execute-tools after reviewing the corpus and command policy",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "latex-ast",
+    "reason": "use --execute-tools after reviewing the corpus and command policy",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "latex-math-swift",
+    "reason": "use --execute-tools after reviewing the corpus and command policy",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "latex-parser",
+    "reason": "use --execute-tools after reviewing the corpus and command policy",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "latex-parser",
+    "reason": "use --execute-tools after reviewing the corpus and command policy",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "latex-parser-ts",
+    "reason": "use --execute-tools after reviewing the corpus and command policy",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "latex_lexer",
+    "reason": "use --execute-tools after reviewing the corpus and command policy",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "latexsnipper-core",
+    "reason": "use --execute-tools after reviewing the corpus and command policy",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "lead-gen-video-script",
+    "reason": "use --execute-tools after reviewing the corpus and command policy",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "lexis",
+    "reason": "use --execute-tools after reviewing the corpus and command policy",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "lins",
+    "reason": "use --execute-tools after reviewing the corpus and command policy",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "linter-proselint",
+    "reason": "use --execute-tools after reviewing the corpus and command policy",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "llm-formative-feedback-hudk4050",
+    "reason": "use --execute-tools after reviewing the corpus and command policy",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "llm-writing-feedback",
+    "reason": "use --execute-tools after reviewing the corpus and command policy",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "lucid-lint",
+    "reason": "use --execute-tools after reviewing the corpus and command policy",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "lyx-gc",
+    "reason": "use --execute-tools after reviewing the corpus and command policy",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "mathlex",
+    "reason": "use --execute-tools after reviewing the corpus and command policy",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "mentor-mcp-server",
+    "reason": "use --execute-tools after reviewing the corpus and command policy",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "mimispec",
+    "reason": "use --execute-tools after reviewing the corpus and command policy",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "modes-of-human-AI-collaborative-writing",
+    "reason": "use --execute-tools after reviewing the corpus and command policy",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "neupen",
+    "reason": "use --execute-tools after reviewing the corpus and command policy",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "nnu-smartwrite",
+    "reason": "use --execute-tools after reviewing the corpus and command policy",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "no-slop",
+    "reason": "use --execute-tools after reviewing the corpus and command policy",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "obsidian-textanalysis",
+    "reason": "use --execute-tools after reviewing the corpus and command policy",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "outlier-writing-samples",
+    "reason": "use --execute-tools after reviewing the corpus and command policy",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "paper-checker",
+    "reason": "use --execute-tools after reviewing the corpus and command policy",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "papersignals",
+    "reason": "use --execute-tools after reviewing the corpus and command policy",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "papersmith",
+    "reason": "use --execute-tools after reviewing the corpus and command policy",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "parsers",
+    "reason": "use --execute-tools after reviewing the corpus and command policy",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "phrase-chain",
+    "reason": "use --execute-tools after reviewing the corpus and command policy",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "prose-lint",
+    "reason": "use --execute-tools after reviewing the corpus and command policy",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "prosefmt",
+    "reason": "use --execute-tools after reviewing the corpus and command policy",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "proselint",
+    "reason": "use --execute-tools after reviewing the corpus and command policy",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "proselint",
+    "reason": "use --execute-tools after reviewing the corpus and command policy",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "prosemd-lsp",
+    "reason": "use --execute-tools after reviewing the corpus and command policy",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "proserunner",
+    "reason": "use --execute-tools after reviewing the corpus and command policy",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "prosewash",
+    "reason": "use --execute-tools after reviewing the corpus and command policy",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "readability-analysis-tool",
+    "reason": "use --execute-tools after reviewing the corpus and command policy",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "readability-checker-with-cs",
+    "reason": "use --execute-tools after reviewing the corpus and command policy",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "readability-score",
+    "reason": "use --execute-tools after reviewing the corpus and command policy",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "readable",
+    "reason": "use --execute-tools after reviewing the corpus and command policy",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "red-pencil-editor-skills",
+    "reason": "use --execute-tools after reviewing the corpus and command policy",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "redaktool",
+    "reason": "use --execute-tools after reviewing the corpus and command policy",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "refine-my-diary",
+    "reason": "use --execute-tools after reviewing the corpus and command policy",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "rust_grammar",
+    "reason": "use --execute-tools after reviewing the corpus and command policy",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "scholarwrite-ai",
+    "reason": "use --execute-tools after reviewing the corpus and command policy",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "scientific-research-helper",
+    "reason": "use --execute-tools after reviewing the corpus and command policy",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "scripto",
+    "reason": "use --execute-tools after reviewing the corpus and command policy",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "silver-novel-skills",
+    "reason": "use --execute-tools after reviewing the corpus and command policy",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "skills",
+    "reason": "use --execute-tools after reviewing the corpus and command policy",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "slopless",
+    "reason": "use --execute-tools after reviewing the corpus and command policy",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "smolagents-video-script-generator",
+    "reason": "use --execute-tools after reviewing the corpus and command policy",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "spk_balance",
+    "reason": "use --execute-tools after reviewing the corpus and command policy",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "sprachhilfer",
+    "reason": "use --execute-tools after reviewing the corpus and command policy",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "story-collab-ai",
+    "reason": "use --execute-tools after reviewing the corpus and command policy",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "syntastic-grammar-checkers",
+    "reason": "use --execute-tools after reviewing the corpus and command policy",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "texmax",
+    "reason": "use --execute-tools after reviewing the corpus and command policy",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "text-awakens",
+    "reason": "use --execute-tools after reviewing the corpus and command policy",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "text-complexity-readability-analysis",
+    "reason": "use --execute-tools after reviewing the corpus and command policy",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "text-readability-analysis-functional",
+    "reason": "use --execute-tools after reviewing the corpus and command policy",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "text-simplifier-readability-analysis",
+    "reason": "use --execute-tools after reviewing the corpus and command policy",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "text_readability_analysis",
+    "reason": "use --execute-tools after reviewing the corpus and command policy",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "textlens",
+    "reason": "use --execute-tools after reviewing the corpus and command policy",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "texts_readability_analysis",
+    "reason": "use --execute-tools after reviewing the corpus and command policy",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "textstat",
+    "reason": "use --execute-tools after reviewing the corpus and command policy",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "tiny-cas",
+    "reason": "use --execute-tools after reviewing the corpus and command policy",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "treex",
+    "reason": "use --execute-tools after reviewing the corpus and command policy",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "vale",
+    "reason": "use --execute-tools after reviewing the corpus and command policy",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "vale-llm-slop",
+    "reason": "use --execute-tools after reviewing the corpus and command policy",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "vale.nvim",
+    "reason": "use --execute-tools after reviewing the corpus and command policy",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "vscode-ltex",
+    "reason": "use --execute-tools after reviewing the corpus and command policy",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "vscode-ltex-plus",
+    "reason": "use --execute-tools after reviewing the corpus and command policy",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "wordsmith",
+    "reason": "use --execute-tools after reviewing the corpus and command policy",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "write-good-action",
+    "reason": "use --execute-tools after reviewing the corpus and command policy",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "write-good-as-promised",
+    "reason": "use --execute-tools after reviewing the corpus and command policy",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "writing",
+    "reason": "use --execute-tools after reviewing the corpus and command policy",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "writing-copilot",
+    "reason": "use --execute-tools after reviewing the corpus and command policy",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "writing-eval",
+    "reason": "use --execute-tools after reviewing the corpus and command policy",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "writing-eval-app",
+    "reason": "use --execute-tools after reviewing the corpus and command policy",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "writing-skills",
+    "reason": "use --execute-tools after reviewing the corpus and command policy",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "writing-with-agents",
+    "reason": "use --execute-tools after reviewing the corpus and command policy",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "writing_feedback_papers",
+    "reason": "use --execute-tools after reviewing the corpus and command policy",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "Pandoc",
+    "reason": "use --execute-tools after reviewing the corpus and command policy",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "latexdiff",
+    "reason": "use --execute-tools after reviewing the corpus and command policy",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "academic-humanizer",
+    "reason": "use --execute-tools after reviewing the corpus and command policy",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "avoid-ai-writing",
+    "reason": "use --execute-tools after reviewing the corpus and command policy",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "humanizer",
+    "reason": "use --execute-tools after reviewing the corpus and command policy",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "taste-skill",
+    "reason": "use --execute-tools after reviewing the corpus and command policy",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "LanguageTool",
+    "reason": "use --execute-tools after reviewing the corpus and command policy",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "LaTeXML",
+    "reason": "use --execute-tools after reviewing the corpus and command policy",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "TexSoup",
+    "reason": "use --execute-tools after reviewing the corpus and command policy",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "plasTeX",
+    "reason": "use --execute-tools after reviewing the corpus and command policy",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "pylatexenc",
+    "reason": "use --execute-tools after reviewing the corpus and command policy",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "tree-sitter-latex",
+    "reason": "use --execute-tools after reviewing the corpus and command policy",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "unified-latex",
+    "reason": "use --execute-tools after reviewing the corpus and command policy",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "ChkTeX",
+    "reason": "use --execute-tools after reviewing the corpus and command policy",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "LTeX+ LS",
+    "reason": "use --execute-tools after reviewing the corpus and command policy",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "Textidote",
+    "reason": "use --execute-tools after reviewing the corpus and command policy",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "llama.cpp",
+    "reason": "use --execute-tools after reviewing the corpus and command policy",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "Vale",
+    "reason": "use --execute-tools after reviewing the corpus and command policy",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "proselint",
+    "reason": "use --execute-tools after reviewing the corpus and command policy",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "textlint",
+    "reason": "use --execute-tools after reviewing the corpus and command policy",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "vale-ai-tells",
+    "reason": "use --execute-tools after reviewing the corpus and command policy",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "write-good",
+    "reason": "use --execute-tools after reviewing the corpus and command policy",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "textstat",
+    "reason": "use --execute-tools after reviewing the corpus and command policy",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "Inspect AI",
+    "reason": "use --execute-tools after reviewing the corpus and command policy",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "jsPsych",
+    "reason": "use --execute-tools after reviewing the corpus and command policy",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "latexmk",
+    "reason": "use --execute-tools after reviewing the corpus and command policy",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "humanizer-stack",
+    "reason": "use --execute-tools after reviewing the corpus and command policy",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "writing-agent",
+    "reason": "use --execute-tools after reviewing the corpus and command policy",
+    "status": "not-run"
+  }
+]

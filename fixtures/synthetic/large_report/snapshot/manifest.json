@@ -1,0 +1,87 @@
+{
+  "snapshot_id": "snapshot-20260829-090615",
+  "created_at": "2026-08-29T09:06:15.834515+00:00",
+  "source_hash": "ec1728966e65bf348c16431015298311fff0239dfc390ee3ea87cb9e9e97bf4a",
+  "source_files": [
+    "source/source.tex"
+  ],
+  "brief": {
+    "record_type": "AuthoringBrief",
+    "schema_version": "HV-SCHEMA-1.1",
+    "record_id": "brief-synthetic-large-2026-08-28",
+    "run_id": "run-synthetic-large-2026-08-28",
+    "created_at": "2026-08-28T00:00:00Z",
+    "reader_role": "Graduate-level computer science researchers and distributed systems practitioners with formal methods background",
+    "decision_type": "Trust the document's technical claims about Byzantine consensus protocols and use them to guide production system design decisions",
+    "time_available_minutes": 120,
+    "prior_knowledge": "Familiar with distributed systems fundamentals, consensus basics, asynchronous vs synchronous models, but may not know recent BFT protocol advances or formal verification techniques",
+    "success_criteria": "Reader can explain scalability trade-offs between BFT variants, identify appropriate protocols for different deployment scenarios, and understand safety guarantees with confidence in the empirical claims",
+    "reader": "Graduate-level computer science researchers and distributed systems practitioners with formal methods background",
+    "decision": "Trust the document's technical claims about Byzantine consensus protocols and use them to guide production system design decisions",
+    "genre": "Technical survey with empirical performance analysis",
+    "known_vocabulary": [
+      "Byzantine fault tolerance",
+      "consensus protocols",
+      "PBFT",
+      "Tendermint",
+      "HotStuff",
+      "Casper FFG",
+      "partially synchronous model",
+      "view change",
+      "quorum certificates",
+      "DAG-based consensus",
+      "finality gadgets",
+      "liveness",
+      "safety proofs"
+    ],
+    "exemplars": [
+      "Castro & Liskov OSDI'99 (PBFT)",
+      "Buchman thesis (Tendermint)",
+      "Yin et al. PODC'19 (HotStuff)",
+      "Buterin & Griffith arxiv (Casper)",
+      "Danezis et al. EuroSys'22 (Narwhal)"
+    ],
+    "evidence_boundary": [
+      "Published peer-reviewed papers",
+      "Conference proceedings (OSDI, SOSP, EuroSys, PODC)",
+      "Cryptocurrency white papers with formal specifications",
+      "Open-source implementation benchmarks",
+      "Production deployment case studies"
+    ],
+    "privacy_class": "public",
+    "protected_objects": [
+      "throughput measurements",
+      "latency bounds",
+      "fault tolerance thresholds",
+      "n > 3f safety requirement",
+      "\\cite{castro1999practical}",
+      "\\cite{buchman2016tendermint}",
+      "\\cite{yin2019hotstuff}",
+      "\\cite{buterin2020combining}",
+      "\\cite{danezis2022narwhal}"
+    ],
+    "unknowns": [
+      {
+        "question": "What are the practical scalability limits of BFT protocols in real deployments?",
+        "why_it_matters": "Readers need realistic performance expectations when choosing protocols"
+      },
+      {
+        "question": "How do modern variants (HotStuff, Casper) improve on classical PBFT?",
+        "why_it_matters": "Understanding the evolution helps readers evaluate protocol trade-offs"
+      },
+      {
+        "question": "What formal verification methods exist for BFT safety properties?",
+        "why_it_matters": "Readers designing critical systems need confidence in correctness proofs"
+      }
+    ],
+    "extensions": {
+      "target_word_count": 15000,
+      "target_sections": 25,
+      "target_citations": 50,
+      "target_figures": 10,
+      "target_equations": 50
+    }
+  },
+  "brief_valid": true,
+  "snapshot_immutable": true
+}

@@ -1,144 +1,225 @@
-\documentclass[11pt]{article}
+\documentclass[12pt,a4paper,openany]{report}
 
-\usepackage[margin=1.15in]{geometry}
+\usepackage[margin=1.05in]{geometry}
 \usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
 \usepackage{lmodern}
 \usepackage{microtype}
+\usepackage{graphicx}
 \usepackage{booktabs}
 \usepackage{tabularx}
+\usepackage{longtable}
 \usepackage{array}
+\usepackage{float}
 \usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,positioning,calc,fit,matrix,shapes.geometric,backgrounds}
+\usepackage[most]{tcolorbox}
+\usepackage{titlesec}
+\usepackage{tocloft}
+\usepackage{enumitem}
+\usepackage{needspace}
 \usepackage[hyphens]{url}
 \usepackage{xcolor}
-\usepackage[colorlinks=true, linkcolor=blue!50!black, citecolor=blue!50!black, urlcolor=blue!50!black]{hyperref}
+\usepackage[colorlinks=true,linkcolor=blue!50!black,citecolor=blue!50!black,urlcolor=blue!50!black]{hyperref}
 \usepackage{natbib}
 \bibliographystyle{plainnat}
 
-\newcommand{\hv}{\textsf{humanvoice}}
-\newcolumntype{L}{>{\raggedright\arraybackslash}X}
+\definecolor{hvnavy}{HTML}{17324D}
+\definecolor{hvocean}{HTML}{0A7180}
+\definecolor{hvcoral}{HTML}{C6533B}
+\definecolor{hvgold}{HTML}{B9821C}
+\definecolor{hvmint}{HTML}{E8F3F0}
+\definecolor{hvcream}{HTML}{FFF5E5}
+\definecolor{hvcloud}{HTML}{F2F5F6}
+\definecolor{hvslate}{HTML}{53656E}
 
-% Displayed before/after repair pairs from the internal corpora.
-\newenvironment{repairpair}
-  {\begin{quote}\small}
-  {\end{quote}}
+\titleformat{\chapter}[display]
+  {\normalfont\sffamily\bfseries\color{hvnavy}\raggedright}
+  {\color{hvcoral}\Large\MakeUppercase{\chaptername}\enspace\thechapter}
+  {0.2em}{\fontsize{27}{31}\selectfont}
+\titlespacing*{\chapter}{0pt}{-16pt}{24pt}
+\titleformat{\section}
+  {\normalfont\sffamily\bfseries\color{hvocean}\Large}
+  {\thesection}{0.55em}{}
+\titleformat{\subsection}
+  {\normalfont\sffamily\bfseries\color{hvcoral}\large}
+  {\thesubsection}{0.5em}{}
+\setlength{\cftchapnumwidth}{3.0em}
+\setlength{\cftsecnumwidth}{3.6em}
+\setlength{\cftsubsecnumwidth}{4.0em}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.62em}
+\renewcommand{\arraystretch}{1.12}
+\setlist{itemsep=0.25em,topsep=0.3em}
+\emergencystretch=2em
+
+\tikzset{
+  hvstage/.style={draw=hvnavy!70,rounded corners=1.2mm,fill=hvcloud,
+    align=center,minimum height=12mm,text width=27mm,inner sep=2mm},
+  hvgood/.style={draw=hvocean!80,rounded corners=1.2mm,fill=hvmint,
+    align=center,minimum height=12mm,text width=27mm,inner sep=2mm},
+  hvwarn/.style={draw=hvcoral!85,rounded corners=1.2mm,fill=hvcream,
+    align=center,minimum height=12mm,text width=27mm,inner sep=2mm},
+  hvflow/.style={-{Stealth[length=2mm]},very thick,draw=hvocean}
+}
+
+\input{proposal/visuals}
+
+\newtcolorbox{decisionbox}[1]{
+  enhanced,breakable,colback=hvcream,colframe=hvcoral,boxrule=0.8pt,
+  arc=1.5mm,left=3mm,right=3mm,top=2.2mm,bottom=2.2mm,
+  title={#1},fonttitle=\sffamily\bfseries\color{white},colbacktitle=hvcoral}
+\newtcolorbox{takeawaybox}[1]{
+  enhanced,breakable,colback=hvmint,colframe=hvocean,boxrule=0.8pt,
+  arc=1.5mm,left=3mm,right=3mm,top=2.2mm,bottom=2.2mm,
+  title={#1},fonttitle=\sffamily\bfseries\color{white},colbacktitle=hvocean}
+\newtcolorbox{boundarybox}[1]{
+  enhanced,breakable,colback=hvcloud,colframe=hvslate,boxrule=0.6pt,
+  arc=1.5mm,left=3mm,right=3mm,top=2mm,bottom=2mm,
+  title={#1},fonttitle=\sffamily\bfseries\color{white},colbacktitle=hvslate}
+
+\newcommand{\hv}{\textsf{Humanvoice}}
+\newcolumntype{L}{>{\raggedright\arraybackslash}X}
 \newcommand{\before}[1]{\textit{Before:}\enspace #1\par\medskip}
 \newcommand{\after}[1]{\textit{After:}\enspace #1}
+\newenvironment{repairpair}{\begin{quote}\small}{\end{quote}}
 
-\title{Writing for a human reader:\\ a survey and design basis for \hv}
-\author{Prepared for the \hv{} project}
-\date{21 August 2026 (revised)}
+% Environments retained for the expanded case and tool chapters.  They keep
+% examples visibly separate from the argument without turning the manuscript
+% into a requirements ledger.
+\newtcolorbox{checkpoint}[1]{
+  enhanced,breakable,colback=hvcream,colframe=hvgold,boxrule=0.7pt,
+  arc=1.5mm,left=3mm,right=3mm,top=2.2mm,bottom=2.2mm,
+  title={#1},fonttitle=\sffamily\bfseries\color{white},colbacktitle=hvgold}
+\newtcolorbox{cardexample}[1]{
+  enhanced,breakable,colback=hvcloud,colframe=hvnavy,boxrule=0.7pt,
+  arc=1.5mm,left=3mm,right=3mm,top=2.2mm,bottom=2.2mm,
+  title={#1},fonttitle=\sffamily\bfseries\color{white},colbacktitle=hvnavy}
+\newtcolorbox{plainbox}[1]{
+  enhanced,breakable,colback=white,colframe=hvslate,boxrule=0.6pt,
+  arc=1.5mm,left=3mm,right=3mm,top=2mm,bottom=2mm,
+  title={#1},fonttitle=\sffamily\bfseries\color{white},colbacktitle=hvslate}
+
+\title{Humanvoice: making expert technical documents easier to understand}
+\author{A product proposal for safer technical revision}
+\date{26 August 2026}
+\hypersetup{
+  pdftitle={Humanvoice: making expert technical documents easier to understand},
+  pdfauthor={A product proposal for safer technical revision}
+}
 
 \begin{document}
-\maketitle
 
+\hypersetup{pageanchor=false}
+\begin{titlepage}
+\thispagestyle{empty}
+\vspace*{0.55in}
+{\sffamily\bfseries\color{hvgold}\large PRODUCT PROPOSAL\par}
+\vspace{0.26in}
+{\sffamily\bfseries\color{hvnavy}\fontsize{29}{35}\selectfont Humanvoice\par}
+\vspace{0.08in}
+{\sffamily\color{hvocean}\fontsize{21}{26}\selectfont
+making expert technical documents easier to understand\par}
+\vspace{0.32in}
+{\large Clearer technical documents, with the author in control\par}
+\vspace{0.12in}
+ {\color{hvslate}26 August 2026\par}
+\vfill
+\begin{decisionbox}{Decision requested}
+Fund a bounded twelve-week MVP, a small adjudicated evaluation corpus,
+and one live-document feasibility run. The investment tests whether Humanvoice
+can turn a complete authoring brief into a checked, review-ready document while
+withholding the reader packet when the argument, evidence, or protected meaning
+is unresolved. It does not fund deployment or an efficacy claim.
+\end{decisionbox}
+\vspace{0.18in}
+\begin{takeawaybox}{The proposition}
+Humanvoice helps an author move from a reader brief to a technical document that
+has passed pre-human integrity, argument, writing, and reconstruction checks.
+The named expert reader still makes the final decision, but is not asked to
+discover ordinary defects that the system could have caught first.
+\end{takeawaybox}
+\vfill
+{\sffamily\color{hvslate}A case-led proposal for safer technical revision\par}
+\end{titlepage}
+
+\pagenumbering{roman}
 \begin{abstract}
-\noindent
-Agents in this workspace wrote five large bodies of human-facing text between
-May and August 2026, and human readers initially rejected every one of them.
-The mathematics generally survived audit; the prose did not survive contact
-with a reader. This survey assembles the evidence needed to design \hv{}, the
-project that is supposed to fix this. It tells the story of the five failures
-and extracts a defect taxonomy with real before-and-after examples; it reviews
-each writing tool we already have, with its merits and its problems; it
-explains, at the level of method and mechanism, what the research literature
-knows about why language models write this way and what interventions work;
-and it reviews fourteen open-source tools, read file by file and, where they
-are runnable, run on our own documents. A calibration experiment inside this
-survey makes the central design point concrete: the best mechanical
-tell-scorer we found rates the rejected first version of this very document
-\emph{cleaner} than a manuscript a human reader accepted. Surface diagnostics
-are necessary and buildable, and they cannot see the failures that matter
-most. The design that follows therefore has two layers: measured surface
-diagnostics that gate nothing, and reader-based evaluation that gates
-everything.
+Technical documents often fail in a costly way: they compile, contain correct
+work, and pass automated review, yet leave an expert reader to reconstruct the
+problem, mechanism, evidence, and requested action. The next revision then
+repeats diagnosis, editing, and rereading. Humanvoice is a proposed
+local-first authoring and revision system for this gap. It compiles a reader
+brief into an argument blueprint, drafts in bounded units, runs fail-closed
+pre-human checks, protects equations, numbers, citations, and claims while an
+author revises, and releases a packet for a named human reader only after those
+checks pass.
+
+The literature and software review are part of the product argument. Existing
+studies support bounded assistance, localized feedback, protected comparison,
+and direct reader evaluation; they do not establish that this workflow improves
+expert technical writing. Mature software can supply parsing, linting,
+comparison, citation identity, and local execution, but no validated package
+connects those functions to reader acceptance. The requested build is therefore
+an investment in learning: it will produce a working path from brief to release,
+one measured feasibility case, and a priced recommendation to proceed, revise,
+or stop. It will not claim that an automated critic can certify taste or that one
+case proves efficacy.
 \end{abstract}
 
+\setcounter{tocdepth}{1}
 \tableofcontents
+\clearpage
+\listoffigures
+\clearpage
+\listoftables
+\clearpage
+\pagenumbering{arabic}
+\hypersetup{pageanchor=true}
 
-\section{Introduction}
-\label{sec:intro}
+\input{proposal/00_orientation}
 
-\subsection{What this document is for}
-
-You should come away from this survey able to do three things. First, explain
-each class of writing failure our agents commit, with a concrete example in
-hand, well enough to recognize it in a new document. Second, defend every
-adopt, adapt, or skip verdict in the tool reviews, because the review gives
-you the tool's actual content and observed behavior, not just a conclusion.
-Third, implement the proposal's first two work packages without repeating the
-research, because the diagnostics are specified down to formulas, thresholds,
-and the historical numbers they must reproduce.
-
-Two readers are intended: the project owner, who decides whether and how to
-build \hv{}, and whoever implements it. Both know economics and econometrics.
-Neither should need to open the source repositories to follow the argument,
-which is why the evidence is quoted and explained here rather than pointed at.
-Repository paths appear in footnotes as anchors, since this is an internal
-document and the paths are where the evidence lives.
-
-\subsection{A short history of this document}
-
-The first version of this survey, sixteen pages long, was rejected by the
-project owner with a diagnosis worth preserving: it did not explain, it was
-dense, it quoted papers without saying what the papers did, and it asserted
-tool verdicts without reviewing the tools. The rejection is itself a data
-point, and an uncomfortable one, because the first version had passed every
-mechanical check this project knows how to run. It compiled cleanly. It
-contained no em dashes, no stock AI vocabulary in its own voice, and no
-monotone section openers. A dedicated AI-tell scorer, sloptrim, rated it 10 on
-a 0--100 scale, band ``clean,'' with high confidence. For comparison, the same
-scorer rates a manuscript that a human reader actually accepted, the ZLB
-survey of Section~\ref{sec:bayesfilter}, at 25.
-
-So a document can be mechanically immaculate and still fail completely,
-because the checks measure the surface and the reader needs teaching. Our own
-failure record says exactly this, several times over, and the first version of
-this survey ignored the record it was summarizing. The rewrite you are reading
-follows the record's advice instead: explain first, show worked examples,
-review tools by their contents and behavior, and treat mechanical diagnostics
-as necessary scaffolding that certifies nothing.
-
-\subsection{How the survey is organized}
-
-Section~\ref{sec:record} reads the failure record of the five projects and
-ends with the lessons that survive. Section~\ref{sec:tools} reviews the tools
-the workspace already has, one at a time, each with merits and problems.
-Section~\ref{sec:literature} explains the research literature: what each study
-did, what it found, and what that implies for our design.
-Section~\ref{sec:oss} reviews the open-source field the same way, including
-the tools we ran. Section~\ref{sec:design} converts all of it into design
-requirements, each traced to its evidence, and Section~\ref{sec:proposal}
-gives the work packages. Section~\ref{sec:conclusion} closes with what this
-survey does and does not establish.
-
+\part{Why technical documents fail}
+\input{proposal/02_problem}
 \input{part1_failures}
 \input{part2_existing_tools}
+
+\part{Evidence and available machinery}
+\input{proposal/04_method}
+\input{proposal/14_literature_foundations}
+\input{proposal/04_evidence}
 \input{part3_literature}
-\input{part4_oss}
+\input{proposal/05_field}
+\input{part4_field_lessons}
+\input{proposal/20_hpo_case}
+\input{proposal/15_component_choice}
+
+\part{The product}
+\input{proposal/13_worked_case}
+\input{proposal/03_product}
+\input{proposal/06_design}
+\input{proposal/16_architecture}
 \input{part5_proposal}
 
-\section{Conclusion}
-\label{sec:conclusion}
+\part{Testing the proposition}
+\input{proposal/07_evaluation}
+\input{proposal/17_evaluation_detail}
+\input{proposal/08_implementation}
 
-The record, the literature, and the tool field agree on more than we had any
-right to expect. Our five projects learned by expensive trial and error that
-writing failures arrive in layers and that review machinery cannot write; the
-research literature explains why the models write this way and shows that
-targeted editing, population-level measurement, and disciplined judging work
-where detection and word bans do not; and the open-source field has
-independently converged on the same division of labor, with pattern lists for
-editors, deterministic counters for pipelines, and honest warnings against
-using any of it as an authorship verdict.
+\input{proposal/10_research_program}
+\input{proposal/12_adoption_and_scale}
+\input{proposal/18_operating_plan}
 
-What no source establishes, including this one, is that the assembled toolkit
-reduces the number of human-feedback rounds a document needs. That is the
-only outcome worth the project's budget, it is measurable, and work packages
-three and five exist to measure it. The survey's own history sets the
-benchmark and the caution in one stroke: its first version passed every
-mechanical check we have and failed its only reader. The reader remains the
-gate. Everything this proposal builds is machinery for wasting less of the
-reader's time.
+\appendix
+\input{proposal/09_appendix}
+
+\input{proposal/11_expanded_appendices}
+\input{part4_oss}
+\input{proposal/15_software_dossiers}
+\input{proposal/19_reference_manual}
+\input{proposal/21_implementation_contract}
 
 \bibliography{humanvoice_survey}
 

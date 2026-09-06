@@ -1,0 +1,377 @@
+\chapter{Who would use it, and why}
+\label{ch:adoption-scale}
+
+An organization may like the demonstration and still decline the product. Its
+authors have obligations, its security team has a privacy boundary, and its
+readers already have a review culture. The commercial question after the
+feasibility case is therefore concrete: who will use Humanvoice, what will it
+replace, and what evidence would justify moving from one document to a
+portfolio?
+
+The repository does not yet contain a defensible market-size estimate. It does
+contain a clear first job. A high-consequence document has a named expert
+reader, several expensive review rounds, and equations, citations, or other
+objects that a general editor cannot safely handle. Adoption should begin where
+that job is already visible and measurable.
+
+Figure~\ref{fig:value-mechanism} gives the commercial proposition in one line:
+saved attention creates value only after meaning and reader burden pass the
+guard.
+
+\hvFigureValueMechanism
+
+\section{The buyer, the author, and the reader}
+\label{sec:adoption-roles}
+
+The buyer may sign the contract, the author may do the editing, and the reader
+may decide whether the document matters. Treating those three people as one
+``user'' would optimize the wrong outcome.
+
+\begin{table}[H]
+\centering
+\small
+\begin{tabularx}{\textwidth}{@{}p{0.18\textwidth}p{0.27\textwidth}L@{}}
+\toprule
+Role & Immediate job & Evidence that adoption is real \\
+\midrule
+Sponsor or buyer & Fund a bounded workflow and pay for reduced delay,
+lower incident risk, or a better decision record. & Approves the comparator,
+privacy boundary, and continuation threshold. \\
+Author or analyst & Revise a source without losing equations, numbers,
+citations, or ownership of the claim. & Opens findings, records decisions, and
+returns to the incumbent path when the system abstains. \\
+Editor or methods lead & Make a document's argument teachable and its review
+repeatable across authors. & Reuses contracts, fixtures, and reader rubrics
+without turning them into a style score. \\
+Expert reader or referee & Reconstruct the problem, mechanism, evidence,
+uncertainty, and requested action under a real time budget. & Gives a located
+decision, confidence, and change trigger. \\
+Security or policy owner & Decide what source and response data may leave the
+institution and what disclosure is required. & Signs the boundary and can
+replay or revoke a remote call. \\
+\bottomrule
+\end{tabularx}
+\caption{Different roles make different adoption claims.}
+\label{tab:adoption-roles}
+\end{table}
+
+The buyer's outcome is not ``more human-sounding text.'' It is a document that
+can be accepted, challenged, or funded on the reader's own terms. The author's
+outcome is not a lower diagnostic count. It is less time spent rediscovering
+why a reader objected, with enough provenance to decide whether the objection
+was substantive. The reader's outcome is not agreement. It is a well-founded
+decision with visible uncertainty.
+
+\begin{cardexample}{A buyer can reject a successful demo}
+An engineering team demonstrates that a model can turn a paragraph into fluent
+prose. The sponsor asks whether the revision preserves a denominator, a
+qualification, and the identity of a cited study. The team has no source map,
+no protected comparison, and no way to show the reader's time. The demo may be
+linguistically impressive, but it has not addressed the buyer's job.
+\end{cardexample}
+
+The invalid inference is that a positive author reaction is sufficient for
+adoption. The first pilot must observe all three roles where possible. If a
+document has no consequential reader, it is a useful parser fixture but a
+weak product case.
+
+\section{Three beachheads, chosen by the job}
+\label{sec:adoption-beachheads}
+
+Start with settings in which the job is visible, not with an abstract total
+addressable market. Three settings fit the current evidence and differ enough
+to test whether the mechanism travels.
+
+\subsection{Research and methods groups}
+
+A research group produces a methods note, working paper, or monograph chapter
+whose reader is a technical referee or collaborator. The source may contain
+custom mathematics, code, citations, and a long chain of assumptions. The
+group already uses version control and a build system, so the first product
+integration can be local and command-line driven. The value is a shorter path
+from a review comment to a verified revision, not automatic copy-editing.
+
+The risk is that a researcher may treat the tool as an additional referee and
+accept a plausible but technically wrong suggestion. The pilot therefore
+starts with deterministic source correspondence and a human-controlled
+finding queue. A model adapter is optional and must be disclosed.
+
+\subsection{Investment, policy, and program offices}
+
+An investment or policy office produces a decision document for an executive
+who is expert but time-constrained. The document may mix quantitative results,
+institutional constraints, and a request for funding or a decision. Here
+the reading brief and unfamiliar-reader exercise are especially valuable: the
+question is whether a decision-maker can reconstruct the ask without private
+meetings.
+
+The risk is confidentiality. A remote model call, a retained page image, or a
+shared benchmark fixture can expose information that is more sensitive than
+the prose itself. This setting is therefore a strong test of the local-first
+boundary and of the continuity requirement: the office must be able to finish
+the document if Humanvoice is unavailable.
+
+\subsection{Publishers, funders, and research-support units}
+
+A publisher or funder may not write the document, but it can provide a
+reading-brief and review service across many authors. The buyer's value is
+portfolio consistency and a reusable evidence record; the author's value is a
+clearer review path; the reader's value is a document that can be evaluated
+without learning the organization's internal workflow.
+
+The risk is scale before validity. A support unit can process many documents
+and still measure only surface cleanliness. This setting should be a second
+stage, after the single-document feasibility run has fixed the object model,
+reader rubric, and disclosure language.
+
+\begin{table}[H]
+\centering
+\small
+\begin{tabularx}{\textwidth}{@{}p{0.20\textwidth}p{0.24\textwidth}p{0.24\textwidth}L@{}}
+\toprule
+Setting & Strong reason to start & First measurable outcome & Main stop signal \\
+\midrule
+Research group & Protected technical objects and existing source control. &
+Time from located finding to accepted revision; protected-object incidents. &
+Authors cannot distinguish a useful question from a model rewrite. \\
+Investment or policy office & High review cost and a named executive decision. &
+Reconstruction by a reader unfamiliar with the project, followed by feedback rounds to a decision. &
+Privacy or disclosure boundary cannot be signed. \\
+Publisher or support unit & Repeated documents and a reusable reader rubric. &
+Portfolio-level burden and reader consistency after single-document validity. &
+Scale creates a surface score with no reader endpoint. \\
+\bottomrule
+\end{tabularx}
+\caption{Beachheads and the evidence each one can produce.}
+\label{tab:beachheads}
+\end{table}
+
+The proposal should name one live setting for the twelve-week build. It may
+collect fixtures from the other two, but it should not promise three distinct
+markets with one underpowered pilot. A focused first customer gives the
+comparator, privacy rules, and reader role enough specificity to be measured.
+
+\section{The alternatives Humanvoice must beat}
+\label{sec:adoption-alternatives}
+
+If Humanvoice is absent, the work does not disappear. An author, domain editor,
+general language model or style tool, version control, a build system, citation
+checks, and one or more expert readers form the incumbent bundle. Humanvoice
+must earn its place by improving the handoff between those activities.
+
+\begin{table}[H]
+\centering
+\small
+\begin{tabularx}{\textwidth}{@{}p{0.22\textwidth}p{0.25\textwidth}p{0.25\textwidth}L@{}}
+\toprule
+Alternative & What it does well & What remains unconnected & Humanvoice's
+wedge \\
+Manual expert editing & Interprets claims and audience in context. & Expensive,
+hard to replay, and often loses the reason for a revision. & Preserve the
+finding, source span, protected objects, and reader response around the human
+judgment. \\
+General language model & Generates fluent alternatives and questions quickly.
+& May widen claims, obscure ownership, or require unapproved remote processing.
+& Use bounded questions and explicit acceptance rather than silent rewriting. \\
+CI linter or style guide & Replays deterministic checks at low cost. & Usually
+cannot connect a warning to the reader's decision or technical object. & Keep
+narrow diagnostics and attach them to a reading brief. \\
+Version control and diff & Shows that source changed and permits rollback. & A
+character-level diff does not say whether a denominator, citation, or claim
+scope changed. & Add object-aware comparison and a reason for each revision. \\
+External review service & Supplies a reader and an acceptance signal. &
+Feedback may be unstructured and source provenance may be lost. & Return a
+replayable packet that links reader action to author work. \\
+\bottomrule
+\end{tabularx}
+\caption{The product is a connective layer over an incumbent bundle.}
+\label{tab:adoption-alternatives}
+\end{table}
+
+The wedge is strongest where the alternatives are each useful but their
+interfaces are weak. It is not a claim that Humanvoice is a better editor,
+better model, or better referee. It is a claim that a named reader's decision
+can be connected to a protected revision record owned by the author.
+
+\section{A staged adoption path}
+\label{sec:adoption-path}
+
+Adoption should proceed in the same order as the evidence ladder. Each stage
+has a customer-visible deliverable and a reason to stop. This makes expansion
+a sequence of earned options rather than a commitment to a large platform
+before the first object map works.
+
+\begin{enumerate}
+\item \textbf{Instrument one document.} Agree on the reading brief,
+      incumbent bundle, privacy class, protected-object set, and acceptance
+      endpoint. Produce a baseline run even if no Humanvoice finding is shown.
+\item \textbf{Run the vertical slice.} Parse, locate findings, record author
+      decisions, compare protected objects, and prepare a reader packet for
+      someone without project history. Keep the model adapter off unless the owner explicitly permits
+      it.
+\item \textbf{Repeat within one setting.} Add documents from the same genre
+      and reader role. Estimate burden, abstention, and heterogeneity before
+      comparing settings. A second document is a replication opportunity, not
+      proof of generality.
+\item \textbf{Compare the incumbent bundle.} Counterbalance or randomize
+      preparation and reading order where practical. Declare the primary
+      endpoint and preserve protocol deviations.
+\item \textbf{Offer a portfolio service.} Only after the comparative result
+      supports the workflow should a support unit reuse contracts, fixtures,
+      and reader instruments across authors.
+\end{enumerate}
+
+At each stage, the customer should receive a short decision packet: what was
+run, what changed, what was protected, what the reader did, how much time it
+took, and what remains uncertain. A dashboard that reports only a finding
+count is not a product milestone. The customer must be able to decide whether
+to continue using the incumbent, add a human editor, or fund the next stage.
+
+\paragraph{The adoption handoff.}
+Before moving from one document to a portfolio, ask a person who did not build
+the fixtures to run the packet. If they cannot identify the reading brief,
+replay the protected comparison, and explain an abstention, the product is
+not ready for scale. More documents would multiply an unresolved interface
+failure.
+
+\section{Pricing as a testable hypothesis}
+\label{sec:adoption-pricing}
+
+Pricing should follow the unit of value observed in the pilot. A per-token or
+per-page price would reward volume even when the system creates review work.
+The first offer should therefore be a bounded service or pilot priced around a
+document cohort, an agreed reader exercise, and a retained evidence packet.
+Only after repeat use is measured should a recurring subscription or
+institutional license be considered.
+
+Let $n$ be the number of documents in a cohort, $s$ the service and support
+cost per document, $K_0$ the fixed onboarding cost, and $W$ the observed value
+of avoided or improved review work. A pilot contribution can be written as
+\[
+  \Pi = n(W-s)-K_0.
+\]
+This is a planning identity, not a forecast. $W$ must be estimated from the
+reader and author logs in \autoref{app:cost-worksheets}; it should include an
+incident-cost range when a missed qualification or protected-object change is
+material. A customer should not be charged for a benefit the pilot never
+measured.
+
+\begin{table}[H]
+\centering
+\small
+\begin{tabularx}{\textwidth}{@{}p{0.24\textwidth}p{0.27\textwidth}L@{}}
+\toprule
+Offer form & What the customer receives & Why it is appropriate at this stage \\
+\midrule
+Feasibility service & One live run, protected comparison, reader exercise,
+and decision packet. & Buys learning while the object and reading briefs are
+still being tested. \\
+Pilot cohort & A fixed number of same-setting documents, fixtures, and a
+comparative report. & Measures repeatability and burden without claiming a
+general platform. \\
+Institutional deployment & Local service, support, retention controls, and
+portfolio rubric. & Requires evidence that the workflow works across authors
+and that operations are acceptable. \\
+\bottomrule
+\end{tabularx}
+\caption{Pricing forms should match the evidence stage.}
+\label{tab:pricing-forms}
+\end{table}
+
+The proposal should resist a large subscription forecast until there is
+observed renewal behavior. A financier can still evaluate the option value of
+the MVP: a modest first investment buys a working source map, a corpus, and a
+credible estimate of $W$. If those objects do not materialize, the project
+has learned early and can stop without having built an expensive service
+whose value is only asserted.
+
+\section{Operating model and trust boundary}
+\label{sec:adoption-operating}
+
+An adopted service needs an owner for every handoff. The author owns the
+substantive revision. The editor or methods lead owns the reading brief and
+rubric. The engineer owns parser and build failures. The security or policy
+owner owns the processing boundary. The sponsor owns the continuation rule.
+These roles may be held by two people in a small pilot, but the decisions must
+remain distinct in the records.
+
+The local-first path should be the default operating mode. Deterministic
+parsing, source maps, protected comparisons, and narrow diagnostics run in
+the repository boundary. A model adapter, if allowed, receives only the
+smallest excerpt needed for a declared question and returns a finding rather
+than a replacement document. The run records provider, version, prompt or
+configuration identifier, retention, and abstention. A customer can then
+choose a fully local path without losing the core product.
+
+Continuity protects the customer's deadline. If a
+remote provider is unavailable, the author should be able to continue editing
+the source, build the document, and hand the reader the incumbent packet. The
+eventual Humanvoice run can import the parent snapshot and show what changed.
+This protects the customer's deadline and makes the product's value easier to
+trust: adoption does not require surrendering control of the document.
+
+\begin{table}[H]
+\centering
+\small
+\begin{tabularx}{\textwidth}{@{}p{0.25\textwidth}p{0.30\textwidth}L@{}}
+\toprule
+Operating promise & Minimum customer-visible behavior & Failure response \\
+\midrule
+Local processing & Source, pages, and deterministic findings stay inside the
+declared boundary. & Block or quarantine an unapproved remote call. \\
+Human ownership & No revision enters the reader packet without an author
+decision and protected comparison. & Mark the run incomplete and preserve the
+parent source. \\
+Visible uncertainty & Unsupported objects and model disagreement appear as
+abstentions. & Route to the incumbent workflow or a named expert. \\
+Continuity & The document can be completed if a component is unavailable. &
+Export the source and reading brief; import the later decision. \\
+Accountable records & A sponsor can inspect the evidence behind a continuation
+or stop decision. & Retain the minimum run, response, and rationale records. \\
+\bottomrule
+\end{tabularx}
+\caption{Operating promises that make adoption reversible.}
+\label{tab:operating-promises}
+\end{table}
+
+\section{The scale decision}
+\label{sec:adoption-scale-decision}
+
+At the end of the first comparative cohort, the sponsor should make a scoped
+scale decision, not a binary verdict on ``AI writing.'' Four results are
+possible:
+
+\begin{description}
+\item[Scale within the setting.] The reader endpoint improves or the burden
+  falls, protected-object incidents remain controlled, and the privacy and
+  continuity promises hold for the tested population.
+\item[Deepen the instrument.] The workflow is usable but the endpoint is too
+  noisy, the corpus is too narrow, or the reading brief is underspecified.
+  Invest in measurement before adding features.
+\item[Reposition.] Deterministic source correspondence or comparison is
+  valuable, but the complete packet does not change reader outcomes. Offer an
+  internal editing and evidence service without claiming efficacy.
+\item[Stop.] The product creates burden, cannot protect the source objects,
+  violates the privacy boundary, or cannot produce a credible comparison.
+\end{description}
+
+The scale rule should be written before the result is seen. For example, move
+to a second setting only if the held-out documents meet the protected-object
+threshold, the median author burden is no higher than the declared margin,
+and the reader can state the action and uncertainty above a predeclared
+threshold. The exact values belong to the study protocol; the important point
+is that a fluent demo cannot waive them.
+
+\begin{plainbox}{What the proposal is buying}
+The requested investment buys an option, not a promise of a market. It buys a
+working path from source snapshot to reader decision, a corpus that can expose
+where the path fails, and an economic worksheet tied to observed review work.
+Those objects make the next financing decision more informed. They also make
+it possible to stop without confusing a polished prototype with a validated
+product.
+\end{plainbox}
+
+The next appendices specify the records, fixtures, reader forms, and cost
+inputs that make this scale rule executable. They are part of the product
+proposal because an operating service cannot be separated from the evidence
+that tells a sponsor whether to keep paying for it.

@@ -1,0 +1,28 @@
+{
+  "example_manifest_version": "1.0",
+  "validator": "python-jsonschema==4.26.0",
+  "examples": [
+    {"schema": "authoring-brief.schema.json", "instance": "authoring-brief.valid.json", "expected": "valid"},
+    {"schema": "argument-blueprint.schema.json", "instance": "argument-blueprint.valid.json", "expected": "valid"},
+    {"schema": "finding.schema.json", "instance": "finding.valid.json", "expected": "valid"},
+    {"schema": "revision.schema.json", "instance": "revision.valid.json", "expected": "valid"},
+    {"schema": "preflight-run.schema.json", "instance": "preflight-run.valid.json", "expected": "valid"},
+    {"schema": "release-decision.schema.json", "instance": "release-decision.valid.json", "expected": "valid"},
+    {"schema": "runtime-manifest.schema.json", "instance": "runtime-deterministic.valid.json", "expected": "valid"},
+    {"schema": "runtime-manifest.schema.json", "instance": "runtime-inference.valid.json", "expected": "valid"},
+    {"schema": "runtime-manifest.schema.json", "instance": "runtime-missing-output-hash.invalid.json", "expected": "invalid", "expected_error_contains": "output_hash"},
+    {"schema": "cli-result.schema.json", "instance": "cli-result.valid.json", "expected": "valid"},
+    {"schema": "cli-result.schema.json", "instance": "cli-result-missing-source-hash.invalid.json", "expected": "invalid", "expected_error_contains": "source_hash"},
+    {"schema": "corpus-item.schema.json", "instance": "corpus-item.valid.json", "expected": "valid"},
+    {"schema": "corpus-item.schema.json", "instance": "corpus-item-missing-consent-date.invalid.json", "expected": "invalid", "expected_error_contains": "consent_date"},
+    {"schema": "finding.schema.json", "instance": "finding-extra-top-level.invalid.json", "expected": "invalid", "expected_error_contains": "Additional properties"},
+    {"schema": "source-snapshot.schema.json", "instance": "source-snapshot.valid.json", "expected": "valid"},
+    {"schema": "source-snapshot.schema.json", "instance": "source-snapshot-mutable.invalid.json", "expected": "invalid", "expected_error_contains": "True was expected"},
+    {"schema": "protected-manifest.schema.json", "instance": "protected-manifest.valid.json", "expected": "valid"},
+    {"schema": "protected-manifest.schema.json", "instance": "protected-manifest-unknown-status.invalid.json", "expected": "invalid", "expected_error_contains": "is not one of"},
+    {"schema": "evidence-item.schema.json", "instance": "evidence-item.valid.json", "expected": "valid"},
+    {"schema": "evidence-item.schema.json", "instance": "evidence-item-missing-provenance.invalid.json", "expected": "invalid", "expected_error_contains": "provenance"},
+    {"schema": "reader-decision.schema.json", "instance": "reader-decision.valid.json", "expected": "valid"},
+    {"schema": "reader-decision.schema.json", "instance": "reader-decision-incomplete-rubric.invalid.json", "expected": "invalid", "expected_error_contains": "stop_or_reread"}
+  ]
+}

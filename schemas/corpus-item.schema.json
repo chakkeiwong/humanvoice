@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://humanvoice.local/schema/corpus-item.schema.json",
+  "title": "Humanvoice corpus item rights record",
+  "type": "object",
+  "required": ["record_type", "schema_version", "record_id", "run_id", "created_at", "source_path_or_url", "source_hash", "owner", "license_or_permission", "permitted_use", "redistribution_status", "retention_class", "consent_date"],
+  "properties": {
+    "record_type": {"const": "CorpusItem"},
+    "schema_version": {"type": "string", "pattern": "^HV-SCHEMA-[0-9]+\\.[0-9]+$"},
+    "record_id": {"type": "string", "minLength": 1},
+    "run_id": {"type": "string", "minLength": 1},
+    "created_at": {"type": "string", "format": "date-time"},
+    "source_path_or_url": {"type": "string", "minLength": 1},
+    "source_hash": {"type": "string", "minLength": 1},
+    "owner": {"type": "string", "minLength": 1},
+    "license_or_permission": {"type": "string", "minLength": 1},
+    "permitted_use": {"type": "string", "minLength": 1},
+    "redistribution_status": {"enum": ["cleared-internal", "cleared-public", "restricted-not-for-export", "pending-clearance", "excluded"]},
+    "retention_class": {"type": "string", "minLength": 1},
+    "consent_date": {"type": ["string", "null"], "format": "date"},
+    "extensions": {"type": "object"}
+  },
+  "additionalProperties": false
+}

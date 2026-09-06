@@ -1,0 +1,522 @@
+% Chapter: what the available writing tools teach us
+\chapter{Open-source tools}
+\label{sec:oss}
+
+One of our rejected surveys earned the best score in a small test of writing
+tools. The program found few stock transitions, repeated openings, or phrases
+associated with machine-written prose. It gave the survey 10 points out of
+100, where a lower score meant a cleaner page. A human reader still could not
+follow it.
+
+That result is a useful place to begin. It shows both why writing tools belong
+in Humanvoice and why none of them can judge the finished document. A tool can
+notice a repeated phrase. It can count sentence lengths. With the right parser,
+it can point to a line in a LaTeX source file. It cannot tell whether an
+economist has explained the mechanism, whether an executive can reconstruct
+the decision, or whether a paragraph has asked the reader to absorb six new
+ideas at once.
+
+We examined the open-source field with that boundary in mind. The detailed
+package records, including versions, licences, repository activity, and the
+reasons for each disposition, appear in Appendix~\ref{app:oss-records}. This
+chapter develops the smaller number of ideas that change the product.
+
+\section{A low score and a failed reader}
+\label{sec:oss-calibration}
+
+The test used sloptrim, a local program that counts a documented set of
+phrasing and structural patterns. We gave it three documents whose histories
+we already knew. Two were versions of the same survey on zero-lower-bound
+models. The first was an internal working note. The second had been rewritten
+and accepted by its owner. The third was a technically serious survey that a
+reader had rejected because it did not teach.
+
+\begin{table}[H]
+\centering
+\small
+\begin{tabular}{@{}lccl@{}}
+\toprule
+Document & Score & Band & Human verdict \\
+\midrule
+ZLB survey, internal markdown & 45 & mixed & rejected (register) \\
+ZLB survey, final LaTeX & 25 & light tells & \textbf{accepted} \\
+Dense technical survey & 10 & clean & rejected (does not teach) \\
+\bottomrule
+\end{tabular}
+\caption{sloptrim v0.9.2 scores for three documents with recorded reader
+outcomes. Lower scores indicate fewer of the patterns the program measures.}
+\label{tab:calibration}
+\end{table}
+
+The first comparison went as hoped. The score fell from 45 to 25 after the ZLB
+survey lost its internal labels, crowded inline headings, and conspicuously
+regular phrasing. A one-second check recovered a change that had taken a human
+several readings to describe. Repeating that check after a later edit could
+warn us that the old habits had returned.
+
+The third row changes the interpretation. The dense survey looked cleaner to
+the program than the accepted document. It did not contain many of the phrases
+or rhythms the program had been written to count. Its failure lay elsewhere.
+Each paragraph introduced too many distinctions, and the relations among them
+remained implicit. The reader had to unpack the argument while learning it.
+
+The program did not make an error. It answered a narrow question accurately:
+how often does this text exhibit these observable patterns? The reader answered
+a different question: can I understand the argument well enough to use it?
+Humanvoice needs both observations, but they must never be confused.
+
+\hvFigureScoreBoundary
+
+This calibration also explains why a single readability number would be a
+poor product. A score is useful when it leads back to evidence a writer can
+inspect. It becomes dangerous when a low number is treated as permission to
+stop reading.
+
+\section{Pattern lists begin the diagnosis}
+\label{sec:oss-humanizer}
+
+Consider a deliberately small example:
+
+\begin{repairpair}
+\before{``The package contains a comprehensive suite of 35 robust patterns
+that collectively underscore the importance of human-centred writing.''}
+\after{``The package lists 35 patterns found in AI-assisted prose.''}
+\end{repairpair}
+
+The revision is easier to read because the package now performs a concrete
+action: it lists patterns. The number remains. Three unsupported evaluations,
+``comprehensive,'' ``robust,'' and ``underscore the importance,'' disappear.
+An editor can explain every change without claiming to know who wrote the
+sentence.
+
+Now imagine that the next sentence names all 35 patterns, divides them into
+six classes, gives examples from four classes, states two exceptions, and
+reports the package's licence and release status. It might contain none of the
+phrases in the first sentence. It would still be hard to read. The writer has
+opened several questions before closing the first one.
+
+That distinction matters because blader/humanizer, the strongest general
+pattern list we found, is deliberately a catalogue. It turns Wikipedia's
+``Signs of AI writing'' into 35 editing prompts. Some prompts concern inflated
+importance or vague sources. Others concern predictable sentence shapes,
+headings, filler, and remnants of a chat exchange. Each prompt comes with an
+example. The list is broad enough to give an editor a useful first look, and
+the project already uses a pinned copy.
+
+The list works best when it changes a suspicion into a question. If a passage
+says that a result ``marks a pivotal moment,'' the editor can ask what changed
+and by how much. If three consecutive paragraphs end with a broad outlook, the
+editor can ask whether any of those conclusions adds evidence. If a sentence
+uses ``experts say,'' the editor can ask which experts and where the claim can
+be checked. The pattern points to a place; the author supplies the answer.
+
+\hvFigurePatternQuestion
+
+This is a less glamorous role than automatic humanization, but it is much more
+valuable. The tool does not need to infer a writer's identity or invent a
+better sentence. It needs to locate a plausible problem, name the reason, and
+leave enough context for a person to decide.
+
+The word ``significant'' shows why context comes next. In ``the coefficient is
+significant at the one per cent level,'' the word has a stated statistical
+meaning. In ``the project makes a significant contribution,'' it is an
+evaluation waiting for evidence. A flat search returns both sentences. A good
+finding shows the surrounding clause and asks only about the second use unless
+the statistical statement itself lacks a reported test.
+
+Two parts of humanizer make that use possible. First, it tells the editor what
+not to flag. Formal vocabulary is not evidence of machine authorship. A
+quotation belongs to the person being quoted. A genuine limitation stays when
+the evidence requires it. An em dash, by itself, proves nothing. These
+exceptions keep an ordinary feature of scholarly prose from becoming an
+offence merely because it also appears in generated text.
+
+\Needspace{11cm}
+Second, the skill forbids a rewrite from changing a number, date, quotation,
+citation, or substantive claim. Suppose a cited study estimates a lower bound
+of 13.5 per cent. Changing the sentence to ``about 14 per cent'' may improve
+the cadence, but it changes the reported result. A prose tool has no authority
+to do that. It should either preserve 13.5 per cent or ask the author to review
+the source.
+
+The distinction is easy to miss because the altered sentence may sound more
+natural. Fact preservation therefore has to be checked after the prose edit,
+not entrusted to the editor's memory. The comparison should display 13.5 and
+14 side by side, retain the citation attached to the number, and require an
+author to accept or reject the change. Fluency is not evidence that rounding
+was licensed.
+
+Humanizer also contains a rule that illustrates the need for local control. It
+discourages em and en dashes unless the writer's sample uses them. Applied
+literally to LaTeX, that instruction would damage correct typography in a date
+range such as 1990--2020 and in a name such as Nash--Cournot. Humanvoice keeps
+the diagnostic but overrides the blanket instruction. The detailed record in
+Appendix~\ref{app:oss-humanizer-record} preserves the version and implementation
+facts; the reader-facing lesson is simply that a useful list must be allowed
+to be wrong in context.
+
+\section{Pace is not the same as brevity}
+\label{sec:oss-pace}
+
+A page can be spacious and still move too fast. Suppose a package review tells
+the reader, in one stretch, that the project contains 35 patterns in six
+groups; names examples from each group; explains its false-positive policy and
+its fact-preservation rule; identifies a dangerous typography rule; describes
+the local override; and reports that the vendored copy matches upstream. The
+sentences may be grammatical. The paragraph may contain fewer than 350 words.
+It is nevertheless doing the work of several pages.
+
+The reader has to keep too many questions open. What does the package actually
+catch? Why are the six groups useful? Which rule is dangerous? Why does a
+typographic exception affect adoption? What has already been installed, and
+what remains to be built? The answers arrive, but they arrive while the reader
+is still sorting the questions.
+
+This is the kind of failure a word count misses. It is also easy to worsen by
+shortening. Removing connective sentences leaves the same ideas packed more
+tightly. Breaking the paragraph into bullets changes its shape but not its
+pace. Adding a diagram can make matters worse if the diagram introduces a new
+taxonomy beside an already crowded explanation.
+
+The CardNPV case in Section~\ref{sec:cardnpv} uses the more reliable sequence.
+It begins with one finite account and one decision. The reader sees the entries,
+follows the arithmetic, and learns why a particular timing distinction matters.
+Only then does the text give the distinction a general name and carry it to a
+larger model. The example does not decorate an abstraction that has already
+been stated. It creates the need for the abstraction.
+
+The same sequence works for software. Begin with one sentence that a tool can
+plausibly improve. Show the pattern it notices. Then show a sentence on which
+the same rule would be wrong. Once the reader understands both cases, explain
+how the product will use the rule. Repository status and licence can wait until
+the reader knows why the package matters; the complete facts can sit in a
+reference record.
+
+\hvFigureConceptPace
+
+Slower exposition need not be repetitive. Each return should add something.
+The first example establishes the symptom. The counterexample establishes the
+boundary. A worked product finding shows the action. The implementation
+decision then follows from objects the reader already knows. Repeating the name
+of a category without changing the reader's understanding would merely add
+length.
+
+Pace also changes at natural stopping points. An equation should usually be
+followed by an interpretation before another notation system appears. A table
+should be introduced by the question it answers and followed by the one or two
+comparisons that matter. A new package should not arrive while the implication
+of the previous package remains unstated. These are ordinary teaching habits,
+but a catalogue-driven survey tends to erase them because every record competes
+for the same small template.
+
+Humanvoice should therefore diagnose crowding separately from sentence style.
+A first implementation can nominate passages with several new acronyms,
+package names, parenthetical qualifications, enumerations, or cross-references
+in quick succession. It can also notice when a short section introduces many
+terms that do not recur. Those are reasons to inspect a page, not evidence that
+the page is bad. A compact theorem statement may be exactly right for its
+reader; a compact opening to a product proposal usually is not.
+
+The decisive observation still comes from a person. Give a reader the page and
+ask for the relation among its principal ideas. If the reader can repeat the
+nouns but cannot explain why one leads to the next, the problem is not
+vocabulary. The page has named a structure without teaching it. Revision should
+then change the order, examples, and connections before it changes the tone.
+
+\section{Context decides whether a rule applies}
+\label{sec:oss-context}
+
+Take the sentence ``The estimator is asymptotically normal.'' A general style
+guide that removes every adverb would delete the word carrying the mathematical
+content. The shorter sentence would be false. A ban on passive voice can fail
+in the same way. ``The observations were winsorized at the first and
+ninety-ninth percentiles'' puts the treatment first because the identity of the
+research assistant is irrelevant. Recasting it merely to name an actor can make
+the method less clear.
+
+These are not edge cases in technical writing. They are the reason a package
+written for essays, blog posts, or sales copy cannot be installed as a
+scholarly rulebook. hardikpandya/stop-slop, for example, notices several habits
+that our own drafts exhibit: distant narration, staged negative openings, and
+sentences in which an abstraction appears to act. Those observations are
+useful. Its flat prohibitions on adverbs and passive constructions are not.
+Humanvoice can borrow the first set without importing the second.
+
+Even the idea of an ``abstract actor'' needs a domain test. ``The decision
+emerges'' may hide the person or calculation that produced it. ``The model
+implies'' is ordinary economics when the implication follows from stated
+assumptions. The words are similar; the semantic roles are not. A linter can
+nominate both sentences. Only a context rule, and sometimes the author, can
+separate them.
+
+\Needspace{13cm}
+The useful question is not whether an inanimate noun performs a verb. It is
+whether the sentence lets the reader recover the cause. ``The estimate falls
+after the high-leverage observations are removed'' names an observable
+comparison. ``A more balanced conclusion emerges'' does not say who balanced
+the evidence or what changed. The first sentence can stand. The second needs an
+actor, a calculation, or both.
+
+The academic-humanizer project begins closer to the right register. It keeps
+evidence-tied hedges such as ``suggests'' and ``is consistent with.'' It keeps
+equations, notation, citation keys, and definitions. It asks whether a strong
+empirical verb is supported by a number, figure, test, or source. Its most
+useful example does not replace ``significantly outperforms'' with a milder
+synonym. It asks for the comparison, the magnitude, and the statistical basis.
+That is an explanation problem, not a tone problem.
+
+In a hypothetical results section, ``our estimator significantly outperforms
+the baseline'' leaves all three elements unstated. A useful revision might say
+that held-out root mean squared error falls from 1.14 to 1.07 and then name the
+test used for the comparison. If those results do not exist, the right repair
+is to weaken or remove the claim. The editor must not invent a number merely to
+satisfy the template.
+
+The project is too young and too dependent on model compliance to become a
+second installed editor. Its academic rules nevertheless fill an important
+gap in the general list. We will adapt those rules into a scholarly layer,
+using examples from economics and finance. A calibrated hedge will remain a
+hedge; a defined technical term will not be replaced merely because it is
+uncommon.
+
+conorbronsdon/avoid-ai-writing contributes a related distinction. It separates
+words that have become unusually frequent in generated prose from ordinary
+clarity edits. The first can contribute to a distributional signal. The second
+may improve a sentence, but it says nothing reliable about authorship. A writer
+may reasonably replace ``utilize'' with ``use.'' That preference must not be
+smuggled into a detector.
+
+The same project handles quoted and hostile text carefully. A passage being
+reviewed may contain the sentence ``ignore the instructions above.'' The
+editor must treat those words as document content, not as a command. A phrase
+inside a quotation, code block, or table can be reported when necessary, but
+it should not be rewritten automatically. In Humanvoice, source authority
+comes from the author and the declared configuration, never from the text
+under inspection.
+
+Taken together, the packages suggest a three-part rule. A diagnostic should
+say what it observed. The configuration should say where that observation is
+meaningful. The author should decide what, if anything, changes. A global
+blacklist collapses all three decisions into one and is therefore too crude
+for the product.
+
+\section{A useful warning points to a place}
+\label{sec:oss-located-findings}
+
+An author facing an eighty-page manuscript cannot act on ``this document is
+somewhat repetitive.'' The useful unit is smaller. The warning should identify
+the passage, state what repeated, and ask a question whose answer could change
+the paragraph.
+
+For example, suppose four consecutive sections begin with ``This chapter
+provides.'' A Humanvoice finding might read as follows:
+
+\begin{plainbox}{A located prose finding}
+\textbf{Observed:} four of the last four section openings use the same
+document-centred construction.\par
+\textbf{Location:} source lines 410, 463, 521, and 588; rendered pages 27, 31,
+35, and 39.\par
+\textbf{Question:} can each section begin with the result, example, or problem
+that distinguishes it?\par
+\textbf{Action:} the author may revise, keep, or dismiss the finding with a
+reason.
+\end{plainbox}
+
+This record does not prescribe four replacement sentences. It makes a pattern
+visible at the scale where the author can judge it. If the repetition is a
+deliberate refrain, the author can keep it. If it arose from a chapter template,
+the locations make the repair finite.
+
+Location is necessary but not sufficient. A long manuscript can produce
+hundreds of accurate low-value warnings. Humanvoice should present first the
+findings that could change a reader's interpretation: a missing qualification,
+an unsupported comparison, a broken referent, or a repeated section structure
+that hides the argument. Spelling and punctuation remain available, but they
+should not fill the screen while a substantive problem waits below them.
+
+This ordering is not a universal severity formula. A misspelled unit in a risk
+limit can matter more than an awkward paragraph. The finding record therefore
+retains its rule, location, and affected object. The reading brief supplies the
+priority: what must this reader understand or decide, and which warning bears
+on that task?
+
+Vale is the strongest available host for findings of this kind. Given an
+explicit rule, it returns a file, line, severity, and message. Its configuration
+can turn a rule off for LaTeX while retaining it for a press release, or reduce
+an uncertain pattern from an error to advice. That is how genre and policy
+become executable without pretending that every rule is universal.
+
+The accompanying vale-ai-tells collection supplies useful raw material. It
+contains ordinary vocabulary rules, patterns for defensive sentence shapes,
+and measurements of such features as sentence-opener repetition and paragraph
+variation. Several stock rules are wrong for scholarly LaTeX. One treats every
+en dash as an error; another flags the double hyphen that LaTeX uses to produce
+one. A formal-register rule can even object to ``minimize,'' though an estimator
+may literally minimize an objective. The remedy is a small, reviewed
+configuration, not a mass acceptance of the package defaults.
+
+sloptrim complements Vale. Vale is good at saying which explicit rule fired on
+which line. sloptrim gives a quick view of recurring vocabulary and rhythm
+across the document, with sample spans that can be inspected. It also publishes
+its own limits and does not claim to identify authorship. That candour matters:
+the score in Table~\ref{tab:calibration} is useful precisely because we do not
+ask it to certify the page.
+
+The two tools should not be merged into one opaque score. If the document-level
+scan reports monotonous openings, the author should be able to open the spans
+that produced the count. If a Vale rule fires on one of those spans, the record
+should show the rule separately. Agreement makes the passage easier to find;
+disagreement reveals that the tools are measuring different things.
+
+LaTeX exposes one more wrinkle. A program reading raw source may mistake a
+sequence such as \verb|\item \textbf| for a repeated sentence opening. A
+program reading only extracted prose may lose the source line that an author
+needs to fix. The first implementation should therefore retain both views. Raw
+source preserves locations and commands. Extracted prose gives the diagnostic
+a cleaner linguistic sample. When they disagree, the finding should show the
+disagreement rather than silently choosing one.
+
+\hvFigureDualTextViews
+
+This division yields a modest first stack. Vale supplies located, configurable
+rules. sloptrim supplies a reproducible document-level scan. The installed
+humanizer and the adapted academic layer supply questions and examples. None
+of them rewrites by default, and none of them closes the reader test.
+
+\section{LaTeX changes the engineering problem}
+\label{sec:oss-latex-problem}
+
+A prose linter sees words. A technical revision also contains equations,
+numbers, citations, labels, tables, and commands that acquire meaning only
+when LaTeX builds the document. Consider these two expressions:
+
+\begin{align*}
+\widehat\beta_A &= (X^{\mathsf T}X)^{-1}X^{\mathsf T}y,\\
+\widehat\beta_B &= (XX^{\mathsf T})^{-1}X^{\mathsf T}y.
+\end{align*}
+
+One transposition has moved. A style checker may report no change at all. A
+character diff will show the change but cannot say whether it is admissible.
+The author needs the equation highlighted as a protected difference, with its
+label and rendered location, before deciding whether version B is an error or
+an intentional change of estimator.
+
+A protected comparison handles this in stages. It first fixes the identity of
+the two source versions. It then records the complete equation bodies and their
+labels, rather than comparing only the prose around them. After both versions
+compile, it connects each source expression to the page on which the reader
+sees it. Only then does it ask the author about the moved transposition. The
+software establishes where the change occurred; the author establishes what
+the change means.
+
+The same problem appears in less conspicuous forms. A citation key can still
+compile after it has been attached to the wrong claim. A custom command can
+expand to a number in one table and a label in another. A revised paragraph can
+leave an equation untouched while deleting the assumption that made it valid.
+No prose package reviewed here represents all of those relations.
+
+\Needspace{11cm}
+Consider the citation case. A revision can replace one source with another
+whose title and date look plausible. LaTeX will compile as long as the new key
+exists. A bibliography resolver can establish the new source's identity. It
+still cannot establish that the source supports the sentence. Humanvoice must
+show the changed identity beside the claim and leave support checking to a
+person or a separately evidenced process.
+
+TeXtidote and LTeX+ are useful because they understand enough LaTeX to skip
+mathematics and return grammar findings to source lines. textlint offers a more
+programmable rule system and a LaTeX parser plug-in, but would require us to
+write the relevant rules. These are candidates for line-accurate language
+feedback. They are not substitutes for a protected comparison.
+
+The deeper source question belongs to the next chapter. Tools such as
+pylatexenc, Pandoc, plasTeX, unified-latex, TexSoup, tree-sitter-latex, and
+LaTeXML offer different compromises among tolerance, macro expansion, source
+locations, and document structure. Their names matter to an implementer. To a
+reader of the proposal, the decision is simpler: benchmark several on the same
+small set of hostile LaTeX examples, preserve raw spans, and abstain whenever a
+parser does not understand a construct. Chapter~\ref{ch:software-dossiers}
+develops that comparison at an engineering pace.
+
+This is the point at which a writing assistant becomes a document system. The
+software must connect a warning in prose to the exact source version, the
+rendered page, and any mathematical or evidentiary object that could be changed
+by the repair. Existing packages supply parts of that path. Humanvoice must
+build and test the connection.
+
+\section{Detection is not the product}
+\label{sec:oss-detection-boundary}
+
+It is tempting to turn the same tools into an answer to a more dramatic
+question: was this document written by a model? That question is poorly matched
+to the product and poorly supported at the level of an individual technical
+manuscript.
+
+The literature in Chapter~\ref{sec:literature} shows why. Detectors are
+sensitive to model family, domain, editing, language background, and the
+polished regularity of formal prose. A false accusation can attach to a person;
+a missed label can be defeated by ordinary editing. Neither outcome tells an
+executive whether the document explains its mechanism.
+
+fast-detect-gpt remains useful as research code for a distributional measure.
+If the team later studies a large collection of its own drafts, it may compare
+the curvature distribution across periods or workflows. The observation must
+remain aggregate, with no individual label and no claim of quality. The
+experiment is optional; the writing workflow does not depend on it.
+
+slop-forensics answers a more practical corpus question. It compares word and
+phrase frequencies in model output with a human reference collection. Pointed
+at the team's own drafts and a pre-2022 economics corpus, it could reveal that
+a new model has begun to overproduce a particular transition or sentence
+shape. The result would update the diagnostic list. It would not trigger an
+automatic rewrite, because an overrepresented expression can still be the
+right expression in a particular sentence.
+
+The boundary also excludes tools organized around detector evasion. One
+reviewed project describes its checks in terms of watermark stripping and
+attribution evasion, and several of those checks pass without measuring the
+property named. That goal conflicts with Humanvoice. The product is intended
+to improve disclosed, accountable technical work. It has no need to make
+assistance harder to identify.
+
+Corpus monitoring may eventually help prevent all the team's documents from
+acquiring the same voice. It is a population diagnostic, much like checking a
+portfolio for concentration. The decision on an individual paragraph remains
+local: does this wording convey the right fact, in the right register, to this
+reader?
+
+\section{The software decision}
+\label{sec:oss-decision}
+
+The survey supports four different actions, and keeping them separate prevents
+an interesting repository from becoming an unnecessary dependency.
+
+We will keep the installed humanizer as a general source of questions. Its
+false-positive guidance and fact-preservation rule make it safer than a simple
+ban list. We will adapt the strongest academic rules into the same policy
+layer, so that evidence, notation, and calibrated hedging receive explicit
+protection.
+
+We will pilot Vale and sloptrim as complementary diagnostics. Vale must earn
+its place by returning useful, line-addressable findings under a restrained
+LaTeX configuration. sloptrim must earn its place by remaining stable on a
+held-out set of accepted and rejected passages. A favorable score from either
+tool will never count as reader acceptance.
+
+We will test, rather than prejudge, the source components. LaTeX parsers,
+language servers, and visual comparison tools will face the same fixtures:
+custom commands, equations, tables, citation changes, malformed environments,
+and intentional repetition. A parser that abstains visibly is preferable to
+one that loses a protected object while producing a clean-looking tree.
+
+We will leave out packages whose genre assumptions conflict with scholarly
+writing, whose checks are weaker than available alternatives, or whose purpose
+is detector evasion. Their useful observations remain in the pattern catalogue
+or the package records. Their code does not enter the first build.
+
+The field therefore supplies much of the machinery, but not the product. It
+can parse parts of a source file, locate some prose patterns, compare visible
+changes, and run a model locally. It does not join those observations into a
+protected revision that ends with a named reader's decision. Chapter
+\ref{ch:software-dossiers} now turns from lessons to components and asks which
+ones can survive a held-out engineering test.

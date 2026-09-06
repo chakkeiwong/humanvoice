@@ -1,0 +1,45 @@
+\section{Recommendation and Qualifications}
+
+\subsection{Recommendation}
+
+The assessment recommends conditional approval of the microservices migration, contingent on three prerequisites being satisfied before Phase 3 begins.
+
+First, organizational readiness must be established. Three additional SRE hires must be productive, and the existing team must demonstrate intermediate proficiency in service mesh operations and distributed tracing analysis as measured by the skills assessment instrument. Recruitment must begin at month 2 to meet this timeline.
+
+Second, the saga pattern must be validated against the three highest-complexity cross-service transactions: dispute resolution, multi-account transfer, and settlement reversal. Validation means a working implementation passing a test suite that exercises all failure interleavings, not a design document. If any of the three cannot be implemented satisfactorily, the boundary definitions must be revised to keep that transaction within a single service.
+
+Third, vendor selection for managed Kubernetes and managed service mesh must be complete. Operating these platforms in-house would add an estimated 2.5 FTE to the operational burden, which the cost model does not accommodate and the headcount plan does not support.
+
+Vertical database scaling should proceed immediately and independently of this decision, as it buys 18 months of runway at negligible cost and is not wasted effort under any scenario.
+
+\subsection{What Would Change the Recommendation}
+
+The recommendation is sensitive to three factors, and the assessment states the reversal conditions explicitly so that future evidence can be evaluated against them.
+
+If transaction growth decelerates below 12\% annually, the capacity constraint recedes and the modular monolith becomes the better choice. Current growth is 31\% annually; the assessment recommends re-evaluating if two consecutive quarters fall below 15\%.
+
+If the month-6 or month-12 checkpoint reveals that operational complexity exceeds projections, specifically if page volume for the first four extracted services exceeds 8 per week or if any service fails to meet its availability objective over an 8-week window, the migration should pause and the modular monolith fallback should be activated.
+
+If the saga validation demonstrates that more than five cross-service transactions require semantic locking, the coordination burden approaches that of distributed transactions and the architectural benefit is substantially eroded. In that case, revised boundaries reducing the number of services from twelve to seven or eight should be evaluated before proceeding.
+
+\subsection{Qualifications on the Evidence}
+
+Several limitations bound the confidence of this assessment.
+
+The pilot benchmarked three of twelve services. Extrapolating to the full system assumes that the remaining nine exhibit similar scaling characteristics, which is plausible but unverified. Services with substantially different workload profiles, particularly Reconciliation with its large scans, may behave differently. The month-20 checkpoint is positioned specifically to catch such divergence before commitment becomes irreversible.
+
+Cost estimates for engineering effort derive from the organization's historical velocity on comparable projects, of which there are two. This is a small sample, and both projects overran their estimates by 20\% and 35\% respectively. The 15\% contingency buffer may be insufficient; a 30\% buffer would be more consistent with the historical record.
+
+Opportunity cost is the least defensible figure in the analysis. It depends on revenue projections for features that have not been built, estimated by the product team without a formal methodology. The 40\% haircut applied is a judgment, not a calculation. Readers should treat the \$1.9M figure as an order-of-magnitude indication rather than a point estimate.
+
+The failure injection results were obtained in a pilot environment carrying synthetic load. Production failure behavior may differ, particularly for failure modes involving customer retry behavior, which synthetic load generators model poorly. The chaos engineering program in production is the mechanism for closing this gap, but it will not produce results until Phase 2.
+
+Finally, the assessment does not model the possibility that the migration is abandoned mid-course. Partial migration leaves the organization operating both a monolith and a set of services, which is the worst of both models: full operational complexity without full architectural benefit. The checkpoint structure is designed to force explicit continue-or-revert decisions rather than allowing drift into this state, but the risk is real and the assessment cannot quantify it.
+
+\subsection{Decision Framing}
+
+The choice is not between a good option and a bad one. It is between a lower-cost path that solves the immediate constraint while preserving the current agility limitations, and a higher-cost path that addresses both at the price of substantial operational complexity and execution risk.
+
+The cost analysis does not favor the migration. The strategic argument does, on the grounds that deployment independence compounds in value over time and that the capability built during migration positions the organization for growth beyond the five-year horizon the TCO model covers. That argument is a judgment about the future, and reasonable people may weigh it differently.
+
+What the assessment can state with confidence: the current architecture will reach a hard capacity limit within 18 months; vertical scaling defers this to 42 months at negligible cost; and any option that provides growth beyond 72,000 TPS requires substantial architectural change costing between \$0.9M and \$6.8M. The decision is about which change, and when, not whether.

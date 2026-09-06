@@ -1,0 +1,387 @@
+\chapter{Components worth testing}
+\label{ch:software-dossiers}
+
+Imagine a two-page research note. Its opening reports an estimated premium of
+42 basis points. A table displays the same estimate, an equation defines the
+premium, and a citation supports the identification strategy. The author wants
+help with one awkward paragraph.
+
+A conventional writing assistant sees the paragraph. Humanvoice must see the
+note. If a proposed edit changes 42 to 24, removes the condition attached to the
+estimate, or moves the citation to a stronger claim, the new prose may still be
+fluent. The revision has nevertheless changed the analysis. The product needs
+to show the author that change before anyone accepts the wording.
+
+This small note gives the software review its order. First preserve the source
+and build what the reader sees. Then locate the prose question. Compare the
+meaning-bearing parts of the two versions. Only after those steps should an
+author decide whether to revise and a reader decide whether the note works.
+Available packages can perform many of these jobs, but no package in the survey
+performs the complete sequence.
+
+The detailed component and market records appear in
+Appendix~\ref{app:component-records}. This chapter asks the narrower investment
+question: which parts should the first build reuse, which need an adapter, and
+which connection must Humanvoice own?
+
+\section{One note, six jobs}
+\label{sec:component-jobs}
+
+The note first needs an identity. Humanvoice takes a snapshot of the LaTeX
+source, its bibliography, and the command that produces the PDF. A later
+finding can then point to the exact version on which it was made. Without that
+identity, an author may open a warning from yesterday against a paragraph
+changed this morning.
+
+Next comes the build. The software compiles the note and records unresolved
+references, missing files, and the page on which each labelled object appears.
+A source file that looks plausible but does not produce the reader's PDF is not
+a useful basis for revision.
+
+The third job is diagnosis. A prose rule may notice that the paragraph begins
+with a vague statement of importance. A structural check may notice that the
+same opening appears in four sections. A citation check may notice that the key
+no longer resolves to the source used in the previous version. Each finding
+needs a location and a reason. None changes the source by itself.
+
+The fourth job begins only after the author edits. Humanvoice compares the old
+and new versions of the equation, the number, the citation identity, and the
+qualification around the result. In the example, the author should see that the
+premium remains 42 basis points in the paragraph, table, and equation. If one
+instance differs, the comparison remains open.
+
+Privacy supplies a fifth job. A restricted manuscript stays local unless its
+owner approves a particular external service and the fields that may be sent.
+Installing a local model can reduce one class of disclosure risk. It does not
+make the model's suggestion correct, and it does not erase the need to record
+which version and prompt produced the suggestion.
+
+The last job belongs to a person who did not write the note. That reader sees
+the rendered pages, the declared decision, and any required disclosure. Can the
+reader state what the 42 basis points measure, why the estimate is identified,
+and what action follows? The answer is the product outcome. It cannot be
+recovered from a grammar score or a successful build.
+
+No current candidate does all six jobs. That is not a reason to write six new
+systems. It is a reason to put mature components behind a small record that
+keeps their evidence separate. A parser supplies locations. A linter supplies
+warnings. A model supplies suggestions. A reader supplies the consequential
+judgment.
+
+The path from an interesting repository to an adopted component should be
+deliberately slow.
+
+\hvFigurePackageFunnel
+
+A package that installs has shown only that it can run. A package that handles
+one designed example has shown a little more. It earns a role in Humanvoice
+only after it succeeds and fails in the expected places on examples it did not
+help to design. Even then, adoption is conditional on the burden it creates for
+the author.
+
+\section{Start with the source, not the suggestion}
+\label{sec:component-source}
+
+LaTeX is a program as well as a document format. A command can define a number
+once and print it in several places. Another command can alter spacing without
+altering meaning. A third can expand differently inside a table and a sentence.
+The parser therefore has to preserve both the raw source and what the command
+produces.
+
+\begin{cardexample}{One command, two visible meanings}
+Consider a fixture built around a custom command called
+\verb|\riskterm|. In the table it expands to ``42 bp.'' In the prose it expands
+to ``estimated risk premium.'' An editor that stores only the expanded text
+sees two unrelated phrases. An editor that stores only the command name misses
+the visible difference. Humanvoice needs the call, the expansion, the source
+location, and the rendered location. If any of those cannot be recovered, the
+fixture should be marked unparsed rather than protected.
+\end{cardexample}
+
+pylatexenc is the smallest serious Python candidate for this first pass
+\citep{pylatexenc2026}. It can tokenize commands and groups while retaining
+source positions. That is enough to test whether the product can locate known
+macros, mathematics, citations, and environments without inventing a full
+model of TeX. Its limitation is equally useful: an unfamiliar macro has no
+semantic meaning merely because its braces were parsed. The adapter must keep
+the raw span and abstain.
+
+\Needspace{13cm}
+A richer document model may become necessary. plasTeX understands sections,
+counters, labels, and more of the structure a rendered document exposes
+\citep{plastex2026}. LaTeXML translates many mathematical constructs into a
+semantic XML representation \citep{latexml2026}. Both can answer questions a
+tokenizer cannot. Both also create a larger compatibility problem. A custom
+package may behave differently from the author's TeX installation. The
+benchmark must compare their representation with the canonical PDF rather than
+assuming that a more elaborate tree is more faithful.
+
+The editor route creates a different tradeoff. unified-latex offers typed
+JavaScript structures and transformations that fit a web interface
+\citep{unifiedlatex2026}. tree-sitter-latex can update a syntax tree quickly as
+the author types \citep{treesitterlatex2026}. TexSoup offers a tolerant Python
+interface that remains usable on imperfect input \citep{texsoup2026}. Speed and
+tolerance are helpful in an editor. They become dangerous when a best-effort
+parse is silently promoted to a claim that an equation was protected. Unknown
+constructs must remain visible in every route.
+
+Pandoc solves another job well. It can turn supported sources into a structured
+interchange form and produce a prose view for linguistic diagnostics
+\citep{pandoc2026filters}. That secondary view is useful when raw commands
+confuse a writing rule. It is not the authority for equation preservation. The
+LaTeX source and its own build remain the reference for the first release.
+
+latexdiff belongs at the end of this path, not the beginning. It gives an author
+a legible picture of source changes \citep{latexdiff2026}. That picture is
+valuable in a review packet. It does not decide whether two equations are
+equivalent or whether a citation still supports a sentence. Humanvoice should
+use it to display an already recorded comparison, never to define the
+comparison.
+
+The first parser decision is therefore a bake-off, not a commitment to a
+framework. Give the candidates the same custom commands, nested environments,
+equations, tables, comments, and malformed input. Record what each locates,
+what it loses, and where it abstains. Begin with pylatexenc because it is small
+and fits the proposed Python core. Keep the richer candidates available when a
+fixture demonstrates that the smaller representation is insufficient.
+
+\section{Let mature tools do narrow jobs}
+\label{sec:component-narrow-tools}
+
+The product does not need to conceal the ordinary LaTeX toolchain. latexmk can
+repeat compilation until references and the bibliography settle
+\citep{latexmk2026}. ChkTeX can report source-level syntax and usage warnings
+\citep{chktex2026}. Their output belongs in the run record with the exact build
+command. Neither tool needs to become a Humanvoice feature, and neither tool
+establishes that the resulting page is understandable.
+
+Grammar and prose checks are another mature layer. Vale is well suited to
+project rules because it returns a line, rule, and message
+\citep{vale2026docs}. LTeX+ and TeXtidote understand enough LaTeX to avoid
+treating every equation as a sentence and can return language findings to
+source locations \citep{ltexplus2026}. textlint is attractive when a rule needs
+a programmable JavaScript host \citep{textlint2026docs}. The first build should
+adapt their machine-readable findings rather than copy their rule engines.
+
+\hvFigureNarrowEvidence
+
+These tools should run after the important question is visible. If the research
+note does not explain what the 42 basis points measure, a queue of comma and
+agreement corrections is a distraction. Once the mechanism is present, those
+corrections can reduce friction. The reading brief determines the order; the
+number of warnings does not.
+
+\Needspace{13cm}
+Citations require two separate checks. The first resolves identity: does the
+key still point to the expected authors, title, venue, and identifier? GROBID
+can help extract structured fields when a PDF is the only available source
+\citep{grobid2026}. The second check asks whether the paper supports the
+sentence. Matching a DOI cannot answer that question. Humanvoice should never
+label an identity match as citation validation.
+
+Local inference is also a component rather than a conclusion. llama.cpp offers
+a portable runtime for compatible local models \citep{llamacpp2026}. It can
+keep an approved prompt and manuscript on the organization's hardware. The
+selected model still needs a licence, resource profile, prompt-injection test,
+and comparison with a remote baseline. A local hallucination is private, but it
+is still a hallucination.
+
+The reader task needs less machinery than a general model-evaluation platform.
+jsPsych can present a local browser exercise, randomize version order, record
+answers and elapsed time, and export a structured session
+\citep{jspsych2026}. That makes it a plausible instrument for the first human
+comparison. It does not recruit an expert reader or decide whether an answer is
+correct.
+
+Inspect AI can organize repeatable tasks, solvers, and model graders
+\citep{inspectai2026}. It may become useful when the team compares prompts or
+judge models. Making it a dependency of the first human exercise would reverse
+the order of evidence. The named reader is the endpoint; model-evaluation
+infrastructure is optional support.
+
+\subsection{The pacing adapter is a small local experiment}
+\label{sec:component-pacing-adapter}
+
+The HPO case adds one capability that the general packages do not supply. The
+first build needs a way to compare a target chapter with the exemplars in its
+reading brief and to show where new concepts arrive in bursts. The repository
+now contains a standard-library prototype, \texttt{tools/concept\_density.py},
+for that narrow job. It recognizes a few transparent signals---acronyms,
+mid-sentence proper terms, emphasized definition phrases, recurring technical
+bigrams, and citation keys---then reports introduction rate, consolidation,
+bursts, and live load.
+
+The prototype is deliberately not a dependency of the protected comparison.
+It can be noisy, and it has no sentence-level dependency parser. Its output is
+a ranked worklist with file and line locations. The author can dismiss a
+capitalized ordinary word in one action. A first-use pass reads the same brief
+for known vocabulary and exemption ranges, then asks for a gloss or a
+taught-later pointer when the evidence is missing.
+
+The HPO fixture supplies the first calibration and held-out material: 25
+adjudicated ordering violations and 80 adjudicated false alarms. Those numbers
+remain in the fixture record rather than becoming a success rate. Before the
+adapter is promoted, an independent operator must measure precision,
+abstention, and minutes spent triaging it on documents outside its tuning
+partition. A positive result would justify a narrow adapter; a null result
+would leave the rest of the source-to-reader path intact.
+
+The common rule is simple. Reuse a mature tool when its output names a fact the
+product can check: a build result, a source location, an identifier, a language
+warning, a runtime trace, or a recorded response. Do not ask that tool to make
+the larger claim that the document is correct or persuasive.
+
+\section{The alternatives an executive will try first}
+\label{sec:component-alternatives}
+
+A sponsor should ask why the team cannot buy this capability. The answer cannot
+be that Humanvoice has a longer feature list. Existing assistants are better
+than a new prototype at many common writing tasks, and the experiment should
+retain them as credible alternatives.
+
+For an ordinary memorandum, Grammarly may be the right incumbent. Its
+enterprise product works across common writing environments and combines
+language suggestions with a broader agent layer
+\citep{grammarly2026enterprise}. Its privacy documentation also explains when
+generative features may send text and context to service providers
+\citep{grammarly2026privacy}. An organization can weigh those controls against
+the document's sensitivity. Humanvoice should not spend its first budget
+rebuilding general grammar and tone advice that a mature service already
+provides.
+
+The research-note example exposes the remaining question. The unit seen by a
+general assistant is usually a selected passage or communication context. The
+unit Humanvoice must protect is the versioned note: paragraph, equation, table,
+citation, and reader decision together. An excellent rewrite of the paragraph
+can still change the denominator or remove the identification condition.
+Generic fluency is therefore part of the incumbent workflow, not the proposed
+product wedge.
+
+\hvFigureAlternativeUnits
+
+\Needspace{13cm}
+Academic assistants come closer. Writefull integrates research-trained language
+support into Overleaf and offers rewriting and style functions in the LaTeX
+environment \citep{writefull2026overleaf}. It should be tested as a language
+adapter and as an incumbent arm. The question is not whether it can improve a
+sentence. The fixture asks whether the suggestion remains tied to a source
+span, whether protected objects stay visible, and whether the resulting note
+can enter the same reader task.
+
+Paperpal combines language editing with reference discovery, citation styles,
+and submission checks \citep{paperpal2026assistant}. Trinka similarly targets
+academic and technical writing and documents institutional, privacy,
+integration, and API options \citep{trinka2026privacy}. Their breadth is real
+value for a researcher. It also makes causal interpretation harder: when one
+interface performs many interventions, a favorable reaction does not show
+which intervention helped or whether a protected object moved. The benchmark
+should test declared functions one at a time.
+
+Overleaf already solves the social side of collaborative LaTeX editing. It
+provides comments, version history, and Track Changes through which authors can
+accept or reject revisions \citep{overleaf2026trackchanges}. Humanvoice should
+integrate with that environment when a team already uses it. Track Changes is a
+view of source edits, however, not a proof that an equation is equivalent or a
+citation supports its new sentence. The source snapshot and protected
+comparison remain distinct.
+
+Privacy does not create an automatic winner. A hosted assistant may be suitable
+for a public draft and unacceptable for a restricted manuscript. A local model
+may satisfy the data boundary and perform poorly on the task. An editor may
+retain complete version history while the author prefers not to expose that
+history to an external reader. Each workflow should record what leaves the
+machine, what returns, and what the reader receives.
+
+The fair comparison is therefore practical. Give the incumbent and Humanvoice
+the same note, reading brief, and deliberate defects. Ask each route to surface
+a changed number, a lost qualification, and a moved citation. Record network
+calls, author time, false passes, and the reader's ability to reconstruct the
+result. If an existing product performs the complete job at lower burden, the
+team should adopt it and narrow or stop Humanvoice.
+
+\section{Buy the parts, build the connection}
+\label{sec:component-build-boundary}
+
+The software survey leads to a restrained boundary. Buy or reuse grammar,
+collaborative editing, and document compilation when the licence and privacy
+terms fit. Adapt parsers, linters, and comparison views when they can return a
+stable location and an inspectable reason. Build the connection that current
+alternatives leave implicit.
+
+That connection begins with a source snapshot. It records the note, build, and
+reading brief as one run. A source map then links the paragraph, equation,
+number, table, citation, and rendered page. Diagnostics attach findings to
+those locations. The author accepts, rejects, or defers each finding. A new run
+records the revision and compares its protected parts with the old one. The
+reader's response closes the sequence.
+
+Return to the awkward paragraph. Vale may flag its vague opening. The author
+rewrites it in Overleaf. Humanvoice does not need to own either operation. It
+does need to know which source version produced the finding, which version
+contains the repair, and whether 42 basis points and the identification
+condition survived. It also needs to place the revised PDF in front of the
+reader without exposing private comments or model prompts.
+
+Five small records are sufficient for the first experiment: the run, protected
+object, finding, author decision, and reader response. Immutable identifiers
+join them. This is not a general document platform. It is the minimum structure
+needed to answer who saw what, what changed, and which observation supports the
+next investment decision.
+
+The boundary affects cost. Reimplementing a grammar engine would consume the
+MVP on a solved problem. Depending entirely on a cloud editor would save
+engineering time while moving the central source comparison into a service we
+do not control. The pilot should therefore price three configurations: a fully
+local route, an incumbent-editor route with Humanvoice adapters, and a hosted
+academic assistant used only on approved excerpts.
+
+The choice among those configurations belongs to the experiment. The local
+route may cost more operator time. The editor route may provide the best author
+experience. The hosted route may produce the best language suggestions. Reader
+performance, meaning errors, privacy compliance, and total burden decide; the
+architecture diagram does not.
+
+\clearpage
+\section{A fixture decides, not a feature list}
+\label{sec:component-fixture}
+
+The first held-out set should be small enough to understand completely. One
+fixture is clean. One contains a private project label. One changes an exponent
+in an equation. One changes the denominator in a table. One cites a real paper
+that does not support the sentence. One uses the custom \verb|\riskterm|
+command. One contains malformed LaTeX. One repeats a sentence shape on purpose.
+
+Each fixture states what success and failure look like before a package runs.
+For the custom command, a parser succeeds if it preserves the call, expansion,
+and locations. It abstains acceptably if it identifies the command as unknown
+and blocks a protected pass. It fails dangerously if it returns a complete-
+looking record that has lost either use of the command.
+
+For candidate $k$ on fixture $i$, record whether the capability was observed,
+whether a false pass occurred, how long the run took, and how much operator
+work was required. Keep those observations as a matrix. A single score would
+allow fast execution to compensate for silent loss of an equation, which is
+not an admissible trade.
+
+The benchmark also records ordinary engineering facts. A restrictive licence
+may confine a useful package to a reference implementation. A stale release may
+be acceptable for a frozen migration and unsuitable for a service that must
+track new TeX packages. A component that contacts the network may be excluded
+from a private note even when its findings are good. These facts sit beside the
+functional result rather than being folded into a popularity ranking.
+
+Adoption requires three observations. The component must find the positive
+case. It must fail or abstain on the negative case. A second operator must be
+able to replay the finding from the recorded version and configuration. A
+package that cannot meet all three may remain useful to study, but it does not
+enter the protected path.
+
+The same standard applies to the product as a whole. If the components cannot
+produce a stable source map, the project remains a prose linter. If the source
+map works but authors face an unmanageable queue, the workflow must be reduced.
+If the engineering succeeds but the named reader does no better, the proposed
+connection has not earned its cost.
+
+This component strategy leaves the first build with one narrow responsibility:
+join reliable observations without inflating what any of them proves. The next
+part follows a document through that connection from draft to reader decision.

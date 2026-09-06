@@ -1,0 +1,17 @@
+{
+  "generated_at": "2026-08-24T11:52:15+00:00",
+  "mode": "offline",
+  "network_note": "Network calls are disabled unless --online is supplied.",
+  "protocol_id": "HV-AUDIT-2026-08-22",
+  "protocol_path": "docs/survey/audit_protocol.json",
+  "replaced_output_backup": "/home/ubuntu/workspace/humanvoice/docs/survey/audit/latest.previous-20260824T115215Z",
+  "repository": {
+    "git_error": null,
+    "git_head": "ec4ceebcc9a011f9de0ed904027112dd66f79a1b",
+    "git_status": "M README.md\n M docs/survey/humanvoice_survey.bib\n M docs/survey/humanvoice_survey.pdf\n M docs/survey/humanvoice_survey.tex\n M docs/survey/part1_failures.tex\n M docs/survey/part2_existing_tools.tex\n M docs/survey/part3_literature.tex\n M docs/survey/part4_oss.tex\n M docs/survey/part5_proposal.tex\n?? docs/plans/\n?? docs/survey/archive/\n?? docs/survey/audit/\n?? docs/survey/audit_protocol.json\n?? docs/survey/evidence/\n?? docs/survey/humanvoice_document_status.json\n?? docs/survey/humanvoice_evidence_status.json\n?? docs/survey/humanvoice_product_requirements.csv\n?? docs/survey/humanvoice_product_requirements.json\n?? docs/survey/part0_opening.tex\n?? docs/survey/proposal/\n?? humanvoice.code-workspace\n?? tools/",
+    "root": "/home/ubuntu/workspace/humanvoice",
+    "tracked_file_count": 1194,
+    "tracked_files_sha256": "7b4b8d4c5d266ca7c687d72fa597188e320c7265151b6e678b1086b396fbd183"
+  },
+  "seeds_path": "docs/survey/evidence/pilot_evidence.json"
+}

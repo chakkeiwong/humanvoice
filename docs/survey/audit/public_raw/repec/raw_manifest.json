@@ -1,0 +1,41 @@
+{
+  "database": "RePEc/IDEAS",
+  "responses": [
+    {
+      "query": "generative AI writing",
+      "raw_path": "/home/ubuntu/workspace/humanvoice/docs/survey/audit/public_raw/repec/search-01.html",
+      "raw_sha256": "3e952ccaf04b717da0792a4e07e1a75f4ed5eb8d016571b8282879131a5f2e6f",
+      "status": "http-200",
+      "url": "https://ideas.repec.org/cgi-bin/htsearch2"
+    },
+    {
+      "query": "AI writing feedback revision",
+      "raw_path": "/home/ubuntu/workspace/humanvoice/docs/survey/audit/public_raw/repec/search-02.html",
+      "raw_sha256": "e31d4059a3c5e0517bc92b59ee17279c0fa3127999ba53b915e41f82312ddea3",
+      "status": "http-200",
+      "url": "https://ideas.repec.org/cgi-bin/htsearch2"
+    },
+    {
+      "query": "large language model workplace communication",
+      "raw_path": "/home/ubuntu/workspace/humanvoice/docs/survey/audit/public_raw/repec/search-03.html",
+      "raw_sha256": "03041205a7998e0b8b03fc0edcd35355ab7bdb7026cad74f2bd2182b7960ff91",
+      "status": "http-200",
+      "url": "https://ideas.repec.org/cgi-bin/htsearch2"
+    },
+    {
+      "query": "automated writing evaluation validity",
+      "raw_path": "/home/ubuntu/workspace/humanvoice/docs/survey/audit/public_raw/repec/search-04.html",
+      "raw_sha256": "47891f3a4c7ea28349555a2a9b163fb3ad1378e304c0eda323437ec858693d5c",
+      "status": "http-200",
+      "url": "https://ideas.repec.org/cgi-bin/htsearch2"
+    },
+    {
+      "query": "human AI collaborative writing",
+      "raw_path": "/home/ubuntu/workspace/humanvoice/docs/survey/audit/public_raw/repec/search-05.html",
+      "raw_sha256": "451e8ae4950b241b6db4a4fff3400432d3d3d76fdf2e4e826c06c49970e33ff7",
+      "status": "http-200",
+      "url": "https://ideas.repec.org/cgi-bin/htsearch2"
+    }
+  ],
+  "retrieved_at": "2026-08-24T14:39:21+00:00"
+}

@@ -1,0 +1,14 @@
+char ::= [^"\\\x7F\x00-\x1F] | [\\] (["\\bfnrt] | "u" [0-9a-fA-F]{4})
+repair ::= "{" space repair-changes-kv ( "," space ( repair-abstention-kv ) )? space "}"
+repair-abstention-kv ::= "\"abstention\"" space ":" space string
+repair-changes ::= "[" space (repair-changes-item ("," space repair-changes-item)*)? space "]"
+repair-changes-item ::= "{" space repair-changes-item-location-kv "," space repair-changes-item-original-kv "," space repair-changes-item-revised-kv "," space repair-changes-item-rationale-kv space "}"
+repair-changes-item-location-kv ::= "\"location\"" space ":" space string
+repair-changes-item-original-kv ::= "\"original\"" space ":" space string
+repair-changes-item-rationale-kv ::= "\"rationale\"" space ":" space string
+repair-changes-item-revised-kv ::= "\"revised\"" space ":" space string
+repair-changes-kv ::= "\"changes\"" space ":" space repair-changes
+repair-kv ::= "\"repair\"" space ":" space repair
+root ::= "{" space repair-kv space "}"
+space ::= | " " | "\n"{1,2} [ \t]{0,20}
+string ::= "\"" char* "\""

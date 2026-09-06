@@ -1,0 +1,160 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://humanvoice.local/schema/protected-manifest.schema.json",
+  "title": "Humanvoice protected object manifest",
+  "description": "Records protected objects extracted from a source snapshot with their raw and normalized forms, plus correspondence status when comparing two versions. Per implementation contract §6.3: preserves both objects and correspondence status so human review can audit the automated classification. Per release_authority, unresolved protected-object correspondence is a never-except condition that blocks release.",
+  "type": "object",
+  "required": ["record_type", "schema_version", "record_id", "run_id", "created_at", "source_hash", "objects", "parser_name", "parser_version"],
+  "properties": {
+    "record_type": {"const": "ProtectedManifest"},
+    "schema_version": {"type": "string", "pattern": "^HV-SCHEMA-[0-9]+\\.[0-9]+$"},
+    "record_id": {"type": "string", "minLength": 1},
+    "run_id": {"type": "string", "minLength": 1},
+    "created_at": {"type": "string", "format": "date-time"},
+    "source_hash": {
+      "type": "string",
+      "pattern": "^[A-Fa-f0-9]{64}$",
+      "description": "SHA-256 of the source snapshot this manifest was extracted from"
+    },
+    "objects": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["object_id", "object_type", "raw_form", "location"],
+        "properties": {
+          "object_id": {
+            "type": "string",
+            "minLength": 1,
+            "description": "Stable identifier within this manifest, e.g. eq_0, cite_12, label_intro"
+          },
+          "object_type": {
+            "type": "string",
+            "enum": ["equation", "citation", "table", "label", "macro", "quotation", "number", "qualification"],
+            "description": "Protected object types per parser.py ObjectType enum"
+          },
+          "raw_form": {
+            "type": "string",
+            "minLength": 1,
+            "description": "Exact source text as extracted from the document"
+          },
+          "normalized_form": {
+            "type": ["string", "null"],
+            "description": "Canonical representation for correspondence matching. Normalization is type-specific: equations strip whitespace/comments, citations extract keys, labels extract names."
+          },
+          "location": {
+            "type": "object",
+            "required": ["char_offset"],
+            "properties": {
+              "char_offset": {"type": "integer", "minimum": 0},
+              "line": {"type": ["integer", "null"], "minimum": 1},
+              "column": {"type": ["integer", "null"], "minimum": 0},
+              "length": {"type": "integer", "minimum": 0}
+            },
+            "additionalProperties": false,
+            "description": "Stable source location from parser.py SourceLocation"
+          },
+          "metadata": {
+            "type": "object",
+            "description": "Parser-specific annotations, e.g. environment name for equations, depth"
+          }
+        },
+        "additionalProperties": false
+      },
+      "description": "Protected objects extracted from the source"
+    },
+    "parser_name": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Parser adapter that produced this manifest, e.g. pylatexenc, LaTeXML"
+    },
+    "parser_version": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Version string of the parser library"
+    },
+    "parse_time_seconds": {
+      "type": "number",
+      "minimum": 0,
+      "description": "Time spent parsing the source"
+    },
+    "abstentions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["construct", "reason"],
+        "properties": {
+          "construct": {"type": "string", "minLength": 1},
+          "reason": {"type": "string", "minLength": 1},
+          "location": {"type": ["object", "null"]}
+        }
+      },
+      "description": "Constructs the parser could not safely extract"
+    },
+    "comparison": {
+      "type": ["object", "null"],
+      "description": "Present when this manifest records a correspondence comparison between a baseline and revised version",
+      "required": ["baseline_hash", "revised_hash", "correspondences"],
+      "properties": {
+        "baseline_hash": {
+          "type": "string",
+          "pattern": "^[A-Fa-f0-9]{64}$",
+          "description": "Source hash of the baseline (parent) version"
+        },
+        "revised_hash": {
+          "type": "string",
+          "pattern": "^[A-Fa-f0-9]{64}$",
+          "description": "Source hash of the revised (child) version"
+        },
+        "correspondences": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["status", "confidence", "rationale"],
+            "properties": {
+              "object_baseline": {
+                "type": ["string", "null"],
+                "description": "object_id from baseline manifest, null if this is an added object"
+              },
+              "object_revised": {
+                "type": ["string", "null"],
+                "description": "object_id from revised manifest, null if this is a removed object"
+              },
+              "status": {
+                "type": "string",
+                "enum": ["unchanged", "explained_change", "substantive_change", "added", "removed", "unresolved"],
+                "description": "Correspondence status per compare.py CorrespondenceStatus enum"
+              },
+              "confidence": {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 1,
+                "description": "Matching confidence 0.0-1.0; below min_confidence threshold produces unresolved"
+              },
+              "rationale": {
+                "type": "string",
+                "minLength": 1,
+                "description": "Why this status was assigned"
+              }
+            },
+            "additionalProperties": false
+          },
+          "description": "Matched pairs between baseline and revised, plus unmatched (added/removed)"
+        },
+        "unresolved_count": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Count of correspondences with status=unresolved; any nonzero value blocks release per never_except"
+        },
+        "min_confidence": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1,
+          "description": "Threshold used to classify low-confidence matches as unresolved"
+        }
+      },
+      "additionalProperties": false
+    },
+    "extensions": {"type": "object"}
+  },
+  "additionalProperties": false
+}

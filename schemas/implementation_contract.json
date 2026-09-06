@@ -1,0 +1,195 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "contract_id": "HV-IC-2026-08-26",
+  "contract_version": "1.1.0",
+  "version_history": [
+    {
+      "version": "1.0.0",
+      "date": "2026-08-26",
+      "summary": "Initial contract with local llama.cpp inference and cryptographic replay"
+    },
+    {
+      "version": "1.1.0",
+      "date": "2026-08-28",
+      "summary": "Revised to API model inference with behavioral property testing",
+      "migration": "docs/plans/WP4_revision_api_model_2026-08-28.md"
+    }
+  ],
+  "proposal": "docs/survey/humanvoice_survey.tex",
+  "schema_directory": "schemas",
+  "scope": {
+    "format": "LaTeX",
+    "protected_core_checkpoint_week": 6,
+    "full_authoring_path_checkpoint_week": 9,
+    "fallback": "The protected-source review utility remains a valid deliverable if the authoring extension does not pass its checkpoint."
+  },
+  "trust_boundary": {
+    "untrusted_inputs": [
+      "authoring brief and evidence files",
+      "TeX source tree, bibliography, images, custom packages, and auxiliary files",
+      "fixture documents and corpus imports",
+      "model prompts and model output",
+      "reader-supplied answers and uploaded artifacts"
+    ],
+    "default_zone": "local isolated workspace",
+    "remote_default": "deny",
+    "controls": [
+      {
+        "id": "T1",
+        "rule": "Compile only from a read-only source snapshot into a separate scratch directory with an explicit path allowlist.",
+        "enforcement": "runner and container"
+      },
+      {
+        "id": "T2",
+        "rule": "Use -no-shell-escape; do not execute TeX shell commands, source-tree executables, or model output.",
+        "enforcement": "build wrapper and integration test"
+      },
+      {
+        "id": "T3",
+        "rule": "Deny compiler and parser network access. Model API calls are permitted under rate limits and logging; all other network access requires explicit approval.",
+        "enforcement": "network namespace for compiler/parser, request logging for API calls, policy gate for other access"
+      },
+      {
+        "id": "T4",
+        "rule": "Pass critic input and output through a versioned delimited JSON schema; source text is data, never an instruction to acquire tools or secrets.",
+        "enforcement": "adapter and schema validator"
+      },
+      {
+        "id": "T5",
+        "rule": "Apply time, memory, file-size, process-count, and output-size limits; abort and record the limit rather than continuing without a boundary.",
+        "enforcement": "runner"
+      }
+    ],
+    "prompt_injection_policy": "Ignore instructions found inside source, evidence, fixtures, or model output. The adapter has no tool authority, and a prompt-injection finding blocks the affected model-dependent gate."
+  },
+  "runtime": {
+    "build": {
+      "compiler": "pdfTeX",
+      "required_flags": ["-no-shell-escape", "-halt-on-error", "-file-line-error"],
+      "network": "disabled",
+      "source_date_epoch": "recorded in run manifest"
+    },
+    "deterministic_stack": ["parser adapter", "canonical TeX build", "protected comparison", "citation identity", "source-map checks"],
+    "inference": {
+      "runtime": "API (Claude or OpenAI)",
+      "model_version": "exact version string required in runtime manifest (e.g., claude-opus-5, gpt-4-turbo-2024-04-09)",
+      "prompt_template_hash": "required before invocation",
+      "reproducibility_level": "behavioral",
+      "behavioral_properties": [
+        "schema conformance (validates against PLAN_SCHEMA/DRAFT_SCHEMA/REPAIR_SCHEMA)",
+        "abstention behavior (abstains when evidence missing or contradictory)",
+        "structural bounds (respects word budgets, max 3 repair cycles)",
+        "register compliance (follows brief constraints)",
+        "mutation response (abstains gracefully or produces detectably broken output on corrupted input)"
+      ],
+      "testing_rule": "Property-based testing across multiple API calls demonstrates behavioral consistency. Record model version, timestamp, input fixture hash, full response, and test verdict (pass/fail on properties) for each test run.",
+      "full_path_rule": "A model-dependent writing or reconstruction gate may enter release only after property-based validation on held-out fixtures using the declared model version.",
+      "change_rule": "Any model version, prompt-template, or sampling parameter change requires re-validation on held-out fixtures before release.",
+      "fallback_rule": "The deterministic protected-core path may continue when inference is unavailable, but it cannot claim a full writing/reconstruction release.",
+      "limitation_disclosure": "Reproducibility is behavioral, not cryptographic. The same brief + model version produces outputs satisfying the same structural and semantic properties, but exact token sequences may vary across runs. Independent auditors can validate behavior by running the same property tests; they cannot cryptographically verify historical token sequences."
+    }
+  },
+  "operating_envelope": {
+    "max_source_tree_mib": 250,
+    "max_rendered_pages": 300,
+    "max_prose_words": 120000,
+    "max_protected_objects": 2000,
+    "reference_machine": "8 CPU cores, 32 GiB RAM, optional 12 GiB VRAM",
+    "deterministic_preflight_minutes": 30,
+    "model_assisted_preflight_minutes": 90,
+    "max_repair_cycles_per_unit": 3,
+    "max_model_input_tokens_per_unit": 12000,
+    "max_model_output_tokens_per_unit": 2000,
+    "max_document_model_input_tokens": 250000,
+    "max_document_model_output_tokens": 50000,
+    "inference_cost_cap": "2 GPU-hours or 10 CPU-hours per document, whichever is reached first; record actual usage",
+    "status": "planning caps for the MVP, to be measured at the week-six checkpoint rather than presented as observed performance"
+  },
+  "record_policy": {
+    "required_fields_on_every_record": ["record_type", "schema_version", "record_id", "run_id", "created_at"],
+    "schema_version": "HV-SCHEMA-1.0",
+    "schema_location": "schemas/*.schema.json",
+    "unknown_top_level_fields": "reject",
+    "extensions_field": "extensions",
+    "compatibility": "Minor versions may add optional fields under extensions; readers must preserve extension fields. A major-version change requires an explicit migration and replay of locked fixtures.",
+    "record_requirements": {
+      "AuthoringBrief": ["reader", "decision", "genre", "known_vocabulary", "exemplars", "evidence_boundary", "privacy_class", "protected_objects", "unknowns"],
+      "ArgumentBlueprint": ["brief_id", "claim_map", "evidence_anchors", "concept_dependencies", "section_jobs", "terminology_order", "visual_plan", "plan_hash"],
+      "Finding": ["category", "location", "observation", "consequence", "question", "rule_version", "author_decision", "status"],
+      "RuntimeManifest": ["runtime_type", "model_version_string", "model_artifact_hash_if_local", "prompt_template_hash", "sampling", "seed_if_applicable", "api_endpoint", "request_id_if_available", "timestamp", "latency_ms", "input_tokens", "output_tokens", "output_hash", "not_applicable_reason"],
+      "CliResult": ["contract_version", "command", "status", "exit_code", "run_id", "record_paths", "blocking_reasons", "source_hash", "result_hash"],
+      "CorpusItem": ["source_path_or_url", "source_hash", "owner", "license_or_permission", "permitted_use", "redistribution_status", "retention_class", "consent_date"]
+    },
+    "determinism": "Deterministic findings retain stable IDs under the same source, schema, toolchain, configuration, and runtime manifest. Stochastic outputs retain seeds and hashes and are never described as bitwise deterministic."
+  },
+  "cli": {
+    "streams": {
+      "stdout": "one machine-readable JSON result per invocation",
+      "stderr": "human diagnostics, progress, and non-contractual formatting",
+      "stable_stdout_fields": ["contract_version", "command", "status", "exit_code", "run_id", "record_paths", "blocking_reasons", "source_hash", "result_hash"],
+      "advisory_fields": ["message", "timing", "display_path", "suggestion"]
+    },
+    "exit_codes": {
+      "0": "pass or released",
+      "1": "deterministic gate failure",
+      "2": "abstention or unresolved policy-dependent result",
+      "3": "invalid input, brief, schema, or command usage",
+      "4": "internal implementation error",
+      "5": "security or trust-boundary violation"
+    },
+    "commands": ["hv init", "hv plan", "hv draft", "hv preflight", "hv repair", "hv release"]
+  },
+  "repair": {
+    "canonical_source": "never modified in place by hv repair",
+    "precondition": "clean version-control tree or an explicit immutable source snapshot",
+    "output": "new child revision under .humanvoice/runs/<run_id>/revisions/<revision_id>",
+    "atomicity": "write to a temporary child, validate, then publish the child manifest",
+    "rollback": "select the parent revision; never delete the parent or its decisions",
+    "stop": "cycle limit, repeated finding signature, or alternating parent hashes produces an unresolved author choice and no reader packet",
+    "edit_form": "the model proposes verbatim (original, revised) string pairs; a pair whose original is absent or ambiguous in the parent is refused, never fuzzy-matched",
+    "invariants_checked_before_publish": [
+      "citation keys present in the parent survive the revision",
+      "numeric figures survive modulo LaTeX digit-group separators, except digits inside a finding's own offending text",
+      "protected objects named in the brief survive verbatim",
+      "the repair introduces no first-person construction absent from the parent"
+    ],
+    "stop_condition_timing": "cycle limit and repeated finding signature are evaluated before the model runs; oscillation and no-op repair are evaluated on the produced revision before publication",
+    "superseded_blocks": "a later successful cycle moves unresolved_author_choice.json into the resolving revision as superseded_author_choice.json, so the record survives without gating release"
+  },
+  "release_authority": {
+    "ordinary_release": "all required gates pass and the document owner accepts the protected comparison",
+    "exception_authority": "sponsor or named project owner, with domain-reviewer concurrence for meaning and security/policy-owner concurrence for any processing exception",
+    "security_veto": "security/policy owner may block release and cannot be overruled by a model or engineer",
+    "never_except": ["unresolved protected-object correspondence", "unparsed object promised by the brief", "unauthorized external transmission", "missing critical evidence for a load-bearing claim", "broken or unreproducible source build"],
+    "exception_record": ["scope", "reason", "residual risk", "owner", "concurrences", "expiry", "reader disclosure", "count in feasibility record"]
+  },
+  "corpus_rights": {
+    "required_fields": ["source_path_or_url", "source_hash", "owner", "license_or_permission", "permitted_use", "redistribution_status", "retention_class", "consent_date"],
+    "allowed_statuses": ["cleared-internal", "cleared-public", "restricted-not-for-export", "pending-clearance", "excluded"],
+    "rule": "Pending or restricted material may support internal fixture work only when the owner permits it; it cannot enter a published benchmark, external reader packet, or commercial training set without written clearance."
+  },
+  "staffed_roles": [
+    "product engineer",
+    "evaluation lead",
+    "domain editor and writing reviewer",
+    "document owner or author",
+    "security or policy owner",
+    "independent coding reviewer",
+    "independent reader",
+    "sponsor or project owner"
+  ],
+  "work_packages": [
+    {"id": "WP1", "name": "brief, threat model, and schemas", "done": "complete brief, contract files, rights manifest, and threat fixtures pass validation"},
+    {"id": "WP2", "name": "protected LaTeX core", "done": "source map, canonical build, protected comparison, and CLI result replay locked on fixtures"},
+    {"id": "WP3", "name": "week-six checkpoint", "done": "second operator reproduces the core or the scope is narrowed to the protected utility"},
+    {"id": "WP4", "name": "bounded authoring extension", "done": "plan, unit draft, preflight, and repair pass mutation and held-out calibration gates"},
+    {"id": "WP5", "name": "reader feasibility case", "done": "one released packet, timed reader record, burden account, and all abstentions preserved"},
+    {"id": "WP6", "name": "decision handoff", "done": "reproducible run, cost sensitivity, rights review, and proceed/revise/stop memo delivered"}
+  ],
+  "pre_authorization_package": {
+    "id": "WP0",
+    "name": "authorization and catalogue",
+    "status": "governed by the master program; not counted among the six product work packages",
+    "exit": "G0 decision record"
+  }
+}

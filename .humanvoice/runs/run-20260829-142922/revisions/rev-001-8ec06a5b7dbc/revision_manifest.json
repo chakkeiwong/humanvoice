@@ -1,0 +1,40 @@
+{
+  "revision_id": "rev-001-8ec06a5b7dbc",
+  "cycle": 1,
+  "created_at": "2026-08-29T14:30:40.208511+00:00",
+  "parent": {
+    "path": "/home/ubuntu/workspace/humanvoice/.humanvoice/runs/run-20260829-142922/draft_decision_context_and_problem_statement.tex",
+    "content_hash": "9932bf635df69a12b04307d4d928e830c2fda919603db0e0f2f48868c68edbfb"
+  },
+  "content_hash": "8ec06a5b7dbce7fdfe7ce282891331490ec79482048e259b104fc46b4458fb15",
+  "finding_signature": "25a22c84c05a48564a8d196a3a2ba7e1a442f357c034c13b876c0bb6be8a655a",
+  "findings_presented": [
+    "F001",
+    "F002"
+  ],
+  "changes_applied": [
+    {
+      "finding_id": "F001",
+      "original": "an internal phase label, \\texttt{WP3}, and",
+      "revised": "an internal phase label and",
+      "rationale": "Drops the internal workflow token while preserving the claim that an internal phase label is present, so the reviewer is not asked to interpret a label with no external meaning."
+    },
+    {
+      "finding_id": "F002",
+      "original": "a filesystem path, \\texttt{/srv/humanvoice/private}, neither",
+      "revised": "a filesystem path, neither",
+      "rationale": "Removes the unreachable private path but keeps the assertion that a filesystem path was supplied, so the gap being described stays intact without pointing the reviewer at inaccessible storage."
+    }
+  ],
+  "changes_refused": [],
+  "unaddressed": [],
+  "model": {
+    "version_string": "claude-opus-5",
+    "temperature": 0.0,
+    "input_tokens": 932,
+    "output_tokens": 262,
+    "request_id": "msg_e0LJ9EtGdJZgBiMpip0hWYgj",
+    "prompt_hash": "9e9d2c453a8e4b4b2dbdac1f5ab49f3cb8d2a496a69d58384af20b87e2ddc859"
+  },
+  "canonical_source_modified": false
+}

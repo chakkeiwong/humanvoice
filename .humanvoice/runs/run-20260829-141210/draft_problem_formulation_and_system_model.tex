@@ -1,0 +1,23 @@
+\section{Problem Formulation and System Model}
+
+This section fixes the setting in which the protocols surveyed below operate: the processes and channels available, the timing assumptions that govern message delivery, the powers granted to the adversary, and the correctness properties a protocol must establish. These commitments determine which design choices are admissible and which are ruled out a priori.
+
+\subsection{Processes, Channels, and Cryptography}
+
+The consensus problem is posed over a fixed set of $n$ processes, termed replicas, each maintaining a copy of a deterministic state machine and communicating solely by message passing over authenticated point-to-point channels. Channels neither forge nor duplicate messages, but may reorder and delay them arbitrarily while the network is unstable. Replicas have access to standard cryptographic primitives, specifically digital signatures and collision-resistant hash functions, which the adversary cannot forge or invert. Clients submit requests to replicas; the object the protocol must produce is a totally ordered log of requests that every correct replica executes in the same order.
+
+\subsection{Network Timing Assumptions}
+
+Three timing models delimit what any protocol can achieve. The synchronous model assumes known message delays, which enables timeout-based protocols but leaves them vulnerable to denial-of-service. The asynchronous model makes no timing assumptions, attaining theoretical robustness but limited to probabilistic termination by the FLP impossibility result. The protocols considered here assume the partially synchronous model, in which periods of synchrony follow some unknown Global Stabilization Time (GST), enabling practical protocols with deterministic termination. This assumption is the principal constraint on protocol design: safety must hold unconditionally, including during arbitrarily long asynchronous intervals, whereas liveness need only be guaranteed after GST.
+
+\subsection{Adversary Model}
+
+At most $f$ of the $n$ replicas are Byzantine and may deviate from the protocol arbitrarily, including equivocating, remaining silent, sending malformed messages, or colluding under a single coordinating adversary. The remaining replicas are correct and follow the protocol exactly. Prior to GST the adversary is further assumed to control message scheduling, subject only to eventual delivery. The fundamental safety requirement is therefore $n > 3f$, a bound that emerges from information-theoretic constraints: when $n \leq 3f$, Byzantine nodes can partition the network into groups that observe contradictory but internally consistent states. The bound applies to all deterministic Byzantine consensus protocols regardless of their timing assumptions or communication patterns~\cite{castro1999practical}.
+
+\subsection{Safety and Liveness Properties}
+
+A protocol solves Byzantine consensus if it satisfies three properties. \emph{Agreement}: no two correct replicas commit conflicting values at the same log position. \emph{Validity}: any committed value was proposed by some replica and is well formed under the application's predicate. \emph{Termination}: every request submitted by a correct client is eventually committed by all correct replicas. Agreement and validity constitute safety and must hold in all executions; termination is the liveness property and is conditioned on synchrony after GST.
+
+\subsection{Constraints on Protocol Design}
+
+These requirements admit only quorum-based constructions in which any two quorums intersect in at least $f+1$ replicas, guaranteeing that at least one correct replica witnesses both. Classical PBFT realises this through pre-prepare, prepare, and commit phases, at a cost of $\mathcal{O}(n^2)$ messages per consensus instance~\cite{castro1999practical}. That quadratic communication complexity, together with the need for a view change mechanism to replace faulty leaders without violating agreement, defines the design space that Tendermint~\cite{buchman2016tendermint}, HotStuff~\cite{yin2019hotstuff}, and Casper~\cite{buterin2020combining} navigate through pipelining, linear authenticator complexity, and modified quorum structures.

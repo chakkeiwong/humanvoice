@@ -1,0 +1,119 @@
+{
+  "catalog_id": "HV-RECORD-CATALOG-2026-08-26",
+  "catalog_version": "1.1",
+  "status": "wp5-working-decision",
+  "contract_id": "HV-IC-2026-08-26",
+  "contract_version": "1.1.0",
+  "compatibility_policy": {
+    "unknown_top_level_fields": "reject",
+    "extension_fields": "preserve under extensions",
+    "minor_change": "may add optional fields or a new record type without changing existing meaning",
+    "major_change": "requires migration and replay of locked fixtures"
+  },
+  "records": [
+    {
+      "concept_id": "authoring-brief",
+      "record_type": "AuthoringBrief",
+      "representation": "standalone",
+      "schema_path": "schemas/authoring-brief.schema.json",
+      "schema_status": "present",
+      "required_by": "WP1"
+    },
+    {
+      "concept_id": "argument-blueprint",
+      "record_type": "ArgumentBlueprint",
+      "representation": "standalone",
+      "schema_path": "schemas/argument-blueprint.schema.json",
+      "schema_status": "present",
+      "required_by": "WP4"
+    },
+    {
+      "concept_id": "source-snapshot",
+      "record_type": "SourceSnapshot",
+      "representation": "standalone",
+      "schema_path": "schemas/source-snapshot.schema.json",
+      "schema_status": "present",
+      "required_by": "WP1"
+    },
+    {
+      "concept_id": "protected-object",
+      "record_type": "ProtectedManifest",
+      "representation": "standalone manifest with versioned nested objects",
+      "schema_path": "schemas/protected-manifest.schema.json",
+      "schema_status": "present",
+      "required_by": "WP2"
+    },
+    {
+      "concept_id": "finding",
+      "record_type": "Finding",
+      "representation": "standalone",
+      "schema_path": "schemas/finding.schema.json",
+      "schema_status": "present",
+      "required_by": "WP3"
+    },
+    {
+      "concept_id": "revision",
+      "record_type": "Revision",
+      "representation": "standalone",
+      "schema_path": "schemas/revision.schema.json",
+      "schema_status": "present",
+      "required_by": "WP4"
+    },
+    {
+      "concept_id": "preflight-run",
+      "record_type": "PreflightRun",
+      "representation": "standalone",
+      "schema_path": "schemas/preflight-run.schema.json",
+      "schema_status": "present",
+      "required_by": "WP1"
+    },
+    {
+      "concept_id": "release-decision",
+      "record_type": "ReleaseDecision",
+      "representation": "standalone machine decision",
+      "schema_path": "schemas/release-decision.schema.json",
+      "schema_status": "present",
+      "required_by": "WP5"
+    },
+    {
+      "concept_id": "runtime-manifest",
+      "record_type": "RuntimeManifest",
+      "representation": "standalone",
+      "schema_path": "schemas/runtime-manifest.schema.json",
+      "schema_status": "present",
+      "required_by": "WP1"
+    },
+    {
+      "concept_id": "cli-result",
+      "record_type": "CliResult",
+      "representation": "standalone command envelope",
+      "schema_path": "schemas/cli-result.schema.json",
+      "schema_status": "present",
+      "required_by": "WP1"
+    },
+    {
+      "concept_id": "reader-decision",
+      "record_type": "ReaderDecision",
+      "representation": "standalone human outcome separate from release",
+      "schema_path": "schemas/reader-decision.schema.json",
+      "schema_status": "present",
+      "required_by": "WP5"
+    },
+    {
+      "concept_id": "evidence-item",
+      "record_type": "EvidenceItem",
+      "representation": "standalone claim-source relation",
+      "schema_path": "schemas/evidence-item.schema.json",
+      "schema_status": "present",
+      "required_by": "WP4"
+    },
+    {
+      "concept_id": "corpus-rights-item",
+      "record_type": "CorpusItem",
+      "representation": "standalone",
+      "schema_path": "schemas/corpus-item.schema.json",
+      "schema_status": "present",
+      "required_by": "WP0"
+    }
+  ]
+}

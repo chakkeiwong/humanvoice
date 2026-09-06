@@ -1,0 +1,56 @@
+\section{Current System Characterization}
+
+The existing transaction processing system was commissioned in 2014 as a modular monolith deployed across three availability zones. The application tier comprises 240 instances of a single deployable artifact, fronted by a load balancer performing round-robin distribution with session affinity for stateful operations. The persistence tier uses a primary-replica PostgreSQL cluster with synchronous replication to one standby and asynchronous replication to two read replicas per zone.
+
+\subsection{Workload Profile}
+
+Transaction mix over the trailing 90-day window divides into four categories. Payment authorizations account for 62\% of volume, characterized by short duration (mean 40ms of database time) and strict consistency requirements. Balance inquiries account for 24\% of volume, tolerating stale reads up to 5 seconds. Settlement batch operations account for 9\% of volume but 41\% of database write throughput, executing in scheduled windows. Reconciliation queries account for the remaining 5\%, with individual queries scanning up to 180 million rows.
+
+Peak load occurs in two daily windows: 09:00--11:00 and 19:00--21:00 local time, with the evening peak approximately 12\% higher. Weekly seasonality places Friday evening at 1.4x the median daily peak. Annual seasonality produces a 2.8x spike during the November promotional period, which currently requires pre-provisioned capacity held idle for eleven months.
+
+\subsection{Capacity Envelope}
+
+Sustained throughput capacity relates to per-request resource consumption and available parallelism according to the relationship
+\begin{equation}
+\label{eq:request-rate-capacity}
+\lambda_{\max} = \frac{N_{\text{workers}} \cdot U_{\text{target}}}{S_{\text{mean}}}
+\end{equation}
+where $N_{\text{workers}}$ is the effective concurrency limit, $U_{\text{target}}$ is the utilization ceiling before queueing delay becomes unacceptable, and $S_{\text{mean}}$ is mean service time. With 240 instances at 32 worker threads each, a utilization ceiling of 0.72, and mean service time of 121ms, equation~\eqref{eq:request-rate-capacity} yields a theoretical ceiling of 45,700 TPS. Observed peak sustained throughput of 45,100 TPS matches this projection within 1.3\%.
+
+The binding constraint is not application-tier capacity but database write concurrency. The primary instance sustains 18,400 write IOPS against a provisioned ceiling of 24,000. Synchronous replication adds 8ms to commit latency at current volumes, degrading to 34ms when replica lag triggers flow control. Attempts to raise the provisioned IOPS ceiling encounter a hard limit at 32,000 for the instance class, and migration to a larger instance class requires a 40-minute maintenance window that the business has declined twice.
+
+\subsection{Latency Distribution}
+
+Response time distribution is strongly right-skewed. The relationship between percentile latency and the number of sequential dependencies is captured by
+\begin{equation}
+\label{eq:percentile-latency}
+P(L > t) = 1 - \prod_{i=1}^{k} \left(1 - P(L_i > t_i)\right)
+\end{equation}
+which for the current system's average of 7 sequential internal calls means that a per-call p99 of 30ms produces an aggregate p99 near 280ms. This compounding effect, described in detail by~\cite{dean-tail-at-scale-2013}, dominates the user-visible latency budget. Reducing tail latency therefore requires either reducing $k$ or improving per-call tail behavior, not improving mean performance.
+
+Figure~\ref{fig:latency-percentiles-comparison} presents the full latency distribution across all four transaction categories, showing that reconciliation queries contribute disproportionately to the p99.9 tail despite representing 5\% of volume.
+
+\begin{figure}[htbp]
+\centering
+\rule{0.8\textwidth}{0.35\textwidth}
+\caption{Latency percentile distribution by transaction category, trailing 90 days}
+\label{fig:latency-percentiles-comparison}
+\end{figure}
+
+\subsection{Operational Characteristics}
+
+The system currently achieves 99.94\% availability against a 99.95\% objective, consuming 103\% of its error budget over the trailing quarter. Error budget consumption follows
+\begin{equation}
+\label{eq:error-budget}
+B_{\text{consumed}} = \frac{\sum_{j} D_j \cdot A_j}{T_{\text{period}} \cdot (1 - \text{SLO})}
+\end{equation}
+where $D_j$ is the duration of incident $j$, $A_j$ is the affected request fraction, and $T_{\text{period}}$ is the measurement window. The 2.1\% overage traces to a single 47-minute partial outage caused by replica promotion failure during a routine failover test.
+
+Mean time to recovery across the trailing twelve incidents was 34 minutes, calculated as
+\begin{equation}
+\label{eq:mttr-calculation}
+\text{MTTR} = \frac{1}{n}\sum_{j=1}^{n} \left(T_{\text{detect},j} + T_{\text{diagnose},j} + T_{\text{remediate},j}\right)
+\end{equation}
+with the diagnosis phase accounting for 61\% of total recovery time. This diagnosis-dominated profile is characteristic of monolithic systems where a single failure symptom admits many possible causes, and is one of the arguments advanced for service decomposition by~\cite{newman-monolith-to-microservices-2019}.
+
+Deployment cadence is currently one release per two weeks, constrained by the 90-minute rolling deployment duration and the requirement that all 240 instances run identical code versions during settlement windows. Rollback requires a full redeployment of the prior artifact, historically taking 105 minutes. Six of the trailing twelve incidents were deployment-triggered.

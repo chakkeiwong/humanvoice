@@ -1,0 +1,217 @@
+{
+  "file_count": 42,
+  "files": [
+    {
+      "bytes": 22986,
+      "path": "audit_report.md",
+      "sha256": "869938f3ea50823138c0026ea8b9da031330fd9275b0642826b01548e1c7263a"
+    },
+    {
+      "bytes": 11116,
+      "path": "bibliography_identity_audit.csv",
+      "sha256": "a4c8ee9832d75ef743d4ff3b13c8a0838dd3ce0c5eaac7e3b4b9de2163c77611"
+    },
+    {
+      "bytes": 41610,
+      "path": "bibliography_identity_summary.json",
+      "sha256": "6200ce24e41877bacdebb63ffbd7080ea1c5a5ab759dbc072d71cc5daebbb569"
+    },
+    {
+      "bytes": 14302551,
+      "path": "candidates.csv",
+      "sha256": "90ddc723cdaed543e5ccd0ca938c811fc57d972a60c523dc9c9c4ba9f7bacccf"
+    },
+    {
+      "bytes": 175,
+      "path": "corpus/C-001.txt",
+      "sha256": "5dadfb38caee103a5e9fc0b7b329b45afc4df590f07d760e720b79aa52c5e1db"
+    },
+    {
+      "bytes": 169,
+      "path": "corpus/C-002.txt",
+      "sha256": "3d485d6c11b41e5f9493294143ee592a4ac53103ccbdafdaeffedbe73218e76c"
+    },
+    {
+      "bytes": 159,
+      "path": "corpus/C-003.txt",
+      "sha256": "3e0590d4b9110979c65dcbea97ada3ebdf7bbe439f55d216788f4edebf20c655"
+    },
+    {
+      "bytes": 119,
+      "path": "corpus/C-004.txt",
+      "sha256": "48bcf481b2d062da5e7fb7a5d12e34cd1d691f9651a8850585160de6887576d4"
+    },
+    {
+      "bytes": 274,
+      "path": "corpus/manifest.json",
+      "sha256": "037f75e1f30e08b564244b51d864bcaa87e22a7c6019c68edcb7e1a0ee09c92c"
+    },
+    {
+      "bytes": 17907,
+      "path": "critical_appraisal_queue.csv",
+      "sha256": "2be62ff7e49fae814a5b5b632e9f74ee8acc827c00513894c9f48dd90b3c0be3"
+    },
+    {
+      "bytes": 63,
+      "path": "dossier_render.json",
+      "sha256": "00f944b7d018c9c484ec7ffd7701984f280e186f983bfb88484b373797eeeefd"
+    },
+    {
+      "bytes": 2697,
+      "path": "evaluation_plan.json",
+      "sha256": "512386646920fa6c97023e9373c484d459e49d3b7d921899999f22d027fb9f55"
+    },
+    {
+      "bytes": 41323,
+      "path": "evidence.csv",
+      "sha256": "e89d28e54c7d6e0ca300a650693d4ba0eb52b5a434b679e99206d48b24f10b4b"
+    },
+    {
+      "bytes": 5625,
+      "path": "evidence_identity_audit.csv",
+      "sha256": "0681bf4304e4c3534752a5a0845751c4ee1194de987764d4e5e5aebc83a7b6f5"
+    },
+    {
+      "bytes": 20544,
+      "path": "evidence_identity_summary.json",
+      "sha256": "110b42812bfa09188dd3520208cba97dcf8e52d51f8d3bd45d64f57b5f624962"
+    },
+    {
+      "bytes": 2964,
+      "path": "gate_results.json",
+      "sha256": "f8d2c14d76e28df51351387e4846493491f1933d3f9ac151d86e5fe325f422b8"
+    },
+    {
+      "bytes": 5882,
+      "path": "implementation_dossier.aux",
+      "sha256": "5b9692a1a07ef28bab9afd792679d0c482a1c5b1e828c56e6491a12d99c3f9d8"
+    },
+    {
+      "bytes": 21303,
+      "path": "implementation_dossier.log",
+      "sha256": "609f89604b25b552402d013bbdf39335bc447f34ac829806bc228e575cae9295"
+    },
+    {
+      "bytes": 52841,
+      "path": "implementation_dossier.md",
+      "sha256": "3b232dc9c25933325cb3cc0de571f32c76de7ac5970fd9aab470a3274866eea8"
+    },
+    {
+      "bytes": 4107,
+      "path": "implementation_dossier.out",
+      "sha256": "9b00ca4bd17ff80d40f64d5b0ccc599e73caa3f11720f27cc082263ee14c67da"
+    },
+    {
+      "bytes": 211449,
+      "path": "implementation_dossier.pdf",
+      "sha256": "2a1a537c232adde58d6f026ba6f371ba67a6a78b6f05787fe62c90187aa085e1"
+    },
+    {
+      "bytes": 59918,
+      "path": "implementation_dossier.tex",
+      "sha256": "7e4657cbc7847c979d3f31eac07882e8315c5ee0701a9d70ad82007ca98202f0"
+    },
+    {
+      "bytes": 268,
+      "path": "input_validation.json",
+      "sha256": "e940d62eae0f8966cba8e24b6de5322989e2b0aa9c0cde984a1181944bfd210e"
+    },
+    {
+      "bytes": 2378,
+      "path": "integrity.json",
+      "sha256": "f8ba852f0693fbc2a183097707b33a25aea039695c1e9ac79a5e2bf5c4c8b3ea"
+    },
+    {
+      "bytes": 3637,
+      "path": "known_item_audit.csv",
+      "sha256": "f27667c43cc195beb4610969ba2bd1b90090d8c1afba191c61f0e8e90a31793c"
+    },
+    {
+      "bytes": 6553,
+      "path": "known_item_summary.json",
+      "sha256": "b0f0797c1f390d292da9379125ac59f06b7c48f66d2d215333d51f8b4913c06e"
+    },
+    {
+      "bytes": 343,
+      "path": "manual_import_summary.json",
+      "sha256": "04aedf5cca409ed303804c350556630652786033a85d96760624cecd43e333f0"
+    },
+    {
+      "bytes": 5556,
+      "path": "package_benchmark_results.json",
+      "sha256": "c6c3bd14c7cc0250521248cc027e1f6484bea589fb8908095faa8022732541ec"
+    },
+    {
+      "bytes": 4417,
+      "path": "package_selection.json",
+      "sha256": "fb7b090aa147a8ea4c694e5b33d4d44e741e0cdbe837219a1a028cf5eebb26e3"
+    },
+    {
+      "bytes": 10684,
+      "path": "pdf_build.json",
+      "sha256": "6bd804e0437672aeb43d75a5d81e3bed589eecf056548cbecf1ccbd5949a58de"
+    },
+    {
+      "bytes": 35150,
+      "path": "protocol_snapshot.json",
+      "sha256": "b32d52fcfc06e8839fb45b9957a33c21f27b61a6d300c50711ed9da1da117460"
+    },
+    {
+      "bytes": 6371,
+      "path": "requirements_traceability.csv",
+      "sha256": "f4bd7a023d0e3e4c6940e57c72e0bfd7e064a55279f014a01d13da9fcd70a2ca"
+    },
+    {
+      "bytes": 9153,
+      "path": "requirements_traceability.json",
+      "sha256": "cec2f85baf2b1924d112bfb4351fe9184865320b9fdbb35e6c2dd4ed578b0639"
+    },
+    {
+      "bytes": 558,
+      "path": "review_flow.json",
+      "sha256": "ef0f343206d5809c65b6ebafcdd7f9853ecec4d87ddffe39dda9f69112aee3cc"
+    },
+    {
+      "bytes": 64,
+      "path": "review_overlay_summary.json",
+      "sha256": "2a6fea8bbe95b538beb7ac1bb823180e7d3b0c27d6ad7efa26cb21fa5ab2edea"
+    },
+    {
+      "bytes": 1453,
+      "path": "run_metadata.json",
+      "sha256": "583d841824cacb4587109f13546cb15ac7fd47e64a3b2e21929a42cbc159a1ab"
+    },
+    {
+      "bytes": 4102339,
+      "path": "screening.csv",
+      "sha256": "62c933805b873305b280dabde4621b66e4d605f50317aa66dc19503a6693bcab"
+    },
+    {
+      "bytes": 69474,
+      "path": "screening_queue.csv",
+      "sha256": "0db6f86a540bf616a48ce99f182cc8ef89ffb0f7333a7788eca584abbaaa4750"
+    },
+    {
+      "bytes": 49109,
+      "path": "search_events.json",
+      "sha256": "b31cd39788b43fc8d18fb78ed0fa4d1ddb92ea00f0f287c76fad1f5590c0094e"
+    },
+    {
+      "bytes": 20424,
+      "path": "search_log.csv",
+      "sha256": "1b2460380b2658870723e48efed8bb934f08dcc92c04d1cb5b96e8a8232e43f9"
+    },
+    {
+      "bytes": 49351,
+      "path": "seed_evidence_snapshot.json",
+      "sha256": "5288cb01a592f21a5e48bf9411798f81c118b60262a4f025fd5f3167aecc8c68"
+    },
+    {
+      "bytes": 5732,
+      "path": "software_inventory.csv",
+      "sha256": "322f6b32af002034f467fec9bfa01aa58c9cb8c434ee068cb654b7bc266a8b37"
+    }
+  ],
+  "generated_at": "2026-08-24T11:31:16+00:00",
+  "run_dir": "/home/ubuntu/workspace/humanvoice/docs/survey/audit/latest"
+}

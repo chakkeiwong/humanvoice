@@ -1,0 +1,24 @@
+\section{Problem Formulation and System Model}
+
+This section fixes the system model and the correctness conditions against which the protocol variants surveyed in later sections are compared. The formulation follows the partially synchronous setting introduced by Dwork, Lynch, and Stockmeyer and adopted by classical PBFT~\cite{castro1999practical} and its modern descendants~\cite{buchman2016tendermint,yin2019hotstuff,buterin2020combining}.
+
+\subsection{System Composition}
+
+Consider a system of $n$ processes, or \emph{replicas}, drawn from a fixed set $\Pi = \{p_1, p_2, \ldots, p_n\}$. Up to $f$ of these replicas may be \emph{Byzantine}: such replicas deviate arbitrarily from the prescribed protocol, including equivocating, remaining silent, reordering or forging their own messages, and colluding with one another. The remaining $n - f$ replicas are \emph{correct} and execute the protocol as specified. Following the classical bound established by Lamport et al. and inherited by every deterministic Byzantine consensus protocol, the system is assumed to satisfy
+\begin{equation}
+  n > 3f,
+  \label{eq:safety-bound}
+\end{equation}
+which is customarily instantiated as $n = 3f + 1$ to minimise replication cost. The necessity of \eqref{eq:safety-bound} is information-theoretic rather than an artefact of any particular construction: when $n \leq 3f$, Byzantine replicas can partition the network into groups that observe contradictory yet internally consistent states, so no protocol can distinguish the legitimate history from the fabricated one. Critically, this bound holds irrespective of the timing assumptions or communication patterns a protocol adopts, which is why it constrains DAG-based and leader-based designs alike.
+
+\subsection{Network and Timing Assumptions}
+
+The network model determines which correctness guarantees are attainable. Under the \textbf{synchronous} model, message delays are bounded by a known constant, which permits timeout-driven protocols but leaves them vulnerable to denial-of-service attacks that violate the assumed bound. Under the \textbf{asynchronous} model, no timing assumption is made; this yields maximal robustness but, by the FLP impossibility result, restricts termination to probabilistic guarantees. This survey adopts the \textbf{partially synchronous} model, in which the network behaves asynchronously up to an unknown \emph{Global Stabilization Time} (GST) and thereafter delivers messages within a fixed bound. The existence of eventual synchrony is what permits deterministic termination while retaining tolerance to arbitrary pre-GST delay, and it is the assumption under which PBFT, Tendermint, HotStuff, and Casper FFG are each stated.
+
+Communication is assumed to occur over authenticated point-to-point channels: a correct replica can determine the sender of any message it receives, and the adversary cannot forge messages attributed to correct replicas. The adversary is otherwise permitted to schedule message delivery adversarially before GST, to observe all protocol traffic, and to adaptively coordinate the behaviour of the replicas it controls, subject to standard cryptographic hardness assumptions on the signature scheme used to construct quorum certificates.
+
+\subsection{Correctness Properties}
+
+A Byzantine consensus protocol in this model is required to satisfy two families of properties. \emph{Safety} (agreement and validity) requires that no two correct replicas commit conflicting decisions at the same position in the decided sequence, and that any committed value was proposed by some replica. Safety must hold unconditionally, including during periods of asynchrony before GST, since a violation is unrecoverable. \emph{Liveness} (termination) requires that every correct replica eventually commits a decision; this guarantee is conditioned on synchrony and is therefore only claimed after GST.
+
+The separation of these obligations explains the central design tension analysed in the remainder of this survey. Safety is enforced through quorum intersection, which is precisely what \eqref{eq:safety-bound} makes possible, while liveness is delegated to a view change mechanism that replaces an unresponsive or equivocating leader. PBFT attains both properties at a cost of $\mathcal{O}(n^2)$ messages per consensus instance, and it is this quadratic communication complexity, rather than any weakness in the correctness conditions themselves, that motivates the scalability techniques surveyed subsequently.

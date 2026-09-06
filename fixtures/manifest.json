@@ -1,0 +1,387 @@
+{
+  "fixture_manifest_id": "HV-FIXTURES-2026-08-26",
+  "fixture_manifest_version": "1.0",
+  "status": "partial-readiness",
+  "lifecycle_states": [
+    "planned",
+    "ready",
+    "unavailable",
+    "not-applicable"
+  ],
+  "counting_rule": "Only ready fixtures with verified source and answer-key hashes count as executed evidence. Planned, unavailable, and not-applicable rows remain in every denominator.",
+  "fixtures": [
+    {
+      "id": "F-MACRO-001",
+      "fixture_type": "macro",
+      "lifecycle": "planned",
+      "source_path": null,
+      "source_hash": null,
+      "answer_key_path": null,
+      "answer_key_hash": null,
+      "rights_status": "pending-clearance",
+      "owner": "Humanvoice project",
+      "evaluation_scope": "engineering-only",
+      "intended_job": "Preserve a custom command and its context-dependent expansion or abstain.",
+      "expected_outcomes": {
+        "positive": "Preserve both call and expansion with stable locations.",
+        "negative": "Block a complete-looking record that drops either representation.",
+        "abstention": "Abstain when expansion cannot be resolved safely.",
+        "not_applicable_reason": null
+      },
+      "requirements": [
+        "R5",
+        "R15"
+      ]
+    },
+    {
+      "id": "F-EQUATION-001",
+      "fixture_type": "equation",
+      "lifecycle": "ready",
+      "source_path": "fixtures/synthetic/equation/001.tex",
+      "source_hash": "5f775273a32a7ed4da2c92e6f5526719261d6260bc384e98b6ec8bc90738a432",
+      "answer_key_path": "fixtures/answer-keys/equation-001.json",
+      "answer_key_hash": "16604d5358b25bad7ed2c52f1634be0a8fddf6a97d25422228d538fe1add8f97",
+      "rights_status": "cleared-public",
+      "owner": "Humanvoice project",
+      "evaluation_scope": "engineering-only",
+      "intended_job": "Distinguish a changed exponent from declared whitespace normalization.",
+      "expected_outcomes": {
+        "positive": "Classify a whitespace-only change under the declared normalization.",
+        "negative": "Block an exponent change as substantive.",
+        "abstention": "Abstain when the parser cannot reconstruct the equation body.",
+        "not_applicable_reason": null
+      },
+      "requirements": [
+        "R5",
+        "R15"
+      ]
+    },
+    {
+      "id": "F-TABLE-001",
+      "fixture_type": "table",
+      "lifecycle": "ready",
+      "source_path": "fixtures/synthetic/table/001.tex",
+      "source_hash": "bfe8f9a2c3873bd488bc3127f99c61d6a39d7fd20d1fbc2ea54a77d8ebfd55e8",
+      "answer_key_path": "fixtures/answer-keys/table-001.json",
+      "answer_key_hash": "a25873c02b085f50768ad51fe7e5d556e11c76272913ff14878713f89f1f9817",
+      "rights_status": "cleared-public",
+      "owner": "Humanvoice project",
+      "evaluation_scope": "engineering-only",
+      "intended_job": "Expose a percentage recomputed with a different denominator.",
+      "expected_outcomes": {
+        "positive": "Retain the original percentage and denominator relation.",
+        "negative": "Locate and block an unexplained denominator change.",
+        "abstention": "Abstain when the table relation cannot be reconstructed.",
+        "not_applicable_reason": null
+      },
+      "requirements": [
+        "R5",
+        "R15"
+      ]
+    },
+    {
+      "id": "F-CITATION-001",
+      "fixture_type": "citation",
+      "lifecycle": "ready",
+      "source_path": "fixtures/synthetic/citation/001.tex",
+      "source_hash": "b20b19d6ce34d17114f31d571cbf1dbabee9386ca2b229ccf010817546b2e2bc",
+      "answer_key_path": "fixtures/answer-keys/citation-001.json",
+      "answer_key_hash": "9485f9bfbcb93e9630757f9d8a6de945085856b476f155580a47108dcdb27ed4",
+      "rights_status": "cleared-public",
+      "owner": "Humanvoice project",
+      "evaluation_scope": "engineering-only",
+      "intended_job": "Separate bibliographic identity from source-to-claim support.",
+      "expected_outcomes": {
+        "positive": "Resolve a valid identity while leaving support as a separate result.",
+        "negative": "Block a missing or mismatched identity for a load-bearing claim.",
+        "abstention": "Abstain on support when full text cannot be examined.",
+        "not_applicable_reason": null
+      },
+      "requirements": [
+        "R6",
+        "R20"
+      ]
+    },
+    {
+      "id": "F-QUALIFICATION-001",
+      "fixture_type": "qualification",
+      "lifecycle": "planned",
+      "source_path": null,
+      "source_hash": null,
+      "answer_key_path": null,
+      "answer_key_hash": null,
+      "rights_status": "pending-clearance",
+      "owner": "Humanvoice project",
+      "evaluation_scope": "engineering-only",
+      "intended_job": "Keep a population or horizon qualification linked to the proposition it limits.",
+      "expected_outcomes": {
+        "positive": "Preserve a qualification-proposition link across an explained move.",
+        "negative": "Block a moved qualification whose scope relation is lost.",
+        "abstention": "Abstain when the qualifying relation is ambiguous.",
+        "not_applicable_reason": null
+      },
+      "requirements": [
+        "R5",
+        "R19",
+        "R20"
+      ]
+    },
+    {
+      "id": "F-REGISTER-001",
+      "fixture_type": "register",
+      "lifecycle": "ready",
+      "source_path": "fixtures/synthetic/register/001.tex",
+      "source_hash": "b84cb60f45ee82f0a1be01c9bcc698855dfc28a073b1685b7df18fcab01314fa",
+      "answer_key_path": "fixtures/answer-keys/register-001.json",
+      "answer_key_hash": "834c30a21aa42065f6d5aa4e3c0baa9f8bc1892c058c45fba4d68d2ccf2bf8b3",
+      "rights_status": "cleared-public",
+      "owner": "Humanvoice project",
+      "evaluation_scope": "engineering-only",
+      "intended_job": "Locate private workflow language and connect it to the public decision the reader needs.",
+      "expected_outcomes": {
+        "positive": "Leave legitimate public technical vocabulary unflagged.",
+        "negative": "Locate a private phase label and repository path in reader-facing prose.",
+        "abstention": "Abstain when vocabulary status depends on project configuration.",
+        "not_applicable_reason": null
+      },
+      "requirements": [
+        "R1",
+        "R3",
+        "R10"
+      ]
+    },
+    {
+      "id": "F-INTENTIONAL-PATTERN-001",
+      "fixture_type": "intentional-pattern",
+      "lifecycle": "planned",
+      "source_path": null,
+      "source_hash": null,
+      "answer_key_path": null,
+      "answer_key_hash": null,
+      "rights_status": "pending-clearance",
+      "owner": "Humanvoice project",
+      "evaluation_scope": "engineering-only",
+      "intended_job": "Distinguish purposeful parallel derivation steps from mechanical repetition.",
+      "expected_outcomes": {
+        "positive": "Retain an intentional parallel form with the recorded reason.",
+        "negative": "Locate unexplained repetitive structure when it impairs the declared task.",
+        "abstention": "Abstain when intent cannot be inferred from the brief and local context.",
+        "not_applicable_reason": null
+      },
+      "requirements": [
+        "R2",
+        "R3",
+        "R4"
+      ]
+    },
+    {
+      "id": "F-PACING-001",
+      "fixture_type": "pacing",
+      "lifecycle": "planned",
+      "source_path": null,
+      "source_hash": null,
+      "answer_key_path": null,
+      "answer_key_hash": null,
+      "rights_status": "pending-clearance",
+      "owner": "Humanvoice project",
+      "evaluation_scope": "engineering-only",
+      "intended_job": "Report concept bursts against declared exemplars without inventing a universal threshold.",
+      "expected_outcomes": {
+        "positive": "Report low-burden concept introduction with locations.",
+        "negative": "Locate a concentrated concept burst that exceeds the declared comparison.",
+        "abstention": "Abstain when no eligible exemplar or reader prior is supplied.",
+        "not_applicable_reason": null
+      },
+      "requirements": [
+        "R4",
+        "R18"
+      ]
+    },
+    {
+      "id": "F-FIRST-USE-001",
+      "fixture_type": "first-use",
+      "lifecycle": "planned",
+      "source_path": null,
+      "source_hash": null,
+      "answer_key_path": null,
+      "answer_key_hash": null,
+      "rights_status": "pending-clearance",
+      "owner": "Humanvoice project",
+      "evaluation_scope": "engineering-only",
+      "intended_job": "Check use-before-teach while respecting a declared preview exemption.",
+      "expected_outcomes": {
+        "positive": "Accept a term introduced after a usable expansion or declared preview.",
+        "negative": "Locate the first unexplained acronym use.",
+        "abstention": "Abstain when the term is plausibly part of the reader's declared vocabulary.",
+        "not_applicable_reason": null
+      },
+      "requirements": [
+        "R18"
+      ]
+    },
+    {
+      "id": "F-ASSERTION-001",
+      "fixture_type": "assertion",
+      "lifecycle": "planned",
+      "source_path": null,
+      "source_hash": null,
+      "answer_key_path": null,
+      "answer_key_hash": null,
+      "rights_status": "pending-clearance",
+      "owner": "Humanvoice project",
+      "evaluation_scope": "engineering-only",
+      "intended_job": "Open a review question for a newly added number, superlative, comparison, or causal claim.",
+      "expected_outcomes": {
+        "positive": "Retain an added assertion with a verified evidence anchor.",
+        "negative": "Block silent acceptance of an unsupported new assertion.",
+        "abstention": "Abstain when the cited source is unavailable for support review.",
+        "not_applicable_reason": null
+      },
+      "requirements": [
+        "R6",
+        "R19",
+        "R20"
+      ]
+    },
+    {
+      "id": "F-READER-001",
+      "fixture_type": "reader",
+      "lifecycle": "planned",
+      "source_path": null,
+      "source_hash": null,
+      "answer_key_path": null,
+      "answer_key_hash": null,
+      "rights_status": "pending-clearance",
+      "owner": "Humanvoice project",
+      "evaluation_scope": "internal-evaluation",
+      "intended_job": "Compare whether a low-context reader can recover the decision and mechanism from two protected-equivalent versions.",
+      "expected_outcomes": {
+        "positive": "Record the reader's reconstruction, decision, time, and confidence.",
+        "negative": "Record a failed or incomplete reconstruction without changing it into a machine score.",
+        "abstention": null,
+        "not_applicable_reason": "Reader judgment is a recorded human outcome, not a deterministic parser abstention."
+      },
+      "requirements": [
+        "R8",
+        "R9",
+        "R14",
+        "R21"
+      ]
+    },
+    {
+      "id": "F-THREAT-T1-READONLY",
+      "fixture_type": "threat-T1",
+      "lifecycle": "planned",
+      "source_path": null,
+      "source_hash": null,
+      "answer_key_path": null,
+      "answer_key_hash": null,
+      "rights_status": "pending-clearance",
+      "owner": "Humanvoice project",
+      "evaluation_scope": "engineering-only",
+      "intended_job": "Prove the source stays read-only and writes remain inside the allowlist.",
+      "expected_outcomes": {
+        "positive": "Allowed scratch write succeeds.",
+        "negative": "Source or out-of-allowlist write is blocked.",
+        "abstention": "Environment unable to enforce isolation blocks execution.",
+        "not_applicable_reason": null
+      },
+      "requirements": [
+        "R11",
+        "R20"
+      ]
+    },
+    {
+      "id": "F-THREAT-T2-SHELL",
+      "fixture_type": "threat-T2",
+      "lifecycle": "planned",
+      "source_path": null,
+      "source_hash": null,
+      "answer_key_path": null,
+      "answer_key_hash": null,
+      "rights_status": "pending-clearance",
+      "owner": "Humanvoice project",
+      "evaluation_scope": "engineering-only",
+      "intended_job": "Prove TeX shell commands and source-tree executables cannot run.",
+      "expected_outcomes": {
+        "positive": "Ordinary no-shell-escape compilation succeeds.",
+        "negative": "A per-run sentinel cannot be created by TeX.",
+        "abstention": "Compiler flags or execution boundary cannot be verified.",
+        "not_applicable_reason": null
+      },
+      "requirements": [
+        "R11",
+        "R20"
+      ]
+    },
+    {
+      "id": "F-THREAT-T3-NETWORK",
+      "fixture_type": "threat-T3",
+      "lifecycle": "planned",
+      "source_path": null,
+      "source_hash": null,
+      "answer_key_path": null,
+      "answer_key_hash": null,
+      "rights_status": "pending-clearance",
+      "owner": "Humanvoice project",
+      "evaluation_scope": "engineering-only",
+      "intended_job": "Prove compiler and parser network access is denied.",
+      "expected_outcomes": {
+        "positive": "Local parsing proceeds without network authority.",
+        "negative": "A connection attempt exits with the security code.",
+        "abstention": "Network isolation cannot be created or observed.",
+        "not_applicable_reason": null
+      },
+      "requirements": [
+        "R11",
+        "R20"
+      ]
+    },
+    {
+      "id": "F-THREAT-T4-INJECTION",
+      "fixture_type": "threat-T4",
+      "lifecycle": "planned",
+      "source_path": null,
+      "source_hash": null,
+      "answer_key_path": null,
+      "answer_key_hash": null,
+      "rights_status": "pending-clearance",
+      "owner": "Humanvoice project",
+      "evaluation_scope": "engineering-only",
+      "intended_job": "Treat instruction-looking manuscript content as delimited data with no tool authority.",
+      "expected_outcomes": {
+        "positive": "Ordinary source text reaches the versioned adapter.",
+        "negative": "Instruction-looking text cannot acquire tools, files, or secrets.",
+        "abstention": "Adapter output fails schema or delimiter validation.",
+        "not_applicable_reason": null
+      },
+      "requirements": [
+        "R11",
+        "R20"
+      ]
+    },
+    {
+      "id": "F-THREAT-T5-LIMITS",
+      "fixture_type": "threat-T5",
+      "lifecycle": "planned",
+      "source_path": null,
+      "source_hash": null,
+      "answer_key_path": null,
+      "answer_key_hash": null,
+      "rights_status": "pending-clearance",
+      "owner": "Humanvoice project",
+      "evaluation_scope": "engineering-only",
+      "intended_job": "Enforce time, memory, file, process, and output limits.",
+      "expected_outcomes": {
+        "positive": "A bounded case completes and records resource use.",
+        "negative": "Each seeded exhaustion aborts and names the breached limit.",
+        "abstention": "A limit cannot be enforced or measured on the host.",
+        "not_applicable_reason": null
+      },
+      "requirements": [
+        "R11",
+        "R20"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "counts": {
+    "adoption_candidates": 9,
+    "evidence_rows": 48,
+    "exclusion_codes": 7,
+    "known_items": 14,
+    "literature_sources": 5,
+    "product_requirements": 16,
+    "questions": 6,
+    "software_seeds": 17
+  },
+  "errors": [],
+  "status": "pass"
+}

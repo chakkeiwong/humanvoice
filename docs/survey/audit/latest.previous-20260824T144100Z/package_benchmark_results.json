@@ -1,0 +1,1416 @@
+[
+  {
+    "cases": 0,
+    "package": "fast-detect-gpt",
+    "reason": "no safe adapter is implemented for this package; benchmark adapter required",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "slop-forensics",
+    "reason": "no safe adapter is implemented for this package; benchmark adapter required",
+    "status": "not-run"
+  },
+  {
+    "case_results": [
+      {
+        "band": "clean",
+        "corpus_id": "C-001",
+        "label": "provisional-clean",
+        "return_code": 0,
+        "score": 0,
+        "stderr": ""
+      },
+      {
+        "band": "mixed",
+        "corpus_id": "C-002",
+        "label": "provisional-surface-tell",
+        "return_code": 0,
+        "score": 50,
+        "stderr": ""
+      },
+      {
+        "band": "clean",
+        "corpus_id": "C-003",
+        "label": "provisional-internal-register",
+        "return_code": 0,
+        "score": 0,
+        "stderr": ""
+      },
+      {
+        "band": "clean",
+        "corpus_id": "C-004",
+        "label": "provisional-substance-gap",
+        "return_code": 0,
+        "score": 0,
+        "stderr": ""
+      }
+    ],
+    "cases": 4,
+    "package": "sloptrim",
+    "reason": "detector executed on provisional corpus; no effectiveness claim",
+    "status": "smoke-pass"
+  },
+  {
+    "cases": 0,
+    "package": "stop-slop",
+    "reason": "no safe adapter is implemented for this package; benchmark adapter required",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "GROBID",
+    "reason": "no safe adapter is implemented for this package; benchmark adapter required",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "111-2-Text-Analysis-App",
+    "reason": "no safe adapter is implemented for this package; benchmark adapter required",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "6f02d74f-ai-writing-coach-chrome-extens",
+    "reason": "no safe adapter is implemented for this package; benchmark adapter required",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "AI-Academic-Reviewer-Comments-Helper",
+    "reason": "no safe adapter is implemented for this package; benchmark adapter required",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "AI-Writing-Coach-Chatbot-",
+    "reason": "no safe adapter is implemented for this package; benchmark adapter required",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "AI-writing-feedback",
+    "reason": "no safe adapter is implemented for this package; benchmark adapter required",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "AIprep",
+    "reason": "no safe adapter is implemented for this package; benchmark adapter required",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "Academic_Writing_Feedback",
+    "reason": "no safe adapter is implemented for this package; benchmark adapter required",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "Automated-Writing-Evaluation",
+    "reason": "no safe adapter is implemented for this package; benchmark adapter required",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "Book-Writing-AI-Agent",
+    "reason": "no safe adapter is implemented for this package; benchmark adapter required",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "CELPIP-Writing-tool",
+    "reason": "no safe adapter is implemented for this package; benchmark adapter required",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "Cautious-octo-Veli-Mahlangu",
+    "reason": "no safe adapter is implemented for this package; benchmark adapter required",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "Cognitive_Mirror",
+    "reason": "no safe adapter is implemented for this package; benchmark adapter required",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "DAR-N400-AI-Resistance",
+    "reason": "no safe adapter is implemented for this package; benchmark adapter required",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "Democtratizing_AI_Writing_Support",
+    "reason": "no safe adapter is implemented for this package; benchmark adapter required",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "Digital-Lab-Coach-v0.1.0",
+    "reason": "no safe adapter is implemented for this package; benchmark adapter required",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "English-Language-Learning-Prediction-with-AI-and-Machine-Learning",
+    "reason": "no safe adapter is implemented for this package; benchmark adapter required",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "English_essay_review",
+    "reason": "no safe adapter is implemented for this package; benchmark adapter required",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "EssayMate",
+    "reason": "no safe adapter is implemented for this package; benchmark adapter required",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "Evaluating-Cross-Linguistic-Fairness-in-LLM-Generated-Writing-Feedback",
+    "reason": "no safe adapter is implemented for this package; benchmark adapter required",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "ExpressionParser",
+    "reason": "no safe adapter is implemented for this package; benchmark adapter required",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "HCI-Academic-Writing",
+    "reason": "no safe adapter is implemented for this package; benchmark adapter required",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "HTML-to-Latex-Converter",
+    "reason": "no safe adapter is implemented for this package; benchmark adapter required",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "Human-AI-Collaborative-Writing",
+    "reason": "no safe adapter is implemented for this package; benchmark adapter required",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "Human-AI-Cowriters-Survey-Analysis",
+    "reason": "no safe adapter is implemented for this package; benchmark adapter required",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "IELTS-Preparation-System",
+    "reason": "no safe adapter is implemented for this package; benchmark adapter required",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "IELTS-Writing-Examinier",
+    "reason": "no safe adapter is implemented for this package; benchmark adapter required",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "IELTS-Writing-Practice",
+    "reason": "no safe adapter is implemented for this package; benchmark adapter required",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "IELTSCLI",
+    "reason": "no safe adapter is implemented for this package; benchmark adapter required",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "Ink-Gateway",
+    "reason": "no safe adapter is implemented for this package; benchmark adapter required",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "Interactive_Story_Generator",
+    "reason": "no safe adapter is implemented for this package; benchmark adapter required",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "ItalianWritingSamples",
+    "reason": "no safe adapter is implemented for this package; benchmark adapter required",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "Keystroke2",
+    "reason": "no safe adapter is implemented for this package; benchmark adapter required",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "LSP-ltex-plus",
+    "reason": "no safe adapter is implemented for this package; benchmark adapter required",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "LaTeX-to-HTML-Compiler",
+    "reason": "no safe adapter is implemented for this package; benchmark adapter required",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "Language-Analyzer",
+    "reason": "no safe adapter is implemented for this package; benchmark adapter required",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "Language_Learning_Bot",
+    "reason": "no safe adapter is implemented for this package; benchmark adapter required",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "Lucen",
+    "reason": "no safe adapter is implemented for this package; benchmark adapter required",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "Mira",
+    "reason": "no safe adapter is implemented for this package; benchmark adapter required",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "MyGrammarly",
+    "reason": "no safe adapter is implemented for this package; benchmark adapter required",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "OpenIELTS-AI",
+    "reason": "no safe adapter is implemented for this package; benchmark adapter required",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "PaperWritingLLM",
+    "reason": "no safe adapter is implemented for this package; benchmark adapter required",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "Practice-IELTS",
+    "reason": "no safe adapter is implemented for this package; benchmark adapter required",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "ReadabilityAnalysis",
+    "reason": "no safe adapter is implemented for this package; benchmark adapter required",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "ReferenceChecker",
+    "reason": "no safe adapter is implemented for this package; benchmark adapter required",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "Research-Pilot",
+    "reason": "no safe adapter is implemented for this package; benchmark adapter required",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "SublimeLinter-contrib-proselint",
+    "reason": "no safe adapter is implemented for this package; benchmark adapter required",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "SublimeLinter-contrib-write-good",
+    "reason": "no safe adapter is implemented for this package; benchmark adapter required",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "Text-Analysis",
+    "reason": "no safe adapter is implemented for this package; benchmark adapter required",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "Text-Analysis",
+    "reason": "no safe adapter is implemented for this package; benchmark adapter required",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "Text-Analysis-NLP",
+    "reason": "no safe adapter is implemented for this package; benchmark adapter required",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "Text-Analysis-Project-Sentiment-Readability-Analysis",
+    "reason": "no safe adapter is implemented for this package; benchmark adapter required",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "Text-Analytics-Sentimental-Analysis",
+    "reason": "no safe adapter is implemented for this package; benchmark adapter required",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "Text-Sentiment-Analysis",
+    "reason": "no safe adapter is implemented for this package; benchmark adapter required",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "TextAnalysis",
+    "reason": "no safe adapter is implemented for this package; benchmark adapter required",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "TextConverter",
+    "reason": "no safe adapter is implemented for this package; benchmark adapter required",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "TextInsight-Web-Data-Wizard",
+    "reason": "no safe adapter is implemented for this package; benchmark adapter required",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "TextSight-CLI-NLP",
+    "reason": "no safe adapter is implemented for this package; benchmark adapter required",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "Text_Analysis-SentimentalAnalysis",
+    "reason": "no safe adapter is implemented for this package; benchmark adapter required",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "Textalyzer",
+    "reason": "no safe adapter is implemented for this package; benchmark adapter required",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "WebLaTex",
+    "reason": "no safe adapter is implemented for this package; benchmark adapter required",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "Write-Ace",
+    "reason": "no safe adapter is implemented for this package; benchmark adapter required",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "academic-review-ui",
+    "reason": "no safe adapter is implemented for this package; benchmark adapter required",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "academic-writing-polisher",
+    "reason": "no safe adapter is implemented for this package; benchmark adapter required",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "academic_paper_writing",
+    "reason": "no safe adapter is implemented for this package; benchmark adapter required",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "agentic_essay_writer",
+    "reason": "no safe adapter is implemented for this package; benchmark adapter required",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "ai-evaluation-portfolio",
+    "reason": "no safe adapter is implemented for this package; benchmark adapter required",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "ai-feedback-assistant",
+    "reason": "no safe adapter is implemented for this package; benchmark adapter required",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "ai-ielts-writing-evaluator",
+    "reason": "no safe adapter is implemented for this package; benchmark adapter required",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "ai-seo-system",
+    "reason": "no safe adapter is implemented for this package; benchmark adapter required",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "ai-thesis-reviewer",
+    "reason": "no safe adapter is implemented for this package; benchmark adapter required",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "ai-writing-coach",
+    "reason": "no safe adapter is implemented for this package; benchmark adapter required",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "ai-writing-critiquer",
+    "reason": "no safe adapter is implemented for this package; benchmark adapter required",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "ai-writing-feedback-api",
+    "reason": "no safe adapter is implemented for this package; benchmark adapter required",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "ai-writing-skill",
+    "reason": "no safe adapter is implemented for this package; benchmark adapter required",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "al-resume-ats-checker",
+    "reason": "no safe adapter is implemented for this package; benchmark adapter required",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "arc-proselint",
+    "reason": "no safe adapter is implemented for this package; benchmark adapter required",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "ast-calculus",
+    "reason": "no safe adapter is implemented for this package; benchmark adapter required",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "auralscript",
+    "reason": "no safe adapter is implemented for this package; benchmark adapter required",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "blog-writing-ai-human-pair",
+    "reason": "no safe adapter is implemented for this package; benchmark adapter required",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "case-report-feedback-system",
+    "reason": "no safe adapter is implemented for this package; benchmark adapter required",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "citelearn",
+    "reason": "no safe adapter is implemented for this package; benchmark adapter required",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "claude_scribe_infrastructure",
+    "reason": "no safe adapter is implemented for this package; benchmark adapter required",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "cnsenti",
+    "reason": "no safe adapter is implemented for this package; benchmark adapter required",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "coauthor-nlp-analysis",
+    "reason": "no safe adapter is implemented for this package; benchmark adapter required",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "content-os-2.0",
+    "reason": "no safe adapter is implemented for this package; benchmark adapter required",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "coverletter_wiz",
+    "reason": "no safe adapter is implemented for this package; benchmark adapter required",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "cybergym-e2e",
+    "reason": "no safe adapter is implemented for this package; benchmark adapter required",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "danger-prose",
+    "reason": "no safe adapter is implemented for this package; benchmark adapter required",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "deslopper",
+    "reason": "no safe adapter is implemented for this package; benchmark adapter required",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "desmos-latex-parser",
+    "reason": "no safe adapter is implemented for this package; benchmark adapter required",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "deutsch-essay-evaluator",
+    "reason": "no safe adapter is implemented for this package; benchmark adapter required",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "dissertation-writing-tool-frontend",
+    "reason": "no safe adapter is implemented for this package; benchmark adapter required",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "docs",
+    "reason": "no safe adapter is implemented for this package; benchmark adapter required",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "dutch-essay-helper",
+    "reason": "no safe adapter is implemented for this package; benchmark adapter required",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "editing-agent",
+    "reason": "no safe adapter is implemented for this package; benchmark adapter required",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "editorial",
+    "reason": "no safe adapter is implemented for this package; benchmark adapter required",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "emacs-ltex-plus",
+    "reason": "no safe adapter is implemented for this package; benchmark adapter required",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "engineering-reflection-assessor",
+    "reason": "no safe adapter is implemented for this package; benchmark adapter required",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "essay-feedback-app",
+    "reason": "no safe adapter is implemented for this package; benchmark adapter required",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "eval-data",
+    "reason": "no safe adapter is implemented for this package; benchmark adapter required",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "evo_blog_public",
+    "reason": "no safe adapter is implemented for this package; benchmark adapter required",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "flywrite",
+    "reason": "no safe adapter is implemented for this package; benchmark adapter required",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "formula-to-latex",
+    "reason": "no safe adapter is implemented for this package; benchmark adapter required",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "friction",
+    "reason": "no safe adapter is implemented for this package; benchmark adapter required",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "futuring-machines",
+    "reason": "no safe adapter is implemented for this package; benchmark adapter required",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "grammar.el",
+    "reason": "no safe adapter is implemented for this package; benchmark adapter required",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "grammarFormatTranslator",
+    "reason": "no safe adapter is implemented for this package; benchmark adapter required",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "grammar_checker",
+    "reason": "no safe adapter is implemented for this package; benchmark adapter required",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "grammargraph-ast-generator",
+    "reason": "no safe adapter is implemented for this package; benchmark adapter required",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "gre-awa-grader",
+    "reason": "no safe adapter is implemented for this package; benchmark adapter required",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "humanly",
+    "reason": "no safe adapter is implemented for this package; benchmark adapter required",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "ielts-study-assistant",
+    "reason": "no safe adapter is implemented for this package; benchmark adapter required",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "ielts-writing-pro",
+    "reason": "no safe adapter is implemented for this package; benchmark adapter required",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "iterate",
+    "reason": "no safe adapter is implemented for this package; benchmark adapter required",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "joodalint",
+    "reason": "no safe adapter is implemented for this package; benchmark adapter required",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "knowrite",
+    "reason": "no safe adapter is implemented for this package; benchmark adapter required",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "kol-ops-suite",
+    "reason": "no safe adapter is implemented for this package; benchmark adapter required",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "langchain-multi-agent-writer",
+    "reason": "no safe adapter is implemented for this package; benchmark adapter required",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "laravel-prose-linter",
+    "reason": "no safe adapter is implemented for this package; benchmark adapter required",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "latex-ast",
+    "reason": "no safe adapter is implemented for this package; benchmark adapter required",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "latex-math-swift",
+    "reason": "no safe adapter is implemented for this package; benchmark adapter required",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "latex-parser",
+    "reason": "no safe adapter is implemented for this package; benchmark adapter required",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "latex-parser",
+    "reason": "no safe adapter is implemented for this package; benchmark adapter required",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "latex-parser-ts",
+    "reason": "no safe adapter is implemented for this package; benchmark adapter required",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "latex_lexer",
+    "reason": "no safe adapter is implemented for this package; benchmark adapter required",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "latexsnipper-core",
+    "reason": "no safe adapter is implemented for this package; benchmark adapter required",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "lead-gen-video-script",
+    "reason": "no safe adapter is implemented for this package; benchmark adapter required",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "lexis",
+    "reason": "no safe adapter is implemented for this package; benchmark adapter required",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "lins",
+    "reason": "no safe adapter is implemented for this package; benchmark adapter required",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "linter-proselint",
+    "reason": "no safe adapter is implemented for this package; benchmark adapter required",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "llm-formative-feedback-hudk4050",
+    "reason": "no safe adapter is implemented for this package; benchmark adapter required",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "llm-writing-feedback",
+    "reason": "no safe adapter is implemented for this package; benchmark adapter required",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "lucid-lint",
+    "reason": "no safe adapter is implemented for this package; benchmark adapter required",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "luminbuddy-writing-agent-v2",
+    "reason": "no safe adapter is implemented for this package; benchmark adapter required",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "lyx-gc",
+    "reason": "no safe adapter is implemented for this package; benchmark adapter required",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "mathlex",
+    "reason": "no safe adapter is implemented for this package; benchmark adapter required",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "mentor-mcp-server",
+    "reason": "no safe adapter is implemented for this package; benchmark adapter required",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "mimispec",
+    "reason": "no safe adapter is implemented for this package; benchmark adapter required",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "modes-of-human-AI-collaborative-writing",
+    "reason": "no safe adapter is implemented for this package; benchmark adapter required",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "neupen",
+    "reason": "no safe adapter is implemented for this package; benchmark adapter required",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "nnu-smartwrite",
+    "reason": "no safe adapter is implemented for this package; benchmark adapter required",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "no-slop",
+    "reason": "no safe adapter is implemented for this package; benchmark adapter required",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "obsidian-textanalysis",
+    "reason": "no safe adapter is implemented for this package; benchmark adapter required",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "outlier-writing-samples",
+    "reason": "no safe adapter is implemented for this package; benchmark adapter required",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "paper-checker",
+    "reason": "no safe adapter is implemented for this package; benchmark adapter required",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "papersignals",
+    "reason": "no safe adapter is implemented for this package; benchmark adapter required",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "papersmith",
+    "reason": "no safe adapter is implemented for this package; benchmark adapter required",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "parsers",
+    "reason": "no safe adapter is implemented for this package; benchmark adapter required",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "phrase-chain",
+    "reason": "no safe adapter is implemented for this package; benchmark adapter required",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "prose-lint",
+    "reason": "no safe adapter is implemented for this package; benchmark adapter required",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "prosefmt",
+    "reason": "no safe adapter is implemented for this package; benchmark adapter required",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "proselint",
+    "reason": "no safe adapter is implemented for this package; benchmark adapter required",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "proselint",
+    "reason": "no safe adapter is implemented for this package; benchmark adapter required",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "prosemd-lsp",
+    "reason": "no safe adapter is implemented for this package; benchmark adapter required",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "proserunner",
+    "reason": "no safe adapter is implemented for this package; benchmark adapter required",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "prosewash",
+    "reason": "no safe adapter is implemented for this package; benchmark adapter required",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "readability-analysis-tool",
+    "reason": "no safe adapter is implemented for this package; benchmark adapter required",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "readability-checker-with-cs",
+    "reason": "no safe adapter is implemented for this package; benchmark adapter required",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "readability-score",
+    "reason": "no safe adapter is implemented for this package; benchmark adapter required",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "readable",
+    "reason": "no safe adapter is implemented for this package; benchmark adapter required",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "red-pencil-editor-skills",
+    "reason": "no safe adapter is implemented for this package; benchmark adapter required",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "redaktool",
+    "reason": "no safe adapter is implemented for this package; benchmark adapter required",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "refine-my-diary",
+    "reason": "no safe adapter is implemented for this package; benchmark adapter required",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "rust_grammar",
+    "reason": "no safe adapter is implemented for this package; benchmark adapter required",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "scholarwrite-ai",
+    "reason": "no safe adapter is implemented for this package; benchmark adapter required",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "scientific-research-helper",
+    "reason": "no safe adapter is implemented for this package; benchmark adapter required",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "scripto",
+    "reason": "no safe adapter is implemented for this package; benchmark adapter required",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "silver-novel-skills",
+    "reason": "no safe adapter is implemented for this package; benchmark adapter required",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "skills",
+    "reason": "no safe adapter is implemented for this package; benchmark adapter required",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "slopless",
+    "reason": "no safe adapter is implemented for this package; benchmark adapter required",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "smolagents-video-script-generator",
+    "reason": "no safe adapter is implemented for this package; benchmark adapter required",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "spk_balance",
+    "reason": "no safe adapter is implemented for this package; benchmark adapter required",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "sprachhilfer",
+    "reason": "no safe adapter is implemented for this package; benchmark adapter required",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "story-collab-ai",
+    "reason": "no safe adapter is implemented for this package; benchmark adapter required",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "syntastic-grammar-checkers",
+    "reason": "no safe adapter is implemented for this package; benchmark adapter required",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "texmax",
+    "reason": "no safe adapter is implemented for this package; benchmark adapter required",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "text-awakens",
+    "reason": "no safe adapter is implemented for this package; benchmark adapter required",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "text-complexity-readability-analysis",
+    "reason": "no safe adapter is implemented for this package; benchmark adapter required",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "text-readability-analysis-functional",
+    "reason": "no safe adapter is implemented for this package; benchmark adapter required",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "text-simplifier-readability-analysis",
+    "reason": "no safe adapter is implemented for this package; benchmark adapter required",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "text_readability_analysis",
+    "reason": "no safe adapter is implemented for this package; benchmark adapter required",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "textlens",
+    "reason": "no safe adapter is implemented for this package; benchmark adapter required",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "texts_readability_analysis",
+    "reason": "no safe adapter is implemented for this package; benchmark adapter required",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "textstat",
+    "reason": "no safe adapter is implemented for this package; benchmark adapter required",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "tiny-cas",
+    "reason": "no safe adapter is implemented for this package; benchmark adapter required",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "treex",
+    "reason": "no safe adapter is implemented for this package; benchmark adapter required",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "unified-latex",
+    "reason": "no safe adapter is implemented for this package; benchmark adapter required",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "vale",
+    "reason": "no safe adapter is implemented for this package; benchmark adapter required",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "vale-llm-slop",
+    "reason": "no safe adapter is implemented for this package; benchmark adapter required",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "vale.nvim",
+    "reason": "no safe adapter is implemented for this package; benchmark adapter required",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "vscode-ltex",
+    "reason": "no safe adapter is implemented for this package; benchmark adapter required",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "vscode-ltex-plus",
+    "reason": "no safe adapter is implemented for this package; benchmark adapter required",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "wordsmith",
+    "reason": "no safe adapter is implemented for this package; benchmark adapter required",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "write-good-action",
+    "reason": "no safe adapter is implemented for this package; benchmark adapter required",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "write-good-as-promised",
+    "reason": "no safe adapter is implemented for this package; benchmark adapter required",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "writing",
+    "reason": "no safe adapter is implemented for this package; benchmark adapter required",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "writing-copilot",
+    "reason": "no safe adapter is implemented for this package; benchmark adapter required",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "writing-eval",
+    "reason": "no safe adapter is implemented for this package; benchmark adapter required",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "writing-eval-app",
+    "reason": "no safe adapter is implemented for this package; benchmark adapter required",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "writing-skills",
+    "reason": "no safe adapter is implemented for this package; benchmark adapter required",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "writing-with-agents",
+    "reason": "no safe adapter is implemented for this package; benchmark adapter required",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "writing_feedback_papers",
+    "reason": "no safe adapter is implemented for this package; benchmark adapter required",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "Pandoc",
+    "reason": "no safe adapter is implemented for this package; benchmark adapter required",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "latexdiff",
+    "reason": "no safe adapter is implemented for this package; benchmark adapter required",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "academic-humanizer",
+    "reason": "no safe adapter is implemented for this package; benchmark adapter required",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "avoid-ai-writing",
+    "reason": "no safe adapter is implemented for this package; benchmark adapter required",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "humanizer",
+    "reason": "no safe adapter is implemented for this package; benchmark adapter required",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "taste-skill",
+    "reason": "no safe adapter is implemented for this package; benchmark adapter required",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "LanguageTool",
+    "reason": "no safe adapter is implemented for this package; benchmark adapter required",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "LaTeXML",
+    "reason": "no safe adapter is implemented for this package; benchmark adapter required",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "plasTeX",
+    "reason": "no safe adapter is implemented for this package; benchmark adapter required",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "pylatexenc",
+    "reason": "no safe adapter is implemented for this package; benchmark adapter required",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "tree-sitter-latex",
+    "reason": "no safe adapter is implemented for this package; benchmark adapter required",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "LTeX+ LS",
+    "reason": "no safe adapter is implemented for this package; benchmark adapter required",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "Textidote",
+    "reason": "no safe adapter is implemented for this package; benchmark adapter required",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "llama.cpp",
+    "reason": "no safe adapter is implemented for this package; benchmark adapter required",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "Vale",
+    "reason": "no safe adapter is implemented for this package; benchmark adapter required",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "proselint",
+    "reason": "no safe adapter is implemented for this package; benchmark adapter required",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "textlint",
+    "reason": "no safe adapter is implemented for this package; benchmark adapter required",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "vale-ai-tells",
+    "reason": "no safe adapter is implemented for this package; benchmark adapter required",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "write-good",
+    "reason": "no safe adapter is implemented for this package; benchmark adapter required",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "textstat",
+    "reason": "no safe adapter is implemented for this package; benchmark adapter required",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "Inspect AI",
+    "reason": "no safe adapter is implemented for this package; benchmark adapter required",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "humanizer-stack",
+    "reason": "no safe adapter is implemented for this package; benchmark adapter required",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "writing-agent",
+    "reason": "no safe adapter is implemented for this package; benchmark adapter required",
+    "status": "not-run"
+  }
+]

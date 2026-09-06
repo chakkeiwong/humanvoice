@@ -1,0 +1,69 @@
+{
+  "id": "E-INT-HPO-001",
+  "source_type": "internal-case-record",
+  "title": "Three-round density repair in the HPO survey engagement",
+  "date": "2026-08-25",
+  "source_provenance": "Internal engagement memo suggestions_from_hpo_survey_2026-08-25.md and the dated HPO literature-audit ledger",
+  "source_repository": "hponas/hpo-survey",
+  "claim_class": "internal-calibration-and-fixture",
+  "population": "one 90-page methods monograph and one manager-reader relationship",
+  "rounds": [
+    {
+      "id": 1,
+      "symptom": "too dense",
+      "cause": "paragraph packing",
+      "evidence": {
+        "paragraph_words": 210,
+        "mechanisms": 6,
+        "citations": 5,
+        "mean_prose_paragraph_words_before": 128,
+        "mean_prose_paragraph_words_after": 90
+      },
+      "repair": "one idea per paragraph",
+      "use": "calibration fixture; not a paragraph-length standard"
+    },
+    {
+      "id": 2,
+      "symptom": "too dense",
+      "cause": "conceptual pacing",
+      "evidence": {
+        "words_per_new_concept": {
+          "survey": 70,
+          "exemplar_1": 83,
+          "exemplar_2": 253
+        },
+        "burst_paragraph_share_percent": {
+          "survey": 12.9,
+          "exemplar_1": 5.9,
+          "exemplar_2": 0.8
+        }
+      },
+      "repair": "concrete case, explanation, figure, and read-back before the next distinction",
+      "use": "relative calibration; not a universal threshold"
+    },
+    {
+      "id": 3,
+      "symptom": "do not use it before explaining it",
+      "cause": "dependency ordering",
+      "evidence": {
+        "adjudicated_positive_violations": 25,
+        "adjudicated_false_alarms": 80,
+        "examples": ["PPO used before introduction", "acquisition-function names used before acquisitions were taught"]
+      },
+      "repair": "generic object first, name after, or taught-later pointer",
+      "use": "held-out ordering fixture; prevalence outside this case is unknown"
+    }
+  ],
+  "prototype_limits": [
+    "heuristic concept detector",
+    "no sentence-level dependency parser",
+    "spot-checked precision is not an acceptance criterion",
+    "one engagement does not establish efficacy or general prevalence"
+  ],
+  "fixture_policy": {
+    "calibration_partition": "may tune wording and exemption conventions",
+    "held_out_partition": "25 positive ordering locations plus 80 adjudicated false alarms remain untouched while tuning",
+    "human_decision": "author and reader decide; metrics only locate passages",
+    "promotion_veto": "any silent protected-object change blocks promotion"
+  }
+}

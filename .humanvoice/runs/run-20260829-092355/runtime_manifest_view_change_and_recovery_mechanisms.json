@@ -1,0 +1,33 @@
+{
+  "record_type": "RuntimeManifest",
+  "schema_version": "HV-SCHEMA-1.0",
+  "record_id": "draft-View Change and Recovery Mechanisms-2026-08-29T09:24:36.778535+00:00",
+  "run_id": "run-20260829-092355",
+  "created_at": "2026-08-29T09:24:36.778547+00:00",
+  "mode": "inference",
+  "compiler": {
+    "name": "none",
+    "version": "n/a",
+    "executable_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+    "flags": []
+  },
+  "runtime_type": "claude-api",
+  "model_version_string": "claude-opus-5",
+  "model_artifact_hash_if_local": null,
+  "prompt_template_hash": "9203411fa7aff6ff124cf6da2711ea561db874ee9c54134733d4c47785a79d74",
+  "sampling": {
+    "temperature": 0.0
+  },
+  "seed_if_applicable": null,
+  "api_endpoint": "https://api.anthropic.com/v1/messages",
+  "request_id_if_available": "msg_2vR7X5zTdkZ2uqnq4omk1N4f",
+  "timestamp": "2026-08-29T09:24:36.778551+00:00",
+  "latency_ms": 0,
+  "input_tokens": 1097,
+  "output_tokens": 1329,
+  "output_hash": "8d39af7485c8c1daa47bcb8c28734d2d1fdeded103725eff49bbf8e99229a99b",
+  "not_applicable_reason": null,
+  "hardware": null,
+  "network_policy": "api-only",
+  "resource_limits": null
+}

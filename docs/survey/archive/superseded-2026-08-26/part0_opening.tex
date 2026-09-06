@@ -1,0 +1,362 @@
+% Expanded decision chapter: the shared decision and reader journey
+\chapter{What the first investment would buy}
+\label{sec:opening}
+
+The case and the wider record now let us state the investment plainly. A small
+team would have twelve weeks to build a review system, try it on one
+consequential document, and measure whether it saves the attention of the
+person who has to decide what the document means. The people making that
+decision can assess a research design and a financial case; they should not
+have to reconstruct the project's private history before they can judge it.
+
+The practical question is straightforward: is this bounded effort worth
+funding, given what the cases and the literature already tell us and what the
+first build still has to learn?
+
+\section{The first investment}
+
+\hv{} is a reader-first revision system for technical documents. It does not
+try to make prose sound generically ``human,'' and it does not replace the
+author's judgment with a detector or a model score. It locates problems that
+can be shown in the source, protects equations, numbers, citations, and claims
+while a draft changes, and ends with a decision from a named human reader.
+
+The first investment is limited. Fund a twelve-week MVP, a small evaluation
+corpus, and one live-document feasibility run. At the end of that work, we
+should decide whether a comparative study against the current
+combination of linters, general language-model editing, version control, and
+manual review is worth funding. This request does not fund general
+deployment or support a claim that \hv{} already improves expert writing.
+
+The eventual success criterion is economic as well as technical: fewer
+human-feedback rounds to reader acceptance, without increasing reader time or
+changes to protected meaning. If the system makes review slower, creates too
+many low-value alerts, or cannot show what happened to a substantive change,
+we should stop or redesign it even if its surface scores improve.
+
+\begin{table}[H]
+\centering
+\small
+\begin{tabular}{@{}p{0.25\textwidth}p{0.68\textwidth}@{}}
+\toprule
+Decision question & Proposed answer \\
+\midrule
+What problem is worth paying to solve? & Repeated diagnosis, revision, and rereading when a document is correct but leaves an expert reader to reconstruct its purpose and argument. \\
+What would we build first? & A local-first parser, located diagnostics, protected comparison, reader review, and an evaluation corpus for LaTeX and Markdown. \\
+What would count as evidence? & A working end-to-end case followed, if feasible, by a preregistered comparison of feedback rounds, reader time, and meaning preservation. \\
+What is not yet established? & That this workflow improves expert economics or research writing, or that any detector can decide whether a document is acceptable. \\
+What decision is requested now? & Fund the bounded MVP and feasibility case; defer deployment and efficacy claims until the comparison earns them. \\
+\bottomrule
+\end{tabular}
+\caption{The investment decision in one page. The later chapters supply the evidence and design behind each answer.}
+\label{tab:opening-decision}
+\end{table}
+
+\Needspace{4.5cm}
+\begin{decisionbox}{The recommendation}
+Fund the bounded build and the feasibility case. Do not treat deployment or a
+passing surface score as evidence that expert writing has improved. Fund a
+larger study only if the workflow is usable, protects meaning, and leaves the
+reader outcome credible.
+\end{decisionbox}
+
+\section{What we know, and what the first build must learn}
+
+The work is not starting from a blank page. The internal cases provide a
+concrete failure and repair vocabulary; the literature supplies mechanisms and
+limits; and the software review identifies components that can be tested rather
+than invented. What remains unknown is the value of connecting those pieces for
+technical authors and their readers.
+
+\begin{table}[H]
+\centering
+\small
+\begin{tabularx}{\textwidth}{@{}p{0.24\textwidth}L@{}}
+\toprule
+\textbf{Already established} & \textbf{What the record supports} \\
+\midrule
+The costly failure & A document can compile and pass agent review while an expert unfamiliar with the project cannot state its purpose or requested action. \\
+The mechanism & Internal vocabulary, mechanical repetition, defensive prose, and missing substance mask one another in a predictable order. \\
+The available pieces & Parsers, linters, protected comparison, citation tools, and reader-review methods exist, but no validated system connects them. \\
+\midrule
+\textbf{Still missing} & \textbf{What the MVP must learn} \\
+\midrule
+Economic value & Whether the connected workflow reduces feedback and rereading time enough to justify its cost. \\
+Generalization & Whether the result survives new writers, genres, and readers rather than one rescued document. \\
+Efficacy & Whether a comparative study can show fewer feedback rounds without meaning violations or slower readers. \\
+\bottomrule
+\end{tabularx}
+\caption{The current evidence separates feasibility from efficacy.}
+\label{tab:opening-status}
+\end{table}
+
+\section{What the first system must get right}
+
+The alternatives already in use each solve one part of the problem. A grammar
+checker catches local errors; a general language model drafts and rewrites; a
+detector estimates whether text resembles a model; and a version-control
+system records that a file changed. An investable product has to satisfy five
+conditions at once, because improving one layer while damaging another merely
+moves the reader's cost.
+
+\begin{table}[H]
+\centering
+\small
+\begin{tabularx}{\textwidth}{@{}p{0.23\textwidth}p{0.31\textwidth}L@{}}
+\toprule
+Condition & Why it matters & First-release test \\
+\midrule
+\textbf{Reader outcome} & The document exists to support a decision, not to
+  win a style score. & A named reader recovers the problem, evidence,
+  qualification, and requested action from the rendered document. \\
+\textbf{Meaning protection} & A fluent edit is a failure if it changes an
+  equation, number, citation, assumption, or conclusion. & A protected
+  comparison explains every change to those objects and blocks silent loss. \\
+\textbf{Located diagnosis} & Authors can evaluate a finding only when they
+  can see where it came from and why it matters. & Each alert names a span,
+  category, evidence, and editorial question; no alert edits the source. \\
+\textbf{Local provenance} & Technical manuscripts may contain confidential
+  research and unpublished decisions. & The local-first path reproduces a
+  finding from a source snapshot without sending the manuscript to a remote
+  service by default. \\
+\textbf{Economic discipline} & A tool that adds review work is not an
+  improvement, however polished its output. & The feasibility run measures
+  feedback rounds, reader time, false-positive burden, and meaning errors
+  before any scale-up decision. \\
+\bottomrule
+\end{tabularx}
+\caption{Five conditions for a useful first release.}
+\label{tab:opening-conditions}
+\end{table}
+
+The comparison is therefore with a bundle of existing practices, not with a
+single rival. Humanvoice earns a place only if the bundle becomes easier to
+inspect and cheaper to use without weakening the author's control. The later
+chapters test each condition against research findings, source-level package
+reviews, and the project's own failure record.
+
+\section{The cost of a document that makes the reader do the work}
+
+A technical document can compile without warnings, survive several model
+reviews, and contain correct mathematics while failing in its first few
+minutes with a human reader. One funding proposal in this project's record
+did exactly that. Its reader could not state the purpose, could not tell why
+private file names and phase labels appeared in the argument, and could not
+identify the action being requested. The failure was not a missing comma. The
+document had transferred the work of constructing the argument from its author
+to a scarce expert reader. The preceding worked case makes that transfer
+concrete; this section draws out its economic consequence rather than treating
+the case as an external efficacy study.
+
+That transfer has a simple economic consequence. A rejected draft starts
+another cycle of diagnosis, revision, and rereading. The author spends time,
+but so does the person whose judgment the document was meant to support. For a
+research group, investment committee, or executive team, the scarce input is
+often not another paragraph of writing. It is the uninterrupted attention of
+someone who can decide whether the work deserves resources or a change in
+direction.
+
+The current toolchain lowers parts of this cost. Grammar checkers find local
+errors. Prose linters expose repeated phrases. A general language model can
+draft, rewrite, or comment. A citation service can confirm that a DOI exists,
+and version control can show that text changed. None of these, on its own,
+answers the decision question: can the intended reader now reconstruct the
+problem, the mechanism, the evidence, and the requested action? A fluent
+rewrite can also change a number, assumption, citation, or conclusion while
+making the sentence look better.
+
+\subsection{A concrete repair}
+
+The product's promise is easier to see in a small, recorded change. In one
+internal economics manuscript, a sentence carried a project-status word that
+made sense to its authors but not to an unaided reader:
+
+\begin{repairpair}
+\before{``It translates one declared restricted reconstruction into Dynare and
+compares like with like, including likelihood components, observations,
+counterfactual paths, and lower-bound conditions.''}
+\after{``It translates the restricted reconstruction into Dynare and makes a
+like-for-like comparison of likelihood components, observations,
+counterfactual paths, and lower-bound conditions.''}
+\end{repairpair}
+
+The repair removes the private status marker and makes the comparison the
+sentence's action. It does not change an equation, a result, or a qualification.
+An MVP should make this kind of located, reviewable change easy to propose and
+safe to reject; a generic score would not show either fact.
+
+\section{What the product does in one document}
+
+\hv{} sits beside the author's existing editor and repository. A document
+moves through a short, observable sequence.
+
+First, the author identifies the intended reader and the decision the document
+must support. The system parses a LaTeX or Markdown source into ordinary prose
+and protected content. Equations, numbers, labels, citations, quotations, and
+declared claims retain their source locations.
+
+Second, it presents a small ranked set of findings. Some are deterministic: a
+private path has entered the manuscript, several sections open in the same
+way, a citation's metadata does not match, or a protected number changed.
+Others are editorial questions attached to a span: does this qualification
+prevent a real misunderstanding, or only protect the author? Is the mechanism
+that connects the paragraph's evidence to its conclusion missing? Findings
+remain findings. The system does not silently edit the source.
+
+Third, the author or an explicitly chosen editor revises the draft. A
+protected comparison reports what happened to each equation, number, label,
+citation, quotation, and declared claim. A substantive change is allowed, but
+it cannot disappear inside a smoother sentence.
+
+Finally, a reader who has not seen the project history receives the rendered
+document without the context that made its private language seem normal. The reader
+answers a short set of questions tied to the document's purpose: What problem
+is being solved? What is proposed? Why is the obvious alternative
+insufficient? What evidence matters? What action is requested? A named human
+remains the final authority. A missing answer sends the document back for
+substantive revision, not another round of synonym replacement.
+
+\begin{quote}\small\ttfamily
+source -> parse and protect -> located findings\\
+-> author revision -> protected comparison\\
+-> reader without project history -> human decision
+\end{quote}
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[node distance=2mm and 2mm,font=\small,scale=0.86,transform shape]
+  \node[hvstage] (source) {Source document};
+  \node[hvstage,right=of source] (parse) {Parse source\\and protect meaning};
+  \node[hvstage,right=of parse] (find) {Located findings\\with evidence};
+  \node[hvstage,right=of find] (revise) {Author revision\\and protected comparison};
+  \node[hvstage,right=of revise] (read) {Independent read\\and human decision};
+  \draw[hvflow] (source) -- (parse);
+  \draw[hvflow] (parse) -- (find);
+  \draw[hvflow] (find) -- (revise);
+  \draw[hvflow] (revise) -- (read);
+\end{tikzpicture}
+\caption{The product connects measurement to judgment without making either one impersonate the other.}
+\label{fig:opening-journey}
+\end{figure}
+
+The reader sees one manuscript. The project retains only the provenance needed
+to reproduce a finding, understand a revision, and evaluate the workflow. That
+separation is an implementation boundary, not a second reader-facing
+document: this volume carries the argument, while machine records remain in
+the repository for reproducibility.
+
+\section{What the evidence allows us to promise}
+
+The research literature makes the design plausible and limits its promise.
+Controlled experiments find that generative assistance can make some writing
+and knowledge-work tasks faster or better scored \citep{noy2023experimental}.
+Field studies report productivity changes in workplace settings, but average
+effects vary by task and worker experience \citep{dillon2025shifting,brynjolfsson2025work}.
+Assistance can even reduce correctness when a task lies outside a model's
+capability frontier \citep{dellacqua2026jagged}. These studies establish that
+assistance changes work; they do not estimate the value of this workflow for
+expert research writing.
+
+Studies of feedback evaluate comments by the revisions they induce, not by
+their fluency. Models can identify local defects while missing the central
+problem in a passage \citep{nair2024closing,rashkin2025story}. Systematic
+reviews find more consistent gains in grammar, process, coherence, and surface
+accuracy than in argumentation, discourse organization, or creativity
+\citep{meng2026systematic,abudalfa2026awe}. Model judges are useful screening
+instruments, but their preferences change with order, length, model family,
+and self-preference \citep{zheng2023judging,panickssery2024llm,dubois2024length}.
+Disclosure can change reader response, assistance can increase individual
+performance while reducing collective diversity, and a DOI match does not
+show that a paper supports the sentence citing it
+\citep{li2024disclosure,doshi2024generative,padmakumar2024writing,mugaanyi2024citation}.
+
+Together these findings support a narrow product hypothesis: connecting
+located diagnosis, protected editing, and direct reader evidence may reduce
+wasted revision and rereading. They do not justify autonomous rewriting, an
+authorship detector, a scalar ``human-likeness'' score, or an efficacy claim
+before the pilot.
+
+\section{What the product joins together}
+
+The proposition is an interface claim, not a claim that one new model will
+write better sentences. Humanvoice should join four activities that are
+usually separated: locating a problem in the source, preserving the objects
+that carry meaning, asking the author to choose a repair, and measuring what a
+reader can recover afterward.
+
+\begin{enumerate}[label=\textbf{C\arabic*.},leftmargin=*]
+\item \textbf{A bounded diagnosis.} Findings have a location, a category, and
+  an explanation. They are useful because an author can disagree with them.
+\item \textbf{A protected revision.} Equations, numbers, citations, labels,
+  quotations, and claims remain visible while prose changes.
+\item \textbf{A reader outcome.} The endpoint is whether a named reader can
+  reconstruct the problem, mechanism, evidence, and requested action.
+\item \textbf{An economic test.} The workflow earns further investment only
+  when it reduces costly feedback without increasing reader time or meaning
+  violations.
+\end{enumerate}
+
+\begin{takeawaybox}{Why this is a product rather than another writing guide}
+The first three claims describe a usable workflow. The fourth makes it
+falsifiable. A policy can recommend these behaviors; a product can record them,
+replay them, and discover whether they save expert attention.
+\end{takeawaybox}
+
+\section{The economic test}
+
+The value of the project should be calculated from its own documents and
+readers. Let $r_0$ and $r_1$ be the number of feedback rounds under the current
+and proposed workflows, $t_0$ and $t_1$ the expert-reader hours per round,
+$c_r$ the loaded cost of that time, $N$ the annual number of relevant
+documents, and $C$ the annualized build and maintenance cost. The directly
+measurable reader-time component of annual value is
+\begin{equation}
+V = N(r_0t_0-r_1t_1)c_r-C.
+\label{eq:opening-value}
+\end{equation}
+
+The equation is a decision aid, not a forecast. The project does not yet have
+defensible values for all of its inputs, and no published study supplies them.
+The feasibility case should measure the baseline distribution of rounds,
+reader time, false-positive burden, and meaning-preservation failures. A later
+comparison can then price the investment honestly and report results by writer
+experience, document genre, and reader role.
+
+\section{What the first release enables}
+
+The same workflow can serve several high-value document settings without
+pretending that they are the same genre:
+
+\begin{description}
+\item[Research proposals.] Keep the mechanism and requested decision visible
+  while evidence and caveats are revised.
+\item[Technical monographs and model notes.] Protect notation, equations, and
+  calibration claims while a long argument is made easier to teach.
+\item[Executive decision briefs.] Compress the route to an action without
+  turning the technical appendix into the main story.
+\item[Implementation and evaluation records.] Preserve enough provenance to
+  reproduce a finding without asking the decision reader to read the ledger.
+\end{description}
+
+These are application targets, not evidence that the workflow already works in
+each setting. The feasibility case should choose one live document and one
+named reader first; generalization is a result to earn.
+
+\section{Where the evidence leads}
+\label{sec:route}
+
+The next chapters examine the research that explains machine-typical language,
+assistance, feedback, judging, trust, and citation reliability. They then
+examine software at source level where possible and distinguish operational
+suitability from effectiveness. The argument returns to the policies and tools
+already in this project before turning those findings into a product boundary,
+a feasible implementation, and a testable evaluation.
+
+The internal case record appears once because it is useful evidence about
+failure mechanisms and test fixtures, but it is not a substitute for external
+research. The research chapters identify mechanisms and limits; the software
+chapters ask which components can perform a named job; and the product chapters
+turn those answers into a protected revision path. The final chapters ask
+whether the path saves attention and what result would justify the next
+investment. A result that fails those tests tells us to stop or to narrow the
+claim.

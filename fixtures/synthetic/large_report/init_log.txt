@@ -1,0 +1,6 @@
+Error: Brief is incomplete:
+  Brief missing required field: reader_role
+  Brief missing required field: decision_type
+  Brief missing required field: time_available_minutes
+  Brief missing required field: prior_knowledge
+  Brief missing required field: success_criteria

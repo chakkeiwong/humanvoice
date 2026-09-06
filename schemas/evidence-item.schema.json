@@ -1,0 +1,102 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://humanvoice.local/schema/evidence-item.schema.json",
+  "title": "Humanvoice evidence item",
+  "description": "A source or software observation tied to a claim, a fixture, or a product choice, with provenance and appraisal state. Per architecture §2: an evidence item may motivate a finding rule or a reader question, but it cannot silently alter a document. Per release_authority, missing critical evidence for a load-bearing claim is a never-except condition.",
+  "type": "object",
+  "required": ["record_type", "schema_version", "record_id", "run_id", "created_at", "source_path_or_url", "source_hash", "observation", "provenance", "appraisal_state", "supports"],
+  "properties": {
+    "record_type": {"const": "EvidenceItem"},
+    "schema_version": {"type": "string", "pattern": "^HV-SCHEMA-[0-9]+\\.[0-9]+$"},
+    "record_id": {"type": "string", "minLength": 1},
+    "run_id": {"type": "string", "minLength": 1},
+    "created_at": {"type": "string", "format": "date-time"},
+    "source_path_or_url": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Where the observation came from: a snapshot-relative evidence file, a published source, or a software artifact"
+    },
+    "source_hash": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Digest of the evidence source, so a claim can be re-checked against the exact bytes that supported it"
+    },
+    "observation": {
+      "type": "string",
+      "minLength": 1,
+      "description": "What the evidence states, quoted or closely paraphrased. Figures appear here in the form the source uses."
+    },
+    "provenance": {
+      "type": "object",
+      "required": ["kind", "obtained_at"],
+      "properties": {
+        "kind": {
+          "type": "string",
+          "enum": ["published-source", "internal-document", "measurement", "software-observation", "fixture", "author-assertion"],
+          "description": "How the observation was obtained. author-assertion carries no external support and cannot alone support a load-bearing claim."
+        },
+        "obtained_at": {"type": "string", "format": "date-time"},
+        "obtained_by": {"type": ["string", "null"], "description": "Person or process that captured the observation"},
+        "measuring_party": {
+          "type": ["string", "null"],
+          "description": "Who performed a measurement, when that differs from who recorded it. Null when the source does not state it; an unstated measuring party is a known gap, not an inference."
+        },
+        "measurement_window": {
+          "type": ["string", "null"],
+          "description": "Period the observation covers, when applicable. Null when the source does not bound it."
+        },
+        "citation_key": {
+          "type": ["string", "null"],
+          "description": "BibTeX key when the evidence is a published source"
+        }
+      },
+      "additionalProperties": false
+    },
+    "appraisal_state": {
+      "type": "string",
+      "enum": ["unappraised", "corroborated", "single-source", "contested", "superseded", "insufficient"],
+      "description": "Reviewer judgment of evidential weight. insufficient records that the item cannot support the claim it was gathered for; the claim must then be qualified, re-sourced, or withdrawn."
+    },
+    "supports": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["target_kind", "target_id"],
+        "properties": {
+          "target_kind": {
+            "type": "string",
+            "enum": ["claim", "fixture", "product-choice", "finding-rule", "reader-question"],
+            "description": "What this evidence is tied to"
+          },
+          "target_id": {"type": "string", "minLength": 1},
+          "load_bearing": {
+            "type": "boolean",
+            "description": "Whether the target fails without this evidence. A load-bearing tie with appraisal_state of insufficient or unappraised blocks release."
+          }
+        },
+        "additionalProperties": false
+      },
+      "description": "Claims, fixtures, or choices this observation is tied to. An empty array records evidence gathered but not yet connected to anything."
+    },
+    "limitations": {
+      "type": "array",
+      "items": {"type": "string"},
+      "description": "What the evidence does not establish, stated by the reviewer rather than inferred"
+    },
+    "contradicts": {
+      "type": "array",
+      "items": {"type": "string"},
+      "description": "record_ids of evidence items this one conflicts with. A contradiction is preserved, not resolved by deletion."
+    },
+    "privacy_class": {
+      "enum": ["public", "internal", "confidential", "restricted"],
+      "description": "Handling class; governs whether the observation may appear in a reader packet"
+    },
+    "rights_record_id": {
+      "type": ["string", "null"],
+      "description": "record_id of the CorpusItem carrying rights clearance, when the evidence is third-party material"
+    },
+    "extensions": {"type": "object"}
+  },
+  "additionalProperties": false
+}

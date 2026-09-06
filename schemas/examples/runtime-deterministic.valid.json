@@ -1,0 +1,31 @@
+{
+  "record_type": "RuntimeManifest",
+  "schema_version": "HV-SCHEMA-1.0",
+  "record_id": "runtime-deterministic-001",
+  "run_id": "run-001",
+  "created_at": "2026-08-26T00:00:00Z",
+  "mode": "deterministic",
+  "compiler": {
+    "name": "pdfTeX",
+    "version": "1.40.22",
+    "executable_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "flags": ["-no-shell-escape", "-halt-on-error", "-file-line-error"]
+  },
+  "runtime_type": "deterministic-only",
+  "model_version_string": null,
+  "model_artifact_hash_if_local": null,
+  "prompt_template_hash": null,
+  "sampling": null,
+  "seed_if_applicable": null,
+  "api_endpoint": null,
+  "request_id_if_available": null,
+  "timestamp": "2026-08-26T00:00:00Z",
+  "latency_ms": 250.0,
+  "input_tokens": null,
+  "output_tokens": null,
+  "output_hash": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+  "not_applicable_reason": "No model was invoked in this deterministic run.",
+  "hardware": {"cpu": "x86_64", "ram_mib": 32768, "accelerator": null},
+  "network_policy": "deny",
+  "resource_limits": {"wall_clock_seconds": 1800, "processes": 256}
+}

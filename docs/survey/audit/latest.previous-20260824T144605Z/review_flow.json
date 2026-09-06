@@ -1,0 +1,12 @@
+{
+  "discovery_records_after_deduplication": 13841,
+  "note": "The bounded queue is a first pass; the full discovery ledger is retained and the queue must expand if eligible strata are missed.",
+  "records_auto_excluded_low_relevance_but_retained": 542,
+  "records_awaiting_dual_review": 200,
+  "records_dual_reviewed_and_adjudicated": 0,
+  "records_excluded_after_adjudication": 0,
+  "records_in_first_pass_dual_review_queue": 200,
+  "records_included_after_adjudication": 0,
+  "records_requiring_manual_screening": 13299,
+  "status": "screening-pending"
+}

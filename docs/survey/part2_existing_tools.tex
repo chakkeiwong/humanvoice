@@ -1,23 +1,25 @@
-% Part 2: review of existing internal tools
-\section{The tools we already have}
+% Chapter: review of existing internal tools
+\chapter{The tools already in the repository}
 \label{sec:tools}
 
-Our answer to the failure record so far is a doctrine stack: one policy,
-three skills, one vendored pattern list, two grounding tools, and a
-distribution mechanism. This section reviews each piece the way a designer
-needs it reviewed: what it is, how it actually works, what evidence exists
-that it helped, what its merits are, and where it falls short. The summary
-judgment, argued piece by piece below, is that the doctrine layer is mature
-and consistent while three things are missing entirely: executable
-measurement, behavioral evidence, and a single home.
+An author working in this workspace already has a prose policy, three skills, a
+pattern list, two grounding tools, and a way to distribute them. Those pieces
+can help, but they do not yet form a product. We need to know which ones help an
+author in practice, which have evidence behind them, and where each one stops.
+The rules are mature and largely consistent; executable measurement, behavioral
+evidence, and one product-owned home are still missing.
 
-\subsection{The prose policy}
+Figure~\ref{fig:tool-gap} explains why consolidation alone is not the product.
+The missing value lies in the handoffs between capable tools and in the reader
+outcome at the end.
+
+\hvFigureToolGap
+
+\section{The prose policy}
 \label{sec:tool-policy}
 
-The constitution of the stack is the ``Reader-Facing Scientific Prose''
-section of the global agent policy, roughly 150 lines inside the 618-line
-policy file installed into every agent's
-context.\footnote{\path{claudecodex/policies/global-scientific-coding-agent-policy.md}. The companion section ``Plain Scientific Language And Non-Evasion'' supplies the verdict vocabulary discussed below.}
+Every agent receives roughly 150 lines of the global policy under the heading
+``Reader-Facing Scientific Prose.''\footnote{\path{claudecodex/policies/global-scientific-coding-agent-policy.md}. The companion section ``Plain Scientific Language And Non-Evasion'' supplies the verdict vocabulary discussed below.}
 Its load-bearing device is a precedence order. When rules conflict, an agent
 resolves them in this sequence: mathematical and scientific correctness
 first, then source and evidentiary fidelity, then domain-appropriate meaning,
@@ -27,25 +29,32 @@ like ``remove em dashes'' sits at the lowest level, so it can never justify
 deleting a numeric range from a theorem statement; a readability preference
 can never justify dropping an assumption.
 
-Three of its rules encode the failure record directly. The register rule
-forbids software and workflow vocabulary as metaphor in exposition:
-``artifact,'' ``pipeline,'' ``gate,'' and ``handoff'' are reserved for actual
-software, which is precisely the administrative-register defect of
-Table~\ref{tab:bgs-taxonomy} written as a prohibition. The rigor rule demands
-positive statements over defensive ones, with a worked example: prefer ``We
-assume log utility in this example because it keeps the first-order condition
-simple'' to ``We are not claiming that households literally have logarithmic
-utility.'' That is the defensive-qualification repair from
-Section~\ref{sec:bgs-audit}, generalized. And the acceptance rule states that
-``author self-review, model review, policy installation, checklist
-completion, a style score, or successful compilation cannot certify a human
-voice,'' which Section~\ref{sec:lessons} showed the hard way. Beside the
-prose section sits the non-evasion vocabulary: a claim is ``correct,''
-``wrong relative to the stated target,'' ``unsupported,'' ``not checked,'' or
-``heuristic only,'' and softening words may not blur which one applies.
+Three rules came directly from the failure record.
+
+The first keeps internal workflow language out of ordinary exposition. Words
+such as ``artifact,'' ``pipeline,'' ``gate,'' and ``handoff'' remain available
+when the text is genuinely about software or project operations. They are not
+used as metaphors for a theorem, an argument, or a paragraph. This rule turns
+the administrative-register finding in Table~\ref{tab:bgs-taxonomy} into a
+choice an editor can make sentence by sentence.
+
+The second replaces defensive disclaimers with reasons. The policy prefers
+``We assume log utility in this example because it keeps the first-order
+condition simple'' to ``We are not claiming that households literally have
+logarithmic utility.'' The first sentence states the modelling choice and its
+purpose. The second introduces a mistaken interpretation merely to deny it.
+This is the repair observed in Section~\ref{sec:bgs-audit}, expressed as a
+general rule.
+
+The third reserves acceptance for a reader. Author self-review, a model review,
+a checklist, a style score, and a clean compilation can each provide evidence
+about one part of a document. None can certify a human voice. The vocabulary
+beside that rule is deliberately direct: a statement may be correct, wrong for
+the stated target, unsupported, not checked, or heuristic. A polite synonym
+must not blur which verdict applies.
 
 Merits: the policy is complete in the sense that every failure class in
-Section~\ref{sec:record} has a corresponding clause, and the precedence order
+Chapter~\ref{sec:record} has a corresponding clause, and the precedence order
 resolves the conflicts that sank naive rule-following elsewhere. Problems:
 it is prose all the way down. Nothing in it executes, so compliance is
 whatever the drafting agent happens to retain from 618 lines of context, and
@@ -54,24 +63,34 @@ ZLB rescue's third pass began with the admission that the policy ``had not
 been consulted.'' A policy that must be remembered is a policy that will
 sometimes not be.
 
-\subsection{The narrative skill}
+\section{The narrative skill}
 \label{sec:tool-linear}
 
-\path{write-linear-scholarly-narrative} is the document-architecture skill,
+When an agent uses \path{write-linear-scholarly-narrative}, it gets the
+document-architecture skill,
 distilled from the SMEwallet Draft~11 method.\footnote{\path{claudecodex/skills/write-linear-scholarly-narrative/SKILL.md}, with a 259-line companion, \path{references/teaching-contract.md}, defining the comprehension standard.}
-It instructs an agent to do, in order, the things Draft~11 did. Freeze a
-human contract first: the target reader, their prerequisites, and what they
-must be able to explain afterward without hunting elsewhere. Design the plot
-before the contents, choosing the smallest narrative spine that makes the
-argument accumulate, and deriving chapter order from explanatory dependencies
-rather than from the source material's order. Storyboard one bounded unit at
-a time, recording what the unit reactivates, the one question it opens, the
-smallest new idea, and the tension carried forward. Draft in a teaching
-order: eleven steps from ``return to the running case'' through ``introduce
-notation only after the need is felt'' to ``make the next question feel
-necessary.'' Then validate by reader reconstruction: a human reads the unit
-and must be able to rebuild why it began, every turn, what the equation was
-for, and why the next unit follows.
+Its sequence begins with the reader rather than the source files. The writer
+states who will read the unit, what that person already knows, and what they
+should be able to explain afterward without hunting through another document.
+For this proposal, that means a former professor acting as an executive, not an
+engineer who already knows the repository.
+
+The writer then chooses the smallest case or question that can carry the
+argument. Chapter order follows explanatory dependence: a concept appears
+after the reader has encountered the problem that requires it, even if the
+source material was originally stored in another order. Each bounded unit
+opens one question and introduces the smallest idea needed to answer it.
+
+Drafting follows a teaching sequence. Return to a known example, show the new
+difficulty, and introduce notation only when it resolves that difficulty. An
+equation is followed by its interpretation. The transition to the next unit
+comes from a question the present unit cannot yet answer, not from a stock
+phrase announcing that the document will move on.
+
+Finally, a person reads the unit and tries to reconstruct the chain. They
+should be able to explain why the unit began, what each turn contributed, what
+the equation was for, and why the next question follows. Failure at that stage
+is evidence about the exposition, not a request for the reader to study harder.
 
 Its most valuable property is self-awareness about
 Section~\ref{sec:lessons}'s fourth lesson. Nearly every rule carries an
@@ -89,15 +108,15 @@ spine,'' ``reactivate'') without a single worked instance; it has no tooling,
 so storyboards and contracts live or die by agent diligence; and its
 acceptance step needs a human per unit, which priced it out of the BGS lane's
 volume. Nothing tests whether an agent following it writes measurably better
-than an agent that has never seen it, a gap Section~\ref{sec:proposal}'s
+than an agent that has never seen it, a gap Chapter~\ref{sec:proposal}'s
 third work package exists to close.
 
-\subsection{The sentence-level skill}
+\section{The sentence-level skill}
 \label{sec:tool-natural}
 
-\path{write-natural-analytical-prose} is the sentence-and-paragraph
-companion.\footnote{\path{claudecodex/skills/write-natural-analytical-prose/SKILL.md}, with before/after contrasts in \path{references/prose-patterns.md}.}
-Its core is a two-sided safety mechanism. Before any rewrite, the agent
+The companion \path{write-natural-analytical-prose} works at sentence and
+paragraph scale.\footnote{\path{claudecodex/skills/write-natural-analytical-prose/SKILL.md}, with before/after contrasts in \path{references/prose-patterns.md}.}
+Before any rewrite, the agent
 freezes a meaning ledger: the facts, attributed claims, deductions, live
 uncertainties, author judgments, and exact numbers that must survive. After
 the rewrite, it diffs the result against the ledger, and a smoother sentence
@@ -121,7 +140,7 @@ Section~\ref{sec:tool-claudecodex}): the test suite asserts that certain
 sentences still appear in the skill file, not that the skill changes any
 output.
 
-\subsection{The humanizer pattern list, as installed}
+\section{The humanizer pattern list, as installed}
 \label{sec:tool-humanizer}
 
 On 20~August the workspace vendored \texttt{blader/humanizer} v2.11.2 into
@@ -148,9 +167,9 @@ markdown file. It governs an agent exactly as far as the agent reads and
 honors it. Turning this from a comment into configuration, per-format rule
 downgrades in the diagnostic layer itself, is one of the cleaner design
 requirements to come out of this review
-(Section~\ref{sec:design}, R2).
+(Chapter~\ref{sec:design}, under configurable policy precedence).
 
-\subsection{The repair skill and the only working scripts}
+\section{The repair skill and the only working scripts}
 \label{sec:tool-repair}
 
 MathDevMCP ships its own scholarly-writing skill,
@@ -158,25 +177,25 @@ MathDevMCP ships its own scholarly-writing skill,
 with executable parts.\footnote{\path{MathDevMCP/skills/repair-scholarly-readability/SKILL.md}, with three reference rubrics and two scripts under the same directory.}
 Where the narrative skill teaches drafting, this one teaches repair of an
 existing LaTeX document, and its structure encodes two ideas the rest of the
-stack lacks. The first is four separate ledgers: reader comprehension,
+stack lacks. The first is four separate records: reader comprehension,
 mathematical integrity, source fidelity, and typography, with the explicit
 rule that ``evidence in one ledger cannot certify another.'' A clean compile
 is typography evidence only; a passed equation audit says nothing about
 motivation. The second is bounded repair: one mechanism chapter or 6--12
-rendered pages at a time, against a preserved baseline, ending in a
-cold-reader test with prespecified questions and a four-ledger decision
-table.
+rendered pages at a time, against a preserved baseline, ending in a test with a
+reader who has no project history, prespecified questions, and a four-record
+decision table.
 
 Both scripts matter beyond their modest size.
 \path{scripts/scholarly_surface_audit.py} emits JSON and markdown surface
 diagnostics for a .tex/.pdf pair, and \path{scripts/render_review_pages.sh}
 renders page images for visual inspection, institutionalizing the ZLB
 rescue's discovery that text extraction lies about layout. These are the
-embryo of the \texttt{hv gate} command in Section~\ref{sec:proposal}.
+embryo of the \texttt{hv capture} command in Chapter~\ref{sec:proposal}.
 
 Evidence of effect: the skill's bounded method took the opening of the BGS
 industry-DSGE dossier through a repair that passed five prespecified
-cold-reader questions, the strongest automated-plus-human result in the BGS
+reader-without-project-history questions, the strongest automated-plus-human result in the BGS
 lane. The same result file records the limit: later chapters ``remain dry,''
 and the project's audit concluded the skill ``generalizes locally, not across
 a corpus-sized argument,'' which is lesson five of
@@ -185,11 +204,11 @@ organizational: this skill overlaps the claudecodex narrative skill in scope
 while living in a different repository with different reference rubrics.
 Scholarly readability currently has two homes and no owner.
 
-\subsection{ResearchAssistant}
+\section{ResearchAssistant}
 \label{sec:tool-ra}
 
-ResearchAssistant is the source-grounding half of citation discipline: a
-local-first tool that ingests papers (preferring arXiv LaTeX source over PDF,
+When a citation needs checking, ResearchAssistant supplies the source-grounding
+half of the discipline. It is a local-first tool that ingests papers (preferring arXiv LaTeX source over PDF,
 because the LaTeX parses reliably and the PDF does not), extracts sections,
 equations, labels, and bibliographies, tracks provenance and review status,
 and exposes a read-only MCP surface plus a
@@ -211,7 +230,7 @@ sources, not prose; its equation extraction from PDFs is explicitly marked
 unreliable (arXiv LaTeX is the reliable path); and its discovery pipeline
 depends on external metadata services that were down when most needed.
 
-\subsection{The mathematics side: MathDevMCP and DynareMCP}
+\section{The mathematics and modeling tools}
 \label{sec:tool-math}
 
 Two more tools border the writing problem without being writing tools.
@@ -229,7 +248,7 @@ inventories that were used to falsify inflated rewrite claims (counting
 inherited words and relocated blocks), a niche but genuinely useful
 falsification tool for ``we rewrote it'' assertions.
 
-\subsection{Distribution, and what the tests actually test}
+\section{Distribution and the limits of the current tests}
 \label{sec:tool-claudecodex}
 
 claudecodex is the delivery mechanism. Its installer splices the global
@@ -252,23 +271,22 @@ whether the doctrine changes what an agent writes. As of today, no experiment
 anywhere in the workspace has compared documents produced with and without
 any of these skills. The doctrine is plausible, consistent, and untested.
 
-Two further gaps are administrative but consequential. Installation is
+Two further operational gaps matter. Installation is
 Codex-first; Claude Code agents receive the policy but not a native skill
 installation. And the writing doctrine now lives in three places, the
 claudecodex policy tree, the claudecodex skills, and the MathDevMCP skill,
 with cross-references in prose instead of a shared source of truth.
 
-\subsection{The gap, stated precisely}
+\section{The gap, stated precisely}
 \label{sec:tool-gap}
 
-Table~\ref{tab:tool-gap} compresses this section. Reading its last column
-top to bottom gives the build list: the six diagnostics the ZLB case study
-asked for exist nowhere as code (register linter, rhythm profiler,
-defensive-register finder, LaTeX-aware baseline differ, first-class
-two-document support, and a precedence mechanism that is configuration rather
-than a comment); the doctrine has no behavioral evidence; and consolidation
-is overdue. That is what Sections~\ref{sec:design}
-and~\ref{sec:proposal} are for.
+The last column of Table~\ref{tab:tool-gap} gives the build list. The six
+capabilities requested by the ZLB case exist nowhere as a coherent product: a
+register linter, rhythm profiler, defensive-register finder, LaTeX-aware
+baseline differ, a private provenance map that keeps evidence attached to one
+manuscript, and a precedence mechanism stored in configuration rather than a
+comment. The doctrine also has no behavioral evidence, and its three copies
+need a shared source. Humanvoice joins that list into one testable review path.
 
 \begin{table}[t]
 \centering
@@ -290,3 +308,12 @@ claudecodex & idempotent install; review plumbing & test writing behavior; reach
 \caption{The existing stack, by what each piece does and does not provide.}
 \label{tab:tool-gap}
 \end{table}
+
+The inventory is therefore an asset and a warning. It gives the build a set of
+tested interfaces, historical fixtures, and language for describing failure;
+it does not give the project a validated intervention. The next part places
+those local assets beside external evidence. That comparison matters because
+a tool can be useful in this repository for reasons that do not travel to
+another genre, and a widely used package can still fail the protected-source
+contract. The field review begins with what research supports, then explains
+how the literature was assembled, before returning to the package choices.

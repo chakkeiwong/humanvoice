@@ -1,0 +1,23 @@
+\documentclass{article}
+\usepackage{booktabs}
+\begin{document}
+
+This document tests table extraction.
+
+\begin{table}[h]
+\centering
+\caption{Test results}
+\label{tab:results}
+\begin{tabular}{lrr}
+\toprule
+Method & Accuracy & Time (s) \\
+\midrule
+Baseline & 0.85 & 120 \\
+Proposed & 0.92 & 95 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Table~\ref{tab:results} shows the comparison.
+
+\end{document}

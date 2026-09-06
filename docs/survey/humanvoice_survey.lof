@@ -1,0 +1,66 @@
+\contentsline {figure}{\numberline {1}{\ignorespaces The five reader complaints in the ZLB rescue. The sequence is a recorded case history, not a universal law or an efficacy estimate.}}{1}{figure.0.1}%
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {1.1}{\ignorespaces How locally correct material can still consume expert attention.}}{7}{figure.1.1}%
+\contentsline {figure}{\numberline {1.2}{\ignorespaces A recurring path from local correctness to reader failure. The arrows are diagnostic opportunities, not a claim that every document follows all five steps.}}{7}{figure.1.2}%
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {2.1}{\ignorespaces The case record suggests an order of inspection: visible rendering failures can conceal register, rhythm, reasoning, and finally substance.}}{10}{figure.2.1}%
+\contentsline {figure}{\numberline {2.2}{\ignorespaces The cases contribute different evidence. Their combination specifies failure classes and fixtures, but only the ZLB case records whole-document owner acceptance.}}{16}{figure.2.2}%
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {3.1}{\ignorespaces The incumbent bundle has capable components but no shared path from a finding to a reader's decision.}}{23}{figure.3.1}%
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {4.1}{\ignorespaces A search result becomes usable evidence only after screening, full-text appraisal, and an explicit bridge to a bounded product claim.}}{33}{figure.4.1}%
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {5.1}{\ignorespaces Writing is a feedback system: the tool makes the loop inspectable, while the author and reader retain different judgments.}}{37}{figure.5.1}%
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {6.1}{\ignorespaces Evidence strength must rise with the claim. Literature plausibility and historical replay do not substitute for held-out comparative evidence.}}{46}{figure.6.1}%
+\contentsline {figure}{\numberline {6.2}{\ignorespaces Corpus-level monitoring and individual authorship detection answer different questions. Humanvoice excludes the latter from revision and review.}}{50}{figure.6.2}%
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {7.1}{\ignorespaces Writing studies often observe different parts of the path. Evidence about generation time cannot by itself establish feedback quality, safe revision, or reader use.}}{55}{figure.7.1}%
+\contentsline {figure}{\numberline {7.2}{\ignorespaces A model preference becomes usable only after order, length, self-preference, and human-calibration controls.}}{61}{figure.7.2}%
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {8.1}{\ignorespaces Humanvoice's proposed advantage lies in the common record between component families, not in replacing mature parsers, linters, or build tools.}}{63}{figure.8.1}%
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {9.1}{\ignorespaces A surface score can nominate text for review. It cannot be promoted into a reader outcome without a separately observed task.}}{68}{figure.9.1}%
+\contentsline {figure}{\numberline {9.2}{\ignorespaces A pattern becomes useful when it leads to a bounded editorial question and leaves the decision with the author.}}{69}{figure.9.2}%
+\contentsline {figure}{\numberline {9.3}{\ignorespaces Pacing depends on the number of unresolved questions, not simply on the number of words or the amount of white space.}}{71}{figure.9.3}%
+\contentsline {figure}{\numberline {9.4}{\ignorespaces Raw source preserves locations and technical structure; extracted prose gives language rules a cleaner sample. Humanvoice retains both.}}{74}{figure.9.4}%
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {10.1}{\ignorespaces The HPO case turns one reader complaint into three diagnostic questions. The arrows show evidence entering a common record, not a claim that every document follows this sequence.}}{78}{figure.10.1}%
+\contentsline {figure}{\numberline {10.2}{\ignorespaces A diagnostic ladder for the complaint ``too dense.'' Surface checks remain useful, but they cannot stand in for paragraph, pacing, or ordering evidence.}}{80}{figure.10.2}%
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {11.1}{\ignorespaces A repository earns adoption in stages. Popularity and a successful smoke run are availability evidence, not effectiveness evidence.}}{84}{figure.11.1}%
+\contentsline {figure}{\numberline {11.2}{\ignorespaces Mature tools produce narrow, checkable observations. Humanvoice connects them to a source version; the reader supplies the outcome.}}{86}{figure.11.2}%
+\contentsline {figure}{\numberline {11.3}{\ignorespaces The alternatives overlap, but their units of work differ. The Humanvoice claim begins where passage-level fluency and tracked edits stop.}}{88}{figure.11.3}%
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {12.1}{\ignorespaces The unit of work is one document version moving from brief to release, with a bounded return when pre-human checks find a repair.}}{93}{figure.12.1}%
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {13.1}{\ignorespaces Three people see different interfaces over one version record; the reader does not receive the project's private audit trail.}}{100}{figure.13.1}%
+\contentsline {figure}{\numberline {13.2}{\ignorespaces Humanvoice spends scarce reader attention at the end of the path. A failed pre-human check returns the draft to a located repair; it cannot produce a review packet by default.}}{101}{figure.13.2}%
+\contentsline {figure}{\numberline {13.3}{\ignorespaces Protected comparison does not forbid change. It prevents a substantive change from disappearing inside fluent prose.}}{104}{figure.13.3}%
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {14.1}{\ignorespaces The common record keeps a flawed draft inside a bounded repair loop. Only a passed release gate reaches the expensive human reader.}}{108}{figure.14.1}%
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {15.1}{\ignorespaces A small record model links source facts to editorial choices and reader outcomes without treating any diagnostic as a verdict.}}{115}{figure.15.1}%
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {16.1}{\ignorespaces The first build has one critical path. A brief and blueprint precede bounded drafting, and a failed pre-human check returns to repair instead of emitting a reader packet.}}{123}{figure.16.1}%
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {17.1}{\ignorespaces The feasibility case and the comparative study answer different questions. Passing the first authorizes the second, not an efficacy claim.}}{131}{figure.17.1}%
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {18.1}{\ignorespaces A counterbalanced paired design separates workflow effects from document difficulty and order, subject to the available volume and readers.}}{137}{figure.18.1}%
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {19.1}{\ignorespaces The canonical twelve-week sequence. Weeks 1--6 end in a protected core go/no-go; the extension and feasibility preparation begin only after that gate.}}{143}{figure.19.1}%
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {20.1}{\ignorespaces The research program climbs from source integrity to reader use. Failure on a lower rung invalidates a favorable result above it.}}{150}{figure.20.1}%
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {21.1}{\ignorespaces Value arises only when lower review burden survives the quality guard. Faster revision with more meaning errors has negative value.}}{157}{figure.21.1}%
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {22.1}{\ignorespaces Local-first is an enforceable data path, not a slogan. Remote use requires a declared purpose and a field-level approval record.}}{169}{figure.22.1}%
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {B.1}{\ignorespaces Traceability is a chain of reasons. Internal identifiers help reproduce it, but the main text should show the reasons themselves.}}{190}{figure.B.1}%
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {C.1}{\ignorespaces The surveyed writing packages occupy different layers. They are inputs to one review path, not rival all-in-one products.}}{209}{figure.C.1}%
+\contentsline {figure}{\numberline {C.2}{\ignorespaces The LaTeX diagnostic sequence starts with tools that work now and adds a new rule host only when a held-out fixture shows why it is needed.}}{213}{figure.C.2}%
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\addvspace {10\p@ }

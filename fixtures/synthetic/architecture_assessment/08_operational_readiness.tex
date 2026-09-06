@@ -1,0 +1,43 @@
+\section{Operational Readiness}
+
+The architecture change shifts substantial complexity from development time to run time. This section assesses whether the organization's current operational capability is sufficient, and what must change if it is not.
+
+\subsection{Capability Gap Assessment}
+
+The SRE team currently comprises six engineers supporting four production services: the monolith, the load balancer tier, the batch scheduler, and the reporting warehouse. Industry benchmarks suggest a sustainable ratio of one SRE per 1.5 to 2.5 services depending on service complexity and automation maturity. Twelve services therefore imply a requirement of five to eight SREs at current automation levels.
+
+The gap is not headcount alone. The team's expertise is concentrated in relational database operations and JVM performance tuning, matching the monolith's technology profile. The proposed architecture requires competence in container orchestration, service mesh configuration, distributed tracing analysis, and event-driven debugging. A skills assessment conducted in July placed the team at intermediate proficiency in container orchestration and beginner proficiency in the remaining three areas.
+
+Closing the skills gap requires structured training and, more importantly, operational experience. The phased migration provides this: by extracting four low-criticality services first, the team accumulates experience before assuming responsibility for the critical path. This sequencing is a deliberate risk mitigation, not merely a convenience.
+
+\subsection{Observability Requirements}
+
+Debugging a distributed system requires observability that a monolith does not. In the monolith, a stack trace identifies the failure point. In a distributed system, a failure may manifest in one service while originating in another, with the causal chain spanning several asynchronous hops.
+
+Three observability pillars are required. Distributed tracing must capture the full request path with sufficient sampling to reconstruct rare failures; 1\% sampling is adequate for performance analysis but insufficient for debugging incidents affecting 0.01\% of requests, so tail-based sampling that retains all traces exceeding latency thresholds is necessary. Structured logging must correlate log entries across services via a propagated trace identifier; unstructured logs are unusable at this scale. Metrics must be dimensioned by service, version, and availability zone to permit attribution of anomalies.
+
+The estimated observability data volume is 4.2TB daily: 1.8TB traces, 1.9TB logs, 0.5TB metrics. At current vendor pricing this represents \$140,000 annually, already included in the cost analysis. Retention is 14 days for traces, 30 days for logs, 13 months for metrics, balancing debugging utility against cost.
+
+\subsection{Incident Response Adaptation}
+
+Current incident response assumes a single system with a single owner. The runbook structure is: identify symptom, consult symptom-to-cause table, execute remediation. This structure does not survive decomposition, because a symptom in one service may require remediation in another.
+
+The adapted model designates a single incident commander who coordinates across service owners, with each service owner responsible for assessing whether their service is the cause or a victim. This requires that every service expose a standard health assessment interface answering three questions: is this service functioning correctly by its own measures, are its dependencies responding correctly, and is it experiencing unusual load.
+
+The practice recommended by~\cite{hamilton-on-designing-2007} of designing for operations rather than retrofitting operability applies directly. Each service must ship with: health endpoints, documented failure modes, defined degradation behavior, and runbooks for its top five expected failures. The migration plan allocates two weeks per service for operational documentation, an allocation the engineering team initially resisted as excessive and later, after the pilot, agreed was insufficient.
+
+\subsection{On-Call Sustainability}
+
+The current on-call rotation places six engineers in a one-week primary rotation with a secondary escalation. Page volume averages 3.2 pages per week, of which 1.1 require action outside business hours. This is within sustainable limits.
+
+Projecting to twelve services, page volume estimates range from 6 to 14 per week depending on automation maturity. The upper bound is not sustainable with six engineers and would produce attrition. Mitigations include: automating remediation for the five most common alert types (estimated 40\% page reduction), tuning alert thresholds using pilot data to eliminate false positives (estimated 25\% reduction), and expanding the rotation to nine engineers.
+
+The nine-engineer target requires three hires, which at a 4-month average time-to-productivity means recruitment must begin at month 2 of the migration to have capacity in place before Phase 3. This dependency is on the critical path and is the basis for the recommendation that organizational readiness be a prerequisite rather than a parallel activity.
+
+\subsection{Chaos Engineering Program}
+
+Confidence that the architecture behaves correctly under failure requires deliberately inducing failure. The proposed program runs weekly experiments in production during low-traffic windows, escalating in scope as confidence accumulates.
+
+The experiment catalog begins with single-instance termination, progresses to zone isolation and dependency failure, and culminates in multi-failure scenarios. Each experiment defines a hypothesis (e.g., "terminating one Balance Tracker instance will not affect customer-visible error rates"), a blast radius limit, and an abort condition. Experiments that falsify their hypothesis generate remediation work items.
+
+The program requires tooling: a failure injection framework, an experiment scheduler, and automated abort based on error-rate monitors. Build-versus-buy analysis favors buying, at \$60,000 annually, given that building would consume an estimated 4 person-months of engineering time worth \$74,000 plus ongoing maintenance.

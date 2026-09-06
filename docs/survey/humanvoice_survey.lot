@@ -1,0 +1,100 @@
+\contentsline {table}{\numberline {1}{\ignorespaces The proposal separates what is known from what the first build must observe.}}{3}{table.0.1}%
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\contentsline {table}{\numberline {2.1}{\ignorespaces The BGS paragraph audit's defect taxonomy (top ten of nineteen codes by count, out of 815 repaired paragraphs in a 2{,}775-paragraph volume). The counts are from \texttt {frozen\_repair\_map\_v7.jsonl}.}}{13}{table.2.1}%
+\addvspace {10\p@ }
+\contentsline {table}{\numberline {3.1}{\ignorespaces The existing stack, by what each piece does and does not provide.}}{29}{table.3.1}%
+\addvspace {10\p@ }
+\contentsline {table}{\numberline {4.1}{\ignorespaces The source hierarchy follows the decision question.}}{32}{table.4.1}%
+\contentsline {table}{\numberline {4.2}{\ignorespaces A staged search keeps discovery separate from support.}}{33}{table.4.2}%
+\contentsline {table}{\numberline {4.3}{\ignorespaces A claim record preserves the bridge and its boundary.}}{35}{table.4.3}%
+\addvspace {10\p@ }
+\contentsline {table}{\numberline {5.1}{\ignorespaces The reading literature changes what a useful diagnostic is allowed to mean.}}{38}{table.5.1}%
+\contentsline {table}{\numberline {5.2}{\ignorespaces Foundational writing research supplies mechanisms and boundaries for the product hypothesis.}}{43}{table.5.2}%
+\addvspace {10\p@ }
+\contentsline {table}{\numberline {6.1}{\ignorespaces The literature changes the design rather than merely decorating it with citations.}}{50}{table.6.1}%
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\contentsline {table}{\numberline {8.1}{\ignorespaces Software choices are hypotheses tested against the product contract, not a popularity ranking.}}{65}{table.8.1}%
+\addvspace {10\p@ }
+\contentsline {table}{\numberline {9.1}{\ignorespaces sloptrim v0.9.2 scores for three documents with recorded reader outcomes. Lower scores indicate fewer of the patterns the program measures.}}{67}{table.9.1}%
+\addvspace {10\p@ }
+\contentsline {table}{\numberline {10.1}{\ignorespaces One reader complaint, three levels of diagnosis. All figures are internal calibration observations from one engagement.}}{81}{table.10.1}%
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\contentsline {table}{\numberline {12.1}{\ignorespaces The source contains the necessary material, but the reader must reconstruct its order and purpose.}}{94}{table.12.1}%
+\contentsline {table}{\numberline {12.2}{\ignorespaces The argument becomes a sequence of answerable questions rather than a sequence of project phases.}}{96}{table.12.2}%
+\addvspace {10\p@ }
+\contentsline {table}{\numberline {13.1}{\ignorespaces A finding is located, reasoned, and contestable. It is not an automatic rewrite instruction.}}{103}{table.13.1}%
+\contentsline {table}{\numberline {13.2}{\ignorespaces The diff distinguishes a safe explanatory repair from a substantive change that needs a human decision.}}{104}{table.13.2}%
+\addvspace {10\p@ }
+\contentsline {table}{\numberline {14.1}{\ignorespaces The record model connects intent, argument, prose, checks, and reader judgment. It is deliberately small enough to inspect and rich enough to stop an unfinished draft before release.}}{109}{table.14.1}%
+\contentsline {table}{\numberline {14.2}{\ignorespaces The reader-facing map of the implementation path. The canonical acceptance register is in Appendix\nobreakspace {}\ref {app:requirements}; exit codes and execution boundaries are in the implementation contract annex.}}{114}{table.14.2}%
+\addvspace {10\p@ }
+\contentsline {table}{\numberline {15.1}{\ignorespaces A snapshot joins the source, its rendering, and the reader task.}}{117}{table.15.1}%
+\contentsline {table}{\numberline {15.2}{\ignorespaces The same revision has three views because the three people have different jobs.}}{120}{table.15.2}%
+\addvspace {10\p@ }
+\contentsline {table}{\numberline {16.1}{\ignorespaces The main design commitments, stated as behavior and possible falsification rather than internal requirement codes.}}{124}{table.16.1}%
+\contentsline {table}{\numberline {16.2}{\ignorespaces The complete first-release path and its explicit fallbacks.}}{126}{table.16.2}%
+\addvspace {10\p@ }
+\contentsline {table}{\numberline {17.1}{\ignorespaces A reader outcome records reconstruction and action, not stylistic approval.}}{133}{table.17.1}%
+\contentsline {table}{\numberline {17.2}{\ignorespaces Symbolic sensitivity cases. Each row shows which local observation, not a placeholder forecast, determines the investment boundary.}}{135}{table.17.2}%
+\addvspace {10\p@ }
+\contentsline {table}{\numberline {18.1}{\ignorespaces The feasibility design and the stronger comparative design answer different questions.}}{138}{table.18.1}%
+\contentsline {table}{\numberline {18.2}{\ignorespaces The feasibility sample is designed to expose variance and failure modes before a larger effect study is priced.}}{139}{table.18.2}%
+\addvspace {10\p@ }
+\contentsline {table}{\numberline {19.1}{\ignorespaces The implementation schedule produces evidence that changes the next decision, not a sequence of status reports.}}{144}{table.19.1}%
+\contentsline {table}{\numberline {19.2}{\ignorespaces A planning shape, not a dollar budget. The security or policy owner, domain editor, and evaluation lead are explicit roles; one person may hold more than one role in a small pilot, but the decisions remain distinct.}}{145}{table.19.2}%
+\contentsline {table}{\numberline {19.3}{The first-build risk register.}}{147}{table.19.3}%
+\contentsline {table}{\numberline {19.4}{\ignorespaces The build earns a larger investment only by changing this decision from a guess into an observed choice.}}{149}{table.19.4}%
+\addvspace {10\p@ }
+\contentsline {table}{\numberline {20.1}{\ignorespaces Evidence strength rises with the decision at stake.}}{151}{table.20.1}%
+\contentsline {table}{\numberline {20.2}{\ignorespaces Operating questions that remain after a favorable experiment.}}{155}{table.20.2}%
+\addvspace {10\p@ }
+\contentsline {table}{\numberline {21.1}{\ignorespaces Different roles make different adoption claims.}}{158}{table.21.1}%
+\contentsline {table}{\numberline {21.2}{\ignorespaces Beachheads and the evidence each one can produce.}}{160}{table.21.2}%
+\contentsline {table}{\numberline {21.3}{\ignorespaces The product is a connective layer over an incumbent bundle.}}{161}{table.21.3}%
+\contentsline {table}{\numberline {21.4}{\ignorespaces Pricing forms should match the evidence stage.}}{163}{table.21.4}%
+\contentsline {table}{\numberline {21.5}{\ignorespaces Operating promises that make adoption reversible.}}{164}{table.21.5}%
+\addvspace {10\p@ }
+\contentsline {table}{\numberline {22.1}{\ignorespaces A service run has a small number of human owners and visible outputs.}}{167}{table.22.1}%
+\contentsline {table}{\numberline {22.2}{\ignorespaces Contingencies preserve a useful service even when a larger product claim fails.}}{171}{table.22.2}%
+\addvspace {10\p@ }
+\contentsline {table}{\numberline {A.1}{\ignorespaces Internal cases motivate the product boundary; they do not estimate its effect.}}{174}{table.A.1}%
+\addvspace {10\p@ }
+\contentsline {table}{\numberline {B.1}{\ignorespaces Small records that turn the HPO lessons into inspectable questions.}}{178}{table.B.1}%
+\contentsline {table}{\numberline {B.2}{\ignorespaces Initial meaning-bearing object vocabulary.}}{179}{table.B.2}%
+\contentsline {table}{\numberline {B.3}{\ignorespaces A compact evidence vocabulary for design decisions.}}{180}{table.B.3}%
+\contentsline {table}{\numberline {B.4}{Canonical implementation requirements and acceptance observations.}}{181}{table.B.4}%
+\contentsline {table}{\numberline {B.5}{\ignorespaces MVP records and the questions they answer.}}{184}{table.B.5}%
+\contentsline {table}{\numberline {B.6}{Internal case index and the claim boundary for each case.}}{185}{table.B.6}%
+\contentsline {table}{\numberline {B.7}{\ignorespaces Repair annotations should retain negative examples.}}{187}{table.B.7}%
+\contentsline {table}{\numberline {B.8}{HPO case record and evidence boundary.}}{188}{table.B.8}%
+\contentsline {table}{\numberline {B.9}{Claim-to-design matrix for the evidence review.}}{190}{table.B.9}%
+\contentsline {table}{\numberline {B.10}{Named omissions and reviewer risks at the 25 August 2026 snapshot.}}{192}{table.B.10}%
+\contentsline {table}{\numberline {B.11}{\ignorespaces Backward and forward snowball ledger. A route is complete only when retrieved candidates have screening dispositions and provenance.}}{194}{table.B.11}%
+\contentsline {table}{\numberline {B.12}{\ignorespaces Evidence work still required before a strong external literature claim.}}{194}{table.B.12}%
+\contentsline {table}{\numberline {B.13}{\ignorespaces Software capability families and their benchmark questions.}}{196}{table.B.13}%
+\contentsline {table}{\numberline {B.14}{\ignorespaces Reader reconstruction rubric for the feasibility case.}}{199}{table.B.14}%
+\contentsline {table}{\numberline {B.15}{Minimum event log for measuring workflow burden.}}{199}{table.B.15}%
+\contentsline {table}{\numberline {B.16}{\ignorespaces Observable inputs for the economic worksheet.}}{201}{table.B.16}%
+\contentsline {table}{\numberline {B.17}{\ignorespaces Illustrative sensitivity cases; values are placeholders for observed inputs.}}{202}{table.B.17}%
+\contentsline {table}{\numberline {B.18}{\ignorespaces Source map for a reproducible proposal and feasibility run.}}{203}{table.B.18}%
+\addvspace {10\p@ }
+\contentsline {table}{\numberline {C.1}{Verdicts over the evaluated open-source field, with the concrete action each verdict implies.}}{215}{table.C.1}%
+\addvspace {10\p@ }
+\contentsline {table}{\numberline {D.1}{\ignorespaces The package field supplies components, not a finished product.}}{218}{table.D.1}%
+\contentsline {table}{\numberline {D.2}{\ignorespaces Adjacent products define the incumbent bundle and the falsifiable Humanvoice wedge.}}{223}{table.D.2}%
+\contentsline {table}{\numberline {D.3}{\ignorespaces Initial software dispositions are hypotheses to be tested on a locked fixture set.}}{225}{table.D.3}%
+\addvspace {10\p@ }
+\contentsline {table}{\numberline {E.1}{\ignorespaces Fields that define the document before diagnostics run.}}{228}{table.E.1}%
+\contentsline {table}{\numberline {E.2}{\ignorespaces A version record ties source, build, and rendered output together.}}{229}{table.E.2}%
+\contentsline {table}{\numberline {E.3}{\ignorespaces Typed protected objects keep normalization from becoming silent rewriting.}}{229}{table.E.3}%
+\contentsline {table}{\numberline {E.4}{\ignorespaces A finding record is an editorial question with provenance.}}{232}{table.E.4}%
+\contentsline {table}{\numberline {E.5}{\ignorespaces A scholarly omission is recorded as a question with a next action.}}{234}{table.E.5}%
+\addvspace {10\p@ }
+\contentsline {table}{\numberline {F.1}{\ignorespaces The protected core is the week-six go/no-go decision. The full path is conditional, so an ambitious model extension cannot silently consume the whole feasibility horizon.}}{238}{table.F.1}%
+\contentsline {table}{\numberline {F.2}{\ignorespaces The threat model turns local-first and prompt-injection language into checks a build team can run.}}{239}{table.F.2}%
+\contentsline {table}{\numberline {F.3}{\ignorespaces Model candidates are pinned experimental inputs, not a claim that a particular model is already suitable.}}{240}{table.F.3}%
+\contentsline {table}{\numberline {F.4}{\ignorespaces Initial operating limits. They are scope controls and cost inputs, not promises of speed.}}{241}{table.F.4}%
+\contentsline {table}{\numberline {F.5}{\ignorespaces Stable command outcomes. Exit codes carry coarse control flow; the JSON result carries the reasons.}}{242}{table.F.5}%

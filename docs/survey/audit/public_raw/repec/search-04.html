@@ -1,0 +1,721 @@
+<!DOCTYPE html>
+<head><title>IDEAS/RePEc search</title>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css" integrity="sha256-pdY4ejLKO67E0CM2tbPtq1DJ3VGDVVdqAR6j3ZwdiE4=" crossorigin="anonymous">
+    <link rel="stylesheet" href="/css/font-awesome.min.css">
+    <link href="/css/normalnew.css" rel="stylesheet" type="text/css"/>
+    <link href="/css/pushy.css" rel="stylesheet" type="text/css"/>
+    <link rel="icon" type="image.jpg" href="/favicon.ico">
+
+</head>
+
+<body onload="checkCookie()">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-G63YGSJVZ7"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-G63YGSJVZ7');
+</script>
+<div class="container">
+    <div id="header" class="row">
+      <nav class="navbar navbar-collapse navbar-expand-md" role="navigation">
+          <a class="navbar-brand" href="/">
+            <img width="125" src="/ideas4.jpg" border="0" alt="IDEAS home">
+          </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-toggle="collapse" data-target="#mobilesearch" aria-controls="mobilesearch" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"><i class="bi bi-search"></i></span>
+        </button>
+        <div class="collapse" id="mobilesearch">
+          <div class="form-inline">
+          <form method="POST" action="/cgi-bin/htsearch2" id="mobilesearch" role="search" class="card card-body">
+            <div class="input-group">
+              <input class="form-control" type="text" name="q" value="" placeholder="Search econ literature">
+              <span class="input-group-btn">
+              <button type="submit" class="btn" style="background-color: #2d4e8b; color: white;" aria-label="Search">
+                <i class="bi-search"></i>
+              </button>
+              <!--  <input class="btn btn-default btn-lg fa" type="submit" value="&#xf002;" style="color:white;background-color:#2d4e8b;">-->
+              </span>
+            </div>
+            <a href="/search.html" class="advanced-search">Advanced search</a>
+          </form>
+          </div>
+          </div>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-toggle="collapse" data-target="#mobilemenu" aria-controls="mobilemenu" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"><i class="bi bi-list"></i></span>
+        </button>
+        <div class="collapse" id="mobilemenu">
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="/">Economic literature:</a> <a href="/i/p.html">papers</A>, <a href="/i/a.html">articles</A>, <a href="/i/c.html">software</A>, <a href="/i/h.html">chapters</A>, <a href="
+/i/b.html">books</A>.
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/i/e.html">Authors</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="http://edirc.repec.org/">Institutions</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/top/">Rankings</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/help.html" target="NEW">Help/FAQ  <i class="bi bi-box-arrow-up-right"></i></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/cgi-bin/myideas.cgi">MyIDEAS <I class="bi bi-lightbulb"></I></a>
+            </li>
+            <li class="nav-item">
+              <span class="nav-text">More options at page bottom</span>
+            </li>
+          </ul>
+        </div>
+        <div class="d-none d-md-inline">
+          <ul class="nav nav-fill" id="topnav">
+            <li class="nav-item">
+              <a class="nav-link" href="/">Economic literature</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/i/e.html">Authors</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="http://edirc.repec.org/">Institutions</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/top/">Rankings</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/help.html" target="NEW">Help/FAQ  <i class="bi bi-box-arrow-up-right"></i></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/cgi-bin/myideas.cgi" style="color:blue;">MyIDEAS <I class="bi bi-lightbulb"></I> <small>(now improved)</small></a>
+            </li>
+          </ul>
+        </div>
+      </nav>
+    </div>
+
+
+    <div class="row">
+      <div style="margin-top: -10px;">
+
+
+        <div id="sidebar" class="sidebar-nav-fixed pull-right d-none d-print-none d-md-inline col-md-3">
+          <div class="inline-form">
+          <form method="POST" action="/cgi-bin/htsearch2" id="topsearch" role="search" class="navbar-form navbar-right">
+            <div class="input-group">
+              <input class="form-control" type="text" name="q" value="" placeholder="Search econ literature">
+              <button type="submit" class="btn" style="background-color: #2d4e8b; color: white;" aria-label="Search">
+                <i class="bi-search"></i>
+              </button>
+<!--            <input class="btn fa" type="submit" value="&#xf002;" style="color:white;background-color:#2d4e8b;">-->
+            </div>
+            <a href="/search.html" class="advanced-search">Advanced search</a>
+          </form>
+          </div>
+          <div id="menu">
+            <h3>Browse Econ Literature</h3>
+            <ul>
+              <li><a href="/i/p.html">Working papers</a></li>
+              <li><a href="/i/a.html">Journals</a></li>
+              <li><a href="/i/c.html">Software components</a></li>
+              <li><a href="/i/b.html">Books</a></li>
+              <li><a href="/i/h.html">Book chapters</a></li>
+              <li><a href="/j/">JEL classification</a></li>
+            </ul>
+
+            <h3>More features</h3>
+            <ul>
+              <li><a href="http://nep.repec.org/">Subscribe to new research</a></li>
+              <li><a href="https://biblio.repec.org/">RePEc Biblio</a></li>
+              <li><a href="https://authors.repec.org/">Author registration</a></li>
+              <li><a href="/v/">Economics Virtual Seminar Calendar</a></li>
+              <li><a href="https://confwatcher.b2ideas.eu/"><font color="red">ConfWatcher</font></a> NEW!</li>
+            </ul>
+          </div>
+        </div>
+        <div class="d-none d-print-block">
+          <img width="145" src="/ideas4.jpg" border="0" alt="IDEAS home"> Printed from https://ideas.repec.org<!--#echo var="REQUEST_URI"-->
+        </div>
+
+        <div id="main" class="col-12 col-md-9">
+        <div class="site-overlay"></div>
+          <div class="d-print-none">
+<div id="messages" class="col-xs-12">
+<!--<p><font color="red">IDEAS is struggling with massive bot traffic, please be patient. We apologize for the inconvenience.</font></p>-->
+<span class="share-block">
+ &nbsp;<a href="https://bsky.app/intent/compose?text=Found%20on%20RePEc/IDEAS:%20https://ideas.repec.org/%20&#128161;" target="_NEW"><i class="bi bi-bluesky"></i></a>&nbsp;
+            <share-to-mastodon message="Found on RePEc/IDEAS:" url='https://ideas.repec.org/'><font color="#2d4e8b"><i class="bi bi-mastodon"></i></font></share-to-mastodon>
+            <a class="share-twitter bi bi-twitter-x" href="#" title="Share on Twitter"></a>
+            <a class="share-facebook bi bi-facebook" href="#" title="Share on Facebook"></a>
+            <a class="share-reddit bi bi-reddit" href="#" title="Share on Reddit"></a>
+            <a class="share-linkedin bi bi-linkedin" href="#"  title="Share on LinkedIn"></a>
+            <a class="share-email bi bi-envelope" href="#"  title="Share by Email"></a>
+            <a class="share-print bi bi-printer" href="#" title="Print this page"></a>
+</span>
+<span id="myideas">
+<a href="/cgi-bin/myideas.cgi" data-bs-toggle="tooltip" data-toggle="tooltip" title="MyIDEAS: not logged in">
+<i class="bi bi-lightbulb"></i>
+<i class="bi bi-lock"></i>&nbsp;</a>
+</span>
+
+<script>
+function loadDoc(url,cfunc) {
+  var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+    if (xhttp.readyState == 4 && xhttp.status == 200) {
+      cfunc(xhttp);
+    }
+  };
+  xhttp.open("GET", url, true);
+  xhttp.send();
+}
+function myFunction(xhttp) {
+  document.getElementById("response").innerHTML = xhttp.responseText;
+}
+</script><span id="response"></span>
+</div>
+          </div>
+          <div id="content-block">
+
+<h1>IDEAS/RePEc search</h1>
+
+<form method="POST" action="/cgi-bin/htsearch2"> 
+        <input type="hidden" name="form" value="extended">
+        <input type="hidden" name="wm" value="wrd">
+        <input type="hidden" name="dt" value="range">
+        <div class="row" style="margin-top: 12px; margin-bottom: 12px;">
+          <div class="form-group col-auto">
+            <select name="ul" class="form-control input-sm" id="ul-select">
+    
+<option value="" select="selected"
+>All</option>
+    <option value="%/a/%"
+>Articles</option>
+    <option value="%/p/%"
+>Papers</option>
+    <option value="%/h/%"
+>Chapters</option>
+    <option value="%/b/%"
+>Books</option>
+    <option value="%/c/%"
+>Software</option>
+            </select>
+          </div>
+          <div class="col-12 col-md">
+            <input class="form-control fill" type="text" name="q" value=' automated writing evaluation validity ' style="float: left;">
+          </div>
+          <div class="col-auto">
+              <button type="submit" class="btn" style="background-color: #2d4e8b; color: white;" aria-label="Search">
+                <i class="bi-search"></i>
+              </button>
+           <!--<button class="btn btn-lg fa" type="submit" name="cmd" value="Search!" style="color:white;background-color:#2d4e8b;">&#xf002;</button>-->
+          </div>
+        </div>
+        <div class="row" style="margin-top: 12px; margin-bottom: 12px;">
+          <div class="col-12 col-sm-6 col-lg-3">
+            <div class="form-group">
+              <label class="control-label" for="wf-select">
+                In:</label>
+              <div>
+                <select id="wf-select" class="form-control input-sm" name="wf">
+                  <option value="4BFF"
+ selected
+>Whole record </option>
+                  <option value="F000"
+>Abstract</option>
+                  <option value="0F00"
+>Keywords</option>
+                  <option value="00F0"
+>Title</option>
+                  <option value="000F"
+>Author</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="col-12 col-sm-6 col-lg-3">
+            <div class="form-group">
+              <label for="s-select" class="control-label">Sort by:</label>
+              <div>
+                <select id="s-select" class="form-control input-sm" name="s">
+                  <option value="R"
+ selected
+>Relevance</option>
+                  <option value="d"
+>Oldest</option>
+                  <option value="D"
+>Most recent</option>
+                  <option value="C"
+>Most cited</option>
+                  <option value="T"
+>Title alphabet</option>
+                  <option value="A"
+>Recently added</option>
+                  <option value="S"
+>Recent & relevant</option>
+                  <option value="Q"
+>Relevant & cited</option>
+                  <option value="B"
+>Recent & cited</option>
+  </select>
+              </div>
+            </div>
+          </div>
+          <div class="col-12 col-sm-6 col-lg-3">
+            <div class="form-group">
+              <label for="from-select" class="control-label">From: </label>
+              <div>
+                <select class="form-control input-sm" name="db" id="from-select">
+                  <option value=""
+ selected
+>Any Year</option>
+    <option value="01/01/2026"
+>2026</option>
+    <option value="01/01/2025"
+>2025</option>
+    <option value="01/01/2024"
+>2024</option>
+    <option value="01/01/2023"
+>2023</option>
+    <option value="01/01/2022"
+>2022</option>
+    <option value="01/01/2021"
+>2021</option>
+    <option value="01/01/2020"
+>2020</option>
+    <option value="01/01/2019"
+>2019</option>
+    <option value="01/01/2018"
+>2018</option>
+    <option value="01/01/2017"
+>2017</option>
+    <option value="01/01/2016"
+>2016</option>
+    <option value="01/01/2015"
+>2015</option>
+    <option value="01/01/2014"
+>2014</option>
+    <option value="01/01/2013"
+>2013</option>
+    <option value="01/01/2012"
+>2012</option>
+    <option value="01/01/2011"
+>2011</option>
+    <option value="01/01/2010"
+>2010</option>
+    <option value="01/01/2009"
+>2009</option>
+    <option value="01/01/2008"
+>2008</option>
+    <option value="01/01/2007"
+>2007</option>
+    <option value="01/01/2006"
+>2006</option>
+    <option value="01/01/2005"
+>2005</option>
+    <option value="01/01/2004"
+>2004</option>
+    <option value="01/01/2003"
+>2003</option>
+    <option value="01/01/2002"
+>2002</option>
+    <option value="01/01/2001"
+>2001</option>
+    <option value="01/01/2000"
+>2000</option>
+    <option value="01/01/1999"
+>1999</option>
+    <option value="01/01/1998"
+>1998</option>
+    <option value="01/01/1997"
+>1997</option>
+    <option value="01/01/1996"
+>1996</option>
+    <option value="01/01/1995"
+>1995</option>
+    <option value="01/01/1994"
+>1994</option>
+    <option value="01/01/1993"
+>1993</option>
+    <option value="01/01/1992"
+>1992</option>
+    <option value="01/01/1991"
+>1991</option>
+    <option value="01/01/1990"
+>1990</option>
+    <option value="01/01/1985"
+>1985</option>
+    <option value="01/01/1980"
+>1980</option>
+    <option value="01/01/1975"
+>1975</option>
+    <option value="01/01/1970"
+>1970</option>
+    <option value="01/01/1960"
+>1960</option>
+    <option value="01/01/1950"
+>1950</option>
+    <option value="01/01/1940"
+>1940</option>
+    <option value="01/01/1930"
+>1930</option>
+    <option value="01/01/1900"
+>1900</option>
+    <option value="01/01/1800"
+>1800</option>
+    <option value="01/01/1700"
+>1700</option>
+                </select>
+              </div>
+            </div>
+      </div>
+
+          <div class="col-12 col-sm-6 col-lg-3">
+            <div class="form-group">
+              <label for="to-select" class="control-label">To: </label>
+              <div class="">
+                <select id="to-select" class="form-control input-sm" name="de">
+                  <option value=""
+ selected
+>Any Year</option>
+    <option value="31/12/2026"
+>2026</option>
+    <option value="31/12/2025"
+>2025</option>
+    <option value="31/12/2024"
+>2024</option>
+    <option value="31/12/2023"
+>2023</option>
+    <option value="31/12/2022"
+>2022</option>
+    <option value="31/12/2021"
+>2021</option>
+    <option value="31/12/2020"
+>2020</option>
+    <option value="31/12/2019"
+>2019</option>
+    <option value="31/12/2018"
+>2018</option>
+    <option value="31/12/2017"
+>2017</option>
+    <option value="31/12/2016"
+>2016</option>
+    <option value="31/12/2015"
+>2015</option>
+    <option value="31/12/2014"
+>2014</option>
+    <option value="31/12/2013"
+>2013</option>
+    <option value="31/12/2012"
+>2012</option>
+    <option value="31/12/2011"
+>2011</option>
+    <option value="31/12/2010"
+>2010</option>
+    <option value="31/12/2009"
+>2009</option>
+    <option value="31/12/2008"
+>2008</option>
+    <option value="31/12/2007"
+>2007</option>
+    <option value="31/12/2006"
+>2006</option>
+    <option value="31/12/2005"
+>2005</option>
+    <option value="31/12/2004"
+>2004</option>
+    <option value="31/12/2003"
+>2003</option>
+    <option value="31/12/2002"
+>2002</option>
+    <option value="31/12/2001"
+>2001</option>
+    <option value="31/12/2000"
+>2000</option>
+    <option value="31/12/1999"
+>1999</option>
+    <option value="31/12/1998"
+>1998</option>
+    <option value="31/12/1997"
+>1997</option>
+    <option value="31/12/1996"
+>1996</option>
+    <option value="31/12/1995"
+>1995</option>
+    <option value="31/12/1994"
+>1994</option>
+    <option value="31/12/1993"
+>1993</option>
+    <option value="31/12/1992"
+>1992</option>
+    <option value="31/12/1991"
+>1991</option>
+    <option value="31/12/1990"
+>1990</option>
+    <option value="31/12/1985"
+>1985</option>
+    <option value="31/12/1980"
+>1980</option>
+    <option value="31/12/1975"
+>1975</option>
+    <option value="31/12/1970"
+>1970</option>
+    <option value="31/12/1960"
+>1960</option>
+    <option value="31/12/1950"
+>1950</option>
+    <option value="31/12/1940"
+>1940</option>
+    <option value="31/12/1930"
+>1930</option>
+    <option value="31/12/1900"
+>1900</option>
+    <option value="31/12/1800"
+>1800</option>
+    <option value="31/12/1700"
+>1700</option>
+                </select>
+
+          </div>
+            </div>
+          </div>
+        </div>
+      <span style="position:absolute;right:0px;transform: translateY(-12px);color:red">New search options! See the <a href="/search.html">search page</a></span>
+      </form>
+    </div>
+    
+
+<font color="red"></font> Found 16 results
+ for <i>automated writing evaluation validity</i>, showing 
+1-10
+<ol class="list-group" start="1">
+<li class="list-group-item downfree">Yi Xue (2024): <a href="https://ideas.repec.org/a/onl/ajossh/v9y2024i2p49-77id1178.html" target="_blank">Mediating&#32;effect&#32;of&#32;ambiguity&#32;tolerance&#32;in&#32;<b>automated</b>&#32;<b>writing</b>&#32;<b>evaluation</b>&#32;research&#32;model</a><hr>In&#32;light&#32;of&#32;the&#32;advancement&#32;of&#32;generative&#32;artificial&#32;intelligence&#32;&#40;GenAI&#41;&#32;technology&#45;empowered&#32;<b>automated</b>&#32;<b>writing</b>&#32;<b>evaluation</b>&#32;&#40;AWE&#41;&#32;system&#32;represents&#32;a&#32;revolutionary&#32;paradigm&#32;at&#32;the&#32;forefront&#32;of&#32;mobile&#32;assisted&#32;English&#32;learning&#32;&#40;MAEL&#41;&#46;&#32;Numerous&#32;empirical&#32;studies&#32;have&#32;been&#32;carried&#32;out&#32;to&#32;test&#32;the&#32;efficacy&#32;of&#32;<b>automated</b>&#32;<b>writing</b>&#32;corrective&#32;feedback&#32;in&#32;<b>writing</b>&#32;assistance&#46;&#32;... This&#32;study&#32;utilized&#32;the&#32;partial&#32;least&#32;square&#32;structural&#32;equation&#32;modeling&#32;&#40;PLS&#45;SEM&#41;&#32;method&#32;to&#32;analyze&#32;679&#32;<b>valid</b>&#32;questionnaire&#32;responses&#32;via&#32;SPSS&#32;29&#32;and&#32;SmartPLS&#32;4&#46;&#32;The&#32;results&#32;elucidated&#32;that&#32;the&#32;AWE&#32;research&#32;model&#32;incorporating&#32;the&#32;technology&#32;acceptance&#32;model&#32;&#40;TAM&#32;model&#41;&#44;&#32;task&#32;technology&#32;fit&#32;model&#32;&#40;TTF&#32;model&#41;&#44;&#32;and&#32;individual&#32;characteristics&#32;could&#32;predict&#32;the&#32;user’s&#32;adoption&#32;of&#32;AWE&#32;software&#32;in&#32;the&#32;completion&#32;of&#32;<b>writing</b>&#32;tasks&#46;&#32;Moreover&#44;&#32;ambiguity&#32;tolerance&#32;functions&#32;as&#32;an&#32;effective&#32;mediator&#32;in&#32;the&#32;GenAI&#32;technology&#45;empowered&#32;<b>automated</b>&#32;<b>writing</b>&#32;<b>evaluation</b>&#32;research&#32;model&#46;&#32;<br><i>RePEc:onl:ajossh:v:9:y:2024:i:2:p:49-77:id:1178</i>
+<span onclick="loadDoc('https://ideas.repec.org/cgi-bin/myiadd3.cgi?RePEc:onl:ajossh:v:9:y:2024:i:2:p:49-77:id:1178',myFunction);return true;"> <font color="#0000fc"><i class="bi bi-bookmark"></i>&nbsp;Save to MyIDEAS <i class="bi bi-lightbulb"></i></font></span></li>
+
+<li class="list-group-item downfree">Elena Cotos &amp; Sarah Huffman (2013): <a href="https://ideas.repec.org/a/igg/jcallt/v3y2013i3p77-98.html" target="_blank">Learner&#32;Fit&#32;in&#32;Scaling&#32;Up&#32;<b>Automated</b>&#32;<b>Writing</b>&#32;<b>Evaluation</b></a><hr><b>Valid</b>&#32;<b>evaluations</b>&#32;of&#32;<b>automated</b>&#32;<b>writing</b>&#32;<b>evaluation</b>&#32;&#40;AWE&#41;&#32;design&#44;&#32;development&#44;&#32;and&#32;implementation&#32;should&#32;integrate&#32;the&#32;learners’&#32;perspective&#32;in&#32;order&#32;to&#32;ensure&#32;the&#32;attainment&#32;of&#32;desired&#32;outcomes&#46;&#32;This&#32;paper&#32;explores&#32;the&#32;learner&#32;fit&#32;quality&#32;of&#32;the&#32;Research&#32;<b>Writing</b>&#32;Tutor&#32;&#40;RWT&#41;&#44;&#32;an&#32;emerging&#32;AWE&#32;tool&#32;tested&#32;with&#32;L2&#32;writers&#32;at&#32;an&#32;early&#32;stage&#32;of&#32;its&#32;development&#46;&#32;<br><i>RePEc:igg:jcallt:v:3:y:2013:i:3:p:77-98</i>
+<span onclick="loadDoc('https://ideas.repec.org/cgi-bin/myiadd3.cgi?RePEc:igg:jcallt:v:3:y:2013:i:3:p:77-98',myFunction);return true;"> <font color="#0000fc"><i class="bi bi-bookmark"></i>&nbsp;Save to MyIDEAS <i class="bi bi-lightbulb"></i></font></span></li>
+
+<li class="list-group-item downfree">Tabotabo, Sarah Jane &amp; Surdilla Michelle Joy &amp; Sumampong Stephanie &amp; Cadizon John Carl &amp; Labrador Althea &amp; Golbin Rodolfo Jr &amp; Gimena Grace (2026): <a href="https://ideas.repec.org/a/aoj/asjoet/v12y2026i2p19-27id8623.html" target="_blank">Effects&#32;of&#32;AI&#45;assisted&#32;feedback&#32;on&#32;the&#32;essay&#32;<b>writing</b>&#32;performance&#32;of&#32;undergraduate&#32;English&#32;major&#32;students</a><hr>This&#32;study&#32;investigates&#32;the&#32;effects&#32;of&#32;AI&#45;assisted&#32;feedback&#32;on&#32;the&#32;essay&#32;<b>writing</b>&#32;performance&#32;of&#32;undergraduate&#32;English&#32;major&#32;students&#46;&#32;... <b>Writing</b>&#32;performance&#32;was&#32;measured&#32;using&#32;a&#32;<b>validated</b>&#32;analytic&#32;rubric&#32;covering&#32;content&#44;&#32;organization&#44;&#32;vocabulary&#44;&#32;language&#32;use&#44;&#32;and&#32;mechanics&#46;&#32;... Results&#32;showed&#32;significant&#32;increases&#32;in&#32;essay&#32;<b>writing</b>&#32;performance&#32;in&#32;both&#32;groups&#46;&#32;... Results&#32;suggest&#32;that&#32;timely&#44;&#32;consistently&#32;incentivized&#32;AI&#45;generated&#32;feedback&#32;supports&#32;reformulation&#44;&#32;leading&#32;to&#32;better&#32;<b>writing</b>&#46;&#32;The&#32;study&#32;underscores&#32;the&#32;importance&#32;of&#32;teacher&#32;feedback&#44;&#32;especially&#32;for&#32;higher&#45;level&#32;<b>writing</b>&#32;practices&#46;&#32;<br><i>RePEc:aoj:asjoet:v:12:y:2026:i:2:p:19-27:id:8623</i>
+<span onclick="loadDoc('https://ideas.repec.org/cgi-bin/myiadd3.cgi?RePEc:aoj:asjoet:v:12:y:2026:i:2:p:19-27:id:8623',myFunction);return true;"> <font color="#0000fc"><i class="bi bi-bookmark"></i>&nbsp;Save to MyIDEAS <i class="bi bi-lightbulb"></i></font></span></li>
+
+<li class="list-group-item downfree">Park, Shinjae (2025): <a href="https://ideas.repec.org/a/asi/ijells/v14y2025i1p17-30id5328.html" target="_blank">Effectiveness&#32;and&#32;moderating&#32;factors&#32;of&#32;computer&#45;mediated&#32;feedback&#32;in&#32;L2&#32;<b>writing</b>&#58;&#32;A&#32;meta&#45;analysis</a><hr>Computer&#45;mediated&#32;feedback&#32;&#40;CMF&#41;&#32;for&#32;<b>writing</b>&#32;has&#32;garnered&#32;growing&#32;attention&#32;among&#32;practitioners&#32;and&#32;researchers&#46;&#32;... This&#32;study&#32;synthesized&#32;19&#32;<b>valid</b>&#32;effect&#32;sizes&#32;from&#32;26&#32;experimental&#32;studies&#32;conducted&#32;between&#32;2021&#32;and&#32;2024&#32;to&#32;<b>evaluate</b>&#32;the&#32;effectiveness&#32;of&#32;CMF&#32;in&#32;L2&#32;learners’&#32;<b>writing</b>&#32;performance&#32;and&#32;determine&#32;the&#32;moderating&#32;factors&#32;influencing&#32;its&#32;variability&#46;&#32;... <b>Automated</b>&#32;and&#32;immediate&#32;feedback&#32;demonstrated&#32;the&#32;strongest&#32;impact&#32;&#40;g&#32;&#61;&#32;0&#46;937&#32;and&#32;g&#32;&#61;&#32;0&#46;875&#41;&#32;highlighting&#32;their&#32;importance&#32;in&#32;facilitating&#32;real&#45;time&#32;corrections&#46;&#32;... Greater&#32;improvements&#32;were&#32;observed&#32;in&#32;academic&#32;<b>writing</b>&#32;tasks&#32;other&#32;than&#32;argumentative&#32;<b>writing</b>&#32;tasks&#46;&#32;... These&#32;findings&#32;suggest&#32;that&#32;CMF&#32;significantly&#32;contributes&#32;to&#32;L2&#32;<b>writing</b>&#32;development&#44;&#32;particularly&#32;in&#32;structured&#32;academic&#32;environments&#46;<br><i>RePEc:asi:ijells:v:14:y:2025:i:1:p:17-30:id:5328</i>
+<span onclick="loadDoc('https://ideas.repec.org/cgi-bin/myiadd3.cgi?RePEc:asi:ijells:v:14:y:2025:i:1:p:17-30:id:5328',myFunction);return true;"> <font color="#0000fc"><i class="bi bi-bookmark"></i>&nbsp;Save to MyIDEAS <i class="bi bi-lightbulb"></i></font></span></li>
+
+<li class="list-group-item downfree">A. K. Konar &amp; Ayesha Martin &amp; Sombala Ningthoujam (2023): <a href="https://ideas.repec.org/a/sae/metjou/v22y2023i1p18-27.html" target="_blank"><b>Validating</b>&#32;an&#32;<b>Automated</b>&#32;System&#32;of&#32;<b>Evaluation</b>&#32;for&#32;English&#32;Drafting&#32;Skill&#58;&#32;A&#32;Case&#32;of&#32;Large&#45;scale&#44;&#32;High&#45;stakes&#32;Selection&#32;of&#32;Entry&#45;level&#32;Managerial&#32;Positions</a><hr>In&#32;the&#32;context&#32;of&#32;large&#45;scale&#32;<b>writing</b>&#32;assessments&#44;&#32;<b>automated</b>&#32;scoring&#32;could&#32;provide&#32;superior&#32;results&#32;to&#32;human&#32;scoring&#32;in&#32;terms&#32;of&#32;<b>validity</b>&#32;and&#32;reliability&#46;&#32;In&#32;the&#32;present&#32;study&#44;&#32;an&#32;attempt&#32;has&#32;been&#32;made&#32;to&#32;<b>validate</b>&#32;an&#32;<b>automated</b>&#32;essay&#32;scoring&#32;&#40;AES&#41;&#32;algorithm&#46;&#32;... The&#32;<b>evaluation</b>&#32;of&#32;the&#32;descriptive&#32;&#40;constructed&#32;response&#41;&#32;component&#32;of&#32;the&#32;examination&#32;&#40;English&#32;composition&#41;&#32;was&#32;carried&#32;out&#32;parallelly&#32;by&#32;four&#32;expert&#32;human&#32;raters&#32;and&#32;the&#32;AES&#32;algorithm&#46;&#32;The&#32;parameters&#32;for&#32;<b>evaluation</b>&#32;were&#32;devised&#32;and&#32;made&#32;available&#32;to&#32;raters&#32;and&#32;the&#32;algorithm&#46;&#32;... Results&#32;show&#32;that&#32;the&#32;mean&#32;scores&#32;of&#32;human&#32;expert&#32;raters&#32;&#40;&#32;M&#32;&#61;&#32;14&#46;648&#41;&#32;and&#32;<b>automated</b>&#32;algorithm&#32;method&#32;&#40;&#32;M&#32;&#61;&#32;15&#46;804&#41;&#32;were&#32;similar&#46;&#32;<br><i>RePEc:sae:metjou:v:22:y:2023:i:1:p:18-27</i>
+<span onclick="loadDoc('https://ideas.repec.org/cgi-bin/myiadd3.cgi?RePEc:sae:metjou:v:22:y:2023:i:1:p:18-27',myFunction);return true;"> <font color="#0000fc"><i class="bi bi-bookmark"></i>&nbsp;Save to MyIDEAS <i class="bi bi-lightbulb"></i></font></span></li>
+
+<li class="list-group-item downnone">Annier Jesús Fajardo Quesada &amp; René Herrero Pacheco (2024): <a href="https://ideas.repec.org/a/dbk/gammif/v2y2024ip39id39.html" target="_blank">Guidelines&#32;for&#32;<b>writing</b>&#32;software&#32;building&#32;reports</a><hr>The&#32;linkage&#32;of&#32;software&#32;with&#32;various&#32;areas&#32;of&#32;knowledge&#32;has&#32;increased&#32;significantly&#44;&#32;highlighting&#32;the&#32;importance&#32;of&#32;process&#32;<b>automation</b>&#32;thanks&#32;to&#32;the&#32;expansion&#32;of&#32;imaginative&#32;capabilities&#32;in&#32;this&#32;area&#46;&#32;... This&#32;landscape&#32;demands&#32;standardized&#32;methods&#32;for&#32;the&#32;creation&#32;and&#32;dissemination&#32;of&#32;applications&#44;&#32;although&#32;there&#32;is&#32;currently&#32;no&#32;detailed&#32;guidance&#32;for&#32;<b>writing</b>&#32;reports&#32;on&#32;software&#32;creation&#46;&#32;It&#32;is&#32;crucial&#32;to&#32;adopt&#32;methodological&#32;guidelines&#32;that&#32;allow&#32;the&#32;reproducibility&#32;of&#32;software&#32;research&#44;&#32;clearly&#32;differentiating&#32;between&#32;the&#32;creation&#32;and&#32;the&#32;<b>evaluation</b>&#45;<b>validation</b>&#32;of&#32;these&#32;tools&#46;&#32;... The&#32;article&#32;proposes&#32;a&#32;detailed&#32;outline&#32;for&#32;<b>writing</b>&#32;software&#32;development&#32;reports&#44;&#32;covering&#32;from&#32;the&#32;introduction&#44;&#32;method&#44;&#32;results&#44;&#32;to&#32;the&#32;discussion&#32;and&#32;conclusions&#46;&#32;This&#32;outline&#32;covers&#32;aspects&#32;such&#32;as&#32;the&#32;theoretical&#32;and&#32;historical&#32;framework&#44;&#32;the&#32;importance&#32;and&#32;necessity&#32;of&#32;the&#32;product&#44;&#32;classification&#32;of&#32;the&#32;study&#44;&#32;details&#32;of&#32;the&#32;creation&#32;process&#44;&#32;technologies&#32;used&#44;&#32;and&#32;software&#32;<b>evaluation</b>&#46;&#32;<br><i>RePEc:dbk:gammif:v:2:y:2024:i::p:39:id:39</i>
+<span onclick="loadDoc('https://ideas.repec.org/cgi-bin/myiadd3.cgi?RePEc:dbk:gammif:v:2:y:2024:i::p:39:id:39',myFunction);return true;"> <font color="#0000fc"><i class="bi bi-bookmark"></i>&nbsp;Save to MyIDEAS <i class="bi bi-lightbulb"></i></font></span></li>
+
+<li class="list-group-item downfree">Fajardo Quesada, Annier Jesús &amp; Herrero Pacheco, René (2024): <a href="https://ideas.repec.org/a/cwf/grarti/gr202439.html" target="_blank">Guidelines&#32;for&#32;<b>writing</b>&#32;software&#32;building&#32;reports</a><hr>The&#32;linkage&#32;of&#32;software&#32;with&#32;various&#32;areas&#32;of&#32;knowledge&#32;has&#32;increased&#32;significantly&#44;&#32;highlighting&#32;the&#32;importance&#32;of&#32;process&#32;<b>automation</b>&#32;thanks&#32;to&#32;the&#32;expansion&#32;of&#32;imaginative&#32;capabilities&#32;in&#32;this&#32;area&#46;&#32;... This&#32;landscape&#32;demands&#32;standardized&#32;methods&#32;for&#32;the&#32;creation&#32;and&#32;dissemination&#32;of&#32;applications&#44;&#32;although&#32;there&#32;is&#32;currently&#32;no&#32;detailed&#32;guidance&#32;for&#32;<b>writing</b>&#32;reports&#32;on&#32;software&#32;creation&#46;&#32;It&#32;is&#32;crucial&#32;to&#32;adopt&#32;methodological&#32;guidelines&#32;that&#32;allow&#32;the&#32;reproducibility&#32;of&#32;software&#32;research&#44;&#32;clearly&#32;differentiating&#32;between&#32;the&#32;creation&#32;and&#32;the&#32;<b>evaluation</b>&#45;<b>validation</b>&#32;of&#32;these&#32;tools&#46;&#32;... The&#32;article&#32;proposes&#32;a&#32;detailed&#32;outline&#32;for&#32;<b>writing</b>&#32;software&#32;development&#32;reports&#44;&#32;covering&#32;from&#32;the&#32;introduction&#44;&#32;method&#44;&#32;results&#44;&#32;to&#32;the&#32;discussion&#32;and&#32;conclusions&#46;&#32;This&#32;outline&#32;covers&#32;aspects&#32;such&#32;as&#32;the&#32;theoretical&#32;and&#32;historical&#32;framework&#44;&#32;the&#32;importance&#32;and&#32;necessity&#32;of&#32;the&#32;product&#44;&#32;classification&#32;of&#32;the&#32;study&#44;&#32;details&#32;of&#32;the&#32;creation&#32;process&#44;&#32;technologies&#32;used&#44;&#32;and&#32;software&#32;<b>evaluation</b>&#46;&#32;<br><i>RePEc:cwf:grarti:gr202439</i>
+<span onclick="loadDoc('https://ideas.repec.org/cgi-bin/myiadd3.cgi?RePEc:cwf:grarti:gr202439',myFunction);return true;"> <font color="#0000fc"><i class="bi bi-bookmark"></i>&nbsp;Save to MyIDEAS <i class="bi bi-lightbulb"></i></font></span></li>
+
+<li class="list-group-item downfree">J. Miller &amp; L. Zhang &amp; E. Ofuonye &amp; M. Smith (2008): <a href="https://ideas.repec.org/a/igg/jitwe0/v3y2008i3p28-45.html" target="_blank">The&#32;Theory&#32;and&#32;Implementation&#32;of&#32;InputValidator&#58;&#32;A&#32;Semi&#45;<b>Automated</b>&#32;Value&#45;Level&#32;Bypass&#32;Testing&#32;Tool</a><hr>One&#32;of&#32;the&#32;principal&#32;vulnerabilities&#32;in&#32;Webbased&#32;systems&#32;revolves&#32;around&#32;insufficient&#32;and&#32;inappropriate&#32;input&#32;<b>validation</b>&#44;&#32;a&#32;deficiency&#32;that&#32;can&#32;be&#32;exploited&#32;by&#32;attacks&#32;that&#32;bypass&#32;client&#45;side&#32;checking&#46;&#32;This&#32;article&#32;describes&#32;a&#32;partially&#32;<b>automated</b>&#32;mechanism&#44;&#32;the&#32;tool&#32;InputValidator&#44;&#32;which&#32;seeks&#32;to&#32;address&#32;this&#32;issue&#32;by&#32;sending&#32;test&#32;data&#32;directly&#32;to&#32;the&#32;server&#32;to&#32;test&#32;the&#32;robustness&#32;and&#32;security&#32;of&#32;the&#32;back&#45;end&#32;software&#46;&#32;The&#32;tool&#32;allows&#32;a&#32;user&#32;to&#32;construct&#44;&#32;execute&#44;&#32;and&#32;<b>evaluate</b>&#32;a&#32;number&#32;of&#32;test&#32;cases&#32;through&#32;a&#32;formfilling&#32;exercise&#32;instead&#32;of&#32;<b>writing</b>&#32;bespoke&#32;test&#32;code&#46;<br><i>RePEc:igg:jitwe0:v:3:y:2008:i:3:p:28-45</i>
+<span onclick="loadDoc('https://ideas.repec.org/cgi-bin/myiadd3.cgi?RePEc:igg:jitwe0:v:3:y:2008:i:3:p:28-45',myFunction);return true;"> <font color="#0000fc"><i class="bi bi-bookmark"></i>&nbsp;Save to MyIDEAS <i class="bi bi-lightbulb"></i></font></span></li>
+
+<li class="list-group-item downfree">David G Mets &amp; Michael S Brainard (2018): <a href="https://ideas.repec.org/a/plo/pcbi00/1006437.html" target="_blank">An&#32;<b>automated</b>&#32;approach&#32;to&#32;the&#32;quantitation&#32;of&#32;vocalizations&#32;and&#32;vocal&#32;learning&#32;in&#32;the&#32;songbird</a><hr>We&#32;present&#32;a&#32;novel&#44;&#32;<b>automated</b>&#32;approach&#32;to&#32;<b>evaluating</b>&#32;imitative&#32;learning&#46;&#32;... We&#32;<b>validate</b>&#32;our&#32;approach&#32;through&#32;examination&#32;of&#32;songbird&#32;vocalizations&#44;&#32;complex&#32;learned&#32;behaviors&#32;the&#32;study&#32;of&#32;which&#32;has&#32;provided&#32;many&#32;insights&#32;into&#32;sensory&#45;motor&#32;learning&#32;in&#32;general&#32;and&#32;vocal&#32;learning&#32;in&#32;particular&#46;&#32;... We&#32;show&#32;that&#32;our&#32;measure&#32;of&#32;song&#32;learning&#32;&#40;the&#32;Kullback&#45;Leibler&#32;divergence&#32;between&#32;two&#32;distributions&#32;corresponding&#32;to&#32;specific&#32;song&#32;data&#44;&#32;or&#44;&#32;Song&#32;DKL&#41;&#32;is&#32;well&#32;correlated&#32;with&#32;human&#32;<b>evaluation</b>&#32;of&#32;song&#32;learning&#46;&#32;... However&#44;&#32;many&#32;behaviors&#32;&#40;e&#46;g&#46;&#32;speaking&#44;&#32;walking&#44;&#32;and&#32;<b>writing</b>&#41;&#32;are&#32;complex&#32;and&#32;multidimensional&#44;&#32;confounding&#32;the&#32;assessment&#32;of&#32;learning&#46;&#32;... We&#32;show&#32;that&#32;this&#32;measure&#32;provides&#32;a&#32;holistic&#32;and&#32;<b>automated</b>&#32;assessment&#32;of&#32;vocal&#32;learning&#32;in&#32;Estrildid&#32;finches&#32;that&#32;is&#32;consistent&#32;with&#32;human&#32;assessment&#46;&#32;<br><i>RePEc:plo:pcbi00:1006437</i>
+<span onclick="loadDoc('https://ideas.repec.org/cgi-bin/myiadd3.cgi?RePEc:plo:pcbi00:1006437',myFunction);return true;"> <font color="#0000fc"><i class="bi bi-bookmark"></i>&nbsp;Save to MyIDEAS <i class="bi bi-lightbulb"></i></font></span></li>
+
+<li class="list-group-item downfree">Zein Bassam Bani Younes (2025): <a href="https://ideas.repec.org/a/jfr/wjel11/v15y2025i5p285.html" target="_blank">Investigate&#32;How&#32;AI&#32;Algorithms&#32;Can&#32;Be&#32;Used&#32;to&#32;<b>Automate</b>&#32;English&#32;Language&#32;Proficiency&#32;Assessments</a><hr>This&#32;study&#32;explores&#32;the&#32;integration&#32;of&#32;artificial&#32;intelligence&#32;&#40;AI&#41;&#32;tools&#32;in&#32;English&#32;language&#32;learning&#32;and&#32;assessment&#32;among&#32;university&#32;students&#44;&#32;focusing&#32;on&#32;its&#32;impact&#32;on&#32;the&#32;accuracy&#44;&#32;efficiency&#44;&#32;and&#32;comprehensiveness&#32;of&#32;<b>evaluating</b>&#32;speaking&#44;&#32;listening&#44;&#32;reading&#44;&#32;and&#32;<b>writing</b>&#32;skills&#46;&#32;... Adopting&#32;a&#32;cross&#45;sectional&#32;survey&#32;methodology&#44;&#32;the&#32;study&#32;investigates&#32;how&#32;AI&#45;driven&#32;assessments&#32;can&#32;enhance&#32;learning&#32;by&#32;providing&#32;instant&#32;feedback&#44;&#32;streamlining&#32;<b>evaluation</b>&#32;processes&#44;&#32;and&#32;potentially&#32;reducing&#32;the&#32;burden&#32;on&#32;educators&#46;&#32;The&#32;findings&#32;suggest&#32;that&#32;AI&#32;offers&#32;promising&#32;opportunities&#32;to&#32;support&#32;language&#32;acquisition&#32;through&#32;<b>automated</b>&#32;scoring&#32;systems&#32;and&#32;personalized&#32;learning&#32;experiences&#32;tailored&#32;to&#32;individual&#32;needs&#46;&#32;However&#44;&#32;concerns&#32;persist&#32;regarding&#32;the&#32;reliability&#44;&#32;fairness&#44;&#32;and&#32;accuracy&#32;of&#32;AI&#45;generated&#32;assessments&#44;&#32;raising&#32;the&#32;need&#32;for&#32;standardized&#32;frameworks&#32;to&#32;ensure&#32;<b>validity</b>&#32;and&#32;minimize&#32;biases&#46;&#32;<br><i>RePEc:jfr:wjel11:v:15:y:2025:i:5:p:285</i>
+<span onclick="loadDoc('https://ideas.repec.org/cgi-bin/myiadd3.cgi?RePEc:jfr:wjel11:v:15:y:2025:i:5:p:285',myFunction);return true;"> <font color="#0000fc"><i class="bi bi-bookmark"></i>&nbsp;Save to MyIDEAS <i class="bi bi-lightbulb"></i></font></span></li>
+
+</ol>
+
+   <nav>
+      <ul class="pagination flex-wrap">
+<li class="page-item
+ active
+"><form action="htsearch2" method="post" class="inline"><input type="hidden" name="form" value="extended"><input type="hidden" name="wm" value="wrd"><input type="hidden" name="dt" value="range"><input type="hidden" name="q" value="automated writing evaluation validity"><input type="hidden" name="ul" value=""><input type="hidden" name="wf" value="4BFF"><input type="hidden" name="s" value="R"><input type="hidden" name="np" value="0"><button type="submit" value="submit" class="page-link">1</button></form></li>
+<li class="page-item
+"><form action="htsearch2" method="post" class="inline"><input type="hidden" name="form" value="extended"><input type="hidden" name="wm" value="wrd"><input type="hidden" name="dt" value="range"><input type="hidden" name="q" value="automated writing evaluation validity"><input type="hidden" name="ul" value=""><input type="hidden" name="wf" value="4BFF"><input type="hidden" name="s" value="R"><input type="hidden" name="np" value="1"><button type="submit" value="submit" class="page-link">2</button></form></li>
+</ul>
+   </nav>
+     
+<script>
+function loadDoc(url,cfunc) {
+  var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+    if (xhttp.readyState == 4 && xhttp.status == 200) {
+      cfunc(xhttp);
+    }
+  };
+  xhttp.open("GET", url, true);
+  xhttp.send();
+}
+function myFunction(xhttp) {
+  document.getElementById("response").innerHTML = xhttp.responseText;
+}
+    function getCookie(name) {
+        var cookies = document.cookie.split(';');
+        for (var i in cookies) {
+            var cookie = cookies[i].trim().split('=');
+            if (cookie[0] == name) {
+                return cookie[1];
+            }
+        }
+        return null;
+    }
+
+function checkCookie() {
+    var content = getCookie("MyIDEAS");
+    if (content) {
+         document.getElementById("myideas").innerHTML = `<A HREF="/cgi-bin/myideas.cgi" data-bs-toggle="tooltip" data-toggle="tooltip" title="MyIDEAS: logged in"><i class="bi bi-lightbulb"></i> <i class="bi bi-unlock"></i>&nbsp;</a> <A HREF="/cgi-bin/myideas.cgi#myikeywords"><i class="bi bi-search"></i>&nbsp;My&nbsp;keywords</A> <!--<i class="bi bi-search-heart"></i>&nbsp; <span onclick="loadDoc('https://ideas.repec.org/cgi-bin/myiadd2.cgi',myFunction);return true;">follow this keyword search (disabled)</span>--> <span id="response"></span>`;
+    } else {
+         document.getElementById("myideas").innerHTML = `<A HREF="/cgi-bin/myideas.cgi" data-bs-toggle="tooltip" data-toggle="tooltip" title="MyIDEAS: not logged in"><i class="bi bi-lightbulb"></i> <i class="bi bi-lock"></i>&nbsp;</a> <A HREF="/cgi-bin/myideas.cgi#myikeywords"><i class="bi bi-search"></i>&nbsp;My&nbsp;keywords</A> <!--<i class="bi bi-search-heart"></i>&nbsp; <span onclick="loadDoc('https://ideas.repec.org/cgi-bin/myiadd2.cgi',myFunction);return true;">follow this keyword search (disabled)</span>--> <span id="response"></span>`;
+    }
+}
+</script>
+</div>
+
+
+</div>
+</div>
+<div id="footer" class="row d-print-none">
+  <div class="col-sm-6 more-services">
+    <h3 style="border-bottom: 1px solid #111; position: relative; right:0.9em;">More services and features</h3>
+    <div class="row">
+      <div class="list-group col">
+        <a href="/cgi-bin/myideas.cgi" class="list-group-item">
+          <h4 class="list-group-item-heading">MyIDEAS</h4>
+          <p class="list-group-item-text">Follow serials, authors, keywords &amp; more</p>
+        </a>
+        <a href="http://nep.repec.org/" class="list-group-item" target="_blank">
+          <h4 class="list-group-item-heading">New papers by email <i class="bi bi-box-arrow-up-right"></i></h4>
+          <p class="list-group-item-text">Subscribe to new additions to RePEc</p>
+        </a>
+        <a href="http://authors.repec.org/" class="list-group-item">
+          <h4 class="list-group-item-heading">Author registration</h4>
+          <p class="list-group-item-text">Public profiles for Economics researchers</p>
+        </a>
+        <a href="http://ideas.repec.org/top/" class="list-group-item">
+          <h4 class="list-group-item-heading">Rankings</h4>
+          <p class="list-group-item-text">Various research rankings in Economics</p>
+        </a>
+        <a href="http://genealogy.repec.org/" class="list-group-item">
+          <h4 class="list-group-item-heading">RePEc Genealogy</h4>
+          <p class="list-group-item-text">Who was a student of whom, using RePEc</p>
+        </a>
+        <a href="http://biblio.repec.org/" class="list-group-item">
+          <h4 class="list-group-item-heading">RePEc Biblio</h4>
+          <p class="list-group-item-text">Curated articles &amp; papers on economics topics</p>
+        </a>
+      </div>
+      <div class="list-group col">
+        <a href="http://mpra.ub.uni-muenchen.de/" class="list-group-item" target="_blank">
+          <h4 class="list-group-item-heading">MPRA  <i class="bi bi-box-arrow-up-right"></i></h4>
+          <p class="list-group-item-text">Upload your paper to be listed on RePEc and IDEAS</p>
+        </a>
+        <a href="https://nep.repec.org/" class="list-group-item" target="_blank">
+          <h4>New papers by email <i class="bi bi-box-arrow-up-right"></i></h4>
+          <p class="list-group-item-text">Subscribe to new additions to RePEc</p>
+        </a>
+        <a href="http://econacademics.org/" class="list-group-item">
+          <h4 class="list-group-item-heading">EconAcademics</h4>
+          <p class="list-group-item-text">Blog aggregator for economics research</p>
+        </a>
+        <a href="http://plagiarism.repec.org/" class="list-group-item">
+          <h4 class="list-group-item-heading">Plagiarism</h4>
+          <p class="list-group-item-text">Cases of plagiarism in Economics</p>
+        </a>
+      </div>
+      </div>
+    </div>
+    <div class="col-sm more-services">
+      <h3 style="border-bottom: 1px solid #111;">About RePEc</h3>
+      <div class="list-group col">
+        <a href="http://repec.org/" class="list-group-item" target="_blank">
+          <h4 class="list-group-item-heading">RePEc home <i class="bi bi-box-arrow-up-right"></i></h4>
+          <p class="list-group-item-text">Initiative for open bibliographies in Economics</p>
+        </a>
+        <a href="http://blog.repec.org/" class="list-group-item" target="_blank">
+          <h4 class="list-group-item-heading">Blog <i class="bi bi-box-arrow-up-right"></i></h4>
+          <p class="list-group-item-text">News about RePEc</p>
+        </a>
+        <a href="/help.html" class="list-group-item" target="_blank">
+          <h4 class="list-group-item-heading">Help/FAQ <i class="bi bi-box-arrow-up-right"></i></h4>
+          <p class="list-group-item-text">Questions about IDEAS and RePEc</p>
+        </a>
+        <a href="/team.html" class="list-group-item">
+          <h4 class="list-group-item-heading">RePEc team</h4>
+          <p class="list-group-item-text">RePEc volunteers</p>
+        </a>
+        <a href="/archives.html" class="list-group-item">
+          <h4 class="list-group-item-heading">Participating archives</h4>
+          <p class="list-group-item-text">Publishers indexing in RePEc</p>
+        </a>
+        <a href="https://ideas.repec.org/privacy.html" class="list-group-item" target="_blank">
+          <h4 class="list-group-item-heading">Privacy statement <i class="bi bi-box-arrow-up-right"></i></h4>
+        </a>
+      </div>
+    </div>
+    <div class="col-sm more-services">
+      <h3 style="border-bottom: 1px solid #111;">Help us</h3>
+      <div class="list-group col">
+        <a href="/corrections.html" class="list-group-item">
+          <h4 class="list-group-item-heading">Corrections</h4>
+          <p class="list-group-item-text">Found an error or omission?</p>
+        </a>
+        <a href="/volunteers.html" class="list-group-item">
+          <h4 class="list-group-item-heading">Volunteers</h4>
+          <p class="list-group-item-text">Opportunities to help RePEc</p>
+        </a>
+        <a href="/participate.html" class="list-group-item">
+          <h4 class="list-group-item-heading">Get papers listed</h4>
+          <p class="list-group-item-text">Have your research listed on RePEc</p>
+        </a>
+        <a href="/stepbystep.html" class="list-group-item">
+          <h4 class="list-group-item-heading">Open a RePEc archive</h4>
+          <p class="list-group-item-text">Have your institution's/publisher's output listed on RePEc</p>
+        </a>
+        <a href="/getdata.html" class="list-group-item">
+          <h4 class="list-group-item-heading">Get RePEc data</h4>
+          <p class="list-group-item-text">Use data assembled by RePEc</p>
+        </a>
+      </div>
+    </div>
+</div>
+<div class="row">
+  <div class="col-12" style="text-align: center; padding-top: 10px;">
+    <div id="sidelogos">
+      <a href="https://ideas.repec.org/">IDEAS</a> is a <a href="http://repec.org/" target="_blank">RePEc <i class="bi bi-box-arrow-up-right"></i></a> service. RePEc uses bibliographic data supplied by the respective
+ publishers.
+    </div>
+  </div>
+
+
+</div>
+</div>
+
+
+<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+<script type="module" src="https://cdn.jsdelivr.net/npm/@justinribeiro/share-to-mastodon@0.2.0/dist/share-to-mastodon.js">
+<script src="/css/ideas.js"></script>
+<script>
+function myFunction(xhttp) {
+  document.getElementById("response").innerHTML = xhttp.responseText;
+}
+$(document).ready(function() {
+    // show active tab on reload
+    if (location.hash !== '') $('a[href="' + location.hash + '"]').tab('show');
+
+    // remember the hash in the URL without jumping
+//    $('a[data-toggle="tab"]').on('shown.bs.tab', function(e) {
+//       if(history.pushState) {
+//            history.pushState(null, null, '#'+$(e.target).attr('href').substr(1));
+//       } else {
+//            location.hash = '#'+$(e.target).attr('href').substr(1);
+//       }
+//    });
+});
+</script>
+

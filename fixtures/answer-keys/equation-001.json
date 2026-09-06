@@ -1,0 +1,24 @@
+{
+  "fixture_id": "F-EQUATION-001",
+  "answer_key_version": "1.0",
+  "expected_objects": [
+    {
+      "object_type": "equation",
+      "environment": "equation",
+      "contains": "a^2 + b^2 = c^2",
+      "has_label": true
+    },
+    {
+      "object_type": "equation",
+      "environment": "equation*",
+      "contains": "\\int_{0}^{\\infty}",
+      "has_label": false
+    },
+    {
+      "object_type": "label",
+      "label_name": "eq:pythagorean"
+    }
+  ],
+  "expected_abstention": null,
+  "minimum_object_count": 3
+}

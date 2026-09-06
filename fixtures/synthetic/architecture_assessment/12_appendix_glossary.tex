@@ -1,0 +1,55 @@
+\section{Appendix A: Glossary}
+
+\textbf{At-least-once delivery}: A message delivery guarantee where each message is delivered one or more times. Recipients must be idempotent to handle duplicates correctly.
+
+\textbf{Availability zone}: An isolated failure domain within a cloud region, typically a separate physical datacenter with independent power and networking.
+
+\textbf{Bounded context}: A boundary within which a domain model is consistent and unified. In domain-driven design, each bounded context owns its data and exposes a stable interface.
+
+\textbf{Bulkhead pattern}: An isolation strategy that partitions resources so that failure in one partition cannot exhaust resources needed by others.
+
+\textbf{CAP theorem}: The formal result that a distributed system cannot simultaneously guarantee consistency, availability, and partition tolerance.
+
+\textbf{Circuit breaker}: A stability pattern that stops attempting failing operations after a threshold, preventing cascading failures.
+
+\textbf{CloudEvents}: An open specification for describing event data in a common format, enabling interoperability across services and platforms.
+
+\textbf{Command Query Responsibility Segregation (CQRS)}: An architectural pattern separating write operations (commands) from read operations (queries), often with different data models for each.
+
+\textbf{Compensating transaction}: An operation that semantically undoes the effect of a prior operation, used in saga-based distributed transactions.
+
+\textbf{Consensus algorithm}: A protocol enabling distributed nodes to agree on a single value despite failures, formalized by Paxos and Raft.
+
+\textbf{Consistent hashing}: A distribution scheme that minimizes remapping when nodes are added or removed, reducing disruption during scaling.
+
+\textbf{CQRS}: See Command Query Responsibility Segregation.
+
+\textbf{Distributed tracing}: Instrumentation that tracks requests across service boundaries, correlating operations into complete execution paths.
+
+\textbf{Error budget}: The permitted amount of downtime or errors within an SLO period, calculated as (1 - SLO) × time period.
+
+\textbf{Event sourcing}: A persistence pattern where state changes are stored as a sequence of events rather than overwriting current state.
+
+\textbf{Eventual consistency}: A consistency model guaranteeing that, absent new writes, all replicas converge to identical state within a bounded time.
+
+\textbf{Idempotency}: The property that applying an operation multiple times produces the same result as applying it once.
+
+\textbf{Linearizable consistency}: The strongest consistency model, where operations appear to occur atomically at a single point in time.
+
+\textbf{Mean time to recovery (MTTR)}: The average time from incident detection to full service restoration.
+
+\textbf{Partition}: A network failure that prevents some nodes from communicating while each partition remains internally connected.
+
+\textbf{Projection}: In CQRS, a read model built by consuming events from the write-side event store.
+
+\textbf{Raft}: A consensus algorithm designed for understandability, widely used in distributed systems for configuration agreement.
+
+\textbf{Saga}: A pattern for managing distributed transactions as a sequence of local transactions with compensating actions for rollback.
+
+\textbf{Service mesh}: Infrastructure layer managing service-to-service communication, typically providing observability, traffic control, and security features.
+
+\textbf{Strangler pattern}: A migration strategy that incrementally replaces a legacy system by routing traffic to new implementations while the old system remains operational.
+
+\textbf{Two-phase commit}: A distributed transaction protocol ensuring all participants commit or all abort, requiring blocking and vulnerable to coordinator failure.
+
+\textbf{Vector clock}: A logical clock structure enabling detection of causal relationships and concurrent operations in distributed systems.

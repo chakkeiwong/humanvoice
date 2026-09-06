@@ -1,0 +1,244 @@
+\chapter{Evidence, promise, and limits}
+\label{ch:evidence}
+
+Imagine a funder asking a simple question after reading the literature: what,
+exactly, may this project promise? The studies can support bounded assistance,
+located feedback, protected comparison, and direct reader evaluation. They do
+not yet show that this combination improves an expert technical document. The
+review therefore follows the decisions the product must make rather than the
+chronology of the field.
+
+The search has identified sources and a reproducible protocol. After four
+missing foundations were added to the test set, the latest online run recovered
+fifteen of eighteen known items through broad searches and fourteen through
+deliberately indirect challenge queries. The broad-recall gate passes; the
+challenge gate does not. A provenance-complete RePEc/IDEAS specialist slice is
+also recorded, and Crossref resolves all twenty-six DOI-bearing bibliography
+rows and all fifteen DOI-bearing load-bearing evidence rows. The scholarly job
+is not finished: independent screening, full-text appraisal, held-out package
+benchmarks, and external review remain incomplete. The passages that follow
+say what each source can bear at its present inspection depth. That boundary
+narrows the claim; it does not prevent the available evidence from changing
+the design.
+
+Figure~\ref{fig:evidence-ladder} places the present literature below the
+held-out feasibility and comparative evidence that Humanvoice must still earn.
+Each rung supports a stronger claim, and no lower rung can substitute for the
+one above it.
+
+\hvFigureEvidenceLadder
+
+\section{Does assistance save time or improve work?}
+
+The positive case for generative assistance is real but heterogeneous. In a
+controlled experiment, access to ChatGPT reduced the time required for some
+professional writing tasks and improved external assessments of the resulting
+work \citep{noy2023experimental}. A large field study of customer-support
+workers found productivity gains, with larger benefits for less-experienced
+workers and smaller or absent gains for the most experienced workers
+\citep{brynjolfsson2025work}. A workplace experiment across firms similarly
+reports time savings in email, while leaving the composition of tasks largely
+unchanged \citep{dillon2025shifting}.
+
+These results justify treating review burden as an economic outcome rather than
+assuming that any fluent assistance is valuable. They do not transfer directly
+to technical proposals. A proposal reader must decide whether its mechanism,
+evidence, and uncertainty warrant action. That decision can sit outside the model's capability
+frontier. In a field experiment with knowledge workers, assistance improved
+speed and quality on tasks inside that frontier but reduced correctness on
+tasks outside it, even when the recommendations looked useful
+\citep{dellacqua2026jagged}.
+
+In the pilot, authors and readers will record their time, feedback rounds, and
+substantive errors together. The evaluation lead will split those observations
+by writer experience and task class instead of hiding them inside one average.
+That is the product hypothesis in its useful form: Humanvoice may reduce wasted
+review, even when it does not make every writing task faster.
+
+\section{Can feedback improve the next draft?}
+
+Writing feedback is the closest literature to the proposed intervention, and
+its limits are clear. In generated stories, language models produced specific,
+reasonable comments but often missed the central problem or misjudged criticism
+versus encouragement \citep{rashkin2025story}. A simulated-revision study treats
+the link between a comment and a useful next draft as empirical
+\citep{nair2024closing}. Comparisons with human resources find potential under
+detailed rubrics, but agreement varies with writer proficiency
+\citep{behzad2024feedback}.
+
+The LAMP work provides a useful magnitude check. Professional writers supplied
+span-level edits to generated passages across categories such as cliche,
+redundancy, poor sentence structure, missing specificity, and tense
+inconsistency. A span detector reached only moderate precision, and expert
+agreement was itself imperfect; edited generated text nevertheless ranked above
+raw generated text in blind comparisons \citep{chakrabarty2024salvage}. The
+result does not say that a detector can edit safely. It says that localized
+diagnosis followed by human-controlled editing is a plausible workflow, and
+that the workflow must tolerate disagreement.
+
+Humanvoice takes three choices from this evidence. A finding includes a source
+span and context, so an author can disagree with it. A substantive finding is
+an editorial question, not an automatic operation. Agreement between a model
+and a reference label is one diagnostic; the outcomes are the resulting
+revision and the reader's response.
+
+\section{What makes technical writing comprehensible?}
+
+When a reader cannot tell what a technical term does, the problem is usually
+the relation around the term, not the term alone. That is why the relevant
+scholarship is broader than generative-AI studies. Longitudinal analysis finds
+that scientific texts have become harder to read over time, while specialized
+terminology is associated with fewer citations in some scientific fields
+\citep{plavensigray2017readability,martinez2021terminology}. These findings do
+not imply that technical terms should be removed. They imply that a document
+must make its actors, mechanisms, and purpose visible around the terms.
+
+Readability is multidimensional. Coh-Metrix and related corpus work distinguish
+surface features from cohesion, referential clarity, syntactic structure, and
+knowledge demands \citep{graesser2004cohmetrix,crossley2022clear}. Register
+varies systematically between speech and writing, disciplines, and genres
+\citep{biber1988variation}. A technical proposal should therefore be compared
+with an appropriate professional corpus and reader task, not optimized toward
+a universal readability number.
+
+That finding gives the pilot a concrete reader task. Ask whether the problem,
+mechanism, evidence, qualification, and action can be recovered. A
+sentence-length or lexical statistic can point to a passage, but it cannot
+answer those questions. Humanvoice therefore protects domain terminology and
+looks instead for a missing relation, an unintroduced actor, or an avoidable
+burden on the reader.
+
+\section{What happens to trust, diversity, and integrity?}
+
+Assistance can improve an individual output while changing the distribution of
+outputs. In a controlled writing experiment, instruction-tuned assistance
+reduced lexical and content diversity across writers; the model-contributed
+text accounted for most of the convergence \citep{padmakumar2024writing}.
+Related creative-writing work reports higher individual scores alongside lower
+collective diversity \citep{doshi2024generative}. Recursive training on
+synthetic text supplies a mechanism for why this matters: linguistic diversity
+can decline across generations \citep{guo2023curious}.
+
+Disclosure also changes the reader's judgment. Experiments on argumentative and
+creative writing report heterogeneous responses, including lower assessments in
+some conditions, when assistance is disclosed \citep{li2024disclosure}. Citation
+reliability is separate: language-model introductions have produced nonexistent
+or incorrect citations at material rates across disciplines
+\citep{mugaanyi2024citation}. A valid identifier does not establish support.
+
+Publication guidance places responsibility in the same location as the
+product. ICMJE's recommendations keep accuracy, integrity, originality,
+citations, and disclosure with human authors \citep{icmje2025ai}. NIST's AI
+Risk Management Framework provides a useful vocabulary for validity,
+reliability, privacy, transparency, and accountability \citep{nist2023airmf}.
+Humanvoice translates those principles into concrete objects: a source
+snapshot, a protected-span record, a citation verification queue, and a named
+human decision. It does not treat a model output as an authorship or quality
+certificate.
+
+\section{Can a model judge the document?}
+
+Model-based evaluation is useful as a screening instrument, but it is not a
+substitute for the reader whose decision matters. The LLM-as-a-judge literature
+shows sensitivity to order, verbosity, and model family
+\citep{zheng2023judging,dubois2024length}. Models can also favor their own
+generations \citep{panickssery2024llm}. These biases can change the writing. A
+judge trained to reward a familiar style can push the product
+toward the very regularity it is meant to diagnose.
+
+Interaction studies make the missing unit of analysis visible. CoAuthor and
+Wordcraft show that writing with a model is an interaction in which suggestion,
+selection, editing, and rejection matter, not just a comparison of final texts
+\citep{lee2022coauthor,yuan2022wordcraft}. In-the-wild traces identify
+recurring behaviors such as revising intent, exploring alternatives, asking
+questions, adjusting style, and injecting content \citep{mysore2025paths}. A
+useful evaluation record must retain enough of that path to explain why burden
+or quality changed.
+
+If the pilot uses a model judge, the evaluation lead will first calibrate it on
+human labels, randomize presentation, control length, and check another model
+family. The named reader still accepts or rejects the document. The protocol
+does not assume that human judgment is perfectly consistent; it records the
+disagreement as part of the result.
+
+\section{Why authorship detection is not the product}
+
+Detection research is relevant as a boundary condition. Probability-curvature
+and cross-model methods demonstrate that generated text can be distinguishable
+under benchmark conditions
+\citep{gehrmann2019gltr,mitchell2023detectgpt,bao2024fastdetect,hans2024binoculars}.
+The failure modes are more important for this proposal. Detectors have produced
+high false-positive rates for non-native English writers and formal prose, and
+paraphrase can defeat several detector families
+\citep{liang2023detectors,weberwulff2023testing,krishna2023paraphrasing,
+sadasivan2024reliably}.
+
+Watermarks are a provenance mechanism rather than a general detector.
+Provider-side watermarking can insert a statistical signal when a cooperating
+model generates the text \citep{kirchenbauer2023watermark}; it does not turn
+arbitrary edited prose into a reliable authorship verdict. Humanvoice therefore
+records assistance at the time it occurs and keeps watermark verification, if
+an institution requires it, separate from judgments about clarity and quality.
+
+Population-level monitoring may be statistically meaningful in a narrowly
+defined corpus, as in mixture estimates of AI-modified review text
+\citep{liang2024monitoring}. That is a different question from whether one
+document is clear or whether one author acted properly. Humanvoice excludes
+per-document authorship verdicts and keeps any future population instrument
+outside the revision path.
+
+Figure~\ref{fig:detection-boundary} turns that distinction into an interface
+rule. An aggregate research instrument must not acquire a single-document
+button later through convenience or product pressure.
+
+\hvFigureDetectionBoundary
+
+\section{The evidence-to-design synthesis}
+
+\begin{table}[H]
+\centering
+\small
+\begin{tabularx}{\textwidth}{@{}p{0.24\textwidth}L p{0.28\textwidth}@{}}
+\toprule
+Evidence question & What the evidence supports & Product consequence \\
+\midrule
+Does assistance save work? & Effects are task- and worker-dependent; some
+frontier failures reduce correctness. & Measure reader time and meaning errors,
+and report heterogeneous outcomes. \\
+Can feedback improve revision? & Local comments can help, but central defects
+and priority are often missed; expert agreement is imperfect. & Locate findings,
+show context, and leave repair and acceptance with a human. \\
+What is comprehensible? & Cohesion, referential clarity, genre, and knowledge
+demand matter more than one surface formula. & Use genre-aware diagnostics and
+a direct purpose-and-action reader rubric. \\
+What risks accompany assistance? & Diversity, disclosure, citation reliability,
+and provenance can change even when prose improves. & Protect meaning-bearing
+objects, verify citation identity and support, and record disclosure. \\
+Can a model judge? & Judges vary with order, length, family, and self-preference. &
+Use model evaluation only as calibrated screening; never as acceptance. \\
+\bottomrule
+\end{tabularx}
+\caption{The literature changes the design rather than merely decorating it with
+citations.}
+\label{tab:evidence-design}
+\end{table}
+
+\section{The questions still open}
+
+No study in the current record answers whether Humanvoice reduces feedback
+rounds for expert technical documents, whether authors will tolerate its
+findings, or whether the protected comparison saves more attention than it
+consumes. Those are project hypotheses. The team must test them with a
+comparator, a reader protocol, and a corpus with independent labels.
+
+The current evidence status is intentionally visible but compact. Of fifteen
+release gates, nine pass. The six blockers are challenge-query recall,
+independent screening by two people, full-text claim anchors, design-specific
+appraisal, held-out package effectiveness, and external review. Specialist
+coverage and bibliographic DOI identity have passed for the bounded records
+described above; neither pass turns an abstract-level record into a fully
+appraised study. The proposal
+therefore uses phrases such as "supports the design" and "open question" rather
+than "proves" or "validated." Completing the evidence work is part of the
+implementation program; it is not a reason to put search administration in
+front of the product story.

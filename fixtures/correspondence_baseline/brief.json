@@ -1,0 +1,18 @@
+{
+  "document_type": "technical_report",
+  "target_word_count": 3000,
+  "target_sections": 8,
+  "purpose": "Correspondence verification baseline test with 50 equations and protected objects",
+  "scope": "Complete technical document covering physical constants, equations, and mathematical relationships",
+  "audience": "Technical readers with physics/mathematics background",
+  "reader_role": "researcher",
+  "decision_type": "technical_evaluation",
+  "time_available_minutes": 60,
+  "prior_knowledge": "Advanced physics and mathematics",
+  "success_criteria": "Reader can verify all equations and understand mathematical relationships",
+  "constraints": [
+    "Preserve all 50 equations with labels",
+    "Maintain all cross-references",
+    "Keep all 5 tables intact"
+  ]
+}

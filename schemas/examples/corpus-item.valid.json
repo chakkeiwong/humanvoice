@@ -1,0 +1,15 @@
+{
+  "record_type": "CorpusItem",
+  "schema_version": "HV-SCHEMA-1.0",
+  "record_id": "corpus-synthetic-001",
+  "run_id": "rights-001",
+  "created_at": "2026-08-26T00:00:00Z",
+  "source_path_or_url": "fixtures/synthetic/example.tex",
+  "source_hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+  "owner": "Humanvoice project",
+  "license_or_permission": "project-owned synthetic fixture",
+  "permitted_use": "engineering and public benchmark",
+  "redistribution_status": "cleared-public",
+  "retention_class": "project-source",
+  "consent_date": null
+}

@@ -1,0 +1,74 @@
+{
+  "profile_id": "HV-INFERENCE-API-2026-08-28",
+  "profile_version": "2.0",
+  "profile_status": "ready",
+  "g2_readiness": "ready",
+  "contract_version": "1.1.0",
+  "runtime": {
+    "type": "claude-api",
+    "provider": "Anthropic",
+    "endpoint": "https://api.anthropic.com/v1/messages",
+    "sdk": "anthropic",
+    "sdk_version_pin": "recorded in requirements-dev.txt",
+    "auth": "ANTHROPIC_API_KEY environment variable; never written to a record or log"
+  },
+  "model": {
+    "version_string": "claude-opus-5",
+    "family": "claude-opus-5",
+    "context_length": 200000,
+    "max_output_tokens": 2000,
+    "note": "Version string is the pinned identity for behavioral validation. Anthropic's claude-opus-5 model ID does not include date suffix. Any change requires re-validation on held-out fixtures per contract change_rule."
+  },
+  "sampling": {
+    "temperature": 0.0,
+    "rationale": "Lowest-variance sampling for repeatable structure. Reproducibility is behavioral, not bitwise: the same brief and model version satisfy the same declared properties, but token sequences may differ."
+  },
+  "prompt_template": {
+    "template_id": "HV-CRITIC-V1",
+    "template_path": "security/prompt_template_critic.txt",
+    "template_sha256": "9203411fa7aff6ff124cf6da2711ea561db874ee9c54134733d4c47785a79d74",
+    "note": "Template hash is still required before invocation under contract 1.1.0."
+  },
+  "reproducibility": {
+    "level": "behavioral",
+    "declared_properties": [
+      "schema conformance against PLAN_SCHEMA, DRAFT_SCHEMA, REPAIR_SCHEMA",
+      "abstention when evidence is missing or contradictory",
+      "structural bounds: word budgets and the three-cycle repair cap",
+      "register compliance with the brief",
+      "mutation response: graceful abstention or downstream-detectable failure on corrupted input"
+    ],
+    "limitation_disclosure": "An auditor can re-run the property suite against the declared model version. An auditor cannot cryptographically verify the token sequence of a historical run."
+  },
+  "isolation": {
+    "model_output_authority": "none",
+    "model_output_handling": "delimited JSON validated against the target schema before use; validation failure produces abstention, never execution",
+    "network": "API egress to the declared endpoint only; parser and compiler remain network-denied",
+    "parser_compiler_sandbox": "bubblewrap, unchanged from contract 1.0.0",
+    "secrets": "API key read from the environment; excluded from run manifests, findings, and CLI stdout",
+    "rationale": "T4 authority boundary is unchanged. T3 now permits logged API egress for prose generation while keeping untrusted-code execution paths isolated."
+  },
+  "budget": {
+    "max_input_tokens_per_unit": 12000,
+    "max_output_tokens_per_unit": 2000,
+    "max_document_input_tokens": 250000,
+    "max_document_output_tokens": 50000,
+    "timeout_seconds": 300,
+    "on_exceeded": "fail explicitly with exit code 2 and record the limit; never continue unbounded"
+  },
+  "local_fallback": {
+    "status": "available but not the main path",
+    "runtime": "llama.cpp at commit 539f24529bdf99e0baefd54fefff1660034bfe7b",
+    "executable": "/tmp/llama.cpp/build/bin/llama-cli",
+    "model_artifact": "/tmp/models/Qwen2.5-3B-Instruct-Q4_K_M.gguf",
+    "artifact_sha256": "9c9f56a391a3abbd5b89d0245bf6106081bcc3173119d4229235dd9d23253f94",
+    "grammars": ["schemas/plan.gbnf", "schemas/draft.gbnf", "schemas/repair.gbnf"],
+    "note": "Retained for offline work. Prose quality at 3B is not publishable and no release claim may rest on it."
+  },
+  "verification": {
+    "recorded_at": "2026-08-28T00:00:00+08:00",
+    "result": "profile recorded; live property validation pending",
+    "observation": "Contract 1.1.0 prerequisites recorded: model version string pinned, prompt template hashed, budget caps declared, secret handling declared. No API invocation has been validated against the property suite yet.",
+    "next_action": "Implement the API adapter and the property suite, then record the first validation run."
+  }
+}

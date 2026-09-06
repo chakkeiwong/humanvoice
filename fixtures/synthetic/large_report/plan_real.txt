@@ -1,0 +1,6 @@
+Loading model configuration...
+Generating blueprint with claude-opus-5...
+Blueprint generated: 10 sections, 5100 words
+Output: /home/ubuntu/workspace/humanvoice/.humanvoice/runs/run-20260829-091358/blueprint.json
+Tokens: 475 input / 864 output
+Request ID: msg_ciu4FiK6BF4jqrxPEvF7GGaj

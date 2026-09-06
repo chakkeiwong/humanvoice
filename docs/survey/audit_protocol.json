@@ -1,0 +1,842 @@
+{
+  "protocol_id": "HV-AUDIT-2026-08-22",
+  "title": "Humanvoice literature and software audit protocol",
+  "cutoff_date": "2026-08-25",
+  "review_type": "systematic mapping review plus structured software landscape audit",
+  "purpose": "Produce an auditable evidence base for the humanvoice implementation proposal. The audit must distinguish discovery, screening, evidence extraction, and product decisions.",
+  "implementation_contract": "schemas/implementation_contract.json",
+  "rights_manifest": "docs/survey/evidence/corpus_rights_manifest.json",
+  "questions": [
+    {
+      "id": "Q1",
+      "text": "What empirically observed failure modes occur in AI-assisted scholarly and professional writing?"
+    },
+    {
+      "id": "Q2",
+      "text": "Which human, model, or workflow interventions improve reader-perceived quality, factuality, comprehension, or revision efficiency?"
+    },
+    {
+      "id": "Q3",
+      "text": "Which evaluation methods and metrics have evidence of validity against human judgments?"
+    },
+    {
+      "id": "Q4",
+      "text": "What effects on agency, ownership, diversity, convergence, and professional practice must the product account for?"
+    },
+    {
+      "id": "Q5",
+      "text": "What software components are available, maintained, extensible, privacy-compatible, and measurable for the implementation?"
+    },
+    {
+      "id": "Q6",
+      "text": "What evidence is strong enough to justify each humanvoice product requirement and what remains uncertain?"
+    }
+  ],
+  "literature": {
+    "sources": [
+      {
+        "id": "openalex",
+        "kind": "openalex",
+        "endpoint": "https://api.openalex.org/works",
+        "per_page": 50,
+        "queries": [
+          "generative AI writing",
+          "large language model academic writing",
+          "human AI collaborative writing",
+          "LLM writing feedback",
+          "ChatGPT scientific writing",
+          "generative AI prose quality",
+          "AI-assisted writing evaluation",
+          "AI writing economics",
+          "generative AI revision feedback",
+          "AI assisted essay revision",
+          "human AI co-writing agency ownership",
+          "language model writing feedback evaluation",
+          "generative AI workplace writing productivity",
+          "AI academic writing systematic review",
+          "AI writing disclosure authorship",
+          "LLM judge writing quality",
+          "AI writing citation accuracy",
+          "writing assistance collective diversity",
+          "AI writing reader perception"
+          ,"language model simulated student revisions"
+          ,"PRISMA S reporting literature searches"
+          ,"generative AI workplace email field experiment"
+          ,"large language models creative diversity writing"
+          ,"generative artificial intelligence productivity experiment college professionals"
+          ,"generative AI creativity collective diversity experiment"
+          ,"ChatGPT generated scientific abstracts human reviewers detection"
+          ,"human AI co-writing user demands writing process"
+          ,"systematic review AI assisted academic writing outcomes measurement"
+          ,"generative AI automated writing evaluation validity systematic review"
+          ,"LLM assisted writing in the wild collaboration behavior"
+          ,"generative AI workplace conversational assistant productivity heterogeneity"
+          ,"interaction aware co-writing editing cost acceptance"
+        ]
+      },
+      {
+        "id": "crossref",
+        "kind": "crossref",
+        "endpoint": "https://api.crossref.org/works",
+        "rows": 50,
+        "queries": [
+          "generative AI writing",
+          "large language model academic writing",
+          "human AI collaborative writing",
+          "LLM writing feedback",
+          "ChatGPT scientific writing",
+          "AI-assisted writing evaluation",
+          "AI writing productivity",
+          "AI writing economics",
+          "generative AI revision feedback",
+          "AI assisted essay revision",
+          "human AI co-writing agency ownership",
+          "language model writing feedback evaluation",
+          "generative AI workplace writing productivity",
+          "AI academic writing systematic review",
+          "AI writing disclosure authorship",
+          "LLM judge writing quality",
+          "AI writing citation accuracy",
+          "writing assistance collective diversity",
+          "AI writing reader perception",
+          "generative artificial intelligence productivity experiment college professionals",
+          "generative AI creativity collective diversity experiment",
+          "ChatGPT generated scientific abstracts human reviewers detection",
+          "human AI co-writing user demands writing process"
+          ,"language model simulated student revisions"
+          ,"PRISMA S reporting literature searches"
+          ,"generative AI workplace email field experiment"
+          ,"large language models creative diversity writing"
+          ,"systematic review AI assisted academic writing outcomes measurement"
+          ,"generative AI automated writing evaluation validity systematic review"
+          ,"LLM assisted writing in the wild collaboration behavior"
+          ,"generative AI workplace conversational assistant productivity heterogeneity"
+          ,"interaction aware co-writing editing cost acceptance"
+        ]
+      }
+    ],
+    "domain_sources_to_add_manually": [
+      "EconLit",
+      "RePEc/IDEAS",
+      "NBER",
+      "SSRN",
+      "ACM Digital Library",
+      "ACL Anthology",
+      "IEEE Xplore",
+      "Web of Science or Scopus, if licensed"
+    ],
+    "public_export_sources": [
+      {
+        "id": "acl-anthology",
+        "name": "ACL Anthology",
+        "kind": "public-bibliography",
+        "url": "https://aclanthology.org/anthology.bib.gz",
+        "required_metadata": ["source_url", "retrieved_at", "sha256", "query_or_filter"]
+      },
+      {
+        "id": "nber",
+        "name": "NBER",
+        "kind": "public-search-export",
+        "url": "https://www.nber.org/papers",
+        "api_url": "https://www.nber.org/api/v1/search",
+        "required_metadata": ["source_url", "retrieved_at", "query_or_filter", "record_url"]
+      },
+      {
+        "id": "iclr-proceedings",
+        "name": "ICLR Proceedings",
+        "kind": "public-search-export",
+        "url": "https://proceedings.iclr.cc/papers/search",
+        "required_metadata": ["source_url", "retrieved_at", "query_or_filter", "record_url"]
+      }
+    ],
+    "accepted_export_formats": ["csv", "json", "bib", "bibtex"],
+    "export_provenance_fields": ["database", "source_url", "retrieved_at", "sha256", "query_or_filter"],
+    "eligibility": {
+      "scope": "Evidence about AI-assisted human writing, writing feedback or evaluation, reader response, scholarly integrity, professional writing work, and implementation components needed by humanvoice.",
+      "languages": ["English"],
+      "date_policy": "No lower bound for foundational writing, readability, or evaluation methods; generative-AI evidence searched through the protocol cutoff date.",
+      "include": [
+        "Empirical studies with a human writer, editor, reviewer, reader, or workplace outcome relevant to Q1-Q4.",
+        "Empirical evaluations of generated writing, feedback, revision, citation reliability, or writing-quality judgments relevant to Q1-Q3.",
+        "Systematic, scoping, or mapping reviews with explicit search and selection methods relevant to Q1-Q4.",
+        "Foundational measurement studies needed to define or validate an evaluation construct.",
+        "Official reporting standards, governance policies, API documentation, and primary software documentation relevant to Q5-Q6."
+      ],
+      "exclude": [
+        {"code": "E1", "reason": "No AI-assisted writing, feedback, reader, or writing-evaluation construct."},
+        {"code": "E2", "reason": "Generation-only benchmark with no human-writing workflow or transferable evaluation result."},
+        {"code": "E3", "reason": "Opinion, commentary, marketing claim, or tutorial without reviewable methods; official policy and documentation excepted."},
+        {"code": "E4", "reason": "Detector-evasion or misconduct-enablement objective; detector validity studies may remain eligible for risk analysis."},
+        {"code": "E5", "reason": "Duplicate report of the same study without additional methods or results."},
+        {"code": "E6", "reason": "Insufficient bibliographic identity or inaccessible evidence for the claim proposed."},
+        {"code": "E7", "reason": "Non-English full text not assessable within the declared review resources."}
+      ],
+      "decision_values": ["include", "exclude", "uncertain"],
+      "screening_rule": "Two reviewers independently apply the same criteria; disagreements require a recorded adjudication and excluded full texts require one exclusion code."
+    },
+    "critical_appraisal": {
+      "required_for": ["primary-study", "field-experiment", "systematic-review"],
+      "design_tools": {
+        "randomized-experiment": "RoB 2 domains adapted to the reported outcome",
+        "nonrandomized-intervention": "ROBINS-I domains",
+        "systematic-review": "AMSTAR 2 plus search-reporting check",
+        "qualitative-study": "CASP qualitative checklist",
+        "mixed-methods-or-hci-study": "MMAT design-specific criteria",
+        "measurement-study": "construct validity, reliability, reference standard, and external validation checklist",
+        "primary-empirical-uncoded": "design must be classified before appraisal"
+      },
+      "status_values": ["pending", "completed-low-concern", "completed-some-concerns", "completed-high-concern", "not-applicable"],
+      "rule": "No empirical or review source may carry a release-ready load-bearing claim until its design, outcome anchor, limitations, and independent appraisal are recorded."
+    },
+    "known_items": [
+      {
+        "id": "KI-01",
+        "title": "Experimental evidence on the productivity effects of generative artificial intelligence",
+        "doi": "10.1126/science.adh2586",
+        "url": "https://ui.adsabs.harvard.edu/abs/2023Sci...381..187N/abstract",
+        "query": "Experimental evidence on the productivity effects of generative artificial intelligence"
+      },
+      {
+        "id": "KI-02",
+        "title": "CoAuthor: Designing a Human-AI Collaborative Writing Dataset for Exploring Language Model Capabilities",
+        "doi": "10.1145/3491102.3502030",
+        "url": "https://arxiv.org/abs/2201.06796",
+        "query": "CoAuthor Designing a Human-AI Collaborative Writing Dataset"
+      },
+      {
+        "id": "KI-03",
+        "title": "Closing the Loop: Learning to Generate Writing Feedback via Language Model Simulated Student Revisions",
+        "doi": "10.18653/v1/2024.emnlp-main.928",
+        "url": "https://aclanthology.org/2024.emnlp-main.928/",
+        "query": "Closing the Loop Learning to Generate Writing Feedback"
+      },
+      {
+        "id": "KI-04",
+        "title": "Co-Writing with AI, on Human Terms: Aligning Research with User Demands Across the Writing Process",
+        "doi": "10.1145/3757566",
+        "url": "https://arxiv.org/abs/2504.12488",
+        "query": "Co-Writing with AI on Human Terms"
+      },
+      {
+        "id": "KI-05",
+        "title": "Generative AI enhances individual creativity but reduces the collective diversity of novel content",
+        "doi": "10.1126/sciadv.adn5290",
+        "url": "https://doi.org/10.1126/sciadv.adn5290",
+        "query": "Generative AI enhances individual creativity but reduces collective diversity"
+      },
+      {
+        "id": "KI-06",
+        "title": "Comparing scientific abstracts generated by ChatGPT to real abstracts with detectors and blinded human reviewers",
+        "doi": "10.1038/s41746-023-00819-6",
+        "url": "https://www.nature.com/articles/s41746-023-00819-6",
+        "query": "Comparing scientific abstracts generated by ChatGPT real abstracts blinded human reviewers"
+      },
+      {
+        "id": "KI-07",
+        "title": "PRISMA-S: an extension to the PRISMA Statement for Reporting Literature Searches in Systematic Reviews",
+        "doi": "10.1186/s13643-020-01542-z",
+        "url": "https://www.prisma-statement.org/prisma-search",
+        "query": "PRISMA-S extension reporting literature searches systematic reviews"
+      },
+      {
+        "id": "KI-08",
+        "title": "Help Me Write a Story: Evaluating LLMs' Ability to Generate Writing Feedback",
+        "doi": "10.18653/v1/2025.acl-long.1254",
+        "url": "https://aclanthology.org/2025.acl-long.1254/",
+        "query": "LLM writing feedback evaluation corrupted stories",
+        "challenge_queries": ["Help Me Write a Story Evaluating LLMs Ability to Generate Writing Feedback"]
+      },
+      {
+        "id": "KI-09",
+        "title": "Shifting Work Patterns with Generative AI",
+        "doi": "10.3386/w33795",
+        "url": "https://www.nber.org/papers/w33795",
+        "query": "generative AI workplace writing randomized field experiment",
+        "challenge_queries": ["Shifting Work Patterns with Generative AI"],
+        "public_challenge_source": "nber"
+      },
+      {
+        "id": "KI-10",
+        "title": "Does writing with language models reduce content diversity?",
+        "url": "https://proceedings.iclr.cc/paper_files/paper/2024/hash/02dec8877fb7c6aa9a79f81661baca7c-Abstract-Conference.html",
+        "query": "writing language models content diversity InstructGPT",
+        "challenge_queries": ["Does Writing with Language Models Reduce Content Diversity"],
+        "public_challenge_source": "iclr-proceedings"
+      },
+      {
+        "id": "KI-11",
+        "title": "A systematic review of AI-assisted academic writing: Tools, measures, and effects",
+        "doi": "10.1016/j.jeap.2026.101726",
+        "url": "https://doi.org/10.1016/j.jeap.2026.101726",
+        "query": "AI assisted academic writing tools measures effects systematic review",
+        "challenge_queries": ["A systematic review of AI-assisted academic writing Tools measures and effects"]
+      },
+      {
+        "id": "KI-12",
+        "title": "Generative artificial intelligence for automated writing evaluation: A systematic review of trends, efficacy, and challenges",
+        "doi": "10.1016/j.asw.2026.101041",
+        "url": "https://doi.org/10.1016/j.asw.2026.101041",
+        "query": "generative AI automated writing evaluation efficacy validity systematic review",
+        "challenge_queries": ["Generative artificial intelligence for automated writing evaluation systematic review trends efficacy challenges"]
+      },
+      {
+        "id": "KI-13",
+        "title": "Prototypical Human-AI Collaboration Behaviors from LLM-Assisted Writing in the Wild",
+        "doi": "10.18653/v1/2025.emnlp-main.852",
+        "url": "https://aclanthology.org/2025.emnlp-main.852/",
+        "query": "LLM assisted writing in the wild collaboration behavior multi turn",
+        "challenge_queries": ["Prototypical Human AI Collaboration Behaviors from LLM Assisted Writing in the Wild"]
+      },
+      {
+        "id": "KI-14",
+        "title": "Generative AI at Work",
+        "doi": "10.1093/qje/qjae044",
+        "url": "https://doi.org/10.1093/qje/qjae044",
+        "query": "generative AI conversational assistant workplace productivity heterogeneous workers",
+        "challenge_queries": ["Generative AI at Work Brynjolfsson Li Raymond"]
+      },
+      {
+        "id": "KI-15",
+        "title": "The Science of Scientific Writing",
+        "url": "https://scholars.duke.edu/publication/881487",
+        "query": "The Science of Scientific Writing Gopen Swan",
+        "challenge_queries": ["Gopen Swan reader expectations scientific writing"]
+      },
+      {
+        "id": "KI-16",
+        "title": "Consequences of Erudite Vernacular Utilized Irrespective of Necessity: Problems with Using Long Words Needlessly",
+        "doi": "10.1002/acp.1178",
+        "url": "https://doi.org/10.1002/acp.1178",
+        "query": "Oppenheimer problems using long words needlessly",
+        "challenge_queries": ["Consequences of Erudite Vernacular Oppenheimer"]
+      },
+      {
+        "id": "KI-17",
+        "title": "A Watermark for Large Language Models",
+        "url": "https://proceedings.mlr.press/v202/kirchenbauer23a.html",
+        "query": "A Watermark for Large Language Models Kirchenbauer",
+        "challenge_queries": ["language model watermark provenance robustness Kirchenbauer"]
+      },
+      {
+        "id": "KI-18",
+        "title": "Can AI-Generated Text Be Reliably Detected?",
+        "url": "https://arxiv.org/abs/2303.11156",
+        "query": "Can AI Generated Text Be Reliably Detected Sadasivan",
+        "challenge_queries": ["AI generated text detection impossibility paraphrasing Sadasivan"]
+      }
+    ]
+  },
+  "software": {
+    "adoption_candidates": [
+      "sloptrim",
+      "Vale",
+      "textlint",
+      "LanguageTool",
+      "Textidote",
+      "LTeX+ LS",
+      "Pandoc",
+      "pylatexenc",
+      "unified-latex",
+      "TexSoup",
+      "latexdiff",
+      "jsPsych",
+      "latexmk",
+      "ChkTeX"
+    ],
+    "github_endpoint": "https://api.github.com/search/repositories",
+    "github_queries": [
+      "prose linter",
+      "LaTeX grammar checker",
+      "academic writing feedback",
+      "citation checker scholarly",
+      "readability text analysis",
+      "AI writing evaluation",
+      "LLM writing feedback",
+      "human AI collaborative writing",
+      "LaTeX parser AST",
+      "LaTeX document object model macro expansion",
+      "LaTeX incremental parser tree-sitter",
+      "scholarly PDF citation extraction",
+      "language model evaluation framework",
+      "local LLM inference"
+    ],
+    "registry_seeds": [
+      {
+        "name": "Vale",
+        "ecosystem": "binary",
+        "category": "prose-linter",
+        "url": "https://docs.vale.sh/",
+        "repository": "https://github.com/errata-ai/vale"
+      },
+      {
+        "name": "textlint",
+        "ecosystem": "npm",
+        "category": "prose-linter",
+        "url": "https://textlint.org/docs/",
+        "repository": "https://github.com/textlint/textlint"
+      },
+      {
+        "name": "LanguageTool",
+        "ecosystem": "java",
+        "category": "grammar-style",
+        "url": "https://languagetool.org/",
+        "repository": "https://github.com/languagetool-org/languagetool"
+      },
+      {
+        "name": "Textidote",
+        "ecosystem": "java",
+        "category": "latex-writing",
+        "url": "https://github.com/sylvainhalle/textidote",
+        "repository": "https://github.com/sylvainhalle/textidote"
+      },
+      {
+        "name": "proselint",
+        "ecosystem": "python",
+        "category": "prose-linter",
+        "url": "https://github.com/amperser/proselint",
+        "repository": "https://github.com/amperser/proselint"
+      },
+      {
+        "name": "write-good",
+        "ecosystem": "npm",
+        "category": "prose-linter",
+        "url": "https://github.com/btford/write-good",
+        "repository": "https://github.com/btford/write-good"
+      },
+      {
+        "name": "LTeX+ LS",
+        "ecosystem": "java",
+        "category": "latex-writing",
+        "url": "https://ltex-plus.github.io/ltex-plus/",
+        "repository": "https://github.com/ltex-plus/ltex-ls-plus"
+      },
+      {
+        "name": "Pandoc",
+        "ecosystem": "haskell",
+        "category": "document-conversion",
+        "url": "https://pandoc.org/",
+        "repository": "https://github.com/jgm/pandoc"
+      },
+      {
+        "name": "pylatexenc",
+        "ecosystem": "python",
+        "category": "latex-parsing",
+        "url": "https://pylatexenc.readthedocs.io/en/latest/",
+        "repository": "https://github.com/phfaist/pylatexenc"
+      },
+      {
+        "name": "latexdiff",
+        "ecosystem": "perl",
+        "category": "document-diff",
+        "url": "https://www.ctan.org/pkg/latexdiff",
+        "repository": "https://github.com/ftilmann/latexdiff"
+      },
+      {
+        "name": "GROBID",
+        "ecosystem": "java",
+        "category": "citation-validation",
+        "url": "https://grobid.readthedocs.io/en/latest/Introduction/",
+        "repository": "https://github.com/kermitt2/grobid"
+      },
+      {
+        "name": "textstat",
+        "ecosystem": "python",
+        "category": "readability-cohesion",
+        "url": "https://github.com/textstat/textstat",
+        "repository": "https://github.com/textstat/textstat"
+      },
+      {
+        "name": "Inspect AI",
+        "ecosystem": "python",
+        "category": "reader-evaluation",
+        "url": "https://inspect.aisi.org.uk/",
+        "repository": "https://github.com/UKGovernmentBEIS/inspect_ai"
+      },
+      {
+        "name": "llama.cpp",
+        "ecosystem": "binary",
+        "category": "local-private-inference",
+        "url": "https://github.com/ggml-org/llama.cpp",
+        "repository": "https://github.com/ggml-org/llama.cpp"
+      },
+      {
+        "name": "plasTeX",
+        "ecosystem": "python",
+        "category": "latex-parsing",
+        "url": "https://plastex.github.io/plastex/",
+        "repository": "https://github.com/plastex/plastex"
+      },
+      {
+        "name": "tree-sitter-latex",
+        "ecosystem": "multi-language",
+        "category": "latex-parsing",
+        "url": "https://github.com/latex-lsp/tree-sitter-latex",
+        "repository": "https://github.com/latex-lsp/tree-sitter-latex"
+      },
+      {
+        "name": "LaTeXML",
+        "ecosystem": "perl",
+        "category": "latex-parsing",
+        "url": "https://dlmf.nist.gov/LaTeXML/",
+        "repository": "https://github.com/brucemiller/LaTeXML"
+      },
+      {
+        "name": "unified-latex",
+        "ecosystem": "npm",
+        "category": "latex-parsing",
+        "url": "https://siefkenj.github.io/unified-latex/index.html",
+        "repository": "https://github.com/siefkenj/unified-latex"
+      },
+      {
+        "name": "TexSoup",
+        "ecosystem": "python",
+        "category": "latex-parsing",
+        "url": "https://texsoup.alvinwan.com/",
+        "repository": "https://github.com/alvinwan/TexSoup"
+      },
+      {
+        "name": "jsPsych",
+        "ecosystem": "npm",
+        "category": "reader-evaluation",
+        "url": "https://www.jspsych.org/v7/",
+        "repository": "https://github.com/jspsych/jsPsych"
+      },
+      {
+        "name": "latexmk",
+        "ecosystem": "perl",
+        "category": "workflow-ci",
+        "url": "https://ctan.org/pkg/latexmk",
+        "repository": "https://github.com/debian-tex/latexmk"
+      },
+      {
+        "name": "ChkTeX",
+        "ecosystem": "binary",
+        "category": "latex-writing",
+        "url": "https://ctan.org/pkg/chktex",
+        "repository": "https://github.com/ChkTeX/ChkTeX"
+      }
+    ],
+    "categories": [
+      "prose-linter",
+      "grammar-style",
+      "latex-writing",
+      "latex-parsing",
+      "document-conversion",
+      "citation-validation",
+      "document-diff",
+      "readability-cohesion",
+      "reader-evaluation",
+      "workflow-ci",
+      "local-private-inference"
+    ]
+  },
+  "screening": {
+    "ai_terms": [
+      "generative ai",
+      "large language model",
+      "language model",
+      "llm",
+      "chatgpt",
+      "gpt-4",
+      "claude",
+      "human-ai",
+      "human ai",
+      "co-writing",
+      "cowriting"
+    ],
+    "writing_terms": [
+      "writing",
+      "writer",
+      "prose",
+      "essay",
+      "text",
+      "manuscript",
+      "scholarly",
+      "scientific",
+      "academic",
+      "feedback",
+      "revision",
+      "editing",
+      "authorship",
+      "readability",
+      "cohesion",
+      "creativity"
+    ],
+    "manual_required": true,
+    "manual_review_sample_size": 200,
+    "sample_seed": "HV-screen-2026-08-22",
+    "sampling_note": "Dual-review every known-item candidate and a deterministic, stratified first-pass sample of relevant records; unresolved or included records then require full-text review."
+  },
+  "evidence_extraction": {
+    "required_fields": [
+      "source_type",
+      "question_ids",
+      "inspection",
+      "finding",
+      "implication",
+      "confidence",
+      "load_bearing",
+      "source_provenance"
+    ],
+    "inspection_levels": [
+      "metadata-only",
+      "abstract",
+      "methods-and-results",
+      "full-text",
+      "full-local-source"
+    ],
+    "load_bearing_minimum": "methods-and-results",
+    "independent_verification_required": true
+  },
+  "software_audit": {
+    "selection_rule": "Metadata establishes availability; only a reproducible adapter on a locked, human-labelled corpus can establish effectiveness.",
+    "required_provenance": ["repository", "version_or_commit", "license", "retrieved_at", "sha256_or_commit"],
+    "required_benchmark_fields": ["corpus_id", "task", "gold_label", "prediction", "metric", "result", "run_command"],
+    "survey_only_categories": ["ai-detector", "editing-guidance", "discovered"],
+    "privacy_constraints": ["no unapproved remote upload", "record model/provider and retention policy", "preserve protected text and citations"]
+  },
+  "product_requirements": [
+    {
+      "id": "R1",
+      "title": "Reader-facing separation",
+      "statement": "Keep the reader-facing manuscript separate from the audit and provenance record, linked by immutable document and version identifiers; internal workflow vocabulary must not leak into the manuscript.",
+      "acceptance_test": "A low-context reader can state the purpose, object, and requested action, the leak fixture finds no forbidden internal register, and every released file traces to a source hash and version.",
+      "evidence_ids": ["E-INT-001", "E-INT-002"],
+      "phase": "P1,P4"
+    },
+    {
+      "id": "R2",
+      "title": "Configurable policy precedence",
+      "statement": "Resolve conflicts in the order correctness, source fidelity, domain meaning, reader comprehension, then template regularity; store project and format overrides in configuration rather than manuscript prose.",
+      "acceptance_test": "Conflict fixtures resolve in the declared order and LaTeX-specific configuration disables rules that would alter protected syntax.",
+      "evidence_ids": ["E-INT-002", "E-SW-003", "E-SW-013"],
+      "phase": "P1"
+    },
+    {
+      "id": "R3",
+      "title": "Located diagnostics without automatic rewriting",
+      "statement": "Diagnostics emit categories, source spans, measurements, context, and editorial questions; only an explicit author or editor action may change text.",
+      "acceptance_test": "Every diagnostic fixture returns stable locations and no command mutates its input; accepted edits are remeasured and recorded separately.",
+      "evidence_ids": ["E-INT-002", "E-SW-003", "E-SW-013"],
+      "phase": "P2,P4"
+    },
+    {
+      "id": "R4",
+      "title": "Layered diagnosis and repair",
+      "statement": "Diagnose and repair register leakage, mechanical repetition, defensive prose, substance, and reader comprehension in that order while retaining intermediate results.",
+      "acceptance_test": "Historical replay preserves a result for every layer and prevents a later-layer score from concealing an unresolved earlier defect.",
+      "evidence_ids": ["E-INT-001", "E-EXT-007"],
+      "phase": "P2,P4"
+    },
+    {
+      "id": "R5",
+      "title": "Protected meaning-preserving diff",
+      "statement": "Represent equations, labels, citations, numbers, claims, code, tables, and quoted text as protected content and explain every substantive change between versions.",
+      "acceptance_test": "Repair replay produces zero unexplained protected-token changes and blocks promotion on any unexplained deletion, insertion, or mutation.",
+      "evidence_ids": ["E-INT-001", "E-SW-006", "E-SW-007", "E-SW-008"],
+      "phase": "P1,P2"
+    },
+    {
+      "id": "R6",
+      "title": "Citation identity and claim support",
+      "statement": "Resolve bibliographic identity separately from source-to-claim support, retain a sentence-level claim anchor, and block release on an unresolved load-bearing citation.",
+      "acceptance_test": "Seeded valid, nonexistent, wrong-DOI, duplicate, and title-mismatch cases are classified correctly, and every load-bearing claim has a human-verified full-text anchor.",
+      "evidence_ids": ["E-EXT-015", "E-METHOD-005", "E-METHOD-007"],
+      "phase": "P0,P2"
+    },
+    {
+      "id": "R7",
+      "title": "Calibrated model judging",
+      "statement": "Use model judges only for construct-specific screening after pair-order randomization, length control, cross-family checking, and calibration against recorded human labels.",
+      "acceptance_test": "A frozen human-labelled set reports agreement and order, verbosity, and family-sensitivity diagnostics before a judge result can enter analysis.",
+      "evidence_ids": ["E-EXT-008", "E-EXT-016", "E-EXT-018"],
+      "phase": "P3"
+    },
+    {
+      "id": "R8",
+      "title": "Named human acceptance",
+      "statement": "A human reader, not a surface metric or model judge, is the promotion authority for a specific document version.",
+      "acceptance_test": "Every promoted document records the pseudonymous reader, immutable document hash, rubric response, decision, requested changes, and elapsed time.",
+      "evidence_ids": ["E-INT-001", "E-METHOD-006"],
+      "phase": "P3,P4,P5"
+    },
+    {
+      "id": "R9",
+      "title": "Held-out behavioral evaluation",
+      "statement": "Evaluate diagnostic packages and the complete workflow on documents not used for rule tuning, and separate surface, process, higher-order, and acceptance outcomes.",
+      "acceptance_test": "Tuning and holdout hashes are frozen before execution, each package has a human-labelled scorecard, and no smoke test is reported as effectiveness.",
+      "evidence_ids": ["E-INT-002", "E-EXT-017", "E-EXT-018"],
+      "phase": "P0,P3,P5"
+    },
+    {
+      "id": "R10",
+      "title": "Minimal process surface",
+      "statement": "Use one bounded plan and one result record per work package; do not expose audit ledgers, gate names, or orchestration state in reader-facing prose.",
+      "acceptance_test": "The release packet contains the required provenance records while the manuscript passes the internal-register leak test and a reader can identify the argument without process context.",
+      "evidence_ids": ["E-INT-001", "E-INT-002"],
+      "phase": "P1,P4"
+    },
+    {
+      "id": "R11",
+      "title": "Privacy and disclosure",
+      "statement": "Keep protected manuscripts local by default and record provider, model, purpose, retention policy, disclosure status, and approval for every remote call.",
+      "acceptance_test": "An unapproved remote route is blocked, approved calls produce a complete disclosure record, and the minimum-content retention policy is enforced.",
+      "evidence_ids": ["E-METHOD-004", "E-METHOD-006"],
+      "phase": "P1,P4,P5"
+    },
+    {
+      "id": "R12",
+      "title": "Population-level convergence without attribution",
+      "statement": "Monitor aggregate vocabulary and structural convergence against an appropriate pre-assistance baseline, but never classify the authorship of an individual document.",
+      "acceptance_test": "The drift command refuses single-document analysis, suppresses small cells, and reports uncertainty and baseline sensitivity for aggregate trends.",
+      "evidence_ids": ["E-EXT-004", "E-EXT-005", "E-EXT-012"],
+      "phase": "P2,P3,P5"
+    },
+    {
+      "id": "R13",
+      "title": "Interaction telemetry",
+      "statement": "Record writer intent, suggestion, acceptance, edit, rejection, and rollback events without retaining unnecessary manuscript content.",
+      "acceptance_test": "End-to-end replay reconstructs the intervention path from hashes and event records, distinguishes edited acceptance from direct acceptance, and applies the retention class.",
+      "evidence_ids": ["E-EXT-002", "E-EXT-019", "E-EXT-021"],
+      "phase": "P3,P4,P5"
+    },
+    {
+      "id": "R14",
+      "title": "Heterogeneous outcomes",
+      "statement": "Report effects by baseline writer skill, document task and genre, and reader role; do not deploy from an average effect that conceals subgroup harm.",
+      "acceptance_test": "The preregistered analysis reports uncertainty for each prespecified stratum and applies the stop rule if expert writers or a task class are harmed.",
+      "evidence_ids": ["E-EXT-013", "E-EXT-017", "E-EXT-018", "E-EXT-020"],
+      "phase": "P3,P5"
+    },
+    {
+      "id": "R15",
+      "title": "Format-aware parser contract",
+      "statement": "All parser adapters must emit the same source-map and protected-span contract; no parser is authoritative merely because it accepts a document.",
+      "acceptance_test": "Pandoc, pylatexenc, plasTeX, LaTeXML, and tree-sitter candidates are benchmarked on malformed, unknown-macro, nested-environment, comment, math, citation, location, and round-trip fixtures before selection.",
+      "evidence_ids": ["E-SW-006", "E-SW-007", "E-SW-014", "E-SW-015", "E-SW-016"],
+      "phase": "P1"
+    },
+    {
+      "id": "R16",
+      "title": "Evidence-tiered package adoption",
+      "statement": "Treat package availability, operational suitability, and writing effectiveness as separate decisions; only a held-out human-labelled benchmark supports adoption.",
+      "acceptance_test": "Every adoption candidate has one provenance record and one explicit hold or adopt decision, and adoption is impossible unless its benchmark status is effectiveness-pass and independent review is recorded.",
+      "evidence_ids": ["E-INT-002", "E-SW-003", "E-SW-013"],
+      "phase": "P0,P1,P3"
+    },
+    {
+      "id": "R17",
+      "title": "Complete authoring brief",
+      "statement": "Require the intended reader, decision, genre, known vocabulary, named exemplars, evidence boundary, privacy class, protected objects, and unresolved assumptions before long-form drafting; critical unknowns block the run.",
+      "acceptance_test": "Seeded missing critical fields fail before writer invocation; complete briefs produce a stable hash and an explicit list of noncritical unknowns.",
+      "evidence_ids": ["E-INT-001", "E-INT-002"],
+      "phase": "P1,P4"
+    },
+    {
+      "id": "R18",
+      "title": "Argument blueprint before prose",
+      "statement": "Compile a claim map, evidence anchors, concept-dependency graph, section jobs, terminology order, and visual plan before bounded drafting.",
+      "acceptance_test": "Seeded missing warrants, use-before-teach concepts, duplicate section jobs, and figures without a teaching purpose block promotion; the plan has a stable hash.",
+      "evidence_ids": ["E-INT-001", "E-INT-002", "E-EXT-007"],
+      "phase": "P1,P2,P4"
+    },
+    {
+      "id": "R19",
+      "title": "Bounded evidence-constrained drafting",
+      "statement": "Give a replaceable writer one approved unit at a time with only the context and evidence named in the blueprint; widening a claim or inventing evidence requires an author decision.",
+      "acceptance_test": "A unit can be rebuilt independently, records its prompt context and evidence anchors, and cannot advance the next unit while its own checks are unresolved.",
+      "evidence_ids": ["E-INT-002", "E-EXT-019", "E-EXT-021"],
+      "phase": "P2,P4"
+    },
+    {
+      "id": "R20",
+      "title": "Fail-closed pre-human release",
+      "statement": "Do not emit a human-review packet until integrity, argument, writing, evidence, and reconstruction gates pass or a named owner approves an explicit exception; missing or unknown results block release.",
+      "acceptance_test": "Each seeded gate failure produces no reader packet, preserves a located repair record, and leaves the source available for inspection.",
+      "evidence_ids": ["E-INT-001", "E-INT-002"],
+      "phase": "P2,P4,P5"
+    },
+    {
+      "id": "R21",
+      "title": "Construct-specific preflight critics",
+      "statement": "Use isolated critics for concept order, evidence and scope, concrete mechanism, and low-context reconstruction; calibrate them on held-out human labels and never treat one model's self-assessment as certification.",
+      "acceptance_test": "A frozen held-out set reports false-positive, false-negative, order, verbosity, and family-sensitivity results before a critic enters the release path.",
+      "evidence_ids": ["E-EXT-008", "E-EXT-016", "E-EXT-018"],
+      "phase": "P3,P4,P5"
+    },
+    {
+      "id": "R22",
+      "title": "Adversarial mutation testing",
+      "statement": "Inject known integrity, evidence, dependency, pacing, register, citation, and repair-oscillation failures into valid plans and drafts before trusting the release gate.",
+      "acceptance_test": "All critical deterministic mutations are caught or explicitly abstained from; rhetorical mutation rates and uncertainty are reported from a frozen test set.",
+      "evidence_ids": ["E-INT-002", "E-EXT-017", "E-EXT-018"],
+      "phase": "P2,P3,P4"
+    },
+    {
+      "id": "R23",
+      "title": "Bounded causal repair",
+      "statement": "Map each failed gate to a named repair strategy, rebuild and recheck within a fixed cycle limit, detect oscillation, and escalate an unresolved choice to the author.",
+      "acceptance_test": "Seeded failures converge or stop with a located unresolved choice; no repair loop silently hands an unfinished document to the reader.",
+      "evidence_ids": ["E-INT-001", "E-INT-002", "E-EXT-019"],
+      "phase": "P2,P4"
+    },
+    {
+      "id": "R24",
+      "title": "Human-attention budget",
+      "statement": "Treat scarce expert reading time as a product constraint: release only after pre-human checks, measure escalations, repair cycles, reader time, and routine debugging avoided, and compare them with the incumbent workflow.",
+      "acceptance_test": "The feasibility record reports first-draft release rate, author and reader minutes, abstentions, and meaning errors; no model score substitutes for the human outcome.",
+      "evidence_ids": ["E-INT-001", "E-METHOD-006", "E-EXT-017"],
+      "phase": "P3,P4,P5"
+    }
+  ],
+  "proposal": {
+    "primary_outcome": "human-feedback rounds to reader acceptance",
+    "secondary_outcomes": [
+      "reader reconstruction accuracy",
+      "substantive revision rate",
+      "meaning-preservation violations",
+      "time to accepted unit",
+      "false-positive burden",
+      "suggestion acceptance and editing cost",
+      "cross-document convergence"
+    ],
+    "decision_rule": "Do not claim efficacy from the one-document feasibility run. Require a preregistered, power-justified paired or stepped rollout against a documented baseline, report uncertainty, and stratify by baseline writer skill and task class.",
+    "feasibility_scope": "one live document for integration, telemetry, privacy, stop-rule, and burden testing only",
+    "efficacy_design": "paired or stepped rollout over live documents, selected before outcomes are inspected",
+    "sample_size_rule": "simulate power or precision from the observed baseline distribution of feedback rounds and reader clustering; do not choose an arbitrary document count",
+    "estimand": "change in human-feedback rounds to reader acceptance, subject to no increase in meaning-preservation violations or reader time",
+    "stratification": ["baseline writer skill", "document task and genre", "reader role"],
+    "planning_horizon_weeks": 12,
+    "planning_scope": "Twelve weeks covers implementation and one feasibility document; efficacy timing follows the power or precision analysis and live-document arrival rate.",
+    "resource_assumption": "one product engineer, one research/evaluation lead, a domain editor, a part-time security or policy owner, and independent coding and reader review; the authoring extension is conditional on the week-six protected-core checkpoint; planning assumption, not an observed cost",
+    "kill_criteria": [
+      "reader acceptance does not improve or becomes slower after two pilot cycles",
+      "meaning-preservation violations exceed the pre-specified tolerance",
+      "diagnostic false positives consume more review time than they save",
+      "privacy or disclosure requirements cannot be met"
+    ]
+  },
+  "gates": {
+    "known_item_broad_recall_target": 0.8,
+    "known_item_challenge_target": 1.0,
+    "minimum_query_count": 8,
+    "require_source_provenance": true,
+    "require_bibliographic_identity": true,
+    "require_full_text_for_load_bearing": true,
+    "require_package_benchmark": true,
+    "require_external_review": true,
+    "require_artifact_integrity": true,
+    "require_specialist_domain_import": true,
+    "specialist_domain_databases": [
+      "EconLit",
+      "RePEc/IDEAS",
+      "SSRN",
+      "ACM Digital Library",
+      "IEEE Xplore",
+      "Web of Science",
+      "Scopus"
+    ]
+  },
+  "manual_import_dir": "docs/survey/audit/imports",
+  "external_signoff_file": "docs/survey/audit/review_signoff.json"
+}

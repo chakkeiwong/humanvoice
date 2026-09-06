@@ -1,0 +1,64 @@
+{
+  "checks": {
+    "candidate_identities_unique": true,
+    "candidate_ids_unique": true,
+    "candidate_provenance_present": true,
+    "evidence_provenance_present": true,
+    "raw_responses_hash": true,
+    "screening_ids_unique": true,
+    "software_provenance_valid": true
+  },
+  "duplicate_candidate_identities": [],
+  "duplicate_candidate_ids": [],
+  "duplicate_screening_ids": [],
+  "invalid_package_provenance": [],
+  "mismatched_raw": [],
+  "missing_candidate_provenance": 0,
+  "missing_evidence_provenance": [],
+  "missing_raw": [],
+  "raw_checks": [
+    {
+      "actual": "26f9f9532a13f9a6e6280f4df9ef0e4bcdbc0b6a4b5d2b5a80313fa24c2e4e29",
+      "event": 95,
+      "expected": "26f9f9532a13f9a6e6280f4df9ef0e4bcdbc0b6a4b5d2b5a80313fa24c2e4e29",
+      "path": "docs/survey/audit/imports/acl_anthology_writing.csv",
+      "status": "pass"
+    },
+    {
+      "actual": "858f8b2331bd8c5e6333dfd13b28737c2c728dc338a3b49485064df59f0d5d47",
+      "event": 96,
+      "expected": "858f8b2331bd8c5e6333dfd13b28737c2c728dc338a3b49485064df59f0d5d47",
+      "path": "docs/survey/audit/imports/acl_anthology_writing.meta.json",
+      "status": "pass"
+    },
+    {
+      "actual": "5f79319bc370e6259d22a8088f456a06e8446c064d2023116b7d618c2396329f",
+      "event": 97,
+      "expected": "5f79319bc370e6259d22a8088f456a06e8446c064d2023116b7d618c2396329f",
+      "path": "docs/survey/audit/imports/iclr_writing_language_models.csv",
+      "status": "pass"
+    },
+    {
+      "actual": "e02cc227e939883e6a92e1167178b9e655f443ddd38695269a634342007166c2",
+      "event": 98,
+      "expected": "e02cc227e939883e6a92e1167178b9e655f443ddd38695269a634342007166c2",
+      "path": "docs/survey/audit/imports/iclr_writing_language_models.meta.json",
+      "status": "pass"
+    },
+    {
+      "actual": "acb767e3de3457e519b8cbb5877bff62d02a4a4c4b5ee50147d0ac0947c68708",
+      "event": 99,
+      "expected": "acb767e3de3457e519b8cbb5877bff62d02a4a4c4b5ee50147d0ac0947c68708",
+      "path": "docs/survey/audit/imports/nber_generative_ai.csv",
+      "status": "pass"
+    },
+    {
+      "actual": "2126dd892188ba43973bed30d9cbfa2c0a92772e432f5a12bf60ee3e9b7565cd",
+      "event": 100,
+      "expected": "2126dd892188ba43973bed30d9cbfa2c0a92772e432f5a12bf60ee3e9b7565cd",
+      "path": "docs/survey/audit/imports/nber_generative_ai.meta.json",
+      "status": "pass"
+    }
+  ],
+  "status": "pass"
+}

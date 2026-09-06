@@ -1,0 +1,33 @@
+\section{View Change and Recovery Mechanisms}
+
+View change protocols constitute the liveness-critical component of Byzantine consensus systems, enabling recovery from leader failures and Byzantine attacks. The complexity and latency of view change directly determine a protocol's resilience under adversarial conditions and its ability to maintain progress across varying synchrony regimes.
+
+\subsection{Classical View Change in PBFT}
+
+PBFT's view change protocol exemplifies the traditional approach to leader replacement in Byzantine settings~\cite{castro1999practical}. When the primary fails to make progress, replicas timeout and initiate a view change by broadcasting \texttt{VIEW-CHANGE} messages containing proof of the most recent stable checkpoint and any prepared requests. A new primary collects $2f+1$ \texttt{VIEW-CHANGE} messages, constructs a \texttt{NEW-VIEW} message containing this quorum certificate, and broadcasts it to all replicas. The protocol ensures safety by requiring the new primary to include all requests that may have committed in previous views.
+
+This approach incurs substantial overhead. Each view change requires $\mathcal{O}(n^3)$ message complexity as replicas exchange view change certificates and the new primary disseminates the consolidated state. The synchrony assumption becomes critical during view change: if GST has not occurred, malicious primaries can trigger repeated view changes, preventing progress indefinitely. PBFT's liveness guarantee holds only after GST, when timeout-based failure detection becomes reliable.
+
+\subsection{Optimistic Responsiveness and HotStuff}
+
+HotStuff introduced a transformative simplification to view change through its three-phase commit structure~\cite{yin2019hotstuff}. By organizing consensus into prepare, pre-commit, and commit phases with explicit quorum certificates at each stage, HotStuff achieves \emph{optimistic responsiveness}: consensus completes in network delay time rather than timeout-bounded intervals when the leader is honest. This property extends to view change, where the protocol rotates leaders after a single phase timeout rather than waiting for multiple rounds of evidence collection.
+
+The key innovation lies in HotStuff's voting rule. Replicas vote for proposals that extend the highest quorum certificate they have observed, creating a linear chain of certified blocks. During view change, the new leader simply proposes atop the highest known certificate without reconstructing complex state from prior views. This reduces view change complexity to $\mathcal{O}(n)$ messages—only the new leader must collect blame certificates from $f+1$ replicas indicating the previous leader's failure.
+
+HotStuff's approach trades progress speed for simplicity: the protocol may require multiple view changes to elect an honest leader in Byzantine scenarios, whereas PBFT's heavier mechanism attempts to preserve more in-flight work. However, empirical measurements demonstrate that HotStuff's simpler view change completes in 2--3 seconds under Byzantine failures with 100 nodes, compared to PBFT's 8--15 seconds with equivalent fault scenarios.
+
+\subsection{Accountable Safety and Casper FFG}
+
+Casper FFG approaches view change through its finality gadget design, separating the underlying block proposal mechanism from Byzantine agreement~\cite{buterin2020combining}. Validators vote on checkpoint blocks in a two-phase commit (justify and finalize), and view changes occur implicitly through the underlying chain's fork choice rule. The protocol introduces \emph{slashing conditions}—validators who vote for conflicting checkpoints can be cryptographically proven to have violated protocol rules, enabling economic penalties in proof-of-stake systems.
+
+This accountability mechanism transforms view change analysis. Rather than requiring complex state synchronization during leader rotation, Casper relies on the assumption that validators with staked capital will not violate slashing conditions due to economic disincentives. View change becomes a matter of selecting the next block proposer according to the underlying chain's rules, while Byzantine safety depends on the finality threshold of $\frac{2}{3}$ validator stake.
+
+The partially synchronous assumption manifests differently in Casper: liveness requires that justified checkpoints eventually become finalized within some bounded time after GST, but safety holds even under full asynchrony as long as fewer than $\frac{1}{3}$ of validators are Byzantine. This separation allows Casper to maintain safety during network partitions while accepting temporary liveness failures—a trade-off suitable for blockchain applications where occasional confirmation delays are preferable to safety violations.
+
+\subsection{DAG-Based Implicit View Changes}
+
+DAG-based protocols like Narwhal and Tusk eliminate explicit view change entirely by separating data dissemination from ordering~\cite{danezis2022narwhal}. Narwhal constructs a DAG of causally ordered blocks through reliable broadcast, while Tusk interprets this DAG to extract a linear sequence. Leader failures become local events: if a designated leader fails to contribute to the DAG, replicas simply interpret the DAG structure to extract consensus decisions without coordinating a global view change.
+
+This approach achieves view change latency bounded only by the DAG construction time—typically 1--2 network round trips. The complexity reduction stems from avoiding state synchronization: replicas maintain consistent DAG views through the reliable broadcast protocol, and consensus extraction operates deterministically on this shared structure. Measurements show DAG-based systems maintain 95\% of peak throughput during leadership transitions, compared to 40--60\% throughput retention in PBFT variants during view change.
+
+The synchrony assumption for liveness becomes more nuanced: DAG protocols require eventual synchrony for the reliable broadcast layer to make progress, but individual leader failures do not trigger protocol-wide synchronization delays. This property proves valuable in wide-area deployments where network conditions vary across geographic regions.

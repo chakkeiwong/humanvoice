@@ -1,0 +1,11 @@
+{
+  "database": "RePEc/IDEAS",
+  "query_or_filter": "Official IDEAS search form; bounded queries: generative AI writing | AI writing feedback revision | large language model workplace communication | automated writing evaluation validity | human AI collaborative writing; first result page per query; deduplicated by RePEc handle.",
+  "raw_source_path": "docs/survey/audit/public_raw/repec/raw_manifest.json",
+  "raw_source_sha256": "7ceda99d7da2b0f946a5123c1a1791b17f29716bedf50ee8253761bbb5fc49d2",
+  "record_count": 45,
+  "retrieved_at": "2026-08-24T14:39:21+00:00",
+  "scope_note": "Specialist discovery slice, not a complete RePEc export; title/abstract records require dual screening and full-text appraisal.",
+  "sha256": "71409cc29d9425a0ca034b170e929450e40b892e788721f79fc155f6568a62bd",
+  "source_url": "https://ideas.repec.org/cgi-bin/htsearch2"
+}

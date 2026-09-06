@@ -1,0 +1,680 @@
+% Shared visual language for the proposal.  Each figure is source-controlled
+% TikZ so that claims, labels, and print rendering remain auditable.
+\tikzset{
+  hvbox/.style={draw=hvnavy!75,fill=white,rounded corners=1mm,
+    align=center,minimum height=10mm,text width=29mm,inner sep=2mm},
+  hvbluebox/.style={hvbox,fill=hvmint,draw=hvocean},
+  hvredbox/.style={hvbox,fill=hvcream,draw=hvcoral},
+  hvgoldbox/.style={hvbox,fill=hvcream,draw=hvgold!90!black},
+  hvgraybox/.style={hvbox,fill=hvcloud,draw=hvslate},
+  hvline/.style={-{Stealth[length=2mm]},thick,draw=hvocean},
+  hvback/.style={-{Stealth[length=2mm]},thick,dashed,draw=hvcoral},
+  hvguard/.style={draw=hvcoral,very thick,rounded corners=1mm},
+  hvlabel/.style={font=\sffamily\bfseries\small,text=hvnavy,align=center},
+  hvnote/.style={font=\footnotesize,align=center,text=hvslate}
+}
+
+\newcommand{\hvFigureZLBRescue}{%
+\begin{figure}[H]
+\centering
+\resizebox{\textwidth}{!}{%
+\begin{tikzpicture}[font=\small,node distance=4mm]
+  \node[hvredbox] (p1) {1. Repair the conversion\\\footnotesize broken mathematics and tables};
+  \node[hvredbox,right=of p1] (p2) {2. Remove the audit register\\\footnotesize paths, dates, project labels};
+  \node[hvgoldbox,right=of p2] (p3) {3. Break the template\\\footnotesize repeated openings and section shapes};
+  \node[hvgoldbox,right=of p3] (p4) {4. Replace defenses with reasons\\\footnotesize explain instead of disclaim};
+  \node[hvbluebox,right=of p4] (p5) {5. Supply the missing substance\\\footnotesize reference models for validation};
+  \draw[hvline] (p1) -- (p2);
+  \draw[hvline] (p2) -- (p3);
+  \draw[hvline] (p3) -- (p4);
+  \draw[hvline] (p4) -- (p5);
+  \node[hvnote,below=4mm of p3] {Each repair made the next defect visible.};
+\end{tikzpicture}}
+\caption{The five reader complaints in the ZLB rescue. The sequence is a
+recorded case history, not a universal law or an efficacy estimate.}
+\label{fig:zlb-rescue}
+\end{figure}}
+
+\newcommand{\hvFigureReaderBurden}{%
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[font=\small,node distance=8mm and 13mm]
+  \node[hvbluebox] (facts) {Correct local material\\\footnotesize equations, evidence, qualifications};
+  \node[hvredbox,right=of facts] (links) {Missing visible relations\\\footnotesize purpose, mechanism, action};
+  \node[hvgoldbox,below=of links] (reader) {Reader reconstructs the argument};
+  \node[hvgraybox,left=of reader] (round) {Another diagnosis, revision, and rereading round};
+  \draw[hvline] (facts) -- (links);
+  \draw[hvline] (links) -- (reader);
+  \draw[hvline] (reader) -- (round);
+  \draw[hvback] (round) -- (facts);
+\end{tikzpicture}
+\caption{How locally correct material can still consume expert attention.}
+\label{fig:reader-burden-cycle}
+\end{figure}}
+
+\newcommand{\hvFigureFailureLayers}{%
+\begin{figure}[H]
+\centering
+\resizebox{0.96\textwidth}{!}{%
+\begin{tikzpicture}[font=\small,node distance=1.8mm]
+  \node[hvbluebox,text width=90mm] (sub) {Substance: the missing model, mechanism, comparison, or decision};
+  \node[hvgoldbox,text width=90mm,below=of sub] (def) {Defensive register: qualifications replace explanation};
+  \node[hvgoldbox,text width=90mm,below=of def] (rep) {Mechanical regularity: repeated openings, transitions, and paragraph shapes};
+  \node[hvredbox,text width=90mm,below=of rep] (reg) {Internal register: paths, phases, dates, and private labels};
+  \node[hvredbox,text width=90mm,below=of reg] (render) {Rendering: broken mathematics, tables, references, or page layout};
+\draw[hvline] ([xshift=50mm]render.east) -- node[right,hvnote]{repair upward} ([xshift=50mm]sub.east);
+\end{tikzpicture}}
+\caption{The case record suggests an order of inspection: visible rendering
+failures can conceal register, rhythm, reasoning, and finally substance.}
+\label{fig:repair-order}
+\end{figure}}
+
+\newcommand{\hvFigureToolGap}{%
+\begin{figure}[H]
+\centering
+\resizebox{0.96\textwidth}{!}{%
+\begin{tikzpicture}[font=\small,node distance=3mm and 12mm]
+  \node[hvgraybox] (lint) {Prose linter\\\footnotesize local patterns};
+  \node[hvgraybox,below=of lint] (model) {Language model\\\footnotesize suggestions};
+  \node[hvgraybox,below=of model] (vcs) {Version control\\\footnotesize character changes};
+  \node[hvgraybox,below=of vcs] (cite) {Citation service\\\footnotesize identity};
+  \node[hvredbox,text width=44mm,right=of model] (gap) {Missing handoffs\\\footnotesize finding $\rightarrow$ author choice\\revision $\rightarrow$ protected comparison\\comparison $\rightarrow$ reader task};
+  \node[hvbluebox,text width=37mm,right=of gap] (out) {Named reader decision\\\footnotesize understood, revise, or stop};
+  \foreach \x in {lint,model,vcs,cite}{\draw[hvline] (\x.east) -- (gap.west);}
+  \draw[hvline] (gap) -- (out);
+\end{tikzpicture}}
+\caption{The incumbent bundle has capable components but no shared path from
+a finding to a reader's decision.}
+\label{fig:tool-gap}
+\end{figure}}
+
+\newcommand{\hvFigureEvidencePipeline}{%
+\begin{figure}[H]
+\centering
+\resizebox{\textwidth}{!}{%
+\begin{tikzpicture}[font=\small,node distance=5mm]
+  \node[hvgraybox] (q) {Decision question\\\footnotesize fixed before search};
+  \node[hvgraybox,right=of q] (search) {Discovery and challenge searches\\\footnotesize seeds kept separate};
+  \node[hvgoldbox,right=of search] (screen) {Independent screening\\\footnotesize inclusion and exclusion reasons};
+  \node[hvgoldbox,right=of screen] (appraise) {Full-text appraisal\\\footnotesize result, design, limit};
+  \node[hvbluebox,right=of appraise] (claim) {Bounded product claim\\\footnotesize implication plus next test};
+  \draw[hvline] (q)--(search); \draw[hvline] (search)--(screen);
+  \draw[hvline] (screen)--(appraise); \draw[hvline] (appraise)--(claim);
+\end{tikzpicture}}
+\caption{A search result becomes usable evidence only after screening,
+full-text appraisal, and an explicit bridge to a bounded product claim.}
+\label{fig:evidence-pipeline}
+\end{figure}}
+
+\newcommand{\hvFigureReaderLoop}{%
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[font=\small,node distance=15mm and 23mm]
+  \node[hvbluebox] (author) {Author\\\footnotesize states intent and decides repairs};
+  \node[hvgraybox,right=of author] (source) {Versioned source\\\footnotesize prose plus protected objects};
+  \node[hvbluebox,below=of source] (reader) {Reader\\\footnotesize reconstructs and decides};
+  \node[hvgoldbox,left=of reader] (system) {Humanvoice\\\footnotesize locates, compares, records};
+  \draw[hvline] (author)--(source); \draw[hvline] (source)--(reader);
+  \draw[hvback] (reader)--(system); \draw[hvline] (system)--(author);
+\end{tikzpicture}
+\caption{Writing is a feedback system: the tool makes the loop inspectable,
+while the author and reader retain different judgments.}
+\label{fig:reader-author-loop}
+\end{figure}}
+
+\newcommand{\hvFigureEvidenceLadder}{%
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[font=\small,node distance=2mm]
+  \node[hvgraybox,text width=105mm] (a) {Adjacent research: mechanisms, risks, and candidate outcomes};
+  \node[hvgoldbox,text width=88mm,above=of a] (b) {Historical replay: can a component reproduce a recorded case?};
+  \node[hvgoldbox,text width=70mm,above=of b] (c) {Held-out feasibility: can the workflow run and be measured?};
+  \node[hvbluebox,text width=52mm,above=of c] (d) {Comparative efficacy: does it improve the declared outcome?};
+  \draw[hvline] (a)--(b); \draw[hvline] (b)--(c); \draw[hvline] (c)--(d);
+\end{tikzpicture}
+\caption{Evidence strength must rise with the claim. Literature plausibility
+and historical replay do not substitute for held-out comparative evidence.}
+\label{fig:evidence-ladder}
+\end{figure}}
+
+\newcommand{\hvFigureDetectionBoundary}{%
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[font=\small,node distance=9mm]
+  \node[hvbluebox,text width=58mm] (pop) {Permitted research use\\\footnotesize aggregate change in a declared corpus, uncertainty reported, small cells suppressed};
+  \node[hvredbox,text width=58mm,right=of pop] (doc) {Excluded product use\\\footnotesize a verdict about one document, one author, clarity, integrity, or acceptability};
+  \node[hvnote,below=4mm of pop] {Population estimation};
+  \node[hvnote,below=4mm of doc] {Individual attribution};
+  \draw[very thick,hvocean] ([xshift=3mm]pop.south east) -- ([xshift=-3mm]doc.south west);
+\end{tikzpicture}
+\caption{Corpus-level monitoring and individual authorship detection answer
+different questions. Humanvoice excludes the latter from revision and review.}
+\label{fig:detection-boundary}
+\end{figure}}
+
+\newcommand{\hvFigureCapabilityMap}{%
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[font=\small,node distance=8mm and 13mm]
+  \node[hvbluebox,text width=36mm] (record) {Common version record\\\footnotesize source, spans, decisions, outcomes};
+  \node[hvgraybox,above left=of record] (parse) {Parse and build};
+  \node[hvgraybox,below left=of record] (diag) {Locate findings};
+  \node[hvgraybox,above right=of record] (diff) {Protect and compare};
+  \node[hvgraybox,below right=of record] (read) {Reader instrument};
+  \draw[hvline] (parse)--(record); \draw[hvline] (diag)--(record);
+  \draw[hvline] (record)--(diff); \draw[hvline] (record)--(read);
+\end{tikzpicture}
+\caption{Humanvoice's proposed advantage lies in the common record between
+component families, not in replacing mature parsers, linters, or build tools.}
+\label{fig:capability-map}
+\end{figure}}
+
+\newcommand{\hvFigurePackageFunnel}{%
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[font=\small,node distance=2mm]
+  \node[hvgraybox,text width=105mm] (listed) {Listed candidate: discoverable, identifiable, license recorded};
+  \node[hvgraybox,text width=86mm,above=of listed] (runs) {Operational candidate: installs and runs locally};
+  \node[hvgoldbox,text width=67mm,above=of runs] (fixture) {Fixture candidate: handles declared successes and failures};
+  \node[hvgoldbox,text width=50mm,above=of fixture] (held) {Held-out candidate: useful at acceptable burden};
+  \node[hvbluebox,text width=33mm,above=of held] (adopt) {Adopt or adapt};
+  \draw[hvline] (listed)--(runs); \draw[hvline] (runs)--(fixture);
+  \draw[hvline] (fixture)--(held); \draw[hvline] (held)--(adopt);
+\end{tikzpicture}
+\caption{A repository earns adoption in stages. Popularity and a successful
+smoke run are availability evidence, not effectiveness evidence.}
+\label{fig:package-funnel}
+\end{figure}}
+
+\newcommand{\hvFigureWorkedCase}{%
+\begin{figure}[H]
+\centering
+\resizebox{\textwidth}{!}{%
+\begin{tikzpicture}[font=\small,node distance=5mm]
+  \node[hvgraybox] (brief) {Authoring brief\\\footnotesize decision and reader};
+  \node[hvgraybox,right=of brief] (plan) {Argument blueprint\\\footnotesize claims and dependencies};
+  \node[hvredbox,right=of plan] (draft) {Bounded draft\\\footnotesize private unit under construction};
+  \node[hvgoldbox,right=of draft] (preflight) {Pre-human preflight\\\footnotesize located failures and mutations};
+  \node[hvgoldbox,right=of preflight] (repair) {Repair and compare\\\footnotesize rebuild until pass or stop};
+  \node[hvbluebox,right=of repair] (reader) {Fresh reader\\\footnotesize recover and decide};
+  \draw[hvline] (brief)--(plan); \draw[hvline] (plan)--(draft);
+  \draw[hvline] (draft)--(preflight); \draw[hvline] (preflight)--(repair);
+  \draw[hvline] (repair)--(reader);
+  \draw[hvback] (preflight.south) to[bend right=22] (draft.south);
+\end{tikzpicture}}
+\caption{The unit of work is one document version moving from brief to release,
+with a bounded return when pre-human checks find a repair.}
+\label{fig:worked-case-flow}
+\end{figure}}
+
+\newcommand{\hvFigureThreeViews}{%
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[font=\small,node distance=9mm and 12mm]
+  \node[hvbluebox] (author) {Author view\\\footnotesize questions, choices, source locations};
+  \node[hvgoldbox,right=of author] (review) {Review view\\\footnotesize protected changes and unresolved risks};
+  \node[hvbluebox,right=of review] (reader) {Reader view\\\footnotesize clean document and task};
+  \node[hvgraybox,text width=98mm,below=of review] (record) {One common record: immutable version, protected objects, finding decisions, reader outcome};
+  \draw[hvline] (record)--(author); \draw[hvline] (record)--(review); \draw[hvline] (record)--(reader);
+\end{tikzpicture}
+\caption{Three people see different interfaces over one version record; the
+reader does not receive the project's private audit trail.}
+\label{fig:three-views}
+\end{figure}}
+
+\newcommand{\hvFigureProtectedDiff}{%
+\begin{figure}[H]
+\centering
+\resizebox{0.96\textwidth}{!}{%
+\begin{tikzpicture}[font=\small,node distance=8mm and 14mm]
+  \node[hvgraybox,text width=39mm] (old) {Version A\\\footnotesize equation, 4.2\% result, citation, qualification};
+  \node[hvgoldbox,text width=42mm,right=of old] (match) {Typed correspondence\\\footnotesize unchanged, moved, edited, added, removed, uncertain};
+  \node[hvgraybox,text width=39mm,right=of match] (new) {Version B\\\footnotesize equation, 4.2\% result, citation, qualification};
+  \node[hvbluebox,text width=54mm,below=of match] (decision) {Human disposition for every substantive difference};
+  \draw[hvline] (old)--(match); \draw[hvline] (match)--(new); \draw[hvline] (match)--(decision);
+  \node[hvguard,fit=(old)(match)(new),inner sep=3mm] {};
+\end{tikzpicture}}
+\caption{Protected comparison does not forbid change. It prevents a
+substantive change from disappearing inside fluent prose.}
+\label{fig:protected-diff}
+\end{figure}}
+
+\newcommand{\hvFigureRecordModel}{%
+\begin{figure}[H]
+\centering
+\resizebox{0.94\textwidth}{!}{%
+\begin{tikzpicture}[font=\small,node distance=5mm and 9mm]
+  \node[hvgraybox] (doc) {Document\\\footnotesize reader and decision brief};
+  \node[hvgraybox,right=of doc] (version) {Version\\\footnotesize source and render hashes};
+  \node[hvgoldbox,right=of version] (object) {Protected object\\\footnotesize type, span, value};
+  \node[hvgoldbox,below=of version] (finding) {Finding and author decision};
+  \node[hvbluebox,right=of finding] (review) {Reader observation and disposition};
+  \draw[hvline] (doc)--(version); \draw[hvline] (version)--(object);
+  \draw[hvline] (version)--(finding); \draw[hvline] (finding)--(review);
+  \draw[hvline] (object)--(review);
+\end{tikzpicture}}
+\caption{A small record model links source facts to editorial choices and
+reader outcomes without treating any diagnostic as a verdict.}
+\label{fig:record-model}
+\end{figure}}
+
+\newcommand{\hvFigureMVPDependencies}{%
+\begin{figure}[H]
+\centering
+\resizebox{0.98\textwidth}{!}{%
+\begin{tikzpicture}[font=\small,node distance=7mm and 12mm]
+  \node[hvgraybox] (evidence) {Evidence and brief\\\footnotesize screening, appraisal, reader, decision};
+  \node[hvbluebox,right=of evidence] (plan) {Argument blueprint\\\footnotesize claims, dependencies, figures};
+  \node[hvgoldbox,right=of plan] (core) {LaTeX document core\\\footnotesize bounded units, parse, protected objects};
+  \node[hvwarn,right=of core] (preflight) {Pre-human preflight\\\footnotesize integrity, writing, mutation, critics};
+  \node[hvbluebox,right=of preflight] (release) {Release gate\\\footnotesize packet or fail closed};
+  \node[hvbluebox,below=of release] (live) {Live feasibility case};
+  \node[hvgraybox,left=of live] (design) {Comparative-study design and cost};
+  \draw[hvline] (evidence)--(plan); \draw[hvline] (plan)--(core);
+  \draw[hvline] (core)--(preflight); \draw[hvline] (preflight)--(release);
+  \draw[hvline] (release)--(live); \draw[hvline] (live)--(design);
+  \draw[hvback] (preflight.south) to[bend right=22] node[below,hvnote]{repair} (core.south);
+  \draw[hvline] (evidence) to[bend right=18] (design);
+\end{tikzpicture}
+}%
+\caption{The first build has one critical path. A brief and blueprint precede
+bounded drafting, and a failed pre-human check returns to repair instead of
+emitting a reader packet.}
+\label{fig:mvp-dependencies}
+\end{figure}}
+
+\newcommand{\hvFigureEvaluationLogic}{%
+\begin{figure}[H]
+\centering
+\resizebox{0.96\textwidth}{!}{%
+\begin{tikzpicture}[font=\small,node distance=7mm and 14mm]
+  \node[hvgraybox] (live) {One live document};
+  \node[hvgoldbox,right=of live] (feas) {Feasibility result\\\footnotesize can run, burden observed, failures found};
+  \node[hvredbox,above right=of feas] (stop) {Stop or repair\\\footnotesize safety or observability fails};
+  \node[hvbluebox,below right=of feas] (study) {Comparative study\\\footnotesize new documents, declared comparator};
+  \node[hvbluebox,right=of study] (effect) {Efficacy estimate\\\footnotesize effect, uncertainty, heterogeneity};
+  \draw[hvline] (live)--(feas); \draw[hvline] (feas)--node[above,hvnote]{fails} (stop);
+  \draw[hvline] (feas)--node[below,hvnote]{passes} (study); \draw[hvline] (study)--(effect);
+\end{tikzpicture}}
+\caption{The feasibility case and the comparative study answer different
+questions. Passing the first authorizes the second, not an efficacy claim.}
+\label{fig:evaluation-logic}
+\end{figure}}
+
+\newcommand{\hvFigurePairedDesign}{%
+\begin{figure}[H]
+\centering
+\resizebox{0.94\textwidth}{!}{%
+\begin{tikzpicture}[font=\small,node distance=5mm]
+  \node[hvlabel] (d1) {Document set A};
+  \node[hvgraybox,right=of d1] (a0) {Incumbent workflow};
+  \node[hvbluebox,right=of a0] (a1) {Humanvoice workflow};
+  \node[hvlabel,below=8mm of d1] (d2) {Document set B};
+  \node[hvbluebox,right=of d2] (b0) {Humanvoice workflow};
+  \node[hvgraybox,right=of b0] (b1) {Incumbent workflow};
+  \node[hvgoldbox,right=10mm of a1] (out) {Common outcomes\\\footnotesize time, rounds, meaning, reconstruction};
+  \draw[hvline] (a0)--(a1); \draw[hvline] (b0)--(b1);
+  \draw[hvline] (a1)--(out); \draw[hvline] (b1)--(out);
+\end{tikzpicture}}
+\caption{A counterbalanced paired design separates workflow effects from
+document difficulty and order, subject to the available volume and readers.}
+\label{fig:paired-design}
+\end{figure}}
+
+\newcommand{\hvFigureSchedule}{%
+\begin{figure}[H]
+\centering
+\resizebox{\textwidth}{!}{%
+\begin{tikzpicture}[x=7.5mm,y=7mm,font=\footnotesize]
+  \foreach \w in {1,...,12}{\node[hvnote] at (\w,5.7) {\w};}
+  \node[hvlabel,anchor=east] at (0.6,5.7) {Week};
+  \node[hvlabel,anchor=east] at (0.6,4.7) {Brief + rights};
+  \node[hvlabel,anchor=east] at (0.6,3.7) {Protected core};
+  \node[hvlabel,anchor=east] at (0.6,2.7) {Conditional extension};
+  \node[hvlabel,anchor=east] at (0.6,1.7) {Feasibility prep};
+  \node[hvlabel,anchor=east] at (0.6,0.7) {Live case};
+  \filldraw[fill=hvcloud,draw=hvslate,rounded corners=1mm] (1,4.35) rectangle (2.9,5.05);
+  \filldraw[fill=hvmint,draw=hvocean,rounded corners=1mm] (3,3.35) rectangle (6.9,4.05);
+  \filldraw[fill=hvcream,draw=hvgold,rounded corners=1mm] (7,2.35) rectangle (9.9,3.05);
+  \filldraw[fill=hvmint,draw=hvocean,rounded corners=1mm] (10,1.35) rectangle (12.9,2.05);
+  \filldraw[fill=hvcream,draw=hvcoral,rounded corners=1mm] (10,0.35) rectangle (12.9,1.05);
+  \draw[hvline] (2.9,4.7)--(2.9,4.05); \draw[hvline] (6.9,3.7)--(6.9,3.05);
+  \draw[hvline] (9.9,2.7)--(9.9,2.05); \draw[hvline] (12.9,1.7)--(12.9,1.05);
+\end{tikzpicture}}
+\caption{The canonical twelve-week sequence. Weeks 1--6 end in a protected
+core go/no-go; the extension and feasibility preparation begin only after that
+gate.}
+\label{fig:twelve-week-schedule}
+\end{figure}}
+
+\newcommand{\hvFigureResearchLadder}{%
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[font=\small,node distance=2mm]
+  \node[hvgraybox,text width=92mm] (s) {1. Source correspondence: did the document survive parsing and revision?};
+  \node[hvgoldbox,text width=80mm,above=of s] (d) {2. Diagnostic validity: did the finding locate a real editorial question?};
+  \node[hvgoldbox,text width=68mm,above=of d] (b) {3. Workflow burden: what did author and reviewer spend?};
+  \node[hvbluebox,text width=56mm,above=of b] (r) {4. Reader reconstruction: could the reader decide?};
+  \draw[hvline] (s)--(d); \draw[hvline] (d)--(b); \draw[hvline] (b)--(r);
+\end{tikzpicture}
+\caption{The research program climbs from source integrity to reader use.
+Failure on a lower rung invalidates a favorable result above it.}
+\label{fig:research-ladder}
+\end{figure}}
+
+\newcommand{\hvFigureValueMechanism}{%
+\begin{figure}[H]
+\centering
+\resizebox{0.96\textwidth}{!}{%
+\begin{tikzpicture}[font=\small,node distance=5mm]
+  \node[hvgraybox] (base) {Baseline review\\\footnotesize rounds $r_0$, time $t_0$};
+  \node[hvbluebox,right=of base] (hv) {Humanvoice path\\\footnotesize rounds $r_1$, time $t_1$};
+  \node[hvgoldbox,right=of hv] (guard) {Quality guard\\\footnotesize no excess meaning error or reader burden};
+  \node[hvbluebox,right=of guard] (value) {Net value\\\footnotesize saved attention minus product cost};
+  \draw[hvline] (base)--(hv); \draw[hvline] (hv)--(guard); \draw[hvline] (guard)--(value);
+  \node[hvnote,below=5mm of guard] {If the guard fails: stop or redesign.};
+\end{tikzpicture}}
+\caption{Value arises only when lower review burden survives the quality
+guard. Faster revision with more meaning errors has negative value.}
+\label{fig:value-mechanism}
+\end{figure}}
+
+\newcommand{\hvFigureTrustBoundary}{%
+\begin{figure}[H]
+\centering
+\resizebox{0.96\textwidth}{!}{%
+\begin{tikzpicture}[font=\small,node distance=7mm and 14mm]
+  \node[hvbluebox,text width=40mm] (local) {Local trust zone\\\footnotesize source, parser, findings, protected diff, event log};
+  \node[hvgoldbox,text width=38mm,right=of local] (gate) {Explicit approval gate\\\footnotesize provider, purpose, fields, retention};
+  \node[hvgraybox,text width=40mm,right=of gate] (remote) {Optional external service\\\footnotesize metadata or approved inference only};
+  \draw[hvline] (local)--(gate); \draw[hvline] (gate)--(remote);
+  \node[hvguard,fit=(local),inner sep=4mm] {};
+  \node[hvnote,text width=100mm,below=12mm of gate]
+    {The manuscript stays local by default; only approved fields cross, and every returned response is logged.};
+\end{tikzpicture}}
+\caption{Local-first is an enforceable data path, not a slogan. Remote use
+requires a declared purpose and a field-level approval record.}
+\label{fig:trust-boundary}
+\end{figure}}
+
+\newcommand{\hvFigureTraceability}{%
+\begin{figure}[H]
+\centering
+\resizebox{\textwidth}{!}{%
+\begin{tikzpicture}[font=\small,node distance=5mm]
+  \node[hvgraybox] (source) {Source result\\\footnotesize anchored and appraised};
+  \node[hvgoldbox,right=of source] (claim) {Bounded claim\\\footnotesize limit stated};
+  \node[hvgoldbox,right=of claim] (design) {Design choice\\\footnotesize product object or rule};
+  \node[hvbluebox,right=of design] (test) {Fixture or reader test};
+  \node[hvbluebox,right=of test] (decision) {Proceed, repair, or stop};
+  \draw[hvline] (source)--(claim); \draw[hvline] (claim)--(design);
+  \draw[hvline] (design)--(test); \draw[hvline] (test)--(decision);
+  \node[hvnote,text width=70mm,below=5mm of design]
+    {A failed test narrows the claim or changes the design.};
+\end{tikzpicture}}
+\caption{Traceability is a chain of reasons. Internal identifiers help
+reproduce it, but the main text should show the reasons themselves.}
+\label{fig:traceability-chain}
+\end{figure}}
+
+\newcommand{\hvFigureCaseEvidence}{%
+\begin{figure}[H]
+\centering
+\resizebox{\textwidth}{!}{%
+\begin{tikzpicture}[font=\small,node distance=5mm]
+  \node[hvredbox] (card) {Funding proposal\\\footnotesize substance and contracts too thin};
+  \node[hvgoldbox,right=of card] (bgs) {Book-length thesis\\\footnotesize process displaced the argument};
+  \node[hvbluebox,right=of bgs] (sme) {Rewritten units\\\footnotesize protected maps and local acceptance};
+  \node[hvbluebox,right=of sme] (zlb) {ZLB survey\\\footnotesize five layered repairs to owner acceptance};
+  \draw[hvline] (card)--(bgs); \draw[hvline] (bgs)--(sme); \draw[hvline] (sme)--(zlb);
+  \node[hvnote,below=5mm of bgs] {failure vocabulary};
+  \node[hvnote,below=5mm of sme] {implementation fixtures};
+  \node[hvnote,below=5mm of zlb] {historical regression, not efficacy};
+\end{tikzpicture}}
+\caption{The cases contribute different evidence. Their combination specifies
+failure classes and fixtures, but only the ZLB case records whole-document owner
+acceptance.}
+\label{fig:case-evidence}
+\end{figure}}
+
+\newcommand{\hvFigureInterventionBoundary}{%
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[font=\small,node distance=7mm and 11mm]
+  \node[hvgraybox] (generate) {Generate prose\\\footnotesize speed and fluency};
+  \node[hvgoldbox,right=of generate] (feedback) {Locate feedback\\\footnotesize span and priority};
+  \node[hvbluebox,right=of feedback] (edit) {Author edits\\\footnotesize accepts, rejects, verifies};
+  \node[hvbluebox,below=of feedback] (reader) {Reader uses the result\\\footnotesize reconstructs and decides};
+  \draw[hvline] (generate)--(feedback); \draw[hvline] (feedback)--(edit);
+  \draw[hvline] (edit)--(reader);
+  \draw[hvback] (reader)--(feedback);
+  \node[hvnote,below=4mm of generate] {most productivity studies};
+  \node[hvnote,below=4mm of edit] {Humanvoice intervention};
+\end{tikzpicture}
+\caption{Writing studies often observe different parts of the path. Evidence
+about generation time cannot by itself establish feedback quality, safe
+revision, or reader use.}
+\label{fig:intervention-boundary}
+\end{figure}}
+
+\newcommand{\hvFigurePatternQuestion}{%
+\begin{figure}[H]
+\centering
+\resizebox{0.96\textwidth}{!}{%
+\begin{tikzpicture}[font=\small,node distance=5mm]
+  \node[hvgraybox,text width=34mm] (passage) {Passage\\\footnotesize ``marks a pivotal moment''};
+  \node[hvgoldbox,text width=37mm,right=of passage] (pattern) {Observed pattern\\\footnotesize inflated importance};
+  \node[hvgoldbox,text width=38mm,right=of pattern] (context) {Context question\\\footnotesize what changed, and by how much?};
+  \node[hvbluebox,text width=36mm,right=of context] (author) {Author's decision\\\footnotesize revise, keep, or dismiss};
+  \draw[hvline] (passage)--(pattern);
+  \draw[hvline] (pattern)--(context);
+  \draw[hvline] (context)--(author);
+  \node[hvnote,text width=86mm,below=7mm of context]
+    {The diagnostic supplies evidence and a question. It does not supply a verdict or an undisclosed rewrite.};
+\end{tikzpicture}}
+\caption{A pattern becomes useful when it leads to a bounded editorial
+question and leaves the decision with the author.}
+\label{fig:pattern-question}
+\end{figure}}
+
+\newcommand{\hvFigureConceptPace}{%
+\begin{figure}[H]
+\centering
+\resizebox{0.97\textwidth}{!}{%
+\begin{tikzpicture}[font=\small,node distance=3mm and 5mm]
+  \node[hvlabel] (fastlabel) {Too many open questions};
+  \node[hvredbox,text width=31mm,right=of fastlabel] (f1) {Package identity};
+  \node[hvredbox,text width=31mm,right=of f1] (f2) {Pattern taxonomy};
+  \node[hvredbox,text width=31mm,right=of f2] (f3) {Exceptions};
+  \node[hvredbox,text width=31mm,right=of f3] (f4) {Version and verdict};
+  \draw[hvline] (fastlabel)--(f1); \draw[hvline] (f1)--(f2);
+  \draw[hvline] (f2)--(f3); \draw[hvline] (f3)--(f4);
+
+  \node[hvlabel,below=12mm of fastlabel] (slowlabel) {One question closed at a time};
+  \node[hvgraybox,text width=31mm,right=of slowlabel] (s1) {Concrete example};
+  \node[hvgoldbox,text width=31mm,right=of s1] (s2) {Why the rule helps};
+  \node[hvgoldbox,text width=31mm,right=of s2] (s3) {Where it fails};
+  \node[hvbluebox,text width=31mm,right=of s3] (s4) {Product decision};
+  \draw[hvline] (slowlabel)--(s1); \draw[hvline] (s1)--(s2);
+  \draw[hvline] (s2)--(s3); \draw[hvline] (s3)--(s4);
+  \node[hvnote,text width=88mm,below=6mm of s2]
+    {Each step answers the question raised by the previous one before a new distinction arrives.};
+\end{tikzpicture}}
+\caption{Pacing depends on the number of unresolved questions, not simply on
+the number of words or the amount of white space.}
+\label{fig:concept-pace}
+\end{figure}}
+
+\newcommand{\hvFigureNarrowEvidence}{%
+\begin{figure}[H]
+\centering
+\resizebox{0.96\textwidth}{!}{%
+\begin{tikzpicture}[font=\small,node distance=6mm and 8mm]
+  \node[hvgraybox,text width=36mm] (build) {Build tools\\\footnotesize PDF, errors, page anchors};
+  \node[hvgraybox,text width=36mm,right=of build] (language) {Language tools\\\footnotesize source location, rule, message};
+  \node[hvgraybox,text width=36mm,right=of language] (reference) {Reference tools\\\footnotesize citation identity};
+  \node[hvgoldbox,text width=54mm,below=10mm of language] (join) {Humanvoice record\\\footnotesize joins observations to one source version};
+  \node[hvbluebox,text width=48mm,right=12mm of join] (reader) {Reader outcome\\\footnotesize understanding and decision};
+  \draw[hvline] (build)--(join); \draw[hvline] (language)--(join);
+  \draw[hvline] (reference)--(join); \draw[hvline] (join)--(reader);
+\end{tikzpicture}}
+\caption{Mature tools produce narrow, checkable observations. Humanvoice
+connects them to a source version; the reader supplies the outcome.}
+\label{fig:narrow-evidence}
+\end{figure}}
+
+\newcommand{\hvFigureAlternativeUnits}{%
+\begin{figure}[H]
+\centering
+\resizebox{0.94\textwidth}{!}{%
+\begin{tikzpicture}[font=\small,node distance=5mm and 12mm]
+  \node[hvlabel,anchor=east] (glabel) {General assistant};
+  \node[hvgraybox,text width=42mm,right=of glabel] (gunit) {Selected passage or communication context};
+  \node[hvgraybox,text width=42mm,right=of gunit] (gjob) {Grammar, wording,\\and tone};
+  \draw[hvline] (gunit)--(gjob);
+
+  \node[hvlabel,anchor=east,below=8mm of glabel] (alabel) {Academic editor};
+  \node[hvgoldbox,text width=42mm,right=of alabel] (aunit) {LaTeX source in an authoring environment};
+  \node[hvgoldbox,text width=42mm,right=of aunit] (ajob) {Research language and tracked edits};
+  \draw[hvline] (aunit)--(ajob);
+
+  \node[hvlabel,anchor=east,below=8mm of alabel] (hlabel) {Humanvoice};
+  \node[hvbluebox,text width=42mm,right=of hlabel] (hunit) {Versioned technical document and reading brief};
+  \node[hvbluebox,text width=42mm,right=of hunit] (hjob) {Protected comparison and reader decision};
+  \draw[hvline] (hunit)--(hjob);
+\end{tikzpicture}}
+\caption{The alternatives overlap, but their units of work differ. The
+Humanvoice claim begins where passage-level fluency and tracked edits stop.}
+\label{fig:alternative-units}
+\end{figure}}
+
+\newcommand{\hvFigureJudgeProtocol}{%
+\begin{figure}[H]
+\centering
+\resizebox{0.98\textwidth}{!}{%
+\begin{tikzpicture}[font=\small,node distance=4mm]
+  \node[hvgraybox,text width=29mm] (pair) {Two versions\\\footnotesize one rubric dimension};
+  \node[hvgoldbox,text width=29mm,right=of pair] (order) {Swap the order\\\footnotesize average both presentations};
+  \node[hvgoldbox,text width=29mm,right=of order] (length) {Control length\\\footnotesize remove verbosity advantage};
+  \node[hvgoldbox,text width=29mm,right=of length] (independent) {Independent judge\\\footnotesize not generator or editor};
+  \node[hvbluebox,text width=29mm,right=of independent] (human) {Human\\calibration\\\footnotesize compare with expert verdicts};
+  \draw[hvline] (pair)--(order); \draw[hvline] (order)--(length);
+  \draw[hvline] (length)--(independent); \draw[hvline] (independent)--(human);
+\end{tikzpicture}}
+\caption{A model preference becomes usable only after order, length,
+self-preference, and human-calibration controls.}
+\label{fig:judge-protocol}
+\end{figure}}
+
+\newcommand{\hvFigureDualTextViews}{%
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[font=\small,node distance=9mm and 18mm]
+  \node[hvgraybox,text width=48mm] (raw) {Raw LaTeX\\\footnotesize source lines, commands, protected spans};
+  \node[hvgraybox,text width=48mm,right=of raw] (prose) {Extracted prose\\\footnotesize cleaner linguistic context};
+  \node[hvgoldbox,text width=62mm,below=of $(raw)!0.5!(prose)$] (finding) {One finding\\\footnotesize shows both views and any disagreement};
+  \node[hvbluebox,text width=46mm,below=of finding] (author) {Author decision};
+  \draw[hvline] (raw)--(finding); \draw[hvline] (prose)--(finding);
+  \draw[hvline] (finding)--(author);
+\end{tikzpicture}
+\caption{Raw source preserves locations and technical structure; extracted
+prose gives language rules a cleaner sample. Humanvoice retains both.}
+\label{fig:dual-text-views}
+\end{figure}}
+
+\newcommand{\hvFigurePackageFamilies}{%
+\begin{figure}[H]
+\centering
+\resizebox{0.97\textwidth}{!}{%
+\begin{tikzpicture}[font=\small,node distance=5mm]
+  \node[hvgraybox,text width=34mm] (patterns) {Pattern sources\\\footnotesize humanizer, academic layer};
+  \node[hvgraybox,text width=34mm,right=of patterns] (located) {Located\\measurement\\\footnotesize Vale, sloptrim};
+  \node[hvgraybox,text width=34mm,right=of located] (corpus) {Corpus monitoring\\\footnotesize slop-forensics, aggregate detector};
+  \node[hvgraybox,text width=34mm,right=of corpus] (latex) {LaTeX feedback\\\footnotesize TeXtidote, LTeX+, textlint};
+  \node[hvgoldbox,text width=62mm,below=10mm of $(located)!0.5!(corpus)$] (adapters) {Humanvoice adapters\\\footnotesize retain provenance, location, rule, and limits};
+  \node[hvbluebox,text width=48mm,below=of adapters] (author) {Author review and\\protected comparison};
+  \draw[hvline] (patterns)--(adapters); \draw[hvline] (located)--(adapters);
+  \draw[hvline] (corpus)--(adapters); \draw[hvline] (latex)--(adapters);
+  \draw[hvline] (adapters)--(author);
+\end{tikzpicture}}
+\caption{The surveyed writing packages occupy different layers. They are
+inputs to one review path, not rival all-in-one products.}
+\label{fig:package-families}
+\end{figure}}
+
+\newcommand{\hvFigureLaTeXDiagnosticRoute}{%
+\begin{figure}[H]
+\centering
+\resizebox{0.95\textwidth}{!}{%
+\begin{tikzpicture}[font=\small,node distance=5mm and 9mm]
+  \node[hvlabel,anchor=east] (nowlabel) {Initial route};
+  \node[hvgraybox,text width=43mm,right=of nowlabel] (now) {sloptrim on raw TeX\\Vale on extracted prose};
+  \node[hvgoldbox,text width=43mm,right=of now] (nowtest) {Check spans and source recovery};
+  \draw[hvline] (now)--(nowtest);
+
+  \node[hvlabel,anchor=east,below=8mm of nowlabel] (pilotlabel) {Line-accurate pilot};
+  \node[hvgraybox,text width=43mm,right=of pilotlabel] (pilot) {TeXtidote or LTeX+};
+  \node[hvgoldbox,text width=43mm,right=of pilot] (pilottest) {Check protected-region precision};
+  \draw[hvline] (pilot)--(pilottest);
+
+  \node[hvlabel,anchor=east,below=8mm of pilotlabel] (fallbacklabel) {Fallback host};
+  \node[hvgraybox,text width=43mm,right=of fallbacklabel] (fallback) {textlint with\\latex2e plug-in};
+  \node[hvgoldbox,text width=43mm,right=of fallback] (fallbacktest) {Use only if detex mapping is too lossy};
+  \draw[hvline] (fallback)--(fallbacktest);
+\end{tikzpicture}}
+\caption{The LaTeX diagnostic sequence starts with tools that work now and
+adds a new rule host only when a held-out fixture shows why it is needed.}
+\label{fig:latex-diagnostic-route}
+\end{figure}}
+
+\newcommand{\hvFigureScoreBoundary}{%
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[font=\small,node distance=10mm and 18mm]
+  \node[hvgoldbox,text width=43mm] (score) {Surface instrument\\\footnotesize counts repetition, phrasing, or distributional signals};
+  \node[hvgraybox,text width=43mm,right=of score] (locate) {Permitted conclusion\\\footnotesize this passage deserves inspection};
+  \node[hvbluebox,text width=43mm,below=of score] (task) {Reader instrument\\\footnotesize purpose, mechanism, evidence, action};
+  \node[hvbluebox,text width=43mm,right=of task] (decision) {Permitted conclusion\\\footnotesize this version supported the declared task};
+  \draw[hvline] (score)--(locate); \draw[hvline] (task)--(decision);
+  \draw[hvback] (score)--node[left,hvnote]{no direct inference} (task);
+\end{tikzpicture}
+\caption{A surface score can nominate text for review. It cannot be promoted
+into a reader outcome without a separately observed task.}
+\label{fig:score-boundary}
+\end{figure}}
+
+\newcommand{\hvFigureHpoRounds}{%
+\begin{figure}[H]
+\centering
+\resizebox{0.97\textwidth}{!}{%
+\begin{tikzpicture}[font=\small,node distance=4mm and 7mm]
+  \node[hvredbox,text width=31mm] (r1) {Round 1\\\footnotesize paragraph packing\\210 words, six mechanisms};
+  \node[hvgoldbox,text width=31mm,right=of r1] (r2) {Round 2\\\footnotesize concept pacing\\exemplars set the pace};
+  \node[hvbluebox,text width=31mm,right=of r2] (r3) {Round 3\\\footnotesize dependency order\\name after the object};
+  \node[hvgraybox,text width=47mm,below=9mm of r2] (record) {One repeated complaint\\\footnotesize three located causes and three different repairs};
+  \draw[hvline] (r1)--(r2); \draw[hvline] (r2)--(r3);
+  \draw[hvline] (r1)--(record); \draw[hvline] (r2)--(record); \draw[hvline] (r3)--(record);
+\end{tikzpicture}}
+\caption{The HPO case turns one reader complaint into three diagnostic
+questions. The arrows show evidence entering a common record, not a claim
+that every document follows this sequence.}
+\label{fig:hpo-rounds}
+\end{figure}}
+
+\newcommand{\hvFigureDensityLadder}{%
+\begin{figure}[H]
+\centering
+\resizebox{0.96\textwidth}{!}{%
+\begin{tikzpicture}[font=\small,node distance=2mm]
+  \node[hvgraybox,text width=92mm] (surface) {1. Surface patterns\\\footnotesize repeated openings, stock phrases, private labels};
+  \node[hvgoldbox,text width=82mm,above=of surface] (packing) {2. Paragraph packing\\\footnotesize mechanisms, citations, and qualifications held together};
+  \node[hvgoldbox,text width=70mm,above=of packing] (pace) {3. Conceptual pacing\\\footnotesize introduction rate, consolidation, bursts, live load};
+  \node[hvbluebox,text width=58mm,above=of pace] (order) {4. Dependency order\\\footnotesize first use, gloss, known vocabulary, exemptions};
+  \draw[hvline] (surface)--(packing); \draw[hvline] (packing)--(pace); \draw[hvline] (pace)--(order);
+  \node[hvnote,text width=90mm,below=5mm of surface] {Each level locates a question. A reader, not the meter, decides whether the passage needs repair.};
+\end{tikzpicture}}
+\caption{A diagnostic ladder for the complaint ``too dense.'' Surface checks
+remain useful, but they cannot stand in for paragraph, pacing, or ordering
+evidence.}
+\label{fig:density-ladder}
+\end{figure}}

@@ -1,0 +1,71 @@
+\section{Data Consistency Patterns in Practice}
+
+The theoretical analysis in Section 4 establishes the formal boundaries of what consistency models are achievable. This section examines how those models manifest in the actual operation of each proposed service, with specific attention to the invariants that must hold and the mechanisms that enforce them.
+
+\subsection{Account Balance Consistency}
+
+Balance Tracker maintains the critical invariant that an account's available balance never goes negative except for authorized overdraft. In the monolithic system this is enforced by a database check constraint. In the distributed architecture it becomes substantially more complex.
+
+The write path receives a debit request, checks the current available balance from the read model, compares it against the debit amount plus the overdraft limit, and either accepts or rejects the request. The read model is a projection, updated asynchronously from the event stream, introducing a consistency window. During this window, concurrent debit requests may each observe a balance that permits their individual operation but whose aggregate would violate the invariant.
+
+Three approaches were evaluated. Pessimistic locking serializes all operations on an account, eliminating the race condition at the cost of throughput. For high-volume accounts this is unacceptable; benchmark data show a 40\% throughput reduction for accounts with more than 50 TPS. Optimistic locking permits concurrency but rejects operations when a version check fails, requiring retry logic and producing user-visible errors in 0.8\% of attempts under load. Reserved balance is the chosen approach: a debit operation writes a tentative hold to the event stream and waits for its projection before reporting success to the caller.
+
+The reserved balance mechanism introduces latency: the p99 debit latency increases from 30ms to 87ms. This cost is acceptable because it preserves the invariant without user-visible errors. The alternative—accepting occasional overdrafts and correcting them asynchronously—was rejected on compliance grounds. Regulatory reporting requires that reported balances never temporarily violate limits, even within subsecond windows.
+
+\subsection{Ledger Immutability}
+
+The Ledger service enforces an append-only constraint: once a transaction is committed, its record cannot be modified. This differs from the monolith, where retroactive corrections were implemented as UPDATE statements with audit triggers.
+
+Corrections in the event-sourced design occur as new events. A transaction recorded incorrectly on day 1 remains in the ledger forever; a correction event on day 2 records the adjustment. The queryable balance at any point in time is the aggregate of all events up to that point. This design preserves a complete history but complicates reporting, because queries must now sum events rather than reading a single record.
+
+Performance implications are significant. The monolithic design answered "what is the balance as of timestamp T" with a single indexed lookup. The event-sourced design requires scanning all events between account creation and T, then aggregating. For accounts with ten years of history and daily transactions, this is approximately 3,650 events. Benchmark measurements show p99 query latency of 280ms for these historical queries, versus 8ms in the monolith.
+
+Mitigation uses snapshot events: at monthly intervals, a balance snapshot is written to the event stream. Queries for timestamps after the most recent snapshot need only aggregate events since that snapshot, reducing the scan to at most 30 days. This reduces p99 historical query latency to 45ms while preserving the append-only property. The tradeoff is storage: snapshot events add approximately 8\% to the event stream size.
+
+The business impact of immutability extends beyond technical considerations. Auditors reviewing historical transactions expect to see the original incorrect record and the subsequent correction as separate entries. The event-sourced design makes this audit trail inherent, whereas the monolithic UPDATE approach required reconstructing it from audit triggers. Compliance stakeholders consider this a material improvement.
+
+\subsection{Cross-Service Data Duplication}
+
+Multiple services need customer account information: Account Management owns the authoritative record, but Authorization Engine, Balance Tracker, and Notification Dispatcher each need subsets. Three replication strategies were considered.
+
+Query-on-demand has each service query Account Management when it needs customer data. This preserves a single source of truth but introduces latency and coupling: if Account Management is unavailable, dependent services cannot function. Benchmark data showed this approach added 40ms to the critical path for authorization decisions, exceeding the latency budget.
+
+Replicated cache has each service maintain a local cache of customer records, invalidated when Account Management publishes account-update events. This provides low latency but introduces eventual consistency: a service may briefly operate on stale data after an account change. The consistency window is typically 40--80ms. For Authorization Engine this is unacceptable; for Notification Dispatcher it is fine.
+
+Replicated database has each service maintain a complete replica of the customer table, updated via change-data-capture from Account Management's data store. This provides strong consistency at the cost of storage duplication and operational complexity. Each replica lags the primary by 200ms at the p99.
+
+The chosen design uses replicated cache for eight services and query-on-demand with aggressive caching for Authorization Engine. Authorization Engine's cache has a 10-second TTL, short enough that regulatory changes to account restrictions propagate within compliance requirements but long enough to provide 99.7\% cache hit rate. The cache is pre-warmed at startup by scanning the customer table, eliminating cold-start latency penalties.
+
+\subsection{Settlement Batch Consistency}
+
+Settlement Coordinator orchestrates end-of-day batch operations that must be atomic: either the entire settlement succeeds or none of it does. In the monolith this was a single database transaction wrapping 40--60 individual operations. In the distributed architecture it becomes a multi-service saga with complex compensation logic.
+
+The settlement saga proceeds through seven phases: transaction cutoff (preventing new transactions from entering the current business day), balance aggregation (computing net positions), external file generation (producing settlement files for payment networks), transmission confirmation (receiving acknowledgment from external systems), ledger finalization (marking transactions as settled), balance release (unfreezing accounts), and reconciliation verification (comparing internal state to external confirmations).
+
+Failure at any phase requires compensating actions specific to that point. Failure during transaction cutoff is benign: simply retry. Failure during balance aggregation requires no compensation if the aggregation is idempotent. Failure during external file generation after files have been transmitted is the critical case: the external system has received the files but internal state has not advanced. Compensation requires determining whether the external system processed the files (by querying their status API), then either advancing internal state to match or issuing reversal files.
+
+The implementation includes 23 compensating action definitions covering all identified failure points. Testing these combinations requires a substantial investment in fault injection: the test suite executes 89 settlement scenarios with injected failures at each phase. Development of the settlement saga consumed 7 person-weeks, versus 2 person-weeks for the monolithic implementation, reflecting the inherent complexity of distributed coordination.
+
+The operational risk is that a novel failure mode—one not anticipated in the 23 compensating actions—leaves the system in an inconsistent state that requires manual resolution. This has occurred once in the pilot: a network partition during transmission confirmation left settlement in a state where internal state reflected successful transmission but no acknowledgment was received. The designed compensation action was to query the external status API, but the API itself was unavailable during the partition. Resolution required waiting for the partition to heal, then executing the compensation manually. This incident drove the requirement that all sagas include a "manual escape hatch" compensation path for operators to invoke when automated compensation fails.
+
+\subsection{Audit Trail Consistency}
+
+Audit Logger receives events from all eleven other services and must provide a consistent, tamper-evident log for compliance purposes. Regulatory requirements specify that the audit trail must be immutable, cryptographically verifiable, and queryable by transaction identifier, account identifier, and timestamp.
+
+The design uses an append-only event store with Merkle tree chaining. Each audit event includes a hash of the prior event, forming an immutable chain. A separate summary record is published hourly containing the Merkle root of all events in that hour. Any modification to a historical event would change its hash, which would change the hash of all subsequent events, which would fail to match the published hourly root.
+
+This provides tamper detection but not tamper prevention: a sufficiently privileged operator could modify both the event and the subsequent chain. Defense against insider threat requires that hourly roots be published to an external system outside the organization's control. The implementation writes roots to a blockchain-based timestamp service costing \$120 annually per service instance. This external witness provides non-repudiable evidence of the event sequence as of each hour.
+
+Query performance for audit trails is challenging because the write-optimized append-only structure is poorly suited for random access. Finding all events for a specific account requires scanning the entire event stream, which for a service processing 200,000 TPS over 24 hours is 17.3 billion events per day. A full scan takes approximately 14 minutes.
+
+Secondary indexes solve this for the common query patterns. An account-to-events index, an transaction-to-events index, and a timestamp-to-events index are built asynchronously from the event stream. Queries that can use an index complete in under 2 seconds at the p99. Queries that cannot—such as "find all events where field X contains substring Y"—still require full scans and are restricted to compliance officers using a separate batch query interface with explicit multi-minute timeouts.
+
+\subsection{Configuration Propagation Consistency}
+
+Configuration Manager distributes runtime parameters such as fraud scoring thresholds, feature flags, and rate limits. All services must agree on the active configuration version to prevent inconsistent behavior where one service processes a transaction under different rules than another.
+
+The implementation uses a two-phase protocol. Phase one: the new configuration is replicated to a quorum of Configuration Manager's five nodes using Raft consensus. Phase two: Configuration Manager publishes a configuration-version-changed event, and each service acknowledges when it has loaded the new version. The configuration is not considered active until all services have acknowledged, or until a 60-second timeout elapses, whichever comes first.
+
+The timeout case is the operational challenge. If one service fails to acknowledge—due to a crash, deployment, or message loss—the system must choose between blocking configuration changes indefinitely or activating despite incomplete propagation. The implementation chooses activation, but logs a high-severity alert and marks the configuration as "degraded." Operators are expected to investigate why acknowledgment failed.
+
+Measured propagation latency is 340ms at the p99 when all services are healthy. The degraded-mode timeout path has occurred 14 times in the pilot: 9 times due to a service being mid-deployment during the configuration change, 3 times due to message broker congestion, and twice for unexplained reasons that resolved before investigation could determine root cause. The business has accepted this behavior on the grounds that configuration changes are infrequent (approximately 3 per week) and do not require subsecond propagation.

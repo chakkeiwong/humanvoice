@@ -25,6 +25,44 @@ from humanvoice.paths import new_run_dir, mint_run_id
 from humanvoice.protected_objects import ProtectedManifest
 
 
+# Output tokens allowed per word of budgeted prose.
+#
+# Deliberately generous. LaTeX with JSON-escaped backslashes tokenises far worse
+# than plain prose: the ZLB run measured ~3.9 bytes per output token against a
+# typical ~4.5 for English text, and the JSON envelope adds its own overhead. A
+# tight conversion would truncate drafts that were the right length.
+WORDS_TO_TOKENS = 1.3
+
+# Floor for the per-unit ceiling. A blueprint that omits word_budget, or sets an
+# implausibly small one, must not produce a ceiling so low that every draft
+# truncates -- that would read as a model failure rather than a planning error.
+MIN_OUTPUT_CEILING_TOKENS = 600
+
+
+def _output_ceiling_tokens(section: Dict[str, Any]) -> int:
+    """
+    Output token ceiling for one unit, derived from its word budget.
+
+    Sizing the ceiling per unit is what makes an overrun diagnosable. Letting
+    every unit inherit the profile maximum means a 650-word section may emit
+    2000 words and still be called a success, and the document quietly drifts
+    past its planned length. Capping at the unit's own budget makes the overrun
+    surface as truncation on the unit that caused it.
+
+    The profile maximum still applies -- ModelAdapter._invoke_api takes the
+    minimum of this value and config.max_tokens -- so this can tighten the
+    ceiling but never raise it.
+    """
+    budget_words = section.get("word_budget")
+    if not isinstance(budget_words, (int, float)) or budget_words <= 0:
+        return MIN_OUTPUT_CEILING_TOKENS
+
+    # +20% matches the variance the word-budget check already tolerates, so a
+    # draft that lands inside the accepted range is never cut off mid-sentence.
+    allowed_words = budget_words * 1.2
+    return max(MIN_OUTPUT_CEILING_TOKENS, int(allowed_words * WORDS_TO_TOKENS))
+
+
 def _find_undrafted_sections(
     snapshot_dir: Path, sections: List[Dict[str, Any]]
 ) -> List[int]:
@@ -613,18 +651,44 @@ def run(args) -> int:
                     snapshot_dir=snapshot_dir,
                 )
 
-                print(f"Generating draft for '{section_title}' with {config.model_version}...",
+                # Size the output ceiling to this unit rather than letting every
+                # unit inherit the profile maximum. A unit whose budget is 650
+                # words has no business being allowed 2000 words of output: an
+                # overrun is a planning error, and capping it here makes that
+                # error surface as truncation on the unit that caused it instead
+                # of as silent budget drift across the document.
+                #
+                # WORDS_TO_TOKENS is deliberately generous. LaTeX with escaped
+                # backslashes tokenises far worse than prose -- the ZLB run
+                # measured ~3.9 bytes/token -- and the JSON envelope adds its own
+                # overhead, so a tight conversion would truncate correct drafts.
+                ceiling = _output_ceiling_tokens(section)
+
+                print(f"Generating draft for '{section_title}' with {config.model_version} "
+                      f"(ceiling {ceiling} tokens)...",
                       file=sys.stderr)
                 response = adapter.invoke(
                     prompt=prompt,
                     system_prompt=system_prompt,
                     schema=DRAFT_SCHEMA,
                     purpose="draft_generation",
+                    max_tokens=ceiling,
                 )
 
-                # Check for abstention
+                # Check for abstention or truncation
                 if response.abstention:
                     raise ValueError(f"Model abstained: {response.abstention}")
+
+                # Truncation means the output was incomplete -- treating it as success
+                # would write a partial unit into the snapshot and report convergence
+                # when the document is still broken. Rejecting it here forces the operator
+                # to diagnose (unit too large? ceiling misconfigured? prompt wasteful?)
+                # before proceeding.
+                if response.truncated:
+                    raise ValueError(
+                        f"Output truncated at {response.output_tokens} tokens "
+                        f"(ceiling was {ceiling}). Unit may be too large for its budget."
+                    )
 
                 # Parse and validate draft
                 try:
@@ -708,7 +772,7 @@ def run(args) -> int:
 
                 # In single-section mode, a failure is terminal
                 if not batch_mode:
-                    if "abstained" in error_msg.lower():
+                    if "truncated" in error_msg.lower() or "abstained" in error_msg.lower():
                         return 2
                     elif "register violation" in error_msg.lower() or "word_count=0" in error_msg:
                         return 1

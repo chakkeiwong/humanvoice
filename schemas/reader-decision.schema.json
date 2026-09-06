@@ -1,0 +1,122 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://humanvoice.local/schema/reader-decision.schema.json",
+  "title": "Humanvoice reader decision",
+  "description": "Records a human reader's reconstruction, confidence, and acceptance decision after reviewing an immutable reader packet. Per implementation contract release_authority: this is a separate human outcome after the machine release gate, not a second machine status.",
+  "type": "object",
+  "required": ["record_type", "schema_version", "record_id", "run_id", "created_at", "reader_name", "reader_role", "packet_hash", "document_hash", "rubric_responses", "confidence", "elapsed_minutes", "decision", "requested_changes"],
+  "properties": {
+    "record_type": {"const": "ReaderDecision"},
+    "schema_version": {"type": "string", "pattern": "^HV-SCHEMA-[0-9]+\\.[0-9]+$"},
+    "record_id": {"type": "string", "minLength": 1},
+    "run_id": {"type": "string", "minLength": 1},
+    "created_at": {"type": "string", "format": "date-time"},
+    "reader_name": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Named reader who performed the reconstruction task"
+    },
+    "reader_role": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Role the reader occupied during the task (e.g., 'operations lead', 'security reviewer')"
+    },
+    "packet_hash": {
+      "type": "string",
+      "pattern": "^[A-Fa-f0-9]{64}$",
+      "description": "SHA-256 of the immutable reader packet (PDF + metadata)"
+    },
+    "document_hash": {
+      "type": "string",
+      "pattern": "^[A-Fa-f0-9]{64}$",
+      "description": "SHA-256 of the released PDF"
+    },
+    "rubric_responses": {
+      "type": "object",
+      "description": "Six reader rubric questions per proposal §7.1 and contract WP5",
+      "required": ["problem_reconstruction", "mechanism_reconstruction", "decisive_evidence", "qualification", "action", "stop_or_reread"],
+      "properties": {
+        "problem_reconstruction": {
+          "type": "object",
+          "required": ["response", "confidence"],
+          "properties": {
+            "response": {"type": "string", "minLength": 1},
+            "confidence": {"type": "string", "enum": ["high", "medium", "low"]}
+          }
+        },
+        "mechanism_reconstruction": {
+          "type": "object",
+          "required": ["response", "selected_components"],
+          "properties": {
+            "response": {"type": "string", "minLength": 1},
+            "selected_components": {"type": "array", "items": {"type": "string"}}
+          }
+        },
+        "decisive_evidence": {
+          "type": "object",
+          "required": ["selection", "explanation"],
+          "properties": {
+            "selection": {"type": "string", "minLength": 1, "description": "Source or passage"},
+            "explanation": {"type": "string", "minLength": 1}
+          }
+        },
+        "qualification": {
+          "type": "object",
+          "required": ["response"],
+          "properties": {
+            "response": {"type": "string", "description": "What qualification changes your interpretation"}
+          }
+        },
+        "action": {
+          "type": "object",
+          "required": ["decision", "reason"],
+          "properties": {
+            "decision": {"type": "string", "enum": ["accept", "request-revision", "decline"]},
+            "reason": {"type": "string", "minLength": 1}
+          }
+        },
+        "stop_or_reread": {
+          "type": "object",
+          "required": ["location", "quoted_span", "missing_relation"],
+          "properties": {
+            "location": {"type": ["string", "null"], "description": "Page or section where reader stopped or reread"},
+            "quoted_span": {"type": ["string", "null"], "description": "Short quoted text that triggered the stop"},
+            "missing_relation": {"type": ["string", "null"], "description": "The relation the reader was trying to recover"}
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "confidence": {
+      "type": "string",
+      "enum": ["high", "medium", "low"],
+      "description": "Overall reader confidence in their reconstruction"
+    },
+    "elapsed_minutes": {
+      "type": "number",
+      "minimum": 0,
+      "description": "Time from first page to final answer, excluding pauses"
+    },
+    "decision": {
+      "type": "string",
+      "enum": ["accept", "request-revision", "decline"],
+      "description": "Reader's final decision on the document"
+    },
+    "requested_changes": {
+      "type": "array",
+      "items": {"type": "string"},
+      "description": "Specific changes requested if decision is request-revision"
+    },
+    "prior_exposure": {
+      "type": ["string", "null"],
+      "enum": ["none", "topic-familiar", "project-familiar", "author-familiar", null],
+      "description": "Reader's prior exposure to the topic or project"
+    },
+    "repository_context_used": {
+      "type": "boolean",
+      "description": "Whether reader consulted repository or source context (should be false per independence requirement)"
+    },
+    "extensions": {"type": "object"}
+  },
+  "additionalProperties": false
+}

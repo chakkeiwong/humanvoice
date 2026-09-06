@@ -1,0 +1,16 @@
+{
+  "record_type": "Finding",
+  "schema_version": "HV-SCHEMA-1.0",
+  "record_id": "finding-invalid-001",
+  "run_id": "run-invalid-003",
+  "created_at": "2026-08-26T00:00:00Z",
+  "category": "register",
+  "location": {"path": "example.tex", "line": 1},
+  "observation": "A private path appears in reader-facing prose.",
+  "consequence": "A new reader may not recover the comparison.",
+  "question": "Name the public decision and omit the private path.",
+  "rule_version": "register-1.0",
+  "author_decision": "pending",
+  "status": "open",
+  "undeclared_field": "must be placed under extensions"
+}

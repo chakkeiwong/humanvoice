@@ -1,0 +1,17 @@
+{
+  "databases": [
+    "ACL Anthology",
+    "ICLR Proceedings",
+    "NBER",
+    "RePEc/IDEAS"
+  ],
+  "invalid_files": 0,
+  "literature_files": 4,
+  "literature_provenance_records": 11700,
+  "literature_records": 11700,
+  "metadata_files": 4,
+  "raw_source_hash_mismatches": 0,
+  "software_files": 0,
+  "software_provenance_records": 0,
+  "software_records": 0
+}

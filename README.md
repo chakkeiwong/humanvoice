@@ -1,60 +1,121 @@
 # humanvoice
 
-Teaching agents to write documents a human will actually read.
+Helping technical authors reach a human reader with fewer wasted revisions.
 
-This repository consolidates the workspace's scattered efforts on human-facing
-scientific writing (claudecodex policies and skills, the DynareMCP/AIpostdoc
-record, the BayesFilter, MacroFinance, cardnpv, and SMEwallet documentation
-histories, ResearchAssistant, MathDevMCP) and hosts the tooling those efforts
-showed was missing.
+Humanvoice is a proposed LaTeX-first authoring and revision system. It turns a
+reader brief into an argument blueprint, drafts in bounded units, runs
+fail-closed pre-human checks, protects meaning-bearing objects, and releases a
+direct decision task for a named reader only after the earlier gates pass. The
+project is meant to reduce the expert time lost to repeated diagnosis and
+rereading without turning a style score or model judgment into an acceptance
+decision.
 
 ## Start here
 
-`docs/survey/humanvoice_survey.pdf` — the founding document (40 pages,
-revised 22 August 2026 after the sixteen-page first version was rejected for
-density; the rejection itself became evidence, see its Section 1.2). It
-contains:
+Read [`docs/survey/humanvoice_survey.pdf`](docs/survey/humanvoice_survey.pdf).
+This is the single reader-facing document: it is both the product proposal and
+the literature/software evidence needed to decide whether to build it. Its
+canonical source is [`docs/survey/humanvoice_survey.tex`](docs/survey/humanvoice_survey.tex).
+Build it with:
 
-1. The failure record across five projects, told in sequence with real
-   before/after repair examples and a defect taxonomy (Section 2).
-2. A review of each existing tool with merits and issues (Section 3).
-3. The research literature explained at method level, with the formulas a
-   builder needs (Section 4).
-4. Detailed reviews of fourteen open-source projects, including a
-   calibration experiment run on our own documents (Section 5; verdicts in
-   Table 4). Evaluated code is pinned under `vendor/` (see
-   `vendor/MANIFEST.md` for commits).
-5. Design requirements traced to evidence (Section 6, Table 5) and the
-   proposal: the `hv` diagnostic CLI specified per command, and work
-   packages WP1-WP5 with replay-based acceptance tests (Section 7).
+```bash
+tools/build_humanvoice.sh
+```
 
-Rebuild with `pdflatex + bibtex` from `docs/survey/humanvoice_survey.tex`.
+The volume opens with the investment decision and a concrete failure, then
+examines the research literature, the software field, the capabilities already
+in the project, the product design, the evaluation, the economics, and the
+implementation plan. The internal case record and detailed requirements are
+appendices in that same volume. Readers should not need to choose between a
+``proposal'' and a ``survey.''
 
-## The one-paragraph version
+The current expanded build is 266 A4 pages and approximately 95,358 extracted
+words, with about 56,558 words on the reader-facing route before the
+appendices. It contains 38 figures, 72 tables, and 110 numbered visuals
+(roughly one visual every 2.20 pages). The
+volume includes a worked source-to-reader case, foundational writing
+scholarship, a discipline-level literature synthesis, an adjacent-product
+comparison, package dossiers and held-out fixtures, a concrete architecture,
+a detailed evaluation design, and an operating plan in the same volume. The
+document is still an author-repaired draft pending independent reader review
+and completion of the evidence review.
 
-Agent-written documents fail in layers: internal register hides mechanical
-style tells, which hide defensive prose, which hides missing substance; repair
-must follow that order. The doctrine for avoiding this exists (the
-reader-facing-prose policy, two writing skills, the humanizer pattern list,
-all with a fixed precedence: correctness, source fidelity, domain meaning,
-reader comprehension, then template regularity). What does not exist is the
-measurement layer — register linter, rhythm profiler, defensive-register
-finder, LaTeX-aware baseline differ — and the evaluation evidence that any of
-the doctrine works. This project builds both, keeps process deliberately thin
-(the BGS record shows governance cannot write), and treats the human read as
-the only acceptance gate.
+The machine-readable requirements trace is
+`docs/survey/humanvoice_product_requirements.csv`. Search histories, source
+identity checks, package benchmarks, and review records remain under
+`docs/survey/audit/latest/` as private reproducibility material. They support
+the single document; they are not a second public narrative.
 
-## Planned layout
+The implementation boundary is specified in
+`schemas/implementation_contract.json`, with JSON Schemas for every run record
+under `schemas/` and a corpus-rights manifest at
+`docs/survey/evidence/corpus_rights_manifest.json`.
+
+## Evidence audit
+
+The evidence runner records discovery, screening, claim inspection, software
+inventory, package evaluation, and unresolved human review. Run it with:
+
+```bash
+python tools/survey_audit.py run --online --execute-tools --build-pdf --output docs/survey/audit/latest --replace-output
+python tools/survey_audit.py validate --run docs/survey/audit/latest
+python tools/survey_audit.py publish --run docs/survey/audit/latest
+```
+
+Runs refuse to write into a non-empty directory. Use a fresh output path for
+each audit, or pass `--replace-output` to move the prior run to a timestamped
+`.previous-*` sibling before rebuilding; prior artifacts are never silently
+mixed into a new run.
+
+To add the reproducible public ACL Anthology supplement first, run
+`python tools/survey_audit.py collect-public`; licensed economics and indexing
+exports still need to be supplied separately with provenance sidecars. The
+public slices do not by themselves satisfy the specialist-domain gate. The
+current run satisfies that gate with the bounded RePEc/IDEAS collector
+(`python tools/collect_repec.py`); a future release may replace or extend that
+slice with an institutional EconLit, SSRN, ACM, IEEE, Web of Science, or Scopus
+export.
+
+The protocol, query log, raw response hashes, candidate registry, screening
+ledger and queue, claim-level evidence matrix, software inventory and package
+record, evaluation plan, benchmark results, dossier, and artifact manifest are
+written under `docs/survey/audit/latest/`. New runs generate
+`implementation_dossier.*`; preserved older runs may retain the legacy
+`final_product_proposal.*` names inside their run folder.
+
+`publish` copies only machine-readable requirements and status summaries, while
+leaving the human-readable audit report and dossier under the run directory.
+It does not copy another narrative beside the proposal, and it never writes
+the canonical `humanvoice_survey.tex`, its PDF, or
+`humanvoice_document_status.json`. The runner returns a nonzero status while
+required evidence or human review remains incomplete.
+
+## Product thesis
+
+A plausible draft can pass compilation, grammar checks, and several model
+reviews while still making an expert reader reconstruct its purpose and
+argument. Existing linters, language models, citation services, and version
+control each solve part of the writing path. Humanvoice connects them before
+the expensive read: it compiles the brief, checks the argument and concept
+order, locates repairable failures, protects substantive content during
+revision, and measures the reader outcome that matters. The MVP tests whether
+that fail-closed workflow is usable and measurable. A later comparison must
+earn any claim that it improves expert writing.
+
+## Implementation surface
 
 ```
-policies/     single home for the writing doctrine (WP1)
-diagnostics/  the hv CLI: leak, rhythm, defensive, diff, gate, drift (WP2)
-corpus/       evaluation assets: BGS repair pairs, ZLB pass snapshots,
-              SMEwallet draft units, pre-2022 economics baseline (WP3)
-harness/      reader-proxy review templates and behavioral tests (WP3/WP4)
-vendor/       pinned external tools with commit manifest (done)
-docs/survey/  the founding survey and proposal (done)
+docs/survey/  the canonical proposal, evidence status, and source material
+schemas/      normative implementation contract and machine-readable records
+tools/        build, structural diagnostics, audit, and test commands
+vendor/       candidate external components retained for bounded benchmarks
+docs/plans/   execution plans and author-side review records
 ```
+
+The implementation work should add source adapters, protected-object fixtures,
+diagnostic adapters, and reader-evaluation assets only when they support the
+MVP contract in the proposal. Work-package names are deliberately not part of
+the reader-facing story.
 
 Non-goal: detector evasion. humanvoice improves prose under disclosure norms
 and never optimizes against an AI-text detector.

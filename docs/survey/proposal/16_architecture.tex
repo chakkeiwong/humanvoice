@@ -1,0 +1,374 @@
+\chapter{Architecture for reversible review}
+\label{ch:architecture}
+
+Open a finished review packet and four things should be easy to find: the
+version the reader saw, the changes the author made, the technical objects that
+survived, and the reader's decision. The packet exists only because an earlier
+brief, blueprint, and pre-human release record cleared the path. Parsers,
+linters, models, and build tools support those steps; none of them owns the
+document.
+
+That practical test drives the engineering. The system records explicit
+correspondence and abstains when it cannot establish one. The author sees
+context and alternatives. The reader sees a clean document and a short task.
+
+Figure~\ref{fig:record-model} shows the minimum set of relationships. A larger
+schema would add fields, but it would not change the ownership of the arrows.
+
+\hvFigureRecordModel
+
+\section{The objects that must survive a revision}
+\label{sec:architecture-objects}
+
+The first release needs eleven records. Their names are technical
+because the software stores them, not because the finished document should
+expose them as labels.
+
+\begin{description}[style=nextline,leftmargin=37mm,labelindent=0mm]
+\item[Authoring brief] The intended reader, decision, genre, known vocabulary,
+named exemplars, evidence boundary, privacy class, protected objects, and
+explicit unknowns.
+\item[Argument blueprint] The claim map, evidence anchors, concept-dependency
+graph, section jobs, terminology order, and visual plan approved before
+long-form drafting.
+\item[Document] The stable identity of a work, its genre, intended reader, and
+declared decision.
+\item[Source snapshot] The exact source tree, build environment, compiler
+output, and content hash used for a version.
+\item[Protected object] An equation, number, label, citation, table, quotation,
+code block, or qualification with a source span and normalized form.
+\item[Finding] A located passage, an observable reason for attention, an
+optional machine suggestion, and the author's decision.
+\item[Revision] A source snapshot derived from a parent version, with the
+author, time, changed spans, and explanations.
+\item[Reader session] A rendered version, reader role, context supplied, task
+questions, time observations, and decision.
+\item[Preflight run] The build, integrity, argument, writing, evidence,
+reconstruction, mutation, abstention, and repair results for a candidate
+version.
+\item[Release decision] The gate results, explicit exceptions, packet hash,
+unresolved risks, and named owner of release.
+\item[Evidence item] A source or software observation tied to a claim, a
+fixture, or a product choice, with provenance and appraisal state.
+\end{description}
+
+The relationships are more important than the field names. A brief owns a
+blueprint; a blueprint owns bounded units; a finding belongs to a source
+snapshot and a preflight run; a revision answers one or more findings; a
+protected-object comparison links parent and child snapshots; and a reader
+session sees only one released version at a time. An evidence item may motivate
+a finding rule or a reader question, but it cannot silently alter a document.
+
+Let $D$ be a document, $s$ a source snapshot, and $r$ a revision. The basic
+lineage is
+\begin{equation}
+  D \longleftarrow B \longrightarrow P \longrightarrow s_0
+  \xrightarrow{\;r_1\;} s_1 \longrightarrow \text{preflight}
+  \longrightarrow \text{release} \longrightarrow \text{reader session}.
+  \label{eq:architecture-lineage}
+\end{equation}
+The arrows carry a person and a time. A generated suggestion is not an arrow
+until it is accepted into a bounded unit and the source changes; a candidate is
+not a release until its preflight record passes. This simple rule makes
+it possible to answer a later question such as ``who changed the denominator
+in Table 3, and why?'' without reading a prompt transcript.
+
+\section{The source snapshot and the canonical build}
+\label{sec:architecture-snapshot}
+
+When an author opens a version, the system must be able to reproduce the page
+the reader will see. It therefore stores the whole source directory, not just a
+hash of the top file: entry point, included files, bibliography, image hashes,
+compiler version, package list, relevant environment variables, and build log.
+The rendered PDF belongs to the version because readers judge the page, not the
+source alone.
+
+The build wrapper performs the checks in a fixed order. It first validates that
+the requested entry point names one reader-facing route and that the source is a
+read-only snapshot. It then compiles with \texttt{-no-shell-escape}, inside a
+network-denied scratch directory, twice around bibliography generation, checks
+references and citations, and finally records the PDF hash and page count. A
+clean build is useful evidence about typography and reproducibility. It says
+nothing about whether the argument is persuasive, so the wrapper reports it as
+a build result rather than as a reader verdict. The complete trust-boundary
+contract appears in Appendix~\ref{app:implementation-contract}.
+
+The snapshot also stores a detexed prose view for diagnostics. Detexing is a
+lossy transformation. Equations, tables, captions, and source locations remain
+in the canonical source and PDF; the prose view is allowed to answer only
+questions about words, sentence boundaries, and paragraph structure. A finding
+created from the prose view links back to its source span before it can enter an
+author's queue.
+
+\begin{table}[H]
+\centering
+\small
+\begin{tabularx}{\textwidth}{@{}p{0.23\textwidth}L p{0.28\textwidth}@{}}
+\toprule
+Snapshot field & Example value & Why the field matters \\
+\midrule
+Entry point & \path{docs/survey/humanvoice_survey.tex} & Establishes which
+document the reader is being asked to judge \\
+Included source hash & Hash over route files & Prevents an unrecorded include
+from changing the evidence \\
+Build environment & pdfTeX version, packages, date epoch & Makes a PDF
+replayable and distinguishes source from rendering noise \\
+Protected manifest & Object IDs, spans, normalized values & Makes a changed
+number or equation visible \\
+Authoring brief & Role, decision, time budget, disclosure, evidence boundary &
+Defines the task and the material the writer may use \\
+Blueprint hash & Claims, dependencies, unit jobs, visual plan & Makes the
+argument order and writer context reproducible \\
+Preflight and release & Gate results, mutations, abstentions, packet hash &
+Shows why the reader was asked to spend time \\
+\bottomrule
+\end{tabularx}
+\caption{A snapshot joins the source, its rendering, and the reader task.}
+\label{tab:snapshot-fields}
+\end{table}
+
+\section{Protected objects and correspondence}
+\label{sec:architecture-protection}
+
+Before an author accepts a revision, the system must find every equation,
+number, label, citation, table, quotation, code block, and qualification whose
+silent alteration could change the argument. The extractor scans the source
+and rendered representations, assigns each object a stable local ID, and keeps
+the raw span beside a normalized value. It may ignore whitespace around an
+equation operator; it may not ignore a changed exponent, sign, unit, or table
+denominator.
+
+For object $p$ in version $v$, let $raw_v(p)$ be the source span, $norm_v(p)$
+the normalized representation, and $loc_v(p)$ its source and PDF location. A
+candidate correspondence from parent $v$ to child $v'$ is accepted only if
+the object type, semantic anchor, and local context agree:
+\begin{equation}
+  match(p_v,p_{v'}) =
+  1\{type_v=type_{v'}\}\,1\{anchor_v\approx anchor_{v'}\}\,
+  1\{context_v\approx context_{v'}\}.
+  \label{eq:architecture-match}
+\end{equation}
+The relation $\approx$ is intentionally typed. For a citation it can use the
+key and bibliography identity; for a table cell it can use row and column
+labels; for an equation it can use its environment, label, and neighboring
+text. When the relation is ambiguous, the extractor returns an unresolved
+match for the author rather than choosing the highest textual similarity.
+
+The comparison result has four ordinary-language outcomes: unchanged,
+explained change, added or removed with an author explanation, and unresolved.
+The last outcome blocks a release of the revision packet. It is the one place
+where abstention is more valuable than coverage.
+
+\begin{cardexample}{algebraic equivalence is not string equality}
+The parent writes $a/(b+c)$ and the child writes $(b+c)^{-1}a$. A character
+diff reports a large change. A parser may establish algebraic equivalence under
+the declared commutativity assumptions, but it must also show the author the
+assumptions and the source locations. If the parent instead writes
+$a/(b-c)$, the same normalizer must not silently identify the two forms. The
+first release can conservatively mark both changes for review; it need not
+solve symbolic mathematics to protect a document.
+\end{cardexample}
+
+Numbers receive an analogous treatment. The normalized record stores value,
+unit, sign, precision, and a relation to a table, equation, or prose claim.
+Changing ``3.0 hours'' to ``3 hours'' is a formatting change if the precision
+policy permits it. Changing ``3.0'' to ``30'' is a substantive change even when
+the surrounding paragraph is identical. The user interface should show both
+the raw and normalized forms so that a reader can tell which rule was applied.
+
+\section{Findings as questions, not verdicts}
+\label{sec:architecture-findings}
+
+When a passage deserves attention, the author needs more than a score. The
+finding layer combines deterministic rules, corpus statistics, and optional
+model suggestions to provide a location, an observable reason, a consequence
+hypothesis, and a next action. The hypothesis does not declare the passage
+wrong; it explains why the passage may deserve a human's time.
+
+For finding $f$, write
+\begin{equation}
+  f=(loc, rule, observation, consequence, question, suggestion),
+  \label{eq:architecture-finding}
+\end{equation}
+where $suggestion$ may be empty. A useful finding can therefore read:
+
+\begin{quote}
+The phrase ``frozen interface'' occurs before the comparison is defined. A
+reader without the project history may not know which inputs are held fixed.
+Should the paragraph name the baseline and the changed mechanism first?
+\end{quote}
+
+The finding does not read ``AI phrase detected'' or ``bad writing.'' Those
+labels collapse an observation, a genre judgment, and a remedy into one
+authority claim. They also invite authors to optimize the label rather than
+repair the passage.
+
+Findings are ranked by expected reader consequence and review cost. A practical
+priority function for the pilot is
+\begin{equation}
+  priority(f)=\frac{p_f\,c_f}{1+b_f},
+  \label{eq:architecture-priority}
+\end{equation}
+where $p_f$ is the adjudicated probability that the issue blocks the reader's
+task, $c_f$ is its consequence if left unrepaired, and $b_f$ is the expected
+author burden. The terms are estimates used to order a queue, not a quality
+score. The pilot should compare this ordering with the order in which readers
+actually report problems.
+
+\section{Three views with different responsibilities}
+\label{sec:architecture-views}
+
+The author view is a source-aware workbench. It shows the passage, source
+location, rendered context, protected objects nearby, and any model suggestion.
+The author can accept, reject, defer, or rewrite. A rejection asks for a short
+reason, not a long compliance form. The view should make the next useful edit
+obvious without forcing the author to inspect every low-confidence rule hit.
+
+The reviewer view is narrower. An independent reviewer sees the source claim,
+the cited evidence, the change explanation, and the protected comparison. The
+reviewer can confirm the correspondence, ask for a correction, or mark the
+claim as not checked. The reviewer does not need the author's entire prompt
+history.
+
+The reader view is deliberately plain. It is the rendered proposal, its
+figures and references, and a short decision context. It does not show finding
+IDs, model confidence, parser warnings, or internal phase names. At the end of
+the reading task, the reader records the decision, the first unresolved
+question, and the time spent. This separation is a product requirement: a
+reader who sees the backstage machinery is no longer independent of the project.
+
+\begin{table}[H]
+\centering
+\small
+\begin{tabularx}{\textwidth}{@{}p{0.19\textwidth}p{0.28\textwidth}L@{}}
+\toprule
+View & Primary question & Information deliberately omitted \\
+\midrule
+Author & What should I investigate or change, and what meaning must I protect? &
+Other readers' private judgments and irrelevant rule hits \\
+Reviewer & Is the source, change, and evidence correspondence defensible? &
+Prompt transcripts and a global style score \\
+Reader & Can I understand the decision and act on this document? & Source
+history, finding IDs, model confidence, and internal project language \\
+\bottomrule
+\end{tabularx}
+\caption{The same revision has three views because the three people have
+different jobs.}
+\label{tab:architecture-views}
+\end{table}
+
+\section{Local inference and the trust boundary}
+\label{sec:architecture-trust}
+
+The product is local-first because technical documents often contain private
+data, unpublished results, or contractual material. Local-first does not mean
+that every computation must run on a laptop. It means that the default path
+keeps the source inside an explicitly declared boundary and requires an
+authorization before a remote service sees content.
+
+The inference adapter records model family, model file or endpoint, prompt
+template, sampling parameters, network state, and output hash. It passes only
+the context needed for the finding. A citation identity lookup may use a public
+identifier without sending the surrounding manuscript. A model suggestion may
+be generated on a redacted passage. The author decides whether the suggestion
+is useful; the adapter never writes directly to the canonical source.
+
+Privacy is a property of the data flow. Let $X$ be the source, $Z$ a redacted
+context, and $Y$ a model response. A local run has $X\to Z\to Y$ inside the
+declared boundary. A remote run adds an external recipient $E$ and requires
+explicit authorization:
+\begin{equation}
+  X\to Z\to Y\quad\text{(local)},\qquad
+  X\to Z\to E\to Y\quad\text{(remote, authorized only)}.
+  \label{eq:architecture-trust-flow}
+\end{equation}
+The diagram is a data-flow statement, not a promise that redaction is perfect.
+The privacy review must test whether equations, rare identifiers, and quoted
+sentences can re-identify a source even after obvious names are removed.
+
+\section{Interfaces and commands}
+\label{sec:architecture-interfaces}
+
+The first command surface has the same six verbs introduced in
+Chapter~\ref{ch:product} and specified in Chapter~\ref{ch:proposal}:
+
+\begin{description}[style=nextline,leftmargin=30mm,labelindent=0mm]
+\item[\texttt{hv init}] Validates the authoring brief, evidence boundary,
+privacy class, and protected-object declarations. Critical blanks block the
+writer.
+\item[\texttt{hv plan}] Builds the claim map, dependency graph, unit jobs,
+terminology order, and visual plan. Missing warrants become questions.
+\item[\texttt{hv draft}] Invokes the replaceable writer for one approved unit
+and records the context and evidence it received.
+\item[\texttt{hv preflight}] Runs build, integrity, argument, writing,
+evidence, reconstruction, and mutation checks. Unknown results remain
+blockers.
+\item[\texttt{hv repair}] Applies a named repair, rebuilds, reruns preflight,
+and stops on a cycle limit or oscillation.
+\item[\texttt{hv release}] Presents a clean version and records the named
+reader's task outcome only after the release gate passes. A report is an export
+of this record, not another top-level command.
+\end{description}
+
+The commands exchange versioned JSON records, not hidden global state. A
+minimal finding record can be represented as
+\begin{verbatim}
+{
+  "finding_id": "F-014",
+  "source": "chapter.tex:87",
+  "rule": "private-register",
+  "observation": "phase label precedes public definition",
+  "question": "name the comparison before the project history",
+  "author_decision": "accepted",
+  "revision_id": "R-003"
+}
+\end{verbatim}
+The record schemas and compatibility rule are fixed in Appendix~\ref{app:implementation-contract}
+and in \path{schemas/}. A minor schema version may add optional fields; a major
+change requires migration and fixture replay. The invariant is that a later
+reader can locate the passage and the author decision without opening an
+orchestration log.
+
+\section{Failure handling and observability}
+\label{sec:architecture-failure}
+
+The system should fail in ways that help a person decide what to do next. An
+unknown macro yields ``source not parsed'' with a location. A missing citation
+identifier yields ``identity unresolved'' with the key. A protected equation
+that cannot be matched yields ``comparison unresolved'' and blocks the release
+gate. A local model that exceeds the memory envelope yields a clear fallback to
+deterministic findings, but any gate that depends on the model remains
+abstained. A failed dependency or reconstruction check yields a located repair,
+not a reader packet. None of these states should be phrased as a successful
+review with a small confidence score.
+
+When a parser cannot read a macro, the build log should say so. When a model
+falls outside the memory envelope, the inference adapter should record the
+fallback. The build log records compiler errors and warnings, the parser
+records unsupported constructs, the adapter records latency, memory, and
+network policy, and the reader protocol records task completion and questions.
+Those records are what we mean by observability. A single ``quality'' number
+would hide the failed boundary and make repair harder.
+
+The operational envelope for the feasibility build is intentionally modest and
+is stated numerically in Appendix~\ref{app:implementation-contract}: a 300-page
+cap, 2,000 protected objects, bounded scratch space, and fixed deterministic
+and model-assisted time limits on the reference machine. Those are planning
+caps, not performance claims. Week six records the actual distributions and
+either revises the caps openly or narrows the supported document class.
+
+\section{The result of this architecture}
+\label{sec:architecture-conclusion}
+
+Follow one document through the system and the promise becomes testable. The
+brief identifies the reader and decision; the blueprint explains why each unit
+exists; a bounded draft records its evidence; preflight exposes a failure before
+release; a revision records a human choice; a protected comparison exposes a
+meaning-bearing change; and a clean reader view supplies the outcome. Engineers
+can replace a component as long as it respects those boundaries.
+
+The architecture does not guarantee a persuasive document. It makes the
+failure legible and makes a comparative experiment possible. That is the
+appropriate ambition for the first investment. The next Part specifies the
+experiment, the economic decision rule, and the operating work required if the
+path earns a larger trial.

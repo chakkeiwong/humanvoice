@@ -1,0 +1,37 @@
+{
+  "record_type": "ReleaseDecision",
+  "schema_version": "HV-SCHEMA-1.1",
+  "record_id": "release-20260829-173350",
+  "run_id": "snapshot-20260829-173345",
+  "created_at": "2026-08-29T17:33:50.137034+00:00",
+  "gate_results": {
+    "protected_correspondence": "pass",
+    "brief_parsing_promises": "pass",
+    "evidence_sufficiency": "pass",
+    "unauthorized_transmission": "pass",
+    "deterministic_preflight": "blocked",
+    "source_build": "pass",
+    "author_convergence": "pass"
+  },
+  "packet_hash": "",
+  "status": "blocked",
+  "authorized_by": "machine",
+  "exceptions": [
+    {
+      "gate": "deterministic_preflight",
+      "never_except": true,
+      "detail": {
+        "reason": "unresolved_preflight_findings",
+        "preflight_id": "preflight-20260829-173350",
+        "finding_count": 2,
+        "categories": [
+          "register"
+        ],
+        "detail": "2 deterministic finding(s) stand unresolved in preflight-20260829-173350. Repair them and re-run preflight."
+      }
+    }
+  ],
+  "unresolved_risks": [
+    "deterministic_preflight"
+  ]
+}

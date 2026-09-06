@@ -1,0 +1,138 @@
+\chapter{Evidence and technical notes}
+\label{app:notes}
+
+This appendix preserves the detail that an implementer or scholar may need
+after reading the main argument. It is not a project diary. Search ledgers,
+raw responses, source hashes, and package manifests remain in the repository's
+evidence record; this appendix states only the conclusions relevant to the
+proposal.
+
+\section{How to read the evidence status}
+
+The literature and software review was assembled from primary papers,
+systematic reviews, official documentation, and internal case records. Source
+identity and claim support were treated as separate questions. A DOI match
+establishes bibliographic identity; it does not establish that the source
+supports a sentence. A package's official documentation establishes an
+available function; it does not establish effectiveness on technical
+documents.
+
+At the current run, ten of fifteen evidence gates pass. The bounded
+RePEc/IDEAS specialist slice, live known-item recall checks, and Crossref DOI
+identity checks are complete. The outstanding items are independent screening
+and adjudication, full-text anchors and design-specific appraisal for
+load-bearing studies, held-out package benchmarks, and independent external
+review. The proposal is therefore an author-repaired research request, not a
+completed systematic review or an efficacy report.
+
+\begin{boundarybox}{Claim classes used in this proposal}
+\begin{description}
+\item[Source result.] The cited source explicitly reports the finding at the
+  inspection depth available.
+\item[Local implication.] The product consequence follows from the source
+  result and the stated workflow, without adding an efficacy claim.
+\item[Project hypothesis.] The proposed workflow may reduce burden or improve
+  reconstruction; the feasibility and comparative studies must test it.
+\item[Open question.] The current evidence does not decide the issue and names
+  the next observation required.
+\end{description}
+\end{boundarybox}
+
+\section{The compact internal case record}
+
+The internal cases are product requirements, not external efficacy evidence.
+They are useful because they contain a failure, a repair, and a reader
+consequence rather than a collection of style opinions.
+
+\begin{table}[H]
+\centering
+\small
+\begin{tabularx}{\textwidth}{@{}p{0.21\textwidth}L p{0.28\textwidth}@{}}
+\toprule
+Case & Observed pattern & Design consequence \\
+\midrule
+Funding proposal & A compiled and repeatedly reviewed draft left a reader
+unfamiliar with the project unable to state purpose or requested action. &
+The reading brief and acceptance by an unfamiliar reader belong in the product,
+not in an after-the-fact review. \\
+Model note repair & A sequence of revisions preserved equations while removing
+private labels and making the comparison explicit. & Protected spans and
+located findings that the author can accept or reject are feasible targets. \\
+Accepted technical units & Small units passed a named reader gate after
+substantive explanation, while whole-document acceptance was not claimed. &
+Measure the unit of reader decision and do not generalize a local repair. \\
+Long monograph review & Mathematical detail survived, but repeated structure
+and administrative language increased the reading burden. & Diagnostics must
+serve a running argument and cannot be accepted on the basis of surface scores. \\
+\bottomrule
+\end{tabularx}
+\caption{Internal cases motivate the product boundary; they do not estimate its
+effect.}
+\label{tab:internal-cases}
+\end{table}
+
+\section{Protected objects and allowed changes}
+
+The protected-source model distinguishes object preservation from prose
+preservation. The following default is appropriate for the first fixtures:
+
+\begin{longtable}{@{}p{0.25\textwidth}p{0.28\textwidth}p{0.38\textwidth}@{}}
+\toprule
+Object & Default check & Permitted author action \\
+\midrule
+\endfirsthead
+\toprule
+Object & Default check & Permitted author action \\
+\midrule
+\endhead
+Equation body & Exact normalized hash and rendered comparison. & Change only
+with an explicit explanation and a rechecked result. \\
+Numerical literal and unit & Token and unit comparison. & Change with an
+explanation of the new estimate or convention. \\
+Citation key and bibliography identity & Key resolution and metadata match. &
+Replace or remove after human source verification. \\
+Label, cross-reference, and table membership & Resolve after each build. &
+Move when the rendered relation remains correct. \\
+Claim or assumption & Author-declared span and substantive diff. & Rewrite,
+narrow, or remove with an author decision. \\
+Quotation, code, and data field & Exact or format-specific comparison. &
+Change only under the source's disclosure and ownership rules. \\
+\bottomrule
+\end{longtable}
+
+\section{The first software benchmark}
+
+The benchmark corpus should contain at least one valid and one malformed case
+for each of the following: custom LaTeX macros, displayed mathematics,
+citations, labels, tables, comments, code blocks, Markdown emphasis, and
+source-to-render locations. For each parser candidate, record whether the
+protected object is recovered, whether a finding points to the same source
+span on replay, and whether a deliberate change is classified correctly.
+
+For diagnostics, human reviewers label a frozen sample by category and burden.
+The benchmark reports precision, abstention, runtime, and review minutes. It
+does not report a single "human" score. For model-assisted findings, the
+benchmark also records order sensitivity, length sensitivity, provider and
+version, and the proportion of cases in which the model abstains.
+
+\section{Evidence that would change the recommendation}
+
+The recommendation to fund the MVP should be revised if any of the following
+new evidence appears:
+
+\begin{itemize}
+\item a direct competitor already provides the complete source-to-reader path
+  with lower measured burden;
+\item protected comparisons cannot preserve equations, citations, or claims
+  across the target formats;
+\item independent readers find that the review packet makes documents harder
+  to understand or increases their time;
+\item the live document cannot be processed within its privacy and disclosure
+  boundary; or
+\item the comparative design cannot observe a credible reader-acceptance
+  endpoint.
+\end{itemize}
+
+Conversely, a successful feasibility packet is not sufficient to claim
+efficacy. It earns the right to run the comparative study and to price the
+larger decision.

@@ -1,0 +1,70 @@
+bib_key,expected_doi,expected_title,expected_year,identifier,canonical_doi,canonical_title,canonical_year,title_similarity,status,raw_response,raw_sha256,error,reused_from_evidence
+kobak2025delving,,Delving into {LLM}-assisted writing in biomedical publications through excess vocabulary,2025,arXiv:2406.07016,,,,,identifier-only,,,,no
+juzek2025delve,,Why does {ChatGPT} ``delve'' so much? {E}xploring the sources of lexical overrepresentation in large language models,2025,arXiv:2412.11385,,,,,identifier-only,,,,no
+shaib2025slop,,Measuring {AI} ``slop'' in text,2025,arXiv:2509.19163,,,,,identifier-only,,,,no
+padmakumar2024writing,,Does writing with language models reduce content diversity?,2024,arXiv:2309.05196,,,,,identifier-only,,,,no
+doshi2024generative,10.1126/sciadv.adn5290,Generative {AI} enhances individual creativity but reduces the collective diversity of novel content,2024,,10.1126/sciadv.adn5290,Generative AI enhances individual creativity but reduces the collective diversity of novel content,2024,1.0,verified,raw/evidence-doi-006-e-ext-004.json,3e671fd0b3d66dfe1f33ee232fbd69879812dd260e80208f0f477b44167882a6,,yes
+kirk2024understanding,,Understanding the effects of {RLHF} on {LLM} generalisation and diversity,2024,arXiv:2310.06452,,,,,identifier-only,,,,no
+zhang2025verbalized,,Verbalized sampling: how to mitigate mode collapse and unlock {LLM} diversity,2025,arXiv:2510.01171,,,,,identifier-only,,,,no
+sharma2024sycophancy,,Towards understanding sycophancy in language models,2024,arXiv:2310.13548,,,,,identifier-only,,,,no
+singhal2023length,,A long way to go: investigating length correlations in {RLHF},2023,arXiv:2310.03716,,,,,identifier-only,,,,no
+guo2023curious,,The curious decline of linguistic diversity: training language models on synthetic text,2023,arXiv:2311.09807,,,,,identifier-only,,,,no
+gehrmann2019gltr,,{GLTR}: statistical detection and visualization of generated text,2019,arXiv:1906.04043,,,,,identifier-only,,,,no
+mitchell2023detectgpt,,{DetectGPT}: zero-shot machine-generated text detection using probability curvature,2023,arXiv:2301.11305,,,,,identifier-only,,,,no
+bao2024fastdetect,,Fast-{DetectGPT}: efficient zero-shot detection of machine-generated text via conditional probability curvature,2024,arXiv:2310.05130,,,,,identifier-only,,,,no
+hans2024binoculars,,Spotting {LLMs} with {B}inoculars: zero-shot detection of machine-generated text,2024,arXiv:2401.12070,,,,,identifier-only,,,,no
+liang2023detectors,10.1016/j.patter.2023.100779,{GPT} detectors are biased against non-native {E}nglish writers,2023,,10.1016/j.patter.2023.100779,GPT detectors are biased against non-native English writers,2023,1.0,verified,raw/bib-doi-015-liang2023detectors.json,a1d4fcaef3c2f4674e06cb10b550731c277a1e9738c078bc7314b65d01a44089,,no
+weberwulff2023testing,10.1007/s40979-023-00146-z,Testing of detection tools for {AI}-generated text,2023,,10.1007/s40979-023-00146-z,Testing of detection tools for AI-generated text,2023,1.0,verified,raw/bib-doi-016-weberwulff2023testing.json,c731a9e974c1368abff49e2db35fc82207af1d5f346e6b84f5e3feeae0903179,,no
+krishna2023paraphrasing,,"Paraphrasing evades detectors of {AI}-generated text, but retrieval is an effective defense",2023,arXiv:2303.13408,,,,,identifier-only,,,,no
+lee2022coauthor,,{CoAuthor}: designing a human--{AI} collaborative writing dataset for exploring language model capabilities,2022,arXiv:2201.06796,,,,,identifier-only,,,,no
+yuan2022wordcraft,10.1145/3490099.3511105,Wordcraft: story writing with large language models,2022,,10.1145/3490099.3511105,Wordcraft: Story Writing With Large Language Models,2022,1.0,verified,raw/bib-doi-019-yuan2022wordcraft.json,f2c9e14abc49141da7f2e127a2bd2672916f8d82eb64da3f903ceae611f153a8,,no
+chakrabarty2024salvage,,Can {AI} writing be salvaged? {M}itigating idiosyncrasies and improving human--{AI} alignment in the writing process through edits,2024,arXiv:2409.14509,,,,,identifier-only,,,,no
+cheng2025humt,,{HumT DumT}: measuring and controlling human-like language in {LLMs},2025,arXiv:2502.13259,,,,,identifier-only,,,,no
+jin2022style,10.1162/coli_a_00426,Deep learning for text style transfer: a survey,2022,,10.1162/coli_a_00426,Deep Learning for Text Style Transfer: A Survey,2022,1.0,verified,raw/bib-doi-022-jin2022style.json,b887ec2e6a1ae3e29b65eb214157cc3085e4b1eac6eda1b06ea6f467c6c6f84d,,no
+zheng2023judging,,Judging {LLM}-as-a-judge with {MT}-{B}ench and {C}hatbot {A}rena,2023,arXiv:2306.05685,,,,,identifier-only,,,,no
+panickssery2024llm,,{LLM} evaluators recognize and favor their own generations,2024,arXiv:2404.13076,,,,,identifier-only,,,,no
+dubois2024length,,Length-controlled {AlpacaEval}: a simple way to debias automatic evaluators,2024,arXiv:2404.04475,,,,,identifier-only,,,,no
+chakrabarty2024art,,Art or artifice? {L}arge language models and the false promise of creativity,2024,arXiv:2309.14556,,,,,identifier-only,,,,no
+plavensigray2017readability,10.7554/eLife.27725,The readability of scientific texts is decreasing over time,2017,,10.7554/elife.27725,The readability of scientific texts is decreasing over time,2017,1.0,verified,raw/bib-doi-027-plavensigray2017readability.json,bf9f854bc6afc4ccc83d4f55a954d8e42c4857e184b89a442c770f08698b0a83,,no
+martinez2021terminology,10.1098/rspb.2020.2581,Specialized terminology reduces the number of citations of scientific papers,2021,,10.1098/rspb.2020.2581,Specialized terminology reduces the number of citations of scientific papers,2021,1.0,verified,raw/bib-doi-028-martinez2021terminology.json,aa2e5b74fcc63f47832e7823f08f10936dcaffca4a136141ba6e0678e5fd557b,,no
+crossley2022clear,10.3758/s13428-022-01802-x,A large-scaled corpus for assessing text readability,2022,,10.3758/s13428-022-01802-x,A large-scaled corpus for assessing text readability,2022,1.0,verified,raw/bib-doi-029-crossley2022clear.json,1d016c7c7e75944e50d85a3987917332426d370db41b7ae74c806451296c4ce2,,no
+graesser2004cohmetrix,10.3758/BF03195564,Coh-{M}etrix: analysis of text on cohesion and language,2004,,10.3758/bf03195564,Coh-Metrix: Analysis of text on cohesion and language,2004,1.0,verified,raw/bib-doi-030-graesser2004cohmetrix.json,c7df4333ac6532b3588db922d06d8c886628e056a61d14ad46e10b36eb20e3d1,,no
+biber1988variation,,Variation across Speech and Writing,1988,,,,,,not-applicable-no-doi,,,,no
+korinek2023generative,10.1257/jel.20231736,Generative {AI} for economic research: use cases and implications for economists,2023,,10.1257/jel.20231736,Generative AI for Economic Research: Use Cases and Implications for Economists,2023,1.0,verified,raw/bib-doi-032-korinek2023generative.json,2e0de905f2b63a9800cd7b70f04ae1f6d71c189bca8492a7a18125fe2341bbeb,,no
+liang2024monitoring,,Monitoring {AI}-modified content at scale: a case study on the impact of {ChatGPT} on {AI} conference peer reviews,2024,arXiv:2403.07183,,,,,identifier-only,,,,no
+liang2024mapping,,Mapping the increasing use of {LLMs} in scientific papers,2024,arXiv:2404.01268,,,,,identifier-only,,,,no
+latona2024lottery,,The {AI} review lottery: widespread {AI}-assisted peer reviews boost paper scores and acceptance rates,2024,arXiv:2405.02150,,,,,identifier-only,,,,no
+lin2025divergent,,Divergent {LLM} adoption and heterogeneous convergence paths in research writing,2025,arXiv:2504.13629,,,,,identifier-only,,,,no
+glynn2024academai,,Academ-{AI}: documenting the undisclosed use of generative {AI} in academic publishing,2024,arXiv:2411.15218,,,,,identifier-only,,,,no
+wikipedia2026signs,,Signs of {AI} writing,2026,,,,,,not-applicable-no-doi,,,,no
+russell2026storyscope,,{StoryScope}: discourse-level detection of machine-generated narrative,2026,"arXiv:2604.03136, as summarized in the humanizer-stack repository; not independently inspected",,,,,identifier-only,,,,no
+nair2024closing,10.18653/v1/2024.emnlp-main.928,Closing the Loop: Learning to Generate Writing Feedback via Language Model Simulated Student Revisions,2024,,10.18653/v1/2024.emnlp-main.928,Closing the Loop: Learning to Generate Writing Feedback via Language Model Simulated Student Revisions,2024,1.0,verified,raw/evidence-doi-005-e-ext-003.json,a42460b68a695be7418fc1871408ead28247197cba2156a5a58a1fcb2dcc492b,,yes
+rashkin2025story,10.18653/v1/2025.acl-long.1254,Help Me Write a Story: Evaluating {LLM}s' Ability to Generate Writing Feedback,2025,,10.18653/v1/2025.acl-long.1254,Help Me Write a Story: Evaluating LLMs’ Ability to Generate Writing Feedback,2025,1.0,verified,raw/evidence-doi-014-e-ext-007.json,0d1f3927eebaadf3b4f20396a13b4210b2c261f47e310e20f1c0730180a552f5,,yes
+li2024revisions,,Using Large Language Models to Assess Young Students' Writing Revisions,2024,,,,,,not-applicable-no-doi,,,,no
+behzad2024feedback,,Assessing Online Writing Feedback Resources: Generative {AI} vs. Good Samaritans,2024,,,,,,not-applicable-no-doi,,,,no
+li2024disclosure,10.18653/v1/2024.emnlp-main.279,How Does the Disclosure of {AI} Assistance Affect the Perceptions of Writing?,2024,,10.18653/v1/2024.emnlp-main.279,How Does the Disclosure of AI Assistance Affect the Perceptions of Writing?,2024,1.0,verified,raw/evidence-doi-017-e-ext-010.json,17c1d79da88a27c4f0365c817d680646ebbb13aadc3a5729a4e2c11fb8c19c3b,,yes
+dillon2025shifting,10.3386/w33795,Shifting Work Patterns with Generative {AI},2025,,10.3386/w33795,Shifting Work Patterns with Generative AI,2025,1.0,verified,raw/evidence-doi-018-e-ext-011.json,c186674ec9a7194936bc6e389068903f163b3ad08a8fc1909203d16d9c45a554,,yes
+dellacqua2026jagged,10.1287/orsc.2025.21838,Navigating the Jagged Technological Frontier: Field Experimental Evidence of the Effects of Artificial Intelligence on Knowledge Worker Productivity and Quality,2026,,10.1287/orsc.2025.21838,Navigating the Jagged Technological Frontier: Field Experimental Evidence of the Effects of Artificial Intelligence on Knowledge Worker Productivity and Quality,2026,1.0,verified,raw/evidence-doi-020-e-ext-013.json,d7cb29264cc56a3f12886bbd12e7daca83b7108e5ef8a367de71d25f233a3cd2,,yes
+mugaanyi2024citation,10.2196/52935,Evaluation of Large Language Model Performance and Reliability for Citations and References in Scholarly Writing: Cross-Disciplinary Study,2024,,10.2196/52935,Evaluation of Large Language Model Performance and Reliability for Citations and References in Scholarly Writing: Cross-Disciplinary Study,2024,1.0,verified,raw/evidence-doi-022-e-ext-015.json,5e707ac4da5c8b02ce0067e2d06bb3d7bfe201b2f681f3064b4573963ec30c5f,,yes
+rethlefsen2021prismas,10.1186/s13643-020-01542-z,{PRISMA-S}: An Extension to the {PRISMA} Statement for Reporting Literature Searches in Systematic Reviews,2021,,10.1186/s13643-020-01542-z,PRISMA-S: an extension to the PRISMA Statement for Reporting Literature Searches in Systematic Reviews,2021,1.0,verified,raw/evidence-doi-009-e-method-001.json,bc46330c48f0828322828bfc3cd52ec51a1b669c64b424c97b7b265e873cb580,,yes
+nist2023airmf,,Artificial Intelligence Risk Management Framework ({AI RMF} 1.0),2023,,,,,,not-applicable-no-doi,,,,no
+icmje2025ai,,Use of Artificial Intelligence in Scholarly Manuscripts,2025,,,,,,not-applicable-no-doi,,,,no
+vale2026docs,,Vale: A Prose Linter,2026,,,,,,not-applicable-no-doi,,,,no
+languagetool2026dev,,LanguageTool Developer Documentation,2026,,,,,,not-applicable-no-doi,,,,no
+latexlint2026,,latexlint,2026,,,,,,not-applicable-no-doi,,,,no
+meng2026systematic,10.1016/j.jeap.2026.101726,"A Systematic Review of {AI}-Assisted Academic Writing: Tools, Measures, and Effects",2026,,10.1016/j.jeap.2026.101726,"A systematic review of AI-assisted academic writing: Tools, measures, and effects",2026,1.0,verified,raw/evidence-doi-024-e-ext-017.json,71e879332edacdd003912a47291b69bee53a94282f51079f7f6c8e0ce0f0e6a6,,yes
+abudalfa2026awe,10.1016/j.asw.2026.101041,"Generative Artificial Intelligence for Automated Writing Evaluation: A Systematic Review of Trends, Efficacy, and Challenges",2026,,10.1016/j.asw.2026.101041,"Generative artificial intelligence for automated writing evaluation: A systematic review of trends, efficacy, and challenges",2026,1.0,verified,raw/evidence-doi-025-e-ext-018.json,e15fe134c9a3206adc023fa29f883f88e7a6458a2592b9530ff5cce06fb1ecb4,,yes
+mysore2025paths,10.18653/v1/2025.emnlp-main.852,Prototypical Human--{AI} Collaboration Behaviors from {LLM}-Assisted Writing in the Wild,2025,,10.18653/v1/2025.emnlp-main.852,Prototypical Human-AI Collaboration Behaviors from LLM-Assisted Writing in the Wild,2025,1.0,verified,raw/evidence-doi-026-e-ext-019.json,dfc830fbfbd85b1e08eeff359bb7987e1be4574c0e467f7bd46660fd26fe8be8,,yes
+brynjolfsson2025work,10.1093/qje/qjae044,Generative {AI} at Work,2025,,10.1093/qje/qjae044,Generative AI at Work,2025,1.0,verified,raw/evidence-doi-027-e-ext-020.json,68a647f4d08a9fd0068d5d2d2247086614458a1227e93f01e35b8aade8533dc0,,yes
+fang2026mindcopilot,,{MindCopilot}: Towards Formalizing and Evaluating Granular Human--{LLM} Co-Writing,2026,,,,,,not-applicable-no-doi,,,,no
+pandoc2026filters,,Pandoc Filters and Document Abstract Syntax Tree,2026,,,,,,not-applicable-no-doi,,,,no
+pylatexenc2026,,pylatexenc Documentation,2026,,,,,,not-applicable-no-doi,,,,no
+latexdiff2026,,latexdiff: Determine and Mark Up Significant Differences between LaTeX Files,2026,,,,,,not-applicable-no-doi,,,,no
+grobid2026,,{GROBID} Documentation,2026,,,,,,not-applicable-no-doi,,,,no
+textstat2026,,textstat,2026,,,,,,not-applicable-no-doi,,,,no
+inspectai2026,,Inspect {AI},2026,,,,,,not-applicable-no-doi,,,,no
+llamacpp2026,,llama.cpp,2026,,,,,,not-applicable-no-doi,,,,no
+ltexplus2026,,{LTeX+} Language Server,2026,,,,,,not-applicable-no-doi,,,,no
+plastex2026,,plasTeX: A Python Framework for Processing LaTeX Documents,2026,,,,,,not-applicable-no-doi,,,,no
+treesitterlatex2026,,tree-sitter-latex,2026,,,,,,not-applicable-no-doi,,,,no
+latexml2026,,LaTeXML Manual,2026,,,,,,not-applicable-no-doi,,,,no

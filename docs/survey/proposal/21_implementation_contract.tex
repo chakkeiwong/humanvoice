@@ -1,0 +1,402 @@
+\chapter{Implementation contract}
+\label{app:implementation-contract}
+
+This annex is normative for the first build. The reader-facing chapters explain
+why the product exists and what a person should experience. This annex states
+the boundaries an implementation may not invent away. The machine-readable
+companion is \path{schemas/implementation_contract.json}; the record schemas
+are in \path{schemas/}. If this annex and an implementation disagree, the
+implementation stops until the contract is deliberately changed and the locked
+fixtures are replayed.
+
+The canonical R1--R24 acceptance register is
+Table~\ref{tab:expanded-requirements} in Appendix~\ref{app:requirements}.
+This annex supplies the execution contract for that register; it does not
+create a second list of requirements.
+
+\section{Scope, precedence, and the week-six decision}
+\label{sec:contract-scope}
+
+The first release has a protected-source core and an optional authoring
+extension. The core is not a consolation prize. It is the first investment's
+test of whether Humanvoice can preserve a technical document while making a
+reviewer's work more local and more reversible. The extension earns its place
+only after that test passes.
+
+\begin{table}[H]
+\centering
+\small
+\begin{tabularx}{\textwidth}{@{}p{0.18\textwidth}p{0.23\textwidth}L p{0.20\textwidth}@{}}
+\toprule
+Stage & Weeks & Required output & Checkpoint \\
+\midrule
+Protected core & 1--6 & Authoring brief, source snapshot, canonical LaTeX
+build, source map, protected-object comparison, versioned records, and safe
+command results. & A second operator replays the core, or the project narrows
+to this review utility. \\
+Authoring extension & 7--9, conditional & Blueprint, bounded unit writer,
+pre-human critics, mutation harness, bounded repair, and fail-closed release. &
+The exact runtime and model pass calibration and held-out replay; otherwise
+model-dependent gates remain abstentions. \\
+Feasibility case & 10--12 & One released packet, timed reader task, burden
+account, rights record, and proceed/revise/stop memo. & The sponsor decides
+whether a comparative study is worth funding. \\
+\bottomrule
+\end{tabularx}
+\caption{The protected core is the week-six go/no-go decision. The full path is
+conditional, so an ambitious model extension cannot silently consume the whole
+feasibility horizon.}
+\label{tab:contract-scope}
+\end{table}
+
+When controls conflict, apply them in this order: correctness, source fidelity,
+domain meaning, reader comprehension, then template regularity. A safety or
+privacy control overrides all five. Project and format exceptions belong in a
+configuration record, never in an unexplained manuscript instruction.
+
+\section{Threat model and trust boundary}
+\label{sec:contract-threat-model}
+
+Humanvoice handles data that may be both executable and confidential. The
+following inputs are untrusted: the authoring brief and evidence files; the
+TeX source tree, bibliography, images, custom packages, and auxiliary files;
+fixture documents and corpus imports; model prompts and model output; and
+reader-supplied answers or uploaded artifacts. Text that looks like an
+instruction inside any of those inputs is data. It has no authority to invoke a
+tool, disclose a secret, change a policy, or widen a claim.
+
+The default trust boundary is a local isolated workspace. A run receives a
+read-only source snapshot and writes to a separate scratch directory. The
+canonical source is never compiled in place, and no output from a parser or
+model is executed. Remote access is denied unless a separate policy record
+names the fields, provider, purpose, retention, and approving owner.
+
+\begin{table}[H]
+\centering
+\small
+\begin{tabularx}{\textwidth}{@{}p{0.09\textwidth}p{0.40\textwidth}L@{}}
+\toprule
+Control & Rule & Observable test \\
+\midrule
+T1 & Compile from a read-only snapshot into an allow-listed scratch directory. &
+The source tree is byte-identical after every build and no path outside the
+allowlist is written. \\
+T2 & Invoke TeX with \texttt{-no-shell-escape}; reject
+\texttt{\textbackslash write18},
+source executables, and model-generated commands. & A shell-command fixture
+cannot create a file or alter the run result. \\
+T3 & Deny compiler and parser network access. A remote model or metadata lookup
+crosses an explicit approval point. & A network-deny fixture blocks an
+unapproved call and records exit code 5. \\
+T4 & Send critics only delimited, schema-validated JSON. Treat source text and
+model output as data, not instructions. & An injection fixture yields a
+located finding or abstention and cannot acquire a tool or secret. \\
+T5 & Enforce time, memory, file-size, process-count, and output-size limits. &
+An exhausted limit aborts the run with its limit and source hash; it never
+falls through to a pass. \\
+\bottomrule
+\end{tabularx}
+\caption{The threat model turns local-first and prompt-injection language into
+checks a build team can run.}
+\label{tab:contract-threat-controls}
+\end{table}
+
+The build wrapper must use \texttt{-halt-on-error} and \texttt{-file-line-error}
+in addition to \texttt{-no-shell-escape}. A successful PDF is not evidence that
+the source was safe: the trust-boundary checks and the protected comparison are
+separate release conditions. A security or policy owner may veto a run and may
+not be overruled by a model, an editor, or an engineer.
+
+\section{Runtime and model manifest}
+\label{sec:contract-runtime}
+
+The deterministic path is the reference implementation. It consists of the
+parser adapter, canonical TeX build, protected comparison, citation-identity
+checks, and source-map checks. The proposed local inference runtime is
+\texttt{llama.cpp}; model quality is a separate question from runtime
+availability.
+
+The following are planning candidates, not an unearned adoption claim:
+
+\begin{table}[H]
+\centering
+\small
+\begin{tabularx}{\textwidth}{@{}p{0.22\textwidth}p{0.25\textwidth}L@{}}
+\toprule
+Role & Candidate & Condition before it may enter a release gate \\
+\midrule
+Runtime & \texttt{llama.cpp}, exact commit recorded & Rebuild the runtime and
+record compiler, hardware, and license information. \\
+Reference model & Qwen3--8B--Instruct, GGUF Q4\_K\_M, exact file hash & Run
+the frozen calibration and held-out sets with the exact artifact, tokenizer,
+prompt template, and sampling settings. \\
+Fallback model & Llama 3.1--8B--Instruct, GGUF Q4\_K\_M, exact file hash &
+Use only as a separately calibrated alternative; never silently substitute it
+for the reference model. \\
+No model & Deterministic protected core & May continue when inference is
+unavailable, but model-dependent writing and reconstruction gates remain
+abstentions and cannot produce a full-path release. \\
+\bottomrule
+\end{tabularx}
+\caption{Model candidates are pinned experimental inputs, not a claim that a
+particular model is already suitable.}
+\label{tab:contract-models}
+\end{table}
+
+Every inference run records the runtime revision, model file hash, tokenizer
+hash, prompt-template hash, sampling parameters, seed, hardware, network
+state, latency, memory, and output hash. A change to any of those invalidates
+the affected calibration and held-out results. The fixtures must be replayed
+before the changed component can return a release-ready finding. A model may
+suggest a repair; it may not accept the document.
+
+\section{Operating envelope}
+\label{sec:contract-envelope}
+
+The numbers below are planning caps for the MVP, not measured performance. They
+make the parser, scratch space, and inference budget designable. Week six
+records actual distributions and either revises the caps openly or narrows the
+supported document class.
+
+\begin{table}[H]
+\centering
+\small
+\begin{tabularx}{\textwidth}{@{}p{0.35\textwidth}p{0.19\textwidth}L@{}}
+\toprule
+Quantity & MVP cap & Interpretation \\
+\midrule
+Source tree & 250 MiB & Includes bibliography, images, packages, and auxiliary
+files in the snapshot. \\
+Rendered document & 300 pages & A larger document may use the protected core
+after an explicit scope decision; it is not silently truncated. \\
+Prose & 120,000 words & The cap controls extraction and critic work, not the
+author's final length. \\
+Protected objects & 2,000 & Equations, numbers, citations, tables, quotations,
+code blocks, and declared claims. \\
+Deterministic preflight & 30 minutes & On the reference machine: eight CPU
+cores and 32 GiB RAM. \\
+Model-assisted preflight & 90 minutes & Includes bounded critic calls and
+reconstruction; timeout is an abstention. \\
+Repair & 3 cycles per unit & Repeated signatures or alternating parent hashes
+stop the loop. \\
+Inference & 2 GPU-hours or 10 CPU-hours per document & Whichever limit is
+reached first; actual usage enters the cost account. \\
+\bottomrule
+\end{tabularx}
+\caption{Initial operating limits. They are scope controls and cost inputs,
+not promises of speed.}
+\label{tab:contract-envelope}
+\end{table}
+
+\subsection{Measured budgets from cost validation}
+
+Cost validation runs on the architecture assessment corpus (15,642 words,
+16 source files, 18 sections) measured the following in August 2026:
+
+\begin{table}[H]
+\centering
+\small
+\begin{tabularx}{\textwidth}{@{}p{0.30\textwidth}p{0.22\textwidth}L@{}}
+\toprule
+Quantity & Measured & Enforcement \\
+\midrule
+Document size & 15,642 words & Hard cap: 120,000 words \\
+Token cost per document & \$2.24--\$2.53 & Warning at \$15, fail at \$20 \\
+Wall-clock time (plan+draft) & 639 seconds & Hard cap: 90 min (5,400 s) \\
+Input tokens per section & 1,020--16,703 & Hard cap: 12,000 per unit \\
+Output tokens per section & 663--2,147 & Hard cap: 2,000 per unit \\
+Peak memory & Not measured & Cap: 32 GiB (from runtime profile) \\
+\bottomrule
+\end{tabularx}
+\caption{Measured budgets from cost validation runs (2026-08-29). Cost
+variance is 16$\times$ across sections due to source file size and context
+accumulation. Budget enforcement (implemented in \texttt{model.py}
+BudgetTracker) uses the caps from Table~\ref{tab:contract-envelope}; this
+table provides empirical data for sizing decisions.}
+\label{tab:contract-measured-budgets}
+\end{table}
+
+The model receives at most 12,000 input tokens and returns at most 2,000 tokens
+for one bounded unit. A whole-document model context is outside the first
+release. The document-level model limits in the repository contract exist only
+for an explicitly approved assembly or reconstruction task; they do not permit
+an unbounded autonomous rewrite.
+
+\section{Record and schema policy}
+\label{sec:contract-schemas}
+
+Every record carries \texttt{record\_type}, \texttt{schema\_version},
+\texttt{record\_id}, \texttt{run\_id}, and \texttt{created\_at}. The first
+release schemas live in \path{schemas/authoring-brief.schema.json},
+\path{schemas/argument-blueprint.schema.json},
+\path{schemas/finding.schema.json}, \path{schemas/revision.schema.json},
+\path{schemas/preflight-run.schema.json},
+\path{schemas/release-decision.schema.json},
+\path{schemas/runtime-manifest.schema.json}, and
+\path{schemas/cli-result.schema.json}. The rights record is
+\path{schemas/corpus-item.schema.json}.
+
+The compatibility rule is simple. A minor schema version may add optional
+fields; readers preserve unknown extension fields. A major version requires a
+migration, a changed contract identifier, and replay of the locked fixtures.
+The same source, schema, toolchain, configuration, and runtime manifest must
+reproduce deterministic finding identifiers. Stochastic outputs retain their
+seed and hashes but are never described as bitwise deterministic.
+
+Unknown fields at the top level are rejected. Additions that do not change the
+meaning of an existing record belong under an explicit \texttt{extensions}
+object and are preserved by readers. The runtime manifest records the compiler,
+runtime revision, model and tokenizer hashes when applicable, prompt-template
+hash, sampling and seed, hardware, network policy, resource limits, latency,
+peak memory, output hash, and an explicit reason for fields that do not apply.
+CLI results always include the nine stable output fields named below, and corpus
+rights records include \texttt{consent\_date}, including a null value when no
+consent date is applicable.
+
+The authoring brief also requires the intended reader, decision, genre, known
+vocabulary, named exemplars, evidence boundary, privacy class, protected
+objects, and explicit unknowns. A blueprint requires evidence anchors,
+terminology order, and a stable plan hash. A finding carries a consequence,
+editorial question, rule version, and author disposition as well as its
+location and observation.
+
+\section{Command-line contract}
+\label{sec:contract-cli}
+
+The six commands exchange versioned JSON records. Each invocation writes one
+machine-readable result to standard output and human progress or diagnostics to
+standard error. The stable output fields are \texttt{contract\_version},
+\texttt{command}, \texttt{status}, \texttt{exit\_code}, \texttt{run\_id},
+\texttt{record\_paths}, \texttt{blocking\_reasons}, \texttt{source\_hash},
+and \texttt{result\_hash}. Messages, display paths, timings, and suggestions
+are advisory and may change without a contract-version bump.
+
+\begin{table}[H]
+\centering
+\small
+\begin{tabularx}{\textwidth}{@{}p{0.19\textwidth}p{0.29\textwidth}L@{}}
+\toprule
+Exit & Meaning & Required behavior \\
+\midrule
+0 & Pass or released & The command completed its declared job. \\
+1 & Deterministic gate failure & Preserve the source and emit the blocking
+finding or build result. \\
+2 & Abstention or unresolved policy result & Do not treat absence as pass;
+identify the affected gate. \\
+3 & Invalid brief, input, schema, or usage & Do not invoke the writer. \\
+4 & Internal implementation error & Preserve the parent run and provide an
+incident identifier. \\
+5 & Security or trust-boundary violation & Stop the run, quarantine its output,
+and notify the security/policy owner. \\
+\bottomrule
+\end{tabularx}
+\caption{Stable command outcomes. Exit codes carry coarse control flow; the
+JSON result carries the reasons.}
+\label{tab:contract-exit-codes}
+\end{table}
+
+\section{Repair, exceptions, and release authority}
+\label{sec:contract-authority}
+
+\texttt{hv repair} never edits the canonical source in place. It requires a
+clean version-control tree or an immutable source snapshot, writes a child
+revision under \path{.humanvoice/runs/<run\_id>/revisions/<revision\_id>},
+validates that child in a temporary directory, and publishes its manifest only
+after the comparison passes. The parent and its decisions are never deleted.
+Rollback selects the parent revision. A cycle limit, repeated finding
+signature, or alternating parent hashes stops the loop and returns an author
+choice; it cannot produce a reader packet.
+
+Ordinary release requires every required gate to pass and the document owner to
+accept the protected comparison. An exception may be granted by the sponsor or
+named project owner. A meaning exception also requires the domain editor's
+concurrence; a processing exception requires the security/policy owner's
+concurrence. The security/policy owner can veto release.
+
+No exception may waive unresolved protected-object correspondence, an unparsed
+object promised by the brief, unauthorized external transmission, missing
+critical evidence for a load-bearing claim, or a broken or unreproducible
+source build. Every permitted exception records its scope, reason, residual
+risk, owner, concurrences, expiry, reader disclosure, and count in the
+feasibility record.
+
+\section{Corpus rights and definition of done}
+\label{sec:contract-rights-done}
+
+\subsection{Role assignments and coverage}
+
+The R1--R24 register assigns requirements to decision roles. The following
+table maps those roles to the staffed positions in the 12-week plan:
+
+\begin{table}[H]
+\centering
+\small
+\begin{tabularx}{\textwidth}{@{}p{0.30\textwidth}L@{}}
+\toprule
+Requirement owner & Staffed by \\
+\midrule
+Product engineer & Product engineer (weeks 1--12) \\
+Evaluation lead & Evaluation lead (weeks 6--12, part-time weeks 1--5) \\
+Document owner & Sponsor or product engineer \\
+Domain editor & Sponsor (acceptance) or product engineer (implementation) \\
+Independent reader & External recruit (week 11--12) \\
+Security or policy owner & Product engineer (implementation) + sponsor (approval) \\
+Sponsor or project owner & Sponsor \\
+\bottomrule
+\end{tabularx}
+\caption{Role coverage for R1--R24 requirements. For the MVP, the product
+engineer implements controls for all requirements. Acceptance observations
+requiring domain expertise (R1, R6, R10, R18) or security approval (R11)
+escalate to the sponsor. The independent reader is recruited externally for R8.}
+\label{tab:role-coverage}
+\end{table}
+
+\subsection{Corpus rights}
+
+Each corpus item carries a source path or URL, source hash, owner,
+license or written permission, permitted use, redistribution status, retention
+class, and consent date. The allowed statuses are
+\texttt{cleared-internal}, \texttt{cleared-public},
+\texttt{restricted-not-for-export}, \texttt{pending-clearance}, and
+\texttt{excluded}. Pending or restricted material may support an internal
+fixture only when its owner permits that use. It cannot enter a published
+benchmark, external reader packet, or commercial training set without written
+clearance.
+
+\subsection{Definition of done}
+
+The work packages have explicit exits:
+
+\begin{enumerate}
+\item \textbf{Brief, threat model, and schemas:} a complete brief, the contract
+      files, a rights manifest, and threat fixtures pass validation. Code
+      complete when all schemas validate, T1--T5 tests pass, and corpus rights
+      manifest is populated.
+\item \textbf{Protected LaTeX core:} source maps, canonical build, protected
+      comparison, and CLI result replay are locked on the fixture set. Code
+      complete when parser produces stable source maps, build runs in sandbox,
+      and comparison produces deterministic finding IDs.
+\item \textbf{Week-six checkpoint:} a second operator reproduces the core, or
+      the scope is narrowed to the protected review utility. Acceptance
+      complete when another engineer runs the deterministic path from
+      documentation alone, or sponsor approves scope reduction.
+\item \textbf{Bounded authoring extension:} plan, unit draft, preflight, and
+      repair pass mutation and held-out calibration gates. Code complete when
+      model invocations respect budget caps, emit valid JSON, and repair
+      converges or stops within 3 cycles.
+\item \textbf{Reader feasibility case:} one released packet, timed reader
+      record, burden account, rights record, and all abstentions are preserved.
+      Acceptance complete when independent reader completes task and burden
+      calculation shows median($U_k - B_k$) $> 0$ or reports the deficit.
+\item \textbf{Decision handoff:} a reproducible run, cost sensitivity, rights
+      review, and proceed/revise/stop memorandum are delivered. Sponsor
+      acceptance when all deliverables are received and decision is recorded.
+\end{enumerate}
+
+A work package is not complete if: (a) its mapped requirements from R1--R24
+lack passing tests; (b) fixtures for this WP fail or produce unexpected
+results; (c) another engineer cannot run the deliverable from documentation
+alone; or (d) sponsor review identifies scope mismatch. Breaking changes are
+recorded in a change log; TODOs are resolved or promoted to tracked issues.
+or that the product improves expert writing. Those claims remain the province
+of the named reader and the later comparative study.

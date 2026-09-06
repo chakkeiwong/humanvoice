@@ -1,0 +1,40 @@
+{
+  "blueprint": {
+    "sections": [
+      {
+        "title": "Decision Under Review",
+        "purpose": "States the approval question the reader must answer and the scope of the proposed review, so the reader knows what a yes or no commits them to. Establishes the problem the review is meant to address and the consequence of leaving it unaddressed.",
+        "evidence_needed": [
+          "source/001.tex"
+        ],
+        "word_budget": 75
+      },
+      {
+        "title": "Proposed Mechanism and Path",
+        "purpose": "Describes how the proposal operates: the sequence of steps, the path it follows, and the boundary of what it changes versus leaves intact. Written as third-person exposition so the reader can evaluate the mechanism independently of any advocacy for it.",
+        "evidence_needed": [
+          "source/001.tex"
+        ],
+        "word_budget": 90
+      },
+      {
+        "title": "Decisive Evidence per Claim",
+        "purpose": "Maps each load-bearing claim about the mechanism to the specific passage that supports it, and marks claims that rest on assertion rather than demonstration. Gives the reviewer the basis for approving on evidence rather than on plausibility.",
+        "evidence_needed": [
+          "source/001.tex"
+        ],
+        "word_budget": 85
+      },
+      {
+        "title": "Qualifications and Conditions",
+        "purpose": "Names the conditions under which the proposal's reasoning weakens, including unverified assumptions and cases outside the described path. Frames what a conditional approval would need to specify.",
+        "evidence_needed": [
+          "source/001.tex"
+        ],
+        "word_budget": 50
+      }
+    ],
+    "total_words": 300
+  },
+  "abstention": "Partial abstention on evidence mapping. The blueprint structure above reflects the requested problem-to-qualifications arc and the stated reader, review, and path framing, but the contents of source/001.tex were not read: no file access occurred in this exchange, and no excerpt was supplied in the prompt. Files listed as available: source/001.tex. Files actually inspected: none. As a result, the section purposes are structural placeholders, and the claim-to-passage mapping in 'Decisive Evidence per Claim' cannot be populated. Word budgets are provisional and may need reallocation once the source is read, since the balance between mechanism and qualifications depends on how much of the proposal is demonstrated versus asserted. Recommend re-running blueprint generation with source/001.tex readable, or with its relevant passages pasted inline."
+}

@@ -1,0 +1,231 @@
+\chapter{The test and its economics}
+\label{ch:evaluation}
+
+The product changes a chain of work: an author revises, a reader reads, and a
+sponsor decides whether the result is worth keeping. Document scores observe
+only one part of that chain, so the evaluation compares the complete workflow.
+The central question is:
+
+\begin{quote}
+Does the Humanvoice workflow help more documents reach a reader decision within
+a fixed horizon, or reduce the attention required to get there, without
+increasing meaning-preservation failures relative to the incumbent bundle?
+\end{quote}
+
+One live document cannot answer the causal question. It can show that the
+system runs, that people can use its records, and that the team can observe
+burden and failures. An efficacy estimate requires a later comparison across
+documents and workflows.
+
+Figure~\ref{fig:evaluation-logic} marks the decision boundary. The live case
+can expose integration failures and burden; only a later comparison can
+estimate an effect.
+
+\hvFigureEvaluationLogic
+
+\section{The estimand}
+
+Let $i$ index a document task, and let $w=0$ denote the incumbent bundle of
+ordinary linting, general LLM editing, version control, citation checking, and
+manual review. Let $w=1$ denote the Humanvoice workflow. Before assignment, the
+study fixes a maximum of $K$ review cycles and $H$ calendar days. At that
+horizon it records one disposition: accepted, revision still requested,
+declined, withdrawn by the author, or incomplete for an operational reason.
+
+Define $A_i^H(w)=1$ when the named reader accepts by the horizon,
+$T_i^H(w)$ as cumulative reader hours through the horizon,
+$R_i^K(w)=\min(R_i(w),K)$ as restricted review cycles, and $M_i(w)$ as an
+indicator that a meaning-bearing object changed without an explained author
+decision. The co-primary estimands are
+\begin{equation}
+  \Delta_A=\mathbb E[A_i^H(1)-A_i^H(0)],
+  \qquad
+  \Delta_T=\mathbb E[T_i^H(1)-T_i^H(0)].
+  \label{eq:estimand}
+\end{equation}
+
+Acceptance prevents a quick decline from looking like success; restricted
+reader time captures the scarce attention the product is meant to save.
+$R_i^K$ remains an important process outcome, reported with the terminal
+disposition rather than only for accepted documents. Every decline,
+withdrawal, and incomplete task stays in the analysis. An unexplained protected
+change is a safety failure regardless of time or acceptance. Author editing
+time, false-positive burden, substantive revision rate, reader reconstruction,
+confidence, and time to decision explain how the primary outcomes arose.
+
+\section{The unit and the comparator}
+
+Give each task a named reader and a decision before assigning a workflow. The
+task may be a funding proposal, model note, technical report, or manuscript, but
+its genre and decision must be recorded. Both conditions receive the same
+source snapshot and protected-object inventory. The reader should be blinded to
+the workflow where practical; the author cannot be, so the study measures
+author expectations rather than pretending they do not exist.
+
+The comparator is the practice the team would use if Humanvoice did not exist,
+not an ideal editor invented for the experiment. Before the study begins, write
+down which linter and general editor people use, how they check version changes
+and citations, who reads, and what counts as acceptance. A product that wins
+against an artificially weak baseline has not earned its place.
+
+\section{The reader record}
+
+The reader rubric is short enough to use repeatedly and specific enough to
+distinguish comprehension from agreement:
+
+\begin{table}[H]
+\centering
+\small
+\begin{tabularx}{\textwidth}{@{}p{0.28\textwidth}L p{0.25\textwidth}@{}}
+\toprule
+Question & Response recorded & Why it matters \\
+\midrule
+What problem or decision is this document about? & Free response plus
+confidence. & Tests whether purpose is visible. \\
+What is the proposed mechanism or object? & Free response plus selected
+components. & Tests whether the argument has an identifiable center. \\
+Which evidence is decisive? & Source or passage selection with explanation. &
+Tests evidence-to-conclusion linkage. \\
+What qualification changes your interpretation? & Short response. & Tests
+whether uncertainty is visible without swallowing the argument. \\
+What action would you take now? & Accept, request revision, or decline, with
+reason. & Connects comprehension to the actual decision. \\
+Where did you stop or reread? & Page or section, a short quoted span, and the
+missing relation you were trying to recover. & Locates the reader's first
+failure instead of reducing it to a score. \\
+\bottomrule
+\end{tabularx}
+\caption{A reader outcome records reconstruction and action, not stylistic
+approval.}
+\label{tab:reader-rubric}
+\end{table}
+
+Reader disagreement is not automatically noise. If two qualified readers
+recover different mechanisms, that may indicate an ambiguous document. The
+analysis should report agreement, confidence, and the reasons for requested
+changes rather than force a single hidden "quality" label.
+
+\section{The feasibility case}
+
+The first twelve weeks include one live document. Its purpose is integration,
+not efficacy. The case must demonstrate:
+
+\begin{enumerate}
+\item the source can be parsed and rendered with protected spans intact;
+\item findings are reproducible and actionable in the author's editor;
+\item accepted and rejected revisions produce an understandable protected
+      comparison;
+\item privacy and disclosure choices are respected; and
+\item a reader can complete the rubric without repository context.
+\end{enumerate}
+
+The case should be selected because its failure cost is real and its owner is
+willing to permit a reading by someone unfamiliar with the project, not because
+it is likely to make the system look good. The result note reports all abstentions, unresolved
+citations, reader requests, and meaning checks. It cannot report a reduction in
+rounds relative to a counterfactual that was never run.
+
+\section{The comparative study}
+
+After the feasibility case, the evaluation lead should freeze a corpus with
+tuning and held-out partitions. The corpus needs documents from more than one
+writer and more than one task class. If the available volume is small, the
+study should say so and use paired designs or repeated reader tasks rather than
+inventing a large-sample certainty.
+
+The study should report outcomes by baseline writer experience, document genre,
+reader role, and use of model assistance. Averages can conceal harm to the
+authors or readers whose work matters most. The field literature's
+heterogeneous effects make this stratification a design requirement rather than
+an optional subgroup analysis \citep{brynjolfsson2025work,dellacqua2026jagged}.
+
+Model-based screening, if used, is calibrated on a frozen human-labelled set.
+Pair order is randomized, length is controlled, and the judge family is varied
+when feasible. A model result can nominate a passage or explain a discrepancy;
+it cannot accept a document.
+
+\section{The economic decision rule}
+
+One accounting identity is enough. Let $N$ be annual in-scope document volume,
+$T_w$ cumulative reader hours per document through the fixed horizon, $W_w$
+author and operating hours, $c_r$ and $c_a$ their loaded rates, $p_wL_w$ the
+expected cost of a meaning incident, and $C$ annualized product cost. The
+annual net value of replacing workflow 0 with workflow 1 is
+\begin{equation}
+  V=N\left[(T_0-T_1)c_r+(W_0-W_1)c_a
+    -(p_1L_1-p_0L_0)\right]-C.
+  \label{eq:value}
+\end{equation}
+
+This is an accounting model, not a forecast. Acceptance by the horizon is a
+condition on using it: a workflow that saves time by producing more declines or
+unfinished documents does not receive a favorable value estimate. The
+feasibility run adds the quantities needed to populate the model:
+
+\begin{description}
+\item[Volume.] How many in-scope documents does the group produce each year?
+\item[Baseline burden.] How many rounds and reader hours do those documents
+  consume, with a distribution rather than one anecdotal average?
+\item[Workflow burden.] How much author and reviewer time does Humanvoice add,
+  including false-positive resolution and protected comparisons?
+\item[Loaded rates.] What is the local cost of author, reader, evaluator, and
+  engineer time?
+\item[Build and maintenance.] What person-weeks and recurring infrastructure
+  cost are required after the pilot?
+\end{description}
+
+Until those inputs exist, symbolic break-even cases are more honest than
+invented volumes and hourly rates.
+
+\begin{table}[H]
+\centering
+\small
+\begin{tabularx}{\textwidth}{@{}p{0.26\textwidth}p{0.34\textwidth}L@{}}
+\toprule
+Decision question & Break-even expression & Observation required \\
+\midrule
+Maximum annual product cost &
+$C^*=N[(T_0-T_1)c_r+(W_0-W_1)c_a-(p_1L_1-p_0L_0)]$ &
+Local volume, time distributions, loaded rates, and incident assumptions. \\
+Reader-time saving required when all other changes are zero &
+$T_0-T_1=C/(Nc_r)$ & Canonical reader-session timing under both workflows. \\
+Maximum extra author time the workflow can consume &
+$W_1-W_0=[(T_0-T_1)c_r-(p_1L_1-p_0L_0)-C/N]/c_a$ &
+Author event logs and adjudicated false-alert work. \\
+Effect of one additional meaning risk &
+$\Delta V=-N(p_1L_1-p_0L_0)$ & Incident definition, probability range, and
+loss range approved by the sponsor. \\
+\bottomrule
+\end{tabularx}
+\caption{Symbolic sensitivity cases. Each row shows which local observation,
+not a placeholder forecast, determines the investment boundary.}
+\label{tab:value-sensitivity}
+\end{table}
+
+The sponsor should see low, central, and high cases for every uncertain input,
+with each value marked observed, assumed, or open. A point estimate made before
+the baseline exists would be financial decoration rather than analysis.
+
+\section{Stop and redirect conditions}
+
+The evaluation has four stop conditions:
+
+\begin{enumerate}
+\item the protected comparison misses or silently changes a meaning-bearing
+      object;
+\item the diagnostic queue consumes more author or reader time than it saves;
+\item the privacy or disclosure boundary cannot be implemented for the live
+      document; or
+\item the reader cannot recover the purpose and requested action after two
+      bounded repair cycles.
+\end{enumerate}
+
+A failed candidate does not automatically reject the product direction. If a
+parser fails malformed macros but a documented fallback can repair that exact
+failure, the next phase tests the fallback. If the reader endpoint itself is
+not observable or the burden cannot be measured, the direction is not ready for
+a larger study. The result note must distinguish those cases.
+This feasibility case establishes only that the workflow can be run and measured
+on one live document. It cannot establish a general reduction in revision
+rounds, a universal improvement in technical prose, or a return on investment;
+those claims require the comparative study and its uncertainty.

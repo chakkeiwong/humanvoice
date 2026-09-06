@@ -1,0 +1,15 @@
+{
+  "author_review": "complete",
+  "canonical_source": "docs/survey/humanvoice_product_proposal.md",
+  "canonical_source_sha256": "885f6bc0bfe36ef04b05d9ebab681ea0ee28d4cd1a6de7ea7e157727b7dc6066",
+  "evidence_status": "incomplete",
+  "evidence_status_file": "docs/survey/humanvoice_evidence_status.json",
+  "human_acceptance": "pending_project_owner",
+  "independent_reader_review": "pending",
+  "pages": 11,
+  "rendered_artifact": "docs/survey/humanvoice_product_proposal.pdf",
+  "rendered_artifact_sha256": "01ac69327290600a93833a41d8f988e3d68cc391cc641ac137e2d9aff2b815d3",
+  "status": "author_repaired_draft",
+  "structural_diagnostics": "pass",
+  "updated_at": "2026-08-23T14:35:37Z"
+}

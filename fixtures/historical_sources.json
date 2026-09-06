@@ -1,0 +1,63 @@
+{
+  "registry_id": "HV-HISTORICAL-SOURCES-2026-08-26",
+  "registry_version": "1.0",
+  "status": "quarantined",
+  "rule": "A located artifact is not a permitted replay. Replay also requires an immutable source snapshot, answer key, provenance, and rights for the declared use.",
+  "sources": [
+    {
+      "id": "HIST-BGS-REPAIR-MAP-V7",
+      "repository": "DynareMCP",
+      "repository_relative_path": "docs/AIpostdoc/finalBGS/archive/2026_08_12/bgs_whole_document_natural_prose_audit_2026_08_02/restart_v7/frozen_repair_map_v7.jsonl",
+      "sha256": "09c530e16ac7bcd1d0eff5e5ab056df0c1da428d292ab6e4da13aadcc001d170",
+      "observed_rows": 815,
+      "availability": "located-rights-pending",
+      "replay_status": "unavailable",
+      "rights_record_id": "CORP-BGS",
+      "reason": "The artifact is located and hashed, but permission and a frozen replay answer key have not been cleared. This is BGS history, not ZLB history."
+    },
+    {
+      "id": "HIST-ZLB-PASS-TWO",
+      "repository": "BayesFilter",
+      "repository_relative_path": null,
+      "sha256": null,
+      "observed_rows": null,
+      "availability": "unavailable",
+      "replay_status": "unavailable",
+      "rights_record_id": "CORP-ZLB",
+      "reason": "The case-study record reports 133 em dashes and 20 of 55 repeated section openers, but the exact pass-two source snapshot has not been identified."
+    },
+    {
+      "id": "HIST-ZLB-CURRENT-TEX",
+      "repository": "BayesFilter",
+      "repository_relative_path": "docs/surveys/zlb_discontinuous_hmc/zlb_discontinuous_hmc_survey.tex",
+      "sha256": "fa73f4d21a73ed21dc499b3b458fcdedbd600c586445a190903e8db3148e68cf",
+      "observed_rows": null,
+      "availability": "located-rights-pending",
+      "replay_status": "unavailable",
+      "rights_record_id": "CORP-ZLB",
+      "reason": "The current source is located, but the historical comparison requires the missing pass-two snapshot, an answer key, and permission."
+    },
+    {
+      "id": "HIST-ZLB-CURRENT-PDF",
+      "repository": "BayesFilter",
+      "repository_relative_path": "docs/surveys/zlb_discontinuous_hmc/zlb_discontinuous_hmc_survey.pdf",
+      "sha256": "8a13ae86820c5fa05abebb911ed52675f4e26622284f3d56b4941acaa121d765",
+      "observed_rows": null,
+      "availability": "located-rights-pending",
+      "replay_status": "unavailable",
+      "rights_record_id": "CORP-ZLB",
+      "reason": "The rendered current artifact is located but is not a substitute for the missing historical source pair."
+    },
+    {
+      "id": "HIST-SLOPTRIM-HUMANVOICE-CALIBRATION",
+      "repository": "humanvoice",
+      "repository_relative_path": null,
+      "sha256": null,
+      "observed_rows": 3,
+      "availability": "unavailable",
+      "replay_status": "unavailable",
+      "rights_record_id": null,
+      "reason": "The three documents described in the survey table have not been frozen as a named calibration set with source hashes and human verdict records. Vendored sloptrim demo files are not substitutes."
+    }
+  ]
+}

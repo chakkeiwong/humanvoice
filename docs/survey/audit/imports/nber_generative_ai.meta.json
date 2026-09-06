@@ -1,0 +1,10 @@
+{
+  "database": "NBER",
+  "query_or_filter": "generative AI workplace; page=1; title/abstract terms=generative ai, writing, email, communication, productivity, workplace",
+  "raw_source_path": "docs/survey/audit/public_raw/nber_search.json",
+  "raw_source_sha256": "9daf187332f04e14301770bd20a35935886d37ffa769911bd08fd4f40de364bd",
+  "record_count": 32,
+  "retrieved_at": "2026-08-22T05:06:19+00:00",
+  "sha256": "acb767e3de3457e519b8cbb5877bff62d02a4a4c4b5ee50147d0ac0947c68708",
+  "source_url": "https://www.nber.org/api/v1/search"
+}

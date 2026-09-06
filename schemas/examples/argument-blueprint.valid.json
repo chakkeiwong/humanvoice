@@ -1,0 +1,15 @@
+{
+  "record_type": "ArgumentBlueprint",
+  "schema_version": "HV-SCHEMA-1.0",
+  "record_id": "blueprint-001",
+  "run_id": "run-001",
+  "created_at": "2026-08-26T00:00:00Z",
+  "brief_id": "brief-001",
+  "claim_map": [{"id": "C1", "claim": "The protected core is feasible.", "warrant": "The replay can preserve protected objects."}],
+  "evidence_anchors": [{"claim_id": "C1", "source": "fixtures/manifest.json"}],
+  "concept_dependencies": [{"concept": "protected object", "predecessors": []}],
+  "section_jobs": [{"id": "S1", "job": "Explain the investment boundary."}],
+  "terminology_order": ["source snapshot", "protected object", "replay"],
+  "visual_plan": [{"id": "V1", "purpose": "Show the source-to-reader path."}],
+  "plan_hash": "sha256:blueprint-example"
+}

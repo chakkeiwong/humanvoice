@@ -1,0 +1,1198 @@
+{
+  "checks": {
+    "candidate_identities_unique": true,
+    "candidate_ids_unique": true,
+    "candidate_provenance_present": true,
+    "evidence_provenance_present": true,
+    "raw_responses_hash": true,
+    "screening_ids_unique": true,
+    "software_provenance_valid": true
+  },
+  "duplicate_candidate_identities": [],
+  "duplicate_candidate_ids": [],
+  "duplicate_screening_ids": [],
+  "invalid_package_provenance": [],
+  "mismatched_raw": [],
+  "missing_candidate_provenance": 0,
+  "missing_evidence_provenance": [],
+  "missing_raw": [],
+  "raw_checks": [
+    {
+      "actual": "7edb917fe30918bbe2a93fb93b639292004130ac40bb6e891cc25ce4b41746d6",
+      "event": 1,
+      "expected": "7edb917fe30918bbe2a93fb93b639292004130ac40bb6e891cc25ce4b41746d6",
+      "path": "raw/openalex-001.json",
+      "status": "pass"
+    },
+    {
+      "actual": "7edb917fe30918bbe2a93fb93b639292004130ac40bb6e891cc25ce4b41746d6",
+      "event": 2,
+      "expected": "7edb917fe30918bbe2a93fb93b639292004130ac40bb6e891cc25ce4b41746d6",
+      "path": "raw/openalex-002.json",
+      "status": "pass"
+    },
+    {
+      "actual": "7edb917fe30918bbe2a93fb93b639292004130ac40bb6e891cc25ce4b41746d6",
+      "event": 3,
+      "expected": "7edb917fe30918bbe2a93fb93b639292004130ac40bb6e891cc25ce4b41746d6",
+      "path": "raw/openalex-003.json",
+      "status": "pass"
+    },
+    {
+      "actual": "7edb917fe30918bbe2a93fb93b639292004130ac40bb6e891cc25ce4b41746d6",
+      "event": 4,
+      "expected": "7edb917fe30918bbe2a93fb93b639292004130ac40bb6e891cc25ce4b41746d6",
+      "path": "raw/openalex-004.json",
+      "status": "pass"
+    },
+    {
+      "actual": "209d6c0ae753301ad74c311ee2e88e95aec9247feb9d67bf0351614037a1430c",
+      "event": 5,
+      "expected": "209d6c0ae753301ad74c311ee2e88e95aec9247feb9d67bf0351614037a1430c",
+      "path": "raw/openalex-005.json",
+      "status": "pass"
+    },
+    {
+      "actual": "209d6c0ae753301ad74c311ee2e88e95aec9247feb9d67bf0351614037a1430c",
+      "event": 6,
+      "expected": "209d6c0ae753301ad74c311ee2e88e95aec9247feb9d67bf0351614037a1430c",
+      "path": "raw/openalex-006.json",
+      "status": "pass"
+    },
+    {
+      "actual": "209d6c0ae753301ad74c311ee2e88e95aec9247feb9d67bf0351614037a1430c",
+      "event": 7,
+      "expected": "209d6c0ae753301ad74c311ee2e88e95aec9247feb9d67bf0351614037a1430c",
+      "path": "raw/openalex-007.json",
+      "status": "pass"
+    },
+    {
+      "actual": "209d6c0ae753301ad74c311ee2e88e95aec9247feb9d67bf0351614037a1430c",
+      "event": 8,
+      "expected": "209d6c0ae753301ad74c311ee2e88e95aec9247feb9d67bf0351614037a1430c",
+      "path": "raw/openalex-008.json",
+      "status": "pass"
+    },
+    {
+      "actual": "209d6c0ae753301ad74c311ee2e88e95aec9247feb9d67bf0351614037a1430c",
+      "event": 9,
+      "expected": "209d6c0ae753301ad74c311ee2e88e95aec9247feb9d67bf0351614037a1430c",
+      "path": "raw/openalex-009.json",
+      "status": "pass"
+    },
+    {
+      "actual": "209d6c0ae753301ad74c311ee2e88e95aec9247feb9d67bf0351614037a1430c",
+      "event": 10,
+      "expected": "209d6c0ae753301ad74c311ee2e88e95aec9247feb9d67bf0351614037a1430c",
+      "path": "raw/openalex-010.json",
+      "status": "pass"
+    },
+    {
+      "actual": "361df328568f32f0ff01ff699037451c79260035aee3a510dfed852ca42bda10",
+      "event": 11,
+      "expected": "361df328568f32f0ff01ff699037451c79260035aee3a510dfed852ca42bda10",
+      "path": "raw/openalex-011.json",
+      "status": "pass"
+    },
+    {
+      "actual": "361df328568f32f0ff01ff699037451c79260035aee3a510dfed852ca42bda10",
+      "event": 12,
+      "expected": "361df328568f32f0ff01ff699037451c79260035aee3a510dfed852ca42bda10",
+      "path": "raw/openalex-012.json",
+      "status": "pass"
+    },
+    {
+      "actual": "361df328568f32f0ff01ff699037451c79260035aee3a510dfed852ca42bda10",
+      "event": 13,
+      "expected": "361df328568f32f0ff01ff699037451c79260035aee3a510dfed852ca42bda10",
+      "path": "raw/openalex-013.json",
+      "status": "pass"
+    },
+    {
+      "actual": "361df328568f32f0ff01ff699037451c79260035aee3a510dfed852ca42bda10",
+      "event": 14,
+      "expected": "361df328568f32f0ff01ff699037451c79260035aee3a510dfed852ca42bda10",
+      "path": "raw/openalex-014.json",
+      "status": "pass"
+    },
+    {
+      "actual": "361df328568f32f0ff01ff699037451c79260035aee3a510dfed852ca42bda10",
+      "event": 15,
+      "expected": "361df328568f32f0ff01ff699037451c79260035aee3a510dfed852ca42bda10",
+      "path": "raw/openalex-015.json",
+      "status": "pass"
+    },
+    {
+      "actual": "af67431ad6a3dc5f5ef9579f5ecd466438ea3d87479f8f57934acd802d750ad3",
+      "event": 16,
+      "expected": "af67431ad6a3dc5f5ef9579f5ecd466438ea3d87479f8f57934acd802d750ad3",
+      "path": "raw/openalex-016.json",
+      "status": "pass"
+    },
+    {
+      "actual": "af67431ad6a3dc5f5ef9579f5ecd466438ea3d87479f8f57934acd802d750ad3",
+      "event": 17,
+      "expected": "af67431ad6a3dc5f5ef9579f5ecd466438ea3d87479f8f57934acd802d750ad3",
+      "path": "raw/openalex-017.json",
+      "status": "pass"
+    },
+    {
+      "actual": "af67431ad6a3dc5f5ef9579f5ecd466438ea3d87479f8f57934acd802d750ad3",
+      "event": 18,
+      "expected": "af67431ad6a3dc5f5ef9579f5ecd466438ea3d87479f8f57934acd802d750ad3",
+      "path": "raw/openalex-018.json",
+      "status": "pass"
+    },
+    {
+      "actual": "af67431ad6a3dc5f5ef9579f5ecd466438ea3d87479f8f57934acd802d750ad3",
+      "event": 19,
+      "expected": "af67431ad6a3dc5f5ef9579f5ecd466438ea3d87479f8f57934acd802d750ad3",
+      "path": "raw/openalex-019.json",
+      "status": "pass"
+    },
+    {
+      "actual": "af67431ad6a3dc5f5ef9579f5ecd466438ea3d87479f8f57934acd802d750ad3",
+      "event": 20,
+      "expected": "af67431ad6a3dc5f5ef9579f5ecd466438ea3d87479f8f57934acd802d750ad3",
+      "path": "raw/openalex-020.json",
+      "status": "pass"
+    },
+    {
+      "actual": "af67431ad6a3dc5f5ef9579f5ecd466438ea3d87479f8f57934acd802d750ad3",
+      "event": 21,
+      "expected": "af67431ad6a3dc5f5ef9579f5ecd466438ea3d87479f8f57934acd802d750ad3",
+      "path": "raw/openalex-021.json",
+      "status": "pass"
+    },
+    {
+      "actual": "77e8ade8006754c6f8a923e70923730f54bcd58a8f3d339c5b0830c979cd51cf",
+      "event": 22,
+      "expected": "77e8ade8006754c6f8a923e70923730f54bcd58a8f3d339c5b0830c979cd51cf",
+      "path": "raw/openalex-022.json",
+      "status": "pass"
+    },
+    {
+      "actual": "77e8ade8006754c6f8a923e70923730f54bcd58a8f3d339c5b0830c979cd51cf",
+      "event": 23,
+      "expected": "77e8ade8006754c6f8a923e70923730f54bcd58a8f3d339c5b0830c979cd51cf",
+      "path": "raw/openalex-023.json",
+      "status": "pass"
+    },
+    {
+      "actual": "77e8ade8006754c6f8a923e70923730f54bcd58a8f3d339c5b0830c979cd51cf",
+      "event": 24,
+      "expected": "77e8ade8006754c6f8a923e70923730f54bcd58a8f3d339c5b0830c979cd51cf",
+      "path": "raw/openalex-024.json",
+      "status": "pass"
+    },
+    {
+      "actual": "77e8ade8006754c6f8a923e70923730f54bcd58a8f3d339c5b0830c979cd51cf",
+      "event": 25,
+      "expected": "77e8ade8006754c6f8a923e70923730f54bcd58a8f3d339c5b0830c979cd51cf",
+      "path": "raw/openalex-025.json",
+      "status": "pass"
+    },
+    {
+      "actual": "77e8ade8006754c6f8a923e70923730f54bcd58a8f3d339c5b0830c979cd51cf",
+      "event": 26,
+      "expected": "77e8ade8006754c6f8a923e70923730f54bcd58a8f3d339c5b0830c979cd51cf",
+      "path": "raw/openalex-026.json",
+      "status": "pass"
+    },
+    {
+      "actual": "77e8ade8006754c6f8a923e70923730f54bcd58a8f3d339c5b0830c979cd51cf",
+      "event": 27,
+      "expected": "77e8ade8006754c6f8a923e70923730f54bcd58a8f3d339c5b0830c979cd51cf",
+      "path": "raw/openalex-027.json",
+      "status": "pass"
+    },
+    {
+      "actual": "584c2bf1ff19ad077b8877c325caf63ea12bfcedca058fdcfdb76910651ba151",
+      "event": 28,
+      "expected": "584c2bf1ff19ad077b8877c325caf63ea12bfcedca058fdcfdb76910651ba151",
+      "path": "raw/openalex-028.json",
+      "status": "pass"
+    },
+    {
+      "actual": "584c2bf1ff19ad077b8877c325caf63ea12bfcedca058fdcfdb76910651ba151",
+      "event": 29,
+      "expected": "584c2bf1ff19ad077b8877c325caf63ea12bfcedca058fdcfdb76910651ba151",
+      "path": "raw/openalex-029.json",
+      "status": "pass"
+    },
+    {
+      "actual": "584c2bf1ff19ad077b8877c325caf63ea12bfcedca058fdcfdb76910651ba151",
+      "event": 30,
+      "expected": "584c2bf1ff19ad077b8877c325caf63ea12bfcedca058fdcfdb76910651ba151",
+      "path": "raw/openalex-030.json",
+      "status": "pass"
+    },
+    {
+      "actual": "584c2bf1ff19ad077b8877c325caf63ea12bfcedca058fdcfdb76910651ba151",
+      "event": 31,
+      "expected": "584c2bf1ff19ad077b8877c325caf63ea12bfcedca058fdcfdb76910651ba151",
+      "path": "raw/openalex-031.json",
+      "status": "pass"
+    },
+    {
+      "actual": "3aaccf7bb48ce3c7f14674896c88b59ec8044e14358a663bed2345f78d241b20",
+      "event": 32,
+      "expected": "3aaccf7bb48ce3c7f14674896c88b59ec8044e14358a663bed2345f78d241b20",
+      "path": "raw/openalex-032.json",
+      "status": "pass"
+    },
+    {
+      "actual": "3aaccf7bb48ce3c7f14674896c88b59ec8044e14358a663bed2345f78d241b20",
+      "event": 33,
+      "expected": "3aaccf7bb48ce3c7f14674896c88b59ec8044e14358a663bed2345f78d241b20",
+      "path": "raw/openalex-033.json",
+      "status": "pass"
+    },
+    {
+      "actual": "3aaccf7bb48ce3c7f14674896c88b59ec8044e14358a663bed2345f78d241b20",
+      "event": 34,
+      "expected": "3aaccf7bb48ce3c7f14674896c88b59ec8044e14358a663bed2345f78d241b20",
+      "path": "raw/openalex-034.json",
+      "status": "pass"
+    },
+    {
+      "actual": "3aaccf7bb48ce3c7f14674896c88b59ec8044e14358a663bed2345f78d241b20",
+      "event": 35,
+      "expected": "3aaccf7bb48ce3c7f14674896c88b59ec8044e14358a663bed2345f78d241b20",
+      "path": "raw/openalex-035.json",
+      "status": "pass"
+    },
+    {
+      "actual": "1d458756ea468f6a04efbdc20ff7878d62af49f07364816e955f4280cf95c4b2",
+      "event": 36,
+      "expected": "1d458756ea468f6a04efbdc20ff7878d62af49f07364816e955f4280cf95c4b2",
+      "path": "raw/openalex-036.json",
+      "status": "pass"
+    },
+    {
+      "actual": "1d458756ea468f6a04efbdc20ff7878d62af49f07364816e955f4280cf95c4b2",
+      "event": 37,
+      "expected": "1d458756ea468f6a04efbdc20ff7878d62af49f07364816e955f4280cf95c4b2",
+      "path": "raw/openalex-037.json",
+      "status": "pass"
+    },
+    {
+      "actual": "1d458756ea468f6a04efbdc20ff7878d62af49f07364816e955f4280cf95c4b2",
+      "event": 38,
+      "expected": "1d458756ea468f6a04efbdc20ff7878d62af49f07364816e955f4280cf95c4b2",
+      "path": "raw/openalex-038.json",
+      "status": "pass"
+    },
+    {
+      "actual": "1d458756ea468f6a04efbdc20ff7878d62af49f07364816e955f4280cf95c4b2",
+      "event": 39,
+      "expected": "1d458756ea468f6a04efbdc20ff7878d62af49f07364816e955f4280cf95c4b2",
+      "path": "raw/openalex-039.json",
+      "status": "pass"
+    },
+    {
+      "actual": "4e81ba36e0cfca61d107e9e592e57da68b6ce013a0dbfbab2d5504c34d554838",
+      "event": 40,
+      "expected": "4e81ba36e0cfca61d107e9e592e57da68b6ce013a0dbfbab2d5504c34d554838",
+      "path": "raw/openalex-040.json",
+      "status": "pass"
+    },
+    {
+      "actual": "4e81ba36e0cfca61d107e9e592e57da68b6ce013a0dbfbab2d5504c34d554838",
+      "event": 41,
+      "expected": "4e81ba36e0cfca61d107e9e592e57da68b6ce013a0dbfbab2d5504c34d554838",
+      "path": "raw/openalex-041.json",
+      "status": "pass"
+    },
+    {
+      "actual": "4e81ba36e0cfca61d107e9e592e57da68b6ce013a0dbfbab2d5504c34d554838",
+      "event": 42,
+      "expected": "4e81ba36e0cfca61d107e9e592e57da68b6ce013a0dbfbab2d5504c34d554838",
+      "path": "raw/openalex-042.json",
+      "status": "pass"
+    },
+    {
+      "actual": "35a3f78ff85eb2b96ca5403a35ff6e4e425c457d4c99f59e16a418217914c5db",
+      "event": 43,
+      "expected": "35a3f78ff85eb2b96ca5403a35ff6e4e425c457d4c99f59e16a418217914c5db",
+      "path": "raw/openalex-043.json",
+      "status": "pass"
+    },
+    {
+      "actual": "35a3f78ff85eb2b96ca5403a35ff6e4e425c457d4c99f59e16a418217914c5db",
+      "event": 44,
+      "expected": "35a3f78ff85eb2b96ca5403a35ff6e4e425c457d4c99f59e16a418217914c5db",
+      "path": "raw/openalex-044.json",
+      "status": "pass"
+    },
+    {
+      "actual": "35a3f78ff85eb2b96ca5403a35ff6e4e425c457d4c99f59e16a418217914c5db",
+      "event": 45,
+      "expected": "35a3f78ff85eb2b96ca5403a35ff6e4e425c457d4c99f59e16a418217914c5db",
+      "path": "raw/openalex-045.json",
+      "status": "pass"
+    },
+    {
+      "actual": "35a3f78ff85eb2b96ca5403a35ff6e4e425c457d4c99f59e16a418217914c5db",
+      "event": 46,
+      "expected": "35a3f78ff85eb2b96ca5403a35ff6e4e425c457d4c99f59e16a418217914c5db",
+      "path": "raw/openalex-046.json",
+      "status": "pass"
+    },
+    {
+      "actual": "9cbe1924d528b5abf3477eacee8d7f508ee7e143bf12e36d2674072ca435785a",
+      "event": 47,
+      "expected": "9cbe1924d528b5abf3477eacee8d7f508ee7e143bf12e36d2674072ca435785a",
+      "path": "raw/crossref-001.json",
+      "status": "pass"
+    },
+    {
+      "actual": "d756fa4f87774a7fce82034120621c0b926cb2c252d8a07ad1b7d6f7f068e9ff",
+      "event": 48,
+      "expected": "d756fa4f87774a7fce82034120621c0b926cb2c252d8a07ad1b7d6f7f068e9ff",
+      "path": "raw/crossref-002.json",
+      "status": "pass"
+    },
+    {
+      "actual": "ea399bdddae2b8fa18eb94b81dd4ef56a91b615b9f631c6c7fe234bfd7cfd14d",
+      "event": 49,
+      "expected": "ea399bdddae2b8fa18eb94b81dd4ef56a91b615b9f631c6c7fe234bfd7cfd14d",
+      "path": "raw/crossref-003.json",
+      "status": "pass"
+    },
+    {
+      "actual": "a2cfb8456ad34de82380002edb13d5d6a35d36d042f86d22281b216a32bf65ca",
+      "event": 50,
+      "expected": "a2cfb8456ad34de82380002edb13d5d6a35d36d042f86d22281b216a32bf65ca",
+      "path": "raw/crossref-004.json",
+      "status": "pass"
+    },
+    {
+      "actual": "ed87b2ca53ced35757edc96bb5f50cf0428e6fba69782cf6c6fde031d08f88c0",
+      "event": 51,
+      "expected": "ed87b2ca53ced35757edc96bb5f50cf0428e6fba69782cf6c6fde031d08f88c0",
+      "path": "raw/crossref-005.json",
+      "status": "pass"
+    },
+    {
+      "actual": "9bd8c602dda4485429fae959bb69fa2c0560b7e6054c28e1545fc3c1fb2eb2c2",
+      "event": 52,
+      "expected": "9bd8c602dda4485429fae959bb69fa2c0560b7e6054c28e1545fc3c1fb2eb2c2",
+      "path": "raw/crossref-006.json",
+      "status": "pass"
+    },
+    {
+      "actual": "012d2c5f279926e13c56866e9aae46c3bfc651c758e99d2853746e77fad62d0c",
+      "event": 53,
+      "expected": "012d2c5f279926e13c56866e9aae46c3bfc651c758e99d2853746e77fad62d0c",
+      "path": "raw/crossref-007.json",
+      "status": "pass"
+    },
+    {
+      "actual": "96cf956324b2b881befec37268b81a43a3f46b7a005eb141b646c379da1e0661",
+      "event": 54,
+      "expected": "96cf956324b2b881befec37268b81a43a3f46b7a005eb141b646c379da1e0661",
+      "path": "raw/crossref-008.json",
+      "status": "pass"
+    },
+    {
+      "actual": "c34aadfaaf8794185deb0aefcf03cd05a4d85b163f0f756c105f9c303a6ae5e6",
+      "event": 55,
+      "expected": "c34aadfaaf8794185deb0aefcf03cd05a4d85b163f0f756c105f9c303a6ae5e6",
+      "path": "raw/crossref-009.json",
+      "status": "pass"
+    },
+    {
+      "actual": "70c361562a3383aceb10bb0d5e4f6274ac206d6385c941836feb1a24f31d256c",
+      "event": 56,
+      "expected": "70c361562a3383aceb10bb0d5e4f6274ac206d6385c941836feb1a24f31d256c",
+      "path": "raw/crossref-010.json",
+      "status": "pass"
+    },
+    {
+      "actual": "0ee17c58534f940ffeb9b3028da197943964de367d95bf4e2bbb7af9a4fe9cd3",
+      "event": 57,
+      "expected": "0ee17c58534f940ffeb9b3028da197943964de367d95bf4e2bbb7af9a4fe9cd3",
+      "path": "raw/crossref-011.json",
+      "status": "pass"
+    },
+    {
+      "actual": "9bb48e0dcd68d78c30ae24d36569ebc2f679d16a6e228b2809840f186f5ba00e",
+      "event": 58,
+      "expected": "9bb48e0dcd68d78c30ae24d36569ebc2f679d16a6e228b2809840f186f5ba00e",
+      "path": "raw/crossref-012.json",
+      "status": "pass"
+    },
+    {
+      "actual": "74690d96ebf16233bff44a420af6104d474a98ed0b2c1ffba9b5c4a5852469c7",
+      "event": 59,
+      "expected": "74690d96ebf16233bff44a420af6104d474a98ed0b2c1ffba9b5c4a5852469c7",
+      "path": "raw/crossref-013.json",
+      "status": "pass"
+    },
+    {
+      "actual": "bae0affa747682d3e0f3d89d394271c9e594df2694b61c3b56e92d853fea052c",
+      "event": 60,
+      "expected": "bae0affa747682d3e0f3d89d394271c9e594df2694b61c3b56e92d853fea052c",
+      "path": "raw/crossref-014.json",
+      "status": "pass"
+    },
+    {
+      "actual": "b685be0924be400b336b96cff2c5534e01a09b1a2e40912a5e6f7bd4848cc0c9",
+      "event": 61,
+      "expected": "b685be0924be400b336b96cff2c5534e01a09b1a2e40912a5e6f7bd4848cc0c9",
+      "path": "raw/crossref-015.json",
+      "status": "pass"
+    },
+    {
+      "actual": "ad5225fdf2044b981657452eb9a571c59f19a3170d71e569d181f88a90fe0f7c",
+      "event": 62,
+      "expected": "ad5225fdf2044b981657452eb9a571c59f19a3170d71e569d181f88a90fe0f7c",
+      "path": "raw/crossref-016.json",
+      "status": "pass"
+    },
+    {
+      "actual": "da2b8f58ec89f16be6ef777096400d44b5ea0af2ef0e18c7a9df4c824cb84b22",
+      "event": 63,
+      "expected": "da2b8f58ec89f16be6ef777096400d44b5ea0af2ef0e18c7a9df4c824cb84b22",
+      "path": "raw/crossref-017.json",
+      "status": "pass"
+    },
+    {
+      "actual": "b7cc283074cd271231efa703439f955e2fc158f8b397deb541af71e56c58abe7",
+      "event": 64,
+      "expected": "b7cc283074cd271231efa703439f955e2fc158f8b397deb541af71e56c58abe7",
+      "path": "raw/crossref-018.json",
+      "status": "pass"
+    },
+    {
+      "actual": "565b3dcd136118c2fe02cd0fa655fd5bb29f24621c2562b56c51c6356d94b355",
+      "event": 65,
+      "expected": "565b3dcd136118c2fe02cd0fa655fd5bb29f24621c2562b56c51c6356d94b355",
+      "path": "raw/crossref-019.json",
+      "status": "pass"
+    },
+    {
+      "actual": "505bc1d69d55df3fff1a3c63309a0b297e4f3e7f7609ce223fdd7b08616b6fd2",
+      "event": 66,
+      "expected": "505bc1d69d55df3fff1a3c63309a0b297e4f3e7f7609ce223fdd7b08616b6fd2",
+      "path": "raw/crossref-020.json",
+      "status": "pass"
+    },
+    {
+      "actual": "3161c9a92e039095513695428d68917f09120e63ed6c0624cf1b33a773233b06",
+      "event": 67,
+      "expected": "3161c9a92e039095513695428d68917f09120e63ed6c0624cf1b33a773233b06",
+      "path": "raw/crossref-021.json",
+      "status": "pass"
+    },
+    {
+      "actual": "fa06e269545f4bff4e26be5a81c637416c8dbdecad54bf6a2fcc8768bb2a3262",
+      "event": 68,
+      "expected": "fa06e269545f4bff4e26be5a81c637416c8dbdecad54bf6a2fcc8768bb2a3262",
+      "path": "raw/crossref-022.json",
+      "status": "pass"
+    },
+    {
+      "actual": "9073d744ff8686c0671a5ed82dd7c6577778b96cd0c61412dacb5f1c8a3fe86b",
+      "event": 69,
+      "expected": "9073d744ff8686c0671a5ed82dd7c6577778b96cd0c61412dacb5f1c8a3fe86b",
+      "path": "raw/crossref-023.json",
+      "status": "pass"
+    },
+    {
+      "actual": "7a5b4a0d40a0d727053e73b9fee9295718ad6e30de9110189cf5ce1e69739b20",
+      "event": 70,
+      "expected": "7a5b4a0d40a0d727053e73b9fee9295718ad6e30de9110189cf5ce1e69739b20",
+      "path": "raw/crossref-024.json",
+      "status": "pass"
+    },
+    {
+      "actual": "53ccef0bba5b8f0e510b05dca5fbaad11b927f9d3e85b5bd7c51594556fb4605",
+      "event": 71,
+      "expected": "53ccef0bba5b8f0e510b05dca5fbaad11b927f9d3e85b5bd7c51594556fb4605",
+      "path": "raw/crossref-025.json",
+      "status": "pass"
+    },
+    {
+      "actual": "4f9f36fe5163b179b6b5d95234227b02d5e9b368f942a1b8ef51d6d4ac7fe3bb",
+      "event": 72,
+      "expected": "4f9f36fe5163b179b6b5d95234227b02d5e9b368f942a1b8ef51d6d4ac7fe3bb",
+      "path": "raw/crossref-026.json",
+      "status": "pass"
+    },
+    {
+      "actual": "1a73fadf7e178f9c2c2546cb5e3a2424527970e2e6767f381175d6e28b7afbef",
+      "event": 73,
+      "expected": "1a73fadf7e178f9c2c2546cb5e3a2424527970e2e6767f381175d6e28b7afbef",
+      "path": "raw/crossref-027.json",
+      "status": "pass"
+    },
+    {
+      "actual": "8458bccc5745ed0ae4f97056ee3ca20a0829770e4ef3db9370184ba27f3bd503",
+      "event": 74,
+      "expected": "8458bccc5745ed0ae4f97056ee3ca20a0829770e4ef3db9370184ba27f3bd503",
+      "path": "raw/crossref-028.json",
+      "status": "pass"
+    },
+    {
+      "actual": "325e3c7e329e980bbe30bdd15fa507b9543fa9eb5add250d4092eb2e8edc5cae",
+      "event": 75,
+      "expected": "325e3c7e329e980bbe30bdd15fa507b9543fa9eb5add250d4092eb2e8edc5cae",
+      "path": "raw/crossref-029.json",
+      "status": "pass"
+    },
+    {
+      "actual": "99d15fe14e1872423c270e0fda3e9a697775fdc9438df2837f39ed3a94980cc3",
+      "event": 76,
+      "expected": "99d15fe14e1872423c270e0fda3e9a697775fdc9438df2837f39ed3a94980cc3",
+      "path": "raw/crossref-030.json",
+      "status": "pass"
+    },
+    {
+      "actual": "9787a134dfeebb4d37197a1990a3dbdc39d0dbf2699d78a17ea36d702dabb294",
+      "event": 77,
+      "expected": "9787a134dfeebb4d37197a1990a3dbdc39d0dbf2699d78a17ea36d702dabb294",
+      "path": "raw/crossref-031.json",
+      "status": "pass"
+    },
+    {
+      "actual": "fdbcc8ad80953fe095cda827e5f81d41898368ef8df65c2bdf099ecb977b2e77",
+      "event": 78,
+      "expected": "fdbcc8ad80953fe095cda827e5f81d41898368ef8df65c2bdf099ecb977b2e77",
+      "path": "raw/crossref-032.json",
+      "status": "pass"
+    },
+    {
+      "actual": "1b817fb1aa30e74ca74343061b92a9f934dd6b5a8479886b39118d90b4e23933",
+      "event": 79,
+      "expected": "1b817fb1aa30e74ca74343061b92a9f934dd6b5a8479886b39118d90b4e23933",
+      "path": "raw/crossref-033.json",
+      "status": "pass"
+    },
+    {
+      "actual": "be1189e39c6a6c4011eccd632c75d772b6ea9c16cd14e94237dc55279e185264",
+      "event": 80,
+      "expected": "be1189e39c6a6c4011eccd632c75d772b6ea9c16cd14e94237dc55279e185264",
+      "path": "raw/crossref-034.json",
+      "status": "pass"
+    },
+    {
+      "actual": "0d8081be99c9cb75a48b7ca4f2909d8f6d70b18771fd342bdd92825b1e8e0e4e",
+      "event": 81,
+      "expected": "0d8081be99c9cb75a48b7ca4f2909d8f6d70b18771fd342bdd92825b1e8e0e4e",
+      "path": "raw/crossref-035.json",
+      "status": "pass"
+    },
+    {
+      "actual": "6e648510b26785c85bacc885e729909c762527ac7e93431985e0352e15b29fe1",
+      "event": 82,
+      "expected": "6e648510b26785c85bacc885e729909c762527ac7e93431985e0352e15b29fe1",
+      "path": "raw/crossref-036.json",
+      "status": "pass"
+    },
+    {
+      "actual": "c0acd5b430aeeec7941244754555b693a4d817d18759152b00e370d53c91796c",
+      "event": 83,
+      "expected": "c0acd5b430aeeec7941244754555b693a4d817d18759152b00e370d53c91796c",
+      "path": "raw/crossref-037.json",
+      "status": "pass"
+    },
+    {
+      "actual": "29356a44d1523491b729c75bace1dec8e617e4444def4918472c11fae515e160",
+      "event": 84,
+      "expected": "29356a44d1523491b729c75bace1dec8e617e4444def4918472c11fae515e160",
+      "path": "raw/crossref-038.json",
+      "status": "pass"
+    },
+    {
+      "actual": "284f8190c0bbafa829c9c164d0880d25847c93e6861d8de7a4222502847afe1b",
+      "event": 85,
+      "expected": "284f8190c0bbafa829c9c164d0880d25847c93e6861d8de7a4222502847afe1b",
+      "path": "raw/crossref-039.json",
+      "status": "pass"
+    },
+    {
+      "actual": "7648a09e4c5ce685196fc20274fe19db762360a3ec27afd8d87487ef703d9903",
+      "event": 86,
+      "expected": "7648a09e4c5ce685196fc20274fe19db762360a3ec27afd8d87487ef703d9903",
+      "path": "raw/crossref-040.json",
+      "status": "pass"
+    },
+    {
+      "actual": "da92d104e7327db4ca92f8df76beef88463159f951a9dae0ead1ffd3acc85142",
+      "event": 87,
+      "expected": "da92d104e7327db4ca92f8df76beef88463159f951a9dae0ead1ffd3acc85142",
+      "path": "raw/crossref-041.json",
+      "status": "pass"
+    },
+    {
+      "actual": "dae32aa5b551bbc22463f4db38a15916cf9c2bb11439f9c425ba97087429f42b",
+      "event": 88,
+      "expected": "dae32aa5b551bbc22463f4db38a15916cf9c2bb11439f9c425ba97087429f42b",
+      "path": "raw/crossref-042.json",
+      "status": "pass"
+    },
+    {
+      "actual": "3a894ded85812e9d7bdd7829d487625311cf646c51e9672ba6c88264bebd8ef0",
+      "event": 89,
+      "expected": "3a894ded85812e9d7bdd7829d487625311cf646c51e9672ba6c88264bebd8ef0",
+      "path": "raw/crossref-043.json",
+      "status": "pass"
+    },
+    {
+      "actual": "5540e9df08ce43ed1a6373033768ed669f8c7086707372c8d9bb109c664d8cc7",
+      "event": 90,
+      "expected": "5540e9df08ce43ed1a6373033768ed669f8c7086707372c8d9bb109c664d8cc7",
+      "path": "raw/crossref-044.json",
+      "status": "pass"
+    },
+    {
+      "actual": "fcc57a64285b09b459f1623db7fcb83260a65c98f44e5bbc607f46e0b195bbae",
+      "event": 91,
+      "expected": "fcc57a64285b09b459f1623db7fcb83260a65c98f44e5bbc607f46e0b195bbae",
+      "path": "raw/crossref-045.json",
+      "status": "pass"
+    },
+    {
+      "actual": "66dd6e9ba3053e855554f6d6ff72058a9354ee496a456446f92dad9b2ad69074",
+      "event": 92,
+      "expected": "66dd6e9ba3053e855554f6d6ff72058a9354ee496a456446f92dad9b2ad69074",
+      "path": "raw/crossref-046.json",
+      "status": "pass"
+    },
+    {
+      "actual": "70a0c5a81e8f89d2c56feff06beafe8cde5d7014d1f4d9ea0b0a21164380b61c",
+      "event": 93,
+      "expected": "70a0c5a81e8f89d2c56feff06beafe8cde5d7014d1f4d9ea0b0a21164380b61c",
+      "path": "raw/public-nber-001.json",
+      "status": "pass"
+    },
+    {
+      "actual": "6f6d5a53920d050d1a69f84554544b15d7aeb9c9b3ca6e7f673cfa857882f827",
+      "event": 94,
+      "expected": "6f6d5a53920d050d1a69f84554544b15d7aeb9c9b3ca6e7f673cfa857882f827",
+      "path": "raw/public-iclr-proceedings-001.html",
+      "status": "pass"
+    },
+    {
+      "actual": "26f9f9532a13f9a6e6280f4df9ef0e4bcdbc0b6a4b5d2b5a80313fa24c2e4e29",
+      "event": 95,
+      "expected": "26f9f9532a13f9a6e6280f4df9ef0e4bcdbc0b6a4b5d2b5a80313fa24c2e4e29",
+      "path": "docs/survey/audit/imports/acl_anthology_writing.csv",
+      "status": "pass"
+    },
+    {
+      "actual": "5f79319bc370e6259d22a8088f456a06e8446c064d2023116b7d618c2396329f",
+      "event": 96,
+      "expected": "5f79319bc370e6259d22a8088f456a06e8446c064d2023116b7d618c2396329f",
+      "path": "docs/survey/audit/imports/iclr_writing_language_models.csv",
+      "status": "pass"
+    },
+    {
+      "actual": "acb767e3de3457e519b8cbb5877bff62d02a4a4c4b5ee50147d0ac0947c68708",
+      "event": 97,
+      "expected": "acb767e3de3457e519b8cbb5877bff62d02a4a4c4b5ee50147d0ac0947c68708",
+      "path": "docs/survey/audit/imports/nber_generative_ai.csv",
+      "status": "pass"
+    },
+    {
+      "actual": "71409cc29d9425a0ca034b170e929450e40b892e788721f79fc155f6568a62bd",
+      "event": 98,
+      "expected": "71409cc29d9425a0ca034b170e929450e40b892e788721f79fc155f6568a62bd",
+      "path": "docs/survey/audit/imports/repec_ideas_writing.csv",
+      "status": "pass"
+    },
+    {
+      "actual": "8b69f729644a5c6fb8eeac6001444704842ca6fd93c8fbefdfb9203f04c7fcbf",
+      "event": 99,
+      "expected": "8b69f729644a5c6fb8eeac6001444704842ca6fd93c8fbefdfb9203f04c7fcbf",
+      "path": "raw/registry-001-vale.json",
+      "status": "pass"
+    },
+    {
+      "actual": "835a9138f28de5bd011e2ab3753b3c31a6be23ba552ebf67ff0bb9fac082bd37",
+      "event": 100,
+      "expected": "835a9138f28de5bd011e2ab3753b3c31a6be23ba552ebf67ff0bb9fac082bd37",
+      "path": "raw/registry-002-textlint.json",
+      "status": "pass"
+    },
+    {
+      "actual": "8b69f729644a5c6fb8eeac6001444704842ca6fd93c8fbefdfb9203f04c7fcbf",
+      "event": 101,
+      "expected": "8b69f729644a5c6fb8eeac6001444704842ca6fd93c8fbefdfb9203f04c7fcbf",
+      "path": "raw/registry-003-languagetool.json",
+      "status": "pass"
+    },
+    {
+      "actual": "8b69f729644a5c6fb8eeac6001444704842ca6fd93c8fbefdfb9203f04c7fcbf",
+      "event": 102,
+      "expected": "8b69f729644a5c6fb8eeac6001444704842ca6fd93c8fbefdfb9203f04c7fcbf",
+      "path": "raw/registry-004-textidote.json",
+      "status": "pass"
+    },
+    {
+      "actual": "fba8847ddad6ea47fc0ccc14884a79a0cfe4c079f138343f8cc3e5fa8e476f78",
+      "event": 103,
+      "expected": "fba8847ddad6ea47fc0ccc14884a79a0cfe4c079f138343f8cc3e5fa8e476f78",
+      "path": "raw/registry-005-proselint.json",
+      "status": "pass"
+    },
+    {
+      "actual": "fc23f2445fa874c5bb4c2edcbfd7ed84e87f53bc9fc74aa5615f5f8a52d8ff38",
+      "event": 104,
+      "expected": "fc23f2445fa874c5bb4c2edcbfd7ed84e87f53bc9fc74aa5615f5f8a52d8ff38",
+      "path": "raw/registry-006-write-good.json",
+      "status": "pass"
+    },
+    {
+      "actual": "8b69f729644a5c6fb8eeac6001444704842ca6fd93c8fbefdfb9203f04c7fcbf",
+      "event": 105,
+      "expected": "8b69f729644a5c6fb8eeac6001444704842ca6fd93c8fbefdfb9203f04c7fcbf",
+      "path": "raw/registry-007-ltex-ls.json",
+      "status": "pass"
+    },
+    {
+      "actual": "8b69f729644a5c6fb8eeac6001444704842ca6fd93c8fbefdfb9203f04c7fcbf",
+      "event": 106,
+      "expected": "8b69f729644a5c6fb8eeac6001444704842ca6fd93c8fbefdfb9203f04c7fcbf",
+      "path": "raw/registry-008-pandoc.json",
+      "status": "pass"
+    },
+    {
+      "actual": "d221636be1b922ef6f398930ac40bb9a8976fc105cfdc65331f6665314e8221b",
+      "event": 107,
+      "expected": "d221636be1b922ef6f398930ac40bb9a8976fc105cfdc65331f6665314e8221b",
+      "path": "raw/registry-009-pylatexenc.json",
+      "status": "pass"
+    },
+    {
+      "actual": "8b69f729644a5c6fb8eeac6001444704842ca6fd93c8fbefdfb9203f04c7fcbf",
+      "event": 108,
+      "expected": "8b69f729644a5c6fb8eeac6001444704842ca6fd93c8fbefdfb9203f04c7fcbf",
+      "path": "raw/registry-010-latexdiff.json",
+      "status": "pass"
+    },
+    {
+      "actual": "8b69f729644a5c6fb8eeac6001444704842ca6fd93c8fbefdfb9203f04c7fcbf",
+      "event": 109,
+      "expected": "8b69f729644a5c6fb8eeac6001444704842ca6fd93c8fbefdfb9203f04c7fcbf",
+      "path": "raw/registry-011-grobid.json",
+      "status": "pass"
+    },
+    {
+      "actual": "02d502236e11cbd6a6a2210368eaf7742919531ae18b7fa7a095bddadfadbd99",
+      "event": 110,
+      "expected": "02d502236e11cbd6a6a2210368eaf7742919531ae18b7fa7a095bddadfadbd99",
+      "path": "raw/registry-012-textstat.json",
+      "status": "pass"
+    },
+    {
+      "actual": "b82014934f66beeb9e05a37f65357c4b50db0349d25d68d818ed0319dd4feb40",
+      "event": 111,
+      "expected": "b82014934f66beeb9e05a37f65357c4b50db0349d25d68d818ed0319dd4feb40",
+      "path": "raw/registry-013-inspect-ai.json",
+      "status": "pass"
+    },
+    {
+      "actual": "8b69f729644a5c6fb8eeac6001444704842ca6fd93c8fbefdfb9203f04c7fcbf",
+      "event": 112,
+      "expected": "8b69f729644a5c6fb8eeac6001444704842ca6fd93c8fbefdfb9203f04c7fcbf",
+      "path": "raw/registry-014-llama-cpp.json",
+      "status": "pass"
+    },
+    {
+      "actual": "3dc6e7fc465124c3311be94e7d8d9d2887946c30b83f3de2422aad1958c815fd",
+      "event": 113,
+      "expected": "3dc6e7fc465124c3311be94e7d8d9d2887946c30b83f3de2422aad1958c815fd",
+      "path": "raw/registry-015-plastex.json",
+      "status": "pass"
+    },
+    {
+      "actual": "8b69f729644a5c6fb8eeac6001444704842ca6fd93c8fbefdfb9203f04c7fcbf",
+      "event": 114,
+      "expected": "8b69f729644a5c6fb8eeac6001444704842ca6fd93c8fbefdfb9203f04c7fcbf",
+      "path": "raw/registry-016-tree-sitter-latex.json",
+      "status": "pass"
+    },
+    {
+      "actual": "8b69f729644a5c6fb8eeac6001444704842ca6fd93c8fbefdfb9203f04c7fcbf",
+      "event": 115,
+      "expected": "8b69f729644a5c6fb8eeac6001444704842ca6fd93c8fbefdfb9203f04c7fcbf",
+      "path": "raw/registry-017-latexml.json",
+      "status": "pass"
+    },
+    {
+      "actual": "8b69f729644a5c6fb8eeac6001444704842ca6fd93c8fbefdfb9203f04c7fcbf",
+      "event": 116,
+      "expected": "8b69f729644a5c6fb8eeac6001444704842ca6fd93c8fbefdfb9203f04c7fcbf",
+      "path": "raw/registry-018-humanizer.json",
+      "status": "pass"
+    },
+    {
+      "actual": "8b69f729644a5c6fb8eeac6001444704842ca6fd93c8fbefdfb9203f04c7fcbf",
+      "event": 117,
+      "expected": "8b69f729644a5c6fb8eeac6001444704842ca6fd93c8fbefdfb9203f04c7fcbf",
+      "path": "raw/registry-019-stop-slop.json",
+      "status": "pass"
+    },
+    {
+      "actual": "8b69f729644a5c6fb8eeac6001444704842ca6fd93c8fbefdfb9203f04c7fcbf",
+      "event": 118,
+      "expected": "8b69f729644a5c6fb8eeac6001444704842ca6fd93c8fbefdfb9203f04c7fcbf",
+      "path": "raw/registry-020-taste-skill.json",
+      "status": "pass"
+    },
+    {
+      "actual": "8b69f729644a5c6fb8eeac6001444704842ca6fd93c8fbefdfb9203f04c7fcbf",
+      "event": 119,
+      "expected": "8b69f729644a5c6fb8eeac6001444704842ca6fd93c8fbefdfb9203f04c7fcbf",
+      "path": "raw/registry-021-writing-agent.json",
+      "status": "pass"
+    },
+    {
+      "actual": "8b69f729644a5c6fb8eeac6001444704842ca6fd93c8fbefdfb9203f04c7fcbf",
+      "event": 120,
+      "expected": "8b69f729644a5c6fb8eeac6001444704842ca6fd93c8fbefdfb9203f04c7fcbf",
+      "path": "raw/registry-022-vale-ai-tells.json",
+      "status": "pass"
+    },
+    {
+      "actual": "8b69f729644a5c6fb8eeac6001444704842ca6fd93c8fbefdfb9203f04c7fcbf",
+      "event": 121,
+      "expected": "8b69f729644a5c6fb8eeac6001444704842ca6fd93c8fbefdfb9203f04c7fcbf",
+      "path": "raw/registry-023-academic-humanizer.json",
+      "status": "pass"
+    },
+    {
+      "actual": "8b69f729644a5c6fb8eeac6001444704842ca6fd93c8fbefdfb9203f04c7fcbf",
+      "event": 122,
+      "expected": "8b69f729644a5c6fb8eeac6001444704842ca6fd93c8fbefdfb9203f04c7fcbf",
+      "path": "raw/registry-024-avoid-ai-writing.json",
+      "status": "pass"
+    },
+    {
+      "actual": "8b69f729644a5c6fb8eeac6001444704842ca6fd93c8fbefdfb9203f04c7fcbf",
+      "event": 123,
+      "expected": "8b69f729644a5c6fb8eeac6001444704842ca6fd93c8fbefdfb9203f04c7fcbf",
+      "path": "raw/registry-025-sloptrim.json",
+      "status": "pass"
+    },
+    {
+      "actual": "8b69f729644a5c6fb8eeac6001444704842ca6fd93c8fbefdfb9203f04c7fcbf",
+      "event": 124,
+      "expected": "8b69f729644a5c6fb8eeac6001444704842ca6fd93c8fbefdfb9203f04c7fcbf",
+      "path": "raw/registry-026-humanizer-stack.json",
+      "status": "pass"
+    },
+    {
+      "actual": "8b69f729644a5c6fb8eeac6001444704842ca6fd93c8fbefdfb9203f04c7fcbf",
+      "event": 125,
+      "expected": "8b69f729644a5c6fb8eeac6001444704842ca6fd93c8fbefdfb9203f04c7fcbf",
+      "path": "raw/registry-027-fast-detect-gpt.json",
+      "status": "pass"
+    },
+    {
+      "actual": "8b69f729644a5c6fb8eeac6001444704842ca6fd93c8fbefdfb9203f04c7fcbf",
+      "event": 126,
+      "expected": "8b69f729644a5c6fb8eeac6001444704842ca6fd93c8fbefdfb9203f04c7fcbf",
+      "path": "raw/registry-028-slop-forensics.json",
+      "status": "pass"
+    },
+    {
+      "actual": "40b185967b9ae7b4dfdbf2425fadd2131408fad388e709d7e04a91c958bc15d8",
+      "event": 127,
+      "expected": "40b185967b9ae7b4dfdbf2425fadd2131408fad388e709d7e04a91c958bc15d8",
+      "path": "raw/github-001.json",
+      "status": "pass"
+    },
+    {
+      "actual": "255e03b97a08e6b113d28c3e32c75d9fce9447a6a5a4987ab5599fb8880a2906",
+      "event": 128,
+      "expected": "255e03b97a08e6b113d28c3e32c75d9fce9447a6a5a4987ab5599fb8880a2906",
+      "path": "raw/github-002.json",
+      "status": "pass"
+    },
+    {
+      "actual": "39876c85581d17ec47fe61f4b2acbdcc327a9e6290d580981cdacfb5fdaa242b",
+      "event": 129,
+      "expected": "39876c85581d17ec47fe61f4b2acbdcc327a9e6290d580981cdacfb5fdaa242b",
+      "path": "raw/github-003.json",
+      "status": "pass"
+    },
+    {
+      "actual": "315d391437b984f75ce0e61740a938880975c3337a5c646a2a5d96703683e32e",
+      "event": 130,
+      "expected": "315d391437b984f75ce0e61740a938880975c3337a5c646a2a5d96703683e32e",
+      "path": "raw/github-004.json",
+      "status": "pass"
+    },
+    {
+      "actual": "bd7a36aa8eb10827774275966412e9d9bb99bb1f8b77474dbc13cf964685e50a",
+      "event": 131,
+      "expected": "bd7a36aa8eb10827774275966412e9d9bb99bb1f8b77474dbc13cf964685e50a",
+      "path": "raw/github-005.json",
+      "status": "pass"
+    },
+    {
+      "actual": "3960e2245ec460d418a2bfecc3a6eab638ce1a34159ce950d641b8c96f48a0a5",
+      "event": 132,
+      "expected": "3960e2245ec460d418a2bfecc3a6eab638ce1a34159ce950d641b8c96f48a0a5",
+      "path": "raw/github-006.json",
+      "status": "pass"
+    },
+    {
+      "actual": "c61bdba9e2738cd801b3d9525b29f2163b22f1423389a42f080cf3637f47320c",
+      "event": 133,
+      "expected": "c61bdba9e2738cd801b3d9525b29f2163b22f1423389a42f080cf3637f47320c",
+      "path": "raw/github-007.json",
+      "status": "pass"
+    },
+    {
+      "actual": "3297ffeaec8bf8dd3446644deb78e2e9af06b241106a639f4c7b59f116d8f228",
+      "event": 134,
+      "expected": "3297ffeaec8bf8dd3446644deb78e2e9af06b241106a639f4c7b59f116d8f228",
+      "path": "raw/github-008.json",
+      "status": "pass"
+    },
+    {
+      "actual": "3949ce0199480d518e4d470a8d96abf808e3e634744a9c6a872905198fb54121",
+      "event": 135,
+      "expected": "3949ce0199480d518e4d470a8d96abf808e3e634744a9c6a872905198fb54121",
+      "path": "raw/github-009.json",
+      "status": "pass"
+    },
+    {
+      "actual": "4af480b8ee5b87b369a76c49bd22c9a783908272ebffbe97898f8ab0f0772a5f",
+      "event": 136,
+      "expected": "4af480b8ee5b87b369a76c49bd22c9a783908272ebffbe97898f8ab0f0772a5f",
+      "path": "raw/github-010.json",
+      "status": "pass"
+    },
+    {
+      "actual": "8b69f729644a5c6fb8eeac6001444704842ca6fd93c8fbefdfb9203f04c7fcbf",
+      "event": 137,
+      "expected": "8b69f729644a5c6fb8eeac6001444704842ca6fd93c8fbefdfb9203f04c7fcbf",
+      "path": "raw/github-011.json",
+      "status": "pass"
+    },
+    {
+      "actual": "8b69f729644a5c6fb8eeac6001444704842ca6fd93c8fbefdfb9203f04c7fcbf",
+      "event": 138,
+      "expected": "8b69f729644a5c6fb8eeac6001444704842ca6fd93c8fbefdfb9203f04c7fcbf",
+      "path": "raw/github-012.json",
+      "status": "pass"
+    },
+    {
+      "actual": "8b69f729644a5c6fb8eeac6001444704842ca6fd93c8fbefdfb9203f04c7fcbf",
+      "event": 139,
+      "expected": "8b69f729644a5c6fb8eeac6001444704842ca6fd93c8fbefdfb9203f04c7fcbf",
+      "path": "raw/github-013.json",
+      "status": "pass"
+    },
+    {
+      "actual": "8b69f729644a5c6fb8eeac6001444704842ca6fd93c8fbefdfb9203f04c7fcbf",
+      "event": 140,
+      "expected": "8b69f729644a5c6fb8eeac6001444704842ca6fd93c8fbefdfb9203f04c7fcbf",
+      "path": "raw/github-014.json",
+      "status": "pass"
+    },
+    {
+      "actual": "32e6648993cda882403094bda127351f2bf54b634c397af2737130147a51680a",
+      "event": 141,
+      "expected": "32e6648993cda882403094bda127351f2bf54b634c397af2737130147a51680a",
+      "path": "raw/evidence-doi-003-e-ext-001.json",
+      "status": "pass"
+    },
+    {
+      "actual": "d1c62385a77d4b28aead1d721a27a0448097cecbe36f03d8b231e8f303aedbef",
+      "event": 142,
+      "expected": "d1c62385a77d4b28aead1d721a27a0448097cecbe36f03d8b231e8f303aedbef",
+      "path": "raw/evidence-doi-004-e-ext-002.json",
+      "status": "pass"
+    },
+    {
+      "actual": "edcf364c479f1bd28a2aab8bbededef5606c67fe350be3c40b83633d5df51740",
+      "event": 143,
+      "expected": "edcf364c479f1bd28a2aab8bbededef5606c67fe350be3c40b83633d5df51740",
+      "path": "raw/evidence-doi-005-e-ext-003.json",
+      "status": "pass"
+    },
+    {
+      "actual": "6b39a267a7c67f1be86f4e4448c1d6daf275ab489d3139aae118ca4d7c6ee4d3",
+      "event": 144,
+      "expected": "6b39a267a7c67f1be86f4e4448c1d6daf275ab489d3139aae118ca4d7c6ee4d3",
+      "path": "raw/evidence-doi-006-e-ext-004.json",
+      "status": "pass"
+    },
+    {
+      "actual": "e01e3fa83895a616eb1fc65c35b10a4d01bea55b6af21627236fbfc909ef73da",
+      "event": 145,
+      "expected": "e01e3fa83895a616eb1fc65c35b10a4d01bea55b6af21627236fbfc909ef73da",
+      "path": "raw/evidence-doi-007-e-ext-005.json",
+      "status": "pass"
+    },
+    {
+      "actual": "9a6bd05d207028af91aa18151aa9f2d3498e4244d5565f90153b2e4531024349",
+      "event": 146,
+      "expected": "9a6bd05d207028af91aa18151aa9f2d3498e4244d5565f90153b2e4531024349",
+      "path": "raw/evidence-doi-009-e-method-001.json",
+      "status": "pass"
+    },
+    {
+      "actual": "0d1f3927eebaadf3b4f20396a13b4210b2c261f47e310e20f1c0730180a552f5",
+      "event": 147,
+      "expected": "0d1f3927eebaadf3b4f20396a13b4210b2c261f47e310e20f1c0730180a552f5",
+      "path": "raw/evidence-doi-014-e-ext-007.json",
+      "status": "pass"
+    },
+    {
+      "actual": "17c1d79da88a27c4f0365c817d680646ebbb13aadc3a5729a4e2c11fb8c19c3b",
+      "event": 148,
+      "expected": "17c1d79da88a27c4f0365c817d680646ebbb13aadc3a5729a4e2c11fb8c19c3b",
+      "path": "raw/evidence-doi-017-e-ext-010.json",
+      "status": "pass"
+    },
+    {
+      "actual": "86649329c3315893d6931813c0770b24918263ed5a412dc0e74a72180a233b18",
+      "event": 149,
+      "expected": "86649329c3315893d6931813c0770b24918263ed5a412dc0e74a72180a233b18",
+      "path": "raw/evidence-doi-018-e-ext-011.json",
+      "status": "pass"
+    },
+    {
+      "actual": "db59d628e907d71ea0c66c67383ded3bf31e7e8cff9420ba7e0e121b2a44d5aa",
+      "event": 150,
+      "expected": "db59d628e907d71ea0c66c67383ded3bf31e7e8cff9420ba7e0e121b2a44d5aa",
+      "path": "raw/evidence-doi-020-e-ext-013.json",
+      "status": "pass"
+    },
+    {
+      "actual": "46dee30a37f3348224abef026cbcd666fe9107323841ef75e3eeffb65e4c5d72",
+      "event": 151,
+      "expected": "46dee30a37f3348224abef026cbcd666fe9107323841ef75e3eeffb65e4c5d72",
+      "path": "raw/evidence-doi-021-e-ext-014.json",
+      "status": "pass"
+    },
+    {
+      "actual": "f6b91984fc35906a3035f692002b75b87954d1210eefa7d0b64ef49f8ace532e",
+      "event": 152,
+      "expected": "f6b91984fc35906a3035f692002b75b87954d1210eefa7d0b64ef49f8ace532e",
+      "path": "raw/evidence-doi-022-e-ext-015.json",
+      "status": "pass"
+    },
+    {
+      "actual": "71e879332edacdd003912a47291b69bee53a94282f51079f7f6c8e0ce0f0e6a6",
+      "event": 153,
+      "expected": "71e879332edacdd003912a47291b69bee53a94282f51079f7f6c8e0ce0f0e6a6",
+      "path": "raw/evidence-doi-024-e-ext-017.json",
+      "status": "pass"
+    },
+    {
+      "actual": "e15fe134c9a3206adc023fa29f883f88e7a6458a2592b9530ff5cce06fb1ecb4",
+      "event": 154,
+      "expected": "e15fe134c9a3206adc023fa29f883f88e7a6458a2592b9530ff5cce06fb1ecb4",
+      "path": "raw/evidence-doi-025-e-ext-018.json",
+      "status": "pass"
+    },
+    {
+      "actual": "dfc830fbfbd85b1e08eeff359bb7987e1be4574c0e467f7bd46660fd26fe8be8",
+      "event": 155,
+      "expected": "dfc830fbfbd85b1e08eeff359bb7987e1be4574c0e467f7bd46660fd26fe8be8",
+      "path": "raw/evidence-doi-026-e-ext-019.json",
+      "status": "pass"
+    },
+    {
+      "actual": "81bf9c3ccd8acc8551d889098dbc49e35990f090325b9cb578d0debf9a22a432",
+      "event": 156,
+      "expected": "81bf9c3ccd8acc8551d889098dbc49e35990f090325b9cb578d0debf9a22a432",
+      "path": "raw/evidence-doi-027-e-ext-020.json",
+      "status": "pass"
+    },
+    {
+      "actual": "ee209004edbeddee919be005cfccf60831c03960e0ae86e5e294b15726041f3e",
+      "event": 157,
+      "expected": "ee209004edbeddee919be005cfccf60831c03960e0ae86e5e294b15726041f3e",
+      "path": "raw/bib-doi-015-liang2023detectors.json",
+      "status": "pass"
+    },
+    {
+      "actual": "d7b319c88b1ee2f956ed043f49612b127a523a1185a6c375b1a79a080ca69af4",
+      "event": 158,
+      "expected": "d7b319c88b1ee2f956ed043f49612b127a523a1185a6c375b1a79a080ca69af4",
+      "path": "raw/bib-doi-016-weberwulff2023testing.json",
+      "status": "pass"
+    },
+    {
+      "actual": "6c2e95ded0fde498654e8aa8660640d542c5f8f26850b7e54e8a8337358aae00",
+      "event": 159,
+      "expected": "6c2e95ded0fde498654e8aa8660640d542c5f8f26850b7e54e8a8337358aae00",
+      "path": "raw/bib-doi-019-yuan2022wordcraft.json",
+      "status": "pass"
+    },
+    {
+      "actual": "e46629e8661458f872b0a25e39cb5294cd7c1856b1040aca3e2c572be84faa89",
+      "event": 160,
+      "expected": "e46629e8661458f872b0a25e39cb5294cd7c1856b1040aca3e2c572be84faa89",
+      "path": "raw/bib-doi-022-jin2022style.json",
+      "status": "pass"
+    },
+    {
+      "actual": "f9968fff08d2fa9f89fbf60d8738467348f5305d35e1cad9c144527dafa0ff45",
+      "event": 161,
+      "expected": "f9968fff08d2fa9f89fbf60d8738467348f5305d35e1cad9c144527dafa0ff45",
+      "path": "raw/bib-doi-027-plavensigray2017readability.json",
+      "status": "pass"
+    },
+    {
+      "actual": "aa2e5b74fcc63f47832e7823f08f10936dcaffca4a136141ba6e0678e5fd557b",
+      "event": 162,
+      "expected": "aa2e5b74fcc63f47832e7823f08f10936dcaffca4a136141ba6e0678e5fd557b",
+      "path": "raw/bib-doi-028-martinez2021terminology.json",
+      "status": "pass"
+    },
+    {
+      "actual": "cb204f4e9bb31ffd7857278a955e8b83838cc56a2430255b2623d6d3c36a92b7",
+      "event": 163,
+      "expected": "cb204f4e9bb31ffd7857278a955e8b83838cc56a2430255b2623d6d3c36a92b7",
+      "path": "raw/bib-doi-029-crossley2022clear.json",
+      "status": "pass"
+    },
+    {
+      "actual": "64613216c6fc7356b2ae775d4d86f0eff2ff614bff7cf24647e90d73cc1bcd2c",
+      "event": 164,
+      "expected": "64613216c6fc7356b2ae775d4d86f0eff2ff614bff7cf24647e90d73cc1bcd2c",
+      "path": "raw/bib-doi-030-graesser2004cohmetrix.json",
+      "status": "pass"
+    },
+    {
+      "actual": "c707bf6c33c9188d340663bb341a579d0adf1f719d1f5a93ea62f745fac4a7de",
+      "event": 165,
+      "expected": "c707bf6c33c9188d340663bb341a579d0adf1f719d1f5a93ea62f745fac4a7de",
+      "path": "raw/bib-doi-032-korinek2023generative.json",
+      "status": "pass"
+    },
+    {
+      "actual": "34d89a97f3643d7e4a430e1ad602632d5aa042088d313359f3a67bef14c8e8b9",
+      "event": 166,
+      "expected": "34d89a97f3643d7e4a430e1ad602632d5aa042088d313359f3a67bef14c8e8b9",
+      "path": "raw/bib-doi-072-flower1981cognitive.json",
+      "status": "pass"
+    },
+    {
+      "actual": "845fd0d8a74b533e336d07b0fe7bd800773d815a97c03de8f9de0512a4c86594",
+      "event": 167,
+      "expected": "845fd0d8a74b533e336d07b0fe7bd800773d815a97c03de8f9de0512a4c86594",
+      "path": "raw/bib-doi-076-hattie2007feedback.json",
+      "status": "pass"
+    },
+    {
+      "actual": "59510d3c573c5d7a9255ef60ba7bf420e832dc1dcebf5b9151be6ba932ed5ab9",
+      "event": 168,
+      "expected": "59510d3c573c5d7a9255ef60ba7bf420e832dc1dcebf5b9151be6ba932ed5ab9",
+      "path": "raw/bib-doi-077-nicol2006formative.json",
+      "status": "pass"
+    }
+  ],
+  "status": "pass"
+}

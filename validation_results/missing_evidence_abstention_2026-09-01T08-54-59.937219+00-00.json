@@ -1,0 +1,16 @@
+{
+  "test_name": "missing_evidence_abstention",
+  "timestamp": "2026-09-01T08:54:59.937219+00:00",
+  "model_version": "claude-opus-5",
+  "input_hash": "68544993ec7f3343ef849980b0532c10e886c7fd553d555deec4b7ef79460a23",
+  "input_fixture": {
+    "task": "draft",
+    "section_title": "Results"
+  },
+  "output": {
+    "text": "{\n  \"draft\": {\n    \"latex\": \"mock_latex\",\n    \"word_count\": 0,\n    \"citations_needed\": [],\n    \"abstention\": \"mock_abstention\"\n  }\n}",
+    "abstention": null
+  },
+  "verdict": "pass",
+  "observation": "Abstained: mock_abstention"
+}

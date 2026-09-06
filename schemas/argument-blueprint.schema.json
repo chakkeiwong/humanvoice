@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://humanvoice.local/schema/argument-blueprint.schema.json",
+  "title": "Humanvoice argument blueprint",
+  "type": "object",
+  "required": ["record_type", "schema_version", "record_id", "run_id", "created_at", "brief_id", "claim_map", "evidence_anchors", "concept_dependencies", "section_jobs", "terminology_order", "visual_plan", "plan_hash"],
+  "properties": {
+    "record_type": {"const": "ArgumentBlueprint"},
+    "schema_version": {"type": "string", "pattern": "^HV-SCHEMA-[0-9]+\\.[0-9]+$"},
+    "record_id": {"type": "string", "minLength": 1},
+    "run_id": {"type": "string", "minLength": 1},
+    "created_at": {"type": "string", "format": "date-time"},
+    "brief_id": {"type": "string", "minLength": 1},
+    "claim_map": {"type": "array", "items": {"type": "object"}},
+    "evidence_anchors": {"type": "array", "items": {"type": "object"}},
+    "concept_dependencies": {"type": "array", "items": {"type": "object"}},
+    "section_jobs": {"type": "array", "items": {"type": "object"}},
+    "terminology_order": {"type": "array", "items": {"type": "string"}},
+    "visual_plan": {"type": "array", "items": {"type": "object"}},
+    "plan_hash": {"type": "string", "minLength": 1},
+    "extensions": {"type": "object"}
+  },
+  "additionalProperties": false
+}

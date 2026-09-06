@@ -1,0 +1,204 @@
+[
+  {
+    "cases": 0,
+    "package": "fast-detect-gpt",
+    "reason": "no safe adapter is implemented for this package; benchmark adapter required",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "slop-forensics",
+    "reason": "no safe adapter is implemented for this package; benchmark adapter required",
+    "status": "not-run"
+  },
+  {
+    "case_results": [
+      {
+        "band": "clean",
+        "corpus_id": "C-001",
+        "label": "provisional-clean",
+        "return_code": 0,
+        "score": 0,
+        "stderr": ""
+      },
+      {
+        "band": "mixed",
+        "corpus_id": "C-002",
+        "label": "provisional-surface-tell",
+        "return_code": 0,
+        "score": 50,
+        "stderr": ""
+      },
+      {
+        "band": "clean",
+        "corpus_id": "C-003",
+        "label": "provisional-internal-register",
+        "return_code": 0,
+        "score": 0,
+        "stderr": ""
+      },
+      {
+        "band": "clean",
+        "corpus_id": "C-004",
+        "label": "provisional-substance-gap",
+        "return_code": 0,
+        "score": 0,
+        "stderr": ""
+      }
+    ],
+    "cases": 4,
+    "package": "sloptrim",
+    "reason": "detector executed on provisional corpus; no effectiveness claim",
+    "status": "smoke-pass"
+  },
+  {
+    "cases": 0,
+    "package": "stop-slop",
+    "reason": "no safe adapter is implemented for this package; benchmark adapter required",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "GROBID",
+    "reason": "no safe adapter is implemented for this package; benchmark adapter required",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "Pandoc",
+    "reason": "no safe adapter is implemented for this package; benchmark adapter required",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "latexdiff",
+    "reason": "no safe adapter is implemented for this package; benchmark adapter required",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "academic-humanizer",
+    "reason": "no safe adapter is implemented for this package; benchmark adapter required",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "avoid-ai-writing",
+    "reason": "no safe adapter is implemented for this package; benchmark adapter required",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "humanizer",
+    "reason": "no safe adapter is implemented for this package; benchmark adapter required",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "taste-skill",
+    "reason": "no safe adapter is implemented for this package; benchmark adapter required",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "LanguageTool",
+    "reason": "no safe adapter is implemented for this package; benchmark adapter required",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "LaTeXML",
+    "reason": "no safe adapter is implemented for this package; benchmark adapter required",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "plasTeX",
+    "reason": "no safe adapter is implemented for this package; benchmark adapter required",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "pylatexenc",
+    "reason": "no safe adapter is implemented for this package; benchmark adapter required",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "tree-sitter-latex",
+    "reason": "no safe adapter is implemented for this package; benchmark adapter required",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "LTeX+ LS",
+    "reason": "no safe adapter is implemented for this package; benchmark adapter required",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "Textidote",
+    "reason": "no safe adapter is implemented for this package; benchmark adapter required",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "llama.cpp",
+    "reason": "no safe adapter is implemented for this package; benchmark adapter required",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "Vale",
+    "reason": "no safe adapter is implemented for this package; benchmark adapter required",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "proselint",
+    "reason": "no safe adapter is implemented for this package; benchmark adapter required",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "textlint",
+    "reason": "no safe adapter is implemented for this package; benchmark adapter required",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "vale-ai-tells",
+    "reason": "no safe adapter is implemented for this package; benchmark adapter required",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "write-good",
+    "reason": "no safe adapter is implemented for this package; benchmark adapter required",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "textstat",
+    "reason": "no safe adapter is implemented for this package; benchmark adapter required",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "Inspect AI",
+    "reason": "no safe adapter is implemented for this package; benchmark adapter required",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "humanizer-stack",
+    "reason": "no safe adapter is implemented for this package; benchmark adapter required",
+    "status": "not-run"
+  },
+  {
+    "cases": 0,
+    "package": "writing-agent",
+    "reason": "no safe adapter is implemented for this package; benchmark adapter required",
+    "status": "not-run"
+  }
+]

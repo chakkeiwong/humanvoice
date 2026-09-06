@@ -1,0 +1,17 @@
+{
+  "test_name": "plan_schema_conformance",
+  "timestamp": "2026-08-29T20:21:35.123528+00:00",
+  "model_version": "claude-opus-5",
+  "input_hash": "fbf6ee76ee6d4f661f8624daad400796f0fe124ea72f8024083fe437c3e54684",
+  "input_fixture": {
+    "task": "plan",
+    "document_type": "technical_report",
+    "word_target": 500
+  },
+  "output": {
+    "text": "{\n  \"blueprint\": {\n    \"sections\": [],\n    \"total_words\": 0,\n    \"abstention\": \"mock_abstention\"\n  }\n}",
+    "abstention": null
+  },
+  "verdict": "pass",
+  "observation": "Valid plan structure"
+}

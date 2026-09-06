@@ -1,0 +1,265 @@
+\chapter{How we reviewed the evidence}
+\label{ch:evidence-method}
+
+Suppose a reader finds a paper cited beside a product decision. The paper may
+describe a failure, explain a mechanism, document a package, or suggest a
+workflow worth funding. Those are four different jobs, and one search cannot
+settle all four. This review keeps them separate so that the reader can see
+what a source established, what we inferred, and what result would change the
+recommendation.
+
+The present document is not a completed systematic review. It is a living
+evidence program with a frozen snapshot for this draft and a specified route to
+independent completion. The reporting discipline follows PRISMA-S
+\citep{rethlefsen2021prismas}; recent reviews of AI-assisted academic writing
+and automated writing evaluation provide a topic-level coverage check
+\citep{meng2026systematic,abudalfa2026awe}.
+
+\section{Questions before sources}
+\label{sec:method-questions}
+
+Search terms are unstable when the question is not. The review therefore
+starts with five product questions and one boundary question:
+
+\begin{enumerate}
+\item Do bounded writing or feedback interventions change author time,
+      revision quality, or reader task completion?
+\item Which properties of technical prose affect comprehension, trust, and
+      the ability to reconstruct a decision?
+\item How do authors use model suggestions, and what burden or error does the
+      interaction introduce?
+\item Which software components can represent, compare, and check a document
+      while preserving equations, numbers, citations, and claims?
+\item Which reader, privacy, disclosure, and integrity conditions constrain an
+      acceptable workflow?
+\item What evidence would distinguish an available component from an
+      effective product bundle?
+\end{enumerate}
+
+The boundaries become visible in ordinary examples. A study of writing time
+may inform the economic model but say nothing about technical comprehension. A
+citation benchmark may resolve an identifier but say nothing about whether the
+source supports a sentence. The claim ledger records both the question a source
+answers and the questions it leaves open.
+
+\begin{table}[H]
+\centering
+\small
+\begin{tabularx}{\textwidth}{@{}p{0.22\textwidth}p{0.27\textwidth}L@{}}
+\toprule
+Question family & Preferred source types & Decision it can inform \\
+\midrule
+Observed failure & Internal case record with provenance; prospective reader
+observation. & Whether a product problem is real in the target setting. \\
+Intervention effect & Primary experiment, field study, or controlled
+comparison with a named task and outcome. & Which outcome and comparator the
+Humanvoice study should use. \\
+Comprehension and genre & Technical-communication, readability, corpus, and
+reader studies with population and task stated. & What a reader rubric and
+genre baseline must include. \\
+Interaction and judgment & Human--AI interaction studies and calibrated
+evaluation research. & How to record suggestion, rejection, burden, and model
+judge error. \\
+Software capability & Official documentation, source, release, license, and
+replayable fixture. & Whether a component belongs in the candidate inventory. \\
+Integrity and policy & Standards, venue guidance, privacy and disclosure
+research. & What the operating boundary and consent form must say. \\
+\bottomrule
+\end{tabularx}
+\caption{The source hierarchy follows the decision question.}
+\label{tab:method-question-sources}
+\end{table}
+
+\section{Search and retrieval protocol}
+\label{sec:method-search}
+
+The frozen snapshot follows four trails. The internal trail starts with repair
+pairs, reader objections, build records, and the project's existing assets.
+The scholarly trail searches generative assistance, writing feedback, technical
+communication, readability, human--AI interaction, evaluation, disclosure,
+provenance, and authorship detection. The software trail begins with the
+capabilities the product needs and checks official repositories, documentation,
+releases, and licenses. A fourth trail deliberately looks for trouble: null
+effects, subgroup harms, detector false positives, citation failures, judge
+bias, and packages that fail mathematical or privacy fixtures.
+
+The protocol stores the query, source or database, date, time boundary, result
+count, inclusion decision, and reason for exclusion. A query result is not an
+included study. Known cornerstone items are marked as seeds and kept distinct
+from items discovered by the search; otherwise a bibliography can appear to
+have high recall simply because the desired papers were supplied in advance.
+
+The first pass is broad enough to discover vocabulary. The second pass is
+question-specific and records the exact title, abstract, or documentation
+section inspected. Backward and forward citation chasing is reserved for
+load-bearing sources. A source that changes only a peripheral example does not
+receive the same effort as a source used to justify the primary endpoint or a
+claim about harm.
+
+Figure~\ref{fig:evidence-pipeline} shows the full path. The current audit has
+completed the automated portions of the left-hand side; the independent and
+full-text work in the middle remains a release condition for stronger claims.
+
+\hvFigureEvidencePipeline
+
+\begin{table}[H]
+\centering
+\small
+\begin{tabularx}{\textwidth}{@{}p{0.20\textwidth}p{0.27\textwidth}L@{}}
+\toprule
+Pass & Activity & Output \\
+\midrule
+Vocabulary pass & Search broad terms and inspect reviews, reference lists,
+and official capability pages. & Candidate terms, source identities, and
+question assignments. \\
+Question pass & Retrieve primary studies and documentation for each declared
+question; record population, task, comparator, and outcome. & Claim records
+with a preliminary source result and limit. \\
+Challenge pass & Search for nulls, harms, subgroup variation, detector
+failures, citation errors, and judge bias. & Counterevidence records and
+revised claim classes. \\
+Anchor pass & Inspect full text, methods, results, licenses, and release
+information for load-bearing items. & Page or section anchors, appraisal, and
+implementation constraints. \\
+\bottomrule
+\end{tabularx}
+\caption{A staged search keeps discovery separate from support.}
+\label{tab:method-passes}
+\end{table}
+
+The challenge pass is a protection against local optimization. An agent asked
+only to find support for Humanvoice will preferentially retrieve papers that
+make the product sound plausible. Requiring a counterevidence stream changes
+the objective: a source is valuable when it narrows the claim as well as when
+it supports one.
+
+\section{Screening, appraisal, and adjudication}
+\label{sec:method-screening}
+
+Screening uses a small set of frozen reason codes. An item can be included as
+direct evidence, included as adjacent evidence, retained as a challenge, or
+excluded for wrong question, wrong population, insufficient source identity,
+or inaccessible support. ``Interesting'' is not a reason code. The code must
+explain why the item cannot currently change a product decision.
+
+Two screeners should independently review the load-bearing sample. They record
+the decision before seeing the other review; adjudication then resolves the
+disagreement and preserves both original judgments. For software, the
+equivalent is a second operator replaying the fixture from a clean environment.
+One person can perform the first feasibility pass, but the result must not be
+described as independent confirmation.
+
+Appraisal is design-specific. For an intervention study, record assignment,
+task, comparator, outcome construction, attrition, and heterogeneity. For a
+reader study, record the reader role, time budget, rubric, and whether the
+reader saw the source history. For a detector study, record the corpus,
+editing, language, and false-positive analysis. For a package, record version,
+license, input formats, network behavior, maintenance, and failure mode.
+
+\begin{cardexample}{The same paper can receive two appraisals}
+A field study may provide strong evidence that an assistant shortens email
+completion time. It can be direct evidence for the question ``can assistance
+save time on a bounded writing task?'' It is adjacent evidence for the question
+``will a former professor accept a mathematical product proposal more quickly?''
+The result enters both rows, but its fit and permitted inference differ. A
+single undifferentiated quality label would hide that distinction.
+\end{cardexample}
+
+The current snapshot has completed the declared live retrieval checks, DOI
+identity checks, and a bounded RePEc/IDEAS specialist import, but it has not
+completed every independent screen or full-text anchor. The correct status is
+therefore ``provisional'' for the survey and ``bounded'' for the product
+recommendation. The missing work is listed as an implementation deliverable,
+with an owner and a gate, rather than being silently converted into
+confidence.
+
+\section{From source result to product claim}
+\label{sec:method-synthesis}
+
+The synthesis record has five fields:
+
+\begin{enumerate}
+\item the source result, stated as close as possible to the inspected text;
+\item the population, task, comparator, and outcome to which it belongs;
+\item the limit or plausible alternative explanation;
+\item the local implication for a Humanvoice object, fixture, or protocol; and
+\item the claim class and next observation.
+\end{enumerate}
+
+This order matters. Starting with the product implication encourages a writer
+to reinterpret a source until it sounds like a requirement. Starting with the
+result and its limit makes the bridge inspectable.
+
+\begin{table}[H]
+\centering
+\small
+\begin{tabularx}{\textwidth}{@{}p{0.21\textwidth}L p{0.25\textwidth}@{}}
+\toprule
+Record field & Example of a disciplined entry & What it does not establish \\
+\midrule
+Source result & A bounded writing experiment reports lower completion time on
+its stated task. & A benefit for expert technical review. \\
+Limit & The task, population, and outcome differ from a proposal reader's
+decision. & That the result is irrelevant. \\
+Local implication & Measure author and reader time and declare the incumbent
+bundle in the Humanvoice comparison. & That the measured effect will be
+positive. \\
+Claim class & Adjacent source result plus project hypothesis. & A validated
+product claim. \\
+Next observation & A held-out technical document with a timed reader rubric. &
+That one feasibility case is enough. \\
+\bottomrule
+\end{tabularx}
+\caption{A claim record preserves the bridge and its boundary.}
+\label{tab:method-claim-record}
+\end{table}
+
+The matrix in Appendix~\ref{app:literature-matrix} is the expanded form of
+this record. The main route uses prose because a decision-maker needs the
+mechanism and implication together; the appendix makes it possible to audit
+the rows without interrupting the argument.
+
+\section{Software survey as an empirical review}
+\label{sec:method-software}
+
+Software changes faster than the scholarly literature, so a package survey
+needs a version boundary. The current inventory records the version or commit
+examined on the snapshot date, the official source, and whether the package
+was actually run. A README-only row is an availability observation, not a
+benchmark result. A smoke run is an installation observation, not an
+operational pass. Only a held-out fixture and a human-burden measure can move
+the candidate toward adoption.
+
+The package review uses capability families rather than repository popularity:
+source representation, build and cross-reference, protected comparison,
+diagnostics, citation identity, local inference, and evaluation. For each
+family, at least one positive and one deliberately failing fixture are
+required. The failure fixture is important because a graceful abstention is a
+product behavior, whereas a silent success is a safety defect.
+
+A candidate's maintenance and license are part of technical fit. A package
+with excellent parsing but an incompatible license may be useful as a
+benchmark reference and unusable as a dependency. A package with a permissive
+license but no recent release may be acceptable for a one-off migration and
+unacceptable for a service. The disposition is therefore adopt, adapt, pilot,
+or skip, with a reason that can be revisited when the version changes.
+
+\section{Limits of the present review}
+\label{sec:method-limits}
+
+The method supports a transparent, challengeable product recommendation. It
+does not yet support a claim that the literature has been exhaustively
+searched, that every cited source has been independently verified, or that the
+workflow improves expert writing. Those stronger claims require the gates
+listed in the evidence status and the comparative program.
+
+The method also cannot remove judgment. A reading brief, a claim scope, and
+the usefulness of a finding remain partly adjudicated objects. The purpose of
+the protocol is to expose where judgment enters, who owns it, and what
+counterevidence could overturn it. That is a stronger scholarly posture than
+pretending that a score has made the judgment disappear.
+
+We can now ask what the sources actually say, then ask which software deserves
+a fixture. That order keeps the bridge visible: first define how a source earns
+a role, then interpret the result, then make a build choice. A reader can
+disagree with any one choice without losing the path by which it was made.

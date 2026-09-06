@@ -1,0 +1,10 @@
+README.md
+pyproject.toml
+src/humanvoice/__init__.py
+src/humanvoice/cli.py
+src/humanvoice.egg-info/PKG-INFO
+src/humanvoice.egg-info/SOURCES.txt
+src/humanvoice.egg-info/dependency_links.txt
+src/humanvoice.egg-info/entry_points.txt
+src/humanvoice.egg-info/requires.txt
+src/humanvoice.egg-info/top_level.txt

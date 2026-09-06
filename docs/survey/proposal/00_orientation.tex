@@ -1,0 +1,163 @@
+\chapter*{Five complaints that changed the project}
+\addcontentsline{toc}{chapter}{Five complaints that changed the project}
+
+On 18 August 2026, a technically strong survey failed its first encounter with
+a reader. The source ran to 2,326 lines. It reconstructed the mathematics of
+Hamiltonian Monte Carlo for models with a zero lower bound, cited the relevant
+papers, and documented the implementation in unusual detail. A mechanical
+conversion had also made a mess of the typesetting. The reader's first verdict
+was blunt: the mathematics did not look like mathematics.
+
+Repairing the conversion did not solve the problem. It merely exposed the next
+one. The survey read like an internal audit: file paths stood in for
+explanations, inspection dates stood in for scope, and project labels appeared
+before the objects they named. Once that register was removed, the reader
+noticed the repeated sentence and section shapes. Once the repetition was
+broken, defensive qualifications became conspicuous. Once the author replaced
+those qualifications with reasons, the reader found the important omission:
+the survey explained how to validate an algorithm but supplied no reference
+models on which to do it.
+
+Five rounds of feedback produced five different diagnoses. Figure
+\ref{fig:zlb-rescue} shows their order. The order matters because each defect
+had hidden the next one.
+
+\hvFigureZLBRescue
+
+The final manuscript ran to 49 pages, with 109 equations and 55 references.
+The owner accepted it after the fifth repair. Throughout the rewrite, the
+equation bodies remained byte-identical, labels and citations were counted,
+and the rendered PDF was checked for the internal language that source-level
+searches could miss. This is a useful engineering record. It is not an efficacy
+study: there was one document, one owner, no control group, and no independent
+reader panel.
+
+\section*{The product hidden inside the rescue}
+
+The rescue worked because four kinds of work were joined. A check located an
+observable problem. An author decided what the passage needed to mean. A
+comparison protected the equations, numbers, citations, and claims while the
+prose changed. A reader then judged the rendered document without relying on
+the repository history. Existing tools perform pieces of this sequence, but
+the pieces do not share a record or end in a reader outcome.
+
+Humanvoice is the proposed connective layer. It would sit beside the author's
+editor and repository, not replace them. It would turn a reader brief into an
+argument blueprint, draft in bounded units, and run a fail-closed pre-human
+check before it turns a version into a reader packet. A broad complaint such as
+``this is hard to read'' would become a small set of located questions; the
+objects that carry technical meaning would remain protected; and the author's
+decision would stay visible. It would never certify that prose is ``human,''
+infer authorship from one document, silently rewrite a source, or ask an
+expensive reader to serve as its ordinary debugger.
+
+The wager is economic as much as editorial. A locally fluent document can
+still consume several rounds of expert diagnosis and rereading. Humanvoice is
+worth building only if it reduces that burden without increasing reader time,
+false alarms, or meaning errors. A handsome score from a model is not the
+outcome. A reader who can recover the problem, mechanism, evidence,
+qualification, and requested action is.
+
+\section*{The proposition under test}
+
+The first investment is deliberately bounded: twelve weeks, a product
+engineer, a research and evaluation lead, a domain editor, a part-time
+security or policy owner, independent coding and reader review, a small
+adjudicated corpus, and one live-document feasibility run. Weeks 1--6 deliver
+the protected LaTeX core and its second-operator replay. The authoring
+extension, model critics, and repair loop proceed only if that checkpoint
+passes; otherwise the sponsor receives the protected review utility rather
+than an unfinished platform.
+
+At the end of twelve weeks the sponsor should be able to answer three
+questions:
+
+\begin{enumerate}
+\item Can the system locate useful editorial questions and protect
+      meaning-bearing objects on a real manuscript?
+\item Can authors and readers use the complete path without the review burden
+      exceeding the burden it is meant to remove?
+\item Is a comparative study large enough to estimate an effect worth its
+      expected cost?
+\end{enumerate}
+
+One live case can answer the first two as feasibility questions. It cannot
+show that Humanvoice generally reduces revision rounds. That stronger claim
+requires new documents, readers who did not tune the rules, a declared
+comparator, and uncertainty reported around the result.
+
+\begin{decisionbox}{Recommendation}
+Fund the bounded build and feasibility run. Do not authorize deployment or an
+efficacy claim. Continue only if the system protects meaning, keeps the reader
+outcome observable, and produces a credible, priced design for the comparison
+that follows.
+\end{decisionbox}
+
+\section*{Evidence strong enough to use today}
+
+The research record makes the design plausible, but it is not complete.
+Experiments show that generative assistance can save time on some writing and
+knowledge tasks, while other studies show errors outside a model's capability
+frontier, uneven gains across workers, convergence in assisted writing, and
+bias in model-based judging. Research on writing and technical communication
+explains why readers need visible actors, relations, evidence, and rhetorical
+purpose. Software surveys identify mature components for parsing, linting,
+comparison, citation identity, and local execution. None of those findings
+establishes the effect of the combined Humanvoice workflow on expert technical
+review.
+
+The current audit passes broad retrieval, bibliographic identity checks, and a
+bounded specialist import. Its harder challenge queries recover fourteen of
+eighteen known items and therefore do not pass. Independent screening,
+full-text appraisal of every load-bearing claim, held-out package benchmarks,
+and external review also remain unfinished. The manuscript therefore
+distinguishes source results from product inferences and treats completion of
+those tasks as work, not as a confidence adjective.
+
+\begin{table}[H]
+\centering
+\small
+\begin{tabularx}{\textwidth}{@{}p{0.22\textwidth}L p{0.25\textwidth}@{}}
+\toprule
+Question & What the present record supports & What twelve weeks must add \\
+\midrule
+Is the failure real? & Several internal documents record correct work that
+still required repeated reader-led reconstruction. & Baseline burden measured
+on live documents outside the rule-writing set. \\
+Can the pieces be built? & Mature components exist for most lower-level jobs;
+the integration is technically plausible. & Held-out fixtures, explicit
+fallbacks, and one complete local-first run. \\
+Will the workflow help? & Adjacent studies justify the mechanism and the
+outcomes chosen for measurement. & A later comparative study; one feasibility
+case cannot estimate efficacy. \\
+Can it be trusted? & Protected comparison, provenance, and named human review
+give a testable safety model. & Observed false alarms, meaning errors, privacy
+exceptions, and reader burden. \\
+Is it worth paying for? & Saved expert attention is the relevant benefit. &
+Local volume, loaded costs, baseline rounds, reader time, and maintenance
+cost. \\
+\bottomrule
+\end{tabularx}
+\caption{The proposal separates what is known from what the first build must
+observe.}
+\label{tab:orientation-route}
+\end{table}
+
+\section*{How the argument unfolds}
+
+Part I starts with the reader's cost and then examines the case record that
+made the failure visible. Part II asks what the scholarly and software
+literatures actually establish, including the evidence against tempting
+shortcuts such as automatic rewriting and document-level AI detection. Part
+III follows a single teaching case through the proposed product, then states
+the architecture and the deliberately narrow first build. Part IV specifies
+the measurement, schedule, economics, adoption path, and stopping rules. The
+appendices retain the schemas, fixtures, evidence ledger, and calculations
+needed to reproduce the choices without forcing those records into the main
+narrative.
+
+The document can therefore be read at two depths. The chapters carry the
+argument for a funding decision. The appendices let an implementer or reviewer
+inspect how each consequential claim becomes a record, a test, or an open
+question. Both belong in this volume because the proposal has to persuade a
+reader and survive implementation.

@@ -4,7 +4,7 @@
 **Decision date:** 2026-08-26  
 **Program version:** 1.1 (prototype-scale adaptation)  
 **Contract ID and version:** `HV-IC-2026-08-26` / `1.0.0`  
-**Decision:** pending owner approval
+**Decision:** Passed (narrow: synthetic fixtures only)
 
 ## Context
 
@@ -24,11 +24,11 @@ The v1.1 master program assumed an eight-role staffed project. The project owner
 - **Verification:** `python3 tools/verify_runtime_isolation.py` passed all 5 threat fixtures
 - **Profile:** `security/runtime_profile.json` marked `verified` and `g0_readiness: ready`
 
-### Record catalogue (PENDING OWNER APPROVAL)
+### Record catalogue (APPROVED)
 - **Status:** 13 conceptual records defined in v1.1 program
 - **Schema compliance:** 9 JSON schemas present with `required` arrays
 - **Contract alignment:** `check_implementation_contract.py` passes
-- **Question:** Does the owner approve starting WP1 with this catalogue?
+- **Decision:** Approved 2026-08-26 for WP1-WP6 implementation
 
 ### Fixture readiness (SUFFICIENT)
 - **Status:** 1 ready synthetic fixture, 15 planned
@@ -44,19 +44,22 @@ The v1.1 master program assumed an eight-role staffed project. The project owner
 
 ## Proposed authorization
 
-**Authorize WP1 start** with prototype-scale staffing:
+**WP1-WP6 authorized** with prototype-scale staffing (approved 2026-08-26):
 
 - Create the `hv` package and entry point
 - Implement immutable source snapshots and allow-listed scratch
 - Build `hv init` with brief completeness checking
 - Build deterministic `hv preflight` on the one ready synthetic fixture
 - Use verified Bubblewrap runtime for all parser/compiler execution
+- Continue through WP6 decision handoff with synthetic fixtures only
 - Defer external corpus, live reader cases, and independent review to later milestones
 
-**Do NOT authorize yet:**
-- Model execution on untrusted material (requires WP4 and G1 gate)
-- External reader recruitment or comparative studies
-- Production deployment or claims of general efficacy
+**Authorized work packages:** WP1 (brief and threat model), WP2 (protected core), WP3 (protected comparison), WP4 (authoring extension), WP5 (reader feasibility), WP6 (decision handoff)
+
+**Not authorized:**
+- External corpus use (requires corpus rights clearance)
+- External reader recruitment or comparative studies (requires external release preparation)
+- Production deployment or claims of general efficacy (requires G6 external release gate)
 
 ## Conditions and scope
 
@@ -77,23 +80,21 @@ Per v1.1 program §4.1:
 
 ## Expiry
 
-This authorization expires when:
-- WP1 completes and requires G1 decision for WP4 authoring extension
-- Staffing model changes (e.g., external funding obtained)
-- Owner requests stop or significant scope change
-- 2026-09-30 (one month), whichever comes first
+This authorization expired when WP1-WP6 completed (2026-08-28). Subsequent work authorized by G4 (internal evaluation) and G5 (external release preparation).
 
-## Owner decision needed
+## Owner decision
 
-To proceed with WP1:
+**Decision:** Approved 2026-08-26
 
-1. **Approve record catalogue:** Accept the 13-record catalogue for WP1 implementation
-2. **Authorize WP1 start:** Begin building the `hv` package and deterministic vertical slice
-3. **Confirm prototype scope:** Two-person, synthetic fixtures, one demonstration case
+WP1-WP6 authorized with:
+1. ✓ Record catalogue approved (13-record catalogue for WP1-WP6 implementation)
+2. ✓ WP1-WP6 start authorized (build `hv` package and deterministic vertical slice through handoff)
+3. ✓ Prototype scope confirmed (two-person, synthetic fixtures, one demonstration case)
 
-Reply with approval or flag concerns to address first.
+**Outcome:** WP1-WP6 completed 2026-08-28, delivered to G4 handoff gate. G4 approved Option A (internal evaluation).
 
 ## Signatures
 
-**Project owner:** pending  
-**Date:** pending
+**Project owner:** Approved (formalized retrospectively 2026-09-02)  
+**Date:** 2026-08-26  
+**Status:** Passed (narrow), WP1-WP6 authorized and completed

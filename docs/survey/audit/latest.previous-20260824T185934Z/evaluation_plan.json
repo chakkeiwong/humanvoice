@@ -1,0 +1,66 @@
+{
+  "corpus": [
+    {
+      "id": "C-001",
+      "label": "provisional-clean"
+    },
+    {
+      "id": "C-002",
+      "label": "provisional-surface-tell"
+    },
+    {
+      "id": "C-003",
+      "label": "provisional-internal-register"
+    },
+    {
+      "id": "C-004",
+      "label": "provisional-substance-gap"
+    }
+  ],
+  "decision_rule": "Do not claim efficacy from the one-document feasibility run. Require a preregistered, power-justified paired or stepped rollout against a documented baseline, report uncertainty, and stratify by baseline writer skill and task class.",
+  "efficacy_design": "paired or stepped rollout over live documents, selected before outcomes are inspected",
+  "estimand": "change in human-feedback rounds to reader acceptance, subject to no increase in meaning-preservation violations or reader time",
+  "feasibility_scope": "one live document for integration, telemetry, privacy, stop-rule, and burden testing only",
+  "holdout_rule": "Freeze tuning and held-out splits before reporting package or workflow effectiveness.",
+  "judge_controls": [
+    "randomize pair order",
+    "length-control comparisons",
+    "use a different judge family",
+    "calibrate against human labels"
+  ],
+  "kill_criteria": [
+    "reader acceptance does not improve or becomes slower after two pilot cycles",
+    "meaning-preservation violations exceed the pre-specified tolerance",
+    "diagnostic false positives consume more review time than they save",
+    "privacy or disclosure requirements cannot be met"
+  ],
+  "known_item_recall": {
+    "broad": 1.0,
+    "challenge": 1.0
+  },
+  "planning_horizon_weeks": 12,
+  "planning_scope": "Twelve weeks covers implementation and one feasibility document; efficacy timing follows the power or precision analysis and live-document arrival rate.",
+  "primary_outcome": "human-feedback rounds to reader acceptance",
+  "protocol_id": "HV-AUDIT-2026-08-22",
+  "required_strata": [
+    "accepted human-authored economics prose",
+    "rejected and repaired internal drafts",
+    "AI-assisted drafts with interaction traces",
+    "deliberately corrupted or adversarial examples"
+  ],
+  "sample_size_rule": "simulate power or precision from the observed baseline distribution of feedback rounds and reader clustering; do not choose an arbitrary document count",
+  "secondary_outcomes": [
+    "reader reconstruction accuracy",
+    "substantive revision rate",
+    "meaning-preservation violations",
+    "time to accepted unit",
+    "false-positive burden",
+    "suggestion acceptance and editing cost",
+    "cross-document convergence"
+  ],
+  "stratification": [
+    "baseline writer skill",
+    "document task and genre",
+    "reader role"
+  ]
+}

@@ -1,0 +1,164 @@
+\chapter{Where Humanvoice fits}
+\label{ch:field}
+
+Take one source file and follow it to a reader's decision. Which existing
+components can keep that path inspectable? ``Humanize prose'' is not a validated
+package objective; searching for it would put the surface before the reader's
+task. The narrower question gives us a basis for comparison.
+
+Figure~\ref{fig:capability-map} gives the organizing answer. Mature components
+surround a record that no current package owns; that record is the proposed
+product boundary.
+
+\hvFigureCapabilityMap
+
+\section{The available components}
+
+\subsection{Representing a technical document}
+
+When an author changes a sentence beside an equation, the system must know
+which source span produced each object. Pandoc exposes a typed document
+abstract syntax tree to filters \citep{pandoc2026filters}. pylatexenc parses
+LaTeX into nodes and allows project-specific macro and environment handling
+\citep{pylatexenc2026}. plasTeX expands macros into a document model, while
+tree-sitter-latex offers incremental syntax trees; LaTeXML is a stronger
+conversion path when macro expansion and semantic output are required
+\citep{plastex2026,treesitterlatex2026,latexml2026}. The smaller
+\texttt{latexlint} utility is a useful reference for format-aware checks, but
+its role remains a benchmark candidate until its location and protected-object
+behavior are tested on this repository's macros \citep{latexlint2026}.
+
+Two additional candidates close a language and tolerance gap in the original
+shortlist. unified-latex exposes a JavaScript/TypeScript abstract syntax tree
+and transformation utilities in the unified ecosystem
+\citep{unifiedlatex2026}. TexSoup offers a compact, tolerant Python interface
+that is attractive for prototypes and deliberately messy fixtures
+\citep{texsoup2026}. Neither documentation set establishes source fidelity on
+the custom macros in this repository; both now belong in the same locked
+parser benchmark.
+
+No single parser should be declared correct from a README. The MVP will freeze
+fixtures containing equations, labels, citations, comments, custom macros,
+tables, malformed input, and round-trip locations. Lightweight and full-model
+parser candidates will compete on those fixtures. The winner is the one that preserves the objects the
+protected comparison needs, not the one with the most convenient marketing
+description.
+
+\subsection{Finding observable problems}
+
+Vale supplies configurable, markup-aware prose rules
+\citep{vale2026docs}. LanguageTool and LTeX+ provide grammar and language
+diagnostics that can run locally or through an editor protocol
+\citep{languagetool2026dev,ltexplus2026}. textlint offers a pluggable rule
+interface and machine-readable output \citep{textlint2026docs}. These are useful adapters for local
+observations: a repeated opener, a banned internal identifier, a grammar
+violation, or a sentence that needs an author question.
+
+They do not supply a reader-acceptance layer. A tool can report that a phrase
+matches a rule; it cannot establish that the phrase is appropriate for this
+audience, or that removing it improves the argument. Humanvoice must keep the
+rule output separate from the author decision.
+
+\subsection{Comparing and checking sources}
+
+latexdiff makes a visual LaTeX diff \citep{latexdiff2026}, but cannot prove
+that equations or citations survived. GROBID extracts PDF references
+\citep{grobid2026}; LaTeX should use its source bibliography plus metadata. It
+separates citation identity from sentence support; substantive changes need
+human verification.
+
+\subsection{Models and evaluation infrastructure}
+
+llama.cpp makes local inference practical on supported hardware
+\citep{llamacpp2026}. Inspect AI provides structured datasets, solvers, scorers,
+and logs for model evaluations \citep{inspectai2026}. Both are candidates for
+privacy and reproducibility, not evidence that a local model gives good
+editorial advice. The MVP can run without either: deterministic planning,
+bounded drafting, pre-human diagnostics, and a fail-closed release gate are the
+core path, while model assistance remains a replaceable adapter with an explicit
+disclosure record. A model may write or criticize a unit, but it cannot release
+its own work.
+
+\section{The benchmark's decisions}
+
+The shortlist matters only when it changes a build decision. In the matrix,
+``candidate'' means that a component has a plausible job; it does not mean that
+the component works on Humanvoice documents. The current audit has smoke-level
+results for only some local tools, so held-out fixtures and human labels still
+stand between every candidate and adoption.
+
+\begin{table}[H]
+\centering
+\small
+\begin{tabularx}{\textwidth}{@{}p{0.19\textwidth}p{0.19\textwidth}L p{0.22\textwidth}@{}}
+\toprule
+Need & Candidate components & Decision criterion & First-release role \\
+\midrule
+Source map & Pandoc, pylatexenc, unified-latex, TexSoup, plasTeX,
+tree-sitter-latex & Protected-region
+and line-location fixtures; malformed-source recovery; round-trip fidelity. &
+Select one primary adapter and retain one fallback. \\
+Prose diagnostics & Vale, LTeX+, LanguageTool, textlint & Precision and burden
+on held-out technical documents; markup exclusions; stable machine output. &
+Use replaceable deterministic adapters. \\
+Visual comparison & latexdiff & Review readability and source-link fidelity. &
+Supplement, never replace, protected invariants. \\
+Citation identity & Source bibliography plus Crossref or publisher metadata;
+GROBID for PDF ingestion & Correct classification of valid, wrong, duplicate,
+and unresolved identities. & Block unresolved load-bearing identities; queue
+support review. \\
+Model assistance & Optional local runtime and Inspect AI & Calibration against
+human labels, privacy, order/length sensitivity, and abstention. & Optional
+screening only; no release authority. \\
+\bottomrule
+\end{tabularx}
+\caption{Software choices are hypotheses tested against the product contract,
+not a popularity ranking.}
+\label{tab:software-shortlist}
+\end{table}
+
+The benchmark will report runtime, failure modes, license and maintenance
+status, privacy boundary, and human review burden alongside precision. A
+component that is accurate but produces an unmanageable queue is not suitable
+for the workflow. A component that is easy to install but cannot preserve
+protected spans is not suitable for technical writing.
+
+\section{The existing project is an advantage only if it stays subordinate}
+
+The repository already contains three assets that shorten the path to a pilot:
+recorded cases of reader rejection and repair, a writing policy that places
+meaning before regularity, and scripts that can render and inspect LaTeX
+documents. Those assets supply fixtures and vocabulary. They do not establish
+that a diagnostic improves a reader's decision. The new code should turn them
+into a small corpus and a reproducible review packet, not into another layer of
+rules.
+
+\section{The narrow advantage}
+
+The nearest alternatives are not package names. They are ways a team might
+spend the next month:
+
+\begin{description}
+\item[Generic LLM editing.] Fast and flexible, but it leaves source protection,
+  provenance, and reader acceptance to local discipline.
+\item[Enterprise writing assistance.] Convenient and integrated, but often
+  optimized for general business prose and remote processing rather than
+  equations, citations, and confidential research.
+\item[Rules plus manual review.] Transparent and controllable, but it leaves
+  the author to connect a finding to a revision and a reader outcome.
+\item[Humanvoice.] A deliberately narrow connection between those activities,
+  with the human reader retained as the acceptance authority.
+\end{description}
+
+The wedge is not a superior language model. It is a durable record of why a
+change was proposed, what meaning-bearing objects survived, and whether the
+intended reader could act. That record can survive a change of parser, linter,
+or model provider. It is also the reason the product can be evaluated against
+the incumbent bundle rather than against an imaginary perfect editor.
+
+\begin{boundarybox}{Adoption rule}
+No package earns a permanent place because it is popular, current, or easy to
+install. It earns a place when it passes the protected-source fixtures, has a
+clear privacy and maintenance story, and changes a measured workflow outcome
+on held-out documents. Until then it remains a replaceable candidate.
+\end{boundarybox}

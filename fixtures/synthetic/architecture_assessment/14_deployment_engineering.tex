@@ -1,0 +1,67 @@
+\section{Deployment and Release Engineering}
+
+The shift from a single deployable artifact to twelve independent services fundamentally changes deployment strategy, release coordination, and rollback procedures. This section details the engineering required to support the new deployment model.
+
+\subsection{Deployment Pipeline Architecture}
+
+Each service has an independent deployment pipeline comprising six stages: build, unit test, integration test, security scan, staging deployment, and production deployment. The pipeline is triggered on every commit to the service's repository, with promotion gates between stages requiring explicit approval or automated quality checks to pass.
+
+Build stage compiles code, resolves dependencies, and produces a container image tagged with the git commit SHA. Build duration ranges from 90 seconds for the smallest services to 6 minutes for Ledger, which includes database migration generation. Build failure rate in the pilot averaged 2.3\% of commits, primarily due to dependency resolution conflicts and linting violations. These failures block the pipeline before any testing occurs, providing fast feedback.
+
+Unit test stage runs isolated tests with mocked dependencies. Target coverage is 80\% statement coverage and 70\% branch coverage, measured and enforced by the pipeline. Tests execute in parallel across 8 workers, completing in 2--8 minutes depending on the service. Flaky tests are the operational challenge: 5 of the 12 services have at least one test with intermittent failures occurring in approximately 1\% of runs. Policy requires either fixing or deleting flaky tests within 48 hours, because they erode confidence in the pipeline's signal.
+
+Integration test stage deploys the service to an ephemeral test environment alongside stubbed dependencies, then executes contract tests verifying the service's API behavior against published specifications. Contract tests are bidirectional: each service tests both the APIs it exposes and the APIs it consumes. This catches breaking changes before they reach staging. Integration test duration is 4--12 minutes, dominated by environment provisioning time.
+
+Security scan stage runs static analysis, dependency vulnerability checking, and container image scanning. SAST tools examine code for SQL injection, path traversal, and credential leaks. Dependency checking compares the service's libraries against known-vulnerability databases, failing the pipeline if any critical or high-severity CVEs are present without documented exceptions. Container scanning examines the final image for misconfigurations such as running as root or exposing unnecessary ports. Scan duration is 3--7 minutes.
+
+Staging deployment stage promotes the container image to a staging environment that mirrors production topology but operates at 10\% of production scale. The staging environment receives a continuous stream of synthetic traffic replaying anonymized production traces. The service must sustain this load for 30 minutes with error rate below 0.1\% and p99 latency within 20\% of the service's SLO before the pipeline considers staging deployment successful.
+
+Production deployment stage requires manual approval from the service owner. Deployment executes as a rolling update: one instance at a time is drained, updated, and returned to service. Health checks must pass before proceeding to the next instance. Full deployment duration for a 12-instance service is approximately 18 minutes. Automatic rollback triggers if error rate exceeds 1\% or p99 latency exceeds 150\% of baseline during any deployment step.
+
+\subsection{Cross-Service Compatibility}
+
+Independent deployment creates a combinatorial compatibility problem. With 12 services each deploying independently, the production environment can have $12! = 479,001,600$ distinct version combinations. Ensuring compatibility across all combinations is infeasible; instead, the architecture enforces constraints that bound the compatibility matrix.
+
+The primary constraint is backward compatibility: a service must be compatible with the prior version of every service it communicates with. This allows any pair of services to upgrade independently while ensuring that at any given moment, every service pair is in a tested configuration: either both are on version N, or one is on N and one is on N-1.
+
+Backward compatibility is enforced through contract testing. When Service A consumes an API from Service B, Service A's integration tests run against both the current production version of Service B and the version under development. If tests pass against both, backward compatibility is preserved. If tests fail against the production version, the change is breaking and requires coordination. If tests fail against the development version, either Service A or Service B must change to restore compatibility.
+
+The coordination mechanism for breaking changes is a compatibility announcement: Service B declares "version X will remove API endpoint Y, consumers must migrate by date Z." The announcement is published to a shared registry and monitored by automated tooling that fails the pipeline of any service still consuming endpoint Y after date Z. This mechanism has been used three times in the pilot: twice successfully, once resulting in a deadline extension because consumer migration proved more complex than anticipated.
+
+Event schema evolution follows stricter rules than API evolution because events are persisted to logs and replayed for projection rebuilds. The rules are: adding optional fields is always permitted, removing fields is prohibited, changing field types is prohibited, renaming fields requires a migration period where both names are present. These rules ensure that a service can rebuild its projections from events written by prior versions.
+
+\subsection{Feature Flags and Progressive Rollout}
+
+Feature flags decouple deployment from release: code ships to production in an inactive state and is activated by a configuration change. This enables progressive rollout, where a feature is enabled for 1\% of traffic, then 10\%, then 100\% over a period of days, with the ability to deactivate instantly if problems arise.
+
+The feature flag system integrates with Configuration Manager. Each flag has a targeting rule specifying which requests should see the feature: all requests, requests from specific accounts, requests matching a percentage-based sample, or requests during specific time windows. The evaluation latency of flag lookups is sub-millisecond because flags are cached locally with a 10-second refresh interval.
+
+Flags introduce technical debt: code paths for both the flag-on and flag-off cases must be maintained until the flag is retired. The policy is that flags are temporary and must be removed within 30 days of reaching 100% activation. Enforcement is manual; automated cleanup tooling that would delete flag code after expiration was evaluated but not implemented due to the risk of inadvertently deleting code that superficially resembles flag logic but serves another purpose.
+
+Progressive rollout detected three defects in the pilot that staging testing missed. A Balance Tracker change introduced a memory leak visible only under sustained load; the 1\% rollout detected it within 4 hours, before the leak could propagate to the full fleet. A Fraud Detection change degraded p99 latency by 40ms, unacceptable at scale but within tolerances at 10\%; the rollout stopped at 10% while the performance regression was investigated. A Notification Dispatcher change inadvertently sent duplicate notifications to 0.3% of recipients; the impact was contained to 1\% of the user base before rollback.
+
+\subsection{Blue-Green and Canary Deployments}
+
+Blue-green deployment maintains two complete production environments, only one of which receives traffic. Deployment proceeds by updating the inactive environment, verifying it, then switching traffic. This provides instant rollback but doubles infrastructure cost. The assessment considered blue-green as the default strategy but rejected it due to the cost impact: operating two complete 12-service environments would add \$2.14M annually, exceeding the entire incremental operating cost budget.
+
+Canary deployment is a middle ground: a small subset of production instances receives the new version while the majority remain on the old version. Traffic splits 5\% to canary, 95\% to stable. Metrics from the canary fleet are compared to the stable fleet; if error rates or latency diverge by more than 10\%, the canary is automatically drained and the deployment aborted. If the canary remains healthy for 30 minutes, the deployment proceeds to rolling-update the entire fleet.
+
+The canary strategy requires that both versions handle traffic concurrently, which interacts poorly with database migrations. If the new version's migration adds a required column, the old version's code will fail when it encounters that column. The solution is three-phase migration: version N adds the column as nullable, version N+1 populates it, version N+2 makes it required. This spreads a logical change across three deployments, increasing complexity but preserving the ability to run old and new versions side-by-side.
+
+\subsection{Rollback Procedures}
+
+Rollback strategies depend on deployment phase. During the rolling update, rollback is automatic: the deployment stops and the partially-updated fleet drains back to the prior version. No manual intervention is required. Rollback duration is equal to deployment duration, approximately 18 minutes for a 12-instance service.
+
+After deployment completes, rollback requires redeploying the prior version. This is not instantaneous reversal but a full forward deployment of the old container image. Rollback duration is therefore identical to initial deployment: 18 minutes plus pipeline stages, approximately 35 minutes end-to-end if the prior version's container image is still in the registry and pipeline stages can be skipped.
+
+Database migrations complicate rollback. Forward migrations are applied automatically during deployment; backward migrations must be written manually and tested independently. The policy requires that every forward migration include a tested backward migration, verified by a pipeline stage that applies forward, applies backward, and confirms the schema matches the original. Compliance with this policy was 83\% in the pilot: two services had migrations without backward versions, discovered during a rollback drill that failed.
+
+The most problematic rollback scenario is data format changes. If version N writes data in a format that version N-1 cannot read, rolling back to N-1 leaves the system unable to process data written after the deployment of N. This is a forward-compatibility requirement that is strictly more demanding than backward compatibility. The policy is to avoid data format changes where possible, and when unavoidable, to version the data format explicitly so that readers can select appropriate parsing logic. Implementation of versioned data formats has been inconsistent; it is flagged as a risk for the Phase 3 core services extraction.
+
+\subsection{Deployment Coordination}
+
+While services deploy independently, some changes require coordinated deployment of multiple services. A change to an event schema consumed by three services requires deploying all four services (the producer and three consumers) in a specific order: consumers first to ensure they can handle the new schema, producer last to begin emitting it.
+
+Coordination is managed through deployment proposals: a service owner proposes a multi-service deployment, specifying the order and timing. The proposal is reviewed by all affected service owners, approved or rejected, then scheduled. Scheduled deployments use a coordination lock that prevents other deployments of the affected services during the coordination window.
+
+Coordination overhead is substantial. Of 47 deployments in the pilot's final month, 8 required coordination, and coordination meetings consumed approximately 12 person-hours. Reducing this burden is an explicit goal for Phase 2, but no concrete solution has been identified. The fundamental issue is that coordination cannot be eliminated—the dependencies are real—but the current meeting-based process does not scale to 12 services deploying multiple times weekly.

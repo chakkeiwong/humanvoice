@@ -1,0 +1,47 @@
+{
+  "reader_role": "former professor deciding whether to fund a bounded feasibility build",
+  "decision": "whether the proposed workflow is safe and measurable enough to pilot",
+  "exemplars": [
+    "CardNPV Volume I, the chapter that works a finite account before naming the general model",
+    "CardNPV Volume II, the chapter that reads a figure back into the argument"
+  ],
+  "known_vocabulary": [
+    "equation",
+    "citation",
+    "paragraph",
+    "LaTeX",
+    "PDF",
+    "regression",
+    "confidence interval"
+  ],
+  "whitelist": [
+    "equation",
+    "citation",
+    "paragraph",
+    "LaTeX",
+    "PDF",
+    "regression",
+    "confidence interval"
+  ],
+  "exempt_ranges": [[1, 8]],
+  "exemption_zones": [
+    {
+      "kind": "preview",
+      "reason": "names are landmarks and are taught later",
+      "source_lines": [[1, 8]]
+    },
+    {
+      "kind": "reference-table",
+      "reason": "the table identifies objects for lookup rather than teaching them",
+      "source_lines": []
+    }
+  ],
+  "standing_directives": [
+    "err on the slow side",
+    "introduce the ordinary object before its acronym or method name",
+    "show the passage behind every metric"
+  ],
+  "version": 1,
+  "last_reader_session": "2026-08-25",
+  "status": "calibration brief, not an acceptance verdict"
+}

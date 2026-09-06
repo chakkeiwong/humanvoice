@@ -1,0 +1,303 @@
+\chapter{From prototype to service}
+\label{ch:operating-plan}
+
+Picture the first ordinary Monday after the pilot. An author brings a private
+technical document, an operator builds it, a reader tests it, and a sponsor
+asks what the result is worth. Who owns each handoff, what does the customer
+receive, and what happens when a parser fails? The twelve-week sequence gives us
+a technical path. An operating service also needs clear boundaries, staffing,
+procurement, privacy, maintenance, and an honest fallback if the full workflow
+does not earn adoption.
+
+The customer already pays experts to read technical documents. Humanvoice does
+not need to invent a new reading market. It needs to reduce the repeated
+diagnosis and clarification in research groups, investment teams, policy
+institutions, and regulated technical operations. That keeps the commercial
+question tied to the measured outcome.
+
+\section{The work after the first build}
+\label{sec:ops-work}
+
+The feasibility build leaves four things that an operating service must make
+routine:
+
+\begin{enumerate}
+\item a source adapter and build wrapper that can reproduce a document without
+      a special developer's machine;
+\item a finding and protected-object service that an author can use without
+      exposing private source to an unapproved endpoint;
+\item a pre-human release gate that catches ordinary integrity, argument,
+      evidence, and pacing failures before a reader packet exists;
+\item a reader study that produces interpretable observations rather than a
+      style score; and
+\item a decision packet that tells a sponsor whether to proceed, revise, or
+      stop.
+\end{enumerate}
+
+The service should not promise continuous autonomous editing. A normal run is a
+bounded authoring path for one document or one chapter: brief, blueprint, unit
+draft, preflight, repair, release. The author chooses when to open a new
+version, and the reader receives a frozen PDF only after the release gate
+passes. This cadence makes the cost visible, keeps routine debugging out of the
+reader's hands, and limits the blast radius of a parser or model failure.
+
+\begin{table}[H]
+\centering
+\small
+\begin{tabularx}{\textwidth}{@{}p{0.22\textwidth}p{0.23\textwidth}L@{}}
+\toprule
+Operating activity & Owner & Observable output \\
+\midrule
+Intake and authoring brief & Document owner & Decision, audience, named
+exemplars, known vocabulary, exemption zones, disclosure, privacy boundary,
+and source location \\
+Blueprint and unit plan & Document owner with domain reviewer & Claim map,
+dependencies, evidence anchors, section jobs, and visual plan \\
+Snapshot and build & Technical operator & Reproducible PDF, build log, and
+protected-object manifest \\
+Pre-human preflight & Product operator & Gate results, mutation record,
+abstentions, repair task, and release decision \\
+Author review & Author with product support & Accepted, rejected, or deferred
+findings, pacing and first-use dispositions, and a child version \\
+Independent reading & Named domain reader & Timed answers, stopping point,
+quoted span, missing relation, questions, and decision \\
+Result interpretation & Sponsor and evaluator & Comparison, cost range, and
+next action \\
+Maintenance & Technical owner & Fixture replay, dependency update, and
+incident record \\
+\bottomrule
+\end{tabularx}
+\caption{A service run has a small number of human owners and visible outputs.}
+\label{tab:ops-activities}
+\end{table}
+
+\section{Staffing and the twelve-week sequence}
+\label{sec:ops-staffing}
+
+The first team need not be large, but its responsibilities must be distinct.
+The person implementing a parser should not be the only person deciding that a
+reader understood the result. A practical starting team is a technical lead, a
+document and data engineer, a domain editor, and a part-time evaluator or
+research assistant. The sponsor supplies the decision and access to the named
+readers; the team does not invent those roles.
+
+The weeks are organized by the dependency of the work rather than by software
+feature labels:
+
+\begin{description}[style=nextline,leftmargin=31mm,labelindent=0mm]
+\item[Weeks 1--2: establish the case] Select the live document, write the
+reading brief, freeze the incumbent path, and extract protected objects by
+hand for a small reference set. The output is a human-readable baseline and a
+list of constructs the parser must handle.
+\item[Weeks 3--4: make the source legible] Implement the snapshot and build
+wrapper, source locations, bibliography identity checks, and a first detexed
+view. Replay the positive and negative parser fixtures before adding prose
+rules.
+\item[Weeks 5--6: locate useful findings] Adapt a small set of Vale, textlint,
+and project-specific rules, then run the local concept-density and first-use
+prototype against the named exemplars. Add context windows and an author
+decision form. Measure false positives, investigation time, and hit counts.
+Keep a diagnostic only when the time it saves exceeds the time spent dismissing
+it.
+\item[Weeks 7--8: protect revisions] Implement object normalization, matching,
+visual comparison, and unresolved correspondence handling. Run the deliberately
+bad number, citation, equation, and macro fixtures.
+\item[Weeks 9--10: run the reader path] Render incumbent and revised versions,
+randomize order where possible, recruit the named readers, and record time,
+answers, questions, and disclosure.
+\item[Weeks 11--12: interpret and price] Rebuild from a clean environment,
+replay the fixtures, calculate the predeclared outcomes and cost sensitivity,
+and write the proceed, revise, or stop recommendation.
+\end{description}
+
+The sequence leaves room for a failed fixture. A parser that cannot preserve a
+custom macro in week 4 should narrow the first release, not be hidden until
+week 12. A reader who cannot answer the action question in week 10 should cause
+an author revision or a stop, not a new dashboard.
+
+\section{A small operating service}
+\label{sec:ops-service}
+
+An operator can run the first service as a local command-line application, with
+an optional review page on the organization's network. The command line remains
+the source of truth: it is scriptable and keeps private documents out of an
+unexamined hosted system. The web page is only a convenience for viewing a
+finding, accepting a revision, and presenting a clean reader packet.
+
+The service-level promises should be concrete:
+
+\begin{itemize}
+\item A successful snapshot returns a PDF, source hash, build log, and
+      protected-object manifest.
+\item An unsupported source construct is reported with a location and does not
+      receive a false "protected" result.
+\item A reader packet contains no finding identifiers, private paths, or model
+      confidence unless the document owner explicitly chooses to disclose them.
+\item A revision with unresolved protected correspondence cannot be marked
+      ready for a reader.
+\item Every model suggestion records its endpoint, model version, prompt
+      template, sampling parameters, and network policy.
+\end{itemize}
+
+These are operating behaviors, not claims that the product is safe in every
+environment. The service owner must test them at installation and after each
+dependency update. A failed promise creates an incident with a reproducible
+source snapshot and a route back to the incumbent workflow.
+
+\section{Procurement, licensing, and privacy}
+\label{sec:ops-procurement}
+
+The software inventory contains permissively licensed source projects, remote
+services, and candidates whose license or maintenance status still needs
+review. Procurement should treat each dependency as a decision with three
+questions: may the organization use and modify it, can it be rebuilt from a
+pinned source, and what data does it send outside the trust boundary?
+
+A package can be useful without becoming a runtime dependency. For example, a
+reference parser can generate expected spans for a fixture while the production
+adapter remains a smaller implementation. A detector can supply an aggregate
+research statistic while being forbidden from labeling an individual author.
+The disposition should be written in terms of the job and the boundary, not in
+terms of a package's popularity.
+
+Privacy review follows the document path. The owner classifies source material
+as public, internal, confidential, or restricted. The default local mode
+allows all four classes subject to local access control. A remote model is
+allowed only for public or explicitly redacted material, with a record of the
+authorization and provider retention terms. Logs must not copy full source
+passages by default; a finding stores the minimum context needed to reproduce
+the decision, with access controlled separately from the reader PDF.
+
+Figure~\ref{fig:trust-boundary} turns that policy into a data path. Any remote
+call crosses an explicit approval point; the default manuscript path remains
+inside the local zone.
+
+\hvFigureTrustBoundary
+
+The product should also support deletion and export. An organization must be
+able to remove a source snapshot and its derived model prompts, or to export
+the lineage needed for an authorized audit. A PDF hash is not a substitute for
+a retention policy. These requirements are inexpensive to state at the start
+and expensive to retrofit after a live document has crossed a boundary.
+
+\section{Maintenance and quality of service}
+\label{sec:ops-maintenance}
+
+Writing tools change quickly. A package update can alter a parser tree, a model
+update can alter suggestions, and a TeX package update can alter page breaks.
+The service needs a small regression corpus with four kinds of expected result:
+
+\begin{enumerate}
+\item exact source and PDF invariants for protected objects;
+\item expected findings and intentional abstentions for prose fixtures;
+\item privacy and network checks for local and remote modes; and
+\item reader-packet snapshots checked by a human after material changes.
+\end{enumerate}
+
+The first three can run in continuous integration. The fourth cannot be
+reduced to an image hash because a page can remain pixel-identical while a
+caption or cross-reference becomes confusing. A designated reader reviews the
+changed pages and records whether the decision path remains clear.
+
+Maintenance effort is part of the economic model. Let $u$ be annual document
+volume, $m$ the minutes of operator maintenance per document, and $c_o$ the
+loaded operator cost. The variable maintenance burden is
+\begin{equation}
+  C_{maint,var}=u\,m\,c_o/60.
+  \label{eq:ops-maintenance}
+\end{equation}
+Fixed dependency review, security patches, and fixture refreshes add a fixed
+term. A workflow that saves reader time but requires an operator to repair
+every source manually may still be worthwhile for high-value documents, but
+the buyer must see that trade.
+
+\section{Three ways into the market}
+\label{sec:ops-market}
+
+Three likely customers have different operating needs.
+
+\begin{description}[style=nextline,leftmargin=34mm,labelindent=0mm]
+\item[Research groups] The buyer is a principal investigator or research
+director; the author is a senior researcher; the reader is a collaborator,
+reviewer, or funder. The service can begin as a guided review of a few high-
+value proposals and papers.
+\item[Investment and policy teams] The buyer pays for faster senior review of
+model notes and memoranda. Confidentiality and citation provenance matter more
+than broad style coverage, and the reader may have a short decision window.
+\item[Regulated technical operations] The buyer needs a traceable revision
+history and a controlled local deployment. The sales cycle is longer, but the
+cost of an unexplained change is higher and the protected-object comparison may
+be a direct procurement requirement.
+\end{description}
+
+The first customer should be chosen by document recurrence and reader cost, not
+by the largest potential market. A single organization that can provide a
+stable document class, a willing author, and independent readers is more useful
+for learning than many one-off demos. The pilot should measure willingness to
+repeat the workflow and willingness to pay for the reader outcome. A click on a
+suggestion does not answer either question.
+
+\section{A narrower product if the full service fails}
+\label{sec:ops-alternatives}
+
+The same components can support narrower offers. A "protected revision packet"
+can combine source snapshots, object extraction, and visual comparison without
+model suggestions. A "reader reconstruction study" can provide timed
+evaluation for organizations that already have editing tools, using readers
+unfamiliar with the project. A
+"citation and equation safety service" can focus on high-risk technical
+documents. These alternatives preserve the central value proposition and make
+the result of a failed full-stack trial economically useful.
+
+The reverse alternatives are less attractive. Selling a generic humanizer or
+an authorship detector would put Humanvoice into crowded, weakly identified
+markets and would conflict with the evidence on diversity, detector bias, and
+citation reliability. A surface-only service may have a simpler sales story,
+but it would not solve the reader problem documented in Part~I.
+
+\section{Risk and contingency}
+\label{sec:ops-contingency}
+
+The principal operating risks are manageable when named early:
+
+\begin{table}[H]
+\centering
+\small
+\begin{tabularx}{\textwidth}{@{}p{0.23\textwidth}L p{0.29\textwidth}@{}}
+\toprule
+Risk & Early signal & Contingency \\
+\midrule
+Parser coverage remains low & More than a small fraction of protected objects
+are unresolved & Narrow the supported LaTeX subset and provide a manual review
+path \\
+Readers see no improvement & Time and task completion do not move in the
+feasibility case & Sell the measurement and protected-comparison service only,
+or stop \\
+Authors reject findings & Investigation burden exceeds the observed benefit &
+Reduce rule families, change ordering, and test a diagnostic-only arm \\
+Privacy review blocks inference & Source cannot be redacted without losing
+meaning & Use deterministic local tools and postpone model suggestions \\
+Maintenance dominates cost & Fixture failures follow dependency updates & Pin
+versions, reduce the runtime stack, and price operator time explicitly \\
+\bottomrule
+\end{tabularx}
+\caption{Contingencies preserve a useful service even when a larger product
+claim fails.}
+\label{tab:ops-risks}
+\end{table}
+
+\section{The operating decision}
+\label{sec:ops-decision}
+
+At scale, Humanvoice should be sold as a reduction in expensive reader work
+with a visible meaning boundary. The buyer pays for a review path, not for a
+promise that a model has made prose human. The author remains responsible for
+the argument. The reader remains the authority for acceptance. The operator
+keeps the source and software reproducible.
+
+That arrangement is deliberately less glamorous than an autonomous editor,
+but it has a measurable customer and a credible failure response. The
+feasibility build should return three numbers that determine whether the
+arrangement is worth extending: reader attention saved, protected-object error
+rate, and total operating cost per document. Everything else is evidence for
+understanding those numbers.

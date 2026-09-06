@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<head><title>IDEAS/RePEc search</title>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css" integrity="sha256-pdY4ejLKO67E0CM2tbPtq1DJ3VGDVVdqAR6j3ZwdiE4=" crossorigin="anonymous">
+    <link rel="stylesheet" href="/css/font-awesome.min.css">
+    <link href="/css/normalnew.css" rel="stylesheet" type="text/css"/>
+    <link href="/css/pushy.css" rel="stylesheet" type="text/css"/>
+    <link rel="icon" type="image.jpg" href="/favicon.ico">
+
+</head>
+
+<body onload="checkCookie()">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-G63YGSJVZ7"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-G63YGSJVZ7');
+</script>
+<div class="container">
+    <div id="header" class="row">
+      <nav class="navbar navbar-collapse navbar-expand-md" role="navigation">
+          <a class="navbar-brand" href="/">
+            <img width="125" src="/ideas4.jpg" border="0" alt="IDEAS home">
+          </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-toggle="collapse" data-target="#mobilesearch" aria-controls="mobilesearch" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"><i class="bi bi-search"></i></span>
+        </button>
+        <div class="collapse" id="mobilesearch">
+          <div class="form-inline">
+          <form method="POST" action="/cgi-bin/htsearch2" id="mobilesearch" role="search" class="card card-body">
+            <div class="input-group">
+              <input class="form-control" type="text" name="q" value="" placeholder="Search econ literature">
+              <span class="input-group-btn">
+              <button type="submit" class="btn" style="background-color: #2d4e8b; color: white;" aria-label="Search">
+                <i class="bi-search"></i>
+              </button>
+              <!--  <input class="btn btn-default btn-lg fa" type="submit" value="&#xf002;" style="color:white;background-color:#2d4e8b;">-->
+              </span>
+            </div>
+            <a href="/search.html" class="advanced-search">Advanced search</a>
+          </form>
+          </div>
+          </div>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-toggle="collapse" data-target="#mobilemenu" aria-controls="mobilemenu" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"><i class="bi bi-list"></i></span>
+        </button>
+        <div class="collapse" id="mobilemenu">
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="/">Economic literature:</a> <a href="/i/p.html">papers</A>, <a href="/i/a.html">articles</A>, <a href="/i/c.html">software</A>, <a href="/i/h.html">chapters</A>, <a href="
+/i/b.html">books</A>.
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/i/e.html">Authors</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="http://edirc.repec.org/">Institutions</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/top/">Rankings</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/help.html" target="NEW">Help/FAQ  <i class="bi bi-box-arrow-up-right"></i></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/cgi-bin/myideas.cgi">MyIDEAS <I class="bi bi-lightbulb"></I></a>
+            </li>
+            <li class="nav-item">
+              <span class="nav-text">More options at page bottom</span>
+            </li>
+          </ul>
+        </div>
+        <div class="d-none d-md-inline">
+          <ul class="nav nav-fill" id="topnav">
+            <li class="nav-item">
+              <a class="nav-link" href="/">Economic literature</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/i/e.html">Authors</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="http://edirc.repec.org/">Institutions</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/top/">Rankings</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/help.html" target="NEW">Help/FAQ  <i class="bi bi-box-arrow-up-right"></i></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/cgi-bin/myideas.cgi" style="color:blue;">MyIDEAS <I class="bi bi-lightbulb"></I> <small>(now improved)</small></a>
+            </li>
+          </ul>
+        </div>
+      </nav>
+    </div>
+
+
+    <div class="row">
+      <div style="margin-top: -10px;">
+
+
+        <div id="sidebar" class="sidebar-nav-fixed pull-right d-none d-print-none d-md-inline col-md-3">
+          <div class="inline-form">
+          <form method="POST" action="/cgi-bin/htsearch2" id="topsearch" role="search" class="navbar-form navbar-right">
+            <div class="input-group">
+              <input class="form-control" type="text" name="q" value="" placeholder="Search econ literature">
+              <button type="submit" class="btn" style="background-color: #2d4e8b; color: white;" aria-label="Search">
+                <i class="bi-search"></i>
+              </button>
+<!--            <input class="btn fa" type="submit" value="&#xf002;" style="color:white;background-color:#2d4e8b;">-->
+            </div>
+            <a href="/search.html" class="advanced-search">Advanced search</a>
+          </form>
+          </div>
+          <div id="menu">
+            <h3>Browse Econ Literature</h3>
+            <ul>
+              <li><a href="/i/p.html">Working papers</a></li>
+              <li><a href="/i/a.html">Journals</a></li>
+              <li><a href="/i/c.html">Software components</a></li>
+              <li><a href="/i/b.html">Books</a></li>
+              <li><a href="/i/h.html">Book chapters</a></li>
+              <li><a href="/j/">JEL classification</a></li>
+            </ul>
+
+            <h3>More features</h3>
+            <ul>
+              <li><a href="http://nep.repec.org/">Subscribe to new research</a></li>
+              <li><a href="https://biblio.repec.org/">RePEc Biblio</a></li>
+              <li><a href="https://authors.repec.org/">Author registration</a></li>
+              <li><a href="/v/">Economics Virtual Seminar Calendar</a></li>
+              <li><a href="https://confwatcher.b2ideas.eu/"><font color="red">ConfWatcher</font></a> NEW!</li>
+            </ul>
+          </div>
+        </div>
+        <div class="d-none d-print-block">
+          <img width="145" src="/ideas4.jpg" border="0" alt="IDEAS home"> Printed from https://ideas.repec.org<!--#echo var="REQUEST_URI"-->
+        </div>
+
+        <div id="main" class="col-12 col-md-9">
+        <div class="site-overlay"></div>
+          <div class="d-print-none">
+<div id="messages" class="col-xs-12">
+<!--<p><font color="red">IDEAS is struggling with massive bot traffic, please be patient. We apologize for the inconvenience.</font></p>-->
+<span class="share-block">
+ &nbsp;<a href="https://bsky.app/intent/compose?text=Found%20on%20RePEc/IDEAS:%20https://ideas.repec.org/%20&#128161;" target="_NEW"><i class="bi bi-bluesky"></i></a>&nbsp;
+            <share-to-mastodon message="Found on RePEc/IDEAS:" url='https://ideas.repec.org/'><font color="#2d4e8b"><i class="bi bi-mastodon"></i></font></share-to-mastodon>
+            <a class="share-twitter bi bi-twitter-x" href="#" title="Share on Twitter"></a>
+            <a class="share-facebook bi bi-facebook" href="#" title="Share on Facebook"></a>
+            <a class="share-reddit bi bi-reddit" href="#" title="Share on Reddit"></a>
+            <a class="share-linkedin bi bi-linkedin" href="#"  title="Share on LinkedIn"></a>
+            <a class="share-email bi bi-envelope" href="#"  title="Share by Email"></a>
+            <a class="share-print bi bi-printer" href="#" title="Print this page"></a>
+</span>
+<span id="myideas">
+<a href="/cgi-bin/myideas.cgi" data-bs-toggle="tooltip" data-toggle="tooltip" title="MyIDEAS: not logged in">
+<i class="bi bi-lightbulb"></i>
+<i class="bi bi-lock"></i>&nbsp;</a>
+</span>
+
+<script>
+function loadDoc(url,cfunc) {
+  var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+    if (xhttp.readyState == 4 && xhttp.status == 200) {
+      cfunc(xhttp);
+    }
+  };
+  xhttp.open("GET", url, true);
+  xhttp.send();
+}
+function myFunction(xhttp) {
+  document.getElementById("response").innerHTML = xhttp.responseText;
+}
+</script><span id="response"></span>
+</div>
+          </div>
+          <div id="content-block">
+
+<h1>IDEAS/RePEc search</h1>
+
+<form method="POST" action="/cgi-bin/htsearch2"> 
+        <input type="hidden" name="form" value="extended">
+        <input type="hidden" name="wm" value="wrd">
+        <input type="hidden" name="dt" value="range">
+        <div class="row" style="margin-top: 12px; margin-bottom: 12px;">
+          <div class="form-group col-auto">
+            <select name="ul" class="form-control input-sm" id="ul-select">
+    
+<option value="" select="selected"
+>All</option>
+    <option value="%/a/%"
+>Articles</option>
+    <option value="%/p/%"
+>Papers</option>
+    <option value="%/h/%"
+>Chapters</option>
+    <option value="%/b/%"
+>Books</option>
+    <option value="%/c/%"
+>Software</option>
+            </select>
+          </div>
+          <div class="col-12 col-md">
+            <input class="form-control fill" type="text" name="q" value=' large language model workplace communication ' style="float: left;">
+          </div>
+          <div class="col-auto">
+              <button type="submit" class="btn" style="background-color: #2d4e8b; color: white;" aria-label="Search">
+                <i class="bi-search"></i>
+              </button>
+           <!--<button class="btn btn-lg fa" type="submit" name="cmd" value="Search!" style="color:white;background-color:#2d4e8b;">&#xf002;</button>-->
+          </div>
+        </div>
+        <div class="row" style="margin-top: 12px; margin-bottom: 12px;">
+          <div class="col-12 col-sm-6 col-lg-3">
+            <div class="form-group">
+              <label class="control-label" for="wf-select">
+                In:</label>
+              <div>
+                <select id="wf-select" class="form-control input-sm" name="wf">
+                  <option value="4BFF"
+ selected
+>Whole record </option>
+                  <option value="F000"
+>Abstract</option>
+                  <option value="0F00"
+>Keywords</option>
+                  <option value="00F0"
+>Title</option>
+                  <option value="000F"
+>Author</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="col-12 col-sm-6 col-lg-3">
+            <div class="form-group">
+              <label for="s-select" class="control-label">Sort by:</label>
+              <div>
+                <select id="s-select" class="form-control input-sm" name="s">
+                  <option value="R"
+ selected
+>Relevance</option>
+                  <option value="d"
+>Oldest</option>
+                  <option value="D"
+>Most recent</option>
+                  <option value="C"
+>Most cited</option>
+                  <option value="T"
+>Title alphabet</option>
+                  <option value="A"
+>Recently added</option>
+                  <option value="S"
+>Recent & relevant</option>
+                  <option value="Q"
+>Relevant & cited</option>
+                  <option value="B"
+>Recent & cited</option>
+  </select>
+              </div>
+            </div>
+          </div>
+          <div class="col-12 col-sm-6 col-lg-3">
+            <div class="form-group">
+              <label for="from-select" class="control-label">From: </label>
+              <div>
+                <select class="form-control input-sm" name="db" id="from-select">
+                  <option value=""
+ selected
+>Any Year</option>
+    <option value="01/01/2026"
+>2026</option>
+    <option value="01/01/2025"
+>2025</option>
+    <option value="01/01/2024"
+>2024</option>
+    <option value="01/01/2023"
+>2023</option>
+    <option value="01/01/2022"
+>2022</option>
+    <option value="01/01/2021"
+>2021</option>
+    <option value="01/01/2020"
+>2020</option>
+    <option value="01/01/2019"
+>2019</option>
+    <option value="01/01/2018"
+>2018</option>
+    <option value="01/01/2017"
+>2017</option>
+    <option value="01/01/2016"
+>2016</option>
+    <option value="01/01/2015"
+>2015</option>
+    <option value="01/01/2014"
+>2014</option>
+    <option value="01/01/2013"
+>2013</option>
+    <option value="01/01/2012"
+>2012</option>
+    <option value="01/01/2011"
+>2011</option>
+    <option value="01/01/2010"
+>2010</option>
+    <option value="01/01/2009"
+>2009</option>
+    <option value="01/01/2008"
+>2008</option>
+    <option value="01/01/2007"
+>2007</option>
+    <option value="01/01/2006"
+>2006</option>
+    <option value="01/01/2005"
+>2005</option>
+    <option value="01/01/2004"
+>2004</option>
+    <option value="01/01/2003"
+>2003</option>
+    <option value="01/01/2002"
+>2002</option>
+    <option value="01/01/2001"
+>2001</option>
+    <option value="01/01/2000"
+>2000</option>
+    <option value="01/01/1999"
+>1999</option>
+    <option value="01/01/1998"
+>1998</option>
+    <option value="01/01/1997"
+>1997</option>
+    <option value="01/01/1996"
+>1996</option>
+    <option value="01/01/1995"
+>1995</option>
+    <option value="01/01/1994"
+>1994</option>
+    <option value="01/01/1993"
+>1993</option>
+    <option value="01/01/1992"
+>1992</option>
+    <option value="01/01/1991"
+>1991</option>
+    <option value="01/01/1990"
+>1990</option>
+    <option value="01/01/1985"
+>1985</option>
+    <option value="01/01/1980"
+>1980</option>
+    <option value="01/01/1975"
+>1975</option>
+    <option value="01/01/1970"
+>1970</option>
+    <option value="01/01/1960"
+>1960</option>
+    <option value="01/01/1950"
+>1950</option>
+    <option value="01/01/1940"
+>1940</option>
+    <option value="01/01/1930"
+>1930</option>
+    <option value="01/01/1900"
+>1900</option>
+    <option value="01/01/1800"
+>1800</option>
+    <option value="01/01/1700"
+>1700</option>
+                </select>
+              </div>
+            </div>
+      </div>
+
+          <div class="col-12 col-sm-6 col-lg-3">
+            <div class="form-group">
+              <label for="to-select" class="control-label">To: </label>
+              <div class="">
+                <select id="to-select" class="form-control input-sm" name="de">
+                  <option value=""
+ selected
+>Any Year</option>
+    <option value="31/12/2026"
+>2026</option>
+    <option value="31/12/2025"
+>2025</option>
+    <option value="31/12/2024"
+>2024</option>
+    <option value="31/12/2023"
+>2023</option>
+    <option value="31/12/2022"
+>2022</option>
+    <option value="31/12/2021"
+>2021</option>
+    <option value="31/12/2020"
+>2020</option>
+    <option value="31/12/2019"
+>2019</option>
+    <option value="31/12/2018"
+>2018</option>
+    <option value="31/12/2017"
+>2017</option>
+    <option value="31/12/2016"
+>2016</option>
+    <option value="31/12/2015"
+>2015</option>
+    <option value="31/12/2014"
+>2014</option>
+    <option value="31/12/2013"
+>2013</option>
+    <option value="31/12/2012"
+>2012</option>
+    <option value="31/12/2011"
+>2011</option>
+    <option value="31/12/2010"
+>2010</option>
+    <option value="31/12/2009"
+>2009</option>
+    <option value="31/12/2008"
+>2008</option>
+    <option value="31/12/2007"
+>2007</option>
+    <option value="31/12/2006"
+>2006</option>
+    <option value="31/12/2005"
+>2005</option>
+    <option value="31/12/2004"
+>2004</option>
+    <option value="31/12/2003"
+>2003</option>
+    <option value="31/12/2002"
+>2002</option>
+    <option value="31/12/2001"
+>2001</option>
+    <option value="31/12/2000"
+>2000</option>
+    <option value="31/12/1999"
+>1999</option>
+    <option value="31/12/1998"
+>1998</option>
+    <option value="31/12/1997"
+>1997</option>
+    <option value="31/12/1996"
+>1996</option>
+    <option value="31/12/1995"
+>1995</option>
+    <option value="31/12/1994"
+>1994</option>
+    <option value="31/12/1993"
+>1993</option>
+    <option value="31/12/1992"
+>1992</option>
+    <option value="31/12/1991"
+>1991</option>
+    <option value="31/12/1990"
+>1990</option>
+    <option value="31/12/1985"
+>1985</option>
+    <option value="31/12/1980"
+>1980</option>
+    <option value="31/12/1975"
+>1975</option>
+    <option value="31/12/1970"
+>1970</option>
+    <option value="31/12/1960"
+>1960</option>
+    <option value="31/12/1950"
+>1950</option>
+    <option value="31/12/1940"
+>1940</option>
+    <option value="31/12/1930"
+>1930</option>
+    <option value="31/12/1900"
+>1900</option>
+    <option value="31/12/1800"
+>1800</option>
+    <option value="31/12/1700"
+>1700</option>
+                </select>
+
+          </div>
+            </div>
+          </div>
+        </div>
+      <span style="position:absolute;right:0px;transform: translateY(-12px);color:red">New search options! See the <a href="/search.html">search page</a></span>
+      </form>
+    </div>
+    
+
+<font color="red"></font> Found 7 results
+ for <i>large language model workplace communication</i>, showing 
+1-7
+<ol class="list-group" start="1">
+<li class="list-group-item downfree">Mohammad Junayed Hasan &amp; Jannat Sultana &amp; Silvia Ahmed &amp; Sifat Momen (2025): <a href="https://ideas.repec.org/a/plo/pone00/0323265.html" target="_blank">Early&#32;detection&#32;of&#32;occupational&#32;stress&#58;&#32;Enhancing&#32;<b>workplace</b>&#32;safety&#32;with&#32;machine&#32;learning&#32;and&#32;<b>large</b>&#32;<b>language</b>&#32;<b>models</b></a><hr>Utilizing&#32;a&#32;newly&#32;published&#32;<b>workplace</b>&#32;survey&#32;dataset&#44;&#32;we&#32;developed&#32;a&#32;novel&#32;feature&#32;selection&#32;pipeline&#32;identifying&#32;39&#32;key&#32;indicators&#32;of&#32;work&#45;stress&#46;&#32;An&#32;ensemble&#32;of&#32;three&#32;ML&#32;<b>models</b>&#32;achieved&#32;a&#32;state&#45;of&#45;the&#45;art&#32;accuracy&#32;of&#32;90&#46;32&#37;&#44;&#32;surpassing&#32;existing&#32;studies&#46;&#32;... Additionally&#44;&#32;we&#32;created&#32;an&#32;algorithm&#32;to&#32;convert&#32;tabular&#32;data&#32;into&#32;texts&#32;with&#32;100&#37;&#32;information&#32;retention&#44;&#32;facilitating&#32;domain&#32;analysis&#32;with&#32;<b>large</b>&#32;<b>language</b>&#32;<b>models</b>&#44;&#32;revealing&#32;that&#32;occupational&#32;stress&#32;is&#32;more&#32;closely&#32;related&#32;to&#32;the&#32;biomedical&#32;domain&#32;than&#32;clinical&#32;or&#32;generalist&#32;domains&#46;&#32;... Explainable&#32;AI&#32;techniques&#32;identified&#32;excessive&#32;workload&#32;and&#32;ambiguity&#32;&#40;27&#37;&#41;&#44;&#32;poor&#32;<b>communication</b>&#32;&#40;17&#37;&#41;&#44;&#32;and&#32;a&#32;positive&#32;work&#32;environment&#32;&#40;16&#37;&#41;&#32;as&#32;key&#32;stress&#32;factors&#46;&#32;Unlike&#32;previous&#32;studies&#32;relying&#32;on&#32;clinical&#32;settings&#32;or&#32;biomarkers&#44;&#32;our&#32;approach&#32;streamlines&#32;stress&#32;detection&#32;from&#32;simple&#32;survey&#32;questions&#44;&#32;offering&#32;a&#32;real&#45;time&#44;&#32;deployable&#32;tool&#32;for&#32;periodic&#32;stress&#32;assessment&#32;in&#32;<b>workplaces</b>&#46;<br><i>RePEc:plo:pone00:0323265</i>
+<span onclick="loadDoc('https://ideas.repec.org/cgi-bin/myiadd3.cgi?RePEc:plo:pone00:0323265',myFunction);return true;"> <font color="#0000fc"><i class="bi bi-bookmark"></i>&nbsp;Save to MyIDEAS <i class="bi bi-lightbulb"></i></font></span></li>
+
+<li class="list-group-item downfree">Dharnel Baculo &amp; Jellame Formentera &amp; Jeazle Anne Vinzon &amp; Vivien Agustin &amp; Ronald Fernandez (2026): <a href="https://ideas.repec.org/a/bjc/journl/v13y2026i5p1749-1773.html" target="_blank">Ai&#45;Based&#32;Real&#45;Time&#32;Filipino&#32;Sign&#32;<b>Language</b>&#32;Recognition&#32;and&#32;Translation&#32;System&#32;with&#32;Context&#45;Aware&#32;Natural&#32;<b>Language</b>&#32;Processing</a><hr>The&#32;Filipino&#32;Sign&#32;<b>Language</b>&#32;&#40;FSL&#41;&#32;serves&#32;as&#32;the&#32;official&#32;sign&#32;<b>language</b>&#32;of&#32;the&#32;Deaf&#32;<b>community</b>&#32;in&#32;the&#32;Philippines&#44;&#32;as&#32;recognized&#32;under&#32;Republic&#32;Act&#32;11106&#46;&#32;Despite&#32;this&#32;recognition&#44;&#32;<b>communication</b>&#32;barriers&#32;persist&#32;in&#32;educational&#32;institutions&#44;&#32;healthcare&#32;facilities&#44;&#32;<b>workplaces</b>&#44;&#32;and&#32;other&#32;settings&#32;where&#32;Deaf&#32;and&#32;hearing&#32;individuals&#32;interact&#44;&#32;<b>largely</b>&#32;due&#32;to&#32;the&#32;limited&#32;understanding&#32;of&#32;FSL&#32;among&#32;the&#32;hearing&#32;majority&#46;&#32;Existing&#32;sign&#32;<b>language</b>&#32;recognition&#32;applications&#32;predominantly&#32;target&#32;other&#32;sign&#32;<b>languages</b>&#32;such&#32;as&#32;American&#32;Sign&#32;<b>Language</b>&#32;and&#32;are&#32;constrained&#32;to&#32;isolated&#32;gesture&#32;recognition&#44;&#32;failing&#32;to&#32;address&#32;the&#32;continuous&#32;and&#32;dynamic&#32;nature&#32;of&#32;Filipino&#32;Sign&#32;<b>Language</b>&#32;<b>communication</b>&#46;&#32;... A&#32;dataset&#32;of&#32;20&#32;FSL&#32;vocabulary&#32;items&#32;was&#32;collected&#32;from&#32;seven&#32;Filipino&#32;Sign&#32;<b>Language</b>&#32;signers&#44;&#32;and&#32;a&#32;four&#45;technique&#32;data&#32;augmentation&#32;pipeline&#32;including&#32;Gaussian&#32;noise&#44;&#32;time&#32;shifting&#44;&#32;scale&#32;variation&#44;&#32;and&#32;hand&#32;mirroring&#32;was&#32;applied&#32;to&#32;improve&#32;<b>model</b>&#32;generalization&#32;across&#32;different&#32;signing&#32;styles&#32;and&#32;dominant&#32;hand&#32;preferences&#46;&#32;The&#32;trained&#32;<b>model</b>&#32;was&#32;converted&#32;to&#32;TensorFlow&#32;Lite&#32;format&#32;for&#32;efficient&#32;on&#45;device&#32;inference&#32;without&#32;requiring&#32;server&#45;side&#32;computation&#32;or&#32;internet&#32;connectivity&#46;&#32;<br><i>RePEc:bjc:journl:v:13:y:2026:i:5:p:1749-1773</i>
+<span onclick="loadDoc('https://ideas.repec.org/cgi-bin/myiadd3.cgi?RePEc:bjc:journl:v:13:y:2026:i:5:p:1749-1773',myFunction);return true;"> <font color="#0000fc"><i class="bi bi-bookmark"></i>&nbsp;Save to MyIDEAS <i class="bi bi-lightbulb"></i></font></span></li>
+
+<li class="list-group-item downfree">Christos Makridis &amp; Christos A. Makridis (2025): <a href="https://ideas.repec.org/p/ces/ceswps/_12368.html" target="_blank">The&#32;Labor&#32;Market&#32;Effect&#32;of&#32;Generative&#32;Artificial&#32;Intelligence&#32;on&#32;Artists</a><hr>I&#32;combine&#32;an&#32;occupation&#45;level&#32;LLM&#32;task&#32;exposure&#32;index&#32;with&#32;establishment&#45;based&#32;occupational&#32;outcomes&#32;from&#32;the&#32;Occupational&#32;Employment&#32;and&#32;Wage&#32;Statistics&#32;&#40;OEWS&#41;&#32;and&#32;individual&#32;microdata&#32;from&#32;the&#32;American&#32;<b>Community</b>&#32;Survey&#32;&#40;ACS&#41;&#44;&#32;estimating&#32;event&#45;study&#32;specifications&#32;that&#32;compare&#32;more&#32;versus&#32;less&#32;exposed&#32;artistic&#32;occupations&#32;from&#32;2017&#32;to&#32;2024&#46;&#32;... To&#32;investigate&#32;mechanisms&#44;&#32;I&#32;use&#32;the&#32;Gallup&#32;<b>Workplace</b>&#32;Panel&#32;from&#32;2023&#32;to&#32;2025&#32;to&#32;measure&#32;AI&#32;use&#32;directly&#32;and&#32;relate&#32;changes&#32;in&#32;AI&#32;use&#32;to&#32;job&#32;satisfaction&#32;and&#32;burnout&#46;&#32;<br><i>RePEc:ces:ceswps:_12368</i>
+<span onclick="loadDoc('https://ideas.repec.org/cgi-bin/myiadd3.cgi?RePEc:ces:ceswps:_12368',myFunction);return true;"> <font color="#0000fc"><i class="bi bi-bookmark"></i>&nbsp;Save to MyIDEAS <i class="bi bi-lightbulb"></i></font></span></li>
+
+<li class="list-group-item downfree">Rony, Sidharth (2026): <a href="https://ideas.repec.org/p/unm/unumer/2026010.html" target="_blank">LLM&#32;Meets&#32;Job&#32;Advertisements&#58;&#32;Unmasking&#32;Skill&#32;Premia&#32;in&#32;the&#32;UK</a><hr>Rapid&#32;advances&#32;in&#32;technology&#32;and&#32;events&#32;such&#32;as&#32;COVID&#45;19&#32;have&#32;significantly&#32;transformed&#32;the&#32;modern&#32;<b>workplace</b>&#44;&#32;potentially&#32;altering&#32;the&#32;skills&#32;demanded&#32;in&#32;jobs&#46;&#32;This&#32;study&#32;examines&#32;the&#32;evolving&#32;demand&#32;and&#32;posted&#45;wage&#32;premia&#32;for&#32;Information&#32;and&#32;<b>Communication</b>&#32;Technology&#32;&#40;ICT&#41;&#44;&#32;interpersonal&#44;&#32;and&#32;Artificial&#32;Intelligence&#32;&#40;AI&#41;&#32;skills&#32;in&#32;the&#32;UK&#32;labour&#32;market&#46;&#32;<br><i>RePEc:unm:unumer:2026010</i>
+<span onclick="loadDoc('https://ideas.repec.org/cgi-bin/myiadd3.cgi?RePEc:unm:unumer:2026010',myFunction);return true;"> <font color="#0000fc"><i class="bi bi-bookmark"></i>&nbsp;Save to MyIDEAS <i class="bi bi-lightbulb"></i></font></span></li>
+
+<li class="list-group-item downnone">Jeanne D. Maes &amp; Kenneth L. Wall &amp; David B. Szabla (2021): <a href="https://ideas.repec.org/h/spr/sprchp/978-3-030-38324-4_89.html" target="_blank">Preston&#44;&#32;Joanne&#32;C&#46;&#58;&#32;Integrating&#32;Disciplines&#44;&#32;Expanding&#32;Paradigms</a><hr>Preston&#32;has&#32;emerged&#32;on&#32;the&#32;forefront&#32;as&#32;a&#32;scholar&#45;practitioner&#32;in&#32;her&#32;quest&#32;to&#32;“make&#32;the&#32;<b>workplace</b>&#32;healthier&#46;”&#32;Building&#32;on&#32;her&#32;Russian&#44;&#32;French&#44;&#32;and&#32;German&#32;<b>language</b>&#32;skills&#32;and&#32;her&#32;solid&#32;foundation&#32;in&#32;developmental&#32;psychology&#44;&#32;she&#32;has&#32;pushed&#32;the&#32;boundaries&#32;of&#32;traditional&#32;organization&#32;development&#32;and&#32;change&#32;&#40;ODC&#41;&#46;&#32;Preston&#32;has&#32;taken&#32;the&#32;best&#32;of&#32;family&#32;therapy&#32;practice&#32;and&#32;applied&#32;its&#32;interventions&#32;to&#32;small&#32;business&#32;and&#32;<b>workplace</b>&#32;problems&#44;&#32;producing&#32;results&#32;sufficiently&#32;substantial&#32;to&#32;catch&#32;the&#32;attention&#32;of&#32;international&#32;business&#32;owners&#46;&#32;Her&#32;interventions&#32;in&#32;<b>large</b>&#32;systems&#32;change&#32;and&#32;her&#32;astute&#32;ability&#32;to&#32;create&#32;superordinate&#32;goals&#32;were&#32;instrumental&#32;in&#32;South&#32;Africa’s&#32;transformation&#32;from&#32;apartheid&#32;and&#32;in&#32;Poland’s&#32;change&#32;from&#32;<b>communism</b>&#32;to&#32;a&#32;free&#32;market&#32;society&#46;&#32;... She&#32;has&#32;cut&#32;across&#32;the&#32;typical&#32;discipline&#32;boundaries&#32;of&#32;psychology&#44;&#32;business&#44;&#32;and&#32;education&#32;and&#44;&#32;by&#32;using&#32;technology&#44;&#32;she&#32;has&#32;created&#32;new&#32;<b>models</b>&#32;of&#32;education&#32;for&#32;graduate&#32;students&#44;&#32;linking&#32;global&#32;teams&#32;in&#32;<b>workplace</b>&#32;settings&#46;&#32;<br><i>RePEc:spr:sprchp:978-3-030-38324-4_89</i>
+<span onclick="loadDoc('https://ideas.repec.org/cgi-bin/myiadd3.cgi?RePEc:spr:sprchp:978-3-030-38324-4_89',myFunction);return true;"> <font color="#0000fc"><i class="bi bi-bookmark"></i>&nbsp;Save to MyIDEAS <i class="bi bi-lightbulb"></i></font></span></li>
+
+<li class="list-group-item downnone">Jeanne D. Maes &amp; Kenneth L. Wall &amp; David B. Szabla & William A. Pasmore & Mary A. Barnes & Asha N. Gipson (2017): <a href="https://ideas.repec.org/h/spr/sprchp/978-3-319-52878-6_89.html" target="_blank">Joanne&#32;C&#46;&#32;Preston&#58;&#32;Integrating&#32;Disciplines&#44;&#32;Expanding&#32;Paradigms</a><hr>Preston&#32;has&#32;emerged&#32;on&#32;the&#32;forefront&#32;as&#32;a&#32;scholar&#45;practitioner&#32;in&#32;her&#32;quest&#32;to&#32;“make&#32;the&#32;<b>workplace</b>&#32;healthier&#46;”&#32;Building&#32;on&#32;her&#32;Russian&#44;&#32;French&#44;&#32;and&#32;German&#32;<b>language</b>&#32;skills&#32;and&#32;her&#32;solid&#32;foundation&#32;in&#32;developmental&#32;psychology&#44;&#32;she&#32;has&#32;pushed&#32;the&#32;boundaries&#32;of&#32;traditional&#32;organization&#32;development&#32;and&#32;change&#32;&#40;ODC&#41;&#46;&#32;Preston&#32;has&#32;taken&#32;the&#32;best&#32;of&#32;family&#32;therapy&#32;practice&#32;and&#32;applied&#32;its&#32;interventions&#32;to&#32;small&#32;business&#32;and&#32;<b>workplace</b>&#32;problems&#44;&#32;producing&#32;results&#32;sufficiently&#32;substantial&#32;to&#32;catch&#32;the&#32;attention&#32;of&#32;international&#32;business&#32;owners&#46;&#32;Her&#32;interventions&#32;in&#32;<b>large</b>&#32;systems&#32;change&#32;and&#32;her&#32;astute&#32;ability&#32;to&#32;create&#32;superordinate&#32;goals&#32;were&#32;instrumental&#32;in&#32;South&#32;Africa’s&#32;transformation&#32;from&#32;apartheid&#32;and&#32;in&#32;Poland’s&#32;change&#32;from&#32;<b>communism</b>&#32;to&#32;a&#32;free&#32;market&#32;society&#46;&#32;... She&#32;has&#32;cut&#32;across&#32;the&#32;typical&#32;discipline&#32;boundaries&#32;of&#32;psychology&#44;&#32;business&#44;&#32;and&#32;education&#32;and&#44;&#32;by&#32;using&#32;technology&#44;&#32;she&#32;has&#32;created&#32;new&#32;<b>models</b>&#32;of&#32;education&#32;for&#32;graduate&#32;students&#44;&#32;linking&#32;global&#32;teams&#32;in&#32;<b>workplace</b>&#32;settings&#46;&#32;<br><i>RePEc:spr:sprchp:978-3-319-52878-6_89</i>
+<span onclick="loadDoc('https://ideas.repec.org/cgi-bin/myiadd3.cgi?RePEc:spr:sprchp:978-3-319-52878-6_89',myFunction);return true;"> <font color="#0000fc"><i class="bi bi-bookmark"></i>&nbsp;Save to MyIDEAS <i class="bi bi-lightbulb"></i></font></span></li>
+
+<li class="list-group-item downfree">Tharani Loganathan &amp; Amirah Zafirah Zaini &amp; Hazreen Abdul Majid (2025): <a href="https://ideas.repec.org/a/plo/pone00/0326045.html" target="_blank">Exploring&#32;the&#32;barriers&#32;and&#32;facilities&#32;migrants&#32;face&#32;in&#32;accessing&#32;COVID&#45;19&#32;vaccines&#32;in&#32;Malaysia&#58;&#32;A&#32;qualitative&#32;study</a><hr>Digital&#32;appointment&#32;systems&#32;excluded&#32;many&#32;migrants&#32;due&#32;to&#32;<b>language</b>&#32;and&#32;literacy&#32;barriers&#44;&#32;data&#32;privacy&#32;concerns&#44;&#32;and&#32;the&#32;need&#32;for&#32;identity&#32;documents&#46;&#32;... Employer&#32;support&#44;&#32;driven&#32;by&#32;economic&#32;interests&#44;&#32;played&#32;a&#32;critical&#32;role&#32;in&#32;promoting&#32;compliance&#32;with&#32;<b>workplace</b>&#32;vaccination&#32;mandates&#46;&#32;Collaboration&#32;with&#32;non&#45;governmental&#32;organisations&#32;and&#32;<b>community</b>&#32;partners&#32;proved&#32;pivotal&#44;&#32;offering&#32;tailored&#32;health&#32;<b>communication</b>&#32;and&#32;building&#32;trust&#46;&#32;Flexible&#32;vaccine&#32;delivery&#32;strategies&#44;&#32;including&#32;a&#32;shift&#32;from&#32;centralised&#32;to&#32;outreach&#32;<b>models</b>&#32;near&#32;residences&#32;and&#32;<b>workplaces</b>&#44;&#32;enhanced&#32;access&#44;&#32;particularly&#32;for&#32;hard&#45;to&#45;reach&#32;populations&#46;&#32;Conclusion&#58;&#32;Despite&#32;numerous&#32;challenges&#44;&#32;Malaysia’s&#32;vaccination&#32;efforts&#32;were&#32;<b>largely</b>&#32;successful&#32;due&#32;to&#32;innovative&#32;and&#32;collaborative&#32;delivery&#32;and&#32;<b>communication</b>&#32;strategies&#46;&#32;<br><i>RePEc:plo:pone00:0326045</i>
+<span onclick="loadDoc('https://ideas.repec.org/cgi-bin/myiadd3.cgi?RePEc:plo:pone00:0326045',myFunction);return true;"> <font color="#0000fc"><i class="bi bi-bookmark"></i>&nbsp;Save to MyIDEAS <i class="bi bi-lightbulb"></i></font></span></li>
+
+</ol>
+
+
+</div>
+</div>
+<div id="footer" class="row d-print-none">
+  <div class="col-sm-6 more-services">
+    <h3 style="border-bottom: 1px solid #111; position: relative; right:0.9em;">More services and features</h3>
+    <div class="row">
+      <div class="list-group col">
+        <a href="/cgi-bin/myideas.cgi" class="list-group-item">
+          <h4 class="list-group-item-heading">MyIDEAS</h4>
+          <p class="list-group-item-text">Follow serials, authors, keywords &amp; more</p>
+        </a>
+        <a href="http://nep.repec.org/" class="list-group-item" target="_blank">
+          <h4 class="list-group-item-heading">New papers by email <i class="bi bi-box-arrow-up-right"></i></h4>
+          <p class="list-group-item-text">Subscribe to new additions to RePEc</p>
+        </a>
+        <a href="http://authors.repec.org/" class="list-group-item">
+          <h4 class="list-group-item-heading">Author registration</h4>
+          <p class="list-group-item-text">Public profiles for Economics researchers</p>
+        </a>
+        <a href="http://ideas.repec.org/top/" class="list-group-item">
+          <h4 class="list-group-item-heading">Rankings</h4>
+          <p class="list-group-item-text">Various research rankings in Economics</p>
+        </a>
+        <a href="http://genealogy.repec.org/" class="list-group-item">
+          <h4 class="list-group-item-heading">RePEc Genealogy</h4>
+          <p class="list-group-item-text">Who was a student of whom, using RePEc</p>
+        </a>
+        <a href="http://biblio.repec.org/" class="list-group-item">
+          <h4 class="list-group-item-heading">RePEc Biblio</h4>
+          <p class="list-group-item-text">Curated articles &amp; papers on economics topics</p>
+        </a>
+      </div>
+      <div class="list-group col">
+        <a href="http://mpra.ub.uni-muenchen.de/" class="list-group-item" target="_blank">
+          <h4 class="list-group-item-heading">MPRA  <i class="bi bi-box-arrow-up-right"></i></h4>
+          <p class="list-group-item-text">Upload your paper to be listed on RePEc and IDEAS</p>
+        </a>
+        <a href="https://nep.repec.org/" class="list-group-item" target="_blank">
+          <h4>New papers by email <i class="bi bi-box-arrow-up-right"></i></h4>
+          <p class="list-group-item-text">Subscribe to new additions to RePEc</p>
+        </a>
+        <a href="http://econacademics.org/" class="list-group-item">
+          <h4 class="list-group-item-heading">EconAcademics</h4>
+          <p class="list-group-item-text">Blog aggregator for economics research</p>
+        </a>
+        <a href="http://plagiarism.repec.org/" class="list-group-item">
+          <h4 class="list-group-item-heading">Plagiarism</h4>
+          <p class="list-group-item-text">Cases of plagiarism in Economics</p>
+        </a>
+      </div>
+      </div>
+    </div>
+    <div class="col-sm more-services">
+      <h3 style="border-bottom: 1px solid #111;">About RePEc</h3>
+      <div class="list-group col">
+        <a href="http://repec.org/" class="list-group-item" target="_blank">
+          <h4 class="list-group-item-heading">RePEc home <i class="bi bi-box-arrow-up-right"></i></h4>
+          <p class="list-group-item-text">Initiative for open bibliographies in Economics</p>
+        </a>
+        <a href="http://blog.repec.org/" class="list-group-item" target="_blank">
+          <h4 class="list-group-item-heading">Blog <i class="bi bi-box-arrow-up-right"></i></h4>
+          <p class="list-group-item-text">News about RePEc</p>
+        </a>
+        <a href="/help.html" class="list-group-item" target="_blank">
+          <h4 class="list-group-item-heading">Help/FAQ <i class="bi bi-box-arrow-up-right"></i></h4>
+          <p class="list-group-item-text">Questions about IDEAS and RePEc</p>
+        </a>
+        <a href="/team.html" class="list-group-item">
+          <h4 class="list-group-item-heading">RePEc team</h4>
+          <p class="list-group-item-text">RePEc volunteers</p>
+        </a>
+        <a href="/archives.html" class="list-group-item">
+          <h4 class="list-group-item-heading">Participating archives</h4>
+          <p class="list-group-item-text">Publishers indexing in RePEc</p>
+        </a>
+        <a href="https://ideas.repec.org/privacy.html" class="list-group-item" target="_blank">
+          <h4 class="list-group-item-heading">Privacy statement <i class="bi bi-box-arrow-up-right"></i></h4>
+        </a>
+      </div>
+    </div>
+    <div class="col-sm more-services">
+      <h3 style="border-bottom: 1px solid #111;">Help us</h3>
+      <div class="list-group col">
+        <a href="/corrections.html" class="list-group-item">
+          <h4 class="list-group-item-heading">Corrections</h4>
+          <p class="list-group-item-text">Found an error or omission?</p>
+        </a>
+        <a href="/volunteers.html" class="list-group-item">
+          <h4 class="list-group-item-heading">Volunteers</h4>
+          <p class="list-group-item-text">Opportunities to help RePEc</p>
+        </a>
+        <a href="/participate.html" class="list-group-item">
+          <h4 class="list-group-item-heading">Get papers listed</h4>
+          <p class="list-group-item-text">Have your research listed on RePEc</p>
+        </a>
+        <a href="/stepbystep.html" class="list-group-item">
+          <h4 class="list-group-item-heading">Open a RePEc archive</h4>
+          <p class="list-group-item-text">Have your institution's/publisher's output listed on RePEc</p>
+        </a>
+        <a href="/getdata.html" class="list-group-item">
+          <h4 class="list-group-item-heading">Get RePEc data</h4>
+          <p class="list-group-item-text">Use data assembled by RePEc</p>
+        </a>
+      </div>
+    </div>
+</div>
+<div class="row">
+  <div class="col-12" style="text-align: center; padding-top: 10px;">
+    <div id="sidelogos">
+      <a href="https://ideas.repec.org/">IDEAS</a> is a <a href="http://repec.org/" target="_blank">RePEc <i class="bi bi-box-arrow-up-right"></i></a> service. RePEc uses bibliographic data supplied by the respective
+ publishers.
+    </div>
+  </div>
+
+
+</div>
+</div>
+
+
+<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+<script type="module" src="https://cdn.jsdelivr.net/npm/@justinribeiro/share-to-mastodon@0.2.0/dist/share-to-mastodon.js">
+<script src="/css/ideas.js"></script>
+<script>
+function myFunction(xhttp) {
+  document.getElementById("response").innerHTML = xhttp.responseText;
+}
+$(document).ready(function() {
+    // show active tab on reload
+    if (location.hash !== '') $('a[href="' + location.hash + '"]').tab('show');
+
+    // remember the hash in the URL without jumping
+//    $('a[data-toggle="tab"]').on('shown.bs.tab', function(e) {
+//       if(history.pushState) {
+//            history.pushState(null, null, '#'+$(e.target).attr('href').substr(1));
+//       } else {
+//            location.hash = '#'+$(e.target).attr('href').substr(1);
+//       }
+//    });
+});
+</script>
+

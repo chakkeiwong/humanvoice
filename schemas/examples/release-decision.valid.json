@@ -1,0 +1,12 @@
+{
+  "record_type": "ReleaseDecision",
+  "schema_version": "HV-SCHEMA-1.0",
+  "record_id": "release-001",
+  "run_id": "run-001",
+  "created_at": "2026-08-26T00:00:00Z",
+  "gate_results": {"G0": "pass"},
+  "packet_hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+  "status": "released",
+  "authorized_by": "named project owner",
+  "exceptions": []
+}

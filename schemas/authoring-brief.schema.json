@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://humanvoice.local/schema/authoring-brief.schema.json",
+  "title": "Humanvoice authoring brief",
+  "type": "object",
+  "required": ["record_type", "schema_version", "record_id", "run_id", "created_at", "reader", "decision", "genre", "known_vocabulary", "exemplars", "evidence_boundary", "privacy_class", "protected_objects", "unknowns"],
+  "properties": {
+    "record_type": {"const": "AuthoringBrief"},
+    "schema_version": {"type": "string", "pattern": "^HV-SCHEMA-[0-9]+\\.[0-9]+$"},
+    "record_id": {"type": "string", "minLength": 1},
+    "run_id": {"type": "string", "minLength": 1},
+    "created_at": {"type": "string", "format": "date-time"},
+    "reader": {"type": "string", "minLength": 1},
+    "decision": {"type": "string", "minLength": 1},
+    "genre": {"type": "string", "minLength": 1},
+    "known_vocabulary": {"type": "array", "items": {"type": "string"}},
+    "exemplars": {"type": "array", "items": {"type": "string"}},
+    "evidence_boundary": {"type": "array", "items": {"type": "string"}},
+    "privacy_class": {"enum": ["public", "internal", "confidential", "restricted"]},
+    "protected_objects": {"type": "array", "items": {"type": "string"}},
+    "unknowns": {"type": "array", "items": {"type": "object"}},
+    "extensions": {"type": "object"}
+  },
+  "additionalProperties": false
+}

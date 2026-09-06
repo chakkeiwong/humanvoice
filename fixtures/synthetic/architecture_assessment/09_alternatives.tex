@@ -1,0 +1,45 @@
+\section{Alternatives Considered}
+
+Recommending the microservices migration requires demonstrating that alternatives were evaluated and found less suitable. Four alternatives were assessed against the same criteria: scalability headroom, implementation cost, operational complexity, and reversibility.
+
+\subsection{Alternative 1: Vertical Scaling}
+
+Migrate the database to the largest available instance class and increase application-tier instance count. This defers the capacity ceiling to approximately 72,000 TPS at a cost of \$100,800 annually with a 40-minute maintenance window.
+
+Assessment: this is the lowest-cost, lowest-risk option, and it should be executed regardless of the strategic decision because it buys time. However, it does not resolve the underlying constraint. At current growth rates the deferred ceiling is reached in 24 months, at which point the organization faces the same decision with less runway. Vertical scaling is therefore a necessary tactical action, not a strategic answer.
+
+\subsection{Alternative 2: Database Sharding Within the Monolith}
+
+Partition the database horizontally by account identifier while retaining the monolithic application. Each shard holds a subset of accounts; the application routes queries to the appropriate shard. This preserves the single deployable artifact and the existing operational model.
+
+Assessment: sharding provides effectively unlimited horizontal scalability for the 77\% of operations confined to a single account. Cross-account operations, however, require scatter-gather queries or distributed transactions, and the 23\% figure from the boundary audit applies here as well. Estimated implementation cost is \$1.4M over 9 months, substantially less than the microservices migration.
+
+The critical limitation is that sharding does not address the deployment coupling problem. All 240 instances must still run identical code, releases remain fortnightly, and a defect in any capability still requires a full-system rollback. The organization's stated frustration with release velocity is unaddressed. Sharding solves the scalability problem while leaving the agility problem intact.
+
+\subsection{Alternative 3: Modular Monolith with Enforced Boundaries}
+
+Retain a single deployable artifact but enforce module boundaries at compile time, with modules communicating only through defined interfaces and each owning private database schemas. This is sometimes described as a "modulith."
+
+Assessment: this option achieves much of the architectural discipline of microservices without the distributed systems complexity. Modules can be developed by independent teams, and the enforced boundaries prevent the coupling erosion that produced the current situation. Implementation cost is estimated at \$900,000 over 7 months, chiefly refactoring effort.
+
+The limitation is that it does not provide independent scalability or independent deployability. If Fraud Detection requires 8x the compute of other modules, the entire artifact must be scaled 8x. And a change to any module still requires deploying the whole. For an organization whose primary complaint is release velocity, this is a partial answer.
+
+The modular monolith is nevertheless the strongest alternative, and would be the recommendation if the scalability constraint were less pressing. It is also a valid intermediate step: a modular monolith is substantially easier to decompose into services later, because the boundaries already exist. Some practitioners argue this is the correct default path, and the assessment acknowledges the position has merit.
+
+\subsection{Alternative 4: Selective Extraction of Two Services}
+
+Extract only the two services with the strongest independent-scaling case (Fraud Detection and Reporting Aggregator) while retaining the monolith for everything else. This is a limited-scope version of the proposed architecture.
+
+Assessment: this option captures the highest-value portion of the decomposition benefit at approximately 20\% of the cost, estimated at \$1.3M over 8 months. Fraud Detection's compute-intensive scoring benefits from independent scaling; Reporting Aggregator's long-running queries currently degrade transactional latency and would benefit from isolation.
+
+The limitation is that the monolith retains the transactional core and therefore the database write ceiling. Extracting these two services reduces load on the monolith by an estimated 14\%, deferring the capacity ceiling to 52,000 TPS, which is reached in 11 months. This is less runway than vertical scaling provides at higher cost.
+
+Selective extraction is worth executing as part of the broader migration but is insufficient as a standalone strategy.
+
+\subsection{Comparative Summary}
+
+Ranked by scalability headroom: full microservices (3.1x), sharding (unbounded for single-account operations), vertical scaling (1.6x), selective extraction (1.15x), modular monolith (1.0x). Ranked by cost ascending: vertical scaling (\$0.1M), selective extraction (\$1.3M), sharding (\$1.4M), modular monolith (\$0.9M), full microservices (\$6.8M). Ranked by operational complexity ascending: vertical scaling, modular monolith, sharding, selective extraction, full microservices.
+
+No option dominates. The recommendation of full microservices rests on the judgment that deployment independence has strategic value beyond what the cost analysis captures, and that the organizational capability built during migration is itself an asset. This judgment is contestable, and the assessment states it explicitly rather than burying it in the analysis.
+
+The recommended sequence is: execute vertical scaling immediately to buy runway, then proceed with the microservices migration under the phased plan with checkpoint gates. If the month-12 checkpoint fails, the fallback is to complete the modular monolith refactoring using the boundary definitions already produced, converting sunk analysis cost into a usable outcome.

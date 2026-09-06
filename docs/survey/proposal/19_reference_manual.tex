@@ -1,0 +1,408 @@
+\chapter{Reference manual for records and fixtures}
+\label{ch:reference-manual}
+
+The preceding appendix explains why the records exist. This one makes them
+usable. An engineer should be able to build a first fixture from these pages;
+a researcher should be able to trace a load-bearing sentence to its source; and
+a sponsor should be able to inspect a decision packet without opening a
+repository log. The manual is intentionally concrete. It belongs after the
+argument because its tables and field names are tools for reproduction, not the
+story the reader must learn first.
+
+\section{Document and version fields}
+\label{sec:manual-document-fields}
+
+A document record begins with the work, not with a model run. The minimum fields
+are shown below.
+
+\begin{table}[H]
+\centering
+\small
+\begin{tabularx}{\textwidth}{@{}p{0.23\textwidth}p{0.24\textwidth}L@{}}
+\toprule
+Field & Type & Interpretation \\
+\midrule
+document\_id & stable string & Identifies the work across revisions and
+renderings \\
+genre & controlled text plus free description & Research proposal, model note,
+memorandum, survey, or another declared class \\
+reader\_role & free text & The expertise and decision responsibility of the
+intended reader \\
+decision\_question & prose & The action or judgment the document is meant to
+support \\
+exemplars & ordered list of source ids & Documents that define the intended
+explanatory pace for this reading task \\
+known\_vocabulary & list of terms & Terms the reader may reasonably know
+without a first-use gloss \\
+exemption\_zones & line ranges plus reason & Preview, map, decision-box, or
+reference regions where names may precede teaching \\
+brief\_version & integer plus date & Cumulative reader directives used by this
+inspection \\
+source\_root & path under the authorized boundary & Directory whose contents
+are included in the snapshot \\
+parent\_version & nullable identifier & Previous source snapshot, if the
+document is being revised \\
+assistance\_disclosure & structured record & Tools, model use, human editing,
+and unresolved disclosure choices \\
+privacy\_class & controlled text & Public, internal, confidential, or restricted \\
+\bottomrule
+\end{tabularx}
+\caption{Fields that define the document before diagnostics run.}
+\label{tab:manual-document-fields}
+\end{table}
+
+The free description beside a controlled genre is important. Two documents may
+both be called a proposal while one asks for a research grant and the other asks
+for authorization to change a production model. The reader task, not the label,
+determines which evidence and wording are appropriate. A missing decision
+question is an intake failure, not an invitation to let a model infer one.
+
+A version record adds build information and source lineage:
+
+\begin{table}[H]
+\centering
+\small
+\begin{tabularx}{\textwidth}{@{}p{0.23\textwidth}p{0.24\textwidth}L@{}}
+\toprule
+Field & Type & Interpretation \\
+\midrule
+version\_id & immutable string & One source and configuration snapshot \\
+entry\_point & path & Top-level TeX, Markdown, or other source file \\
+route\_files & ordered list & Included files and their content hashes \\
+build\_id & string & Compiler and dependency environment \\
+source\_sha256 & hexadecimal string & Exact input identity \\
+rendered\_sha256 & hexadecimal string & Exact PDF identity \\
+protected\_manifest & path or embedded object & Objects extracted for comparison \\
+build\_result & pass, fail, or incomplete & Typography and reproducibility result,
+not a reader judgment \\
+\bottomrule
+\end{tabularx}
+\caption{A version record ties source, build, and rendered output together.}
+\label{tab:manual-version-fields}
+\end{table}
+
+The distinction between a source hash and a rendered hash matters when TeX
+changes a page break without changing a sentence, or when a source edit is
+present but the PDF was not rebuilt. Both conditions should be visible in a
+comparison packet.
+
+\section{Protected-object dictionary}
+\label{sec:manual-object-fields}
+
+Each protected object has a typed identity. The following fields are sufficient
+for the first release:
+
+\begin{table}[H]
+\centering
+\small
+\begin{tabularx}{\textwidth}{@{}p{0.21\textwidth}p{0.27\textwidth}L@{}}
+\toprule
+Object type & Required fields & Normalization rule \\
+\midrule
+Equation & source span, environment, label, variables, units, rendered anchor &
+Normalize whitespace and macro aliases; retain signs, exponents, limits, and
+unknown commands \\
+Number & value, unit, precision, context, source span & Normalize separators and
+formatting; do not round or drop a sign \\
+Citation & key, authors, title, identifier, sentence span & Normalize key and
+identifier; preserve sentence and bibliography versions \\
+Table & caption, row/column labels, cells, units, source span & Normalize cell
+formatting; retain denominator, ordering, and missing status \\
+Qualification & text span, associated finding or result, scope terms & Preserve
+scope words and link to the result they qualify \\
+Label or cross-reference & key, target, source span, rendered page & Compare
+key, target, and resolved page independently \\
+Quotation or code & delimiters, source, language, text hash & Preserve content
+exactly unless an author-approved replacement is recorded \\
+\bottomrule
+\end{tabularx}
+\caption{Typed protected objects keep normalization from becoming silent
+rewriting.}
+\label{tab:manual-object-dictionary}
+\end{table}
+
+A normalization function is a convenience for matching, not a replacement for
+the source. Let $g_k$ be the function for object kind $k$. The comparison
+stores both $raw(p)$ and $g_k(raw(p))$:
+\begin{equation}
+  record(p)=\bigl(kind(p),raw(p),g_{kind(p)}(raw(p)),loc(p),owner(p)\bigr).
+  \label{eq:manual-object-record}
+\end{equation}
+When a later implementation changes $g_k$, it must replay old fixtures and
+retain the prior normalized value. Otherwise a dependency update can make a
+historical change appear to have been unchanged.
+
+A qualification deserves special treatment. It is not merely a sentence with
+words such as "may" or "under." The record links it to the proposition whose
+scope it limits. If the proposition moves, the system asks the author to
+confirm the link. This catches the common repair in which a caveat survives as
+a grammatical sentence but no longer qualifies the result it was written to
+bound.
+\section{The fixture catalogue}
+\label{sec:manual-fixtures}
+
+The first benchmark corpus should contain small fixtures that isolate one
+failure and a few composite documents that reproduce the reader problem. Each
+fixture has a positive behavior, a negative behavior, and an abstention rule.
+
+\begin{description}[style=nextline,leftmargin=33mm,labelindent=0mm]
+\item[Macro fixture] A custom command expands to a number in one table and a
+label in another. A parser must preserve the call and expansion or abstain.
+\item[Equation fixture] The child changes an exponent and then changes only
+whitespace. The first difference must be substantive; the second may be
+formatting under the declared normalization.
+\item[Table fixture] A percentage is recomputed with a different denominator.
+The system must identify the denominator and show the before-and-after values.
+\item[Citation fixture] A key resolves to a real paper whose method does not
+support the sentence. Identity resolution passes; support review remains open.
+\item[Qualification fixture] A sentence moves a population or horizon
+qualification away from the result it limits. The object comparison must keep
+the association visible.
+\item[Register fixture] A private phase label and repository path occur in the
+opening paragraph. The finding should point to the public decision the reader
+needs, not merely mark a forbidden word.
+\item[Intentional-pattern fixture] Three adjacent sentences have the same form
+because they enumerate the steps of a derivation. A style rule should either
+abstain or give the author a reason to retain the pattern.
+\item[Pacing fixture] Three prose paragraphs introduce a known set of terms at
+different rates. The meter must report the burst locations and compare the
+target with supplied exemplars without declaring a universal pass value.
+\item[First-use fixture] An acronym appears before its expansion, followed by
+the same acronym after a generic gloss. The audit flags the first occurrence,
+accepts the second, and respects a declared preview exemption.
+\item[Assertion fixture] A prose repair adds a number or superlative without a
+citation. The comparison opens a question and never silently accepts the new
+claim.
+\item[Reader fixture] Two versions have identical equations but different
+openings. A reader unfamiliar with the project should be able to identify which version makes
+the decision and mechanism clearer.
+\end{description}
+
+The composite corpus then combines these cases in realistic documents. It
+should include at least one proposal, one mathematical note, and one
+investment-style memorandum, with a source snapshot and a human-authored answer
+key for each. The answer key records what a competent reader should be able to
+recover, not which recommendation the reader must endorse.
+
+For fixture $i$, the expected result is a partial function
+\begin{equation}
+  E_i: input_i \longrightarrow
+  \{\mathrm{pass},\mathrm{fail},\mathrm{abstain}\}.
+  \label{eq:manual-fixture-result}
+\end{equation}
+A candidate that returns "pass" on an unresolved negative fixture has a false
+pass even if its aggregate accuracy is high. The benchmark report lists every
+fixture, including skipped or unsupported cases, so the denominator cannot
+quietly improve when difficult documents are removed.
+
+\section{Finding record and author decision}
+\label{sec:manual-finding-record}
+
+A finding is useful when another person can understand it without opening the
+tool's implementation. The recommended fields are:
+
+\begin{table}[H]
+\centering
+\small
+\begin{tabularx}{\textwidth}{@{}p{0.24\textwidth}p{0.25\textwidth}L@{}}
+\toprule
+Field & Example & Purpose \\
+\midrule
+finding\_id & F-014 & Stable reference in a revision packet \\
+location & chapter.tex:87, PDF page 6 & Lets the author inspect source and
+rendered context \\
+observation & Private label precedes public definition & States what is visible \\
+consequence & New reader may not recover the comparison & Explains why attention
+might be worthwhile \\
+question & Name the baseline and changed mechanism & Gives the author a usable
+next move \\
+suggestion & Optional text or none & Offers an alternative without authority \\
+priority & provisional ordinal & Orders attention; never certifies quality \\
+author\_decision & accept, reject, defer, rewrite & Preserves human ownership \\
+decision\_reason & short prose & Explains a rejection or substantive change \\
+unit & chapter or section id & Keeps pacing and ordering work bounded and
+replayable \\
+repair\_move & concrete-first, unfold, read-back, generic-first-name-after,
+or other named move & Gives the author a finite option without prescribing
+wording \\
+detector\_evidence & metric, exemplar ids, or first-use signal & Shows why the
+question was raised and what the heuristic cannot establish \\
+\bottomrule
+\end{tabularx}
+\caption{A finding record is an editorial question with provenance.}
+\label{tab:manual-finding-record}
+\end{table}
+
+The author decision is intentionally richer than a checkbox. "Reject" may
+mean that the pattern is intentional, that the proposed consequence is wrong,
+or that the author will address it in a different paragraph. The reason lets a
+later reviewer distinguish a false positive from an unfinished repair. It also
+gives the diagnostic designer evidence about which rules waste time.
+
+A model suggestion, when present, is stored as a child of the finding and never
+as a replacement for the author's text. The system records whether the author
+accepted the wording, adapted it, or wrote an independent repair. This
+distinction matters for disclosure and for a later analysis of which assistance
+actually reduced work.
+\section{Reader form and coding manual}
+\label{sec:manual-reader-form}
+
+The reader form should fit on one page plus an optional comment sheet. It opens
+with the decision context and then asks:
+
+\begin{enumerate}
+\item In one sentence, what decision is the document about?
+\item What is the proposed mechanism or object?
+\item Which result, equation, or table carries the main support?
+\item What condition limits the result?
+\item Would you approve the requested next step now? Choose yes, revise, or
+      no, and give one reason.
+\item Where did you first stop or reread? Give the page or section, a short
+      quotation, and the relation you were trying to recover.
+\end{enumerate}
+
+The coding manual defines an answer as correct when it identifies the
+document-specific target within the declared scope, even if the reader uses
+different words. It defines an answer as incomplete when it names a topic but
+not the action or mechanism, and as incorrect when it assigns the result to a
+different population, comparison, or horizon. These categories are preferable
+to asking a model to judge whether the response is eloquent.
+
+For reader $j$, version $v$, and question $q$, let $Z_{jvq}$ take values
+$1$ (correct), $0$ (incomplete), and $-1$ (incorrect). The reconstruction index
+is reported as a vector of question-level proportions:
+\begin{equation}
+  \rho_{vq} = \frac{1}{J}\sum_{j=1}^{J}1\{Z_{jvq}=1\},
+  \qquad q=1,\ldots,5.
+  \label{eq:manual-reader-coding}
+\end{equation}
+The vector is more informative than its average. A version can improve the
+action answer while leaving the mechanism answer unchanged, which tells the
+author where a further repair is needed.
+
+The form records confidence and prior exposure separately. Confidence is a
+reader observation, not a multiplier on correctness. Prior exposure is a
+potential source of contamination, not a reason to discard a skeptical answer.
+The evaluator reports both so that a sponsor can see whether the product works
+for a new reader or only for someone already familiar with the project.
+
+\section{Evidence and omission register}
+\label{sec:manual-evidence-register}
+
+A load-bearing literature row has six linked parts: the source identity, the
+technical passage inspected, the source result, its population and task, the
+limit, and the local product implication. The record also states what the
+source is not allowed to support. For example, an experiment on email
+completion can support a bounded claim about task time; it cannot support a
+claim about acceptance of an economics proposal.
+
+The omission register uses the following fields:
+
+\begin{table}[H]
+\centering
+\small
+\begin{tabularx}{\textwidth}{@{}p{0.24\textwidth}p{0.27\textwidth}L@{}}
+\toprule
+Field & Example & Use \\
+\midrule
+candidate & specialist technical-communication study & Names a plausible
+missing source or stream \\
+reason considered & Direct reader-comprehension relevance & Explains reviewer risk \\
+current status & source blocked, not screened, or adjacent & Prevents silence from
+looking like exclusion \\
+permitted role & context, direct support, challenge, or none & Limits inference \\
+next action & obtain full text, independent screen, or omit with reason & Gives the
+review a concrete next step \\
+owner and date & named reviewer and deadline & Makes the omission actionable \\
+\bottomrule
+\end{tabularx}
+\caption{A scholarly omission is recorded as a question with a next action.}
+\label{tab:manual-omission}
+\end{table}
+
+The current evidence run has explicit release blockers for independent
+screening, full-text anchors, appraisal, held-out package effectiveness, and
+external review. Specialist coverage and DOI identity have passed for the
+bounded records recorded in the audit, but those passes do not invalidate the
+remaining source-to-claim work or make the survey exhaustive. A later audit can
+close a blocker or narrow a sentence; the main route should not silently change
+its claim class in response.
+
+\section{Cost worksheet}
+\label{sec:manual-cost}
+
+The cost worksheet separates observed inputs from planning assumptions. For
+document class $g$, record annual volume $N_g$, incumbent reader hours
+$T_{0g}$, proposed reader hours $T_{1g}$, author hours $A_{0g}$ and $A_{1g}$,
+reader rate $c_r$, author rate $c_a$, and recurring operating cost $C_o$.
+The direct annual value range is
+\begin{equation}
+  V_g =
+  N_g\left[(T_{0g}-T_{1g})c_r+(A_{0g}-A_{1g})c_a\right]-C_o.
+  \label{eq:manual-cost-range}
+\end{equation}
+The worksheet must include a separate line for protected-object incidents.
+If the sponsor cannot price an incident, it should report a low, medium, and
+high scenario rather than assigning a zero cost.
+
+A worked sensitivity grid varies reader saving and annual volume while holding
+the loaded reader cost fixed. The grid is not a forecast. It tells the evaluator
+which baseline observations have the largest value of information. If the
+break-even point requires an implausibly large volume, the beachhead is wrong
+even if the product is technically interesting.
+
+The worksheet also records labor that a software demo hides: intake, source
+cleanup, finding investigation, citation review, reader recruitment, and
+fixture maintenance. A narrow service with high per-document value may tolerate
+more manual work than a broad subscription. The operating plan should price
+the actual path observed in the pilot, not an imagined fully automated path.
+
+\section{Decision packet and reproducibility}
+\label{sec:manual-packet}
+
+The final packet for a sponsor contains, in order:
+
+\begin{enumerate}
+\item the one-sentence decision and the population of documents in scope;
+\item the incumbent and proposed workflows, including assistance disclosure;
+\item the source and rendered hashes for every compared version;
+\item the protected-object comparison and all unresolved items;
+\item the reader outcomes, author burden, and missing observations;
+\item the evidence status and the sources allowed to support each conclusion;
+\item the cost worksheet with sensitivity and non-priced outcomes; and
+\item a proceed, revise, or stop recommendation with its next owner.
+\end{enumerate}
+
+A packet is reproducible when an independent operator can rebuild the source,
+replay the fixtures, locate the protected objects, and recover the same
+numerical summaries from the recorded input files. It need not reproduce a
+model's stochastic suggestion bit for bit if the model configuration and
+output hash are preserved; it must distinguish a stochastic variation from a
+source or reader outcome.
+
+The canonical Humanvoice build currently records the top-level source hash,
+route hash, rendered hash, page count, extracted word count, and the
+evidence-status file. Those fields identify this draft. Release still
+requires the project owner and an independent reader, because reproducibility
+is evidence about the build and not an endorsement of the prose.
+
+\section{Compact glossary}
+\label{sec:manual-glossary}
+
+\begin{description}[style=nextline,leftmargin=36mm,labelindent=0mm]
+\item[Protected object] A document element whose change can alter scientific,
+financial, or legal meaning and therefore receives explicit comparison.
+\item[Reading brief] The declared decision, audience, context, and time
+conditions for a reading task.
+\item[Finding] A located observation and question that directs human attention.
+\item[Abstention] An explicit statement that the current parser, rule, or model
+cannot establish correspondence or support.
+\item[Incumbent bundle] The actual tools and human work used when Humanvoice is
+not present.
+\item[Feasibility evidence] Evidence that the path can run and be measured on a
+declared case; it is not an efficacy estimate.
+\end{description}
+
+The glossary is intentionally short. Domain nouns should be defined where they
+enter the argument, and technical field names should remain in this appendix
+when they do not help a reader decide whether to fund the next step.

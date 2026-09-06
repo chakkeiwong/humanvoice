@@ -1,0 +1,12 @@
+{
+  "fixture_id": "F-REGISTER-001",
+  "answer_key_version": "1.0",
+  "expected_findings": [
+    {
+      "category": "register",
+      "source_terms": ["WP3", "/srv/humanvoice/private"],
+      "reader_consequence": "The manuscript should name the public decision and omit private workflow vocabulary."
+    }
+  ],
+  "expected_abstention": "The project vocabulary configuration is required before classifying an ambiguous term."
+}

@@ -1,0 +1,326 @@
+\chapter{How the product works}
+\label{ch:design}
+
+When an author starts a document, the team should be able to follow the work
+from the first brief to the final reader decision. Humanvoice keeps that
+correspondence between the intended audience, the argument plan, each bounded
+draft unit, the pre-human checks, the source and its rendering, and the outcome.
+Once the correspondence is stable, engineers can replace a parser or model
+without losing the story of why a paragraph exists or why it was released.
+
+\section{The flow of one version}
+
+The sequence follows the author's work: define the reader's task, plan the
+argument, draft in bounded units, preflight the result, repair located failures,
+and ask the reader only after release.
+
+\begin{figure}[H]
+\centering
+\resizebox{\textwidth}{!}{%
+\begin{tikzpicture}[node distance=6mm and 4mm,font=\small]
+  \node[hvstage,text width=25mm] (brief) {Authoring brief\\decision, reader, evidence};
+  \node[hvstage,right=of brief,text width=25mm] (plan) {Argument blueprint\\claims, dependencies, figures};
+  \node[hvgoldbox,right=of plan,text width=25mm] (draft) {Bounded draft\\one unit at a time};
+  \node[hvwarn,right=of draft,text width=25mm] (preflight) {Pre-human preflight\\integrity and reader simulation};
+  \node[hvbluebox,right=of preflight,text width=25mm] (release) {Release gate\\clean packet or stop};
+  \node[hvbluebox,right=of release,text width=25mm] (read) {Human reader\\decision and action};
+  \draw[hvflow] (brief)--(plan)--(draft)--(preflight)--(release)--(read);
+  \draw[hvback] (preflight.south) to[bend right=25] node[below,hvnote]{located repair} (draft.south);
+  \node[below=9mm of plan,align=center,text=hvslate,text width=34mm]
+    (prov) {provenance: brief, blueprint, source and render hashes};
+  \node[below=9mm of release,align=center,text=hvslate,text width=34mm]
+    (objects) {protected objects: equations, numbers, citations, claims};
+  \draw[hvflow,dashed] (plan.south)--(prov.north);
+  \draw[hvflow,dashed] (release.south)--(objects.north);
+  \node[hvguard,fit=(preflight)(release),inner sep=3mm] {};
+\end{tikzpicture}
+}%
+\caption{The common record keeps a flawed draft inside a bounded repair loop.
+Only a passed release gate reaches the expensive human reader.}
+\label{fig:product-architecture}
+\end{figure}
+
+The brief comes first because a finding means nothing without a purpose. The
+blueprint comes before prose because a fluent paragraph can still introduce a
+concept before its prerequisite or promise a result that the evidence cannot
+support. The source snapshot and protected spans are attached to each unit so
+that a repair remains reproducible. The reader decision comes last because it
+belongs to the released document, not to a model score or an internal queue.
+
+\section{The document representation}
+
+The MVP has one source format: LaTeX. The common representation can later
+admit Markdown or a word-processing adapter, but the first build earns that
+extension only after it preserves locations and protected objects in LaTeX.
+The record model now starts before the source file. Each object has one clear
+owner and one reason it exists in the path.
+
+\begin{table}[H]
+\centering
+\small
+\begin{tabularx}{\textwidth}{@{}p{0.20\textwidth}L p{0.25\textwidth}@{}}
+\toprule
+Object & Required contents & Owner of the decision \\
+\midrule
+AuthoringBrief & Intended reader, decision, genre, known vocabulary, named
+exemplars, evidence boundary, protected objects, privacy class, and unresolved
+assumptions. & Owner confirms that a missing answer is safe to carry forward. \\
+Argument\\Blueprint & Claim map, evidence anchors, concept-dependency graph,
+section and unit jobs, terminology order, and visual plan. & Author and domain
+reviewer approve the argument before long-form drafting. \\
+DocumentVersion & Source hash, source format, rendered hash, author, reading
+brief, creation time, and disclosure status. & Technical owner confirms the
+snapshot. \\
+PreflightRun & Rule versions, build result, integrity findings, structural
+findings, evidence findings, reconstruction results, mutations, and abstentions.
+& Preflight controller records pass, repair, or fail-closed. \\
+ProtectedSpan & Stable identifier, source range, object type, normalized
+content hash, and allowed transformations. & Author declares what must be
+preserved. \\
+Finding & Source range, category, evidence, context, confidence or rule
+version, editorial question, and disposition. & Author or editor accepts,
+rejects, or edits. \\
+RevisionRecord & Parent version, changed ranges, accepted findings, rejected
+findings, and explanation of substantive changes. & Author owns the wording. \\
+ReleaseDecision & Gate results, exceptions, packet hash, unresolved risks, and
+the person who authorized release. & System blocks by default; named owner
+approves an explicit exception. \\
+ReaderDecision & Reader role, document hash, rubric responses, elapsed time,
+acceptance or requested changes, and confidence. & Named reader accepts or
+returns the document. \\
+\bottomrule
+\end{tabularx}
+\caption{The record model connects intent, argument, prose, checks, and reader
+judgment. It is deliberately small enough to inspect and rich enough to stop an
+unfinished draft before release.}
+\label{tab:record-model}
+\end{table}
+
+Protected objects include equations, numerical literals, units, labels,
+citations, quotations, tables, code blocks, declared assumptions, and
+load-bearing claims. The blueprint adds a second class of protection: concepts
+and claims that must be introduced before a dependent explanation. Protection
+does not make an object immutable. It makes a change visible and requires an
+explanation. An author may intentionally change an estimate or replace a
+citation; the system must distinguish that action from silent loss.
+
+\section{The pre-human release contract}
+
+The product is successful only if it changes when a human is asked to read. A
+human may inspect a brief, resolve a high-consequence ambiguity, or adjudicate a
+meaning question during construction. The expensive reader should not be asked
+to find ordinary defects that the system could have found before release.
+
+Every candidate version passes four gates:
+
+\begin{enumerate}
+\item \textbf{Integrity.} The source builds reproducibly; all protected spans
+      are located or explicitly marked unparsed; citations and references
+      resolve; and no seeded change to a number, unit, sign, equation, table,
+      quotation, or claim scope can pass silently.
+\item \textbf{Argument.} Every load-bearing claim has an evidence anchor or is
+      labelled a hypothesis; every section has a job; every new concept has a
+      prerequisite or an explicit exemption; and each figure has a declared
+      relationship to teach.
+\item \textbf{Writing.} Bounded units put concrete actors and objects before
+      abstractions, keep the declared register, vary sentence and paragraph
+      pace, and stay within the concept and evidence budget in the blueprint.
+      These are calibrated checks against named exemplars, not a universal
+      style score.
+\item \textbf{Reconstruction.} Isolated critics, calibrated on held-out human
+      judgements, attempt to recover the purpose, mechanism, evidence,
+      qualification, and requested action. They must report uncertainty and
+      abstain when the evidence is insufficient.
+\end{enumerate}
+
+The release rule is fail-closed: a failed or missing gate produces a located
+repair task, not a human packet. Repair has a bounded cycle count and an
+oscillation detector. If the same defect returns, or two repairs undo one
+another, the system stops and names the unresolved choice for the author. This
+does not certify that the prose is beautiful. It prevents predictable failure
+from being purchased with an executive's time.
+
+Only the sponsor or named project owner may grant an exception. A meaning
+exception also needs the domain editor's concurrence, and a processing
+exception needs the security or policy owner's concurrence. Unresolved protected
+correspondence, an unparsed promised object, unauthorized external transmission,
+missing load-bearing evidence, and a broken build can never be excepted. The
+full authority and record fields are fixed in Appendix~\ref{app:implementation-contract}.
+
+\begin{takeawaybox}{The human-attention budget}
+The ordinary production path asks a human for a brief confirmation and one
+final reading. It escalates earlier only for a decision the machine cannot own:
+the intended meaning, a disputed source, or an explicit exception. The product
+measures those escalations, rather than quietly treating them as free.
+\end{takeawaybox}
+
+\section{The diagnostic layer}
+
+The first release needs only diagnostics that support a real author decision.
+
+\begin{description}
+\item[Register leakage.] Find private identifiers, file paths, status labels,
+  and dates used as unexplained scope markers. Emit the source span and a
+  question about the reader's missing context.
+\item[Structural repetition.] Measure repeated section and paragraph shapes,
+  opener distributions, and transition phrases against a genre reference.
+  Report patterns for inspection; never impose a universal frequency target.
+\item[Defensive or unsupported specificity.] Identify negative definitions,
+  unsupported actor labels, and claims whose evidence or mechanism is not
+  visible in the current document. These are candidate questions, not automatic
+  edits.
+\item[Paragraph packing and conceptual pacing.] Count the mechanisms,
+  citations, and first-introduced concepts carried by each prose paragraph.
+  Compare the target with the exemplars named in the reading brief and return
+  ranked passages, not a universal score.
+\item[Dependency order.] Check the first use of a term against known
+  vocabulary, an introduction signal, a taught-later pointer, and a declared
+  exemption zone. An uncertain match is an abstention for the author.
+\item[Citation identity and build.] Resolve bibliography identity, unresolved
+  references, and compilation failures. Queue sentence-to-source support for
+  human verification.
+\end{description}
+
+During preflight, the comparison also looks for newly added numbers,
+superlatives, comparisons, and causal verbs. An addition with no citation,
+elementary derivation, or pointer to an existing protected claim becomes a
+located assertion question. This catches unsupported specificity introduced
+during an explanation pass without pretending that the detector can establish
+the truth of the new sentence.
+
+The critics are not one general-purpose judge. One checks concept order, one
+checks evidence and scope, one checks concrete actors and mechanism, and one
+attempts a low-context reconstruction. Their prompts, calibration set, order,
+and disagreements are recorded. A critic that cannot beat a frozen baseline on
+held-out examples is removed from the release path.
+
+The MVP deliberately excludes per-document AI detection, population drift
+monitoring, unbounded autonomous rewriting, and a scalar acceptance score.
+Bounded drafting and cause-specific repair are core product behavior; autonomous
+acceptance is not. These exclusions keep the first decision measurable without
+asking a model to certify its own prose.
+
+\section{The author and reader experience}
+
+The author opens one construction session and sees the brief, blueprint, source,
+and rendered unit together. Findings are grouped by location and gate, with the
+most consequential blockers first. Selecting a finding shows its evidence, the
+dependency or protected object it concerns, and the repair it will trigger. The
+author can revise in the existing editor, or ask the bounded writer to produce a
+new unit; Humanvoice rebuilds and preflights the result before it advances.
+
+The reader never sees the internal finding identifiers by default. The reader
+receives the rendered document, the declared decision question, and a short
+rubric only after the release gate passes. A reader may request a change without
+diagnosing its cause. That is important: the product should not force the
+funder to become a copy editor in order to provide useful feedback, nor should
+it use that funder as a routine preflight service.
+
+The session record keeps the two views linked. It can later answer questions
+such as: which finding led to this sentence change; did the equation survive;
+how long did the author spend resolving the queue; and did the reader accept
+the resulting version? It cannot answer whether a different wording would have
+been better unless the team runs that comparison.
+
+\section{Privacy and disclosure}
+
+Technical documents may contain unpublished estimates, client information, or
+internal decisions. The default path is local parsing, local comparison, and
+local storage. A remote model call is optional and explicit. Each call records
+the provider, purpose, input class, retention setting, and approval. A
+project may forbid remote calls entirely; the deterministic path must still be
+useful.
+
+The system stores hashes and minimum necessary excerpts in the evaluation
+record. It should not retain a full manuscript in a telemetry stream merely
+because a finding was emitted. A reader study may require the rendered
+document, but that is a declared study object with a retention decision, not an
+unnoticed side effect of a linter.
+
+\section{The first release and its boundary}
+
+The MVP is complete when one LaTeX document can travel from brief to
+review-ready packet through the full path. It includes:
+
+\begin{enumerate}
+\item a brief schema and blueprint compiler with claim, dependency, and visual
+      fixtures;
+\item a parser adapter with protected-span fixtures and source locations;
+\item a bounded writer interface that accepts only approved unit context;
+\item the integrity, argument, writing, and reconstruction preflight families,
+      with stable machine-readable output;
+\item a cause-specific repair controller with cycle and oscillation limits;
+\item an author decision view, protected comparison, and fail-closed release
+      gate; and
+\item a small calibration and held-out corpus plus a replay harness for the
+      feasibility case.
+\end{enumerate}
+
+It does not include a general editor, cloud collaboration, enterprise
+authentication, autonomous acceptance, authorship classification, or a
+population-level style dashboard. It also does not promise a subjective prose
+certificate. Those may be sensible later products, but including them now would
+make the causal question and the implementation boundary harder to see.
+
+\section{Failure handling}
+
+The system must fail visibly. If parsing loses a macro, it returns an
+unparsed-source status and blocks release. If a citation identity cannot be
+resolved, it enters a human queue rather than being silently accepted. If a
+remote call is unavailable, the local diagnostics continue but the missing
+result remains an abstention that blocks any gate that depends on it. If a
+protected object changes, the author must explain the change before the reader
+packet can be released. If a repair cycle repeats a failure, the controller
+stops rather than polishing the same defect indefinitely.
+
+These are engineering controls, not a substitute for scholarship. A passing
+fixture proves that the implementation handled that fixture. It does not prove
+that the resulting prose is clear or that a reader will agree with the
+proposal. The evaluation chapter keeps those judgments separate.
+
+\section{The build path at a glance}
+\label{sec:core-acceptance}
+
+The canonical acceptance register appears once in
+Appendix~\ref{app:requirements}. The implementation contract in
+Appendix~\ref{app:implementation-contract} defines how those requirements
+are executed, and \path{schemas/} provides the machine-readable records. The
+shorter table below is a reader-facing map of the build path; it deliberately
+does not create a second set of release tests.
+
+\begin{table}[H]
+\centering
+\small
+\begin{tabularx}{\textwidth}{@{}p{0.27\textwidth}L p{0.27\textwidth}@{}}
+\toprule
+Stage & What the team produces & What happens if it fails \\
+\midrule
+Brief and blueprint & A reader, decision, evidence boundary, concept order, and
+visual purpose are explicit before long-form prose. & Stop before writer
+invocation and ask the owner to resolve the missing field. \\
+Protected core & A LaTeX source snapshot, canonical PDF, source map, and
+protected comparison can be replayed by a second operator. & Narrow the first
+release to the protected review utility. \\
+Bounded extension & One approved unit can be drafted, rebuilt, and repaired
+without widening its evidence or claim. & Keep model-dependent work in
+abstention and return to the deterministic path. \\
+Pre-human release & Integrity, argument, writing, evidence, and reconstruction
+checks produce a located decision before a reader packet exists. & Repair or
+stop; never use the reader as the ordinary debugger. \\
+Reader packet & A named reader receives one clean PDF, decision question, and
+short reconstruction task. & Preserve the source and report noncompletion. \\
+Feasibility handoff & The sponsor receives burden, safety, rights, cost, and
+proceed/revise/stop evidence. & Do not make an efficacy or scale claim. \\
+\bottomrule
+\end{tabularx}
+\caption{The reader-facing map of the implementation path. The canonical
+acceptance register is in Appendix~\ref{app:requirements} (requirements R1--R24);
+exit codes and execution boundaries are in the implementation contract annex.
+This table provides a high-level narrative view; R1--R24 is the authoritative
+release gate.}
+\label{tab:build-path-summary}
+\end{table}
+
+The live feasibility document starts only after these tests pass. If the tests
+pass and the reader still cannot state the purpose or requested action, the
+workflow has failed its product purpose even though its software is running.

@@ -1,0 +1,22 @@
+{
+  "record_type": "EvidenceItem",
+  "schema_version": "HV-SCHEMA-1.0",
+  "record_id": "EV-20260826-002",
+  "run_id": "run-evidence-20260826-160000",
+  "created_at": "2026-08-26T16:00:00Z",
+  "source_path_or_url": "evidence/latency_summary.csv",
+  "source_hash": "d2f4e6d8c0b2a4f6e8d0c2b4a6f8e0d2c4b6a8f0e2d4c6b8a0f2e4d6c8b0a2f4",
+  "observation": "P99 latency measured at 45ms under 85% read pool utilization.",
+  "appraisal_state": "single-source",
+  "supports": [
+    {
+      "target_kind": "claim",
+      "target_id": "capacity-plan-claim-2",
+      "load_bearing": true
+    }
+  ],
+  "limitations": [],
+  "contradicts": [],
+  "privacy_class": "internal",
+  "rights_record_id": null
+}

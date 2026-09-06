@@ -1,0 +1,291 @@
+{
+  "protocol_id": "HV-AUDIT-2026-08-22",
+  "requirement_count": 24,
+  "requirements": [
+    {
+      "acceptance_test": "A low-context reader can state the purpose, object, and requested action, the leak fixture finds no forbidden internal register, and every released file traces to a source hash and version.",
+      "evidence_ids": [
+        "E-INT-001",
+        "E-INT-002"
+      ],
+      "id": "R1",
+      "phase": "P1,P4",
+      "statement": "Keep the reader-facing manuscript separate from the audit and provenance record, linked by immutable document and version identifiers; internal workflow vocabulary must not leak into the manuscript.",
+      "title": "Reader-facing separation"
+    },
+    {
+      "acceptance_test": "Conflict fixtures resolve in the declared order and LaTeX-specific configuration disables rules that would alter protected syntax.",
+      "evidence_ids": [
+        "E-INT-002",
+        "E-SW-003",
+        "E-SW-013"
+      ],
+      "id": "R2",
+      "phase": "P1",
+      "statement": "Resolve conflicts in the order correctness, source fidelity, domain meaning, reader comprehension, then template regularity; store project and format overrides in configuration rather than manuscript prose.",
+      "title": "Configurable policy precedence"
+    },
+    {
+      "acceptance_test": "Every diagnostic fixture returns stable locations and no command mutates its input; accepted edits are remeasured and recorded separately.",
+      "evidence_ids": [
+        "E-INT-002",
+        "E-SW-003",
+        "E-SW-013"
+      ],
+      "id": "R3",
+      "phase": "P2,P4",
+      "statement": "Diagnostics emit categories, source spans, measurements, context, and editorial questions; only an explicit author or editor action may change text.",
+      "title": "Located diagnostics without automatic rewriting"
+    },
+    {
+      "acceptance_test": "Historical replay preserves a result for every layer and prevents a later-layer score from concealing an unresolved earlier defect.",
+      "evidence_ids": [
+        "E-INT-001",
+        "E-EXT-007"
+      ],
+      "id": "R4",
+      "phase": "P2,P4",
+      "statement": "Diagnose and repair register leakage, mechanical repetition, defensive prose, substance, and reader comprehension in that order while retaining intermediate results.",
+      "title": "Layered diagnosis and repair"
+    },
+    {
+      "acceptance_test": "Repair replay produces zero unexplained protected-token changes and blocks promotion on any unexplained deletion, insertion, or mutation.",
+      "evidence_ids": [
+        "E-INT-001",
+        "E-SW-006",
+        "E-SW-007",
+        "E-SW-008"
+      ],
+      "id": "R5",
+      "phase": "P1,P2",
+      "statement": "Represent equations, labels, citations, numbers, claims, code, tables, and quoted text as protected content and explain every substantive change between versions.",
+      "title": "Protected meaning-preserving diff"
+    },
+    {
+      "acceptance_test": "Seeded valid, nonexistent, wrong-DOI, duplicate, and title-mismatch cases are classified correctly, and every load-bearing claim has a human-verified full-text anchor.",
+      "evidence_ids": [
+        "E-EXT-015",
+        "E-METHOD-005",
+        "E-METHOD-007"
+      ],
+      "id": "R6",
+      "phase": "P0,P2",
+      "statement": "Resolve bibliographic identity separately from source-to-claim support, retain a sentence-level claim anchor, and block release on an unresolved load-bearing citation.",
+      "title": "Citation identity and claim support"
+    },
+    {
+      "acceptance_test": "A frozen human-labelled set reports agreement and order, verbosity, and family-sensitivity diagnostics before a judge result can enter analysis.",
+      "evidence_ids": [
+        "E-EXT-008",
+        "E-EXT-016",
+        "E-EXT-018"
+      ],
+      "id": "R7",
+      "phase": "P3",
+      "statement": "Use model judges only for construct-specific screening after pair-order randomization, length control, cross-family checking, and calibration against recorded human labels.",
+      "title": "Calibrated model judging"
+    },
+    {
+      "acceptance_test": "Every promoted document records the pseudonymous reader, immutable document hash, rubric response, decision, requested changes, and elapsed time.",
+      "evidence_ids": [
+        "E-INT-001",
+        "E-METHOD-006"
+      ],
+      "id": "R8",
+      "phase": "P3,P4,P5",
+      "statement": "A human reader, not a surface metric or model judge, is the promotion authority for a specific document version.",
+      "title": "Named human acceptance"
+    },
+    {
+      "acceptance_test": "Tuning and holdout hashes are frozen before execution, each package has a human-labelled scorecard, and no smoke test is reported as effectiveness.",
+      "evidence_ids": [
+        "E-INT-002",
+        "E-EXT-017",
+        "E-EXT-018"
+      ],
+      "id": "R9",
+      "phase": "P0,P3,P5",
+      "statement": "Evaluate diagnostic packages and the complete workflow on documents not used for rule tuning, and separate surface, process, higher-order, and acceptance outcomes.",
+      "title": "Held-out behavioral evaluation"
+    },
+    {
+      "acceptance_test": "The release packet contains the required provenance records while the manuscript passes the internal-register leak test and a reader can identify the argument without process context.",
+      "evidence_ids": [
+        "E-INT-001",
+        "E-INT-002"
+      ],
+      "id": "R10",
+      "phase": "P1,P4",
+      "statement": "Use one bounded plan and one result record per work package; do not expose audit ledgers, gate names, or orchestration state in reader-facing prose.",
+      "title": "Minimal process surface"
+    },
+    {
+      "acceptance_test": "An unapproved remote route is blocked, approved calls produce a complete disclosure record, and the minimum-content retention policy is enforced.",
+      "evidence_ids": [
+        "E-METHOD-004",
+        "E-METHOD-006"
+      ],
+      "id": "R11",
+      "phase": "P1,P4,P5",
+      "statement": "Keep protected manuscripts local by default and record provider, model, purpose, retention policy, disclosure status, and approval for every remote call.",
+      "title": "Privacy and disclosure"
+    },
+    {
+      "acceptance_test": "The drift command refuses single-document analysis, suppresses small cells, and reports uncertainty and baseline sensitivity for aggregate trends.",
+      "evidence_ids": [
+        "E-EXT-004",
+        "E-EXT-005",
+        "E-EXT-012"
+      ],
+      "id": "R12",
+      "phase": "P2,P3,P5",
+      "statement": "Monitor aggregate vocabulary and structural convergence against an appropriate pre-assistance baseline, but never classify the authorship of an individual document.",
+      "title": "Population-level convergence without attribution"
+    },
+    {
+      "acceptance_test": "End-to-end replay reconstructs the intervention path from hashes and event records, distinguishes edited acceptance from direct acceptance, and applies the retention class.",
+      "evidence_ids": [
+        "E-EXT-002",
+        "E-EXT-019",
+        "E-EXT-021"
+      ],
+      "id": "R13",
+      "phase": "P3,P4,P5",
+      "statement": "Record writer intent, suggestion, acceptance, edit, rejection, and rollback events without retaining unnecessary manuscript content.",
+      "title": "Interaction telemetry"
+    },
+    {
+      "acceptance_test": "The preregistered analysis reports uncertainty for each prespecified stratum and applies the stop rule if expert writers or a task class are harmed.",
+      "evidence_ids": [
+        "E-EXT-013",
+        "E-EXT-017",
+        "E-EXT-018",
+        "E-EXT-020"
+      ],
+      "id": "R14",
+      "phase": "P3,P5",
+      "statement": "Report effects by baseline writer skill, document task and genre, and reader role; do not deploy from an average effect that conceals subgroup harm.",
+      "title": "Heterogeneous outcomes"
+    },
+    {
+      "acceptance_test": "Pandoc, pylatexenc, plasTeX, LaTeXML, and tree-sitter candidates are benchmarked on malformed, unknown-macro, nested-environment, comment, math, citation, location, and round-trip fixtures before selection.",
+      "evidence_ids": [
+        "E-SW-006",
+        "E-SW-007",
+        "E-SW-014",
+        "E-SW-015",
+        "E-SW-016"
+      ],
+      "id": "R15",
+      "phase": "P1",
+      "statement": "All parser adapters must emit the same source-map and protected-span contract; no parser is authoritative merely because it accepts a document.",
+      "title": "Format-aware parser contract"
+    },
+    {
+      "acceptance_test": "Every adoption candidate has one provenance record and one explicit hold or adopt decision, and adoption is impossible unless its benchmark status is effectiveness-pass and independent review is recorded.",
+      "evidence_ids": [
+        "E-INT-002",
+        "E-SW-003",
+        "E-SW-013"
+      ],
+      "id": "R16",
+      "phase": "P0,P1,P3",
+      "statement": "Treat package availability, operational suitability, and writing effectiveness as separate decisions; only a held-out human-labelled benchmark supports adoption.",
+      "title": "Evidence-tiered package adoption"
+    },
+    {
+      "acceptance_test": "Seeded missing critical fields fail before writer invocation; complete briefs produce a stable hash and an explicit list of noncritical unknowns.",
+      "evidence_ids": [
+        "E-INT-001",
+        "E-INT-002"
+      ],
+      "id": "R17",
+      "phase": "P1,P4",
+      "statement": "Require the intended reader, decision, genre, known vocabulary, named exemplars, evidence boundary, privacy class, protected objects, and unresolved assumptions before long-form drafting; critical unknowns block the run.",
+      "title": "Complete authoring brief"
+    },
+    {
+      "acceptance_test": "Seeded missing warrants, use-before-teach concepts, duplicate section jobs, and figures without a teaching purpose block promotion; the plan has a stable hash.",
+      "evidence_ids": [
+        "E-INT-001",
+        "E-INT-002",
+        "E-EXT-007"
+      ],
+      "id": "R18",
+      "phase": "P1,P2,P4",
+      "statement": "Compile a claim map, evidence anchors, concept-dependency graph, section jobs, terminology order, and visual plan before bounded drafting.",
+      "title": "Argument blueprint before prose"
+    },
+    {
+      "acceptance_test": "A unit can be rebuilt independently, records its prompt context and evidence anchors, and cannot advance the next unit while its own checks are unresolved.",
+      "evidence_ids": [
+        "E-INT-002",
+        "E-EXT-019",
+        "E-EXT-021"
+      ],
+      "id": "R19",
+      "phase": "P2,P4",
+      "statement": "Give a replaceable writer one approved unit at a time with only the context and evidence named in the blueprint; widening a claim or inventing evidence requires an author decision.",
+      "title": "Bounded evidence-constrained drafting"
+    },
+    {
+      "acceptance_test": "Each seeded gate failure produces no reader packet, preserves a located repair record, and leaves the source available for inspection.",
+      "evidence_ids": [
+        "E-INT-001",
+        "E-INT-002"
+      ],
+      "id": "R20",
+      "phase": "P2,P4,P5",
+      "statement": "Do not emit a human-review packet until integrity, argument, writing, evidence, and reconstruction gates pass or a named owner approves an explicit exception; missing or unknown results block release.",
+      "title": "Fail-closed pre-human release"
+    },
+    {
+      "acceptance_test": "A frozen held-out set reports false-positive, false-negative, order, verbosity, and family-sensitivity results before a critic enters the release path.",
+      "evidence_ids": [
+        "E-EXT-008",
+        "E-EXT-016",
+        "E-EXT-018"
+      ],
+      "id": "R21",
+      "phase": "P3,P4,P5",
+      "statement": "Use isolated critics for concept order, evidence and scope, concrete mechanism, and low-context reconstruction; calibrate them on held-out human labels and never treat one model's self-assessment as certification.",
+      "title": "Construct-specific preflight critics"
+    },
+    {
+      "acceptance_test": "All critical deterministic mutations are caught or explicitly abstained from; rhetorical mutation rates and uncertainty are reported from a frozen test set.",
+      "evidence_ids": [
+        "E-INT-002",
+        "E-EXT-017",
+        "E-EXT-018"
+      ],
+      "id": "R22",
+      "phase": "P2,P3,P4",
+      "statement": "Inject known integrity, evidence, dependency, pacing, register, citation, and repair-oscillation failures into valid plans and drafts before trusting the release gate.",
+      "title": "Adversarial mutation testing"
+    },
+    {
+      "acceptance_test": "Seeded failures converge or stop with a located unresolved choice; no repair loop silently hands an unfinished document to the reader.",
+      "evidence_ids": [
+        "E-INT-001",
+        "E-INT-002",
+        "E-EXT-019"
+      ],
+      "id": "R23",
+      "phase": "P2,P4",
+      "statement": "Map each failed gate to a named repair strategy, rebuild and recheck within a fixed cycle limit, detect oscillation, and escalate an unresolved choice to the author.",
+      "title": "Bounded causal repair"
+    },
+    {
+      "acceptance_test": "The feasibility record reports first-draft release rate, author and reader minutes, abstentions, and meaning errors; no model score substitutes for the human outcome.",
+      "evidence_ids": [
+        "E-INT-001",
+        "E-METHOD-006",
+        "E-EXT-017"
+      ],
+      "id": "R24",
+      "phase": "P3,P4,P5",
+      "statement": "Treat scarce expert reading time as a product constraint: release only after pre-human checks, measure escalations, repair cycles, reader time, and routine debugging avoided, and compare them with the incumbent workflow.",
+      "title": "Human-attention budget"
+    }
+  ]
+}

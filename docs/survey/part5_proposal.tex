@@ -1,217 +1,312 @@
-% Part 5: design synthesis and proposal
-\section{What the evidence implies for the design}
+\chapter{The first build}
+\label{ch:proposal}
 \label{sec:design}
 
-Everything above now compresses without loss. The failure record says the
-defects are layered and the deep layers decide acceptance; the literature
-says the shallow layers are measurable and the deep ones are only reachable
-by editing and by readers; the tool field supplies the shallow measurements
-nearly for free and supplies nothing for the deep layers. So \hv{} is a
-two-layer design. A \emph{measurement layer} of deterministic diagnostics
-runs constantly, reports numbers with locations, and gates nothing. An
-\emph{acceptance layer} of context-starved reader proxies and, finally, the
-human reader gates everything. Between them sits an editing workflow that
-repairs in layer order under protected baselines.
+The first version should solve one complete problem before it asks an executive
+to read the result. Give it an authoring brief, the evidence the document may
+use, the source material, and the objects an author cannot afford to change
+silently. Humanvoice should return an argument blueprint, bounded draft units,
+a reproducible rendering, a pre-human preflight record, cause-specific repairs,
+and a reader packet tied to the exact released version. If it cannot establish a
+correspondence or defend the argument, it should stop before the document
+reaches the reader.
 
-Table~\ref{tab:requirements} states the requirements this survey commits the
-design to, each with its evidence. They are numbered for reference from the
-work packages; none is aspirational, in the sense that every one of them
-traces to a failure we paid for or a result we verified.
+That vertical slice is smaller than the platform described in earlier drafts.
+It is also more useful. A team can watch one consequential document travel from
+brief to release, measure the work at each step, and return to the incumbent
+workflow when the system abstains. The human is still the final authority, but
+the human is no longer the default place where ordinary prose defects are
+discovered.
 
-\begin{table}[t]
+The dependency graph in Figure~\ref{fig:mvp-dependencies} shows the critical
+path. The protected LaTeX core comes before corpus scale, optional model
+features, and any claim about comparative effectiveness.
+
+\hvFigureMVPDependencies
+
+\section{Ten commitments that shape the code}
+
+The evidence narrows a credible implementation to ten commitments. Engineers
+still choose the components, data structures, and interface within those
+constraints.
+
+\begin{table}[H]
 \centering
 \small
-\begin{tabularx}{\textwidth}{@{}l L l@{}}
+\begin{tabularx}{\textwidth}{@{}p{0.20\textwidth}L p{0.23\textwidth}@{}}
 \toprule
-\# & Requirement & Evidence \\
+Commitment & Product behavior & Observation that can overturn the choice \\
 \midrule
-R1 & Two documents: internal record and human manuscript, tied by an identifier map; ledger vocabulary never crosses & \S\ref{sec:bgs-rejection}, \S\ref{sec:zlb} \\
-R2 & Precedence as configuration: every pattern source enters as a subordinate diagnostic, with per-format overrides in config, not prose headers & \S\ref{sec:tool-humanizer}, \S\ref{sec:oss-vale} \\
-R3 & Diagnostics report counts with locations and never auto-fix; repairs are made by an editing agent and verified by re-measurement & \S\ref{sec:lessons}(9), \S\ref{sec:oss-taste} \\
-R4 & Repair follows the layer order: register, mechanical tells, defensive prose, substance & \S\ref{sec:zlb} \\
-R5 & Protected baselines on every pass: equation-body identity, label and citation censuses, explain-every-removal & \S\ref{sec:lessons}(10), \S\ref{sec:smewallet} \\
-R6 & All corpus statistics are referenced to pre-2022 economics text; excess frequency per eqs.~\eqref{eq:kobak-p}--\eqref{eq:kobak-q}; prevalence per eq.~\eqref{eq:mixture} & \S\ref{sec:lit-fingerprint}, \S\ref{sec:lit-detection} \\
-R7 & The editor is span-diagnose-then-edit with categories; expected span precision near 0.5; flags adjudicated, not auto-applied & \S\ref{sec:lit-editing} \\
-R8 & Model judging is pairwise, order-randomized, length-controlled, cross-family, one dimension per call, validated against recorded human verdicts & \S\ref{sec:lit-judging} \\
-R9 & Behavioral evaluation of every skill against the corpus before it is called an improvement & \S\ref{sec:tool-claudecodex} \\
-R10 & Thin process: one plan and one result note per work package; no mission-control state; ceremony is a register contaminant & \S\ref{sec:bgs-process} \\
-R11 & No per-document authorship scores, ever; population statistics only, firewalled from attribution & \S\ref{sec:lit-detection} \\
-R12 & Cross-document convergence is monitored, so the toolkit does not become the new template & \S\ref{sec:lessons}(4), \S\ref{sec:oss-stack} \\
+One immutable version & Findings, objects, the PDF, and the reader session all
+refer to the same source and render hashes. & A replay produces different
+locations, objects, or pages from the recorded environment. \\
+Brief before prose & A critical blank in reader, decision, evidence boundary,
+or protected objects blocks long-form drafting. & A fluent draft is produced
+from an incomplete or contradictory brief. \\
+Blueprint before units & Claims, dependencies, section jobs, terminology, and
+figures are checked before a writer inherits them. & A unit uses an untaught
+concept, repeats a job, or makes a claim with no evidence anchor. \\
+Bounded writing & The writer receives one approved unit at a time and cannot
+widen the claim or invent evidence. & A whole-document prompt hides a failure
+until the reader sees it. \\
+Preflight before people & Integrity, argument, writing, and reconstruction gates
+must pass before a reader packet exists. & A seeded defect reaches the packet,
+or an unknown result is treated as pass. \\
+Questions before rewrites & A diagnostic reports a span, evidence, and an
+editorial question; inspection never changes source. & Authors cannot act on the
+finding without asking a model to reconstruct its context. \\
+Protected change, not frozen text & Equations, numbers, labels, citations,
+tables, quotations, and declared claims can change only with a visible
+disposition. & A seeded material change passes without notice. \\
+Different human decisions & The author owns meaning and revision; the named
+reader owns whether the document supports the task. & The interface pressures
+either person to accept a system score or hides disagreement. \\
+Local by default & Source, findings, diffs, and reader data remain local unless
+an owner approves named fields for a named service. & A dependency requires an
+undeclared network path. \\
+Claims rise with evidence & Replays establish regression, held-out fixtures
+establish operational fit, and later comparison estimates efficacy. & A
+historical case is used to claim general effectiveness. \\
 \bottomrule
 \end{tabularx}
-\caption{Design requirements with their evidence. Section references point
-to where this survey establishes each one.}
+\caption{The main design commitments, stated as behavior and possible
+falsification rather than internal requirement codes.}
 \label{tab:requirements}
 \end{table}
 
-One requirement deserves a paragraph rather than a row, because it is the
-one a tooling project most easily forgets. The acceptance metric for \hv{}
-itself is the number of human-feedback rounds a document needs before its
-reader accepts it. The ZLB rescue took five. SMEwallet's units took one to
-three each. The BGS volume never arrived. Every work package below either
-reduces that number or exists to measure whether something else did; any
-proposed activity that does neither is out of scope by construction, which
-is the practical meaning of R10.
+The machine-readable requirements retain stable identifiers in the appendix
+and repository. The main argument uses names because a reader needs to
+understand the tradeoff before tracing its implementation ID.
 
-\section{The proposal}
+\section{The vertical slice}
 \label{sec:proposal}
 
-\subsection{Shape of the repository}
+The slice begins with an authoring brief. The author names the document genre,
+the intended reader, the decision, the concepts the reader can reasonably be
+expected to know, the named exemplars that set the register, the evidence
+boundary, and the objects that must survive revision. Humanvoice compiles that
+brief into a claim map, concept-dependency graph, section cards, terminology
+plan, and visual plan. A missing critical field blocks the long draft and leaves
+an explicit question for the owner.
 
-\hv{} consolidates into five trees, all under the existing repository.
-\path{policies/} becomes the single home of the writing doctrine: the prose
-policy's reader-facing sections, the two claudecodex skills, MathDevMCP's
-repair skill, the installed humanizer list, and a new scholarly layer
-merged from academic-humanizer's Layers 2--4 with examples transposed to
-economics (R2 makes claudecodex the distributor, no longer a source of
-truth). \path{diagnostics/} is the measurement layer, one CLI named
-\texttt{hv}. \path{corpus/} holds the evaluation assets. \path{harness/}
-holds reader-proxy templates and the behavioral tests. \path{vendor/}
-stays as the pinned external tools with their manifest.
+Only then does the system capture the source tree and canonical PDF. The primary
+parser extracts source locations and protected objects; a second adapter or the
+compiled representation checks the result. Unsupported constructs remain
+explicit abstentions and block any gate that relies on them.
 
-\subsection{The \texttt{hv} commands, specified}
+The first diagnostic set is deliberately small. It locates private repository
+language, undefined project labels, broken references, conspicuous repeated
+openings, paragraph packing, concept bursts, first-use ordering, and changes to
+protected objects. These are observable conditions with stable locations. The
+HPO case supplies calibration fixtures for the packing, pacing, and ordering
+families; it does not turn their metrics into a pass/fail score. A more
+interpretive question, such as whether a qualification replaces a reason, may
+enter the feasibility interface only after human calibration shows that the
+queue repays the attention it consumes.
 
-Each command below lists what it consumes, what it emits, what it is built
-from, and how we will know it works. All of them obey R3: numbers out,
-no edits in.
+The writer produces one unit from the approved plan, and the author can revise
+that unit in the existing editor. Humanvoice records accept, reject, revise, or
+defer for each finding, rebuilds the unit, and compares the new source with its
+parent. Preflight critics attempt reconstruction before release. Only then does
+the reader receive the clean PDF and a short reconstruction task in a local
+browser. The event record joins the response to the version without showing
+private rule names, confidence scores, or project history.
 
-\paragraph{\texttt{hv leak}} consumes rendered text (pdftotext output) plus
-the manuscript source; emits counts and locations of internal-register
-leakage: file paths, dates-as-scoping, identifiers, and a
-project-configurable banned-vocabulary map seeded from the ZLB style
-contract's ban list and the BGS audit's administrative-register examples.
-Built as a small matcher over per-project YAML config. Acceptance: on the
-ZLB pre-rescue markdown it must fire heavily; on the accepted final PDF
-text it must report zero, reproducing the recorded leak-sweep result.
+\begin{table}[H]
+\centering
+\small
+\begin{tabularx}{\textwidth}{@{}p{0.18\textwidth}p{0.30\textwidth}L p{0.22\textwidth}@{}}
+\toprule
+Stage & Input & Result & Failure behavior \\
+\midrule
+Brief & Reader, decision, evidence boundary, exemplars, and protected objects &
+Versioned authoring contract. & Stop on a missing critical answer; do not draft
+the long document. \\
+Plan & Brief plus source inventory & Claim map, dependency graph, section cards,
+and visual plan. & Block a claim without evidence or a concept used too early. \\
+Draft & One approved unit and its evidence & Rebuildable prose and source map. &
+Keep the unit internal until its checks pass. \\
+Preflight & Draft, protected manifest, build, critics, and mutations & Gate record
+with located failures and abstentions. & Fail closed; no reader packet. \\
+Repair & Gate failure and named repair strategy & New unit, comparison, and
+convergence record. & Stop on cycle limit or oscillation and escalate to owner. \\
+Release and read & Passed gates, clean PDF, decision context, and timed task &
+One reader packet and a human decision. & Preserve noncompletion and decline as
+outcomes rather than deleting the session. \\
+\bottomrule
+\end{tabularx}
+\caption{The complete first-release path and its explicit fallbacks.}
+\label{tab:mvp-vertical-slice}
+\end{table}
 
-\paragraph{\texttt{hv rhythm}} consumes source and detexed text; emits the
-mechanical-tell profile: dash counts, sentence-opener and
-paragraph-opener distributions, section-shape clustering, transition-phrase
-counts, sentence-length mean and coefficient of variation, paragraph
-monotony, tricolon density. Built by orchestrating sloptrim and the curated
-vale-ai-tells experimental metrics, with the four destructive rules
-disabled for \texttt{.tex} (R2) and the detex path handling the artifacts
-observed in Section~\ref{sec:oss-sloptrim}. Acceptance is historical
-replay: on the preserved ZLB pass-two snapshot it must reproduce the
-recorded numbers, 133 em dashes and 20 of 55 sections opening with ``The'';
-on the final manuscript, 0 and at most 4 per opener word; on the three
-calibration documents, sloptrim's 45/25/10 within tolerance.
+\section{The boundary of the first release}
 
-\paragraph{\texttt{hv defensive}} consumes detexed text; emits candidate
-sentences with surrounding context for the defensive-register classes:
-negative definitions without mechanisms, prohibitions without consequences,
-the moralizing tics, unraised-objection answers (humanizer patterns 34--35,
-the DefensiveHedges shapes, and the BGS defensive-qualification examples as
-seeds). Each candidate is emitted with the editorial question attached,
-``does this sentence give the reader a reason, or only protect the
-author?'', for an editing model or human to adjudicate (R7: flags, not
-fixes). Acceptance: on the preserved ZLB pass-three text it must recover a
-majority of the ~65 sentences the manual diagnostic found, and its
-false-positive rate on the accepted final text must be low enough that an
-editor reviews its output without resentment; both measured, with the
-corpus, in WP3.
+Twelve weeks buys a LaTeX-first implementation. It includes one primary parser
+adapter and one fallback, the canonical build, the protected-object manifest,
+the bounded diagnostics above, author dispositions, the protected comparison,
+a self-hosted reader task, and an exportable event record. The parser bake-off
+includes pylatexenc, unified-latex, TexSoup, and the richer document-model
+candidates described in Chapter~\ref{ch:software-dossiers}; a package wins only
+by passing the locked fixtures with acceptable operator burden.
 
-\paragraph{\texttt{hv diff}} consumes two versions of a manuscript; emits
-the protected-baseline report: equation bodies byte-compared, label,
-citation, and reference censuses, and an explain-every-removal list of
-substantive deletions (R5). Built on LaTeX-aware extraction, piloted per
-Section~\ref{sec:oss-latex}. Acceptance: replaying the five ZLB passes must
-show 109 of 109 equations identical at every step and flag the deliberate
-reference additions of the final pass and nothing else.
+Markdown waits. So do a general editor extension, unbounded autonomous rewriting,
+continuous corpus-drift monitoring, broad rhetorical-move inference, and a
+market-facing multi-tenant service. Local model suggestions remain an optional
+experiment behind the same brief, blueprint, preflight, and author-decision
+record; the deterministic path must still be useful. Single-document
+authorship classification is not a deferred feature. It is outside the product
+boundary.
 
-\paragraph{\texttt{hv gate}} consumes the manuscript; emits the compile
-gate (N-pass build, unresolved references, overfull-box budget) and
-rendered page images for the title, a math-dense page, and every table,
-institutionalizing rendered-page inspection. Built from the repair skill's
-two scripts (Section~\ref{sec:tool-repair}). Acceptance: reproduces the
-recorded ZLB build-gate outcomes.
+The narrow scope produces a useful fallback. If the diagnostic layer fails to
+earn attention, the source snapshot and protected comparison can still become a
+small review utility. If the parser fails too often for full correspondence,
+the reader task can still test whether structured low-context review is useful.
+A platform with seven interdependent commands would make those negative results
+harder to learn from and more expensive to salvage.
 
-\paragraph{\texttt{hv drift}} consumes a corpus of our manuscripts plus the
-references; emits quarterly population statistics: excess-vocabulary
-profiles against the pre-2022 economics baseline
-(eqs.~\eqref{eq:kobak-p}--\eqref{eq:kobak-q}, via adapted slop-forensics),
-the mixture-estimated machine-typical fraction $\hat{\alpha}$ of
-eq.~\eqref{eq:mixture} with $Q$ estimated from our own agents' raw drafts,
-cross-document structural similarity (R12), and optionally an aggregate
-curvature distribution. It has no per-document mode, by construction
-(R11): the command refuses single-file input. Acceptance: on a synthetic
-mixture of known composition, $\hat{\alpha}$ within the validation error
-reported by \citet{liang2024monitoring}.
+\section{A small command surface}
 
-\subsection{Work packages}
+The interface exposes six verbs. Their names are less important than their
+contracts, and each one has a fail-closed boundary.
 
-\paragraph{WP1: consolidation.} Move the doctrine into \path{policies/},
-merge the scholarly layer, convert the humanizer precedence header into
-diagnostic configuration, add Claude-native skill installation beside the
-Codex path, and leave claudecodex as pure distribution. Deliverable: one
-install command produces both agent environments from the \hv{} source of
-truth; the existing phrase-lock tests pass against the new layout.
-Effort: small; risk: low; unblocked today.
+\begin{description}[style=nextline,leftmargin=28mm,labelindent=0mm]
+\item[\texttt{hv init}] Validates the authoring brief, evidence boundary,
+privacy class, and protected-object declarations. It refuses a missing critical
+field.
+\item[\texttt{hv plan}] Builds and checks the claim map, concept-dependency
+graph, section cards, terminology order, and visual plan. It emits questions,
+not prose, when the evidence is insufficient.
+\item[\texttt{hv draft}] Invokes a replaceable writer for one approved unit; the
+unit receives only the context and evidence named in the blueprint.
+\item[\texttt{hv preflight}] Runs integrity, argument, writing, evidence,
+reconstruction, and mutation checks. Unknown results remain blockers.
+\item[\texttt{hv repair}] Applies a named repair strategy, rebuilds the unit,
+reruns preflight, and stops on the cycle limit or oscillation. It writes a
+child revision and never edits the canonical source in place.
+\item[\texttt{hv release}] Emits the clean reader packet and launches the local
+timed task only after the release gate passes. It records completion, response,
+confidence, and decision against one immutable PDF.
+\end{description}
 
-\paragraph{WP2: the measurement layer.} Build the six commands above, in
-the order leak, rhythm, diff, gate, defensive, drift, because the first
-four are configuration and replay while the last two need corpus work.
-Includes the LaTeX-host pilot (Vale-on-detex versus TeXtidote). The
-acceptance tests are the historical replays listed per command; a tool
-that cannot reproduce the recorded history does not ship. Unblocked
-today; the replay fixtures (ZLB snapshots) already exist in the BayesFilter
-repository.
+The older capture, inspect, and compare services remain internal adapters for
+these commands. Citation identity and build diagnostics are part of preflight,
+not optional reports. Population monitoring and research-corpus analysis live in
+the evaluation code, not in an author's release command. This keeps a research
+instrument from acquiring editorial authority through a convenient interface.
 
-\paragraph{WP3: corpus and behavioral evidence.} Assemble \path{corpus/}:
-the 815 BGS repair pairs with their taxonomy labels, the ZLB pass
-snapshots with their measured counts and final acceptance, the SMEwallet
-draft-10/draft-11 units with recorded PI verdicts, and a pre-2022
-economics reference corpus. Then run the experiment the stack has never
-had (R9): matched rewrites of corpus units with and without each skill,
-scored by \texttt{hv}, judged pairwise under the R8 protocol, the judge
-itself validated against the recorded human verdicts. Deliverable: a
-scorecard per skill stating what it measurably changes, plus the
-convergence baseline for R12. Needs WP2's scorers.
+\section{Regression, calibration, and held-out validation}
 
-\paragraph{WP4: the editorial workflow.} One skill codifying the pipeline
-the record validated: two-document setup with identifier map (R1), a
-drafting contract in the ZLB style-contract form, repair in layer order
-(R4) with \texttt{hv} measurements before and after each pass, a single
-voice editor after any parallel drafting, per-agent drop reports,
-protected baselines via \texttt{hv diff} (R5), then low-context
-reader-proxy review descended from the AIpostdoc reader-pull personas with
-forced choices and the injection boundary, and the human read as the only
-promotion (R8's proxy explicitly cannot promote). Mostly consolidation of
-existing text; the work is deleting the ceremony from it (R10).
+The earlier proposal asked historical documents to do three incompatible jobs.
+The revised plan separates them.
 
-\paragraph{WP5: the pilot.} Apply the full pipeline to one live document,
-the next BayesFilter companion note or one CIP monograph part, with the
-ZLB rescue as benchmark: five feedback rounds to acceptance. The pilot's
-single question is whether the toolkit reduces that count. Its result
-note, one page, states the count, what consumed the rounds, and which
-tools earned their place. Needs WP1, WP2, WP4; WP3 can run concurrently.
+\paragraph{Regression fixtures.} Frozen ZLB snapshots test whether the software
+can reproduce recorded facts: the 133-dash snapshot, the distribution of
+section openings, the 109 unchanged equation bodies, and the deliberately added
+references. These tests catch implementation drift. They say nothing about
+performance on a new document.
 
-WP1 and WP2 start immediately and independently. Per R10, each package
-carries one plan and one result note; a package that begins generating
-review packets, milestone registries, or state files is failing by
-definition, and the correct repair is deletion, not documentation.
+\paragraph{Calibration documents.} A declared training partition supplies
+examples for rule wording, thresholds, source-location repair, and reviewer
+instructions. Every tuning decision is logged before the held-out partition is
+opened. A document that changes a rule can no longer estimate that rule's
+operational value.
 
-\subsection{Risks, stated with their controls}
+\paragraph{Pre-human mutation tests.} Before a human sees a packet, the harness
+injects known failures into otherwise valid plans and drafts: a missing evidence
+anchor, a use-before-teach concept, a dense paragraph that exceeds its declared
+concept budget, a citation substitution, a changed sign, a broken reference, an
+internal project label, and a repair that oscillates. Critical deterministic
+mutations must be caught or explicitly abstained from. Rhetorical mutations are
+reported with confidence intervals and a frozen threshold chosen on calibration
+data; no threshold is tuned on the live case.
 
-Four risks have known shapes, because we have watched each one happen.
-The toolkit becomes the new template and the fleet converges on a
-detectable house style: R12's convergence monitoring exists for this, and
-R3 (report, never auto-fix) keeps a human or editing agent's judgment in
-every repair. The gates ossify and get gamed, the BGS checkpoint story:
-diagnostics here gate nothing, so there is nothing to game except the
-human read, which cannot be gamed, only failed. The project spends itself
-on instrumentation, the BGS process story: the WP budget is the one-page
-plan-and-result cap, and the pilot metric is the only scoreboard. And the
-drift instruments get misused for attribution: R11 firewalls them, the
-drift command refuses per-document input, and if the discipline ever
-slips, the instrument goes, not the firewall.
+\paragraph{Held-out operational validation.} New non-ZLB fixtures include
+custom macros, malformed environments, moved equations, changed signs and
+ units, valid citations with unsupported claims, legitimate repeated prose,
+ private labels a reader does not know, and the HPO first-use positives and
+ adjudicated false alarms. A second operator replays the package adapters from
+ a clean environment. Held-out authors judge whether each prose finding was
+ worth attention, and those authors are not the people who wrote the rule.
 
-What this proposal does not claim, so that nobody reads more into it than
-the evidence holds: no tool here, ours or adopted, has yet been shown to
-reduce human-feedback rounds; that is exactly what WP3 and WP5 measure.
-The literature's load-bearing results were verified at method level, the
-supporting ones at abstract level, and StoryScope remains secondhand. The
-sloptrim accuracy figures are its own benchmark. And the reader-proxy
-reviews, however well they predicted one human rejection, are proxies:
-the record contains one case of proxy-predicts-human, not a validation
-study, which is another thing WP3's corpus makes testable.
+The corpus is not automatically reusable merely because it is available in the
+repository. Each item receives an owner, source hash, licence or written
+permission, permitted use, redistribution status, retention class, and consent
+date. Material marked pending or restricted may support an internal fixture only
+under its owner's permission; it cannot enter a published benchmark, external
+reader packet, or commercial training set until the rights record is cleared.
+
+The engineering criteria are exact where safety permits exactness. The
+protected-source core is the week-six gate; the bounded authoring extension is
+built only if that gate passes. The normative command, runtime, security,
+schema, budget, rights, and exception rules live in
+Appendix~\ref{app:implementation-contract}.
+
+\begin{enumerate}
+\item an incomplete critical brief or blueprint blocks model invocation and
+      long-form drafting;
+\item every declared protected object is either located or explicitly marked
+      unparsed; no fixture receives a false protected pass;
+\item every seeded change of sign, exponent, unit, number, citation identity,
+      label target, quotation, table denominator, or declared claim scope is
+      reported at the correct version and source location;
+\item capture and inspect leave the source tree byte-identical;
+\item a second operator reproduces the canonical PDF hash or receives a
+      recorded environment difference that prevents promotion;
+\item a preflight critic remains in the release path only when its held-out
+      false-negative and false-positive behavior is reported against human
+      labels; and
+\item a diagnostic remains in the author queue only when its held-out review
+      time is lower than the time spent finding and resolving the same true
+      issues under the incumbent process.
+\end{enumerate}
+
+The seventh criterion replaces phrases such as ``fires heavily'' or ``low enough
+not to annoy an editor.'' Let $B_k$ be the minutes spent triaging rule family
+$k$ on held-out documents and $U_k$ the incumbent minutes spent locating and
+resolving the same adjudicated issues. Retain the family only when
+\begin{equation}
+  \operatorname{median}(U_k-B_k)>0,
+  \label{eq:diagnostic-burden-rule}
+\end{equation}
+with the complete distribution and the small sample reported. The inequality is
+an operating rule, not a population claim. Any silent protected-object failure
+overrides it.
+
+\section{The work in calendar order}
+
+Weeks 1--2 freeze the live-case brief, evidence boundary, blueprint schema,
+incumbent process, corpus split, protected-object vocabulary, and parser
+fixtures. Weeks 3--5 implement planning, bounded drafting, capture, and compare
+for LaTeX. Weeks 4--7 overlap the adapter benchmark, mutation harness, and
+preflight calibration. Weeks 6--9 connect cause-specific repair, author
+dispositions, and the local reader task. Weeks 10--12 run the live feasibility
+case, account for every failed gate and minute of burden, and price the
+comparative study. Figure
+\ref{fig:twelve-week-schedule} and Table
+\ref{tab:implementation-sequence} are the single calendar for these intervals.
+
+The evidence review proceeds alongside the build without pretending that
+automation completes scholarly judgment. The research lead imports the four
+new cornerstone sources and all snowball candidates, while two people screen
+load-bearing records independently. The domain reviewer appraises source-to-
+claim fit; a different reviewer adjudicates disputed product findings. Package
+adapters receive held-out tests before they enter the live path. External
+review remains a named dependency, not a status that the implementation team
+can award itself.
+
+\section{Deliverables after twelve weeks}
+
+The sponsor receives working software, not a promise of a platform: a
+reproducible LaTeX authoring path from brief to release; a blueprint and bounded
+writer contract; a locked tuning, mutation, and held-out corpus; package and
+critic scorecards with failures and operator burden; one complete feasibility
+record; the observed baseline inputs for the economic model; and a proceed,
+repair, or stop memorandum. The comparative study is specified and priced, not
+smuggled into the feasibility claim.
+
+Continue when the system protects the source, authors can use the findings at
+net lower burden, the reader task produces an interpretable outcome, and the
+expected value of a comparison exceeds its cost. Repair when one replaceable
+adapter or interface fails. Stop the product direction when protected
+correspondence cannot be trusted, the reader outcome cannot be observed, or the
+workflow consistently adds attention rather than saving it.

@@ -1,0 +1,23 @@
+{
+  "fixture_id": "F-TABLE-001",
+  "answer_key_version": "1.0",
+  "expected_objects": [
+    {
+      "object_type": "table",
+      "environment": "table",
+      "has_caption": true,
+      "has_label": true
+    },
+    {
+      "object_type": "table",
+      "environment": "tabular",
+      "contains": "Baseline"
+    },
+    {
+      "object_type": "label",
+      "label_name": "tab:results"
+    }
+  ],
+  "expected_abstention": null,
+  "minimum_object_count": 3
+}

@@ -1,0 +1,43 @@
+{
+  "snapshot_id": "snapshot-20260829-173345",
+  "created_at": "2026-08-29T17:33:45.127409+00:00",
+  "source_hash": "b84cb60f45ee82f0a1be01c9bcc698855dfc28a073b1685b7df18fcab01314fa",
+  "source_files": [
+    "source/001.tex"
+  ],
+  "brief": {
+    "reader": "Engineering reviewer deciding whether to approve a proposed review",
+    "reader_role": "Engineering reviewer",
+    "decision": "Approve or reject the proposed review",
+    "decision_type": "approve_or_reject",
+    "genre": "technical memo",
+    "time_available_minutes": 15,
+    "prior_knowledge": "Familiar with the codebase, not with internal phase labels",
+    "success_criteria": "Reader can decide without needing internal context",
+    "known_vocabulary": [
+      "reader",
+      "review",
+      "path"
+    ],
+    "exemplars": [],
+    "evidence_boundary": [
+      "source/001.tex"
+    ],
+    "privacy_class": "public",
+    "protected_objects": [],
+    "unknowns": [],
+    "max_words": 300
+  },
+  "brief_valid": true,
+  "snapshot_immutable": true,
+  "transmission_log": [
+    {
+      "timestamp": "2026-08-29T17:33:49.868956+00:00",
+      "action": "api_invocation",
+      "destination": "https://api.anthropic.com/v1/messages",
+      "purpose": "plan_generation",
+      "content_summary": "sha256:fef575a11048c210 (416 in / 45 out)",
+      "authorized_by": "operator"
+    }
+  ]
+}

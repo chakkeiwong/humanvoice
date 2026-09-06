@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://humanvoice.local/schema/cli-result.schema.json",
+  "title": "Humanvoice CLI result",
+  "type": "object",
+  "required": ["record_type", "schema_version", "record_id", "run_id", "created_at", "contract_version", "command", "status", "exit_code", "record_paths", "blocking_reasons", "source_hash", "result_hash"],
+  "properties": {
+    "record_type": {"const": "CliResult"},
+    "schema_version": {"type": "string", "pattern": "^HV-SCHEMA-[0-9]+\\.[0-9]+$"},
+    "record_id": {"type": "string", "minLength": 1},
+    "run_id": {"type": "string", "minLength": 1},
+    "created_at": {"type": "string", "format": "date-time"},
+    "contract_version": {"type": "string", "const": "HV-IC-2026-08-26"},
+    "command": {"enum": ["hv init", "hv plan", "hv draft", "hv preflight", "hv repair", "hv release"]},
+    "status": {"enum": ["pass", "blocked", "abstain", "error", "released"]},
+    "exit_code": {"type": "integer", "minimum": 0, "maximum": 5},
+    "record_paths": {"type": "array", "items": {"type": "string"}},
+    "blocking_reasons": {"type": "array", "items": {"type": "string"}},
+    "source_hash": {"type": "string", "pattern": "^[A-Fa-f0-9]{64}$"},
+    "result_hash": {"type": "string", "pattern": "^[A-Fa-f0-9]{64}$"},
+    "extensions": {"type": "object"}
+  },
+  "additionalProperties": false
+}

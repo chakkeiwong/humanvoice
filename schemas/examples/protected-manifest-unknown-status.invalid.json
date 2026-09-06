@@ -1,0 +1,37 @@
+{
+  "record_type": "ProtectedManifest",
+  "schema_version": "HV-SCHEMA-1.0",
+  "record_id": "PM-20260826-002",
+  "run_id": "run-compare-20260826-160000",
+  "created_at": "2026-08-26T16:00:00Z",
+  "source_hash": "b0f2e4d6c8b0a2f4e6d8c0b2a4f6e8d0c2b4a6f8e0d2c4b6a8f0e2d4c6b8a0f2",
+  "objects": [
+    {
+      "object_id": "eq_0",
+      "object_type": "equation",
+      "raw_form": "\\begin{equation} E = mc^2 \\end{equation}",
+      "normalized_form": "E = mc^2",
+      "location": {"char_offset": 512, "line": 20, "column": 0, "length": 39},
+      "metadata": {"environment": "equation", "depth": 0}
+    }
+  ],
+  "parser_name": "pylatexenc",
+  "parser_version": "2.10",
+  "parse_time_seconds": 0.18,
+  "abstentions": [],
+  "comparison": {
+    "baseline_hash": "b0f2e4d6c8b0a2f4e6d8c0b2a4f6e8d0c2b4a6f8e0d2c4b6a8f0e2d4c6b8a0f2",
+    "revised_hash": "c1f3e5d7c9b1a3f5e7d9c1b3a5f7e9d1c3b5a7f9e1d3c5b7a9f1e3d5c7b9a1f3",
+    "correspondences": [
+      {
+        "object_baseline": "eq_0",
+        "object_revised": "eq_0",
+        "status": "probably_fine",
+        "confidence": 0.6,
+        "rationale": "looked similar enough"
+      }
+    ],
+    "unresolved_count": 0,
+    "min_confidence": 0.5
+  }
+}

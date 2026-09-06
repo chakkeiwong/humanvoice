@@ -1,0 +1,184 @@
+\chapter{The reader's problem}
+\label{ch:decision}
+
+The worked note leaves an expert reader spending attention before the reader
+knows which decision it supports. The funder's question is what a small,
+credible intervention would have to do about that cost. Buying a writing bot,
+certifying a document as ``human,'' and deploying an automated editor would be
+different projects with different evidence.
+
+\section{The problem worth paying to solve}
+
+An expert reader's time is often the scarce input in a research proposal, a
+model note, or an investment memorandum. The document may be mathematically
+correct and professionally typeset while still asking that reader to infer why
+the work matters, which evidence supports it, and what decision the author
+wants. When the reader cannot do that, the review does not end. It returns to
+the author as another round of diagnosis, revision, and rereading.
+
+That failure occurred in a funding proposal in the project's internal record.
+The source compiled. Automated checks found no fatal problem. Several rounds
+of agent review made the prose smoother. A human reader still could not answer
+three ordinary questions: What is this proposal trying to change? Why is the
+proposed mechanism necessary? What action is being requested? The private file
+names and phase labels that were meaningful to the authors occupied the space
+where the argument should have been. The cost was not a bad sentence. It was a
+transfer of reasoning from the author to a scarce decision maker.
+
+This case is useful because it separates two things that are often confused. A
+document can be locally clean and globally unsuccessful. A grammar
+checker can be right about a comma while the reader is right that the document
+has no visible point. A language model can produce a fluent paragraph while
+changing the strength of a claim. Version control can show that a file changed
+while saying nothing about whether the change helped.
+
+\begin{takeawaybox}{The decision in one sentence}
+Fund a bounded test of whether a revision workflow can reduce human-feedback
+rounds without increasing reader time or changing meaning-bearing content.
+\end{takeawaybox}
+
+\section{What Humanvoice would do}
+
+An author using Humanvoice would join three activities that are usually
+scattered across tools and habits.
+
+First, it locates problems that can be shown in the source. A finding points to
+a passage, names the observable reason for attention, and asks an editorial
+question when the judgment is substantive. The system can identify an internal
+project identifier that has leaked into prose, repeated paragraph shapes,
+defensive qualifications, a citation whose identity is inconsistent, or a
+protected number that changed. It does not turn any of these observations into
+a scalar quality score.
+
+Second, it protects the objects that carry meaning while an author revises.
+Equations, numbers, labels, citation keys, quotations, tables, code, and
+declared claims receive source locations and a before-and-after comparison. An
+author may change one of them, but the change cannot disappear inside a fluent
+rewrite. The comparison makes revision inspectable rather than merely
+trustworthy by reputation.
+
+Third, it ends with a reader decision. A named reader sees the rendered
+document without the repository history that made its private language seem
+normal. The reader records whether the purpose, mechanism, evidence, and
+requested action can be recovered. A model or metric can direct attention; a
+human reader remains the authority who accepts a version or asks for a further
+change.
+
+The proposal is narrower than ``better writing.'' It asks whether connecting
+located diagnosis, protected revision, and a reader outcome reduces wasted
+review. Even a negative result is useful if it reveals which link creates
+burden rather than saving it.
+
+\section{The tools people already use}
+
+The current alternative is a bundle of practices:
+
+\begin{table}[H]
+\centering
+\small
+\begin{tabularx}{\textwidth}{@{}p{0.23\textwidth}LL@{}}
+\toprule
+Practice & What it does well & What remains for the author and reader \\
+\midrule
+Prose or grammar linter & Finds local violations against explicit rules. & It
+does not know which qualification, mechanism, or requested action matters. \\
+General language model & Drafts, rewrites, and comments quickly. & It may
+change a claim, number, or citation, and its preference is not reader
+acceptance. \\
+Version control and visual diff & Records that text changed and supports
+rollback. & It does not identify which substantive change needs explanation. \\
+Citation service & Resolves identifiers and metadata. & A valid DOI does not
+show that the cited source supports the sentence. \\
+Manual expert review & Can judge purpose, argument, and significance. & It is
+scarce, repeated, and often receives a draft with no useful diagnostic trail. \\
+\bottomrule
+\end{tabularx}
+\caption{The incumbent bundle and the gap Humanvoice would have to fill.}
+\label{tab:incumbent-bundle}
+\end{table}
+
+Humanvoice should reuse these components where they work. Its reason for
+existing is the transition between them: a finding should lead to an author
+decision, a revision should lead to a protected comparison, and the comparison
+should lead to a reader test. If the bundle can achieve the same result with
+less cost, the product should not be built.
+
+\section{The economic mechanism}
+
+The relevant benefit is not a higher detector score or a prettier paragraph.
+It is a reduction in the expert attention consumed before a document reaches a
+sound decision. Let $N$ be the annual number of documents in scope, $r_0$ and
+$r_1$ the feedback rounds under the incumbent and proposed workflows, $t_0$
+and $t_1$ the expert-reader hours per round, $c_r$ the loaded cost of that
+time, and $C$ the annualized product cost. The directly measurable component of
+annual net value is
+\begin{equation}
+  V = N\bigl(r_0t_0-r_1t_1\bigr)c_r-C.
+  \label{eq:value}
+\end{equation}
+
+The expression forces an important discipline. Saving an author ten minutes
+does not create value if the reader spends another hour resolving false
+alarms. A lower count of feedback rounds does not create value if the remaining
+version changes a qualification or a number. The pilot must measure reader
+time and meaning errors beside the round count.
+
+The repository contains no defensible values for all five inputs, so the table
+below is an illustration of the decision surface, not a forecast. It assumes
+100 documents per year, a loaded reader cost of 150 currency units per hour,
+and an annual product cost of 60,000 units. The rows vary the hours saved per
+document; they show why baseline measurement matters more than a confident
+point estimate.
+
+\begin{table}[H]
+\centering
+\small
+\begin{tabular}{@{}lrrr@{}}
+\toprule
+Reader hours saved per document & Annual reader hours saved & Gross value & Net value \\
+\midrule
+1 & 100 & 15,000 & $-45,000$ \\
+4 & 400 & 60,000 & 0 \\
+8 & 800 & 120,000 & 60,000 \\
+\bottomrule
+\end{tabular}
+\caption{Illustrative sensitivity, not a Humanvoice estimate. The feasibility
+run supplies the inputs that determine which row is relevant.}
+\label{tab:value-sensitivity}
+\end{table}
+
+The same calculation can be expressed in terms of feedback rounds when reader
+time per round is stable. That is useful for the pilot, but it is not a license
+to treat rounds as the whole outcome. A review round is a process measure; the
+decision maker cares whether the final document is understood and whether its
+meaning survived.
+
+\section{What the evidence permits us to say now}
+
+The evidence supports a bounded investment, not a deployment claim. Controlled
+experiments show that generative assistance can make some writing and
+knowledge-work tasks faster or better scored, while field results vary with
+task and worker experience \citep{noy2023experimental,brynjolfsson2025work,dillon2025shifting}.
+Work outside a model's capability frontier can reduce correctness even when
+the output appears useful \citep{dellacqua2026jagged}. Studies of writing
+feedback find that models can identify local defects while missing the central
+problem in a passage \citep{nair2024closing,rashkin2025story}. Recent reviews
+find more reliable gains in grammar, conventions, and process than in
+argumentation or discourse organization \citep{meng2026systematic,abudalfa2026awe}.
+
+Those findings make the proposed division of labor sensible: deterministic
+tools locate what they can observe, an author decides what a repair means, and
+a reader supplies the acceptance outcome. They do not show that the combined
+workflow reduces revision cost for expert economics writing. That is the
+question the feasibility build must prepare us to test.
+
+\section{What the first build will and will not do}
+
+The request is deliberately narrow: implement the local-first
+document core and high-value diagnostics; assemble a small corpus with source
+snapshots, protected objects, and human labels; run one live document through
+the complete path; and return with a priced proceed, revise, or stop
+recommendation. It is not permission to deploy, classify authorship,
+optimize against an AI detector, or claim improved expert writing. The product
+must first show that its observed workflow earns its cost, protects meaning,
+and leaves a named reader able to make the intended decision.

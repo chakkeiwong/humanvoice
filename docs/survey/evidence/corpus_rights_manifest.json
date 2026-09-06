@@ -1,0 +1,83 @@
+{
+  "manifest_id": "HV-CORPUS-RIGHTS-2026-08-29",
+  "status": "cleared-internal",
+  "rule": "No item is published, redistributed, sent to an external reader, or used for commercial training until its owner and permission are recorded.",
+  "clearance_note": "All corpus items are from repos owned by the humanvoice project owner. Cleared for internal evaluation use. External redistribution requires explicit review.",
+  "items": [
+    {
+      "record_type": "CorpusItem",
+      "schema_version": "HV-SCHEMA-1.0",
+      "record_id": "CORP-BGS",
+      "run_id": "rights-review-2026-08-29",
+      "created_at": "2026-08-29T19:00:00Z",
+      "source_path_or_url": "/home/ubuntu/workspace/DynareMCP/docs/AIpostdoc/finalBGS/",
+      "source_hash": "962ba231cc376910bbc684f86a1c6a13fc41da96d29b2dac78ef6b0da9320203",
+      "owner": "humanvoice project owner (DynareMCP repo owner)",
+      "license_or_permission": "owner-created content, internal use authorized",
+      "permitted_use": "internal fixture evaluation and external release with owner approval",
+      "redistribution_status": "cleared-internal",
+      "retention_class": "project-corpus",
+      "consent_date": "2026-08-29"
+    },
+    {
+      "record_type": "CorpusItem",
+      "schema_version": "HV-SCHEMA-1.0",
+      "record_id": "CORP-ZLB",
+      "run_id": "rights-review-2026-08-29",
+      "created_at": "2026-08-29T19:00:00Z",
+      "source_path_or_url": "/home/ubuntu/workspace/BayesFilter/docs/surveys/zlb_discontinuous_hmc/",
+      "source_hash": "87c0923eed9fcf05faa0f28a983826b838f21d59eff6231cca2da8d3ff0355bb",
+      "owner": "humanvoice project owner (BayesFilter repo owner)",
+      "license_or_permission": "owner-created content, internal use authorized",
+      "permitted_use": "internal fixture evaluation and external release with owner approval",
+      "redistribution_status": "cleared-internal",
+      "retention_class": "project-corpus",
+      "consent_date": "2026-08-29"
+    },
+    {
+      "record_type": "CorpusItem",
+      "schema_version": "HV-SCHEMA-1.0",
+      "record_id": "CORP-SMEWALLET",
+      "run_id": "rights-review-2026-08-29",
+      "created_at": "2026-08-29T19:00:00Z",
+      "source_path_or_url": "/home/ubuntu/workspace/SMEwallet/docs/handoffs/",
+      "source_hash": "6b21376ef1406ade153bd9f8aedcd08992261926bc05ff73ea1bb0949d139d85",
+      "owner": "humanvoice project owner (SMEwallet repo owner)",
+      "license_or_permission": "owner-created content, internal use authorized",
+      "permitted_use": "internal fixture evaluation and external release with owner approval",
+      "redistribution_status": "cleared-internal",
+      "retention_class": "project-corpus",
+      "consent_date": "2026-08-29"
+    },
+    {
+      "record_type": "CorpusItem",
+      "schema_version": "HV-SCHEMA-1.0",
+      "record_id": "CORP-CARDNPV",
+      "run_id": "rights-review-2026-08-29",
+      "created_at": "2026-08-29T19:00:00Z",
+      "source_path_or_url": "/home/ubuntu/workspace/cardnpv/docs/final/",
+      "source_hash": "faccd92852fcfb87b6711c9dfd3d197878d5d9c20e95949cfe6c68f82983e91a",
+      "owner": "humanvoice project owner (cardnpv repo owner)",
+      "license_or_permission": "owner-created content, internal use authorized",
+      "permitted_use": "internal fixture evaluation and external release with owner approval",
+      "redistribution_status": "cleared-internal",
+      "retention_class": "project-corpus",
+      "consent_date": "2026-08-29"
+    },
+    {
+      "record_type": "CorpusItem",
+      "schema_version": "HV-SCHEMA-1.0",
+      "record_id": "CORP-MACROFINANCE",
+      "run_id": "rights-review-2026-08-29",
+      "created_at": "2026-08-29T19:00:00Z",
+      "source_path_or_url": "/home/ubuntu/workspace/MacroFinance/docs/latex-papers/CIP_monograph/",
+      "source_hash": "2967014af89ccca2e00fa1efd815c62730bc6968328bbd6e586f10250f57c8c4",
+      "owner": "humanvoice project owner (MacroFinance repo owner)",
+      "license_or_permission": "owner-created content, internal use authorized",
+      "permitted_use": "internal fixture evaluation and external release with owner approval",
+      "redistribution_status": "cleared-internal",
+      "retention_class": "project-corpus",
+      "consent_date": "2026-08-29"
+    }
+  ]
+}

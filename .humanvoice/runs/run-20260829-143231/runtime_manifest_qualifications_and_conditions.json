@@ -1,0 +1,33 @@
+{
+  "record_type": "RuntimeManifest",
+  "schema_version": "HV-SCHEMA-1.0",
+  "record_id": "draft-Qualifications and Conditions-2026-08-29T14:32:48.278817+00:00",
+  "run_id": "run-20260829-143231",
+  "created_at": "2026-08-29T14:32:48.278827+00:00",
+  "mode": "inference",
+  "compiler": {
+    "name": "none",
+    "version": "n/a",
+    "executable_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+    "flags": []
+  },
+  "runtime_type": "claude-api",
+  "model_version_string": "claude-opus-5",
+  "model_artifact_hash_if_local": null,
+  "prompt_template_hash": "9203411fa7aff6ff124cf6da2711ea561db874ee9c54134733d4c47785a79d74",
+  "sampling": {
+    "temperature": 0.0
+  },
+  "seed_if_applicable": null,
+  "api_endpoint": "https://api.anthropic.com/v1/messages",
+  "request_id_if_available": "msg_5JYhyE3SdG5Ex9FSIWUFSCSI",
+  "timestamp": "2026-08-29T14:32:48.278832+00:00",
+  "latency_ms": 0,
+  "input_tokens": 642,
+  "output_tokens": 166,
+  "output_hash": "212f163a97c7f81661c51f03f25824f64a6aded8e50cf7f248ab533fd3e43a8a",
+  "not_applicable_reason": null,
+  "hardware": null,
+  "network_policy": "api-only",
+  "resource_limits": null
+}

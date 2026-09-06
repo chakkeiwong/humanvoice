@@ -1,0 +1,265 @@
+\chapter{Twelve weeks to a decision}
+\label{ch:implementation}
+
+At the end of twelve weeks, the sponsor should be able to start with a real
+authoring brief, watch one document move from plan to pre-human release, inspect
+one measured feasibility case, and price the next decision. The build must test
+the product proposition without leaving a stranded platform if the case fails.
+Twelve weeks is a feasibility horizon, not a promise of market readiness.
+
+Figure~\ref{fig:twelve-week-schedule} is the canonical calendar for this
+proposal. Later work-package descriptions refer to these same intervals rather
+than introducing a second schedule.
+
+\hvFigureSchedule
+
+\section{The twelve-week sequence}
+
+\begin{table}[H]
+\centering
+\small
+\begin{tabularx}{\textwidth}{@{}p{0.12\textwidth}p{0.25\textwidth}L p{0.24\textwidth}@{}}
+\toprule
+Weeks & Work & Deliverable & Decision consequence \\
+\midrule
+1--2 & Freeze the authoring brief, threat model, evidence boundary, named
+exemplars, known vocabulary, rights manifest, corpus split, schemas, and
+protected-object fixtures. & One versioned brief, contract, rights record,
+reader rubric, and parser test set. & Stop if the decision, reader, evidence
+boundary, or failure cost cannot be named. \\
+3--6 & Implement and replay the protected core: the common document
+representation, source locations, render checks, protected spans, citation
+fixtures, canonical build, versioned records, and safe command contract. &
+A second operator can reproduce the LaTeX source map and protected comparison.
+& At week six, narrow to the protected review utility if replay fails. \\
+7--9 & Conditional on the core gate, add the blueprint, bounded writer,
+integrity, argument, writing, evidence, and reconstruction preflight, mutation
+harness, and bounded repair. & A fail-closed preflight record and an extension
+that passes calibration and held-out replay. & Keep model-dependent gates in
+abstention if their false negatives or burden are not measured. \\
+10--12 & Conditional on the same gate, integrate author dispositions, release
+gate, reader packet, privacy controls, interaction log, and the live feasibility
+case. & One document can move from approved brief to a reproducible
+review-ready packet, followed by a timed reader task, without exposing private
+workflow language. & Stop if a failed gate can emit a packet or the packet
+cannot be reproduced. \\
+\bottomrule
+\end{tabularx}
+\caption{The implementation schedule produces evidence that changes the next
+decision, not a sequence of status reports.}
+\label{tab:implementation-sequence}
+\end{table}
+
+The stages overlap where the dependency is clear. A trustworthy diff needs the
+parser and protected representation first. The author packet needs the diff
+and findings. The live reader needs the packet. A package benchmark can inform
+those steps, but it cannot replace the end-to-end case.
+
+\section{People and resource envelope}
+
+The repository does not contain local loaded rates or document volume, so the
+plan uses person-weeks. The sponsor can substitute those rates before making a
+funding decision.
+
+\begin{table}[H]
+\centering
+\small
+\begin{tabularx}{\textwidth}{@{}p{0.24\textwidth}p{0.16\textwidth}L@{}}
+\toprule
+Role & Planning effort & Responsibility \\
+\midrule
+Product engineer & 12 person-weeks & Brief and blueprint schema, source
+representation, bounded writer contract, protected comparison, diagnostics,
+release gate, interfaces, build, and privacy controls. \\
+Evaluation lead & 6 person-weeks & Corpus, mutation harness, critic calibration,
+reader rubric, comparator, feasibility measurements, and priced comparative
+design. \\
+Domain editor and writing reviewer & 3 person-weeks & Protected-claim inventory,
+technical-genre interpretation, blueprint review, and resolution of disputed
+scientific meaning. \\
+Security or policy owner & 1 person-week plus incident availability & Threat
+fixtures, network policy, retention and disclosure boundary, and security veto.
+\\
+Independent coding reviewer & 1 person-week & Blind coding of reader answers
+and finding labels; freezes decisions before seeing workflow assignment. \\
+Independent reader(s) & 2 sessions plus preparation & Reads by people unfamiliar with the project and
+recorded acceptance or requested changes. \\
+Sponsor or project owner & 2 decision sessions & Select the live case, approve
+the comparator, and choose proceed, revise, or stop. \\
+\bottomrule
+\end{tabularx}
+\caption{A planning shape, not a dollar budget. The security or policy owner,
+domain editor, and evaluation lead are explicit roles; one person may hold more
+than one role in a small pilot, but the decisions remain distinct.}
+\label{tab:resource-envelope}
+\end{table}
+
+The cost worksheet multiplies these person-weeks and reader sessions by local
+loaded rates, then adds approved compute, data, and external-review costs. Those
+observed or quoted inputs enter $C$ in Equation~\eqref{eq:value}. A short
+calendar should not be mistaken for a cheap project, but another displayed
+budget formula would add no information before the rates exist.
+
+The protected-source core is the week-six checkpoint. Weeks 1--6 must deliver a
+replayable source map, protected comparison, and safe command contract before the
+bounded writer or model critics consume the remaining horizon. If that core does
+not pass with a second operator, the sponsor narrows the build to the protected
+review utility. The full authoring extension is conditional, not an implicit
+promise that one engineer can productionize every command in twelve weeks.
+
+\section{Deliverables at the end of the build}
+
+The sponsor should receive six reader-visible results:
+
+\begin{enumerate}
+\item a local-first command entry point for LaTeX, from brief to release;
+\item a source map, claim map, dependency graph, and protected-object report
+      that can be inspected without trusting a model;
+\item a bounded writer adapter plus a small, adjudicated corpus with tuning,
+      mutation, and held-out partitions;
+\item the HPO density calibration fixture, including positive ordering cases
+      and adjudicated false alarms;
+\item one end-to-end, fail-closed feasibility packet from a live document;
+\item a measured account of first-draft release rate, repair cycles, author
+      burden, reader time, abstentions, and meaning-preservation checks; and
+\item a costed comparative-study design with a proceed, revise, or stop
+      recommendation.
+\end{enumerate}
+
+The implementation may also produce machine-readable logs, package manifests,
+and test fixtures. Those are supporting records. They should not become a
+second narrative or be pasted into the manuscript as evidence of value.
+
+\section{Dependencies and external decisions}
+
+Four external decisions remain with the owner; they are listed on the next
+page.
+
+\begin{description}
+\item[Live document.] The owner must approve a document whose failure cost is
+  meaningful and whose reader can participate without compromising
+  confidentiality.
+\item[Privacy boundary.] The owner must decide whether any remote model call is
+  permitted and what retention class applies to excerpts and rendered pages.
+\item[Comparator.] The evaluation lead and owner must describe the incumbent
+  workflow before the Humanvoice case begins.
+\item[Evidence completion.] A librarian or domain-method reviewer must complete
+  the outstanding literature and package checks before a strong scholarly or
+  efficacy claim is circulated.
+\end{description}
+
+These are real dependencies, not forms to be completed after the build. If one
+cannot be resolved, the project can still develop parser fixtures or a
+synthetic review packet, but it must not present that work as a live efficacy
+result.
+
+\section{Risks with owners and stop triggers}
+
+Human judgment is not immune to gaming, and a local system is not private by
+mere intention. The operating plan therefore gives each important failure an
+owner, an early signal, and a point at which the team stops or removes a
+feature.
+
+\begin{longtable}{@{}>{\raggedright\arraybackslash}p{0.19\textwidth}
+>{\raggedright\arraybackslash}p{0.19\textwidth}
+>{\raggedright\arraybackslash}p{0.25\textwidth}
+>{\raggedright\arraybackslash}p{0.25\textwidth}@{}}
+\caption{The first-build risk register.}
+\label{tab:first-build-risks}\\
+\toprule
+Risk and owner & Early signal & Mitigation & Stop or redirect trigger \\
+\midrule
+Silent semantic change; product engineer and domain reviewer & A seeded sign,
+unit, citation, or scope change receives a clean comparison. & Typed fixtures,
+dual representation, and explicit abstention. & Any unexplained material
+change blocks the live path. \\
+False-negative preflight; evaluation lead & A seeded dependency, evidence, or
+scope defect reaches a release packet, or a critic agrees with a bad draft. &
+Held-out mutation suite, isolated critics, frozen thresholds, and fail-closed
+unknown state. & Any critical mutation can pass without a recorded abstention. \\
+Repair oscillation; product engineer & A repair fixes one gate and reopens the
+same gate or alternates between two failures. & Cause-specific strategies,
+parent hashes, cycle limit, and oscillation detector. & The controller loops or
+silently hands the loop to the reader. \\
+False-alert burden; evaluation lead & Held-out triage time meets or exceeds
+incumbent issue-finding time. & Remove or narrow the rule family; preserve the
+author's rejection reason. & No diagnostic family earns positive net attention
+on held-out review. \\
+Friendly-case selection; evaluation lead & Eligibility exclusions concentrate
+on difficult genres, authors, or privacy classes. & Freeze eligibility and keep
+all exclusions with reasons. & The selected case cannot represent the stated
+beachhead; report feasibility only and redesign sampling. \\
+Prior exposure and reader contamination; independent coding reviewer & A
+reader recognizes the project history or earlier version. & Record exposure,
+use a fresh reader where possible, and report a flagged sensitivity analysis. &
+No uncontaminated reader is available for the declared task. \\
+Coaching or unblinding; evaluation lead & One arm receives extra explanation or
+the interface reveals its workflow. & Script equal context, freeze answer keys,
+and preserve session logs. & Assignment cannot be concealed or equivalent
+context cannot be supplied. \\
+Nonacceptance, decline, or abandonment; evaluation lead & Documents disappear
+from the dataset after a short or failed path. & Fixed horizon and explicit
+terminal dispositions for every assigned case. & Outcomes cannot be recovered
+for a material share of assigned documents. \\
+Privacy breach; technical owner & An undeclared network call or full passage
+appears in a log. & Network-deny test, field-level approval, minimization, and
+incident response. & Any unauthorized external transmission stops the run. \\
+Parser or dependency failure; product engineer & Unknown macros receive a
+false pass or an update changes locations. & Pin versions, keep a fallback,
+replay fixtures, and return to the incumbent path. & Neither adapter can locate
+or explicitly abstain on the protected object set. \\
+Scope overrun; sponsor & Optional model, Markdown, drift, or editor work delays
+the LaTeX vertical slice. & Weekly critical-path review and deletion of deferred
+features. & Brief, plan, draft, preflight, and release are not usable at the end
+of week 5. \\
+Incomplete scholarship; research lead & Load-bearing rows remain singly
+screened or abstract-only. & Independent screening, full-text anchors,
+design-specific appraisal, and external review. & Strong literature or
+efficacy language remains blocked; implementation learning may continue. \\
+\bottomrule
+\end{longtable}
+
+\section{The choice after twelve weeks}
+
+The recommendation is to fund the bounded build, corpus, and one feasibility
+document. At week twelve the sponsor should receive enough evidence to choose
+among three paths:
+
+\begin{table}[H]
+\centering
+\small
+\begin{tabularx}{\textwidth}{@{}p{0.2\textwidth}L p{0.28\textwidth}@{}}
+\toprule
+Choice & Evidence required & What happens next \\
+\midrule
+Proceed & The packet is usable, protected objects are preserved, reader burden is
+credible, and the comparative endpoint is observable. & Preregister and fund
+the paired or stepped comparative study. \\
+Revise & The product is technically viable but one diagnostic, parser, or reader
+interaction adds avoidable burden. & Repair the named component and repeat the
+bounded feasibility test. \\
+Stop & Meaning changes are unexplained, privacy is unacceptable, or the reader
+still cannot recover purpose and action. & Preserve the evidence and return the
+remaining person-weeks and budget. \\
+\bottomrule
+\end{tabularx}
+\caption{The build earns a larger investment only by changing this decision
+from a guess into an observed choice.}
+\label{tab:authorization-outcomes}
+\end{table}
+
+\begin{decisionbox}{What this investment covers}
+Approve the twelve-week MVP and feasibility run described here. Deployment,
+per-document authorship detection, autonomous acceptance, and any claim that
+Humanvoice improves expert writing remain decisions for the sponsor after the
+team has observed the result and priced the comparison.
+\end{decisionbox}
+
+The first investment is intentionally narrow, but it is not the end of the
+argument. A feasibility run can establish that the path is executable and that
+its records are interpretable; it cannot establish that the same path is
+valuable across writers, genres, or readers. The next chapter treats that
+distinction as a research design problem. It specifies the measurement ladder,
+the held-out corpus, and the comparative program that must follow a successful
+build. In this order, implementation earns the right to ask a larger question
+without quietly answering it in advance.

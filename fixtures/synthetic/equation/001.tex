@@ -1,0 +1,22 @@
+\documentclass{article}
+\usepackage{amsmath}
+\begin{document}
+
+This document tests equation extraction.
+
+An inline equation: $E = mc^2$
+
+A display equation:
+\begin{equation}
+\label{eq:pythagorean}
+a^2 + b^2 = c^2
+\end{equation}
+
+Another display equation without a label:
+\begin{equation*}
+\int_{0}^{\infty} e^{-x^2} dx = \frac{\sqrt{\pi}}{2}
+\end{equation*}
+
+The value referenced by~\ref{eq:pythagorean} is fundamental.
+
+\end{document}

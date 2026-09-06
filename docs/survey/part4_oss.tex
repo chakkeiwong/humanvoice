@@ -1,65 +1,31 @@
-% Part 4: open-source tools, reviewed in detail
-\section{Open-source tools, reviewed}
-\label{sec:oss}
+% Appendix: dated package records from the open-source survey
+\chapter{Package records from the open-source survey}
+\label{app:oss-records}
 
-We evaluated fourteen open-source projects: the four named in the project
-brief and ten found by searching for AI-tell skills, prose linters,
-detectors, and LaTeX-aware writing tools. Every project was cloned and read
-at the level of its actual pattern lists, prompts, rules, and code, not its
-README; the runnable ones were run on our own documents. The clones are
+Chapter~\ref{sec:oss} draws the product lessons from the software field. This
+appendix preserves the package-level evidence behind that account: repository
+scope, rules inspected, observed behavior, genre limits, and the action implied
+by each verdict. It is intended for implementers choosing a component or
+reviewers checking a software claim, rather than for continuous reading.
+
+We evaluated fourteen writing projects: the four named in the project brief
+and ten found by searching for AI-tell skills, prose linters, detectors, and
+LaTeX-aware writing tools. We cloned twelve, read their pattern lists, prompts,
+rules, and code, and ran the tools that would execute locally. The clones are
 pinned under \path{humanvoice/vendor/} with a commit
 manifest.\footnote{\path{humanvoice/vendor/MANIFEST.md} records the twelve
-cloned repositories with their commit hashes as of 21 August 2026; two
-further tools (TeXtidote, textlint) were surveyed without cloning.}
-This section reviews each tool in enough detail to defend its verdict:
-what it contains, how it behaves, what is good, what is wrong, and what
-adopting it would concretely mean. Table~\ref{tab:oss} at the end collects
-the verdicts.
+cloned repositories with their commit hashes as of 21 August 2026; two further
+tools (TeXtidote and textlint) were surveyed without cloning.}
 
-\subsection{A calibration experiment first}
-\label{sec:oss-calibration}
+The later infrastructure search covered document parsers, diff tools,
+scholarly-PDF extraction, evaluation harnesses, and local inference. Those
+projects remain candidates until their adapters pass held-out fixtures. A
+documentation record establishes that a function exists; it does not establish
+that the function works on Humanvoice documents. Table~\ref{tab:oss} collects
+the dated dispositions.
 
-One experiment frames every review that follows. sloptrim
-(Section~\ref{sec:oss-sloptrim}) is the best deterministic AI-tell scorer we
-found: 0--100, fully local, documented patterns. We ran it on three
-documents whose human verdicts we know. Table~\ref{tab:calibration} shows
-the result.
-
-\begin{table}[t]
-\centering
-\small
-\begin{tabular}{@{}lccl@{}}
-\toprule
-Document & Score & Band & Human verdict \\
-\midrule
-ZLB survey, internal markdown (pre-rescue) & 45 & mixed & rejected (register) \\
-ZLB survey, final LaTeX (post-rescue) & 25 & light tells & \textbf{accepted} \\
-This survey, first version & 10 & clean & rejected (does not teach) \\
-\bottomrule
-\end{tabular}
-\caption{sloptrim v0.9.2 scores versus human verdicts. Lower scores mean
-fewer mechanical tells. The scorer correctly separates the ZLB rescue's
-before and after, and rates the rejected first version of this survey
-cleaner than the accepted manuscript.}
-\label{tab:calibration}
-\end{table}
-
-Read the table twice. First reading: the scorer works on its own layer. It
-separated the ZLB before (45, driven by boldface density and inline header
-lists, the markdown-era register) from the ZLB after (25), in the right
-direction, deterministically, in about a second. That is real value:
-regressions on this layer become visible without a human. Second reading:
-the layer is not the one that decides acceptance. The first version of this
-survey scored 10, the cleanest of the three, and was the most decisively
-rejected, because its failure, density without explanation, lives above the
-mechanical layer. This is our record's layered-masking lesson
-(Section~\ref{sec:lessons}) reproduced by instrument. Every tool below
-should be read against this calibration: the question is never ``does it
-certify quality'' (nothing here does) but ``which layer does it measure, and
-how honestly.''
-
-\subsection{blader/humanizer: the canonical pattern list}
-\label{sec:oss-humanizer}
+\section{blader/humanizer: the canonical pattern list}
+\label{app:oss-humanizer-record}
 
 \emph{One markdown skill, 457 lines; MIT; 36.8k stars; active. Verdict:
 adopted, already installed; we are current with upstream.}
@@ -92,12 +58,12 @@ the writer's sample uses them, with a mandated final search for both
 characters. Applied to scholarly LaTeX it would strip mandatory typography,
 en dashes in numeric ranges and name compounds (``Nash--Cournot''). Our
 precedence header already overrides it to proportionate application; the
-configuration layer of Section~\ref{sec:proposal} will enforce the override
+configuration layer of Chapter~\ref{sec:proposal} will enforce the override
 mechanically. We diffed our vendored copy against upstream: upstream
 \texttt{main} is at the same content version (2.11.2; the version bump since
 the last tag was a README-only change), so no update action is needed.
 
-\subsection{hardikpandya/stop-slop: sharper, narrower, wrong register}
+\section{hardikpandya/stop-slop: sharper, narrower, wrong register}
 \label{sec:oss-stopslop}
 
 \emph{One 68-line skill plus three reference files; MIT; 16k stars; last
@@ -126,7 +92,7 @@ items beat three'' and the ban on ``every/always/never'' collide with
 quantifier language. These are not flaws for its intended genre; they are a
 genre boundary, and it is on the wrong side of ours.
 
-\subsection{leonxlnx/taste-skill: not a writing tool}
+\section{leonxlnx/taste-skill: not a writing tool}
 \label{sec:oss-taste}
 
 \emph{Thirteen skill files, 6{,}670 lines; MIT; 78.6k stars; active.
@@ -147,7 +113,7 @@ except in math'' is enforceable) rather than into prose instructions, and it
 is the last time we will be surprised that every popular skill bans dashes
 outright.
 
-\subsection{itallstartedwithaidea/writing-agent: rejected on both counts}
+\section{itallstartedwithaidea/writing-agent: rejected on both counts}
 \label{sec:oss-writingagent}
 
 \emph{Node.js multi-agent framework with a 40-check QA runner and a
@@ -175,7 +141,7 @@ numeric ideas inside (sentence-length standard deviation targets,
 paragraph-length variation, type-token ratio) exist in better-engineered
 form in sloptrim and vale-ai-tells. Nothing here needs mining.
 
-\subsection{Vale plus tbhb/vale-ai-tells: the CI measurement host}
+\section{Vale plus tbhb/vale-ai-tells: the CI measurement host}
 \label{sec:oss-vale}
 
 \emph{Vale: markup-aware prose linter in Go; MIT; 6k stars; very active.
@@ -184,13 +150,11 @@ rules, 18 experimental structural metrics; MIT; 73 stars; active, with a
 false-positive test corpus in CI. Verdict: adopt with a curated
 configuration.}
 
-Vale is the standard way to run prose rules in CI: rules are YAML files
-grouped into styles, findings come back with file, line, severity, and
-count, and per-format configuration can enable, disable, or downgrade any
-rule for any file glob. That last property is the point for us. Our
-policy-precedence principle, ``diagnostics subordinate to domain
-correctness,'' becomes an ordinary configuration file: a rule that is wrong
-for LaTeX is switched off for \texttt{*.tex} without touching the rule.
+Give Vale a sentence with a private phase label and it can return the file,
+line, severity, and rule that fired. Its YAML styles can then enable, disable,
+or downgrade that rule for a particular file type. That configuration is the
+practical form of our policy precedence: a rule that is wrong for LaTeX is
+switched off for \texttt{*.tex} without changing the rule itself.
 
 vale-ai-tells is the rule package that makes Vale worth adopting now, and
 its engineering quality is visible in the rule bodies. Three examples show
@@ -245,9 +209,9 @@ AsciiDoc, and friends, but not TeX). The workable options are mapping
 environments, running Vale over detexed text at the cost of line fidelity,
 or hosting rules in a genuinely LaTeX-aware tool
 (Section~\ref{sec:oss-latex}). Piloting that choice is an explicit early
-task in WP2.
+task in the diagnostic implementation.
 
-\subsection{seyedehsanhadi/sloptrim: the deterministic scorer}
+\section{seyedehsanhadi/sloptrim: the deterministic scorer}
 \label{sec:oss-sloptrim}
 
 \emph{Single-file Python detector (2{,}223 lines, standard library only)
@@ -285,10 +249,16 @@ prose, and on raw \texttt{.tex} the opener-repetition metric can count
 command sequences as sentence openers (our run flagged ``\verb|\item|
 \verb|\textbf|'' repetition in a list). Scoring detexed text alongside raw
 source removes both. The tool slots into \hv{} as the on-save scorer and
-the first layer of \texttt{hv rhythm}, with the calibration of
+the first structural finding adapter behind \texttt{hv inspect}, with the calibration of
 Table~\ref{tab:calibration} rerun whenever its pattern set updates.
 
-\subsection{AIScientists-Dev/academic-humanizer: the missing academic layer}
+The calibration in Table~\ref{tab:calibration} supplies the governing boundary:
+surface instruments can direct attention, while the reader task supplies the
+consequential outcome.
+
+\hvFigurePackageFamilies
+
+\section{AIScientists-Dev/academic-humanizer: the missing academic layer}
 \label{sec:oss-academic}
 
 \emph{One 261-line skill plus examples; MIT; 1.1k stars; last push July
@@ -337,9 +307,10 @@ flavored examples rather than economics; and a single-file young project.
 None of that argues for running it as a second skill beside humanizer,
 which would create rule-conflict ambiguity; all of it argues for merging
 Layers 2--4 into our policy stack as the scholarly layer, with examples
-transposed to econometrics. That merge is a WP1 task.
+transposed to econometrics. That merge belongs in policy consolidation, after
+the LaTeX vertical slice is stable.
 
-\subsection{conorbronsdon/avoid-ai-writing: three ideas worth taking}
+\section{conorbronsdon/avoid-ai-writing: three ideas worth taking}
 \label{sec:oss-avoid}
 
 \emph{An 813-line skill with 62 pattern categories plus measurement
@@ -378,7 +349,7 @@ not install it: its context profiles run from LinkedIn to investor emails
 with no academic register, and its dash policy (``Target: zero'') is wrong
 for us. The three ideas come; the skill stays.
 
-\subsection{NulightJens/humanizer-stack: the structural thesis}
+\section{NulightJens/humanizer-stack: the structural thesis}
 \label{sec:oss-stack}
 
 \emph{Two chained skills (surface pass, structural pass) plus two small
@@ -403,14 +374,14 @@ supposed to be tidy and linear, and IMRaD structure is a feature. Two
 things transfer anyway. The anti-convergence warning is directly relevant
 to \hv{}, which will edit every manuscript the group produces with one
 toolkit; measuring cross-document structural similarity is the guard, and
-it enters the design as part of \texttt{hv drift}. And the two scanners
+it remains a candidate for a future aggregate corpus study. And the two scanners
 (\texttt{copy\_scan.py}, \texttt{structural\_scan.py}) are small clean
 reference implementations of deterministic tell-counting, worth reading if
 not importing. The skills themselves stay out: their genre calibration is
 narrative and marketing, and their base rates do not describe scholarly
 prose.
 
-\subsection{Corpus instruments: slop-forensics and fast-detect-gpt}
+\section{Corpus instruments: slop-forensics and fast-detect-gpt}
 \label{sec:oss-corpus}
 
 \emph{sam-paech/slop-forensics: Python toolkit for deriving
@@ -448,7 +419,7 @@ response is to drop the instrument, not the discipline. (Binoculars, the
 other zero-shot detector we cloned for comparison, is stale since 2024 and
 needs a heavier model pair; fast-detect-gpt supersedes it for local use.)
 
-\subsection{The LaTeX question: TeXtidote and textlint}
+\section{The LaTeX question: TeXtidote, textlint, and LTeX+}
 \label{sec:oss-latex}
 
 \emph{TeXtidote: LaTeX-aware grammar and style checker wrapping
@@ -464,12 +435,24 @@ rules) could host simple tells with real LaTeX awareness; GPL-3 is fine
 for internal use. textlint is the opposite trade: a first-class custom-rule
 ecosystem in JavaScript with a true LaTeX parser plugin
 (\texttt{textlint-plugin-latex2e}), but no existing AI-tell rule pack, so
-everything we want would be written by us. The pragmatic WP2 sequence is:
+everything we want would be written by us. The pragmatic first-build sequence is:
 start with Vale over detexed text plus sloptrim on raw source (both work
 today), and pilot TeXtidote as the line-accurate LaTeX layer; move rules
 into textlint only if the pilot shows the detex mapping loses too much.
 
-\subsection{proselint, and the rest}
+One candidate in the initial registry needs a dated correction. The original
+\path{valentjn/ltex-ls} repository was archived in April 2026. Its active
+successor is LTeX+ LS, which bundles LanguageTool, supports LaTeX, Markdown,
+and BibTeX, runs offline, and exposes both LSP and command-line paths
+\citep{ltexplus2026}. The successor, not the archived repository, enters the
+pilot. Its value proposition is line-mapped local grammar feedback rather
+than AI-tell detection; its acceptance test is therefore protected-region
+precision and review burden on the economics corpus, compared directly with
+TeXtidote and LanguageTool.
+
+\hvFigureLaTeXDiagnosticRoute
+
+\section{proselint, and the rest}
 \label{sec:oss-rest}
 
 proselint (BSD-3, 4.6k stars) is the classic usage linter, 87 checks
@@ -484,44 +467,132 @@ Vale slop styles superseded by vale-ai-tells, and academic humanizer
 variants less developed than the one reviewed above; none changes a
 verdict.
 
-\subsection{Verdicts, and what adoption means}
+\section{Infrastructure the first search missed}
+\label{sec:oss-infrastructure}
+
+The first search followed the visible symptom, AI-sounding prose. Before an
+author can trust another tell list, the implementation needs a source parser,
+a protected comparison, reference extraction, an evaluation log, and a private
+execution option. We therefore searched the documentation for mature projects
+that supply those jobs. The search now covers more of the implementation, but
+none of this code has passed our corpus.
+
+\paragraph{Source structure.} Pandoc exposes a typed document AST to filters
+\citep{pandoc2026filters}; \texttt{pylatexenc} exposes LaTeX nodes and
+customizable macro/environment contexts directly in Python
+\citep{pylatexenc2026}. unified-latex adds a JavaScript/TypeScript AST and
+transformation ecosystem, while TexSoup offers a tolerant Python tree for
+compact prototypes \citep{unifiedlatex2026,texsoup2026}. Three further
+candidates define the boundary of that shortlist. plasTeX expands macros into a Python XML-like DOM
+\citep{plastex2026}; LaTeXML converts supported TeX into XML, HTML, and MathML
+with a larger conversion stack \citep{latexml2026}; and
+\texttt{tree-sitter-latex} supplies fast incremental concrete syntax while
+explicitly treating general TeX behavior as best effort
+\citep{treesitterlatex2026}. They answer overlapping but different questions.
+Pandoc is the stronger interchange layer for supported document formats;
+\texttt{pylatexenc} is the smaller candidate for locating protected LaTeX
+regions without crossing a process boundary. unified-latex tests the web-editor
+route, and TexSoup tests whether tolerance can help without hiding ambiguity.
+These lightweight candidates form the first benchmark group. plasTeX is the macro-expanding
+fallback, LaTeXML the heavier conversion fallback, and tree-sitter the
+incremental-editor candidate. The parser bake-off should benchmark the shortlist on
+unknown macros, nested environments, comments, math, citation commands, and
+source-location recovery. None may rewrite source until round-trip and
+protected-token fixtures pass; no parser is assumed complete merely because it
+returns a tree.
+
+\paragraph{Comparison and references.} \texttt{latexdiff} can produce a
+typeset, markup-aware visual comparison between two LaTeX sources
+\citep{latexdiff2026}. That is useful in a review packet, but visual markup is
+not an invariant checker; \texttt{hv compare} must still compare equations,
+numbers, citation keys, labels, and claims mechanically. GROBID can extract
+structured metadata and references from scholarly PDFs \citep{grobid2026}.
+It belongs behind an optional PDF-ingestion adapter, not in the normal TeX
+path, and extraction does not establish that a cited work exists or supports
+a sentence. DOI resolution and claim verification remain separate gates.
+
+\paragraph{Measurement and execution.} \texttt{textstat} makes classical
+readability formulas and basic counts easy to reproduce \citep{textstat2026};
+Section~\ref{sec:lit-readability} explains why those values are descriptive
+features, never a quality score. Inspect AI supplies structured datasets,
+solvers, scorers, and evaluation logs \citep{inspectai2026}; it is a plausible
+optional harness for judge experiments, but adopting a general model-eval
+framework does not validate a writing rubric. Finally, \texttt{llama.cpp}
+offers a portable local inference runtime \citep{llamacpp2026}. It makes a
+private mode feasible, not effective: weights, license, task performance,
+prompt-injection behavior, and hardware cost still need their own evaluation.
+
+For the human outcome, jsPsych supplies a lighter browser-based trial
+instrument with timing, randomization, response capture, and export
+\citep{jspsych2026}. It enters the reader-packet benchmark; it does not supply
+participants or validate the rubric.
+
+These projects widen the implementation choices without changing the decision
+rule. Pandoc, \texttt{pylatexenc}, unified-latex, TexSoup, and
+\texttt{latexdiff} enter the adapter
+benchmark because they touch the protected-source path. GROBID,
+\texttt{textstat}, Inspect AI, and \texttt{llama.cpp} remain survey-only until
+a concrete input class or experiment requires them.
+
+\section{Verdicts, and what adoption means}
 \label{sec:oss-verdicts}
 
-\begin{table}[t]
-\centering
+\begingroup
 \small
-\begin{tabularx}{\textwidth}{@{}l l L@{}}
+\begin{longtable}{@{}>{\raggedright\arraybackslash}p{0.22\textwidth}
+                     >{\raggedright\arraybackslash}p{0.12\textwidth}
+                     >{\raggedright\arraybackslash}p{0.60\textwidth}@{}}
+\caption{Verdicts over the evaluated open-source field, with the concrete
+action each verdict implies.}
+\label{tab:oss}\\
 \toprule
 Project & Verdict & What the verdict means in practice \\
 \midrule
+\endfirsthead
+\toprule
+Project & Verdict & What the verdict means in practice \\
+\midrule
+\endhead
+\midrule
+\multicolumn{3}{r}{\small Continued on next page}\\
+\endfoot
+\bottomrule
+\endlastfoot
 blader/humanizer & adopted & keep vendored copy; precedence header stays; enforce dash override in config \\
 tbhb/vale-ai-tells + Vale & adopt & CI linter; disable four rules for \texttt{.tex}; enable structural metrics; take commit rules \\
-seyedehsanhadi/sloptrim & adopt & on-save scorer and rhythm layer; recalibrate per Table~\ref{tab:calibration} on updates \\
+\path{seyedehsanhadi/sloptrim} & adopt & on-save scorer and rhythm layer; recalibrate per Table~\ref{tab:calibration} on updates \\
 AIScientists-Dev/academic-humanizer & adapt & merge Layers 2--4 into our policy as the scholarly layer, examples transposed to economics \\
 sam-paech/slop-forensics & adapt & derive our own tell lists against a pre-2022 economics baseline \\
 baoguangsheng/fast-detect-gpt & adapt & aggregate drift metric only; never per-document \\
-conorbronsdon/avoid-ai-writing & mine & take 1A/1B weighting, injection boundary, flag-don't-fix zones \\
+\path{conorbronsdon/avoid-ai-writing} & mine & take 1A/1B weighting, injection boundary, flag-don't-fix zones \\
 hardikpandya/stop-slop & mine & take false agency (with econ carve-out), negative listing, Wh-openers \\
-NulightJens/humanizer-stack & mine & take the anti-convergence diagnostic; skills stay out \\
-sylvainhalle/textidote & pilot & candidate line-accurate LaTeX layer \\
+\path{NulightJens/humanizer-stack} & mine & take the anti-convergence diagnostic; skills stay out \\
+\path{sylvainhalle/textidote} & pilot & candidate line-accurate LaTeX layer \\
 textlint + latex2e & pilot & fallback host if detex mapping proves lossy \\
+LTeX+ LS & pilot & current offline LanguageTool-backed LaTeX/Markdown server; replace archived ltex-ls \\
+pylatexenc & pilot & compare LaTeX node coverage and source mapping with Pandoc on protected fixtures \\
+Pandoc & pilot & benchmark AST conversion and round-trip preservation on supported formats \\
+plasTeX & survey-only & macro-expanding Python DOM fallback if lightweight parsing is insufficient \\
+tree-sitter-latex & survey-only & incremental editor spans; not a complete TeX semantic parser \\
+LaTeXML & survey-only & heavier structured-conversion fallback with package and deployment costs \\
+latexdiff & pilot & render review-packet diffs; never substitute it for invariant checks \\
+GROBID & survey-only & optional PDF/reference ingestion; extraction is not citation verification \\
+textstat & survey-only & descriptive readability features only; never a quality endpoint \\
+Inspect AI & survey-only & optional model-evaluation harness after the writing rubric is validated \\
+llama.cpp & survey-only & private inference option whose model efficacy and resource cost are separate \\
 amperser/proselint & skip & no custom rules; content reachable via Vale \\
 leonxlnx/taste-skill & skip & frontend pack; one sociological lesson retained \\
-itallstartedwithaidea/writing-agent & skip & evasion-framed; weak checks; nothing to mine \\
-\bottomrule
-\end{tabularx}
-\caption{Verdicts over the evaluated open-source field, with the concrete
-action each verdict implies.}
-\label{tab:oss}
-\end{table}
+{\scriptsize\path{itallstartedwithaidea/writing-agent}} & skip & evasion-framed; weak checks; nothing to mine \\
+\end{longtable}
+\endgroup
 
 Put together: humanizer stays as the installed general diagnostic;
 academic-humanizer's content becomes our scholarly layer; sloptrim and a
 curated Vale configuration become the measurement floor; slop-forensics
 and the mixture estimator keep the measurements current; three skills
-contribute patterns without being installed; two LaTeX-aware hosts get a
-pilot; and three projects are set aside for cause. Nothing in the field
-does what Sections~\ref{sec:record} and~\ref{sec:tools} showed we need
-most, reader-based acceptance testing and behavioral evaluation of writing
-doctrine, which is why the proposal builds those two things and mostly
-configures the rest.
+contribute patterns without being installed; source parsing and visual diff
+components enter protected-fixture pilots; four broader infrastructure
+projects remain survey-only; and three projects are set aside for cause. Nothing in the field
+does what the case and local-tool chapters show we need most: reader-based
+acceptance testing and behavioral evaluation of writing doctrine. The product
+therefore builds those two capabilities and configures the rest.

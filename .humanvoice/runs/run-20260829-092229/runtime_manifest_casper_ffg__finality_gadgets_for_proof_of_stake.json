@@ -1,0 +1,33 @@
+{
+  "record_type": "RuntimeManifest",
+  "schema_version": "HV-SCHEMA-1.0",
+  "record_id": "draft-Casper FFG: Finality Gadgets for Proof-of-Stake-2026-08-29T09:23:03.740267+00:00",
+  "run_id": "run-20260829-092229",
+  "created_at": "2026-08-29T09:23:03.740279+00:00",
+  "mode": "inference",
+  "compiler": {
+    "name": "none",
+    "version": "n/a",
+    "executable_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+    "flags": []
+  },
+  "runtime_type": "claude-api",
+  "model_version_string": "claude-opus-5",
+  "model_artifact_hash_if_local": null,
+  "prompt_template_hash": "9203411fa7aff6ff124cf6da2711ea561db874ee9c54134733d4c47785a79d74",
+  "sampling": {
+    "temperature": 0.0
+  },
+  "seed_if_applicable": null,
+  "api_endpoint": "https://api.anthropic.com/v1/messages",
+  "request_id_if_available": "msg_o9Vu2pGg22MacCisvoBjtzmF",
+  "timestamp": "2026-08-29T09:23:03.740284+00:00",
+  "latency_ms": 0,
+  "input_tokens": 1092,
+  "output_tokens": 1124,
+  "output_hash": "b87a0bea638c690f00fcd0084fea6140082effa174a5fdbe313f46883ab5bdc8",
+  "not_applicable_reason": null,
+  "hardware": null,
+  "network_policy": "api-only",
+  "resource_limits": null
+}

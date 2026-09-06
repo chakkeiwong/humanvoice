@@ -1,18 +1,22 @@
-% Part 3: the research literature, explained
-\section{What the research literature says}
+% Chapter: the research literature, explained
+\chapter{Research on AI-assisted writing}
 \label{sec:literature}
 
-This section explains the studies a designer of \hv{} needs to understand,
-at the level of what the researchers actually did and found. Each subsection
-ends with the consequences for our design, so that
-Section~\ref{sec:design} can cite conclusions rather than re-argue them. A
-note on inspection depth: the load-bearing papers below were read at method
-level (design, data, and headline numbers verified from the full text or
-extended abstract); the supporting papers were read at abstract level and are
-cited for orientation only. One result, StoryScope, reached us secondhand
-through an open-source project and is marked accordingly wherever it appears.
+Imagine a reader deciding whether a technical revision deserves another round
+of work. Four questions matter: did assistance save scarce reader time, did
+feedback improve the next draft, can a model be judged without reproducing its
+biases, and what happened to voice, trust, citation, and disclosure? This
+survey asks what each study can contribute to those questions. It does not
+pretend that the literature has already settled the Humanvoice claim.
 
-\subsection{The fingerprint: what makes text read as machine-written}
+For the core studies, we checked the design, data, and headline result in the
+full text or an extended abstract. The executable search adds sources at
+different depths; the evidence matrix records those depths and limits
+abstract-only records to abstract-level claims. StoryScope, for example, was
+available only through a secondary description in an open-source project, and
+the text identifies it wherever it appears.
+
+\section{The machine-written fingerprint}
 \label{sec:lit-fingerprint}
 
 Start with the study that made the phenomenon measurable.
@@ -71,7 +75,7 @@ for diagnostics. It is maintained against live cleanup experience, so it
 updates as the models change; and its preamble insists that no single sign
 is diagnostic, since human writers produce all of them at some rate. That
 warning is the germ of the false-positive discipline that the best
-open-source tools in Section~\ref{sec:oss} implement and the worst ignore.
+open-source tools in Chapter~\ref{sec:oss} implement and the worst ignore.
 
 What about ``slop'' as a quality construct rather than an authorship one?
 \citet{shaib2025slop} asked nineteen experts across NLP, writing,
@@ -88,39 +92,46 @@ agreed only moderately (theme-level Krippendorff's $\alpha$ of 0.34--0.45),
 which calibrates how much precision we should expect from any judge, human
 or model, on this construct.
 
-Finally, homogenization. \citet{padmakumar2024writing} hired 38 writers to
-produce short argumentative essays in three within-subject arms: alone, with
-base GPT-3 suggestions, and with feedback-tuned InstructGPT suggestions, with
-keystroke logging attributing every character to writer or model. Essays
-co-written with the instruction-tuned model were measurably more similar to
-one another (higher pairwise Rouge-L and BERTScore within topics, fewer
-distinct n-grams and key points), the base model showed no such effect, and
-the decomposition traced the homogenization to the model-contributed text
-specifically. The instruction tuning, not the assistance, is the
-homogenizer. \citet{doshi2024generative} found the same shape in a
-creative-writing field experiment, individual quality up, collective
-diversity down, and \citet{guo2023curious} showed the spiral direction:
-models trained recursively on synthetic text lose lexical, syntactic, and
-semantic diversity generation over generation. One discourse-level result is
-worth logging despite its secondhand status: the StoryScope study is
-reported to detect machine narrative at 93\% F1 from discourse features
-alone, with professional surface rewriting moving detection by less than two
-points \citep{russell2026storyscope}. We have not inspected the paper; if it
-holds, it independently confirms that the durable fingerprint is structural,
-which is also what our failure record found when 815 sentence repairs left a
-volume unaccepted.
+The next risk is homogenization. \citet{padmakumar2024writing} hired 38 writers
+to produce short argumentative essays. Each writer worked alone, with base
+GPT-3 suggestions, and with feedback-tuned InstructGPT suggestions. Keystroke
+logs recorded whether each character came from the writer or the model.
 
-\paragraph{Consequences for the design.} The fingerprint is distributional
+Essays written with the instruction-tuned model became more alike. Within a
+topic, their pairwise Rouge-L and BERTScore rose, while the number of distinct
+n-grams and key points fell. The base model did not have the same effect. The
+keystroke record located the convergence in text contributed by the tuned
+model. Assistance alone was not enough; the form of instruction tuning
+affected the range of expression.
+
+Two other studies show why this matters beyond one essay task.
+\citet{doshi2024generative} found that generative assistance could raise the
+quality of individual stories while reducing diversity across the collection.
+\citet{guo2023curious} examined the next turn of the cycle: models trained
+recursively on synthetic text lost lexical, syntactic, and semantic diversity
+over successive generations. A tool can therefore improve a page locally while
+making a body of work more uniform.
+
+One discourse-level result remains provisional. A secondary account reports
+that StoryScope detects machine-written narrative at 93\% F1 from discourse
+features, and that professional surface rewriting changes the score by less
+than two points \citep{russell2026storyscope}. We have not inspected the paper
+itself. If the result survives full-text review, it would support a structural
+rather than lexical account of the durable fingerprint. Our internal record
+points in the same direction: 815 sentence repairs did not make one long volume
+acceptable to its reader.
+
+\paragraph{What this means for the product.} The fingerprint is distributional
 and structural, not a word list. So \hv{} measures excess against a genre
 reference corpus, Kobak-style, with
 equations~\eqref{eq:kobak-p}--\eqref{eq:kobak-q} applied to pre-2022
 economics text rather than PubMed; it treats word lists as seeds for
-measurement, not rewrite targets; it measures homogenization \emph{across}
-our documents, not only within one; and it expects style repair alone to
+measurement, not rewrite targets; it measures homogenization both \emph{across}
+our documents and within each one; and it expects style repair alone to
 leave the deeper fingerprint intact, which is why the acceptance layer is
 reader-based.
 
-\subsection{Why the models write this way}
+\section{Why the models write this way}
 \label{sec:lit-training}
 
 Four studies, read together, explain the register our agents default to, and
@@ -170,16 +181,22 @@ preference-trained assistants systematically flatter and hedge because
 raters prefer agreement, the same mechanism that seeds throat-clearing and
 deference into technical prose.
 
-\paragraph{Consequences for the design.} These are training-time artifacts,
-so prompt-level pleading (``write naturally'') fights the model's objective
-and loses; what works is changing the sampling question (verbalized
-sampling), editing after generation, and measuring. Compression deserves
+The practical lesson is easy to test. These are training-time artifacts, so
+prompt-level pleading (``write naturally'') fights the model's objective and
+loses. Change the sampling question (verbalized sampling), edit after
+generation, and measure the result. Compression deserves
 first-class status among edit operations, since verbosity is a paid-for
 bias. And any LLM used \emph{inside} \hv{} as an editor or judge carries
 these same biases, which is why the judging protocol below is designed
 around them rather than around trust.
 
-\subsection{Detection: how it works and why it cannot be a gate}
+The evidence also observes different moments in the writing process. Figure
+\ref{fig:intervention-boundary} prevents a result about faster generation from
+quietly becoming a claim about useful feedback or reader comprehension.
+
+\hvFigureInterventionBoundary
+
+\section{Detection: useful for research, not for acceptance}
 \label{sec:lit-detection}
 
 \hv{} needs to understand detectors for two reasons: their failure modes
@@ -216,26 +233,50 @@ prompt'' confound (their capybara problem) and detects across generators
 with one global threshold, over 90\% detection at 0.01\% FPR on their
 benchmarks.
 
-Now the failures, which are the design-relevant part.
-\citet{liang2023detectors} ran seven widely used detectors on two human
-corpora: essays by US eighth-graders and TOEFL practice essays by non-native
-speakers. The US essays passed nearly clean; the TOEFL essays were flagged
-as AI at an average false-positive rate of 61\%, with 98\% flagged by at
-least one detector. The mechanism is exactly the detectors' core statistic:
-limited lexical range produces low perplexity, and low perplexity reads as
-machine. Two prompt experiments nailed it: asking ChatGPT to enrich the
-TOEFL essays' word choice dropped their false-positive rate to 12\%, and
-asking it to simplify the US essays raised theirs to 57\%. Polished, formal,
-conventional prose, which is to say \emph{scholarly} prose, sits on the
-wrong side of this statistic by construction. \citet{weberwulff2023testing}
-tested fourteen academic and commercial tools and found none reliable, with
-accuracy below 80\% and easy degradation; \citet{krishna2023paraphrasing}
-showed that one round of automatic paraphrase defeats the
-perturbation-family detectors wholesale. Detection is unreliable exactly
-where we would use it and trivially evaded by anyone trying.
+The failures set the product boundary. \citet{liang2023detectors} ran seven
+widely used detectors on two collections of human writing. One contained
+essays by US eighth-graders. The other contained TOEFL practice essays by
+writers using English as an additional language.
 
-There is one statistically respectable use, and it is population-level.
-\citet{liang2024monitoring} estimate the \emph{fraction} $\alpha$ of a
+The difference was stark. The US essays passed almost cleanly. The TOEFL
+essays were labelled as machine-written at an average false-positive rate of
+61\%, and 98\% were flagged by at least one detector. The detectors were
+responding to the property they were built to measure: a limited lexical range
+produces lower perplexity, and lower perplexity appears more machine-like.
+
+Two prompt experiments exposed the mechanism. When ChatGPT enriched the word
+choice in the TOEFL essays, the false-positive rate fell to 12\%. When it
+simplified the US essays, their false-positive rate rose to 57\%. A detector
+could therefore change its verdict after a machine edited a human passage,
+even though the passage remained human-authored.
+
+Broader comparisons do not rescue individual classification.
+\citet{weberwulff2023testing} tested fourteen academic and commercial tools;
+none reached reliable performance, accuracy remained below 80\%, and ordinary
+edits degraded the results. \citet{krishna2023paraphrasing} showed that one
+round of automatic paraphrase defeats the perturbation family of detectors.
+The tools are least trustworthy around the polished, conventional register in
+which scholars often write, and easy to evade when evasion is the goal.
+
+Two later lines of work make the boundary sharper. Sadasivan and colleagues
+combine theoretical analysis with attacks on several detector families and
+show why paraphrasing and distributional overlap place hard limits on reliable
+post-hoc detection \citep{sadasivan2024reliably}. This does not prove that every
+detector always fails. It shows that a general promise to identify the origin
+of arbitrary edited text is stronger than the evidence can bear.
+
+Watermarking answers a different question. Kirchenbauer and colleagues alter a
+cooperating model's token choices during generation and then test for the
+resulting statistical signal \citep{kirchenbauer2023watermark}. Under the
+declared generator and threat model, that can provide useful provenance. It
+cannot identify text from an uncooperating model, and editing can weaken the
+signal. For Humanvoice the distinction is decisive: when provenance is needed,
+record it at generation time or use an approved watermarking scheme. Do not
+infer it later from a document's style and call that a reader-quality result.
+
+Suppose a sponsor wants to know whether a whole portfolio is becoming more
+machine-typical. One statistically respectable answer works at the population
+level. \citet{liang2024monitoring} estimate the \emph{fraction} $\alpha$ of a
 corpus that is substantially LLM-modified without classifying any document.
 Represent each document by which adjectives it contains; estimate each
 adjective's occurrence probability under a human reference corpus ($P$,
@@ -254,7 +295,7 @@ late, low-confidence reviews. The estimator is meaningless for accusing an
 individual document, by construction, which is exactly the property we
 want.
 
-\paragraph{Consequences for the design.} No per-document authorship verdict,
+\paragraph{The boundary for Humanvoice.} No per-document authorship verdict,
 ever: the false-positive profile lands on precisely the writers and the
 register we care about, and evasion is cheap anyway. What survives is
 (i) curvature or Binoculars-style scores as \emph{corpus-level} smoothness
@@ -262,32 +303,36 @@ trends, advisory only, computed on detexed prose; and (ii) the mixture
 estimator of equation~\eqref{eq:mixture} as the statistically honest way to
 answer ``how much of our output still reads machine-typical this quarter,''
 with $P$ estimated from pre-2022 economics text and $Q$ from our own
-agents' raw drafts. Both enter \texttt{hv drift} in
-Section~\ref{sec:proposal}, gated against per-document use.
+agents' raw drafts. Both remain research instruments for a later aggregate
+corpus study, outside the first-release author workflow.
 
-\subsection{The edit paradigm: the strongest positive evidence}
+\section{The edit paradigm: the strongest positive evidence}
 \label{sec:lit-editing}
 
-Most directly useful for \hv{} is
-\citet{chakrabarty2024salvage}, because it tests the exact pipeline we
-propose: generate, diagnose, edit. They generated about a thousand
-paragraphs with three frontier models from instructions reverse-engineered
-out of published prose, had professional editors mark them up, and
-consolidated the editors' labels into seven idiosyncrasy categories:
-clich\'e, unnecessary or redundant exposition, purple prose, poor sentence
-structure, lack of specificity and detail, awkward word choice, and tense
-inconsistency. Eighteen professional writers then produced 8{,}035
-categorized span-level edits, the LAMP corpus. Three of their findings set
-our expectations. Writing quality did not differ across the three models,
-so the idiosyncrasies are an ecosystem property, not a vendor one. An
-LLM-based span detector reached 0.46 precision against expert spans, but
-the experts themselves only agreed at 0.57, so ``flag the bad spans'' is
-inherently noisy for everyone and should feed a human or model editor
-rather than an automatic rewrite. And the payoff experiment: in blind
-rankings by the writers, edited AI text (whether the spans came from
-experts or the detector) beat raw AI text decisively, raw output ranked
-last 60\% of the time, while human-edited text still ranked first. Editing
-recovers most of the gap; it does not close it.
+The study most directly useful for \hv{} is
+\citet{chakrabarty2024salvage}. It examines the sequence we propose: generate a
+passage, diagnose a local problem, and edit the passage. The researchers first
+generated about a thousand paragraphs with three frontier models, using
+instructions recovered from published prose. Professional editors then marked
+the passages.
+
+The editors' labels fell into seven categories: clich\'e, redundant exposition,
+purple prose, poor sentence structure, insufficient specificity, awkward word
+choice, and tense inconsistency. Eighteen professional writers made 8{,}035
+span-level edits from those labels, creating the LAMP corpus. The record ties a
+diagnosis to an actual change rather than asking a judge for one overall score.
+
+The first result is that the three models did not differ materially in writing
+quality. The recurrent defects were not peculiar to one vendor. The second is
+that locating the defects was noisy. An LLM detector reached 0.46 precision
+against the expert spans, while the experts agreed with one another at 0.57.
+That gap is not large enough to justify treating either group as an automatic
+rewrite authority. It is large enough to make a located suggestion useful.
+
+The blind ranking supplies the payoff. Edited machine text beat raw machine
+text whether experts or the detector had first nominated the spans. Raw output
+ranked last 60\% of the time. Human-edited prose still ranked first. Editing
+recovered much of the quality gap, but it did not close it.
 
 Two smaller results refine the objective. \citet{cheng2025humt} built a
 corpus-based metric of human-like tone and a steering method, and found
@@ -299,45 +344,163 @@ the field's own literature. And the style-transfer literature
 chronically traded content preservation against style strength, which is
 the trade our meaning-ledger and baseline invariants exist to refuse.
 
-\paragraph{Consequences for the design.} Build the editor as
+\paragraph{The intervention we can test.} Build the editor as
 span-diagnose-then-edit with categories, not as one-shot rewriting; expect
 span precision near 0.5 and design the workflow so a human or a second
 model adjudicates flags; measure edit effect by blind pairwise comparison;
 and never let an edit change a claim, which our existing meaning-ledger
-skill already enforces in doctrine and \texttt{hv diff} will enforce in
+skill already enforces in doctrine and \texttt{hv compare} will enforce in
 code.
 
-\subsection{Judging writing with models, without fooling ourselves}
+\section{Recent external checks: feedback, work, and trust}
+\label{sec:lit-recent}
+
+The studies above explain mechanisms and failure modes. The next group asks
+the questions a funder is most likely to ask: did feedback improve the next
+draft, did assistance save time, and can a fluent output be trusted? The
+answers are more conditional than a product pitch would suggest.
+
+Two 2026 systematic reviews now make that conditionality visible at the
+level of an evidence base rather than one demonstration. Meng, Xie, and Lu
+\citep{meng2026systematic} searched Web of Science through 31 October 2025,
+screened 341 records, and synthesized 25 empirical studies of AI-assisted
+academic writing. Psychological and process outcomes were more consistently
+positive than textual-product outcomes; surface accuracy and conventions
+improved more reliably than argumentation or discourse organization. The
+included literature was dominated by course-based tasks and general-purpose
+rubrics, so it cannot establish that research manuscripts become more
+persuasive. Abudalfa and Barrot's PRISMA-guided review of 96 empirical works
+on generative automated writing evaluation reaches a compatible conclusion
+\citep{abudalfa2026awe}: grammar, coherence, and rubric-following are the
+strongest use cases, while higher-order judgment remains inconsistent and
+validity, fairness, and equity remain open in consequential settings. These
+reviews rule out an architecture in which one model score stands for document
+quality.
+
+Nair et al.\ \citep{nair2024closing} evaluate generated writing feedback on an
+economic essay task using simulated student revisions. The important design
+choice is to score the feedback by what happens in the revision, rather than
+by whether the comment sounds specific. Rashkin et al.\ \citep{rashkin2025story}
+make the same point with a 1,300-story test set containing deliberately
+corrupted passages: models often identify local problems accurately, but miss
+the most important problem and sometimes select praise when criticism is
+needed. Li et al.\ \citep{li2024revisions} find that a detailed rubric can make
+GPT-4 a useful revision assessor, but agreement varies by writing proficiency;
+longer reasoning traces do not solve the calibration problem. Behzad et al.
+\citep{behzad2024feedback} likewise find that generative feedback and human
+feedback can complement one another while personalized feedback remains hard.
+
+Final-document comparisons also omit the work by which a writer gets there.
+Mysore et al.\ analyze multi-turn writing sessions from Bing Copilot and
+WildChat and identify recurring collaboration paths: users revise their
+intent, explore alternatives, ask questions, adjust style, and inject content
+\citep{mysore2025paths}. These traces are observational rather than causal,
+but they establish that ``prompt in, document out'' is a poor process model.
+The pilot must retain the intent, suggestion, acceptance, edit, rejection,
+and rollback sequence. A recent preprint proposes hierarchical acceptance and
+knowledge-aware editing-distance measures on 1,688 controlled continuations
+and a 30-person user study \citep{fang2026mindcopilot}. Those measures are
+promising telemetry candidates, not validated endpoints: the paper is recent,
+simulation supplies most of the evidence, and transfer to economics prose is
+unknown.
+
+These studies justify a narrow intervention claim: \emph{a ranked,
+evidence-linked review packet may reduce wasted reader effort}. They do not
+justify an automatic rewrite or an unconditional claim that a model improves
+the document. The pilot therefore records issue importance, revision outcome,
+writer proficiency/domain slice, and human adjudication separately.
+
+The productivity evidence is real, but it does not transfer to this product by
+assertion. Noy and Zhang's preregistered experiment found that people completed
+occupation-specific writing tasks faster and received higher scores when they
+used ChatGPT \citep{noy2023experimental}. In a field experiment across 66
+firms, Dillon and colleagues found that treated knowledge workers spent less
+time on email without a detectable change in the composition of their tasks
+\citep{dillon2025shifting}. Both studies estimate gains on the tasks they
+observed. Neither estimates reader acceptance of a technical monograph.
+
+The distribution of gains matters as much as the average. Brynjolfsson, Li,
+and Raymond studied a staggered deployment to 5,172 support agents and found a
+15\% average increase in issues resolved per hour. Less-experienced workers
+gained more. The most skilled workers experienced small declines in quality
+\citep{brynjolfsson2025work}. An average productivity estimate can therefore
+hide a result with the opposite sign for the expert users Humanvoice is meant
+to assist.
+
+Dell'Acqua and colleagues supply the operational warning. In their
+``jagged frontier'' evidence, assistance helps on tasks within a model's
+capability and can hurt on tasks beyond it \citep{dellacqua2026jagged}. A tool
+that improves routine correspondence may still damage a novel derivation or a
+carefully calibrated empirical claim.
+
+The budget case must therefore use this project's own outcomes: feedback
+rounds, author and reader time, and meaning violations. Results should be split
+by writer experience and task type. An average time saving elsewhere is a
+reason to run the experiment, not an efficacy estimate for expert research
+writing.
+
+Trust has three separate dimensions. Disclosure changes perception: Li et al.
+\citep{li2024disclosure} report lower and more variable reader ratings when
+content-generation assistance is disclosed, especially for creative work.
+Citation reliability is a different failure mode; open-access evaluation of
+ChatGPT references finds unverifiable or mismatched citations often enough to
+require mechanical resolution and human checking \citep{mugaanyi2024citation}.
+Finally, model judges are not neutral readers: review-reliability studies show
+that agreement depends on rubric, order, length, and domain. These facts make
+the product's disclosure ledger, DOI resolver, protected diff, order-swapped
+pairwise judging, and requirement that a named human make the acceptance
+decision rather than optional polish.
+
+\paragraph{The outcome that matters.} The primary endpoint is human-
+feedback rounds to reader acceptance. Time saved, model-judge agreement,
+surface-tell scores, and citation resolution are secondary measures and are
+never combined into a single quality score. A pilot result is transportable
+only when the document task, reader rubric, disclosure condition, and
+protected-source checks are reported alongside it. Process telemetry explains
+how the result arose but does not replace the endpoint. Review-level evidence
+sets the prior expectation: deterministic surface defects should move first;
+argument, organization, voice, and acceptance require direct domain-reader
+measurement.
+
+\section{Judging writing with models, without fooling ourselves}
 \label{sec:lit-judging}
 
 \hv{} needs cheap judgments of ``which version reads better,'' so the
 LLM-as-judge literature is load-bearing, mostly for its list of traps.
 
-\citet{zheng2023judging} established the baseline: on their multi-turn
-benchmark, GPT-4's agreement with pooled expert votes was 85\%, against 81\%
-human-human agreement, so a strong model is a usable proxy for preference
-between chat answers. The same paper measured the biases operationally.
-Position bias: judge two near-identical answers twice with order swapped;
-every judge showed order-dependent flips. Verbosity bias: pad one answer
-with rephrased duplicates of its own list items, adding no information;
-two of three judges preferred the padded answer more than 90\% of the time.
-Self-enhancement: models rate their own outputs higher, though their design
-could not settle causality. \citet{panickssery2024llm} settled it with a
-clean causal design on summarization: models recognize their own outputs
-above chance out of the box, and fine-tuning a model to be \emph{better} at
-self-recognition increases its self-preference linearly, while control
-fine-tunes on unrelated tasks do not. Self-preference rides on
-self-recognition, so the generator must never judge its own rewrite.
-\citet{dubois2024length} showed the verbosity bias is largely removable by
-regression: length-controlled win rates change model rankings and nearly
-triple agreement with human evaluations on their benchmark. Finally,
-\citet{chakrabarty2024art} calibrate optimism for prose specifically:
-expert writers applying a creativity rubric failed LLM-written stories on
-roughly ten times more rubric items than professional stories, while LLM
-judges rated the same stories generously. For writing quality, model judges
-drift lenient exactly where experts are harsh.
+\citet{zheng2023judging} established the optimistic baseline. On a multi-turn
+chat benchmark, GPT-4 agreed with pooled expert votes 85\% of the time. Human
+judges agreed with one another 81\% of the time. A strong model could therefore
+act as a useful proxy for preference between chat answers on that benchmark.
 
-\paragraph{Consequences for the design.} The judging protocol writes
+The same study showed how easily the proxy moves. When two near-identical
+answers were presented twice in opposite orders, every model judge sometimes
+flipped its choice. When one answer was padded with rephrased versions of its
+own list items, adding no information, two of three judges preferred the
+longer answer more than 90\% of the time. Order and length were affecting a
+judgment presented as quality.
+
+Self-preference creates a separate problem. Zheng and colleagues observed that
+models tended to favor their own output, but their design could not establish
+the cause. \citet{panickssery2024llm} used summarization to isolate it. Models
+recognized their own output above chance. Fine-tuning them to improve that
+self-recognition increased their preference for their own output in a nearly
+linear fashion; control fine-tunes on unrelated tasks did not. The generator
+should therefore never be the sole judge of its own rewrite.
+
+Some bias can be reduced. \citet{dubois2024length} controlled statistically for
+response length. The correction changed model rankings and nearly tripled
+agreement with human evaluations on their benchmark. That is a useful control,
+not evidence that every other bias has disappeared.
+
+Writing introduces a harsher calibration. \citet{chakrabarty2024art} asked
+expert writers to apply a creativity rubric to stories. They failed
+machine-written stories on roughly ten times as many rubric items as
+professional stories, while model judges rated the same machine-written
+stories generously. On this task, the model was most lenient where the experts
+were most critical.
+
+\paragraph{How the judge is constrained.} The judging protocol writes
 itself, negatively: pairwise, never absolute scores; order randomized or
 both orders averaged; length-controlled; a different model family from the
 generator and from the editor; one rubric dimension per call rather than
@@ -345,39 +508,47 @@ holistic ``is this good''; and periodic validation of the whole proxy
 against recorded human verdicts, which our evaluation corpus contains. Any
 result that survives those controls is worth acting on; nothing else is.
 
-\subsection{Readability science: measure against the genre, not a formula}
+\hvFigureJudgeProtocol
+
+\section{Readability science: measure against the genre, not a formula}
 \label{sec:lit-readability}
 
-Classical readability formulas are the wrong instrument for this project,
-and it is worth knowing why rather than just asserting it. Flesch-family
-scores are functions of syllable counts and sentence lengths. LLM prose
-often scores \emph{well} on them while failing readers, because its
-failures live in cohesion, rhythm, and register, which the formulas do not
-see. The modern evidence: the CLEAR corpus work collected thousands of
-passages with human ease-of-reading judgments and showed learned models
-beat the classical formulas substantially \citep{crossley2022clear};
-Coh-Metrix demonstrated two decades ago that texts separate on cohesion and
-discourse dimensions the formulas ignore \citep{graesser2004cohmetrix}; and
-Biber's register work established that genres occupy different regions of a
-multidimensional feature space, so ``natural'' is genre-relative
-\citep{biber1988variation}. Two findings about scientific prose complete
-the picture. Scientific abstracts have been getting harder to read for a
-century, with jargon and sentence complexity rising steadily
-\citep{plavensigray2017readability}, so the median published abstract is a
-degrading target, not a gold standard. And jargon density carries a
-professional price: titles and abstracts heavier in specialized terminology
-collect fewer citations \citep{martinez2021terminology}, a result an
-economist will recognize as an incentive argument for plain language, not
-just an aesthetic one.
+Classical readability formulas are the wrong instrument for this project.
+Flesch-family scores depend mainly on syllable counts and sentence lengths.
+Machine-written prose can score well on those features while a reader still
+struggles with its cohesion, rhythm, or register. The formula has not failed at
+arithmetic; it has measured too little of the reading task.
 
-\paragraph{Consequences for the design.} Every \hv{} metric is referenced
+Modern datasets make the limitation visible. The CLEAR project collected
+thousands of passages with human ease-of-reading judgments. Learned models
+predicted those judgments substantially better than the classical formulas
+\citep{crossley2022clear}. Coh-Metrix had already shown that texts differ along
+cohesion and discourse dimensions that syllable arithmetic ignores
+\citep{graesser2004cohmetrix}.
+
+There is no universal target register either. Biber's work shows that genres
+occupy different regions of a multidimensional linguistic space
+\citep{biber1988variation}. A short sentence that is natural in a newspaper can
+be evasive in a methods section. A passive construction that burdens a policy
+memo can place the experimental treatment correctly in a scientific report.
+``Natural'' must therefore be judged against the work the genre is doing.
+
+Published scientific prose is not an unquestioned gold standard. Abstracts
+have become harder to read over the past century as jargon and sentence
+complexity have risen \citep{plavensigray2017readability}. Specialized language
+also carries a professional cost: papers with more jargon in their titles and
+abstracts receive fewer citations on average
+\citep{martinez2021terminology}. For an economist, that is an incentive result
+as well as a stylistic one. Difficulty can reduce the circulation of an idea.
+
+\paragraph{Measurement consequence.} Every \hv{} metric is referenced
 to a target-genre human corpus (for us: pre-2022 economics working papers
 and journal articles), never to an absolute scale; the diagnostic suite
 spans lexis, sentence rhythm, and discourse cohesion rather than syllable
 arithmetic; and ``write like the median abstract'' is explicitly not the
 objective, which the policy's plain-language stance already reflects.
 
-\subsection{Economics and publishing norms}
+\section{Economics and publishing norms}
 \label{sec:lit-econ}
 
 Norms here are settled enough to build on. \citet{korinek2023generative},
@@ -395,10 +566,12 @@ junior researchers, whose styles are converging \citep{lin2025divergent};
 and undisclosed chatbot artifacts (``as an AI language model\ldots'')
 appear verbatim in published papers \citep{glynn2024academai}.
 
-\paragraph{Consequences for the design.} \hv{} is a quality project under
+\paragraph{A final economic consequence.} \hv{} is a quality project under
 disclosure norms, full stop. Detector evasion is not a goal, would not be an
 achievement (Section~\ref{sec:lit-detection} showed evasion is cheap), and
 is ruled out as a success metric because detectors cannot define quality.
-The prevalence work also hands us our reference corpora: pre-2022 economics
-text is a clean human baseline; anything after 2023 is contaminated and
-unusable for calibration.
+The prevalence work suggests a reference strategy rather than a purity claim:
+pre-2022 economics text is the least exposed starting baseline, while later
+documents should enter calibration only with provenance or assistance labels
+and a sensitivity analysis. No publication year alone can certify how a text
+was produced.

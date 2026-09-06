@@ -1,0 +1,50 @@
+\section{Cost Analysis and Total Cost of Ownership}
+
+The migration imposes both one-time transition costs and ongoing operational costs. This section quantifies each category and compares the proposed architecture's five-year total cost of ownership against the status quo.
+
+\subsection{Transition Cost Breakdown}
+
+The 24-month migration program requires engineering effort, infrastructure provisioning, and opportunity cost of delayed feature development. Engineering effort divides into platform preparation (6 months, 8 FTE), incremental service migration (12 months, 12 FTE), and verification/cutover (6 months, 6 FTE), totaling 200 person-months. At a fully-loaded cost of \$18,500 per person-month, engineering represents \$3.7M.
+
+Infrastructure costs include the pilot environment (\$42,000 over 8 weeks), parallel production deployment during the 6-month verification phase (\$680,000), and non-recoverable decommissioning work (\$95,000), totaling \$817,000. Training and consulting expenses are estimated at \$340,000 for service mesh expertise, chaos engineering capability building, and incident response upskilling.
+
+Opportunity cost is the most uncertain component. Product management has identified four revenue-impacting features deferred due to migration resource allocation, with a combined estimated revenue impact of \$3.2M over the migration period. Including a 40\% haircut for estimation uncertainty yields a risk-adjusted opportunity cost of \$1.9M.
+
+Summing these components produces a transition cost of \$6.8M, against an initial budget target of \$8M, providing a 15\% contingency buffer.
+
+\subsection{Steady-State Cost Comparison}
+
+Annual infrastructure cost for the proposed architecture is \$2.14M versus \$1.78M for the current monolith, an increase of \$360,000 or 20\%. The increase stems primarily from the message broker cluster (\$180,000 annually) and the expanded observability infrastructure required to monitor twelve services (\$140,000 annually). Partially offsetting this is a \$120,000 reduction in database costs from right-sizing individual service databases versus the over-provisioned monolithic cluster.
+
+Annual operational labor increases from 2.4 FTE to 4.1 FTE, reflecting the larger monitoring surface area and the on-call burden of twelve independently-deployable services. At \$222,000 fully-loaded cost per FTE, this represents an additional \$377,000 annually.
+
+However, the architecture eliminates the need for the seasonal capacity over-provisioning that currently costs \$280,000 annually. The elastic scaling capability of the microservices design allows provisioning to follow load within a 15-minute adjustment period, versus the monolith's requirement to hold peak capacity year-round.
+
+Net steady-state cost increase is therefore \$457,000 annually, or 18\% above current operating cost.
+
+Figure~\ref{fig:cost-analysis-breakdown} presents the full cost comparison across infrastructure, labor, and capacity provisioning dimensions.
+
+\begin{figure}[htbp]
+\centering
+\rule{0.8\textwidth}{0.35\textwidth}
+\caption{Annual cost breakdown comparison: current versus proposed architecture}
+\label{fig:cost-analysis-breakdown}
+\end{figure}
+
+\subsection{Total Cost of Ownership}
+
+Five-year TCO compares \$6.8M transition cost plus 5 × \$457k = \$2.3M incremental operating cost, totaling \$9.1M incremental cost. The comparison case is the cost of scaling the monolith to meet the 18-month projected demand.
+
+Vertical scaling the database to the next instance class costs \$8,400 monthly (\$100,800 annually) and defers the capacity ceiling to approximately 72,000 TPS, exhausted within 24 months. At that point, the only remaining option is horizontal sharding, which database consultancy estimates would require 9 months and \$1.4M to implement, with ongoing operational complexity comparable to the microservices design but without the independent deployability benefit.
+
+The vertical-scaling-then-sharding path produces five-year TCO of approximately \$2.1M in incremental costs, substantially lower than the microservices path. The microservices architecture is therefore not cost-justified on TCO grounds alone. The decision must rest on the strategic value of independent deployability, organizational learning, and architectural optionality.
+
+\subsection{Sensitivity Analysis}
+
+TCO is sensitive to the accuracy of three estimates: engineering person-months, steady-state operational FTE, and opportunity cost. Varying each ±30\% while holding others constant produces TCO ranging from \$7.2M to \$11.8M. The comparison case likewise varies from \$1.6M to \$2.8M under similar assumptions. In no plausible scenario does the microservices TCO fall below the sharding TCO, confirming that cost alone does not favor the migration.
+
+The break-even point would require either a 60\% reduction in migration engineering effort or the discovery of operational efficiencies that reduce steady-state FTE back to current levels. Neither appears achievable given the known complexity of the domain.
+
+\subsection{Amortization Against Business Growth}
+
+The cost increase is fixed in absolute terms but declines as a percentage of revenue as the business grows. At current revenue of \$180M annually, the \$457k incremental operating cost represents 0.25\%. Under the business plan's growth projection reaching \$340M by year five, this declines to 0.13\%. From this perspective the architectural investment is a reasonable hedge against future scaling requirements.

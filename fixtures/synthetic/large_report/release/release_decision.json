@@ -1,0 +1,30 @@
+{
+  "record_type": "ReleaseDecision",
+  "schema_version": "HV-SCHEMA-1.1",
+  "record_id": "release-20260829-141729",
+  "run_id": "snapshot-20260829-090615",
+  "created_at": "2026-08-29T14:17:29.320039+00:00",
+  "gate_results": {
+    "protected_correspondence": "pass",
+    "brief_parsing_promises": "pass",
+    "evidence_sufficiency": "pass",
+    "source_build": "blocked",
+    "author_convergence": "pass"
+  },
+  "packet_hash": "",
+  "status": "blocked",
+  "authorized_by": "machine",
+  "exceptions": [
+    {
+      "gate": "source_build",
+      "never_except": true,
+      "detail": {
+        "reason": "no_protected_extraction",
+        "detail": "Brief promises 9 protected objects but no runs directory exists"
+      }
+    }
+  ],
+  "unresolved_risks": [
+    "source_build"
+  ]
+}

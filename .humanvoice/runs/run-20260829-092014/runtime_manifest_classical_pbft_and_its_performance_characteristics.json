@@ -1,0 +1,33 @@
+{
+  "record_type": "RuntimeManifest",
+  "schema_version": "HV-SCHEMA-1.0",
+  "record_id": "draft-Classical PBFT and Its Performance Characteristics-2026-08-29T09:21:10.768162+00:00",
+  "run_id": "run-20260829-092014",
+  "created_at": "2026-08-29T09:21:10.768177+00:00",
+  "mode": "inference",
+  "compiler": {
+    "name": "none",
+    "version": "n/a",
+    "executable_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+    "flags": []
+  },
+  "runtime_type": "claude-api",
+  "model_version_string": "claude-opus-5",
+  "model_artifact_hash_if_local": null,
+  "prompt_template_hash": "9203411fa7aff6ff124cf6da2711ea561db874ee9c54134733d4c47785a79d74",
+  "sampling": {
+    "temperature": 0.0
+  },
+  "seed_if_applicable": null,
+  "api_endpoint": "https://api.anthropic.com/v1/messages",
+  "request_id_if_available": "msg_657ec5fe371c48edb7ae108bad78f806",
+  "timestamp": "2026-08-29T09:21:10.768182+00:00",
+  "latency_ms": 0,
+  "input_tokens": 13176,
+  "output_tokens": 1170,
+  "output_hash": "05f58fddd7923361d27aabcde121d901fa222a4f4de9709c06a76705e55803a8",
+  "not_applicable_reason": null,
+  "hardware": null,
+  "network_policy": "api-only",
+  "resource_limits": null
+}

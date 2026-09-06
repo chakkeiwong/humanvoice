@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://humanvoice.local/schema/release-decision.schema.json",
+  "title": "Humanvoice release decision",
+  "type": "object",
+  "required": ["record_type", "schema_version", "record_id", "run_id", "created_at", "gate_results", "packet_hash", "status", "authorized_by", "exceptions"],
+  "properties": {
+    "record_type": {"const": "ReleaseDecision"},
+    "schema_version": {"type": "string", "pattern": "^HV-SCHEMA-[0-9]+\\.[0-9]+$"},
+    "record_id": {"type": "string", "minLength": 1},
+    "run_id": {"type": "string", "minLength": 1},
+    "created_at": {"type": "string", "format": "date-time"},
+    "gate_results": {"type": "object"},
+    "packet_hash": {"type": "string"},
+    "status": {"enum": ["released", "blocked", "exception-released", "stopped"]},
+    "authorized_by": {"type": "string", "minLength": 1},
+    "exceptions": {"type": "array", "items": {"type": "object"}},
+    "unresolved_risks": {"type": "array", "items": {"type": "string"}},
+    "expiry": {"type": ["string", "null"], "format": "date-time"},
+    "extensions": {"type": "object"}
+  },
+  "additionalProperties": false
+}

@@ -1,0 +1,84 @@
+\section{Architectural Proposal}
+
+The proposed architecture decomposes the monolithic system into twelve bounded contexts, each owning its data and exposing a stable API. Service boundaries align with business capability boundaries identified through domain-driven design workshops conducted over a six-week period with participation from engineering, product, and operations teams.
+
+\subsection{Bounded Context Decomposition}
+
+The twelve proposed services are: (1) Account Management, owning customer identity and entitlements; (2) Authorization Engine, executing transaction approval rules; (3) Payment Gateway, interfacing with external networks; (4) Balance Tracker, maintaining real-time account positions; (5) Ledger, recording immutable transaction history; (6) Settlement Coordinator, orchestrating end-of-day batch operations; (7) Reconciliation, comparing internal state to external references; (8) Notification Dispatcher, emitting customer-facing alerts; (9) Fraud Detection, scoring transactions for risk; (10) Reporting Aggregator, building materialized views for analytics; (11) Configuration Manager, distributing runtime parameters; (12) Audit Logger, capturing compliance records.
+
+Each service operates autonomously with private data storage. Inter-service communication occurs exclusively through asynchronous events published to a message broker implementing at-least-once delivery semantics. Synchronous request-response communication is prohibited except for the Authorization Engine, which must query Balance Tracker and Fraud Detection within a 120ms latency budget to maintain competitive approval times.
+
+Figure~\ref{fig:microservices-architecture-overview} presents the service topology, data flow directions, and external integration points.
+
+\begin{figure}[htbp]
+\centering
+\rule{0.8\textwidth}{0.45\textwidth}
+\caption{Proposed microservices architecture with service boundaries and event flows}
+\label{fig:microservices-architecture-overview}
+\end{figure}
+
+\subsection{Event-Driven Integration}
+
+State changes propagate through domain events. When Account Management creates a new customer record, it publishes an \texttt{AccountCreated} event containing the account identifier, creation timestamp, and initial entitlements. Downstream services subscribe to events relevant to their responsibilities: Balance Tracker initializes a zero-balance record, Notification Dispatcher sends a welcome message, Audit Logger records the compliance trail.
+
+Event ordering guarantees are bounded to per-account causality. The message broker partitions events by account identifier, ensuring that all events for account A are delivered to each consumer in publication order, but events for account A and account B may be reordered relative to each other. This partition-local ordering suffices for correctness because cross-account transactions are prohibited by business rules.
+
+The event schema follows CloudEvents 1.0 specification with application-defined payload schemas versioned independently. Each service maintains a registry of events it produces and events it consumes, enabling compile-time detection of schema mismatches through contract testing. Schema evolution follows strict compatibility rules: new fields may be added, existing fields may not be removed or changed in type.
+
+Figure~\ref{fig:event-flow-diagram} traces a representative transaction through the event mesh, showing temporal dependencies and compensating actions.
+
+\begin{figure}[htbp]
+\centering
+\rule{0.8\textwidth}{0.4\textwidth}
+\caption{Event flow for a multi-service transaction with compensation}
+\label{fig:event-flow-diagram}
+\end{figure}
+
+\subsection{CQRS Implementation}
+
+The Command Query Responsibility Segregation pattern separates the write model (commands that change state) from the read model (queries that retrieve state). Authorization Engine and Balance Tracker implement separate read and write paths with eventual consistency between them.
+
+Commands are validated, executed, and persisted to an event store. The event store is an append-only log of state transitions, providing a complete audit trail and enabling point-in-time reconstruction. Projections consume events and build denormalized read models optimized for query patterns. Read models may cache, index, or pre-aggregate data in forms that would be prohibitively expensive to compute on demand.
+
+The consistency window between command execution and read model update is typically 40--80ms at the p99. For Authorization Engine, this delay is unacceptable: the write path must confirm that an authorization's read model update has been applied before returning success to the caller. This synchronous projection update is achieved through a reserved-capacity queue and dedicated projection workers, effectively trading throughput for latency on the critical path.
+
+Figure~\ref{fig:read-write-separation} illustrates the command and query paths, showing the event store, projection process, and read model storage.
+
+\begin{figure}[htbp]
+\centering
+\rule{0.8\textwidth}{0.35\textwidth}
+\caption{CQRS pattern showing write path, event store, and read model projection}
+\label{fig:read-write-separation}
+\end{figure}
+
+\subsection{Saga Pattern for Distributed Transactions}
+
+Cross-service transactions execute as sagas: sequences of local transactions with compensating actions for rollback. The saga pattern was formalized by~\cite{garcia-molina-sagas-1987} and is the standard approach for maintaining consistency without distributed locking in event-driven systems~\cite{richardson-microservices-patterns-2018}.
+
+Consider a payment operation spanning Authorization Engine, Balance Tracker, Ledger, and Payment Gateway. The saga proceeds as follows:
+\begin{enumerate}
+\item Authorization Engine validates the request and reserves a transaction identifier
+\item Balance Tracker decrements the available balance (tentative hold)
+\item Ledger records the transaction (pending state)
+\item Payment Gateway submits to external network
+\item If external network confirms, Ledger transitions to confirmed and Balance Tracker finalizes the hold
+\item If external network rejects, Balance Tracker releases the hold and Ledger marks the transaction failed
+\end{enumerate}
+
+Each step is a local transaction within one service. Failures trigger compensating actions: the tentative balance hold is released, the pending ledger entry is marked rolled-back. Because each local transaction is durable and compensating actions are idempotent, the saga either completes successfully or leaves no side effects.
+
+The cost of saga-based consistency is complexity. The number of compensating actions grows combinatorially with saga length according to
+\begin{equation}
+\label{eq:saga-compensation-cost}
+C_{\text{total}} = \sum_{i=1}^{n} i
+\end{equation}
+where $n$ is the number of saga steps. A 4-step saga requires 10 compensating action definitions to handle all possible failure points. This operational burden must be weighed against the benefit of avoiding distributed locks.
+
+Figure~\ref{fig:saga-state-machine} presents the state machine for the payment saga, including normal path, compensation path, and terminal states.
+
+\begin{figure}[htbp]
+\centering
+\rule{0.8\textwidth}{0.4\textwidth}
+\caption{State machine for payment saga showing compensation paths}
+\label{fig:saga-state-machine}
+\end{figure}

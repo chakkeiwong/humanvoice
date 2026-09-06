@@ -1,0 +1,100 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://humanvoice.local/schema/runtime-manifest.schema.json",
+  "title": "Humanvoice runtime manifest",
+  "type": "object",
+  "required": ["record_type", "schema_version", "record_id", "run_id", "created_at", "mode", "compiler", "runtime_type", "model_version_string", "model_artifact_hash_if_local", "prompt_template_hash", "sampling", "seed_if_applicable", "api_endpoint", "request_id_if_available", "timestamp", "latency_ms", "input_tokens", "output_tokens", "output_hash", "not_applicable_reason"],
+  "properties": {
+    "record_type": {"const": "RuntimeManifest"},
+    "schema_version": {"type": "string", "pattern": "^HV-SCHEMA-[0-9]+\\.[0-9]+$"},
+    "record_id": {"type": "string", "minLength": 1},
+    "run_id": {"type": "string", "minLength": 1},
+    "created_at": {"type": "string", "format": "date-time"},
+    "mode": {"enum": ["deterministic", "inference"]},
+    "compiler": {
+      "type": "object",
+      "required": ["name", "version", "executable_sha256", "flags"],
+      "properties": {
+        "name": {"type": "string", "minLength": 1},
+        "version": {"type": "string", "minLength": 1},
+        "executable_sha256": {"type": "string", "pattern": "^[A-Fa-f0-9]{64}$"},
+        "flags": {"type": "array", "items": {"type": "string"}}
+      },
+      "additionalProperties": false
+    },
+    "runtime_type": {"enum": ["llama.cpp", "claude-api", "openai-api", "deterministic-only"]},
+    "model_version_string": {"type": ["string", "null"], "minLength": 1},
+    "model_artifact_hash_if_local": {"type": ["string", "null"], "pattern": "^[A-Fa-f0-9]{64}$"},
+    "prompt_template_hash": {"type": ["string", "null"], "pattern": "^[A-Fa-f0-9]{64}$"},
+    "sampling": {"type": ["object", "null"]},
+    "seed_if_applicable": {"type": ["integer", "null"]},
+    "api_endpoint": {"type": ["string", "null"]},
+    "request_id_if_available": {"type": ["string", "null"]},
+    "timestamp": {"type": "string", "format": "date-time"},
+    "latency_ms": {"type": "number", "minimum": 0},
+    "input_tokens": {"type": ["integer", "null"], "minimum": 0},
+    "output_tokens": {"type": ["integer", "null"], "minimum": 0},
+    "output_hash": {"type": "string", "pattern": "^[A-Fa-f0-9]{64}$"},
+    "not_applicable_reason": {"type": ["string", "null"]},
+    "hardware": {
+      "type": ["object", "null"],
+      "properties": {
+        "cpu": {"type": "string", "minLength": 1},
+        "ram_mib": {"type": "integer", "minimum": 1},
+        "accelerator": {"type": ["string", "null"]}
+      }
+    },
+    "network_policy": {"enum": ["deny", "api-only", "approved-fields-only"]},
+    "resource_limits": {"type": ["object", "null"]},
+    "extensions": {"type": "object"}
+  },
+  "allOf": [
+    {
+      "if": {"properties": {"mode": {"const": "deterministic"}}},
+      "then": {
+        "properties": {
+          "runtime_type": {"const": "deterministic-only"},
+          "model_version_string": {"type": "null"},
+          "model_artifact_hash_if_local": {"type": "null"},
+          "prompt_template_hash": {"type": "null"},
+          "sampling": {"type": "null"},
+          "seed_if_applicable": {"type": "null"},
+          "api_endpoint": {"type": "null"},
+          "request_id_if_available": {"type": "null"},
+          "input_tokens": {"type": "null"},
+          "output_tokens": {"type": "null"},
+          "not_applicable_reason": {"type": "string", "minLength": 1}
+        }
+      },
+      "else": {
+        "properties": {
+          "runtime_type": {"enum": ["llama.cpp", "claude-api", "openai-api"]},
+          "model_version_string": {"type": "string", "minLength": 1},
+          "prompt_template_hash": {"type": "string", "pattern": "^[A-Fa-f0-9]{64}$"},
+          "not_applicable_reason": {"type": "null"}
+        }
+      }
+    },
+    {
+      "if": {"properties": {"runtime_type": {"const": "llama.cpp"}}},
+      "then": {
+        "properties": {
+          "model_artifact_hash_if_local": {"type": "string", "pattern": "^[A-Fa-f0-9]{64}$"},
+          "seed_if_applicable": {"type": "integer"},
+          "api_endpoint": {"type": "null"},
+          "request_id_if_available": {"type": "null"}
+        }
+      }
+    },
+    {
+      "if": {"properties": {"runtime_type": {"enum": ["claude-api", "openai-api"]}}},
+      "then": {
+        "properties": {
+          "model_artifact_hash_if_local": {"type": "null"},
+          "api_endpoint": {"type": "string", "minLength": 1}
+        }
+      }
+    }
+  ],
+  "additionalProperties": false
+}

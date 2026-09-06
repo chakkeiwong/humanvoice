@@ -1,0 +1,14 @@
+{
+  "record_type": "CliResult",
+  "schema_version": "HV-SCHEMA-1.0",
+  "record_id": "cli-result-invalid-001",
+  "run_id": "run-invalid-002",
+  "created_at": "2026-08-26T00:00:00Z",
+  "contract_version": "HV-IC-2026-08-26",
+  "command": "hv preflight",
+  "status": "pass",
+  "exit_code": 0,
+  "record_paths": [],
+  "blocking_reasons": [],
+  "result_hash": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+}

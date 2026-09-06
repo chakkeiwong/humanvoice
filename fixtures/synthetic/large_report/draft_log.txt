@@ -1,0 +1,130 @@
+=== Section 0 ===
+usage: hv draft [-h] --blueprint BLUEPRINT --brief BRIEF --section SECTION
+                [--mock]
+                snapshot
+hv draft: error: the following arguments are required: --blueprint, --brief
+=== Section 1 ===
+usage: hv draft [-h] --blueprint BLUEPRINT --brief BRIEF --section SECTION
+                [--mock]
+                snapshot
+hv draft: error: the following arguments are required: --blueprint, --brief
+=== Section 2 ===
+usage: hv draft [-h] --blueprint BLUEPRINT --brief BRIEF --section SECTION
+                [--mock]
+                snapshot
+hv draft: error: the following arguments are required: --blueprint, --brief
+=== Section 3 ===
+usage: hv draft [-h] --blueprint BLUEPRINT --brief BRIEF --section SECTION
+                [--mock]
+                snapshot
+hv draft: error: the following arguments are required: --blueprint, --brief
+=== Section 4 ===
+usage: hv draft [-h] --blueprint BLUEPRINT --brief BRIEF --section SECTION
+                [--mock]
+                snapshot
+hv draft: error: the following arguments are required: --blueprint, --brief
+=== Section 5 ===
+usage: hv draft [-h] --blueprint BLUEPRINT --brief BRIEF --section SECTION
+                [--mock]
+                snapshot
+hv draft: error: the following arguments are required: --blueprint, --brief
+=== Section 6 ===
+usage: hv draft [-h] --blueprint BLUEPRINT --brief BRIEF --section SECTION
+                [--mock]
+                snapshot
+hv draft: error: the following arguments are required: --blueprint, --brief
+=== Section 7 ===
+usage: hv draft [-h] --blueprint BLUEPRINT --brief BRIEF --section SECTION
+                [--mock]
+                snapshot
+hv draft: error: the following arguments are required: --blueprint, --brief
+=== Section 8 ===
+usage: hv draft [-h] --blueprint BLUEPRINT --brief BRIEF --section SECTION
+                [--mock]
+                snapshot
+hv draft: error: the following arguments are required: --blueprint, --brief
+=== Section 9 ===
+usage: hv draft [-h] --blueprint BLUEPRINT --brief BRIEF --section SECTION
+                [--mock]
+                snapshot
+hv draft: error: the following arguments are required: --blueprint, --brief
+=== Section 0 ===
+Loading model configuration...
+Generating draft for 'Introduction: Byzantine Consensus in Production Systems' with claude-opus-5...
+Warning: Word count 0 outside target range [320, 480]
+Draft generated: 0 words, 0 citations needed
+Output: /home/ubuntu/workspace/humanvoice/.humanvoice/runs/run-20260829-091611/draft_introduction__byzantine_consensus_in_production_sy.tex
+Tokens: 583 input / 13 output
+Request ID: None
+=== Section 1 ===
+Loading model configuration...
+Generating draft for 'Problem Formulation and System Model' with claude-opus-5...
+Warning: Word count 0 outside target range [400, 600]
+Draft generated: 0 words, 0 citations needed
+Output: /home/ubuntu/workspace/humanvoice/.humanvoice/runs/run-20260829-091611/draft_problem_formulation_and_system_model.tex
+Tokens: 579 input / 13 output
+Request ID: None
+=== Section 2 ===
+Loading model configuration...
+Generating draft for 'Classical PBFT and Its Performance Characteristics' with claude-opus-5...
+Warning: Word count 0 outside target range [480, 720]
+Draft generated: 0 words, 0 citations needed
+Output: /home/ubuntu/workspace/humanvoice/.humanvoice/runs/run-20260829-091611/draft_classical_pbft_and_its_performance_characteristics.tex
+Tokens: 578 input / 13 output
+Request ID: None
+=== Section 3 ===
+Loading model configuration...
+Generating draft for 'Linear Communication Protocols: HotStuff and Variants' with claude-opus-5...
+Warning: Word count 0 outside target range [560, 840]
+Draft generated: 0 words, 0 citations needed
+Output: /home/ubuntu/workspace/humanvoice/.humanvoice/runs/run-20260829-091612/draft_linear_communication_protocols__hotstuff_and_varia.tex
+Tokens: 577 input / 13 output
+Request ID: None
+=== Section 4 ===
+Loading model configuration...
+Generating draft for 'Tendermint: Bounded Synchrony and Accountability' with claude-opus-5...
+Warning: Word count 0 outside target range [480, 720]
+Draft generated: 0 words, 0 citations needed
+Output: /home/ubuntu/workspace/humanvoice/.humanvoice/runs/run-20260829-091612/draft_tendermint__bounded_synchrony_and_accountability.tex
+Tokens: 574 input / 13 output
+Request ID: None
+=== Section 5 ===
+Loading model configuration...
+Generating draft for 'Casper FFG: Finality Gadgets for Proof-of-Stake' with claude-opus-5...
+Warning: Word count 0 outside target range [400, 600]
+Draft generated: 0 words, 0 citations needed
+Output: /home/ubuntu/workspace/humanvoice/.humanvoice/runs/run-20260829-091612/draft_casper_ffg__finality_gadgets_for_proof_of_stake.tex
+Tokens: 575 input / 13 output
+Request ID: None
+=== Section 6 ===
+Loading model configuration...
+Generating draft for 'Empirical Performance Analysis' with claude-opus-5...
+Warning: Word count 0 outside target range [720, 1080]
+Draft generated: 0 words, 0 citations needed
+Output: /home/ubuntu/workspace/humanvoice/.humanvoice/runs/run-20260829-091613/draft_empirical_performance_analysis.tex
+Tokens: 583 input / 13 output
+Request ID: None
+=== Section 7 ===
+Loading model configuration...
+Generating draft for 'View Change and Recovery Mechanisms' with claude-opus-5...
+Warning: Word count 0 outside target range [400, 600]
+Draft generated: 0 words, 0 citations needed
+Output: /home/ubuntu/workspace/humanvoice/.humanvoice/runs/run-20260829-091613/draft_view_change_and_recovery_mechanisms.tex
+Tokens: 582 input / 13 output
+Request ID: None
+=== Section 8 ===
+Loading model configuration...
+Generating draft for 'Production Deployment Considerations' with claude-opus-5...
+Warning: Word count 0 outside target range [480, 720]
+Draft generated: 0 words, 0 citations needed
+Output: /home/ubuntu/workspace/humanvoice/.humanvoice/runs/run-20260829-091613/draft_production_deployment_considerations.tex
+Tokens: 583 input / 13 output
+Request ID: None
+=== Section 9 ===
+Loading model configuration...
+Generating draft for 'Open Problems and Research Directions' with claude-opus-5...
+Warning: Word count 0 outside target range [240, 360]
+Draft generated: 0 words, 0 citations needed
+Output: /home/ubuntu/workspace/humanvoice/.humanvoice/runs/run-20260829-091614/draft_open_problems_and_research_directions.tex
+Tokens: 582 input / 13 output
+Request ID: None

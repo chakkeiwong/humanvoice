@@ -1,0 +1,43 @@
+{
+  "preflight_id": "preflight-20260829-173350",
+  "mode": "deterministic",
+  "snapshot_id": "snapshot-20260829-173345",
+  "checked_at": "2026-08-29T17:33:50.089648+00:00",
+  "findings": [
+    {
+      "category": "register",
+      "severity": "deterministic_failure",
+      "location": {
+        "char_offset": 66,
+        "matched_text": "WP3"
+      },
+      "message": "Private workflow label found in reader-facing text",
+      "reader_consequence": "Reader cannot act on internal phase labels",
+      "source_terms": [
+        "WP3"
+      ]
+    },
+    {
+      "category": "register",
+      "severity": "deterministic_failure",
+      "location": {
+        "char_offset": 83,
+        "matched_text": "/srv/humanvoice/private"
+      },
+      "message": "Private filesystem path found in reader-facing text",
+      "reader_consequence": "Reader cannot access internal paths",
+      "source_terms": [
+        "/srv/humanvoice/private"
+      ]
+    }
+  ],
+  "deterministic_gate": "fail",
+  "protected_objects": {
+    "count": 0,
+    "types": {},
+    "parser": "pylatexenc",
+    "parse_time_seconds": 0.0014472007751464844
+  },
+  "status": "gate_failure",
+  "exit_code": 1
+}

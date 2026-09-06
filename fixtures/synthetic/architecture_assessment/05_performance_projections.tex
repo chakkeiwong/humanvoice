@@ -1,0 +1,85 @@
+\section{Performance Projections and Benchmark Evidence}
+
+Performance claims in this assessment derive from a pilot implementation of three services (Authorization Engine, Balance Tracker, Ledger) benchmarked over an eight-week period against synthetic workloads calibrated to production traffic profiles.
+
+\subsection{Benchmark Methodology}
+
+The pilot deployment used identical instance classes to production, deployed across the same three availability zones. Load generation replayed anonymized production traces at scaled rates, preserving the original distribution of transaction types, account access patterns, and temporal clustering. Each measurement run lasted four hours: thirty minutes of warm-up, three hours of steady-state measurement, thirty minutes of ramp-down.
+
+Measurements were repeated at eleven load levels from 20,000 to 220,000 TPS in 20,000 TPS increments. Three independent runs per level produced 33 total measurement runs. Reported figures are medians across the three runs; inter-run variation exceeded 5\% only at the two highest load levels, where it reached 11\% and 18\% respectively.
+
+Instrumentation captured per-service latency at the p50, p90, p99, and p99.9 percentiles, aggregate throughput, error rates by category, and resource utilization. Distributed tracing sampled 1\% of transactions for end-to-end latency attribution.
+
+\subsection{Throughput Scaling}
+
+Observed throughput scaled near-linearly to 180,000 TPS, after which the Balance Tracker deduplication table became the binding constraint. The scaling relationship follows
+\begin{equation}
+\label{eq:throughput-scaling-curves}
+\lambda_{\text{observed}} = \lambda_{\text{ideal}} \cdot \left(1 - \sigma - \kappa(N-1)\right)
+\end{equation}
+the Universal Scalability Law form, where $\sigma$ is the contention coefficient and $\kappa$ is the coherency coefficient. Fitting to measured data yields $\sigma = 0.019$ and $\kappa = 0.000048$, predicting a theoretical maximum of approximately 196,000 TPS. Observed peak sustained throughput of 187,000 TPS matches this within 4.6\%.
+
+The contention coefficient of 0.019 is dominated by the reserved-capacity projection queue for Authorization Engine. Removing the synchronous projection requirement would reduce $\sigma$ to an estimated 0.006, raising theoretical maximum to 340,000 TPS, but would violate the zero-staleness requirement for authorization decisions.
+
+Figure~\ref{fig:throughput-scaling-curves} plots measured versus modeled throughput across all eleven load levels, with the fitted USL curve and the divergence point at 180,000 TPS.
+
+\begin{figure}[htbp]
+\centering
+\rule{0.8\textwidth}{0.4\textwidth}
+\caption{Measured throughput versus Universal Scalability Law projection}
+\label{fig:throughput-scaling-curves}
+\end{figure}
+
+\subsection{Latency Under Load}
+
+The fundamental tension between throughput and latency is expressed by
+\begin{equation}
+\label{eq:throughput-latency-tradeoff}
+L = \frac{S}{1 - \rho} \quad \text{where} \quad \rho = \frac{\lambda}{\mu}
+\end{equation}
+the M/M/1 queueing result. As utilization $\rho$ approaches unity, latency diverges hyperbolically. The practical implication is that operating above 80\% utilization produces latency that is both high and highly variable.
+
+At 100,000 TPS, corresponding to $\rho = 0.53$, measured p99 latency was 118ms. At 160,000 TPS ($\rho = 0.85$), p99 latency rose to 340ms, exceeding the 200ms objective. This establishes 140,000 TPS as the maximum operationally acceptable throughput, providing 3.1x headroom over current peak volume versus 1.0x for the existing system.
+
+The improvement over the monolith's 280ms p99 at 45,000 TPS is attributable primarily to reducing sequential internal calls from 7 to 3, which per equation~\eqref{eq:percentile-latency} substantially reduces tail compounding. Secondary contributions come from read model denormalization eliminating three joins from the balance inquiry path.
+
+\subsection{Replication and Durability}
+
+Each service replicates its data store with a replication factor determined by durability requirements. The relationship between replication factor and annual data loss probability is
+\begin{equation}
+\label{eq:replication-factor}
+P_{\text{loss}} = \binom{n}{f+1} p^{f+1}(1-p)^{n-f-1}
+\end{equation}
+where $n$ is the replication factor, $f$ is the number of tolerated failures, and $p$ is the per-replica annual failure probability. With $p = 0.02$ observed for the instance class, a replication factor of 3 tolerating 1 failure yields $P_{\text{loss}} = 1.2 \times 10^{-3}$, and a replication factor of 5 tolerating 2 failures yields $2.4 \times 10^{-5}$.
+
+Ledger and Audit Logger use replication factor 5 given regulatory retention requirements. The remaining ten services use replication factor 3. The incremental cost of the higher factor for two services is \$41,000 annually, which the risk reduction justifies.
+
+\subsection{Partition Key Distribution}
+
+Even distribution across partitions is necessary to avoid hot spots. Distribution quality is measured by
+\begin{equation}
+\label{eq:partition-key-distribution}
+\text{CV} = \frac{\sigma_{\text{load}}}{\mu_{\text{load}}}
+\end{equation}
+the coefficient of variation across partition loads. Values below 0.15 are considered acceptable; values above 0.30 indicate a hot-spotting problem requiring key redesign.
+
+Partitioning by account identifier using consistent hashing~\cite{karger-consistent-hashing-1997} produced a coefficient of variation of 0.09 across 256 partitions in the pilot. However, the top 0.1\% of accounts by transaction volume, chiefly institutional accounts, generated 8\% of total load. Isolating these accounts to dedicated partitions reduced the coefficient of variation to 0.04 and eliminated the tail latency spikes previously observed when a high-volume account collided with a busy partition.
+
+\subsection{Failure Injection Results}
+
+Chaos experiments injected six failure classes: single instance termination, availability zone isolation, message broker partition, database primary failure, elevated network latency, and dependency timeout. Each experiment ran at 100,000 TPS with full instrumentation.
+
+Single instance termination produced no measurable customer impact; requests in flight were retried within 40ms. Availability zone isolation caused a 12-second elevated error rate reaching 4.2\% before traffic shifted, then recovered fully. Message broker partition triggered the expected degradation: Balance Tracker continued accepting writes, Ledger refused them, and Authorization Engine entered conservative mode approving only sub-threshold transactions, producing an 18\% decline rate for 90 seconds until the partition healed.
+
+Database primary failure was the most disruptive: automatic failover completed in 38 seconds, during which the affected service returned errors for 100\% of write requests. This is materially better than the monolith's 47-minute failover failure but still exceeds the 15-second objective. Reducing failover time requires either a managed database service with faster promotion or a pre-warmed standby, both of which carry additional cost.
+
+Elevated network latency of 200ms injected between zones produced graceful degradation with p99 rising to 420ms but no errors. Dependency timeout testing confirmed that circuit breakers opened correctly after five consecutive failures and closed after a 30-second probe interval succeeded.
+
+Figure~\ref{fig:failure-modes-tree} enumerates the complete failure mode taxonomy with observed blast radius and recovery characteristics for each.
+
+\begin{figure}[htbp]
+\centering
+\rule{0.8\textwidth}{0.45\textwidth}
+\caption{Failure mode taxonomy with observed blast radius and recovery times}
+\label{fig:failure-modes-tree}
+\end{figure}

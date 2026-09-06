@@ -1,0 +1,160 @@
+\chapter{Why good documents still fail}
+\label{ch:problem}
+
+The author sees the repository, the model's history, and the reason each
+qualification was added. The reader sees a rendered document for the first
+time. In the failed funding proposal that difference was enough to turn a
+correct draft into a confusing one. Humanvoice begins with that change in
+vantage point.
+
+\section{The first five minutes}
+
+An expert reader does not begin by grading sentence style. The reader tries to
+build a small working model of the document:
+
+\begin{enumerate}
+\item What decision or problem is this document about?
+\item What is the proposed object, mechanism, or intervention?
+\item Why is the obvious alternative insufficient?
+\item Which evidence would change my view?
+\item What action is the author asking me to take?
+\end{enumerate}
+
+If those answers are not available, later polish has diminishing value. The
+reader must spend scarce attention discovering the document's structure before
+deciding whether the underlying work deserves attention. In the internal case,
+the first pages named phases, files, and review states before naming the action
+that the funder was meant to approve. Each local sentence was defensible;
+the sequence was not.
+
+This is why ordinary readability formulas are insufficient. A short sentence
+can conceal an undefined mechanism, and a long sentence can be efficient when
+its actors and quantities are familiar. Readability is a relation between a
+document, a task, and a reader. It cannot be inferred from a single number.
+
+Figure~\ref{fig:reader-burden-cycle} makes the economic problem visible. The
+cost arises at the missing relation, where the reader must supply work the
+document should have done.
+
+\hvFigureReaderBurden
+
+\section{How a correct draft becomes difficult to read}
+
+The internal cases suggest a sequence of failures. The sequence is useful not
+as a universal taxonomy but as a way to decide where a product intervention can
+help.
+
+\begin{figure}[H]
+\centering
+\resizebox{\textwidth}{!}{%
+\begin{tikzpicture}[node distance=4mm and 5mm,font=\small]
+  \node[hvstage,text width=32mm] (source) {Correct technical\\source};
+  \node[hvwarn,text width=32mm,right=of source] (register) {Private register\\leaks into prose};
+  \node[hvwarn,text width=32mm,right=of register] (rhythm) {Repeated shapes\\mask the point};
+  \node[hvwarn,text width=32mm,right=of rhythm] (defense) {Qualifications\\replace reasons};
+  \node[hvwarn,text width=32mm,right=of defense] (substance) {Mechanism or\\evidence stays implicit};
+  \node[hvgood,text width=34mm,below=13mm of substance] (reader) {Reader cannot recover\\purpose or action};
+  \draw[hvflow] (source)--(register)--(rhythm)--(defense)--(substance);
+  \draw[hvflow] (substance)--(reader);
+  \draw[hvflow] (register.south) to[bend right=18] (reader.west);
+\end{tikzpicture}
+}%
+\caption{A recurring path from local correctness to reader failure. The arrows
+are diagnostic opportunities, not a claim that every document follows all five
+steps.}
+\label{fig:failure-layers}
+\end{figure}
+
+\paragraph{Private register.} A project identifier, phase label, file path, or
+agent status can be meaningful to the authors and opaque to a new reader. The
+problem is not that the term is technical. The problem is that its referent and
+importance are unavailable in the document.
+
+\paragraph{Mechanical regularity.} A document assembled through repeated
+templates may open every section in the same way, use the same transition, or
+close every discussion with the same kind of qualification. These patterns are
+observable, but their presence is not itself a verdict. They matter when they
+make the reader predict the form instead of following the argument.
+
+\paragraph{Defensive prose.} A sentence can list what the project does not
+claim, what a tool cannot guarantee, or what a reviewer must not infer without
+giving the reader the positive mechanism. A boundary is useful when it prevents
+a plausible mistake. It is a burden when it substitutes for an explanation.
+
+\paragraph{Missing substance.} A document may name a result without showing
+the mechanism connecting evidence to conclusion, or name a feature without
+showing the user decision it changes. No surface diagnostic can establish that
+connection by itself.
+
+\paragraph{Reader failure.} The final test is whether the intended reader can
+reconstruct the document's purpose and make the requested judgment. This is not
+the same as agreement. A reader can understand a proposal and reject it for
+good reasons. Humanvoice must preserve that distinction.
+
+\section{Why the incumbent workflow stops too early}
+
+Today a linter reports a phrase, a model proposes a rewrite, version control
+records a file change, and a human reader makes the final judgment. The links
+between those activities are usually informal: a reviewer pastes a comment into
+a ticket, an author edits a paragraph, and a later reader is asked to trust
+that nothing important changed. That is the structural blind spot.
+
+Three costs follow.
+
+First, diagnosis is not located. A comment such as ``the argument is hard to
+follow'' may be accurate but gives the author no shared object on which to act.
+Second, revision is not protected. A fluent rewrite can alter a sign, a
+denominator, a citation, or the scope of a conclusion without an obvious visual
+signal. Third, acceptance is not recorded as an outcome. The team remembers
+that a senior person ``looked at it,'' but cannot compare reader time or the
+number of rounds across documents.
+
+Humanvoice earns its place only if it reduces those three costs together. A new
+dashboard that adds another queue of findings makes the problem worse. A
+protected diff that no author can understand makes safety too expensive. A
+reader questionnaire detached from the actual decision produces a number
+without a use.
+
+\section{The people and the decision}
+
+The product has four human roles, even when one person temporarily occupies
+more than one role.
+
+\begin{description}
+\item[Author or editor.] Owns the claims, evidence, wording, and decision to
+  accept or reject a suggested repair.
+\item[Technical owner.] Supplies the document's format, protected-object rules,
+  privacy boundary, and integration point with the repository or editor.
+\item[Reader.] Represents the person whose judgment the document is meant to
+  support. The reader may be a funder, executive, reviewer, or collaborator.
+\item[Sponsor.] Decides whether the saved attention and reduced risk justify
+  further investment. The sponsor may be the technical owner, but need not be.
+\end{description}
+
+The author needs actionable findings and safe comparison. The reader needs a
+document that does not require privileged project context. The sponsor needs a
+credible comparison with the incumbent bundle. These are compatible needs, but
+they are not the same metric.
+
+\section{A useful product boundary}
+
+The product should be judged at the boundary where it changes a real review
+decision. It is not a general-purpose writing environment, a style-imposition
+service, or an authorship detector. It is a review path beside the author's
+existing editor and repository.
+
+\begin{takeawaybox}{The boundary that matters}
+Humanvoice owns the evidence trail between a source snapshot and a reader
+decision. The author owns the prose. The reader owns acceptance. The sponsor
+owns the decision to continue.
+\end{takeawaybox}
+
+This boundary also explains why a local-first design is more than a privacy
+preference. Technical proposals can contain unpublished results, client data,
+or decisions that should not be sent to an external model by default. A system
+that cannot show where a finding came from cannot offer a useful privacy or
+meaning guarantee either. Source locations, protected spans, and versioned
+review decisions are the minimum common language between the four roles. The
+next chapter turns from the boundary to the investment question: what burden
+would a bounded build have to remove, and what evidence would make the result
+worth funding?

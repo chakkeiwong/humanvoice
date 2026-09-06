@@ -1,0 +1,68 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://humanvoice.local/schema/source-snapshot.schema.json",
+  "title": "Humanvoice source snapshot",
+  "description": "An immutable read-only capture of a source tree plus the validated authoring brief. Per implementation contract trust_boundary T1, all compilation reads from a snapshot and writes only to a separate scratch directory; the snapshot itself is never modified after creation.",
+  "type": "object",
+  "required": ["record_type", "schema_version", "record_id", "run_id", "created_at", "snapshot_id", "source_hash", "source_files", "brief", "brief_valid", "snapshot_immutable"],
+  "properties": {
+    "record_type": {"const": "SourceSnapshot"},
+    "schema_version": {"type": "string", "pattern": "^HV-SCHEMA-[0-9]+\\.[0-9]+$"},
+    "record_id": {"type": "string", "minLength": 1},
+    "run_id": {"type": "string", "minLength": 1},
+    "created_at": {"type": "string", "format": "date-time"},
+    "snapshot_id": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Stable identifier for this snapshot, e.g. snapshot-20260828-141530"
+    },
+    "source_hash": {
+      "type": "string",
+      "pattern": "^[A-Fa-f0-9]{64}$",
+      "description": "SHA-256 over the snapshot contents. For a single file, the file digest; for a tree, the digest of per-file digests in sorted path order."
+    },
+    "source_files": {
+      "type": "array",
+      "minItems": 1,
+      "items": {"type": "string", "minLength": 1},
+      "description": "Snapshot-relative paths of captured source files, e.g. source/intro.tex. Paths are relative and must not escape the snapshot root."
+    },
+    "brief": {
+      "type": "object",
+      "description": "The authoring brief captured with the snapshot. Its own required fields are enforced by authoring-brief.schema.json when the brief is stored as a standalone record."
+    },
+    "brief_valid": {
+      "type": "boolean",
+      "description": "Whether the brief passed completeness validation at snapshot time. A snapshot with an invalid brief cannot support a release."
+    },
+    "snapshot_immutable": {
+      "type": "boolean",
+      "const": true,
+      "description": "Asserts the snapshot is closed to modification. A snapshot record can only claim immutability; the value is never false."
+    },
+    "source_root": {
+      "type": ["string", "null"],
+      "description": "Absolute path of the original source tree, recorded for provenance. Never read during compilation."
+    },
+    "scratch_path": {
+      "type": ["string", "null"],
+      "description": "Snapshot-relative path of the writable scratch directory used for builds"
+    },
+    "file_digests": {
+      "type": "object",
+      "description": "Optional per-file SHA-256 map keyed by snapshot-relative path, enabling per-file integrity checks without recomputing the tree",
+      "additionalProperties": {"type": "string", "pattern": "^[A-Fa-f0-9]{64}$"}
+    },
+    "byte_size": {
+      "type": ["integer", "null"],
+      "minimum": 0,
+      "description": "Total bytes captured, checked against operating_envelope.max_source_tree_mib"
+    },
+    "privacy_class": {
+      "enum": ["public", "internal", "confidential", "restricted"],
+      "description": "Handling class inherited from the brief; governs what may appear in a reader packet"
+    },
+    "extensions": {"type": "object"}
+  },
+  "additionalProperties": false
+}

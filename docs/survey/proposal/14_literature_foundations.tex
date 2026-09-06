@@ -1,0 +1,441 @@
+\chapter{The research behind Humanvoice}
+\label{ch:literature-foundations}
+
+An economist, referee, or executive does not read a technical document one
+sentence at a time. The reader builds a working picture of the argument, checks
+the evidence, and decides whether the requested action follows. Language-model
+studies cover only part of that work. Humanvoice also draws on technical
+communication, reading, feedback, human--computer interaction, and scholarly
+integrity, fields that have studied those reader and writer decisions for much
+longer.
+
+Those fields do not give us direct efficacy evidence. Each contributes a way to
+describe a reader, a revision, an interaction, or an integrity boundary. Before
+we turn any lesson into a product claim, we need an observation that could test
+it in technical documents.
+
+The common idea is a loop rather than a score. Figure
+\ref{fig:reader-author-loop} locates the judgments: the author owns meaning,
+the reader owns use, and the system records the path between them.
+
+\hvFigureReaderLoop
+
+\section{Technical prose is a genre, not a neutral container}
+\label{sec:lit-genre}
+
+The first useful correction comes from register theory. Biber's analysis of
+variation across speech and writing ties linguistic choices to situation,
+audience, and purpose
+\citep{biber1988variation}. A technical proposal is not a bad version of a
+conversation, and a readable economics paper is not the same object as a
+popular article. It uses equations, defined terms, cautious causal language,
+and references because those forms carry specific obligations.
+
+That observation changes the target for a writing tool. If a diagnostic rewards
+short sentences without checking whether a definition has been separated from
+its condition, it may move the text toward a different genre. If it removes
+all repetition, it may erase the repeated noun that lets a reader track an
+actor across a derivation. The right question is not ``does the document look
+like ordinary speech?'' It is ``does the document give this reader the cues
+needed for this technical task?''
+
+Coh-Metrix makes the distinction measurable. Graesser, McNamara, Louwerse,
+and Cai separate cohesion and language dimensions that syllable-based formulas
+do not see \citep{graesser2004cohmetrix}. A pronoun with no clear antecedent,
+a chain of nouns that changes referent, or a causal connector whose second
+clause does not follow from the first can all increase reader work while
+leaving sentence length unchanged. The CLEAR corpus extends the point with
+human ease-of-reading judgments and shows that learned, multidimensional
+features predict those judgments better than classical readability formulas
+\citep{crossley2022clear}.
+
+The evidence on scientific writing supplies a second warning. Scientific
+abstracts have become harder to read over time as terminology and sentence
+complexity rise \citep{plavensigray2017readability}. Specialized terminology
+also carries a measurable communication cost: papers with more specialized
+terms in titles and abstracts receive fewer citations in the study by
+Mart\'{\i}nez and Mammola \citep{martinez2021terminology}. Neither result says
+that technical terms should be removed. It says that a writer should pay for a
+term with a definition, a reason for using it, or a later calculation that
+needs it.
+
+\begin{table}[H]
+\centering
+\small
+\begin{tabularx}{\textwidth}{@{}p{0.23\textwidth}L p{0.27\textwidth}@{}}
+\toprule
+Reading property & What a genre-aware account notices & Humanvoice consequence \\
+\midrule
+Referential cohesion & Nouns, pronouns, and labels keep the same actor or
+quantity in view & Detect a possible break, show the surrounding passage, and
+ask the author to repair or defend it \\
+Discourse connection & A result, reason, qualification, and implication have
+an interpretable relation & Keep findings tied to the decision question, not
+to an isolated sentence score \\
+Terminology & Specialized words can be necessary but impose a knowledge cost &
+Define a term at first use or show why the intended reader already knows it \\
+Register & Formality and sentence shape vary by genre and audience & Compare
+against an economics reference corpus, not a universal ``human'' baseline \\
+\bottomrule
+\end{tabularx}
+\caption{The reading literature changes what a useful diagnostic is allowed to
+mean.}
+\label{tab:genre-consequences}
+\end{table}
+
+These are not four automatic scores. They are four reasons for locating a
+passage and asking a substantive question. The author's answer may be that a
+term is standard in the field, that a repeated label is needed for a theorem,
+or that the paragraph belongs in a methods appendix. A diagnostic earns its
+place by making that judgment easier, not by making the judgment disappear.
+
+\section{Readers use position and effort as evidence}
+\label{sec:lit-reader-expectations}
+
+Consider two sentences with the same facts. The first ends with the method and
+buries the result in its middle. The second starts from what the previous
+sentence established and ends on the result the reader should carry forward.
+No vocabulary list can explain why the second is easier to use. The difference
+lies in where the sentence asks the reader to look for continuity and emphasis.
+
+Gopen and Swan describe this problem through reader expectations: readers tend
+to treat the opening of a sentence as contextual material and its closing
+position as a place of emphasis; they also expect grammatical subjects and
+verbs to reveal the story's actors and actions
+\citep{gopen1990science}. Their account is an influential editorial model, not
+a controlled demonstration that one arrangement improves every technical
+document. It earns a place here because it yields specific, contestable
+questions. What does this sentence connect to? Which actor performs the main
+action? What new information receives emphasis? A Humanvoice finding can point
+to a mismatch between those cues and the declared argument without pretending
+to calculate comprehension.
+
+The model also explains why noun-heavy prose feels bloodless. ``Validation of
+the result was performed by the review layer'' makes the reader recover both
+actor and action. ``The reviewer validated the result'' supplies them in the
+grammar. Nominalization is not an error in itself: technical prose sometimes
+needs a stable noun for a process that later becomes an object of analysis.
+The diagnostic question is whether the noun helps the argument keep an object
+in view or merely forces a weak verb to carry an action that could have been
+stated directly.
+
+Oppenheimer supplies adjacent experimental evidence for a related effect. In
+several studies, replacing unnecessarily complex wording with simpler wording
+changed judgments of the author; needless complexity did not make the author
+appear more intelligent \citep{oppenheimer2006erudite}. The study concerns
+processing fluency and judged intelligence, not acceptance of mathematical
+monographs by expert executives. It therefore supports a restrained inference:
+complex vocabulary should earn its cost. It does not support deleting domain
+terms, shortening every sentence, or treating a simple-word ratio as a quality
+score.
+
+Together, these sources sharpen the product design. A finding should show the
+passage and the relation it may obscure: actor to action, old information to
+new, evidence to conclusion, or term to purpose. The interface should offer a
+question such as ``what should the reader carry from the end of this sentence
+into the next one?'' rather than an instruction such as ``simplify.'' The
+reader study can then test whether the revised passage improves reconstruction
+or reduces time. That later observation, not the editorial maxim, determines
+whether the finding belongs in the product.
+
+\section{Useful feedback changes the next draft}
+\label{sec:lit-feedback-foundations}
+
+An author can receive a beautifully specific comment and still write the next
+draft unchanged. Feedback research therefore supports the product's revision
+loop only conditionally: a comment is useful when it changes a later choice in
+a way that helps the declared task. Specificity and politeness alone are not
+evidence.
+
+Nair and colleagues evaluate generated feedback on an economic essay task by
+looking at simulated revisions rather than by asking whether the comments
+sound detailed \citep{nair2024closing}. Rashkin and colleagues construct
+stories with deliberately corrupted passages and show that models can find
+local defects while missing the most important problem or selecting praise
+where criticism is needed \citep{rashkin2025story}. Li and colleagues find
+that a detailed rubric can make a model a useful revision assessor, but that
+agreement varies with writer proficiency \citep{li2024revisions}. Behzad and
+colleagues report that model and human feedback can complement one another,
+while personalized feedback remains difficult \citep{behzad2024feedback}.
+
+Taken together, these studies imply three distinct units of analysis:
+
+\begin{enumerate}
+\item the \emph{finding}, which says what passage deserves attention;
+\item the \emph{revision}, which records what the author changed and why; and
+\item the \emph{outcome}, which says whether the intended reader could complete
+      the task with less burden and no meaning error.
+\end{enumerate}
+
+Keep the three observations separate. A high-precision finding can be useless
+if it concerns a low-consequence phrase. A beautiful revision can be harmful if
+it changes the denominator in a table. A reader can accept a document for the
+wrong reason. The evaluation chapter therefore treats finding, revision, and
+reader outcome as a chain with separate records and separate uncertainty.
+
+For document $d$, revision path $h$, and reader task $q$, write
+\begin{equation}
+  Y(d,h,q) = \bigl(F(d),\; C(h\mid F),\; A(q\mid d,h)\bigr),
+  \label{eq:lit-three-outcomes}
+\end{equation}
+where $F$ is the set of located findings, $C$ is the author's change and
+explanation, and $A$ is the reader's ability to act. Equation
+\eqref{eq:lit-three-outcomes} is a bookkeeping identity for the product, not a
+psychological model. It prevents a benchmark of $F$ from being reported as a
+benchmark of $A$.
+
+The edit study by Chakrabarty, Laban, and Wu is useful because it measures the
+middle link directly. Professional writers labeled span-level idiosyncrasies,
+an automated detector recovered only part of those spans, and edited text
+outperformed raw model output while remaining behind professional writing
+\citep{chakrabarty2024salvage}. The result supports an edit workflow, not a
+one-shot humanizer. It also gives a realistic expectation for the first
+release: finding precision will be imperfect, so the interface must expose
+context and allow rejection without penalty.
+
+\section{The reader is part of the intervention}
+\label{sec:lit-reader-interaction}
+
+Human--AI interaction research prevents a common experimental mistake: treating
+the final text as if it were produced by a single prompt. CoAuthor records
+keystrokes and suggestion use in a collaborative writing setting
+\citep{lee2022coauthor}. Wordcraft shows how writers use a model to explore,
+select, and revise alternatives rather than simply accept its first answer
+\citep{yuan2022wordcraft}. Mysore and colleagues' in-the-wild traces identify
+recurring paths in which users revise their intent, ask questions, adjust
+style, and inject content \citep{mysore2025paths}. A document-level experiment
+that records only the before and after versions loses the process variables
+that explain both benefit and harm.
+
+When a reader asks a question, the author should be able to see which suggestion
+was offered, which one was accepted or rejected, which protected object was
+touched, and whether the question caused a second revision. Those records
+support analysis; they should not become visible workflow vocabulary in the
+finished proposal. The reader should see a clear paragraph, not a history of
+prompts.
+
+Agency has a second dimension. The author can delegate wording while retaining
+responsibility for a claim, or can delegate a structural diagnosis while
+retaining the final edit. The system should ask which delegation occurred
+because disclosure and accountability depend on it. It should not infer
+authorship from the text. The detector studies in Chapter~\ref{sec:literature}
+show why: formal or non-native writers can be flagged as machine-generated,
+while paraphrase can evade several detector families
+\citep{liang2023detectors,krishna2023paraphrasing}.
+
+\section{Integrity is a property of the path}
+\label{sec:lit-integrity}
+
+Citation, disclosure, and provenance are often discussed as policy questions,
+but each has a concrete technical counterpart. A citation can have a valid
+identifier and still fail to support the sentence. A disclosure can be present
+and still leave the reader unable to tell which passages were assisted. A
+version history can show that text changed and still omit the reason for a
+changed number.
+
+Mugaanyi and colleagues' evaluation of references generated by ChatGPT finds
+unverifiable and mismatched citations often enough to make mechanical
+resolution and human checking necessary \citep{mugaanyi2024citation}. ICMJE's
+recommendations place accuracy, integrity, originality, and responsibility
+with human authors, while treating a language model as a tool rather than an
+author \citep{icmje2025ai}. NIST's AI Risk Management Framework gives a broader
+vocabulary for validity, reliability, privacy, transparency, and accountability
+\citep{nist2023airmf}.
+
+Those sources do not prescribe Humanvoice's interface. They do establish a
+design relation:
+
+\begin{equation}
+  \begin{aligned}
+  \text{responsible revision} ={}&\text{located source}
+      +\text{declared assistance}\\[-1pt]
+      &+\text{human ownership of the decision}.
+  \end{aligned}
+  \label{eq:lit-integrity-relation}
+\end{equation}
+
+The relation is not a score and the plus signs are not arithmetic. Each term is
+necessary for a reader to reconstruct what happened. If the source cannot be
+located, a changed claim cannot be examined. If assistance is undisclosed,
+the reader cannot interpret the interaction or the responsibility boundary. If
+no human owns the decision, a technically fluent output has no accountable
+author.
+
+\section{Evaluation traditions and their blind spots}
+\label{sec:lit-evaluation-traditions}
+
+The literature uses several familiar endpoints: time, rubric scores, pairwise
+preference, agreement with experts, and task completion. They answer different
+questions. Noy and Zhang report faster and better-scored occupation-specific
+writing with ChatGPT \citep{noy2023experimental}; Brynjolfsson, Li, and
+Raymond find productivity gains in customer support with heterogeneous effects
+by worker experience \citep{brynjolfsson2025work}; and Dell'Acqua and
+colleagues show that assistance can help inside a capability frontier and hurt
+outside it \citep{dellacqua2026jagged}. These studies are valuable evidence
+about task-level assistance. They are not estimates of reader acceptance for a
+technical proposal.
+
+The LLM-as-judge literature supplies a parallel warning. Zheng and colleagues
+measure position and verbosity bias in model evaluation
+\citep{zheng2023judging}. Panickssery, Bowman, and Feng show that models can
+recognize and favor their own generations \citep{panickssery2024llm}. Dubois
+and colleagues show that length control changes automatic rankings and improves
+agreement with human judgments \citep{dubois2024length}. Chakrabarty and
+colleagues find that model judges are generous toward generated creative text
+where expert writers are stricter \citep{chakrabarty2024art}.
+
+The evaluation design follows from the blind spots rather than from a desire
+to collect every metric. The primary endpoint is whether a named reader can
+make the declared decision with less total attention and no protected-object
+error. Time and feedback rounds explain cost. Pairwise model judgments help
+prioritize repairs after calibration. Surface diagnostics describe style drift.
+None of the secondary measures can replace the primary endpoint.
+
+\section{Foundations of writing as planned work}
+\label{sec:lit-writing-foundations}
+
+The product claim also rests on an older literature that is easy to lose when
+the discussion is narrowed to language models. Flower and Hayes describe
+writing as a recursive process of planning, translating, and reviewing under a
+writer's goals and a representation of the rhetorical problem
+\citep{flower1981cognitive}. The useful unit is therefore not a sentence in
+isolation. It is a choice made while the writer is trying to satisfy a reader,
+an evidence standard, and a purpose at the same time. A tool that improves a
+sentence while hiding which goal it serves may reduce local friction while
+increasing the next planning cost.
+
+Bereiter and Scardamalia's distinction between knowledge telling and knowledge
+transforming makes the same point in a different vocabulary
+\citep{bereiter1987psychology}. Knowledge telling retrieves propositions and
+places them on the page. Knowledge transforming changes the relation among
+claims, reasons, evidence, and the problem being solved. Expert technical
+documents require the second operation: a result must be selected, situated,
+qualified, and connected to an action. A fluent assistant can make knowledge
+telling faster without making the transformation happen. Humanvoice should
+therefore expose a missing relation as a question, not fill it with plausible
+text.
+
+Genre analysis supplies the social side of the model. Swales treats research
+writing as a sequence of moves that establishes a territory, identifies a
+gap, occupies that gap, and qualifies the resulting claim
+\citep{swales1990genre}. The exact moves vary by discipline and document type,
+but the implication is stable: a proposal, methods note, and executive
+memorandum have different obligations even when they share vocabulary. A
+universal ``human'' baseline is not a defensible target. The reference corpus
+and reading brief must name the genre, the decision, and the audience whose
+expectations make a move useful.
+
+Hyland's account of metadiscourse adds a reader-facing layer
+\citep{hyland2005metadiscourse}. Writers use signposts, stance, and
+engagement to tell readers how to interpret a claim, how strongly to take it,
+and where to look next. Some of the patterns that a generic humanizer marks as
+repetition are doing this work. Removing every ``however,'' condition, or
+roadmap sentence can make a document shorter while making its inferential
+path harder to follow. A diagnostic must ask whether the device is redundant
+in this passage, not whether the device is common in model output.
+
+Feedback research then explains why the proposed loop ends with a reader. Hattie
+and Timperley distinguish feedback about the task, the process, and the
+self-regulatory activity around the work; the effects depend on timing,
+specificity, and how the recipient uses the information
+\citep{hattie2007feedback}. Nicol and Macfarlane-Dick emphasize that good
+feedback helps a learner generate and use judgments rather than merely receive
+a correction \citep{nicol2006formative}. For a technical author, the analogue
+is an editorial question that can be investigated and accepted or rejected,
+not a replacement paragraph that silently transfers responsibility to a
+system.
+
+\begin{table}[H]
+\centering
+\small
+\begin{tabularx}{\textwidth}{@{}p{0.22\textwidth}L p{0.27\textwidth}@{}}
+\toprule
+Tradition & Observation relevant to the product & Boundary on the claim \\
+\midrule
+Writing as a recursive process & The author plans for a rhetorical problem,
+translates ideas, and reviews against goals. & A sentence score cannot stand in
+for a model of the document's purpose. \\
+Knowledge transforming & Expertise changes relations among claims, reasons,
+evidence, and consequences. & Faster drafting does not show that the relation
+was transformed correctly. \\
+Genre and metadiscourse & Research and decision genres use recognizable moves,
+signposts, stance, and engagement. & A universal style baseline can erase a
+necessary disciplinary cue. \\
+Formative feedback & Feedback is useful when it helps the writer generate and
+use a better judgment on the next attempt. & A detailed comment is not evidence
+of uptake, transfer, or reader acceptance. \\
+\bottomrule
+\end{tabularx}
+\caption{Foundational writing research supplies mechanisms and boundaries for
+the product hypothesis.}
+\label{tab:writing-foundations}
+\end{table}
+
+Consider a small worked contrast. A local checker sees the sentence ``The
+model performs well'' and can suggest a more active verb. The writing-process
+literature asks a prior question: what is the rhetorical problem? If the
+reader must decide whether to fund a larger run, the sentence needs a declared
+comparison, an outcome, and a condition. A defensible revision might be
+``On the held-out documents, the constrained reconstruction reduces median
+reader time by 11 minutes, with no protected-object changes.'' That revision
+is not justified by fluency. It is justified only if the comparison, unit,
+sample, and qualification exist in the source. The same sentence would be
+wrong in a methods section if the 11 minutes came from an illustrative fixture
+rather than observed readers.
+
+The tempting inference is that a model which proposes the second sentence has
+understood the argument. It may instead have supplied a familiar empirical
+shape. Humanvoice makes the distinction operational: the finding points to the
+span and the missing question; the author supplies or rejects the evidence; the
+protected comparison records the change; and the reader instrument tests
+whether the resulting claim can be used. The literature makes this division of
+labor plausible. It does not make the proposed revision true.
+
+These foundations change the implementation in four ways. First, the source
+snapshot stores the reading brief and declared decision alongside text, so a
+finding can be interpreted as a rhetorical problem rather than a lexical
+anomaly. Second, the diagnostic vocabulary includes relations among actors,
+evidence, qualifications, and actions, while retaining simple surface rules
+as low-cost candidates. Third, the author log records why a suggestion was
+accepted, rejected, or deferred; this is the observable trace of feedback use,
+not a productivity badge. Fourth, the reader exercise is part of the workflow,
+because transfer to a later decision is the outcome that matters.
+
+The foundations also limit the first release. Humanvoice should not attempt to
+infer a complete rhetorical move sequence for every discipline, score a
+writer's expertise, or prescribe one voice. It can identify a possible missing
+actor, relation, or qualification and show the evidence behind that question.
+It can compare protected objects and ask a reader what remains unclear. The
+author and the domain reader still supply the interpretation. This narrow
+boundary is what makes a feasibility study possible without pretending to
+automate composition theory.
+
+\section{Gaps in the review}
+\label{sec:lit-gaps}
+
+A skeptical panel should ask what is missing. The current snapshot has live
+broad and challenge searches, public imports, a provenance-complete bounded
+RePEc/IDEAS specialist slice, and resolved Crossref identities for every
+DOI-bearing bibliography row. Broad retrieval passes, but four of eighteen
+known items still evade the deliberately indirect challenge queries. The
+snapshot also has no independent screening of all load-bearing rows and no
+full-text verification or design-specific appraisal for every claim anchor.
+Those remaining gaps are explicit, not hidden assumptions.
+
+The topic also has adjacent literatures that deserve deliberate treatment in
+the next search pass: technical-communication studies of expert review,
+composition research on revision and feedback uptake, information-retrieval
+work on citation entailment, human-factors work on decision aids, and empirical
+studies of privacy-preserving local inference. The product can proceed to a
+bounded feasibility build while those searches continue because the current
+request is for implementation learning. It cannot present the resulting
+pilot as a completed systematic review or as proof that the workflow improves
+all expert writing.
+
+The omission register in Appendix~\ref{app:literature-matrix} records the
+question, likely reviewer objection, source status, and next action for each
+high-risk omission. This is a better scholarly posture than filling the
+bibliography with names that have not been read. The next chapter applies the
+same standard to software: an available package earns a place in the product
+only after its capability, license, failure behavior, and evidence burden are
+visible.

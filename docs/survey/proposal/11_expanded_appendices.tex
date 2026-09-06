@@ -1,0 +1,1284 @@
+\chapter{Technical appendices}
+\label{ch:expanded-appendices}
+
+The main chapters make the investment case in the order a decision-maker
+needs: an observed problem, a mechanism, a bounded product, evidence that
+supports parts of the mechanism, and a test that can change the decision.
+This appendix supplies the working detail behind that route. It is written
+for the engineer who will build a fixture, the researcher who will audit a
+claim, and the sponsor who wants to know exactly what a successful twelve
+weeks would leave behind.
+
+The appendices are deliberately explanatory. A table records a contract, but
+the paragraphs around it explain why the contract exists, what a failure looks
+like, and what conclusion the failure permits. The examples use LaTeX because
+it is the richest current target in the repository; the same objects can be
+represented in Markdown or a word-processing format once their source and
+rendered anchors are known.
+
+\section{Notation and terms}
+\label{app:notation}
+
+\subsection{The unit of work}
+
+Humanvoice operates on a \emph{document run}. A run is one immutable source
+snapshot, one declared reading brief, one execution configuration, and one
+rendered result. A new commit, a changed bibliography, a different parser, or
+a different model version creates a new run. This simple rule prevents an
+author from comparing a revised page with a stale source map and then calling
+the result a protected diff.
+
+Let a run be
+\[
+  R=(S,V,C,E,P),
+\]
+where $S$ is the source snapshot, $V$ its version identifier, $C$ the reading
+brief, $E$ the execution environment, and $P$ the rendered pages and
+anchors. The tuple is not a claim that every field must be stored forever. It
+is the minimum information needed to reproduce a finding while the decision
+is still live. A retention policy may later delete page images while keeping a
+hash and a decision record; it must then say that it has done so.
+
+The reading brief has eight fields. The first four define the reader's task;
+the remaining four keep later inspections from quietly changing that task.
+
+\begin{enumerate}
+\item the reader role, such as investment committee member, technical
+      referee, or policy executive;
+\item the decision the reader must be able to make after reading;
+\item the knowledge and time budget that may reasonably be assumed; and
+\item the evidence, uncertainty, and disclosure obligations that constrain
+      the decision.
+\item two or three named exemplar documents that establish the desired pace
+      and explanatory register;
+\item vocabulary the reader can reasonably be expected to know without a
+      local gloss;
+\item declared exemption zones, such as a map, decision box, or reference
+      table, where a name may appear before it is taught; and
+\item the versioned reader directives and the date of the last reader
+      session.
+\end{enumerate}
+
+The brief is not a marketing persona. It is a testable statement about
+what the document owes a named class of reader. For example, ``an expert
+reader'' is too broad for an acceptance endpoint. ``A former econometrics
+professor deciding whether to fund a twelve-week feasibility build,
+with twenty minutes for the executive route and access to the appendices'' is
+specific enough to generate a rubric and a timed exercise.
+
+The exemplar field is deliberately comparative. It does not turn one
+monograph into a universal standard. A pacing meter reports where the target
+falls relative to the supplied exemplars and shows the passages that account
+for the difference. The vocabulary and exemption fields prevent a first-use
+audit from treating a reader's known language or an announced map as a defect.
+The brief is cumulative: a reader's stopping point or standing instruction
+updates the next version, with the change recorded rather than inferred from a
+new score.
+
+\subsection{Pacing, ordering, and assertion records}
+\label{app:pacing-records}
+
+The HPO case suggests three related but non-interchangeable records. A
+\emph{pacing profile} counts concepts and paragraphs; a \emph{first-use
+record} checks whether a term was introduced before it was needed; an
+\emph{assertion audit} checks whether an editorial repair smuggled in a new
+claim. All three locate questions. None can certify that a reader will accept
+the page.
+
+For a document unit $u$, let $W_u$ be prose words and $C_u$ the distinct
+concepts first introduced in that unit. The descriptive introduction rate is
+
+\begin{equation}
+  q_u=\frac{W_u}{C_u},
+  \qquad
+  b_u=\frac{\#\{\text{paragraphs introducing at least three concepts}\}}
+                 {\#\{\text{prose paragraphs}\}}.
+  \label{eq:pacing-profile}
+\end{equation}
+
+The implementation also reports singleton share, repeated occurrences, and
+the number of first introductions in a trailing 1,500-word window. These
+quantities are diagnostic: the same detector must run over the target and its
+exemplars, and the author must see the spans behind any comparison.
+
+\begin{table}[H]
+\centering
+\small
+\begin{tabularx}{\textwidth}{@{}p{0.22\textwidth}L@{}}
+\toprule
+Record & Minimum fields \\
+\midrule
+Pacing profile & run id; unit; detector version; prose-word count; concept
+count; words per concept; singleton share; burst paragraphs; live-load
+window; exemplar ids; relative position; dismissed findings. \\
+First-use record & concept; first source line and rendered page; introduction
+signal; known-vocabulary match; exemption-zone match; taught-later pointer;
+author disposition. \\
+Assertion audit & parent and child run; added sentence span; detected number,
+comparison, superlative, or causal verb; citation or protected-claim pointer;
+author explanation; status. \\
+Reader observation & reader role; stopping page or section; quoted span;
+missing relation; elapsed time; requested change; confidence. \\
+\bottomrule
+\end{tabularx}
+\caption{Small records that turn the HPO lessons into inspectable questions.}
+\label{tab:pacing-order-assertion-records}
+\end{table}
+
+\subsection{Objects, spans, and anchors}
+
+The source contains more than prose. Humanvoice calls every meaning-bearing
+or navigation-bearing item an \emph{object}. A span is a contiguous source
+range; an anchor is a stable identifier that connects a source range to a
+rendered location. The same object may have several spans: a citation key in
+the sentence, its bibliography entry, and the rendered citation are one
+identity relation rather than three independent strings.
+
+For an object $o$, write
+\[
+  o=(\operatorname{kind},\operatorname{span},\operatorname{anchor},
+     \operatorname{owner},\operatorname{status}).
+\]
+The owner is the person or rule allowed to change it. A numerical literal may
+be owned by the analyst; a quotation may be owned by its source; a claim
+scope may require the document author; a page anchor is owned by the build
+system. Ownership is useful because it turns a vague warning into a bounded
+decision: the tool can flag a change, but it cannot silently decide that the
+owner's object no longer matters.
+
+The first implementation should distinguish these object kinds:
+
+\begin{table}[H]
+\centering
+\small
+\begin{tabularx}{\textwidth}{@{}p{0.19\textwidth}p{0.23\textwidth}L@{}}
+\toprule
+Kind & Typical anchor & Why it matters \\
+\midrule
+Prose claim & source line and paragraph id & A polished sentence can widen a
+claim even when every word is grammatical. \\
+Assumption & tagged span or equation premise & A reader must know which
+conditions make the conclusion conditional. \\
+Equation & equation label and source span & Formatting changes can hide a
+changed term or a lost restriction. \\
+Number and unit & token range & A decimal or unit change can alter the
+decision while escaping a prose diff. \\
+Citation identity & citation key plus bibliography id & A citation that still
+looks plausible may resolve to a different source. \\
+Cross-reference & label and target page & Navigation is part of a long
+document's argument. \\
+Quotation or code & fenced or delimited span & Exactness and provenance are
+different from ordinary copy-editing. \\
+Table or figure & environment id and caption & A result can be correct in the
+text but misaligned with its displayed evidence. \\
+\bottomrule
+\end{tabularx}
+\caption{Initial meaning-bearing object vocabulary.}
+\label{tab:object-vocabulary}
+\end{table}
+
+The object vocabulary is intentionally smaller than a complete abstract
+syntax tree. A parser may know many more nodes, but the product should expose
+only those that affect a reader decision or a protected comparison. This is a
+product boundary, not a limitation on internal implementation. It keeps the
+author's review queue legible and makes test coverage auditable.
+
+\subsection{Finding, decision, and revision}
+
+A \emph{finding} is a located, falsifiable prompt about an object or relation.
+It is not a replacement sentence. Formally, a finding can be represented as
+\[
+  f=(R,\operatorname{kind},\operatorname{location},\operatorname{evidence},
+     \operatorname{question},\operatorname{confidence},\operatorname{state}).
+\]
+The evidence field points to a source span, a deterministic count, a reader
+observation, or a declared absence. The question is phrased so that an author
+can answer ``keep'', ``change'', or ``abstain'' without accepting an implied
+rewrite. Confidence describes the diagnostic's reliability, not the truth of
+the underlying claim.
+
+The author decision is a separate record:
+\[
+  d=(f,\operatorname{action},\operatorname{rationale},\operatorname{new\ run}).
+\]
+An accepted finding may lead to a revision; a rejected finding remains useful
+because it teaches the diagnostic about this author and genre. An abstention
+means the product could not safely decide. Counting rejection and abstention
+is essential: a tool that raises fewer flags by hiding uncertainty can appear
+precise while making the author less safe.
+
+\begin{cardexample}{A small run, written out}
+The source sentence says, ``The intervention improves quality.'' The reader
+contract names a referee who must decide whether to fund a feasibility test.
+The evidence record shows two internal repair cases, neither with a controlled
+comparison. Humanvoice therefore emits a finding at the word ``improves'':
+``Which observed outcome supports this comparative verb, and should it be
+narrowed to a testable hypothesis?'' The author changes the sentence to
+``The intervention is designed to test whether review burden falls.'' The
+equation, citation identities, and decision request remain unchanged. The
+finding is closed with the rationale ``claim changed from result to hypothesis''.
+\end{cardexample}
+
+The tempting but invalid inference is that the tool has proved the revised
+sentence better. It has only made the claim class explicit and preserved the
+objects that must be reviewed. A reader study is still required for an
+effectiveness claim.
+
+\subsection{Claim classes and evidence grades}
+
+Every load-bearing sentence in the proposal should be classifiable as one of
+four kinds: source result, local implication, project hypothesis, or open
+question. The classification is a reading aid, not a substitute for a
+bibliography. A source result needs a citation and an inspectable anchor. A
+local implication must state the bridge from the source result to the product.
+A project hypothesis must name the planned observation. An open question must
+name what would resolve it.
+
+For implementation decisions, use an evidence grade with two axes. The first
+axis is \emph{provenance}: primary external study, official package record,
+internal case, or design assumption. The second is \emph{fit}: direct fit to
+the target population, adjacent fit, or unknown fit. A highly credible study
+with adjacent fit should not outrank a modest internal observation when the
+question is simply whether a source map survives this repository's macros;
+neither should be used to support an efficacy claim outside its scope.
+
+\begin{table}[H]
+\centering
+\small
+\begin{tabularx}{\textwidth}{@{}p{0.19\textwidth}p{0.28\textwidth}L@{}}
+\toprule
+Evidence grade & Interpretation & Permitted use \\
+\midrule
+P--D & Primary or official source, direct target fit & Support a bounded
+design or benchmark expectation. \\
+P--A & Primary or official source, adjacent fit & Motivate a test; do not
+generalize the outcome. \\
+I--D & Internal record, direct repository fit & Specify a fixture or
+workflow requirement; not external efficacy. \\
+I--A & Internal record, adjacent or selected case & Generate a hypothesis or
+counterexample. \\
+A--U & Assumption with unknown fit & Price or scope the experiment only. \\
+\bottomrule
+\end{tabularx}
+\caption{A compact evidence vocabulary for design decisions.}
+\label{tab:evidence-grades}
+\end{table}
+
+\section{Detailed requirements and records}
+\label{app:requirements}
+
+\subsection{From a promise to an acceptance contract}
+
+The product proposal uses requirements in a narrow sense: a requirement is a
+behavior that can be observed in a run and accepted or rejected by a named
+owner. ``The writing should feel human'' is a valuable aspiration but not a
+first-release requirement. ``A reviewer can open a finding and reach the
+source span and rendered page within two interactions'' is testable. The
+distinction prevents a broad editorial goal from being hidden behind a
+surface-style score.
+
+This is the canonical R1--R24 acceptance register. The implementation contract
+is in Appendix~\ref{app:implementation-contract}, with machine-readable
+schemas in \path{schemas/}. The contract annex defines execution, schemas,
+exit codes, and authority without creating a second release register.
+
+\begin{longtable}{@{}p{0.07\textwidth}p{0.19\textwidth}p{0.40\textwidth}p{0.20\textwidth}@{}}
+\caption{Canonical implementation requirements and acceptance observations.}
+\label{tab:expanded-requirements}\\
+\toprule
+ID & Requirement & Acceptance observation & Owner \\
+\midrule
+\endfirsthead
+\toprule
+ID & Requirement & Acceptance observation & Owner \\
+\midrule
+\endhead
+R1 & Reader-facing separation & A low-context reader can state purpose, object,
+and requested action; internal register language is absent; the released file
+traces to a source hash. & Domain editor \\
+R2 & Policy precedence & Conflict fixtures resolve correctness, source fidelity,
+meaning, comprehension, then regularity; format overrides are configuration. &
+Product engineer \\
+R3 & Located diagnostics & Fixtures return stable spans and no inspection
+command mutates input; accepted edits are separate records. & Product engineer \\
+R4 & Layered diagnosis & Replay retains register, repetition, defensive,
+substance, and comprehension results in order. & Evaluation lead \\
+R5 & Protected diff & Equations, labels, citations, numbers, claims, code,
+tables, and quotations have no unexplained material change. & Product engineer \\
+R6 & Citation support & Identity and claim support are separate; unresolved
+load-bearing support blocks release. & Domain editor \\
+R7 & Calibrated judging & Frozen human labels report agreement, order,
+verbosity, and family sensitivity before model judging is used. & Evaluation lead \\
+R8 & Human acceptance & A promoted version records the pseudonymous reader,
+hash, rubric, decision, requested changes, and elapsed time. & Independent reader \\
+R9 & Held-out evaluation & Tuning and holdout hashes are frozen and no smoke
+test is reported as effectiveness. & Evaluation lead \\
+R10 & Minimal process surface & Provenance remains in the packet record while
+the manuscript contains no orchestration state. & Domain editor \\
+R11 & Privacy and disclosure & Unapproved remote routes are blocked; approved
+calls record provider, model, purpose, retention, and approval. & Security or
+policy owner \\
+R12 & Aggregate convergence & Drift analysis refuses single-document
+authorship classification, suppresses small cells, and reports uncertainty. &
+Evaluation lead \\
+R13 & Interaction telemetry & Intent, suggestion, acceptance, edit, rejection,
+and rollback replay without unnecessary manuscript retention. & Product engineer \\
+R14 & Heterogeneous outcomes & Prespecified writer, genre, and reader strata
+report uncertainty and apply the harm stop rule. & Evaluation lead \\
+R15 & Parser contract & Candidate adapters emit the same source-map and
+protected-span contract and pass the locked malformed-input fixtures. & Product
+engineer \\
+R16 & Package adoption & Availability, operational fit, and effectiveness are
+separate; adoption requires a held-out benchmark and independent review. &
+Evaluation lead \\
+R17 & Complete authoring brief & Missing critical reader, decision, evidence,
+privacy, or protection fields fail before writer invocation; a complete brief
+has a stable hash. & Document owner \\
+R18 & Argument blueprint & Missing warrants, early concepts, duplicate jobs, or
+purposeless figures block promotion; the plan has a stable hash. & Domain editor \\
+R19 & Bounded drafting & Each unit records approved context and evidence and
+cannot advance while its checks are unresolved. & Product engineer \\
+R20 & Fail-closed release & Every seeded gate failure emits no reader packet and
+preserves a located repair record. & Product engineer \\
+R21 & Construct-specific critics & Held-out false-positive, false-negative,
+order, verbosity, and family results are recorded before release use. &
+Evaluation lead \\
+R22 & Mutation testing & Critical deterministic mutations are caught or
+abstained from; rhetorical mutation uncertainty is reported. & Evaluation lead \\
+R23 & Bounded repair & Named strategies converge or stop with an unresolved
+author choice; no loop reaches the reader silently. & Product engineer \\
+R24 & Attention budget & Feasibility reports release rate, author and reader
+minutes, abstentions, and meaning errors against the incumbent. & Sponsor or
+project owner \\
+\bottomrule
+\end{longtable}
+
+The register is the single release view. The machine-readable audit protocol
+adds evidence links and implementation phases without changing these
+behaviors. A result is reported by requirement family and phase; it is never
+averaged into one release score. R5, R11, R17, R18, and R20 are hard blockers
+for the protected core or full path respectively, as specified in the
+implementation contract.
+
+\subsection{Record schemas}
+
+The record model should remain plain enough to inspect with ordinary command-
+line tools. A JSON implementation is sensible, but the semantics matter more
+than the serialization. The following fields are sufficient for the MVP.
+
+\begin{table}[H]
+\centering
+\small
+\begin{tabularx}{\textwidth}{@{}p{0.21\textwidth}L@{}}
+\toprule
+Record & Required fields and interpretation \\
+\midrule
+Run & run id; source hash; parent run; source format; build command; tool and
+model versions; privacy class; created and completed times; outcome. \\
+Object & object id; kind; source span; normalized value; rendered anchor;
+owner; protection rule; comparison status. \\
+Finding & finding id; run id; category; location; evidence; question;
+confidence; abstention reason; state; diagnostic version; unit; repair move;
+dismissal reason. \\
+Decision & finding id; action; author id or role; rationale; parent and child
+run ids; time spent; reviewer comments. \\
+Reader response & document run; reader role; contract version; completion
+time; comprehension answers; credibility rating; stopping point; quoted span;
+missing relation; requested action; confidence; disclosure acknowledgement. \\
+Pacing profile & unit; detector version; target metrics; exemplar metrics;
+relative position; burst locations; dismissed concepts. \\
+First-use audit & concept; first-use location; introduction signal; whitelist
+or exemption match; taught-later pointer; disposition. \\
+Assertion audit & parent and child run; added span; assertion type; support
+pointer; author disposition. \\
+Benchmark result & fixture id; candidate; version; expected object set;
+observed object set; precision; abstention; runtime; failure trace. \\
+\bottomrule
+\end{tabularx}
+\caption{MVP records and the questions they answer.}
+\label{tab:record-schemas}
+\end{table}
+
+The schema separates identity from content. A source hash identifies what was
+run; a rendered PDF is an output of that run, not its identity. This matters
+when a build tool changes page breaks without changing source semantics. The
+comparison can then say ``same source objects, different pagination'' rather
+than reporting a false substantive drift.
+
+\subsection{Traceability without a bureaucracy}
+
+Traceability is useful when it follows the reader's question. For each
+requirement, link one fixture, one observed result, and one decision rule. Do
+not create a separate narrative for every administrative event. A compact
+trace looks like
+\[
+  \text{requirement}\;\longrightarrow\;\text{fixture}\;\longrightarrow\;
+  \text{result}\;\longrightarrow\;\text{release decision}.
+\]
+For R5, the fixture contains an equation whose denominator changes in a
+revision; the result reports whether the change was surfaced; the decision
+rule blocks a protected comparison if the denominator is unparsed. For R8, the
+fixture is a timed reader exercise; the result is a response and a completion
+time; the decision rule says whether the reader endpoint is observable enough
+for the comparative study.
+
+\begin{checkpoint}{The traceability test}
+Ask an engineer to pick any promised behavior and an executive to pick any
+investment conclusion. The engineer should be able to walk forward to a
+fixture and a release rule. The executive should be able to walk backward to
+the observed evidence and its limitations. If either path ends at a slogan,
+the proposal is not yet operational.
+\end{checkpoint}
+
+\section{Internal case evidence and repair-pair index}
+\label{app:case-index}
+
+The repository contains a rare kind of product evidence: paired passages in
+which a writer or editor changed a document after a reader failure. These
+pairs are not randomized experiments. They are valuable because they preserve
+the causal story that a feature must eventually support: what the reader
+could not do, what changed, and what remained protected.
+
+\subsection{Case selection and provenance}
+
+The cases came from work on CardNPV, BGS, SMEwallet, BayesFilter with the
+zero-lower-bound rescue, and MacroFinance. Each has a different scale and
+failure mode. CardNPV supplies the strongest teaching example because its
+small worked example and later abstraction make the reader's reconstruction task
+visible. BGS supplies a negative process case: a long sequence of governance
+and review activity did not produce an accepted document. SMEwallet supplies
+a positive local gate. BayesFilter supplies a layered technical argument in
+which notation and computational commitments must survive exposition.
+MacroFinance supplies the book-scale problem: repetition and infrastructure
+can be useful to an implementer while becoming a burden to a first reader.
+
+The case index should preserve four provenance fields: source path or commit,
+date of the observed reader interaction, the role of the person who made the
+judgment, and whether the passage was later used in another revision. A
+passage copied into several drafts is one lineage, not several independent
+observations.
+
+\begin{longtable}{@{}>{\raggedright\arraybackslash}p{0.15\textwidth}
+>{\raggedright\arraybackslash}p{0.19\textwidth}
+>{\raggedright\arraybackslash}p{0.25\textwidth}
+>{\raggedright\arraybackslash}p{0.25\textwidth}@{}}
+\caption{Internal case index and the claim boundary for each case.}
+\label{tab:case-index}\\
+\toprule
+Case & Reader task & Failure or repair pair & What it can establish \\
+\midrule
+\endfirsthead
+\toprule
+Case & Reader task & Failure or repair pair & What it can establish \\
+\midrule
+\endhead
+CardNPV & Reconstruct a finite value question and decide what is identified. &
+Finite teaching case, ledger, timing, mechanism, and later abstraction. & A
+training route can make objects and transitions inspectable; not a causal
+estimate of Humanvoice. \\
+BGS & Decide whether a proposal has a defensible purpose and next action. &
+Repeated governance prose versus located purpose, evidence, and decision. & A
+reader-work failure can persist despite compilation and multiple reviews. \\
+SMEwallet & Pass a named reader gate for a business-facing technical unit. &
+Local explanation and revision until the reader can restate the action. & A
+unit-level acceptance record is feasible; not a population effect. \\
+BayesFilter--ZLB & Follow assumptions through filtering and a boundary-case
+rescue. & Layered notation, an uncovered failure, and a repair that preserves
+the mathematical object. & Protected technical exposition needs more than
+sentence-level style. \\
+Macro\\Finance & Navigate a long methods and implementation volume. & Repeated
+structure and source infrastructure made the book usable to builders but
+harder to enter as a reader. & Monograph-scale navigation and appendices are
+product requirements. \\
+\bottomrule
+\end{longtable}
+
+\subsection{Repair-pair taxonomy}
+
+A repair pair should be annotated by the first reader action it enables. The
+following taxonomy is more informative than labels such as ``awkward'' or
+``AI-like''.
+
+\begin{enumerate}
+\item \textbf{Orientation repair:} the opening identifies the problem,
+      decision, and route before terminology accumulates.
+\item \textbf{Actor repair:} an abstract process is assigned to a concrete
+      author, reader, institution, or data-generating mechanism.
+\item \textbf{Evidence repair:} a conclusion is connected to an observation,
+      citation, calculation, or explicit absence of evidence.
+\item \textbf{Scope repair:} a result is narrowed to the population, period,
+      document unit, or claim class actually supported.
+\item \textbf{Sequence repair:} definitions and examples are reordered so
+      that each later step uses an object the reader has already seen.
+\item \textbf{Register repair:} administrative or defensive language is
+      replaced by the domain statement it was concealing.
+\item \textbf{Navigation repair:} labels, headings, tables, and transitions
+      make a long argument recoverable after interruption.
+\item \textbf{Disclosure repair:} assistance, uncertainty, and ownership are
+      stated where a reader's interpretation can be affected.
+\end{enumerate}
+
+For each pair, record the smallest change that enabled the action and the
+objects deliberately left unchanged. This last field matters. A passage that
+reads better only because its equation, qualification, or numerical result
+was silently removed is not a safe repair.
+
+\begin{table}[H]
+\centering
+\small
+\begin{tabularx}{\textwidth}{@{}p{0.19\textwidth}p{0.28\textwidth}L@{}}
+\toprule
+Annotation & Positive observation & Counterexample to retain \\
+\midrule
+Orientation & A reader unfamiliar with the project states the decision after the opening. &
+The opening is elegant but the reader still cannot name the object being
+decided. \\
+Evidence & The reader can point to the calculation or source supporting the
+claim. & A citation is present but its result does not entail the sentence. \\
+Scope & The revised claim names its population and uncertainty. & The prose is
+qualified so heavily that no testable claim remains. \\
+Sequence & A reader predicts why the next section is needed. & A glossary
+defines every term but no transition explains their relationship. \\
+Protection & The equation and number survive the prose repair. & A textual
+diff is clean because the mathematical object was dropped. \\
+\bottomrule
+\end{tabularx}
+\caption{Repair annotations should retain negative examples.}
+\label{tab:repair-annotations}
+\end{table}
+
+\subsection{What the cases do not show}
+
+The cases are selected for learning, not prevalence. They do not show how
+often expert documents fail, whether a particular diagnostic causes the
+repair, or whether the same repair works for a different reader. They also
+contain author and editor judgment that cannot be reconstructed perfectly from
+the final PDF. The feasibility corpus should therefore include both these
+historical pairs and prospective cases collected under a fixed protocol.
+
+The tempting but invalid inference is ``five successful repairs imply a
+reliable product.'' The defensible conclusion is narrower: the repository
+contains enough varied failures to specify fixtures, reader tasks, and
+protected objects. That is precisely the kind of evidence a product proposal
+needs before it asks for an efficacy claim.
+
+\section{The HPO density case and its fixture}
+\label{app:hpo-density-record}
+
+The HPO survey engagement is the clearest internal example of why the product
+needs more than a surface linter. One manager reviewed a 90-page methods
+monograph over three rounds. The manager used the same word, ``dense,'' in the
+first two rounds and then supplied a more precise ordering instruction in the
+third. The agent's self-review said the document was readable before every
+round; the manager's located observations disagreed.
+
+The case record is dated 24--25 August 2026. Its numbers come from the
+engagement ledger and the prototype concept-density script in the HPO survey
+repository. They are internal observations with direct fit to the proposed
+workflow, not external literature and not a representative sample. We retain
+them because they specify fixtures and questions that a later independent
+review can replay.
+
+\begin{longtable}{@{}p{0.16\textwidth}p{0.25\textwidth}p{0.26\textwidth}p{0.22\textwidth}@{}}
+\caption{HPO case record and evidence boundary.}
+\label{tab:hpo-case-record}\\
+\toprule
+Round & Observed complaint & Located evidence & Permitted use \\
+\midrule
+\endfirsthead
+\toprule
+Round & Complaint & Evidence & Permitted use \\
+\midrule
+\endhead
+1 & ``Too dense.'' & One 210-word paragraph contained six mechanisms and five
+citations; mean prose-paragraph length moved from 128 to 90 words after repair.
+& Seed paragraph-packing fixture; not a paragraph-length standard. \\
+2 & ``Too dense.'' & Words per new concept were 70 in the survey and 83 and 253
+in the two supplied exemplars; paragraphs introducing at least three new
+concepts were 12.9, 5.9, and 0.8 per cent. & Calibration comparison; not a
+universal threshold or efficacy result. \\
+3 & ``Do not use it before explaining it.'' & Approximately 25 adjudicated
+first-use violations, including an unexplained running-example algorithm and
+early acquisition-function names. & Ordering fixture; prevalence outside this
+case is unknown. \\
+\bottomrule
+\end{longtable}
+
+The case also supplies a useful negative set: 80 passages that the first-use
+audit flagged but the manager adjudicated as false alarms. The proposed
+fixture stores the 25 positive locations and the 80 negative locations without
+mixing them into rule tuning. Each item carries the source line, the first-use
+term, the reader's known-vocabulary decision, any exemption-zone declaration,
+the adjudicated label, and the repair or dismissal reason. A future precision
+estimate must be made on a partition that the rule author has not inspected.
+
+The concept detector is a standard-library prototype. It recognises a small
+set of signals---acronyms, mid-sentence proper terms, emphasized definition
+phrases, recurring technical bigrams, and citation keys---and removes common
+LaTeX environments before counting. It has no sentence-level dependency
+parser. The HPO engagement spot-checked roughly 80 percent precision with
+noise that appeared similarly across the target and exemplars; Humanvoice
+should replicate that estimate before treating the detector as an operational
+component. Dismissal must be cheap, and a noisy list must never block an
+author's ordinary edit.
+
+The fixture therefore has four roles:
+
+\begin{enumerate}
+\item a \textbf{calibration role} for choosing wording, displays, and
+      exemption conventions;
+\item a \textbf{held-out role} for measuring precision and abstention after
+      those choices are frozen;
+\item a \textbf{reader-study role} for recording stopping points and quoted
+      spans rather than relying on a score; and
+\item a \textbf{claim-boundary role} that prevents one successful engagement
+      from being described as a general reduction in review rounds.
+\end{enumerate}
+
+The implementation loop is consequently small and repeatable: select one
+chapter, run the meter and first-use audit, inspect the ranked passages, let a
+human author repair or dismiss them, rebuild the chapter, and record the
+reader's stopping point. Only after that unit is stable should the same rule
+be propagated to the next chapter. The ledger records the unit and brief
+version so a later reader can tell which instruction was active at the time.
+
+\section{Literature claim-to-design matrix}
+\label{app:literature-matrix}
+
+The literature chapter explains the main results in prose. This appendix gives
+the audit-friendly matrix that keeps a source result distinct from the design
+choice that follows it. The rows are grouped by question, not by publisher or
+model family, because the product decision is comparative.
+
+\subsection{How to use the matrix}
+
+For each row, the researcher records the source identity, the inspected text
+or official documentation, the population and task, the result, its limit,
+and the Humanvoice implication. A source can appear in more than one row when
+it answers different questions, but each implication must remain local. The
+matrix is not a ranking of papers. It is a guard against a common citation
+error: using evidence about model output style as if it were evidence about
+reader acceptance.
+
+Figure~\ref{fig:traceability-chain} summarizes the relationship that the rows
+below must preserve. A source earns influence only through an inspectable
+claim, design choice, and test.
+
+\hvFigureTraceability
+
+\begin{longtable}{@{}>{\raggedright\arraybackslash}p{0.14\textwidth}
+>{\raggedright\arraybackslash}p{0.22\textwidth}
+>{\raggedright\arraybackslash}p{0.25\textwidth}
+>{\raggedright\arraybackslash}p{0.24\textwidth}@{}}
+\caption{Claim-to-design matrix for the evidence review.}
+\label{tab:literature-claim-design}\\
+\toprule
+Question & Source result to verify & Product implication & Open test \\
+\midrule
+\endfirsthead
+\toprule
+Question & Source result to verify & Product implication & Open test \\
+\midrule
+\endhead
+Why outputs look alike & Distributional markers, repeated discourse, or
+model-conditioned style are observed in a stated corpus. & Use patterns as
+diagnostic prompts and compare against a genre baseline. & Do the prompts
+reduce reader work without erasing legitimate disciplinary style? \\
+Can detection identify origin? & Detection performance varies with domain,
+editing, and generator; false positives remain consequential. & Never expose
+a per-document origin verdict as the product outcome. & Does disclosure plus
+located evidence improve a reader's decision? \\
+Does feedback help? & Controlled writing or editing studies report changes in
+time, quality, or task completion under specific conditions. & Test bounded
+feedback with a declared incumbent and reader endpoint. & Does the effect
+survive expert technical documents and longer tasks? \\
+How do people use models? & Users accept, reject, and adapt suggestions
+heterogeneously; overreliance and verification costs matter. & Record author
+decisions, burden, abstention, and protected-object incidents. & Which reader
+and writer populations benefit or are harmed? \\
+Can models judge text? & Agreement can be high on surface edits and lower on
+scope, evidence, and technical meaning; order and verbosity biases occur. &
+Use model judges only as calibrated screening instruments with human labels. &
+Does calibration hold on held-out mathematical and policy cases? \\
+What is readability? & Formula scores depend on genre, audience, and text
+features; comprehension is not identical to ease. & Pair any metric with a
+reading brief and timed reconstruction task. & Which measures predict the
+decision the document is meant to support? \\
+What are integrity risks? & Provenance, disclosure, privacy, and authorship
+norms differ by venue and can change behavior. & Make processing boundary and
+assistance visible; preserve source ownership. & What policy applies to each
+target institution and publication? \\
+\bottomrule
+\end{longtable}
+
+\subsection{Search coverage and omitted-source risk}
+
+A credible survey reports not only what it found but also where it may be
+thin. The current review covers the supplied internal material, a targeted
+set of primary studies on generative assistance and feedback, readability and
+technical communication, model-based evaluation, and official documentation
+for candidate software. It does not yet constitute a registered systematic
+review. Specialist work in human--computer interaction, writing studies,
+information integrity, accessibility, and privacy may change the design.
+
+The next evidence pass should use at least two independent screeners, a
+recorded query set, backward and forward citation chasing for load-bearing
+studies, and a disposition for every retrieved item. A source should be
+included because it answers a declared question, not because its conclusion
+supports the investment. The screening sheet should preserve exclusions and
+their reasons; otherwise the final bibliography will look comprehensive while
+the selection process remains invisible.
+
+The register below names the present risks one by one. ``Candidate'' means that
+the source has been identified but has not been used to support a manuscript
+claim. ``Included, bounded'' means that the manuscript states the source's
+limited contribution while appraisal or independent verification remains
+open. This is the omission register promised in the main text, not a list of
+topics that someone might search later.
+
+\begin{longtable}{@{}>{\raggedright\arraybackslash}p{0.24\textwidth}
+>{\raggedright\arraybackslash}p{0.24\textwidth}
+>{\raggedright\arraybackslash}p{0.20\textwidth}
+>{\raggedright\arraybackslash}p{0.22\textwidth}@{}}
+\caption{Named omissions and reviewer risks at the 25 August 2026 snapshot.}
+\label{tab:omission-register}\\
+\toprule
+Source or source family & Why its absence could change the proposal & Current
+disposition & Next action \\
+\midrule
+\endfirsthead
+\toprule
+Source or source family & Reviewer risk & Current disposition & Next action \\
+\midrule
+\endhead
+Gopen and Swan, \emph{The Science of Scientific Writing} & The earlier draft
+discussed readability without the best-known account of reader expectations in
+scientific prose. & Included, bounded: conceptual editorial model, not efficacy
+evidence. & Independent full-text check and backward/forward citation chase. \\
+Oppenheimer, \emph{Consequences of Erudite Vernacular} & Claims about needless
+complexity otherwise rested on intuition rather than experimental evidence. &
+Included, bounded: adjacent processing-fluency evidence. & Classify design,
+extract outcomes, and appraise transfer to expert technical readers. \\
+Kirchenbauer et al., \emph{A Watermark for Large Language Models} & A blanket
+rejection of detection would ignore generation-time provenance. & Included as
+a boundary and alternative, not product-efficacy support. & Appraise the threat
+model and test whether watermark verification belongs in a future adapter. \\
+Sadasivan et al., \emph{Can AI-Generated Text Be Reliably Detected?} & The
+detector section would omit a central challenge to reliable post-hoc
+classification. & Included as challenge evidence. & Independently inspect the
+theory, attacks, corpora, and claims retained in the final journal version. \\
+Schriver, \emph{Dynamics in Document Design} & Document-design research may
+change how page layout, navigation, and reader testing enter the product. &
+Named candidate; not used for a claim. & Retrieve and screen relevant chapters
+against the reader-task question. \\
+Kellogg, \emph{Training Writing Skills: A Cognitive Developmental Perspective}
+& Cognitive accounts may change the burden model for expert revision. & Named
+candidate; not used for a claim. & Retrieve, screen, and decide whether it adds
+to Flower--Hayes and Bereiter--Scardamalia. \\
+Sweller, \emph{Cognitive Load During Problem Solving} & ``Reader burden'' may
+otherwise borrow cognitive-load language without an appropriate bridge. &
+Named candidate; no cognitive-load claim made. & Search the applied technical-
+reading literature before importing the construct. \\
+Controlled plain-language studies in technical and public-sector documents &
+They may offer direct reader outcomes closer to proposals than student essays.
+& Source family undercovered. & Run a dedicated query and retain null or
+backfire results as challenge records. \\
+Expert peer-review and revision-response studies & They may define acceptance,
+rounds, and reviewer disagreement more directly than automated-feedback work. &
+Source family undercovered. & Search writing studies, technical communication,
+and HCI databases with independent screening. \\
+Accessibility and screen-reader studies of mathematical documents & Visual
+clarity alone may exclude readers using assistive technology. & Source family
+undercovered; no accessibility efficacy claim made. & Add accessibility
+fixtures and recruit an accessibility reviewer before deployment. \\
+\bottomrule
+\end{longtable}
+
+Citation chasing is also a record, not a sentence saying that it occurred. The
+five seed groups below are the first load-bearing routes. No row is marked
+complete because an independent reviewer has not yet recorded the dispositions.
+
+\begin{table}[H]
+\centering
+\small
+\begin{tabularx}{\textwidth}{@{}p{0.25\textwidth}p{0.22\textwidth}p{0.22\textwidth}L@{}}
+\toprule
+Seed & Backward chase & Forward chase & Completion rule \\
+\midrule
+Gopen--Swan & Pending & Pending & Screen foundational antecedents and later
+tests of reader-expectation principles. \\
+Oppenheimer & Pending & Pending & Screen replications, boundary conditions,
+and technical-reader applications. \\
+Kirchenbauer and related watermarking & Pending & Pending & Record attacks,
+robustness studies, and provenance standards. \\
+Sadasivan and detector challenges & Pending & Pending & Record rebuttals,
+subsequent detectors, and threat-model differences. \\
+Meng and Abudalfa systematic reviews & Partial reference-list inspection;
+independent dispositions pending & Pending & Reconcile included-study lists
+with the Humanvoice candidate and exclusion ledgers. \\
+\bottomrule
+\end{tabularx}
+\caption{Backward and forward snowball ledger. A route is complete only when
+retrieved candidates have screening dispositions and provenance.}
+\label{tab:snowball-ledger}
+\end{table}
+
+\begin{table}[H]
+\centering
+\small
+\begin{tabularx}{\textwidth}{@{}p{0.27\textwidth}p{0.28\textwidth}L@{}}
+\toprule
+Evidence gate & Current state & What completion changes \\
+\midrule
+Primary source identity & DOI-bearing bibliography and load-bearing evidence
+rows resolve against Crossref; sentence-level support still needs review. &
+Bibliographic claims are reproducible without treating identity as support. \\
+Full-text support anchors & Partial; several design claims need page or
+section anchors. & A reviewer can inspect the exact support rather than trust a
+secondary summary. \\
+Independent screening & Outstanding. & Selection and omission risk become
+measurable. \\
+Specialist-domain import & Pass for a bounded RePEc/IDEAS slice; it is not an
+exhaustive licensed search. & Economics-domain coverage becomes less locally
+optimized, while the slice still requires screening. \\
+Design-specific appraisal & Outstanding for load-bearing studies. & Limits,
+task fit, and heterogeneity are visible beside each result. \\
+\bottomrule
+\end{tabularx}
+\caption{Evidence work still required before a strong external literature claim.}
+\label{tab:evidence-gates-expanded}
+\end{table}
+
+The matrix therefore supports a modest conclusion: existing research justifies
+testing a bounded, human-controlled revision workflow and warns against
+detector-led or fully automatic rewriting. It does not justify saying that
+Humanvoice is already validated, nor that any listed package is the best
+choice without a held-out benchmark.
+
+\section{Software benchmark protocol}
+\label{app:software-benchmark}
+
+\subsection{The candidate inventory is a set of hypotheses}
+
+The software review names parsers, linters, diff tools, citation utilities,
+local inference runtimes, and evaluation frameworks. A candidate enters the
+inventory because it might satisfy a contract, not because its repository is
+popular or its README uses the right language. The benchmark turns that
+hypothesis into an observation.
+
+For every candidate, record version or commit, license, supported formats,
+runtime dependencies, maintenance signal, network behavior, model or corpus
+provenance, and the exact interface used. A package that passes a fixture but
+requires an unapproved remote service is not an operational pass. A package
+with an elegant API but no maintained release is a pilot risk. These are
+different failure modes and should not be collapsed.
+
+\begin{table}[H]
+\centering
+\small
+\begin{tabularx}{\textwidth}{@{}p{0.21\textwidth}p{0.25\textwidth}p{0.24\textwidth}L@{}}
+\toprule
+Capability & Candidate family & Fixture question & Default disposition \\
+\midrule
+Source representation & Pandoc or format-native AST & Are claims, equations,
+tables, and citations addressable? & Adapt behind a stable internal model. \\
+Build and cross-reference & TeX engine plus log parsers & Can a run expose
+undefined references and stable page anchors? & Adopt the existing build;
+wrap diagnostics. \\
+Protected comparison & latexdiff or structured diff & Are mathematical and
+numeric changes distinguishable from prose movement? & Pilot, then extend with
+object-aware checks. \\
+Style diagnostics & Vale, textlint, proselint, deterministic pattern tools &
+Can a finding point to evidence and abstain outside its rule? & Adopt narrow
+rules; reject global scores as acceptance. \\
+Citations & BibTeX/BibLaTeX tooling and metadata services & Do keys resolve and
+does identity remain stable across edits? & Adopt local resolution; remote
+lookup only with permission. \\
+Model adapter & local runtime or approved provider & Does it preserve the
+contract, disclose uncertainty, and obey the privacy boundary? & Pilot behind
+an explicit adapter; default to human review. \\
+Evaluation & pairwise and rubric frameworks & Can results be replayed with
+held-out documents and human labels? & Adapt the measurement layer to the
+declared estimand. \\
+\bottomrule
+\end{tabularx}
+\caption{Software capability families and their benchmark questions.}
+\label{tab:software-capabilities}
+\end{table}
+
+\subsection{Fixture design}
+
+The fixture set should be small enough to run on every commit and rich enough
+to expose silent corruption. One fixture contains a numbered equation whose
+denominator changes in a child revision. Another contains a citation key that
+is renamed but still resolves. A third contains a table whose caption moves
+across a page break. A fourth contains a quotation and a code block with
+characters that a prose normalizer might strip. The final fixtures are
+malformed on purpose: an unclosed environment, a missing bibliography entry,
+and an unsupported macro.
+
+For fixture $i$, define the expected protected set $O_i$ and observed set
+$\widehat O_i$. The basic preservation rate is
+\[
+  P_O=\frac{\sum_i |O_i\cap\widehat O_i|}{\sum_i |O_i|},
+\]
+but report the misses by object kind. A 98 percent aggregate can hide every
+equation failure if prose objects dominate the corpus. Also report the
+abstention rate $A$ and the false-success rate $F$, where a false success is a
+run that reports ``safe'' despite a known protected-object mismatch. The
+release rule should treat $F$ as more serious than a visible abstention.
+
+\begin{cardexample}{A benchmark result that changes the architecture}
+Suppose a structured parser recovers 100 prose spans and 20 citations but
+cannot map displayed equations when a custom macro is present. A text diff
+can still produce an attractive report, yet the system has no basis for
+claiming protected technical revision. The correct result is an abstention for
+those documents and an adapter work package, not a green aggregate score.
+\end{cardexample}
+
+\subsection{Adopt, adapt, pilot, skip}
+
+The benchmark disposition has four verbs. \emph{Adopt} means the package's
+interface and behavior satisfy a contract under the local privacy and
+maintenance conditions. \emph{Adapt} means the underlying capability is
+useful but must be wrapped to expose stable object ids or abstention.
+\emph{Pilot} means the package is promising but evidence is too thin for a
+release dependency. \emph{Skip} means the package's behavior or license is
+incompatible with the proposed boundary.
+
+The disposition is revisited when a version, model, or input format changes.
+It is not a permanent endorsement. A package can be adopted for deterministic
+cross-reference checks and skipped for authorship detection; capabilities, not
+repository names, are the unit of judgment.
+
+\subsection{The pacing and ordering adapter}
+\label{app:pacing-adapter}
+
+The first implementation can remain small. A standard-library adapter reads
+LaTeX, removes comments and drawing environments, preserves paragraph and line
+locations, and emits a JSON profile. It runs the same heuristic over a target
+and the exemplars named in the reading brief. The output includes words per
+concept, singleton share, repeated occurrences, burst paragraphs, and a
+trailing live-load window. It also emits a first-use list for terms that lack
+an expansion, appositive gloss, or taught-later pointer.
+
+The adapter accepts two explicit configuration lists. The first is vocabulary
+the reader already owns; the second contains exemption ranges for previews,
+maps, decision boxes, and reference tables. A term in either list is not
+silently deleted from the profile. The output records the reason it was not
+raised as a first-use question. This makes a later change in the reading brief
+replayable.
+
+The adapter's result is a worklist, not a quality score. A typical finding
+contains a file, line, paragraph excerpt, observed metric, exemplar comparison,
+and one question such as ``Should this unit take on fewer named things?'' or
+``Can the ordinary object appear before its acronym?'' The author can keep,
+repair, or dismiss it. A dismissal remains in the run record so precision can
+be estimated without pretending that every signal was correct.
+
+The comparison layer has one further safeguard. When a prose revision adds a
+sentence containing a number, a superlative, a comparison, or a causal verb,
+the adapter asks for either a citation, a pointer to an existing protected
+claim, an elementary calculation, or an author explanation. The rule catches
+the near-miss in which a library gloss acquired the unsupported phrase ``most
+widely adopted.'' It does not ban ordinary prose and it does not decide that
+the added sentence is false. It makes the new assertion visible while the
+author still remembers why it was written.
+
+\begin{cardexample}{A safe prose-diff question}
+Parent: ``The package provides a sampler.''\\
+Child: ``The package provides the most widely adopted sampler.''\\
+\textbf{Observed:} a superlative was added without a citation or protected
+claim pointer.\\
+\textbf{Question:} which source supports ``most widely adopted,'' or should
+the sentence retain the narrower description?
+\end{cardexample}
+
+The adapter is useful only while its burden is measured. Retain a rule family
+when the median minutes saved over the incumbent inspection are positive on
+held-out units, subject to the protected-object veto. Otherwise keep the
+fixture and retire the rule. This is a local operating decision, not evidence
+that the detector measures comprehension.
+
+\section{Reader instruments and scoring forms}
+\label{app:reader-instruments}
+
+\subsection{The reconstruction task without project history}
+
+The primary reader instrument should fit the actual decision. Give the reader
+the rendered document, the role statement, and the decision question. Do not
+give the private source history or the author's intended interpretation. Ask
+the reader to answer in their own words:
+
+\begin{enumerate}
+\item What problem is the document addressing?
+\item What is the proposed mechanism or product?
+\item Which observation, calculation, or source most supports the proposal?
+\item What remains uncertain or outside the evidence?
+\item What action is being requested, from whom, and under what conditions?
+\end{enumerate}
+
+After the answers, ask the reader to mark the first place where they had to
+stop and reconstruct a missing relation. Record the page or section, quote no
+more than two sentences, and describe what they expected to find there. A
+reader may report ``I kept reading but could not tell why the algorithm was
+named''; that observation is useful even when the five answers are correct.
+The instrument also records whether the stopping point was in the main route,
+an appendix, a figure, or a table. These distinctions tell the author whether
+the remedy is an explanation, a map, or a navigation aid.
+
+Score each answer for presence, correctness, and location of support. A
+reader who gives the right action for the wrong reason is not equivalent to a
+reader who reconstructs the argument. Ask for confidence and elapsed time,
+then ask for one sentence explaining what would change the decision. The last
+question distinguishes a reader who has understood the uncertainty from one
+who has merely recognized the requested answer.
+
+\subsection{Rubric and adjudication}
+
+Use a four-point rubric to keep anchors visible:
+
+\begin{table}[H]
+\centering
+\small
+\begin{tabularx}{\textwidth}{@{}p{0.22\textwidth}p{0.17\textwidth}L@{}}
+\toprule
+Dimension & Score & Anchor \\
+\midrule
+Problem reconstruction & 0--3 & 0 absent; 1 vague topic; 2 correct problem
+with missing boundary; 3 correct problem and population. \\
+Mechanism reconstruction & 0--3 & 0 absent; 1 list of features; 2 plausible
+sequence with a gap; 3 sequence tied to the reader's decision. \\
+Evidence and scope & 0--3 & 0 unsupported; 1 citation or number only; 2
+support found but limit missed; 3 support and limit both stated. \\
+Action and uncertainty & 0--3 & 0 no action; 1 action guessed; 2 action and
+some condition; 3 action, owner, condition, and change trigger. \\
+\bottomrule
+\end{tabularx}
+\caption{Reader reconstruction rubric for the feasibility case.}
+\label{tab:reader-instrument}
+\end{table}
+
+Two adjudicators independently score a sample and record the sentence or page
+that supports each score. Disagreements are resolved by discussion only after
+the independent scores are stored. A model judge may suggest a score, but it
+cannot replace the human anchor. Report agreement by dimension and preserve
+the difficult cases; those cases are often the most informative design tests.
+
+\subsection{Author burden and revision log}
+
+The author instrument records each finding opened, the time spent, the action
+taken, and whether a later reader request traced back to that finding. It also
+records work that the product caused but that would not have occurred in the
+incumbent workflow, such as rechecking a protected equation after an
+unnecessary warning. This prevents a reduction in feedback rounds from being
+celebrated when total review time has increased.
+
+\begin{longtable}{@{}p{0.22\textwidth}p{0.30\textwidth}p{0.34\textwidth}@{}}
+\caption{Minimum event log for measuring workflow burden.}
+\label{tab:author-log}\\
+\toprule
+Event & What to record & Interpretation \\
+\midrule
+\endfirsthead
+\toprule
+Event & What to record & Interpretation \\
+\midrule
+\endhead
+Finding opened & id, category, location, timestamp & Exposure to the queue,
+not acceptance. \\
+Finding accepted & action, rationale, child run & A revision decision, not a
+quality label. \\
+Finding rejected & rationale and confidence & Possible diagnostic false
+positive or legitimate author choice. \\
+Abstention & object, reason, fallback & Evidence about the product boundary. \\
+Rollback & parent/child runs and reason & Safety or usability failure to
+investigate. \\
+Reader request & page or section, quoted span, missing relation, requested
+change, substantive status & Outcome that links author work to reader work and
+preserves the reader's stopping point. \\
+\bottomrule
+\end{longtable}
+
+\subsection{Disclosure and consent}
+
+The reader should know what assistance shaped the document when that fact can
+affect trust or interpretation. The disclosure form should state whether a
+model generated questions, whether a human accepted every revision, whether
+remote processing occurred, and which source or data were retained. The form
+should not imply that model involvement makes a document unreliable; it should
+give the reader enough information to interpret the provenance and ask for a
+different review path.
+
+For a feasibility study, consent should cover the document's sensitivity,
+recorded response time, quotations used in internal reports, and the right to
+withdraw a response before analysis. A reader may decline a model-assisted
+condition without forfeiting the ordinary review. This is both an ethical
+requirement and a useful continuity test.
+
+\section{Cost model and sensitivity worksheets}
+\label{app:cost-worksheets}
+
+\subsection{Units and inputs}
+
+The economic case is about review work avoided or improved, not about tokens
+or pages alone. The worksheet should use observed units:
+
+\begin{table}[H]
+\centering
+\small
+\begin{tabularx}{\textwidth}{@{}p{0.15\textwidth}p{0.24\textwidth}L@{}}
+\toprule
+Symbol & Input & Source for the first estimate \\
+\midrule
+$N$ & Documents or document units reviewed per period & Repository history or
+prospective intake count. \\
+$r_0$ & Incumbent review rounds per unit & Version and meeting records. \\
+$r_1$ & Review rounds with Humanvoice & Feasibility or comparative run. \\
+$t_a$ & Author minutes per round & Time log, not a guessed hourly rate. \\
+$t_r$ & Reader minutes per round & Timed reader instrument. \\
+$w_a,w_r$ & Loaded author and reader rates & Sponsor's accounting convention. \\
+$p$ & Probability a unit reaches the decision stage & Intake and completion
+records. \\
+$c$ & Cost of a protected-object incident or missed claim & Scenario range
+agreed before observing the result. \\
+$K$ & MVP and recurring operating cost & Work-package estimate and measured
+runtime. \\
+\bottomrule
+\end{tabularx}
+\caption{Observable inputs for the economic worksheet.}
+\label{tab:cost-inputs}
+\end{table}
+
+The value of a workflow over a period can be written as
+\[
+  V=Np\{(r_0-r_1)(w_at_a+w_rt_r)-\Delta c\}-K,
+\]
+where $\Delta c$ is the change in expected incident cost. The expression is
+deliberately transparent. It does not assume that every avoided round is a
+benefit: if a lower round count comes from skipping necessary review, the
+incident term should rise. It also permits a negative result when the product
+adds author burden or when volume is too small to amortize the build.
+
+\subsection{Worked sensitivity}
+
+Consider a small portfolio with $N=24$ units per year and $p=0.75$. Suppose
+the incumbent averages four rounds and the measured workflow averages three,
+with 35 author minutes and 25 reader minutes per round. At loaded rates of
+\$150 and \$250 per hour, the gross avoided labor is approximately
+\[
+  24(0.75)(1)\left(150\frac{35}{60}+250\frac{25}{60}\right)
+  =\$2{,}025.
+\]
+This is an illustration, not a forecast. If the MVP costs \$30,000, the first
+year cannot be justified by this small portfolio on labor savings alone. The
+case changes with a larger volume, a higher cost of a delayed decision, or a
+measured reduction in protected-object incidents. The sponsor should see this
+arithmetic before hearing a payback period.
+
+\begin{table}[H]
+\centering
+\small
+\begin{tabularx}{\textwidth}{@{}p{0.25\textwidth}rrrL@{}}
+\toprule
+Scenario & $N$ & $r_0-r_1$ & $K$ & Interpretation \\
+\midrule
+Small portfolio & 24 & 1.0 & \$30,000 & Learning case; labor alone does not
+repay the build. \\
+Institutional volume & 180 & 0.8 & \$30,000 & Break-even depends on actual
+rates, reader time, and incident avoidance. \\
+High-consequence review & 60 & 0.5 & \$30,000 & A modest round reduction can
+be valuable if the incident-cost range is credible. \\
+Null workflow & 60 & 0.0 & \$30,000 & Stop or reposition unless another
+benefit is observed. \\
+\bottomrule
+\end{tabularx}
+\caption{Illustrative sensitivity cases; values are placeholders for observed inputs.}
+\label{tab:cost-sensitivity-expanded}
+\end{table}
+
+The worksheet should vary one input at a time and then show a joint low,
+central, and high case. Do not select the central case after seeing which
+scenario crosses break-even. Pre-register the ranges, show the result as a
+range, and state which observation would move the project from learning to
+deployment. A financier can then challenge the assumptions directly rather
+than debate an opaque return percentage.
+
+\subsection{What the model cannot price}
+
+Some benefits and harms are difficult to monetize: a reader's trust, a
+reputational error, a lost technical qualification, or the option value of a
+reusable source map. They should not disappear from the proposal, but they
+should be reported as non-financial outcomes with an owner and an observation
+plan. A qualitative benefit is not a license to inflate the financial case.
+
+\section{Reproducible build and source map}
+\label{app:reproducibility}
+
+\subsection{What a reader needs}
+
+The reader-facing proposal should stand on its own. The implementation team
+needs more: source paths, build commands, dependency versions, bibliography
+identity, and a way to compare a regenerated PDF with the recorded one. Keep
+those functions separate. The main text explains why reproducibility matters;
+the source map tells an operator how to exercise it.
+
+\begin{table}[H]
+\centering
+\small
+\begin{tabularx}{\textwidth}{@{}p{0.24\textwidth}p{0.31\textwidth}L@{}}
+\toprule
+Artifact & Reproducibility field & Why it is retained \\
+\midrule
+Canonical source & path, content hash, route inputs, date & Identifies the
+reader-facing argument. \\
+Build & engine, flags, source-date setting, bibliography pass & Recreates
+pagination and references as far as the environment permits. \\
+Evidence source & key, URL or DOI, inspected version, anchor, claim class &
+Lets a reviewer inspect support and limits. \\
+Fixture & source text, expected objects, expected failure, license & Makes a
+software result replayable and legally usable. \\
+Reader run & document hash, contract, rubric, response, disclosure & Connects
+the outcome to the exact document read. \\
+Decision record & threshold, observed result, owner, next action & Shows why
+the project proceeded, changed, or stopped. \\
+\bottomrule
+\end{tabularx}
+\caption{Source map for a reproducible proposal and feasibility run.}
+\label{tab:source-map}
+\end{table}
+
+\subsection{Build checks and interpretation}
+
+A clean LaTeX build is necessary but weak evidence. The reproducibility check
+should run the structural diagnostics, compile the source twice, inspect the
+log for unresolved references and severe box problems, extract text for a
+word-count sanity check, and render representative pages for visual review.
+The PDF hash is useful only when the environment and source-date setting are
+recorded; a changed TeX engine can produce a different hash without a changed
+argument.
+
+The visual sample should include the title and decision page, a dense table, a
+long equation, a repair pair, a part transition, and an appendix longtable.
+Inspect both the page before and after each part break. A chapter that ends
+with a heading and two lines of text may be technically valid but rhetorically
+broken. Likewise, a table that fits after shrinking the font may be unreadable
+to the intended executive reader.
+
+\subsection{Status boundary}
+
+This appendix records a reproducible author-repaired draft. It does not turn
+the repository's automated status into a human endorsement. The current
+evidence gates remain release-blocked until independent screening,
+source-level verification, held-out software benchmarks, and external reader
+review are complete. That statement belongs here because it protects the
+interpretation of the proposal; a procedural history of how an agent produced
+the files does not belong in the reader's opening.
+
+\begin{plainbox}{The final question for an implementer}
+Can a person who did not write this proposal take one source snapshot, run the
+declared commands, open a finding, inspect the protected object, record an
+author decision, give the resulting packet to a named reader, and recover the
+evidence behind the next investment decision? If the answer is no, the next
+work is not more prose. It is the missing record, fixture, or interface.
+\end{plainbox}

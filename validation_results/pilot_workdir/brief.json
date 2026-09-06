@@ -1,0 +1,23 @@
+{
+  "reader": "Engineering reviewer deciding whether to approve a proposed review",
+  "reader_role": "Engineering reviewer",
+  "decision": "Approve or reject the proposed review",
+  "decision_type": "approve_or_reject",
+  "genre": "technical memo",
+  "time_available_minutes": 15,
+  "prior_knowledge": "Familiar with the codebase, not with internal phase labels",
+  "success_criteria": "Reader can decide without needing internal context",
+  "known_vocabulary": [
+    "reader",
+    "review",
+    "path"
+  ],
+  "exemplars": [],
+  "evidence_boundary": [
+    "source/001.tex"
+  ],
+  "privacy_class": "public",
+  "protected_objects": [],
+  "unknowns": [],
+  "max_words": 300
+}

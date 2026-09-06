@@ -148,6 +148,7 @@ class ModelResponse:
     temperature: float
     request_id: Optional[str] = None
     abstention: Optional[str] = None  # If model signals uncertainty or validation fails
+    truncated: bool = False  # True when output_tokens >= max_tokens - 10
 
 
 class ModelAdapter:
@@ -180,6 +181,7 @@ class ModelAdapter:
         system_prompt: Optional[str] = None,
         schema: Optional[Dict[str, Any]] = None,
         purpose: str = "unspecified",
+        max_tokens: Optional[int] = None,
     ) -> ModelResponse:
         """
         Invoke model with prompt.
@@ -205,7 +207,7 @@ class ModelAdapter:
             request_id = None
         else:
             response_text, input_tokens, output_tokens, request_id = self._invoke_api(
-                prompt, system_prompt
+                prompt, system_prompt, max_tokens=max_tokens
             )
 
             # Blocker 3: log the transmission. Content itself is never logged --
@@ -265,6 +267,21 @@ class ModelAdapter:
                     abstention=f"Output failed schema validation: {e}\nReceived: {debug_text}"
                 )
 
+        # Secondary truncation signal, derived from usage rather than stop_reason.
+        #
+        # _invoke_api already raises on stop_reason == "max_tokens", which is the
+        # authoritative check on the live API path. This covers the cases that
+        # never reach it: a runtime that omits stop_reason, and mock or stubbed
+        # adapters in tests. Landing within 10 tokens of the requested ceiling is
+        # not something a complete response does by coincidence.
+        effective_ceiling = min(
+            max_tokens or self.config.max_tokens, self.config.max_tokens
+        )
+        truncated = (
+            not self.mock_mode
+            and output_tokens >= effective_ceiling - 10
+        )
+
         return ModelResponse(
             text=response_text,
             prompt_hash=prompt_hash,
@@ -273,6 +290,7 @@ class ModelAdapter:
             output_tokens=output_tokens,
             temperature=self.config.temperature,
             request_id=request_id,
+            truncated=truncated,
         )
 
     def _mock_response(self, prompt: str, schema: Optional[Dict]) -> str:
@@ -309,6 +327,7 @@ class ModelAdapter:
         self,
         prompt: str,
         system_prompt: Optional[str],
+        max_tokens: Optional[int] = None,
     ) -> tuple[str, int, int, str]:
         """
         Invoke Claude API (production path).
@@ -321,10 +340,17 @@ class ModelAdapter:
         """
         client = anthropic.Anthropic(api_key=os.environ["ANTHROPIC_API_KEY"])
 
+        # A caller that knows its unit's word budget can request a tighter ceiling
+        # than the profile default; the profile value is the fallback, not an
+        # override, so a per-unit limit cannot silently exceed it.
+        effective_max_tokens = min(
+            max_tokens or self.config.max_tokens, self.config.max_tokens
+        )
+
         try:
             message = client.messages.create(
                 model=self.config.model_version,
-                max_tokens=self.config.max_tokens,
+                max_tokens=effective_max_tokens,
                 temperature=self.config.temperature,
                 system=system_prompt or "",
                 messages=[{"role": "user", "content": prompt}],

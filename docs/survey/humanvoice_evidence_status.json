@@ -1,0 +1,21 @@
+{
+  "artifact_manifest_sha256": "7ae981aa718320cc314872288b4554f6029163b1830dcf84225ec7e53f2ce10c",
+  "copied": [
+    "docs/survey/humanvoice_product_requirements.csv",
+    "docs/survey/humanvoice_product_requirements.json"
+  ],
+  "dossier_location": "docs/survey/audit/latest/implementation_dossier.md",
+  "failed_gates": [
+    "known-item-challenge-recall",
+    "manual-independent-screening",
+    "full-text-load-bearing-evidence",
+    "critical-appraisal",
+    "package-held-out-benchmark",
+    "external-review"
+  ],
+  "passed_gates": 9,
+  "published_at": "2026-08-24T19:03:09+00:00",
+  "source_run": "/home/ubuntu/workspace/humanvoice/docs/survey/audit/latest",
+  "status": "release-blocked",
+  "total_gates": 15
+}

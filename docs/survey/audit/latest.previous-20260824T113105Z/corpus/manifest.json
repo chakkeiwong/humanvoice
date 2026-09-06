@@ -1,0 +1,18 @@
+[
+  {
+    "id": "C-001",
+    "label": "provisional-clean"
+  },
+  {
+    "id": "C-002",
+    "label": "provisional-surface-tell"
+  },
+  {
+    "id": "C-003",
+    "label": "provisional-internal-register"
+  },
+  {
+    "id": "C-004",
+    "label": "provisional-substance-gap"
+  }
+]

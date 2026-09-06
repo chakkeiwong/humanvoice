@@ -1,0 +1,55 @@
+\section{Consistency and Availability Analysis}
+
+The move from a single transactional database to twelve independently-owned data stores changes the consistency model fundamentally. This section characterizes what guarantees the proposed architecture provides, what it gives up, and which business operations are affected.
+
+\subsection{The CAP Constraint}
+
+Any distributed data store must choose, in the presence of a network partition, between consistency and availability. The formal statement, proven by~\cite{brewer-cap-2000}, is that a system cannot simultaneously guarantee
+\begin{equation}
+\label{eq:consistency-availability-partition-tolerance}
+C \wedge A \wedge P
+\end{equation}
+where $C$ denotes linearizable consistency, $A$ denotes availability for all non-failing nodes, and $P$ denotes tolerance of arbitrary message loss between partitions. Because network partitions cannot be excluded in a multi-zone deployment, the practical choice is between $CP$ and $AP$ behavior during partitions.
+
+The proposed architecture selects per-service rather than system-wide. Ledger and Audit Logger operate as $CP$ systems: during a partition they refuse writes rather than risk divergent history. Balance Tracker, Notification Dispatcher, and Reporting Aggregator operate as $AP$ systems: they accept writes during partitions and reconcile afterward. Authorization Engine is a hybrid, degrading to a conservative local decision policy that approves only transactions below a threshold when it cannot reach Balance Tracker.
+
+This per-service selection is more defensible than a single system-wide choice, and reflects the argument by~\cite{bailis-hat-not-cap-2014} that the relevant question is usually not $CP$ versus $AP$ but which specific invariants require coordination.
+
+\subsection{Eventual Consistency Semantics}
+
+For $AP$ services, the guarantee is convergence: given a period without new writes and without partitions, all replicas reach identical state. The convergence time bound is
+\begin{equation}
+\label{eq:eventual-consistency-convergence}
+T_{\text{converge}} \leq T_{\text{partition}} + \frac{Q_{\text{backlog}}}{R_{\text{drain}}} + T_{\text{propagate}}
+\end{equation}
+where $Q_{\text{backlog}}$ is the accumulated write backlog during partition and $R_{\text{drain}}$ is the post-recovery drain rate. With observed drain rates of 12,000 events per second and a worst-case 10-minute partition producing 4.2M backlogged events, equation~\eqref{eq:eventual-consistency-convergence} bounds convergence at approximately 6 minutes after partition healing.
+
+The operational significance, following the treatment in~\cite{vogels-eventual-consistency-2009}, is that during this convergence window customer-visible balances may be stale. Business stakeholders have accepted a 10-minute staleness bound for balance inquiries, but have explicitly rejected any staleness for authorization decisions, which drives the hybrid design for Authorization Engine.
+
+\subsection{Cross-Boundary Transaction Inventory}
+
+An audit of the current system's transaction log identified all operations that would span proposed service boundaries. Of 2.4 million distinct operation traces sampled over 30 days, 23\% touch more than one proposed bounded context. These decompose as follows: 14\% span exactly two contexts, 6\% span three, 2.4\% span four, and 0.6\% span five or more.
+
+The 0.6\% category, approximately 14,400 operations daily, is the primary risk. These are chiefly dispute resolution workflows and multi-account transfers, which currently execute as single database transactions with full ACID guarantees. Converting them to sagas requires defining compensating actions for each step, and there exist failure interleavings where compensation is semantically impossible. Specifically, once a dispute credit has been disclosed to a customer via notification, it cannot be silently reversed.
+
+The mitigation is a semantic lock: dispute workflows acquire an advisory lock on the affected accounts, held for the saga duration, preventing concurrent modification. This reintroduces a coordination point, but scoped to 0.6\% of volume rather than all operations. The pattern and its limitations are discussed at length by~\cite{helland-life-beyond-2007}, who argues that entity-scoped coordination is the only tractable approach at scale.
+
+\subsection{Idempotency Requirements}
+
+At-least-once delivery means every consumer must tolerate duplicate events. Idempotency is achieved through one of three mechanisms depending on the operation.
+
+Naturally idempotent operations, such as setting an account status to a specific value, require no additional machinery. Approximately 40\% of event handlers fall into this category. Deduplication-based idempotency stores processed event identifiers and discards repeats; this covers 45\% of handlers, at the cost of a deduplication table with a 24-hour retention window sized at 1.2 billion rows. Version-check idempotency compares an expected version against current state and rejects mismatches; this covers the remaining 15\%, chiefly monetary operations where deduplication tables are considered insufficiently durable.
+
+The deduplication table is itself a scalability concern. At 200,000 TPS with 45\% of events requiring deduplication and 24-hour retention, the table grows to approximately 7.8 billion rows. Partitioning by hour and dropping partitions on expiry keeps individual partition sizes manageable, but the aggregate storage requirement of 940GB per service that needs it is a material cost.
+
+\subsection{Ordering and Causality}
+
+Distributed systems have no global clock, so ordering must be established logically. The system uses per-partition sequence numbers for total order within a partition, and vector clocks for detecting concurrent modification across partitions. The theoretical foundation is~\cite{lamport-time-clocks-1978}, which establishes that happened-before is a partial order and that any total order consistent with it is acceptable.
+
+Practically, this means the system can determine that event A caused event B when they share a partition, but cannot determine relative order of unrelated events across partitions. Business logic that depends on cross-partition ordering must be redesigned. The audit identified four such dependencies, all in reporting workflows, all resolvable by using event timestamps with an explicit tolerance window rather than strict ordering.
+
+\subsection{Consensus for Configuration}
+
+Configuration Manager requires strong consistency: all services must agree on the active configuration version to prevent inconsistent behavior. This is a consensus problem, solved using the Raft protocol~\cite{ongaro-raft-2014} with a five-node cluster tolerating two failures. Raft was chosen over Paxos~\cite{chandra-paxos-1996} on the basis of implementation availability and operational comprehensibility rather than theoretical differences.
+
+Configuration changes propagate in two phases: proposal, where the new configuration is replicated to a quorum, and activation, where services are instructed to switch. This two-phase approach guarantees that no service activates a configuration that could be lost. Measured propagation latency is 340ms at the p99 for a five-node cluster spanning three availability zones.

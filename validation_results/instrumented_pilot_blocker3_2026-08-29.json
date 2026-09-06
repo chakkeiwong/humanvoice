@@ -1,0 +1,126 @@
+{
+  "record_type": "InstrumentedPilot",
+  "schema_version": "HV-SCHEMA-1.0",
+  "pilot_date": "2026-08-29T17:33:45.092205+00:00",
+  "fixture": "fixtures/synthetic/register/001.tex",
+  "scope": "internal evaluation (G4 Option A)",
+  "runner": "tools/instrumented_pilot.py",
+  "operator_present": false,
+  "steps": [
+    {
+      "step": "init",
+      "argv": [
+        "init",
+        "/home/ubuntu/workspace/humanvoice/fixtures/synthetic/register/001.tex",
+        "--brief",
+        "/home/ubuntu/workspace/humanvoice/validation_results/pilot_workdir/brief.json",
+        "--output",
+        "/home/ubuntu/workspace/humanvoice/validation_results/pilot_workdir/snapshot"
+      ],
+      "started_utc": "2026-08-29T17:33:45.092477+00:00",
+      "ended_utc": "2026-08-29T17:33:45.131862+00:00",
+      "wall_clock_ms": 39,
+      "exit_code": 0,
+      "stdout": "{\n  \"status\": \"initialized\",\n  \"snapshot_id\": \"snapshot-20260829-173345\",\n  \"source_hash\": \"b84cb60f45ee82f0a1be01c9bcc698855dfc28a073b1685b7df18fcab01314fa\",\n  \"brief_valid\": true,\n  \"output_path\": \"/home/ubuntu/workspace/humanvoice/validation_results/pilot_workdir/snapshot\"\n}",
+      "stderr": "",
+      "expected_exit_code": 0,
+      "exit_code_as_expected": true
+    },
+    {
+      "step": "plan",
+      "argv": [
+        "plan",
+        "/home/ubuntu/workspace/humanvoice/validation_results/pilot_workdir/snapshot",
+        "--brief",
+        "/home/ubuntu/workspace/humanvoice/validation_results/pilot_workdir/brief.json"
+      ],
+      "started_utc": "2026-08-29T17:33:45.131906+00:00",
+      "ended_utc": "2026-08-29T17:33:49.970585+00:00",
+      "wall_clock_ms": 4838,
+      "exit_code": 2,
+      "stdout": "",
+      "stderr": "Loading model configuration...\nGenerating blueprint with claude-opus-5...\nModel abstained: Output failed schema validation: 'blueprint' is a required property\n\nFailed validating 'required' in schema:\n    {'type': 'object',\n     'properties': {'blueprint': {'type': 'object',\n                                  'properties': {'sections': {'type': 'array',\n                                                              'items': {'type': 'object',\n                                                                        'properties': {'title': {'type': 'string'},\n                                                                                       'purpose': {'type': 'string'},\n                                                                                       'evidence_needed': {'type': 'array',\n                                                                                                           'items': {'type': 'string'}},\n                                                                                       'word_budget': {'type': 'number'}},\n                                                                        'required': ['title',\n                                                                                     'purpose']}},\n                                                 'total_words': {'type': 'number'},\n                                                 'abstention': {'type': 'string'}},\n                                  'required': ['sections'],\n                                  'anyOf': [{'required': ['total_words']},\n                                            {'required': ['abstention']}]}},\n     'required': ['blueprint']}\n\nOn instance:\n    {'tool': 'read_file', 'path': 'source/001.tex'}\nReceived: {\n  \"tool\": \"read_file\",\n  \"path\": \"source/001.tex\"\n}\nAbstention recorded to: /home/ubuntu/workspace/humanvoice/validation_results/pilot_workdir/snapshot/.humanvoice/runs/run-20260829-173345/blueprint.json",
+      "run_dir": "validation_results/pilot_workdir/snapshot/.humanvoice/runs/run-20260829-173345",
+      "tokens": [
+        {
+          "manifest": "runtime_manifest.json",
+          "input_tokens": 416,
+          "output_tokens": 45,
+          "request_id": "msg_EobjS82Ccz2A7NcbOEgIJzby",
+          "latency_ms_reported": 0,
+          "mode": "inference"
+        }
+      ]
+    },
+    {
+      "step": "preflight",
+      "argv": [
+        "preflight",
+        "/home/ubuntu/workspace/humanvoice/validation_results/pilot_workdir/snapshot",
+        "--brief",
+        "/home/ubuntu/workspace/humanvoice/validation_results/pilot_workdir/brief.json",
+        "--deterministic"
+      ],
+      "started_utc": "2026-08-29T17:33:49.971931+00:00",
+      "ended_utc": "2026-08-29T17:33:50.031704+00:00",
+      "wall_clock_ms": 59,
+      "exit_code": 1,
+      "stdout": "{\n  \"preflight_id\": \"preflight-20260829-173350\",\n  \"mode\": \"deterministic\",\n  \"snapshot_id\": \"snapshot-20260829-173345\",\n  \"checked_at\": \"2026-08-29T17:33:50.023916+00:00\",\n  \"findings\": [\n    {\n      \"category\": \"register\",\n      \"severity\": \"deterministic_failure\",\n      \"location\": {\n        \"char_offset\": 66,\n        \"matched_text\": \"WP3\"\n      },\n      \"message\": \"Private workflow label found in reader-facing text\",\n      \"reader_consequence\": \"Reader cannot act on internal phase labels\",\n      \"source_terms\": [\n        \"WP3\"\n      ]\n    },\n    {\n      \"category\": \"register\",\n      \"severity\": \"deterministic_failure\",\n      \"location\": {\n        \"char_offset\": 83,\n        \"matched_text\": \"/srv/humanvoice/private\"\n      },\n      \"message\": \"Private filesystem path found in reader-facing text\",\n      \"reader_consequence\": \"Reader cannot access internal paths\",\n      \"source_terms\": [\n        \"/srv/humanvoice/private\"\n      ]\n    }\n  ],\n  \"deterministic_gate\": \"fail\",\n  \"protected_objects\": {\n    \"count\": 0,\n    \"types\": {},\n    \"parser\": \"pylatexenc\",\n    \"parse_time_seconds\": 0.0014481544494628906\n  },\n  \"status\": \"gate_failure\",\n  \"exit_code\": 1\n}",
+      "stderr": "Found 2 register violations"
+    },
+    {
+      "step": "preflight_json_for_repair",
+      "argv": [
+        "preflight",
+        "/home/ubuntu/workspace/humanvoice/validation_results/pilot_workdir/snapshot",
+        "--brief",
+        "/home/ubuntu/workspace/humanvoice/validation_results/pilot_workdir/brief.json",
+        "--deterministic"
+      ],
+      "started_utc": "2026-08-29T17:33:50.031766+00:00",
+      "ended_utc": "2026-08-29T17:33:50.097337+00:00",
+      "wall_clock_ms": 65,
+      "exit_code": 1,
+      "stdout": "{\n  \"preflight_id\": \"preflight-20260829-173350\",\n  \"mode\": \"deterministic\",\n  \"snapshot_id\": \"snapshot-20260829-173345\",\n  \"checked_at\": \"2026-08-29T17:33:50.089648+00:00\",\n  \"findings\": [\n    {\n      \"category\": \"register\",\n      \"severity\": \"deterministic_failure\",\n      \"location\": {\n        \"char_offset\": 66,\n        \"matched_text\": \"WP3\"\n      },\n      \"message\": \"Private workflow label found in reader-facing text\",\n      \"reader_consequence\": \"Reader cannot act on internal phase labels\",\n      \"source_terms\": [\n        \"WP3\"\n      ]\n    },\n    {\n      \"category\": \"register\",\n      \"severity\": \"deterministic_failure\",\n      \"location\": {\n        \"char_offset\": 83,\n        \"matched_text\": \"/srv/humanvoice/private\"\n      },\n      \"message\": \"Private filesystem path found in reader-facing text\",\n      \"reader_consequence\": \"Reader cannot access internal paths\",\n      \"source_terms\": [\n        \"/srv/humanvoice/private\"\n      ]\n    }\n  ],\n  \"deterministic_gate\": \"fail\",\n  \"protected_objects\": {\n    \"count\": 0,\n    \"types\": {},\n    \"parser\": \"pylatexenc\",\n    \"parse_time_seconds\": 0.0014472007751464844\n  },\n  \"status\": \"gate_failure\",\n  \"exit_code\": 1\n}",
+      "stderr": "Found 2 register violations"
+    },
+    {
+      "step": "repair",
+      "skipped": true,
+      "reason": "no draft artifact available"
+    },
+    {
+      "step": "release",
+      "argv": [
+        "release",
+        "/home/ubuntu/workspace/humanvoice/validation_results/pilot_workdir/snapshot",
+        "--brief",
+        "/home/ubuntu/workspace/humanvoice/validation_results/pilot_workdir/brief.json",
+        "--output",
+        "/home/ubuntu/workspace/humanvoice/validation_results/pilot_workdir/release"
+      ],
+      "started_utc": "2026-08-29T17:33:50.097975+00:00",
+      "ended_utc": "2026-08-29T17:33:50.141827+00:00",
+      "wall_clock_ms": 43,
+      "exit_code": 1,
+      "stdout": "",
+      "stderr": "Release blocked by 1 never-except condition(s):\n  - deterministic_preflight: {'reason': 'unresolved_preflight_findings', 'preflight_id': 'preflight-20260829-173350', 'finding_count': 2, 'categories': ['register'], 'detail': '2 deterministic finding(s) stand unresolved in preflight-20260829-173350. Repair them and re-run preflight.'}"
+    }
+  ],
+  "totals": {
+    "end_to_end_wall_clock_ms": 5049,
+    "end_to_end_wall_clock_s": 5.0,
+    "input_tokens": 416,
+    "output_tokens": 45,
+    "model_invoking_steps": 1,
+    "deterministic_steps": 4,
+    "deterministic_overhead_ms": 206
+  },
+  "contract_comparison": {
+    "cap_operator_minutes": 180,
+    "cap_tokens_usd": 20,
+    "measured_wall_clock_minutes": 0.08,
+    "operator_wait_time": "not measured - no human in the loop; wall-clock is machine time only",
+    "note": "runtime_manifest.latency_ms is 0 for every command, so per-invocation API latency is measured externally by this wrapper"
+  }
+}

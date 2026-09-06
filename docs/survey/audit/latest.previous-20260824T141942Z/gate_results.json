@@ -1,0 +1,77 @@
+[
+  {
+    "gate": "protocol-frozen",
+    "reason": "Versioned JSON protocol is checked in.",
+    "status": "pass"
+  },
+  {
+    "gate": "minimum-query-count",
+    "reason": "32 OpenAlex query families are specified.",
+    "status": "pass"
+  },
+  {
+    "gate": "known-item-broad-recall",
+    "reason": "Search retrieved 0/14 known items; offline=True.",
+    "status": "fail"
+  },
+  {
+    "gate": "known-item-challenge-recall",
+    "reason": "Challenge queries retrieved 0/14 known items; offline=True.",
+    "status": "fail"
+  },
+  {
+    "gate": "manual-independent-screening",
+    "reason": "Two independent include/exclude/uncertain decisions and include/exclude adjudication are required for every selected queue row; excluded records also require a frozen exclusion code.",
+    "status": "fail"
+  },
+  {
+    "gate": "domain-database-imports",
+    "reason": "At least one provenance-complete domain export is required; records=11655, provenance-complete=11655.",
+    "status": "pass"
+  },
+  {
+    "gate": "specialist-domain-coverage",
+    "reason": "At least one provenance-complete specialist/licensed export is required (EconLit, RePEc/IDEAS, SSRN, ACM Digital Library, IEEE Xplore, Web of Science, Scopus); matched=none. Public ACL/NBER/ICLR slices do not satisfy this gate.",
+    "status": "fail"
+  },
+  {
+    "gate": "full-text-load-bearing-evidence",
+    "reason": "Every load-bearing empirical/review record needs full-text inspection and independent verification; verified=0/17.",
+    "status": "fail"
+  },
+  {
+    "gate": "critical-appraisal",
+    "reason": "Every load-bearing empirical/review record needs a low/some-concern design-specific appraisal, claim anchor, and limitations; acceptable=0/17.",
+    "status": "fail"
+  },
+  {
+    "gate": "bibliographic-identity",
+    "reason": "Every DOI-bearing load-bearing evidence row must resolve to a matching Crossref title; verified=0/14.",
+    "status": "fail"
+  },
+  {
+    "gate": "bibliography-doi-identity",
+    "reason": "Every actual DOI in the checked-in bibliography must resolve to a matching Crossref title; verified=0/25, mismatches=0, unresolved=25. arXiv identifiers are tracked separately.",
+    "status": "fail"
+  },
+  {
+    "gate": "package-provenance",
+    "reason": "Each package must have a URL and a pinned local commit or an explicit remote-only status.",
+    "status": "pass"
+  },
+  {
+    "gate": "package-held-out-benchmark",
+    "reason": "Every adoption candidate needs an adapter and effectiveness results on the locked corpus; smoke tests do not establish effectiveness.",
+    "status": "fail"
+  },
+  {
+    "gate": "external-review",
+    "reason": "The protocol requires an independent librarian/domain reviewer sign-off file with status=approved.",
+    "status": "fail"
+  },
+  {
+    "gate": "artifact-integrity",
+    "reason": "Raw-response hashes, record identities, evidence provenance, and package provenance must remain internally consistent.",
+    "status": "pass"
+  }
+]

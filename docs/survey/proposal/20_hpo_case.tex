@@ -1,0 +1,200 @@
+% A concrete internal case that turns the proposal's pacing discussion into a
+% testable product requirement.  The complete record remains in the appendix.
+\chapter{A live lesson in density}
+\label{ch:hpo-density}
+
+The manager used the same word for each failure. Three times, while reviewing
+a 90-page methods monograph, the manager said the document was
+``too dense.'' Three times, the writing agent had already judged the draft
+readable. The complaint was right each time, but the repair was different.
+
+That small history is more useful than another universal readability score. It
+shows what a reader experiences and what a product has to discover. The first
+round concerned the size of the paragraph. The second concerned the number of
+new ideas arriving over a page. The third concerned order: the document used
+names before it had taught the objects those names referred to.
+
+The figures in this chapter come from one internal engagement, recorded on
+24--25 August 2026. They are calibration evidence for a feasibility build,
+not estimates of how often technical documents fail and not acceptance
+thresholds. The full provenance and the proposed fixture are in
+Appendix~\ref{app:hpo-density-record}.
+
+\hvFigureHpoRounds
+
+\section{The first round: one paragraph carried a page}
+\label{sec:hpo-packing}
+
+The first version contained a 210-word paragraph. It named six mechanisms and
+five citations before the reader had a chance to decide what the paragraph was
+trying to establish. Nothing in it was necessarily false. The problem was
+that each sentence opened another line of thought while the first one was
+still unfinished.
+
+The repair was modest. The author gave each paragraph one job and moved the
+qualifications and citations next to the claims they qualified. The mean
+length of a prose paragraph fell from 128 words to 90. That count is not a
+rule for every document; it is a record of where this reader found relief.
+
+The useful finding would therefore not say ``shorten paragraphs.'' It would
+show the source lines, count the new mechanisms and citations in the passage,
+and ask whether the paragraph can close one question before it opens another.
+The author may split it, add a concrete example, or keep it and explain why
+the concentration is necessary.
+
+\begin{cardexample}{The question a packing finding should ask}
+\textbf{Observed:} one paragraph introduces six mechanisms and five citations
+before it states the consequence.\\
+\textbf{Question:} which one result should the reader carry into the next
+paragraph?\\
+\textbf{Possible repair:} give that result its own paragraph, then unfold the
+mechanisms one at a time. The tool does not choose the split.
+\end{cardexample}
+
+\section{The second round: the page moved too quickly}
+\label{sec:hpo-pacing}
+
+The manager then supplied two documents and said, in effect, ``write at this
+pace.'' That instruction was more precise than a target word count. The same
+concept detector was run over the survey and the two exemplars. The survey
+introduced a new concept about every 70 words. The exemplars introduced one
+about every 83 and 253 words. The longer figure belonged to an 800-page
+single-project monograph: it was not a universal ideal, but it revealed the
+standard this manager had in mind.
+
+The detector also counted paragraphs that introduced at least three new
+concepts. The proportions were 12.9 per cent for the survey, 5.9 per cent for
+one exemplar, and 0.8 per cent for the other. The absolute counts are noisy;
+the comparison is useful because the same imperfect detector was applied to
+all three documents.
+
+The repair was not to pad the survey. It was to let one idea stay on stage
+long enough to become familiar. A concrete case came first. The prose named
+the mechanism. A figure showed it. A short read-back paragraph told the reader
+what the figure had changed. Only then did the author introduce the next
+distinction.
+
+This changes the product question. A pacing finding may recommend fewer named
+things in a unit, not more words in the same unit. It should report the target
+document's position relative to its supplied exemplars and list the paragraphs
+with the largest bursts. A number without a nearby passage is not an editorial
+instruction.
+
+\hvFigureDensityLadder
+
+\section{The third round: names arrived before their objects}
+\label{sec:hpo-ordering}
+
+The final complaint was more specific: ``Do not use a concept before you have
+explained it.'' A first-use audit found roughly 25 genuine violations. The
+running example used the name PPO on its first page and never introduced the
+algorithm. Two acquisition-function names appeared a section before the
+chapter taught what an acquisition was.
+
+The reader could recognise the words and still be unable to follow the
+argument. Recognition is not understanding. A glossary at the end would not
+repair the first encounter, because the reader had already had to guess why
+the name mattered.
+
+The repair pattern was simple. Start with the ordinary object, then name it:
+``a population-based method, BG-PBT, examined in Chapter 6.'' When the order
+must be anticipatory, say so: ``The next two names are only landmarks; the
+method appears in Section 6.2.'' A preview, a decision box, or a reference
+table may legitimately name an object early, but the document should declare
+that exemption rather than silently teaching the rule to ignore every early
+name.
+
+\begin{table}[H]
+\centering
+\small
+\begin{tabularx}{\textwidth}{@{}p{0.18\textwidth}p{0.27\textwidth}p{0.25\textwidth}L@{}}
+\toprule
+Round & What the reader said & Located cause & Repair and product lesson \\
+\midrule
+1 & ``Too dense.'' & Six mechanisms and five citations in one 210-word
+paragraph. & One idea per paragraph; report the passage and let the author
+choose the split. \\
+2 & ``Too dense.'' & New concepts arrived faster than in the named exemplars
+(70 versus 83 and 253 words per concept). & Measure relative pace and burst;
+use examples, figures, and read-backs before adding another term. \\
+3 & ``Do not use it before explaining it.'' & About 25 first-use violations,
+including an unexplained running-example algorithm. & Audit first use with a
+whitelist and explicit exemption zones; introduce the generic object first. \\
+\bottomrule
+\end{tabularx}
+\caption{One reader complaint, three levels of diagnosis. All figures are
+internal calibration observations from one engagement.}
+\label{tab:hpo-rounds}
+\end{table}
+
+\section{The diagnostic ladder}
+\label{sec:hpo-ladder}
+
+The case suggests four questions, in a deliberate order.
+
+\begin{description}
+\item[Surface.] Does a repeated opening, stock phrase, or private label
+  deserve inspection? Pattern tools are useful here because their observations
+  are narrow and easy to locate.
+\item[Packing.] Does one paragraph ask the reader to hold several mechanisms,
+  citations, or qualifications at once? Paragraph length is only a clue; the
+  finding must show what is being carried together.
+\item[Pacing.] How quickly does this document introduce and consolidate new
+  concepts relative to the exemplars named in its reading brief? The meter
+  reports introduction rate, singleton share, burst paragraphs, and a rolling
+  live load. It does not decide whether a theorem or definition is too dense.
+\item[Order.] At the first occurrence of a term, has the document supplied an
+  expansion, a plain-language gloss, or a pointer to where the term is taught?
+  The audit uses the reader's known-vocabulary list and declared exemption
+  zones. It should abstain when the evidence is ambiguous.
+\end{description}
+
+The order matters. A writer who fixes a repeated heading before noticing that
+the paragraph has no example may polish the surface while leaving the reader's
+real problem untouched. Conversely, a writer who discovers an ordering fault
+does not need to rewrite the whole chapter. The finding queue should be
+sortable by unit, and each repaired unit should be rebuilt and inspected before
+the change spreads to the rest of the document.
+
+\section{Slow, but easy to leave}
+\label{sec:hpo-skippable}
+
+The manager offered a practical rule: when a passage is slow, the reader can
+skip; when it is too fast, the reader must reconstruct the missing steps. We
+take that as a repair prior, not as a licence to add padding. A slow section
+earns its space when it closes questions in sequence, uses headings that make
+the stopping points visible, and returns to the same idea in a different form.
+
+The first build should record a second property beside concept pace:
+skippability. A long unit with no internal heading, example, or summary is not
+slow in a useful way. It is simply hard to re-enter after an interruption. The
+author can respond by adding a map, a worked micro-case, or a short read-back;
+the author need not accept the meter's preferred wording.
+
+\section{The reader's evidence completes the loop}
+\label{sec:hpo-reader-evidence}
+
+The agent judged the document readable before each of the three rounds and was
+wrong each time. The meters did not judge it good. They located passages that
+the manager then confirmed or rejected. That division of labour belongs in the
+product contract.
+
+The reader record should preserve the moment at which the document stopped
+working. In addition to a response and elapsed time, the reviewer records the
+page or section where they stopped, a short quotation that triggered the
+request, and the smallest missing relation they were trying to recover. Those
+fields are more informative than a single score: ``I stopped at page 18,
+where PPO appears without an explanation'' tells the author what to repair.
+
+The reading brief must learn from the session. It carries the named exemplars,
+the vocabulary the reader already owns, the sections in which names are only
+landmarks, and the standing instruction to err on the slow side. A later
+inspection runs against that versioned brief rather than reopening a settled
+argument. The brief remains a reader contract, not a private project diary.
+
+\begin{takeawaybox}{What this case adds to Humanvoice}
+The HPO engagement does not prove that Humanvoice works. It gives the first
+build a sharper job: distinguish packing, pacing, and ordering; calibrate
+against the reader's exemplars; show the passage that triggered a finding; and
+leave the repair and the final judgment with the author and reader.
+\end{takeawaybox}

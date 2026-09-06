@@ -1,0 +1,14 @@
+{
+  "contract_version": "1.1.0",
+  "command": "plan",
+  "status": "released",
+  "exit_code": 0,
+  "run_id": "run-20260829-143113",
+  "record_paths": [
+    "/home/ubuntu/workspace/humanvoice/.humanvoice/runs/run-20260829-143113/blueprint.json",
+    "/home/ubuntu/workspace/humanvoice/.humanvoice/runs/run-20260829-143113/runtime_manifest.json"
+  ],
+  "blocking_reasons": [],
+  "source_hash": "edd041d64df31a72c1f1f225a3e523743ad270823e60389b61853cd61a1169ad",
+  "result_hash": "fee439e0d11d375f71da548931af06be6f5a3889105b5823ab0aadc08515d10a"
+}

@@ -1,0 +1,87 @@
+{
+  "blueprint": {
+    "sections": [
+      {
+        "title": "Introduction: Byzantine Consensus in Production Systems",
+        "purpose": "Establish the decision context for readers evaluating Byzantine consensus protocols for production deployment, defining the problem space and the document's scope in analyzing protocol performance and safety guarantees",
+        "evidence_needed": [
+          "source/source.tex"
+        ],
+        "word_budget": 400
+      },
+      {
+        "title": "Problem Formulation and System Model",
+        "purpose": "Specify the Byzantine consensus problem under the partially synchronous model, defining safety and liveness properties, adversary capabilities, and network assumptions that constrain protocol design choices",
+        "evidence_needed": [
+          "source/source.tex"
+        ],
+        "word_budget": 500
+      },
+      {
+        "title": "Classical PBFT and Its Performance Characteristics",
+        "purpose": "Analyze PBFT's three-phase commit protocol, view change mechanism, and communication complexity, establishing baseline performance metrics and identifying scalability bottlenecks that motivate modern optimizations",
+        "evidence_needed": [
+          "source/source.tex"
+        ],
+        "word_budget": 600
+      },
+      {
+        "title": "Linear Communication Protocols: HotStuff and Variants",
+        "purpose": "Examine how threshold signatures and pipelined phases achieve O(n) communication complexity per view, quantifying latency-throughput tradeoffs and comparing leader-based versus DAG-based approaches",
+        "evidence_needed": [
+          "source/source.tex"
+        ],
+        "word_budget": 700
+      },
+      {
+        "title": "Tendermint: Bounded Synchrony and Accountability",
+        "purpose": "Evaluate Tendermint's two-phase voting with prevote/precommit, its fork accountability mechanism, and performance implications of bounded synchrony assumptions versus full asynchrony",
+        "evidence_needed": [
+          "source/source.tex"
+        ],
+        "word_budget": 600
+      },
+      {
+        "title": "Casper FFG: Finality Gadgets for Proof-of-Stake",
+        "purpose": "Analyze Casper FFG's checkpoint-based finality overlay, slashing conditions for provable Byzantine behavior, and integration patterns with underlying block proposal mechanisms",
+        "evidence_needed": [
+          "source/source.tex"
+        ],
+        "word_budget": 500
+      },
+      {
+        "title": "Empirical Performance Analysis",
+        "purpose": "Present experimental measurements of throughput, latency, and scalability across protocols under varying network conditions, validator set sizes, and Byzantine fault scenarios, identifying which protocol characteristics dominate performance in different deployment contexts",
+        "evidence_needed": [
+          "source/source.tex"
+        ],
+        "word_budget": 900
+      },
+      {
+        "title": "View Change and Recovery Mechanisms",
+        "purpose": "Compare view change protocols across systems, measuring recovery time from leader failures and Byzantine attacks, and analyzing how view change complexity affects liveness guarantees under different synchrony assumptions",
+        "evidence_needed": [
+          "source/source.tex"
+        ],
+        "word_budget": 500
+      },
+      {
+        "title": "Production Deployment Considerations",
+        "purpose": "Synthesize protocol tradeoffs for production system design, mapping performance characteristics to deployment requirements (permissioned vs. permissionless, latency sensitivity, validator count), and identifying which protocol features are decisive for specific use cases",
+        "evidence_needed": [
+          "source/source.tex"
+        ],
+        "word_budget": 600
+      },
+      {
+        "title": "Open Problems and Research Directions",
+        "purpose": "Identify unresolved technical challenges in Byzantine consensus (optimal message complexity, asynchronous responsiveness, dynamic validator sets), qualifying the document's claims with known limitations and areas requiring further empirical validation",
+        "evidence_needed": [
+          "source/source.tex"
+        ],
+        "word_budget": 300
+      }
+    ],
+    "total_words": 5100
+  }
+}

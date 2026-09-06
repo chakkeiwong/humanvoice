@@ -1,0 +1,19 @@
+\section{Open Problems and Research Directions}
+
+Despite substantial progress in Byzantine consensus protocols over the past decade, several fundamental challenges remain unresolved. These open problems represent critical barriers to achieving the theoretical limits of scalability, responsiveness, and adaptability in production systems.
+
+\subsection{Message Complexity Bounds}
+
+While protocols like HotStuff~\cite{yin2019hotstuff} achieve linear message complexity in the optimistic path, the lower bound for Byzantine consensus under worst-case conditions remains an open question. Classical PBFT's $\mathcal{O}(n^2)$ communication pattern stems from all-to-all broadcasts during view changes, but whether this quadratic blow-up is fundamental or an artifact of specific protocol designs has not been conclusively established. Recent DAG-based approaches suggest alternative communication patterns, yet no protocol has demonstrated both worst-case linear complexity and deterministic termination in partially synchronous networks.
+
+\subsection{Asynchronous Responsiveness}
+
+The tension between responsiveness and asynchrony represents a persistent challenge. Protocols like Tendermint~\cite{buchman2016tendermint} require synchrony assumptions for liveness, introducing timeout parameters that must be carefully tuned. While theoretically responsive protocols can commit transactions as soon as network delays permit, achieving this property without sacrificing the deterministic guarantees of partially synchronous models remains elusive. The question of whether a protocol can be simultaneously responsive, deterministic, and robust to asynchronous periods with optimal message complexity constitutes a major open problem.
+
+\subsection{Dynamic Validator Sets}
+
+Most formal analyses assume static validator configurations. Production systems like Casper FFG~\cite{buterin2020combining} require dynamic validator sets with nodes joining and leaving without global coordination. The interaction between validator set changes and safety guarantees during view changes lacks comprehensive theoretical treatment. Existing approaches either impose synchronization points that limit throughput or rely on heuristic mechanisms whose safety properties under Byzantine faults remain inadequately characterized.
+
+\subsection{Empirical Validation Gaps}
+
+The claims presented in this survey regarding protocol performance rely heavily on simulation and controlled testbeds. Large-scale deployments under adversarial conditions with realistic network heterogeneity remain underexplored. Production data from blockchain networks often conflates protocol performance with application-layer effects, making it difficult to isolate the fundamental scalability characteristics of the consensus mechanism itself. Further empirical work is needed to validate whether theoretical improvements translate to measurable gains in hostile, geographically distributed environments with Byzantine adversaries employing sophisticated attack strategies.

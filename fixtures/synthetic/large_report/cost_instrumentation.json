@@ -1,0 +1,107 @@
+{
+  "record_type": "CostInstrumentation",
+  "schema_version": "HV-SCHEMA-1.0",
+  "run_date": "2026-08-29",
+  "scope": "internal evaluation (G4 Option A)",
+  "fixture": "fixtures/synthetic/large_report",
+  "snapshot_id": "snapshot-20260829-090615",
+  "source_hash": "ec1728966e65bf348c16431015298311fff0239dfc390ee3ea87cb9e9e97bf4a",
+  "model": "claude-opus-5",
+  "mode": "inference",
+
+  "target_vs_actual": {
+    "target_word_count": 15000,
+    "target_sections": 25,
+    "actual_planned_words": 5100,
+    "actual_planned_sections": 10,
+    "shortfall_cause": "plan_command._build_plan_prompt reads brief['max_words'] (default 5000) and never consults extensions.target_word_count",
+    "cost_projection_validity": "PARTIAL - measured at ~1/3 of intended document scale; per-section costs are valid, whole-document total is not"
+  },
+
+  "plan_phase": {
+    "run_id": "run-20260829-091358",
+    "input_tokens": 475,
+    "output_tokens": 864,
+    "request_id": "msg_ciu4FiK6BF4jqrxPEvF7GGaj",
+    "sections_produced": 10,
+    "words_budgeted": 5100
+  },
+
+  "draft_phase": {
+    "sections_attempted": 10,
+    "sections_succeeded": 10,
+    "register_gate_retries": 2,
+    "units": [
+      {"section": 0, "title": "Introduction: Byzantine Consensus in Production Systems", "run_id": "run-20260829-141041", "words": 414, "citations": 4, "input_tokens": 1314, "output_tokens": 880, "request_id": "msg_NWjWM1WpXYF01U9jA7eHsWA0", "attempts": 2, "first_attempt_result": "register_violation_We_offset_1632"},
+      {"section": 1, "title": "Problem Formulation and System Model", "run_id": "run-20260829-141142", "words": 512, "citations": 4, "input_tokens": 1306, "output_tokens": 1189, "request_id": "msg_Y9NjHyKRYHvmRHA1NIStxwMQ", "attempts": 2, "first_attempt_result": "register_violation_We_offset_48"},
+      {"section": 2, "title": "Classical PBFT and Its Performance Characteristics", "run_id": "run-20260829-092014", "words": 601, "citations": 4, "input_tokens": 13176, "output_tokens": 1170, "request_id": "msg_657ec5fe371c48edb7ae108bad78f806", "attempts": 1},
+      {"section": 3, "title": "Linear Communication Protocols: HotStuff and Variants", "run_id": "run-20260829-092111", "words": 698, "citations": 3, "input_tokens": 1106, "output_tokens": 1599, "request_id": "msg_4AT1rodrT3UgSLthDdxHpIfr", "attempts": 1},
+      {"section": 4, "title": "Tendermint: Bounded Synchrony and Accountability", "run_id": "run-20260829-092150", "words": 698, "citations": 1, "input_tokens": 1089, "output_tokens": 1191, "request_id": "msg_TrO9c4Tib7Sabz1d0pmH68FK", "attempts": 1},
+      {"section": 5, "title": "Casper FFG: Finality Gadgets for Proof-of-Stake", "run_id": "run-20260829-092229", "words": 498, "citations": 1, "input_tokens": 1092, "output_tokens": 1124, "request_id": "msg_o9Vu2pGg22MacCisvoBjtzmF", "attempts": 1},
+      {"section": 6, "title": "Empirical Performance Analysis", "run_id": "run-20260829-092304", "words": 1092, "citations": 4, "input_tokens": 1085, "output_tokens": 1743, "request_id": "msg_Gy4M5PmdTNoqXFQnpL2XCa2u", "attempts": 1, "word_budget_warning": "1092 outside target range [720, 1080]"},
+      {"section": 7, "title": "View Change and Recovery Mechanisms", "run_id": "run-20260829-092355", "words": 497, "citations": 4, "input_tokens": 1097, "output_tokens": 1329, "request_id": "msg_2vR7X5zTdkZ2uqnq4omk1N4f", "attempts": 1},
+      {"section": 8, "title": "Production Deployment Considerations", "run_id": "run-20260829-092437", "words": 617, "citations": 4, "input_tokens": 12857, "output_tokens": 1279, "request_id": "msg_4aed6347d42341378cc27aa0f4da54f6", "attempts": 1},
+      {"section": 9, "title": "Open Problems and Research Directions", "run_id": "run-20260829-092532", "words": 358, "citations": 3, "input_tokens": 1100, "output_tokens": 607, "request_id": "msg_iF47Wbqq53K8Glgf8t302veO", "attempts": 1}
+    ],
+    "totals_successful_units_only": {
+      "input_tokens": 35222,
+      "output_tokens": 12111,
+      "words_drafted": 5985
+    },
+    "totals_including_discarded_retries": {
+      "input_tokens": 48991,
+      "output_tokens": 14116,
+      "note": "includes 2 register-blocked attempts (no artifact) and 2 superseded resamples"
+    }
+  },
+
+  "wall_clock": {
+    "draft_loop_sections_2_to_9": "09:20:14 -> 09:25:32 (~5m20s, ~40s/section)",
+    "sections_0_1_resample": "22:10:40 -> 22:12:20 (~100s for 4 invocations)",
+    "latency_ms_field": "recorded as 0 in every runtime_manifest - instrumentation gap, see findings"
+  },
+
+  "input_token_anomaly": {
+    "observation": "3 of 12 model calls consumed ~12.5-13.2k input tokens; the other 9 consumed ~1.1-1.3k for structurally identical prompts",
+    "correlation": "input token magnitude tracks request-ID format exactly, not section content or evidence size",
+    "high_input_calls": ["msg_657ec5fe371c48edb7ae108bad78f806", "msg_4aed6347d42341378cc27aa0f4da54f6", "msg_9630e114fcf144438dd2eb55be7cc5fb"],
+    "high_input_id_format": "32-char hex",
+    "low_input_id_format": "24-char base62",
+    "inference": "two distinct gateway/serving paths; the hex-ID path appears not to apply prompt caching",
+    "cost_impact": "roughly 11x input-token cost on affected calls; unpredictable which path serves a request",
+    "status": "unresolved - external to humanvoice, but it makes per-document cost non-deterministic and should be characterised before any cost guarantee is published"
+  },
+
+  "cost_model_check": {
+    "contract_cap_tokens_usd": 20,
+    "contract_cap_operator_minutes": 180,
+    "projected_per_document_usd": 3,
+    "measured_scope": "10 sections / 5985 words / 48991 in + 14116 out tokens including retries",
+    "verdict": "cannot confirm the $3/document figure from this run",
+    "reasons": [
+      "document reached only ~40% of intended word count (5985 of 15000) because of the max_words defect",
+      "input-token cost varies ~11x depending on which gateway path serves the call",
+      "operator time not measurable in this run: no human sat in the loop, and latency_ms is unrecorded"
+    ]
+  },
+
+  "release_phase": {
+    "result": "blocked",
+    "exit_code": 2,
+    "blocking_condition": "source_build / no_protected_extraction",
+    "detail": "Brief promises 9 protected objects but no runs directory exists",
+    "assessment": "the block is correct in outcome but wrong in reason - see finding F-RELEASE-PATH-001"
+  },
+
+  "preflight_phase": {
+    "deterministic_gate": "pass",
+    "findings": [],
+    "citations_extracted": 6,
+    "parse_time_s": 0.042,
+    "overall_status": "abstention",
+    "exit_code": 2,
+    "reason": "Project vocabulary configuration required to classify ambiguous terms",
+    "ambiguous_term_count": 8,
+    "sample_terms": ["BLS", "TLA", "BFT", "DAG", "GST"]
+  }
+}

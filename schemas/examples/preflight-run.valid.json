@@ -1,0 +1,12 @@
+{
+  "record_type": "PreflightRun",
+  "schema_version": "HV-SCHEMA-1.0",
+  "record_id": "preflight-001",
+  "run_id": "run-001",
+  "created_at": "2026-08-26T00:00:00Z",
+  "source_hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+  "gates": {"integrity": "pass", "evidence": "pass"},
+  "abstentions": [],
+  "mutations": [],
+  "outcome": "pass"
+}

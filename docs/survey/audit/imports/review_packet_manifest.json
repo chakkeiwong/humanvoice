@@ -1,0 +1,26 @@
+{
+  "evidence_rows": 17,
+  "files": {
+    "evidence_review.csv": {
+      "rows": 17,
+      "sha256": "295619aca128f3d3b395a0c8fd29243d0e214f2cdc7fe3236ac0b0dc19a201d5"
+    },
+    "review_packet_README.md": {
+      "sha256": "fc40421c2050bcecc770d07cac69f869b7b2d9904f64086f2bc222ef93e74317"
+    },
+    "screening_review.csv": {
+      "rows": 200,
+      "sha256": "82576cebb0ea71ce2a5814ef8b29d4ddb73ac1b048ea9d755366c379c505b7e7"
+    }
+  },
+  "generated_at": "2026-08-24T15:20:02+00:00",
+  "reviewer_decisions": "none",
+  "screening_rows": 200,
+  "source_artifacts": {
+    "artifact_manifest.json": "86ceee1539ce8829a39a2d265ec37794117a42209e5ae9941ac4cd4f5f167afb",
+    "critical_appraisal_queue.csv": "fc249a251c582c82dbd50da5f6dd6d0112681e233dad959e114e0393ae72586f",
+    "screening_queue.csv": "f13c61d9bcfd81caffce80e1233bd6c18f7ed10b703d3a4579d13d320f8622e4"
+  },
+  "source_run": "docs/survey/audit/latest",
+  "status": "prepared-blank-overlay"
+}

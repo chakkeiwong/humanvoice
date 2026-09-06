@@ -1,0 +1,47 @@
+{
+  "blueprint": {
+    "sections": [
+      {
+        "title": "Decision Context and Problem Statement",
+        "purpose": "Establishes what is being decided and why it requires a decision now, so the reviewer can frame the approve/reject judgment against a concrete gap or failure mode rather than a general improvement wish.",
+        "evidence_needed": [
+          "source/001.tex"
+        ],
+        "word_budget": 75
+      },
+      {
+        "title": "Proposed Mechanism",
+        "purpose": "Describes the proposed approach in operational terms: what changes, where it sits relative to the existing path, and what behavior it is expected to produce. Gives the reviewer the object of approval in unambiguous form.",
+        "evidence_needed": [
+          "source/001.tex"
+        ],
+        "word_budget": 90
+      },
+      {
+        "title": "Supporting Evidence per Claim",
+        "purpose": "Ties each load-bearing claim about the mechanism to the specific passage or result that supports it, allowing the reviewer to check the strongest and weakest links rather than accepting the argument as a whole.",
+        "evidence_needed": [
+          "source/001.tex"
+        ],
+        "word_budget": 80
+      },
+      {
+        "title": "Qualifications and Limits of the Conclusion",
+        "purpose": "States the scope conditions, unresolved gaps, and assumptions under which the recommendation holds, so approval is granted with an accurate view of residual risk.",
+        "evidence_needed": [
+          "source/001.tex"
+        ],
+        "word_budget": 55
+      }
+    ],
+    "total_words": 300
+  },
+  "abstention": {
+    "status": "partial",
+    "files_inspected": [],
+    "files_listed": [
+      "source/001.tex"
+    ],
+    "reason": "The blueprint above is structural only. The single listed evidence file, source/001.tex, was not read in this session, so no claim can yet be mapped to a specific passage, result, or figure within it. Section 3 in particular cannot be filled without knowing what the file actually contains; as written it names the file but not the decisive evidence, which is the requirement the task sets. A second limitation: one file is thin support for a memo that must justify both the problem and the mechanism, and it may contain only one of the two. Recommended next step is to read source/001.tex and then either bind each section to identified passages or narrow the memo to the sections that file can support."
+  }
+}

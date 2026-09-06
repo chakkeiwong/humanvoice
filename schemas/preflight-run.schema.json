@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://humanvoice.local/schema/preflight-run.schema.json",
+  "title": "Humanvoice preflight run",
+  "type": "object",
+  "required": ["record_type", "schema_version", "record_id", "run_id", "created_at", "source_hash", "gates", "abstentions", "mutations", "outcome"],
+  "properties": {
+    "record_type": {"const": "PreflightRun"},
+    "schema_version": {"type": "string", "pattern": "^HV-SCHEMA-[0-9]+\\.[0-9]+$"},
+    "record_id": {"type": "string", "minLength": 1},
+    "run_id": {"type": "string", "minLength": 1},
+    "created_at": {"type": "string", "format": "date-time"},
+    "source_hash": {"type": "string", "pattern": "^[A-Fa-f0-9]{64}$"},
+    "toolchain": {"type": "object"},
+    "gates": {"type": "object"},
+    "abstentions": {"type": "array", "items": {"type": "object"}},
+    "mutations": {"type": "array", "items": {"type": "object"}},
+    "repair_cycles": {"type": "integer", "minimum": 0},
+    "outcome": {"enum": ["pass", "repair", "fail", "abstain"]},
+    "extensions": {"type": "object"}
+  },
+  "additionalProperties": false
+}

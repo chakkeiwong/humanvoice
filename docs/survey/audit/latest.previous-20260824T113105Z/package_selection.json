@@ -1,0 +1,105 @@
+{
+  "decision_rule": "No package is promoted by metadata or smoke tests; adoption requires held-out effectiveness and independent review.",
+  "protocol_id": "HV-AUDIT-2026-08-22",
+  "records": [
+    {
+      "benchmark_status": "smoke-pass",
+      "category": "ai-tell-diagnostic",
+      "decision": "hold-pending-held-out-benchmark",
+      "license_file": "LICENSE.txt",
+      "local_commit": "4daf5ba58be10683bdbfe9125634aef02d17caa9",
+      "name": "sloptrim",
+      "provenance_status": "vendored-manifest-pin",
+      "rationale": "Availability is documented; effectiveness remains unestablished until a locked human-labelled corpus benchmark passes.",
+      "repository": "https://github.com/seyedehsanhadi/sloptrim"
+    },
+    {
+      "benchmark_status": "not-run",
+      "category": "prose-linter",
+      "decision": "hold-pending-held-out-benchmark",
+      "license_file": "",
+      "local_commit": "",
+      "name": "Vale",
+      "provenance_status": "remote-only",
+      "rationale": "Availability is documented; effectiveness remains unestablished until a locked human-labelled corpus benchmark passes.",
+      "repository": "https://github.com/errata-ai/vale"
+    },
+    {
+      "benchmark_status": "not-run",
+      "category": "prose-linter",
+      "decision": "hold-pending-held-out-benchmark",
+      "license_file": "",
+      "local_commit": "",
+      "name": "textlint",
+      "provenance_status": "remote-only",
+      "rationale": "Availability is documented; effectiveness remains unestablished until a locked human-labelled corpus benchmark passes.",
+      "repository": "https://github.com/textlint/textlint"
+    },
+    {
+      "benchmark_status": "not-run",
+      "category": "grammar-style",
+      "decision": "hold-pending-held-out-benchmark",
+      "license_file": "",
+      "local_commit": "",
+      "name": "LanguageTool",
+      "provenance_status": "remote-only",
+      "rationale": "Availability is documented; effectiveness remains unestablished until a locked human-labelled corpus benchmark passes.",
+      "repository": "https://github.com/languagetool-org/languagetool"
+    },
+    {
+      "benchmark_status": "not-run",
+      "category": "latex-writing",
+      "decision": "hold-pending-held-out-benchmark",
+      "license_file": "",
+      "local_commit": "",
+      "name": "Textidote",
+      "provenance_status": "remote-only",
+      "rationale": "Availability is documented; effectiveness remains unestablished until a locked human-labelled corpus benchmark passes.",
+      "repository": "https://github.com/sylvainhalle/textidote"
+    },
+    {
+      "benchmark_status": "not-run",
+      "category": "latex-writing",
+      "decision": "hold-pending-held-out-benchmark",
+      "license_file": "",
+      "local_commit": "",
+      "name": "LTeX+ LS",
+      "provenance_status": "remote-only",
+      "rationale": "Availability is documented; effectiveness remains unestablished until a locked human-labelled corpus benchmark passes.",
+      "repository": "https://github.com/ltex-plus/ltex-ls-plus"
+    },
+    {
+      "benchmark_status": "not-run",
+      "category": "document-conversion",
+      "decision": "hold-pending-held-out-benchmark",
+      "license_file": "",
+      "local_commit": "",
+      "name": "Pandoc",
+      "provenance_status": "remote-only",
+      "rationale": "Availability is documented; effectiveness remains unestablished until a locked human-labelled corpus benchmark passes.",
+      "repository": "https://github.com/jgm/pandoc"
+    },
+    {
+      "benchmark_status": "not-run",
+      "category": "latex-parsing",
+      "decision": "hold-pending-held-out-benchmark",
+      "license_file": "",
+      "local_commit": "",
+      "name": "pylatexenc",
+      "provenance_status": "remote-only",
+      "rationale": "Availability is documented; effectiveness remains unestablished until a locked human-labelled corpus benchmark passes.",
+      "repository": "https://github.com/phfaist/pylatexenc"
+    },
+    {
+      "benchmark_status": "not-run",
+      "category": "document-diff",
+      "decision": "hold-pending-held-out-benchmark",
+      "license_file": "",
+      "local_commit": "",
+      "name": "latexdiff",
+      "provenance_status": "remote-only",
+      "rationale": "Availability is documented; effectiveness remains unestablished until a locked human-labelled corpus benchmark passes.",
+      "repository": "https://github.com/ftilmann/latexdiff"
+    }
+  ]
+}

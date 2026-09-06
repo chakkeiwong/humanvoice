@@ -1,0 +1,1 @@
+WP3 gates the document after the agent runs the control-plane checklist. The implementation record is then handed off for the next checkpoint and repair pass.

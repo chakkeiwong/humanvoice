@@ -1,0 +1,67 @@
+=== Section 0 real ===
+Loading model configuration...
+Generating draft for 'Introduction: Byzantine Consensus in Production Systems' with claude-opus-5...
+Register violations detected:
+  - First-person usage detected: 'We' at offset 1632
+=== Section 1 real ===
+Loading model configuration...
+Generating draft for 'Problem Formulation and System Model' with claude-opus-5...
+Register violations detected:
+  - First-person usage detected: 'We' at offset 48
+=== Section 2 real ===
+Loading model configuration...
+Generating draft for 'Classical PBFT and Its Performance Characteristics' with claude-opus-5...
+Draft generated: 601 words, 4 citations needed
+Output: /home/ubuntu/workspace/humanvoice/.humanvoice/runs/run-20260829-092014/draft_classical_pbft_and_its_performance_characteristics.tex
+Tokens: 13176 input / 1170 output
+Request ID: msg_657ec5fe371c48edb7ae108bad78f806
+=== Section 3 real ===
+Loading model configuration...
+Generating draft for 'Linear Communication Protocols: HotStuff and Variants' with claude-opus-5...
+Draft generated: 698 words, 3 citations needed
+Output: /home/ubuntu/workspace/humanvoice/.humanvoice/runs/run-20260829-092111/draft_linear_communication_protocols__hotstuff_and_varia.tex
+Tokens: 1106 input / 1599 output
+Request ID: msg_4AT1rodrT3UgSLthDdxHpIfr
+=== Section 4 real ===
+Loading model configuration...
+Generating draft for 'Tendermint: Bounded Synchrony and Accountability' with claude-opus-5...
+Draft generated: 698 words, 1 citations needed
+Output: /home/ubuntu/workspace/humanvoice/.humanvoice/runs/run-20260829-092150/draft_tendermint__bounded_synchrony_and_accountability.tex
+Tokens: 1089 input / 1191 output
+Request ID: msg_TrO9c4Tib7Sabz1d0pmH68FK
+=== Section 5 real ===
+Loading model configuration...
+Generating draft for 'Casper FFG: Finality Gadgets for Proof-of-Stake' with claude-opus-5...
+Draft generated: 498 words, 1 citations needed
+Output: /home/ubuntu/workspace/humanvoice/.humanvoice/runs/run-20260829-092229/draft_casper_ffg__finality_gadgets_for_proof_of_stake.tex
+Tokens: 1092 input / 1124 output
+Request ID: msg_o9Vu2pGg22MacCisvoBjtzmF
+=== Section 6 real ===
+Loading model configuration...
+Generating draft for 'Empirical Performance Analysis' with claude-opus-5...
+Warning: Word count 1092 outside target range [720, 1080]
+Draft generated: 1092 words, 4 citations needed
+Output: /home/ubuntu/workspace/humanvoice/.humanvoice/runs/run-20260829-092304/draft_empirical_performance_analysis.tex
+Tokens: 1085 input / 1743 output
+Request ID: msg_Gy4M5PmdTNoqXFQnpL2XCa2u
+=== Section 7 real ===
+Loading model configuration...
+Generating draft for 'View Change and Recovery Mechanisms' with claude-opus-5...
+Draft generated: 497 words, 4 citations needed
+Output: /home/ubuntu/workspace/humanvoice/.humanvoice/runs/run-20260829-092355/draft_view_change_and_recovery_mechanisms.tex
+Tokens: 1097 input / 1329 output
+Request ID: msg_2vR7X5zTdkZ2uqnq4omk1N4f
+=== Section 8 real ===
+Loading model configuration...
+Generating draft for 'Production Deployment Considerations' with claude-opus-5...
+Draft generated: 617 words, 4 citations needed
+Output: /home/ubuntu/workspace/humanvoice/.humanvoice/runs/run-20260829-092437/draft_production_deployment_considerations.tex
+Tokens: 12857 input / 1279 output
+Request ID: msg_4aed6347d42341378cc27aa0f4da54f6
+=== Section 9 real ===
+Loading model configuration...
+Generating draft for 'Open Problems and Research Directions' with claude-opus-5...
+Draft generated: 358 words, 3 citations needed
+Output: /home/ubuntu/workspace/humanvoice/.humanvoice/runs/run-20260829-092532/draft_open_problems_and_research_directions.tex
+Tokens: 1100 input / 607 output
+Request ID: msg_iF47Wbqq53K8Glgf8t302veO

@@ -1,0 +1,363 @@
+\chapter{One document, from draft to decision}
+\label{ch:worked-case}
+
+One short research note makes the design concrete. An author, a parser, and a
+reader each do something different with it. The note is a teaching case
+assembled from the failure patterns in the
+project's reader records; it is not a claim about a real model's performance or
+a disguised forecast. Its purpose is to keep the nouns, numbers, and choices
+visible while the later chapters generalize the method.
+
+The note compares a baseline model with a constrained reconstruction and asks
+whether the team should approve a larger comparative run. It contains the
+things that make a technical document worth protecting: an equation, a table,
+a citation, a numerical result, and a qualification about what the result does
+not establish. It also contains the things that make a document hard to read:
+private phase names, an implicit mechanism, a result separated from the
+question it answers, and a request that appears only after several pages of
+process description.
+
+Figure~\ref{fig:worked-case-flow} is the route through the chapter. The return
+arrow is bounded: a failed pre-human check goes back to a located authoring
+decision before release. The final reader task is not the system's debugging
+loop, and it never triggers an unending series of automatic rewrites.
+
+\hvFigureWorkedCase
+
+\section{The document before the tools}
+\label{sec:case-before}
+
+Imagine receiving the note as a PDF with no repository history. The first page
+opens with a sentence such as ``Phase 2B evaluates the post-rescue path under
+the frozen interface.'' The phrase is meaningful to the project team. A new
+reader does not know what was rescued, which interface is frozen, or why the
+comparison matters. The next page defines a loss function and presents a table
+of parameter values. The decision request arrives near the end: ``If the
+current branch clears the remaining checks, proceed to the expanded run.''
+
+Nothing in those sentences is necessarily false. The problem is that the
+reader has to infer the object of the comparison before deciding whether the
+equation and table are relevant. In the internal records, this was the point
+at which a mathematically serious draft could be rejected within minutes. The
+reader did not ask for more adjectives. The reader asked what the team was
+trying to change and what action the document supported.
+
+\begin{table}[H]
+\centering
+\small
+\begin{tabularx}{\textwidth}{@{}p{0.23\textwidth}L p{0.27\textwidth}@{}}
+\toprule
+Element in the source & The author's hidden assumption & Question the
+reader actually needs answered \\
+\midrule
+Private phase label & The history of the project and the meaning of ``rescue'' &
+What object is being compared, and why now? \\
+Loss function & The target has already been defined elsewhere & What decision
+does this quantity inform, and what are its units? \\
+Parameter table & The rows are self-explanatory & Which rows are inputs, which
+are estimates, and which are illustrative? \\
+Qualification & The reader will connect it to the result two pages earlier &
+What inference is supported, and where does it stop? \\
+Final request & The implementation team knows the next phase & What exactly is
+being approved, at what cost, and with what stopping rule? \\
+\bottomrule
+\end{tabularx}
+\caption{The source contains the necessary material, but the reader must
+reconstruct its order and purpose.}
+\label{tab:case-before}
+\end{table}
+
+The distinction between an absent fact and a misplaced fact matters for the
+design. A general language model can often make the first sentence smoother.
+It cannot know whether ``post-rescue'' is a technical term, a project label,
+or an accidental remnant unless the author supplies that meaning. A linter can
+flag a long sentence. It cannot decide whether the loss function is the right
+quantity for the funding request. The first review packet must therefore
+show the source passage and ask a question that belongs to the author or the
+reader.
+
+\section{The first preflight and the first repair}
+\label{sec:case-first-repair}
+
+The proposed workflow starts with a preflight run, before any expensive reader
+is asked to reconstruct the project. The system checks the brief and blueprint,
+then tests the first unit against four questions: What decision is at stake?
+What is the proposed mechanism? What evidence would change the decision? What
+action is requested? These are not a score for prose quality. They are a
+construction test for whether the document has delivered its economic purpose.
+
+Suppose the preflight critic cannot recover the first and fourth answers. The
+author opens a located finding. It includes the unit, its source location, the
+reason it was selected, the missing dependency or evidence, and an editorial
+question. The reason is descriptive rather than moral: the paragraph uses a
+private phase label before introducing the research question and leaves the
+action implicit. The author can accept the finding, reject it with a reason, or
+rewrite the passage. A model suggestion may be displayed, but it is an option,
+not the recorded decision. The unit remains inside the repair loop until the
+preflight either passes or stops with an explicit unresolved choice.
+
+\begin{repairpair}
+\before{Phase 2B evaluates the post-rescue path under the frozen interface.}
+\after{The team must decide whether the constrained reconstruction is ready
+for a larger comparison. We compare it with the baseline model under the same
+data and evaluation rule.}
+\end{repairpair}
+
+The revision does three jobs. It names the decision, identifies the two sides
+of the comparison, and states the common condition that makes the comparison
+interpretable. It does not claim that the constrained model is better. That
+claim belongs after the evidence. It also does not delete the project history;
+the history remains useful in the internal record, where it can be found by a
+team member who needs it.
+
+The second repair concerns an equation whose meaning was hidden by notation.
+The source wrote
+\begin{equation}
+  L(\theta) = \sum_{t=1}^{T}
+  \bigl(y_t-f_\theta(x_t)\bigr)^2,
+  \label{eq:case-source-loss}
+\end{equation}
+without saying whether $L$ was a training objective, an evaluation statistic,
+or an accounting identity. The equation is elementary; its role is not. The
+author's revision introduces the units and purpose:
+
+\begin{quote}
+For the feasibility comparison, $y_t$ is the held-out outcome, $x_t$ is the
+declared input record, and $f_\theta$ is the fitted reconstruction. We use
+$L(\theta)$ only as a held-out prediction loss, measured in squared outcome
+units. It is not a measure of reader comprehension and it does not determine
+whether the team should approve deployment.
+\end{quote}
+
+The display itself remains unchanged. The surrounding prose does the work that
+notation alone cannot do. A reader who cares about the model can now interpret
+the terms; a decision-maker can see why the number is relevant but insufficient.
+
+\section{Reconstructing the argument}
+\label{sec:case-argument}
+
+Once the first repairs are accepted, the author reorganizes the note around
+five questions. The order is not a universal template; it fits this decision
+because each answer supplies the premise for the next one.
+
+\begin{enumerate}
+\item \textbf{Decision.} The team must decide whether to fund a larger
+      comparative run.
+\item \textbf{Object.} The comparison is between a baseline and a constrained
+      reconstruction applied to the same declared record.
+\item \textbf{Mechanism.} The reconstruction changes the specified mapping
+      from inputs to predictions while holding the evaluation rule fixed.
+\item \textbf{Evidence.} A held-out loss, a protected-object comparison, and
+      a reader test provide different pieces of evidence.
+\item \textbf{Action.} The sponsor approves the next run only if the
+      comparison is reproducible, the meaning-bearing objects are preserved,
+      and the reader can recover the request.
+\end{enumerate}
+
+\begin{table}[H]
+\centering
+\small
+\begin{tabularx}{\textwidth}{@{}p{0.18\textwidth}L p{0.26\textwidth}@{}}
+\toprule
+Argument step & Passage the revised note must contain & Observation that can
+overturn it \\
+\midrule
+Decision & A one-sentence funding request with a budget and stopping
+rule & The sponsor cannot identify a decision owner or a bounded action \\
+Object & A definition of the baseline, reconstruction, population, and
+evaluation window & The two versions use different records or targets \\
+Mechanism & A short derivation or diagram showing what changes and what remains
+fixed & The observed improvement comes from a changed data or scoring rule \\
+Evidence & The held-out result, source location, and reader observation are
+reported separately & The result is not reproducible or the reader cannot use it \\
+Action & A proceed, revise, or stop recommendation tied to the observations &
+The recommendation depends on an unstated preference \\
+\bottomrule
+\end{tabularx}
+\caption{The argument becomes a sequence of answerable questions rather than a
+sequence of project phases.}
+\label{tab:case-argument}
+\end{table}
+
+The table is useful during revision, but it should not appear as a five-row
+form in every document. In the finished note, the five answers can be ordinary
+prose, a figure, or a short table wherever that form best carries the argument.
+Humanvoice keeps the intermediate record because it lets an author explain why
+a paragraph moved or why a table was retained. The reader sees the resulting
+argument, not the form.
+
+The revised note also changes the order of its numerical material. First it
+states the decision and the target. Then it gives the equation and explains its
+role. The table follows with a sentence that identifies inputs, estimates, and
+illustrative values. Finally, the qualification appears beside the result it
+qualifies. This is a small editorial change, but it reduces the number of
+working assumptions the reader must hold at once.
+
+\section{The objects the system protects}
+\label{sec:case-protected}
+
+The revision is not safe merely because the new prose sounds plausible. The
+source contains objects whose alteration can change the scientific meaning.
+For this case, the protected set is
+\begin{equation}
+  \mathcal P = \{\text{equations},\ \text{numbers},\ \text{labels},\
+  \text{citations},\ \text{tables},\ \text{declared qualifications}\}.
+  \label{eq:case-protected-set}
+\end{equation}
+Each member receives a source span, a normalized representation, and a
+before-and-after comparison. The comparison is not a demand that every object
+remain identical. It is a demand that a change become visible and receive an
+owner.
+
+For an object $p\in\mathcal P$, write $\Delta p=0$ when the normalized object
+is unchanged, $\Delta p=\mathrm{explained}$ when the author has recorded a
+meaningful change, and $\Delta p=\mathrm{unresolved}$ when the comparison
+cannot establish correspondence. The release rule for the case is
+\begin{equation}
+  \forall p\in\mathcal P,\qquad
+  \Delta p \ne \mathrm{unresolved}.
+  \label{eq:case-protection-rule}
+\end{equation}
+This is a safety rule for the workflow, not a quality score. It does not say
+that an unchanged equation is correct or that an explained change is wise. It
+says that the system must not hide a broken correspondence behind a fluent
+rewrite.
+
+The note contains one numerical wedge, for example a change from $0.42$ to
+$0.47$ in a displayed comparison. A character-level diff will find the change,
+but it will not tell the author whether the value is a typo, a recalculation,
+or a deliberate change in the sample. The protected record links the number to
+its table row, unit, source calculation, and explanation. If the author cannot
+provide that link, the revision returns to the author regardless of how much
+the surrounding paragraph improved.
+
+Citation protection has the same shape. The system resolves the key to a
+bibliographic identity and records the sentence in which it appears. It does
+not infer that the source supports the sentence. That second judgment remains
+with the author and, for a load-bearing claim, an independent reviewer. A DOI
+resolver can prevent a misspelled reference from surviving; it cannot turn a
+nearby paper into evidence.
+
+\section{The author's revision}
+\label{sec:case-author-loop}
+
+After the first pass, the author sees a queue of findings ordered by expected
+reader consequence, not by the model's confidence. Three findings may appear:
+
+\begin{description}[style=nextline,leftmargin=34mm,labelindent=0mm]
+\item[Meaning] The paragraph names a result but does not say which decision it
+supports.
+\item[Register] A private phase name and two file paths make the opening
+unintelligible outside the project.
+\item[Surface] Three adjacent sentences repeat the same grammatical shape.
+\end{description}
+
+The author chooses the meaning finding first. This choice is important because
+surface repair can make a weak paragraph more pleasant without making it more
+useful. The author then decides whether the phase name has a legitimate public
+meaning. If it does, it is defined once. If it does not, it is removed from the
+reader-facing version and retained in the internal source map. Finally, the
+author may vary the sentence rhythm, but only after the proposition is clear.
+
+The queue records the decision in ordinary language: ``accepted: the reader
+needs the action before the phase history'' is more useful than a status code.
+The machine can store a code for searching, but the code is not the explanation
+that another author or reviewer should have to read.
+
+\begin{cardexample}{a rejected suggestion}
+The editor proposes replacing the qualification ``the comparison does not
+establish transport to a new population'' with ``the result is promising but
+further work is needed.'' The second sentence is smoother and less useful. It
+removes the population condition and gives no account of what further work
+would answer the question. The author rejects the suggestion and rewrites the
+qualification in terms of the missing population and the planned comparison.
+\end{cardexample}
+
+This example illustrates why a human decision belongs in the path. The issue
+is not whether the proposed sentence is grammatical. It is whether the sentence
+preserves the inference boundary that a reader could reasonably misunderstand.
+An automatic system can point to the boundary, show the alternative, and
+record the protected comparison. It cannot own the scientific judgment.
+
+\section{The reader's turn}
+\label{sec:case-reader}
+
+After the preflight gates pass, the revised note is rendered and sent to a reader who has not seen the source
+history, the finding queue, or the author's rejected suggestions. The reader
+receives a short context statement: ``You are deciding whether to approve a
+larger comparative run. Read the note as you would a proposal from a colleague
+and answer the four questions below.'' The reader may annotate the document,
+but the primary observations are timed and forced-choice so that a vague
+impression becomes a usable record.
+
+For reader $j$ and version $v$, let $A_{jv}=1$ when the reader identifies the
+requested action, the comparison, and the principal qualification within the
+declared time budget. Let $T_{jv}$ be reading and clarification time, and let
+$R_v$ be the number of author feedback rounds before acceptance. The simple
+case-level outcome is the vector
+\begin{equation}
+  O_v = \left(\frac{1}{J}\sum_{j=1}^{J}A_{jv},\quad
+              \frac{1}{J}\sum_{j=1}^{J}T_{jv},\quad R_v,\quad
+              M_v\right),
+  \label{eq:case-reader-outcome}
+\end{equation}
+where $M_v$ counts unresolved or unauthorized changes to protected objects.
+The vector is deliberately not collapsed into one score. A faster reader who
+misses the qualification is not an improvement.
+
+The first reader may answer ``revise'' even when the revised prose is fluent.
+That is not a failed product demonstration. It is information about which
+finding remains unresolved. The author receives the reader's question and
+returns to the source, rather than asking the reader to explain the entire
+document. A second reading then distinguishes a local repair from a change in
+the argument. The process ends when the reader can make the declared decision
+or when the sponsor invokes the stop rule.
+
+\section{The economic reading of the case}
+\label{sec:case-economics}
+
+The case also makes the investment mechanism concrete. Suppose the incumbent
+version takes the reader $T_0=3.0$ hours and requires $R_0=2.4$ feedback rounds
+on average. A revised version takes $T_1=2.4$ hours and $R_1=1.8$ rounds. For
+$N=100$ documents per year and a loaded reader cost of $c=150$ per hour, the
+direct attention saving is
+\begin{equation}
+  B = N(T_0-T_1)c = 100(0.6)(150)=9{,}000.
+  \label{eq:case-benefit}
+\end{equation}
+The values are teaching numbers. They show why the reader's time must be
+measured directly and why a lower round count is not enough. If the revised
+version adds a single hour of clarification for each document, the apparent
+saving disappears. If $M_1>0$, the financial calculation is beside the point
+until the protected change is explained.
+
+The case also separates costs that are easy to hide. The author spends time
+answering findings; the reader spends time reading and clarifying; a technical
+owner spends time maintaining parsers and fixtures; and the organization bears
+the cost of storing sensitive drafts. A serious pilot records each component.
+The product earns adoption only if the attention saved at the reader boundary
+exceeds those costs for a document class that recurs.
+
+\section{Lessons from the case}
+\label{sec:case-lessons}
+
+The worked note establishes five design requirements. The system needs a clear
+statement of the audience and decision because purpose is not recoverable from
+source syntax alone. It needs located findings because an author cannot assess
+an unexplained score. It needs protected comparisons because fluency can conceal
+a changed number or qualification. It needs a reader who has not seen the
+repository because project familiarity can hide a failure. And it needs an
+economic record because a nicer draft is not a product benefit until it reduces
+scarce attention without creating a meaning error.
+
+The case does not establish that the workflow improves a real proposal. It uses
+a finite teaching scenario and a deliberately small reader protocol. The
+comparative program in Part~IV supplies the next observation. The value of the
+case is that it makes the proposed object testable: a later study can disagree
+about the effect without disagreeing about what the system was supposed to do.
+
+The internal record and the external literature now give the case a wider
+test. Each new tool or result can be placed against the same questions: does it
+clarify the decision, preserve a protected object, reduce author or reader
+burden, or improve the evidence for the next choice? That is the product
+boundary in working form.

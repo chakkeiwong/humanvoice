@@ -1,0 +1,266 @@
+{
+  "record_type": "InstrumentedPilot",
+  "schema_version": "HV-SCHEMA-1.0",
+  "pilot_date": "2026-08-29T16:00:43.757695+00:00",
+  "fixture": "fixtures/synthetic/register/001.tex",
+  "scope": "internal evaluation (G4 Option A)",
+  "runner": "tools/instrumented_pilot.py",
+  "operator_present": false,
+  "steps": [
+    {
+      "step": "init",
+      "argv": [
+        "init",
+        "/home/ubuntu/workspace/humanvoice/fixtures/synthetic/register/001.tex",
+        "--brief",
+        "/home/ubuntu/workspace/humanvoice/validation_results/pilot_workdir/brief.json",
+        "--output",
+        "/home/ubuntu/workspace/humanvoice/validation_results/pilot_workdir/snapshot"
+      ],
+      "started_utc": "2026-08-29T16:00:43.758030+00:00",
+      "ended_utc": "2026-08-29T16:00:43.814406+00:00",
+      "wall_clock_ms": 56,
+      "exit_code": 0,
+      "stdout": "{\n  \"status\": \"initialized\",\n  \"snapshot_id\": \"snapshot-20260829-160043\",\n  \"source_hash\": \"b84cb60f45ee82f0a1be01c9bcc698855dfc28a073b1685b7df18fcab01314fa\",\n  \"brief_valid\": true,\n  \"output_path\": \"/home/ubuntu/workspace/humanvoice/validation_results/pilot_workdir/snapshot\"\n}",
+      "stderr": "",
+      "expected_exit_code": 0,
+      "exit_code_as_expected": true
+    },
+    {
+      "step": "plan",
+      "argv": [
+        "plan",
+        "/home/ubuntu/workspace/humanvoice/validation_results/pilot_workdir/snapshot",
+        "--brief",
+        "/home/ubuntu/workspace/humanvoice/validation_results/pilot_workdir/brief.json"
+      ],
+      "started_utc": "2026-08-29T16:00:43.814472+00:00",
+      "ended_utc": "2026-08-29T16:01:03.610327+00:00",
+      "wall_clock_ms": 19795,
+      "exit_code": 0,
+      "stdout": "Blueprint generated: 4 sections, 300 words\nOutput: /home/ubuntu/workspace/humanvoice/validation_results/pilot_workdir/snapshot/.humanvoice/runs/run-20260829-160044/blueprint.json\nTokens: 8975 input / 800 output\nRequest ID: msg_fe990aaec6784f1289d35f213b32b2f9",
+      "stderr": "Loading model configuration...\nGenerating blueprint with claude-opus-5...",
+      "run_dir": "validation_results/pilot_workdir/snapshot/.humanvoice/runs/run-20260829-160044",
+      "tokens": [
+        {
+          "manifest": "runtime_manifest.json",
+          "input_tokens": 8975,
+          "output_tokens": 800,
+          "request_id": "msg_fe990aaec6784f1289d35f213b32b2f9",
+          "latency_ms_reported": 0,
+          "mode": "inference"
+        }
+      ]
+    },
+    {
+      "step": "draft[0]",
+      "argv": [
+        "draft",
+        "/home/ubuntu/workspace/humanvoice/validation_results/pilot_workdir/snapshot",
+        "--blueprint",
+        "/home/ubuntu/workspace/humanvoice/validation_results/pilot_workdir/snapshot/.humanvoice/runs/run-20260829-160044/blueprint.json",
+        "--brief",
+        "/home/ubuntu/workspace/humanvoice/validation_results/pilot_workdir/brief.json",
+        "--section",
+        "0"
+      ],
+      "started_utc": "2026-08-29T16:01:03.611653+00:00",
+      "ended_utc": "2026-08-29T16:01:17.002230+00:00",
+      "wall_clock_ms": 13390,
+      "exit_code": 1,
+      "stdout": "",
+      "stderr": "Loading model configuration...\nGenerating draft for 'Decision Context and Problem Statement' with claude-opus-5...\nError: Draft contains no prose (word_count=0); nothing written",
+      "section_title": "Decision Context and Problem Statement",
+      "word_budget": 75,
+      "run_dir": "validation_results/pilot_workdir/snapshot/.humanvoice/runs/run-20260829-160103",
+      "tokens": null,
+      "draft_written": []
+    },
+    {
+      "step": "draft[1]",
+      "argv": [
+        "draft",
+        "/home/ubuntu/workspace/humanvoice/validation_results/pilot_workdir/snapshot",
+        "--blueprint",
+        "/home/ubuntu/workspace/humanvoice/validation_results/pilot_workdir/snapshot/.humanvoice/runs/run-20260829-160044/blueprint.json",
+        "--brief",
+        "/home/ubuntu/workspace/humanvoice/validation_results/pilot_workdir/brief.json",
+        "--section",
+        "1"
+      ],
+      "started_utc": "2026-08-29T16:01:17.003616+00:00",
+      "ended_utc": "2026-08-29T16:01:38.584546+00:00",
+      "wall_clock_ms": 21580,
+      "exit_code": 1,
+      "stdout": "",
+      "stderr": "Loading model configuration...\nGenerating draft for 'Proposed Mechanism' with claude-opus-5...\nError: Draft contains no prose (word_count=0); nothing written",
+      "section_title": "Proposed Mechanism",
+      "word_budget": 90,
+      "run_dir": "validation_results/pilot_workdir/snapshot/.humanvoice/runs/run-20260829-160117",
+      "tokens": null,
+      "draft_written": []
+    },
+    {
+      "step": "draft[2]",
+      "argv": [
+        "draft",
+        "/home/ubuntu/workspace/humanvoice/validation_results/pilot_workdir/snapshot",
+        "--blueprint",
+        "/home/ubuntu/workspace/humanvoice/validation_results/pilot_workdir/snapshot/.humanvoice/runs/run-20260829-160044/blueprint.json",
+        "--brief",
+        "/home/ubuntu/workspace/humanvoice/validation_results/pilot_workdir/brief.json",
+        "--section",
+        "2"
+      ],
+      "started_utc": "2026-08-29T16:01:38.585477+00:00",
+      "ended_utc": "2026-08-29T16:01:53.543997+00:00",
+      "wall_clock_ms": 14958,
+      "exit_code": 0,
+      "stdout": "Draft generated: 85 words, 1 citations needed\nOutput: /home/ubuntu/workspace/humanvoice/validation_results/pilot_workdir/snapshot/.humanvoice/runs/run-20260829-160138/draft_evidentiary_basis_for_each_claim.tex\nTokens: 483 input / 175 output\nRequest ID: msg_C7Pqb4KiSw46wr1orbXHXuA3",
+      "stderr": "Loading model configuration...\nGenerating draft for 'Evidentiary Basis for Each Claim' with claude-opus-5...",
+      "section_title": "Evidentiary Basis for Each Claim",
+      "word_budget": 85,
+      "run_dir": "validation_results/pilot_workdir/snapshot/.humanvoice/runs/run-20260829-160138",
+      "tokens": [
+        {
+          "manifest": "runtime_manifest_evidentiary_basis_for_each_claim.json",
+          "input_tokens": 483,
+          "output_tokens": 175,
+          "request_id": "msg_C7Pqb4KiSw46wr1orbXHXuA3",
+          "latency_ms_reported": 0,
+          "mode": "inference"
+        }
+      ],
+      "draft_written": [
+        "validation_results/pilot_workdir/snapshot/.humanvoice/runs/run-20260829-160138/draft_evidentiary_basis_for_each_claim.tex"
+      ]
+    },
+    {
+      "step": "draft[3]",
+      "argv": [
+        "draft",
+        "/home/ubuntu/workspace/humanvoice/validation_results/pilot_workdir/snapshot",
+        "--blueprint",
+        "/home/ubuntu/workspace/humanvoice/validation_results/pilot_workdir/snapshot/.humanvoice/runs/run-20260829-160044/blueprint.json",
+        "--brief",
+        "/home/ubuntu/workspace/humanvoice/validation_results/pilot_workdir/brief.json",
+        "--section",
+        "3"
+      ],
+      "started_utc": "2026-08-29T16:01:53.545705+00:00",
+      "ended_utc": "2026-08-29T16:02:20.936416+00:00",
+      "wall_clock_ms": 27390,
+      "exit_code": 0,
+      "stdout": "Draft generated: 58 words, 1 citations needed\nOutput: /home/ubuntu/workspace/humanvoice/validation_results/pilot_workdir/snapshot/.humanvoice/runs/run-20260829-160153/draft_qualifications_and_conditions_on_interpretation.tex\nTokens: 469 input / 123 output\nRequest ID: msg_IfZC0ptWh2VQ9z5p49CuDIQi",
+      "stderr": "Loading model configuration...\nGenerating draft for 'Qualifications and Conditions on Interpretation' with claude-opus-5...",
+      "section_title": "Qualifications and Conditions on Interpretation",
+      "word_budget": 50,
+      "run_dir": "validation_results/pilot_workdir/snapshot/.humanvoice/runs/run-20260829-160153",
+      "tokens": [
+        {
+          "manifest": "runtime_manifest_qualifications_and_conditions_on_interpretation.json",
+          "input_tokens": 469,
+          "output_tokens": 123,
+          "request_id": "msg_IfZC0ptWh2VQ9z5p49CuDIQi",
+          "latency_ms_reported": 0,
+          "mode": "inference"
+        }
+      ],
+      "draft_written": [
+        "validation_results/pilot_workdir/snapshot/.humanvoice/runs/run-20260829-160153/draft_qualifications_and_conditions_on_interpretation.tex"
+      ]
+    },
+    {
+      "step": "preflight",
+      "argv": [
+        "preflight",
+        "/home/ubuntu/workspace/humanvoice/validation_results/pilot_workdir/snapshot",
+        "--brief",
+        "/home/ubuntu/workspace/humanvoice/validation_results/pilot_workdir/brief.json",
+        "--deterministic"
+      ],
+      "started_utc": "2026-08-29T16:02:20.937503+00:00",
+      "ended_utc": "2026-08-29T16:02:20.998476+00:00",
+      "wall_clock_ms": 60,
+      "exit_code": 1,
+      "stdout": "{\n  \"preflight_id\": \"preflight-20260829-160220\",\n  \"mode\": \"deterministic\",\n  \"snapshot_id\": \"snapshot-20260829-160043\",\n  \"checked_at\": \"2026-08-29T16:02:20.990602+00:00\",\n  \"findings\": [\n    {\n      \"category\": \"register\",\n      \"severity\": \"deterministic_failure\",\n      \"location\": {\n        \"char_offset\": 66,\n        \"matched_text\": \"WP3\"\n      },\n      \"message\": \"Private workflow label found in reader-facing text\",\n      \"reader_consequence\": \"Reader cannot act on internal phase labels\",\n      \"source_terms\": [\n        \"WP3\"\n      ]\n    },\n    {\n      \"category\": \"register\",\n      \"severity\": \"deterministic_failure\",\n      \"location\": {\n        \"char_offset\": 83,\n        \"matched_text\": \"/srv/humanvoice/private\"\n      },\n      \"message\": \"Private filesystem path found in reader-facing text\",\n      \"reader_consequence\": \"Reader cannot access internal paths\",\n      \"source_terms\": [\n        \"/srv/humanvoice/private\"\n      ]\n    }\n  ],\n  \"deterministic_gate\": \"fail\",\n  \"protected_objects\": {\n    \"count\": 0,\n    \"types\": {},\n    \"parser\": \"pylatexenc\",\n    \"parse_time_seconds\": 0.0015091896057128906\n  },\n  \"status\": \"gate_failure\",\n  \"exit_code\": 1\n}",
+      "stderr": "Found 2 register violations"
+    },
+    {
+      "step": "preflight_json_for_repair",
+      "argv": [
+        "preflight",
+        "/home/ubuntu/workspace/humanvoice/validation_results/pilot_workdir/snapshot",
+        "--brief",
+        "/home/ubuntu/workspace/humanvoice/validation_results/pilot_workdir/brief.json",
+        "--deterministic"
+      ],
+      "started_utc": "2026-08-29T16:02:20.998550+00:00",
+      "ended_utc": "2026-08-29T16:02:21.057491+00:00",
+      "wall_clock_ms": 58,
+      "exit_code": 1,
+      "stdout": "{\n  \"preflight_id\": \"preflight-20260829-160221\",\n  \"mode\": \"deterministic\",\n  \"snapshot_id\": \"snapshot-20260829-160043\",\n  \"checked_at\": \"2026-08-29T16:02:21.050334+00:00\",\n  \"findings\": [\n    {\n      \"category\": \"register\",\n      \"severity\": \"deterministic_failure\",\n      \"location\": {\n        \"char_offset\": 66,\n        \"matched_text\": \"WP3\"\n      },\n      \"message\": \"Private workflow label found in reader-facing text\",\n      \"reader_consequence\": \"Reader cannot act on internal phase labels\",\n      \"source_terms\": [\n        \"WP3\"\n      ]\n    },\n    {\n      \"category\": \"register\",\n      \"severity\": \"deterministic_failure\",\n      \"location\": {\n        \"char_offset\": 83,\n        \"matched_text\": \"/srv/humanvoice/private\"\n      },\n      \"message\": \"Private filesystem path found in reader-facing text\",\n      \"reader_consequence\": \"Reader cannot access internal paths\",\n      \"source_terms\": [\n        \"/srv/humanvoice/private\"\n      ]\n    }\n  ],\n  \"deterministic_gate\": \"fail\",\n  \"protected_objects\": {\n    \"count\": 0,\n    \"types\": {},\n    \"parser\": \"pylatexenc\",\n    \"parse_time_seconds\": 0.0013260841369628906\n  },\n  \"status\": \"gate_failure\",\n  \"exit_code\": 1\n}",
+      "stderr": "Found 2 register violations"
+    },
+    {
+      "step": "repair",
+      "argv": [
+        "repair",
+        "/home/ubuntu/workspace/humanvoice/validation_results/pilot_workdir/snapshot/.humanvoice/runs/run-20260829-160138/draft_evidentiary_basis_for_each_claim.tex",
+        "--findings",
+        "/home/ubuntu/workspace/humanvoice/validation_results/pilot_workdir/findings.json",
+        "--brief",
+        "/home/ubuntu/workspace/humanvoice/validation_results/pilot_workdir/brief.json"
+      ],
+      "started_utc": "2026-08-29T16:02:21.057755+00:00",
+      "ended_utc": "2026-08-29T16:02:33.132640+00:00",
+      "wall_clock_ms": 12074,
+      "exit_code": 0,
+      "stdout": "Repair cycle 1/3 on draft_evidentiary_basis_for_each_claim.tex\nFindings to clear: 2\nRequesting repair from claude-opus-5...\nApplied 2 change(s), refused 0, unaddressed 0\nRevision published: /home/ubuntu/workspace/humanvoice/validation_results/pilot_workdir/snapshot/.humanvoice/runs/run-20260829-160138/revisions/rev-001-121289548143\nParent preserved: /home/ubuntu/workspace/humanvoice/validation_results/pilot_workdir/snapshot/.humanvoice/runs/run-20260829-160138/draft_evidentiary_basis_for_each_claim.tex",
+      "stderr": "",
+      "tokens": [
+        {
+          "manifest": "runtime_manifest_evidentiary_basis_for_each_claim.json",
+          "input_tokens": 483,
+          "output_tokens": 175,
+          "request_id": "msg_C7Pqb4KiSw46wr1orbXHXuA3",
+          "latency_ms_reported": 0,
+          "mode": "inference"
+        }
+      ]
+    },
+    {
+      "step": "release",
+      "argv": [
+        "release",
+        "/home/ubuntu/workspace/humanvoice/validation_results/pilot_workdir/snapshot",
+        "--brief",
+        "/home/ubuntu/workspace/humanvoice/validation_results/pilot_workdir/brief.json",
+        "--output",
+        "/home/ubuntu/workspace/humanvoice/validation_results/pilot_workdir/release"
+      ],
+      "started_utc": "2026-08-29T16:02:33.133539+00:00",
+      "ended_utc": "2026-08-29T16:02:33.177778+00:00",
+      "wall_clock_ms": 44,
+      "exit_code": 1,
+      "stdout": "",
+      "stderr": "Release blocked by 1 never-except condition(s):\n  - deterministic_preflight: {'reason': 'unresolved_preflight_findings', 'preflight_id': 'preflight-20260829-160221', 'finding_count': 2, 'categories': ['register'], 'detail': '2 deterministic finding(s) stand unresolved in preflight-20260829-160221. Repair them and re-run preflight.'}"
+    }
+  ],
+  "totals": {
+    "end_to_end_wall_clock_ms": 109420,
+    "end_to_end_wall_clock_s": 109.4,
+    "input_tokens": 10410,
+    "output_tokens": 1273,
+    "model_invoking_steps": 4,
+    "deterministic_steps": 6,
+    "deterministic_overhead_ms": 35188
+  },
+  "contract_comparison": {
+    "cap_operator_minutes": 180,
+    "cap_tokens_usd": 20,
+    "measured_wall_clock_minutes": 1.82,
+    "operator_wait_time": "not measured - no human in the loop; wall-clock is machine time only",
+    "note": "runtime_manifest.latency_ms is 0 for every command, so per-invocation API latency is measured externally by this wrapper"
+  }
+}

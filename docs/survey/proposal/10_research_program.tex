@@ -1,0 +1,317 @@
+\chapter{The next research questions}
+\label{ch:research-program}
+
+Run the pieces on one real document and we can answer a small question: do they
+work together? We still will not know whether the workflow reduces review burden
+across genres, writers, and readers. To answer that larger question, the team
+must first measure the objects correctly, then watch people use the workflow,
+and only then estimate its effect on outcomes.
+
+A demonstration earns the right to ask the larger question. It does not answer
+it in advance.
+
+The four rungs in Figure~\ref{fig:research-ladder} make that order explicit.
+An attractive reader result cannot rescue a source-correspondence failure
+below it.
+
+\hvFigureResearchLadder
+
+\section{Three claims that must not be collapsed}
+
+The team will make three increasingly strong claims. The first is an
+\emph{availability claim}: a parser, diagnostic, or review record can be
+installed and run on the target document formats. The second is an
+\emph{operational claim}: the component preserves the objects and locations
+needed by an author, and its output does not impose more review work than it
+removes. The third is an \emph{effectiveness claim}: the complete workflow
+changes a reader-facing outcome relative to the incumbent bundle.
+
+Each claim needs a different observation. A package README can establish
+availability. A fixture benchmark and an observed review session can establish
+operational suitability. Only a comparative study with a declared comparator,
+reader rubric, and uncertainty can support effectiveness. The same hierarchy
+applies to the language-model adapter: plausible questions show availability;
+calibrated abstentions and errors show operational suitability; neither proves
+that the adapter improves a document.
+
+\begin{table}[H]
+\centering
+\small
+\begin{tabularx}{\textwidth}{@{}p{0.19\textwidth}L p{0.25\textwidth}@{}}
+\toprule
+Claim & Minimum evidence & Decision it permits \\
+\midrule
+Availability & Installation record, version, license, supported input, and a
+smoke run. & Keep the component in the candidate inventory. \\
+Operational suitability & Held-out fixtures, protected-object preservation,
+runtime, failure modes, privacy review, and author burden. & Use the component
+in the feasibility workflow. \\
+Workflow effectiveness & Preregistered comparison against the incumbent,
+human reader outcomes, burden, meaning checks, and uncertainty. & Consider
+adoption for the measured population and task class. \\
+Economic value & Observed volume, loaded rates, avoided rounds, error costs,
+and sensitivity. & Fund expansion, revise the offer, or stop. \\
+\bottomrule
+\end{tabularx}
+\caption{Evidence strength rises with the decision at stake.}
+\label{tab:research-claim-ladder}
+\end{table}
+
+An inventory earns space in the main argument when it explains a choice or a
+risk. A long list cannot stand in for a benchmark, so the full package list
+stays in an appendix while the main chapters follow the decisions it informs.
+
+\section{The measurement ladder}
+
+The first research stage is a ladder of observations, not a feature roadmap.
+Each rung names the object the team will measure and the failure that would
+stop the next step.
+
+\subsection{Rung 1: source correspondence}
+
+For every target format, the system must map rendered passages back to source
+locations and identify protected objects. The fixtures should include ordinary
+prose, equations with macros, labels, citations, tables, quotations, code,
+comments, malformed input, and deliberately duplicated identifiers. The test
+does not ask whether a parser is elegant. It asks whether an author can locate
+the finding and whether a before-and-after comparison can tell what changed.
+
+Let $O$ be the set of protected objects in a source version and let
+$\pi(o)$ be the rendered location associated with object $o$. A parser pass is
+usable only if it preserves a partial map
+\[
+  \pi: O \longrightarrow \{\text{source spans}\}\times
+  \{\text{rendered anchors}\}
+\]
+for every object that the product promises to protect. Missing maps are not
+silently imputed. They are an explicit ``unparsed'' result that blocks the
+protected comparison.
+
+\subsection{Rung 2: diagnostic validity}
+
+The second stage asks whether a finding corresponds to an observable property
+of the current document. Register leakage can be counted against a declared
+lexicon and context rule. Repeated structure can be measured against a
+document-level baseline. Citation identity can be checked against metadata.
+These are appropriate places for precision, recall, and abstention measures.
+
+The stage does not turn every editorial judgment into a classification task.
+Whether a qualification belongs in a paragraph, whether a term is familiar to
+the named reader, and whether a conclusion is proportionate to its evidence
+are questions for an author or reader. The diagnostic may attach a question
+and its evidence; it must not pretend that a threshold has answered it.
+
+\subsection{Rung 3: workflow burden}
+
+A finding has a cost. The author must read it, decide whether it applies, and
+possibly revise the source. The reader may later encounter the same passage
+and request a new change. The feasibility run should record the time spent in
+each activity, the number of findings opened, the number accepted or rejected,
+the number of rollbacks, and the reasons for abstention.
+
+If $q$ is the number of findings shown, $a$ the number accepted, and $t_j$ the
+time spent on finding $j$, a simple burden measure is
+\[
+  B=\sum_{j=1}^{q}t_j + t_{\mathrm{recheck}}.
+\]
+The expression is not a universal utility function. It is a bookkeeping
+device that prevents a high precision score from hiding a queue that nobody
+can afford to inspect. Report $B$ alongside the findings that led to a reader
+revision and the findings that were rejected as irrelevant.
+
+\subsection{Rung 4: reader reconstruction}
+
+Give the rendered document to a reader without the project history and ask five
+questions: what does it answer, which objects carry the answer, what evidence
+supports it, what remains uncertain, and what action follows? A reader can
+understand a paragraph without agreeing with its conclusion, so the rubric
+separates comprehension, credibility, and willingness to act.
+
+The first reader exercise is timed and conducted without project history. The
+reader receives
+the rendered document, the declared role, and the decision question, but not
+the source map, findings, or private project history. A second exercise may
+show the review packet to measure whether the packet makes revision easier.
+Keeping the exercises separate distinguishes the product's author interface
+from the outcome it is meant to improve.
+
+\section{The corpus is a scientific instrument}
+
+Do not build the corpus from convenient examples alone. It must represent the
+documents on which the product will be used and preserve why a finding was
+accepted or rejected. The existing cases supply valuable repair pairs, but they
+are selected cases. The evaluation corpus should add prospective samples
+from at least three genres: an investment or funding proposal, a technical
+research note, and a long-form methodological or monograph chapter.
+
+Each unit should carry a document-level reading brief:
+
+\begin{enumerate}
+\item the writer's baseline experience and role;
+\item the intended reader and the decision the document supports;
+\item the source format, length, equation and citation counts, and sensitivity
+      class;
+\item the incumbent workflow, including which tools and human review were
+      actually used;
+\item protected-object annotations and known substantive constraints; and
+\item named exemplar documents, known reader vocabulary, and declared
+      exemption zones for first-use checks;
+\item pacing profile, first-use findings, author dispositions, and the
+      detector version that produced them; and
+\item the reader outcome, revision history, and adjudicated failure reasons.
+\end{enumerate}
+
+The split must be made at the document lineage, not at the paragraph level.
+Otherwise a repeated passage can leak from tuning into evaluation and produce
+an implausibly clean result. A held-out document should remain held out from
+lexicon selection, prompt design, model calibration, and author training.
+
+\paragraph{A corpus split that can fail honestly.}
+Take one long technical chapter and its three revised versions. Keeping one
+version in training and another in test is not a held-out evaluation: the
+reading brief, equations, and private terminology have already leaked. The
+lineage belongs to one partition. If the held-out set becomes too small, the
+correct response is to collect more documents, not to split the same chapter
+more finely.
+
+The labels need two levels. A deterministic label records whether a protected
+object was preserved, whether a citation identity resolved, or whether a
+declared pattern occurred. An adjudicated label records whether the finding
+was useful, whether the revision changed the intended meaning, and whether the
+reader could act. The first level supports repeatable software tests; the
+second supports product claims.
+
+The HPO case adds a practical unit of work. Select one chapter, run the
+deterministic meters, let an author repair or dismiss the ranked findings,
+rebuild the chapter, and then carry the updated brief into the next unit. A
+whole-document pass before the unit is understood hides which repair caused a
+reader response and makes a false positive expensive to remove. The corpus
+therefore stores unit ids and brief versions alongside document ids.
+
+\section{The comparative program}
+
+The comparative study should begin only after the feasibility run has fixed
+the workflow and the comparator. The incumbent is not ``no tool.'' It is the
+combination the author would otherwise use: editor, general language model if
+permitted, version control, citation checks, and manual review. Removing those
+components to make Humanvoice look better would answer the wrong question.
+
+For each document task, randomize or counterbalance the order in which the
+incumbent and Humanvoice versions are prepared and read. Blind the reader to
+condition where the document and disclosure rules permit. Record protocol
+deviations rather than silently excluding difficult tasks. The primary outcome
+is the difference in feedback rounds to acceptance; secondary outcomes include
+reader time, author burden, protected-object incidents, requested substantive
+changes, and confidence in the decision.
+
+Heterogeneity is part of the question. Report results by writer experience,
+genre, reader role, document length, equation density, and whether a model
+adapter was used. If an average improvement comes entirely from short business
+documents while long technical chapters become harder to review, the average
+does not justify expansion to the latter population.
+
+\subsection{Calibration and model judges}
+
+Model judges may reduce the cost of screening a large set of pairwise
+comparisons, but they are not the acceptance authority. Before use, calibrate
+them on human-labelled examples with randomized order, length controls, and
+multiple model families where practical. Measure position bias, verbosity
+bias, self-preference, and sensitivity to protected mathematical content.
+Require abstention when the judge cannot identify the reading brief or when
+the two versions differ in a protected object.
+
+The judge's output should be treated as a noisy measurement. If $Y$ is the
+human reader label and $J$ the model label, report the confusion matrix and
+calibration curve rather than only an agreement percentage. A high agreement
+on easy surface edits can coexist with systematic failure on claim scope or
+technical uncertainty. The human-labelled subset must therefore oversample
+the cases most likely to expose those failures.
+
+\section{From feasibility to an operating service}
+
+If the comparative result is favorable, adoption still requires an operating
+model. A document owner must know where source text is processed, how long
+snapshots and rendered pages are retained, who can see the reader decision,
+and how a failed parse is recovered. The product should expose a local-first
+path and an explicit remote-model boundary. Disclosure is part of the record:
+the author can state whether a model suggested a question, whether a human
+accepted the revision, and whether any confidential excerpt left the local
+environment.
+
+The service should also define what it does when the product is unavailable.
+An author must be able to continue with the incumbent workflow, preserve the
+source version, and import the eventual decision later. A dependency that
+blocks ordinary writing is a deployment risk independent of model quality.
+
+\begin{table}[H]
+\centering
+\small
+\begin{tabularx}{\textwidth}{@{}p{0.24\textwidth}L L@{}}
+\toprule
+Operating question & Minimum answer before expansion & Evidence owner \\
+\midrule
+Confidentiality & Which text, metadata, and rendered pages may leave the local
+boundary? & Project owner and security reviewer \\
+Retention & Which snapshots, findings, and reader responses are retained, and
+for how long? & Product owner \\
+Continuity & Can the author complete the document if Humanvoice or a model
+adapter is unavailable? & Product engineer \\
+Disclosure & What assistance is disclosed to the reader, funder, or publisher?
+& Author and institutional policy owner \\
+Escalation & Who decides when a protected comparison blocks release or a
+reader requests substantive repair? & Named document owner \\
+\bottomrule
+\end{tabularx}
+\caption{Operating questions that remain after a favorable experiment.}
+\label{tab:research-operating-model}
+\end{table}
+
+\section{Alternatives if the full product does not earn adoption}
+
+The research program should preserve useful partial outcomes. If protected
+source correspondence works but the reader effect is null, the repository may
+still have a valuable technical comparison library. If deterministic
+diagnostics reduce author burden but the full packet does not change reader
+acceptance, the project may become an internal editing instrument rather than
+a product sold on reader outcomes. If the privacy boundary prevents model
+assistance, the deterministic and human-review path can remain the default.
+
+These are not consolation prizes to be declared after a failed study. They are
+pre-specified alternatives that keep the interpretation honest. A null result
+for the complete workflow does not establish that every component is useless;
+it establishes that the bundle did not earn the claimed decision under the
+tested conditions. Conversely, a positive result on a narrow corpus does not
+support universal deployment. Expansion follows the population for which
+the evidence was collected.
+
+\section{The decision after twelve weeks}
+
+At the end of the feasibility horizon, the owner should receive one compact
+decision package with the detailed records behind it:
+
+\begin{enumerate}
+\item a replayable source-to-reader run on a live document;
+\item parser and protected-object fixture results, including failures;
+\item the adjudicated corpus description and held-out split;
+\item an author-burden and reader-time account;
+\item a calibration report for any model judge or editor adapter;
+\item an observed cost worksheet with sensitivity to volume and rates; and
+\item a recommendation to proceed, revise, or stop, with the evidence that
+      would change that recommendation.
+\end{enumerate}
+
+The package is deliberately more substantial than a status report. It gives
+the sponsor enough detail to challenge an assumption, reproduce a failure,
+and choose the next experiment. That is the standard the product itself must
+meet: a reader should not have to trust a fluent conclusion when the underlying
+objects and decision path can be shown.
+
+The next question is organizational rather than statistical. Suppose the
+feasibility packet is reproducible, the protected objects survive, and the
+reader rubric can be administered. Who will use the system, what incumbent
+work will it replace, and what privacy and pricing conditions make repeated use
+reasonable? Those questions are not a promise that the workflow has earned a
+market. They are the observations needed to turn a successful experiment into
+an accountable operating choice. Chapter~\ref{ch:adoption-scale} answers them
+by separating buyer, author, editor, and reader roles, then setting a scale
+rule that follows the evidence rather than a projection.

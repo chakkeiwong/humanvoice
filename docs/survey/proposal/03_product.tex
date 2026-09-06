@@ -1,0 +1,347 @@
+\chapter{Inside a Humanvoice review}
+\label{ch:product}
+
+The previous chapter followed a research note from its muddled opening to a
+reader's decision. We now return to the same teaching case and move closer to
+the screen. One paragraph is enough to show what the author, technical reviewer,
+and reader would actually receive. Its text and numbers remain synthetic: they
+expose the product's duties without masquerading as evidence from a live trial.
+
+The same version appears differently to the author, technical reviewer, and
+reader. Figure~\ref{fig:three-views} shows how one record supports those views
+without exposing the private review trail in the manuscript.
+
+\hvFigureThreeViews
+
+\section{Before a reader sees a draft}
+
+The expensive mistake is to give a senior reader a document that was never
+ready for a senior reader. Humanvoice therefore begins before prose. The owner
+states who will read the document, what decision it must support, what the
+reader already knows, which claims must appear, which evidence is allowed, and
+which objects may not change silently. If one of those answers is missing, the
+system records the uncertainty and stops the long draft. It does not turn an
+unfinished brief into something that looks finished.
+
+The first output is an argument blueprint. It is a short, inspectable plan with
+one job for each section, a claim map, a concept-dependency graph, a list of
+protected objects, and a visual plan. A claim without evidence is marked as a
+question. A concept used before its prerequisite is taught is moved or marked
+as an intentional exception. A figure has to earn its place by carrying a
+relationship that prose alone would make harder to see. The blueprint is not a
+new report for the sponsor; it is the construction drawing that keeps the
+report from becoming a pile of fluent paragraphs.
+
+Consider the teaching case in this chapter. The owner might write:
+
+\begin{quote}\small
+The reader is an investment committee. The decision is whether to run the
+constrained reconstruction at larger scale. The reader knows ordinary model
+comparison but not the project's private phase names. The document must explain
+the comparison, the 35-basis-point funding wedge, the evidence needed before a
+larger run, and the limit of what the calibration can establish.
+\end{quote}
+
+Humanvoice turns that brief into a sequence the writer can actually follow:
+
+\begin{enumerate}
+\item open with the decision and the two models;
+\item show the funding wedge in its unit and location;
+\item explain which likelihood terms, observations, and paths are compared;
+\item state what agreement would authorize next and what it would not prove; and
+\item use one diagram to connect the objects, checks, and decision.
+\end{enumerate}
+
+Only after the owner accepts that sequence does the writer draft one bounded
+unit at a time. Each unit is rebuilt and checked before the next unit inherits
+its terminology. This is slower for the machine and faster for the person who
+would otherwise have to discover the missing argument at the end.
+
+\begin{figure}[H]
+\centering
+\resizebox{0.98\textwidth}{!}{%
+\begin{tikzpicture}[font=\small,node distance=5mm and 4mm]
+  \node[hvstage,text width=25mm] (brief) {Reader brief\\\footnotesize audience, decision, evidence};
+  \node[hvstage,right=of brief,text width=25mm] (plan) {Argument blueprint\\\footnotesize claims, dependencies, sections, figures};
+  \node[hvgoldbox,right=of plan,text width=25mm] (draft) {Bounded draft\\\footnotesize one unit, concrete first};
+  \node[hvwarn,right=of draft,text width=25mm] (check) {Pre-human preflight\\\footnotesize integrity, structure, evidence, reconstruction};
+  \node[hvbluebox,right=of check,text width=25mm] (packet) {Review-ready packet\\\footnotesize only after every gate passes};
+  \node[hvbluebox,right=of packet,text width=25mm] (reader) {Human reader\\\footnotesize one expensive final decision};
+  \draw[hvflow] (brief)--(plan)--(draft)--(check)--(packet)--(reader);
+  \draw[hvback] (check.south) to[bend right=28] node[below,hvnote]{failed gate: repair and rebuild} (draft.south);
+  \node[hvguard,fit=(check)(packet),inner sep=3mm] {};
+\end{tikzpicture}}
+\caption{Humanvoice spends scarce reader attention at the end of the path. A
+failed pre-human check returns the draft to a located repair; it cannot produce
+a review packet by default.}
+\label{fig:pre-human-pipeline}
+\end{figure}
+
+The guard in Figure~\ref{fig:pre-human-pipeline} is a product contract, not a
+promise that a machine can certify taste. It says something narrower and more
+useful: an incomplete brief, an ungrounded load-bearing claim, an unknown
+concept order, an unexplained protected-object change, a broken build, or an
+unresolved high-risk preflight finding cannot be packaged as ready for a human
+reader. The system may still save an internal draft for repair. It does not ask
+an expensive reader to serve as its debugger.
+
+\section{A draft that should never reach the reader}
+
+The note compares the baseline model with the constrained reconstruction. An
+unguarded writer has produced the paragraph below. In the old workflow it
+would have been sent to the owner for diagnosis. In the proposed workflow it is
+a fixture: the pre-human checks should locate the problem before a reader sees
+the document.
+
+\begin{quote}\small
+"In the Phase-2 rescue, the declared restricted reconstruction is translated
+into the solver and compared like with like. We do not claim that this proves
+the policy works in general; rather, it is a robust and transparent framework
+for checking the relevant objects, including the 35 basis-point funding wedge
+in Table~3 and the likelihood terms in Equation~(12). The result is therefore
+useful for stakeholders who need confidence that the pipeline is working."
+\end{quote}
+
+The paragraph is not nonsense. It has a real comparison, a numerical result,
+and an appropriate desire not to overstate. It is nevertheless difficult for a
+reader arriving without the project history. "Phase-2 rescue" names a private
+event. "Like with like" does not identify the objects being compared. The
+negative definition delays the positive mechanism. "Stakeholders" is an
+abstract actor. The reader cannot tell whether the 35 basis points are an
+estimated effect, a calibration input, or an illustrative value.
+
+The paragraph fails several blueprint and preflight checks. The private phase
+name is absent from the approved vocabulary; the comparison has no named
+objects; the number has no stated role; and the final sentence names no action.
+Those are located failures, not invitations to score the whole document. The
+writer receives the evidence and a repair question while the source remains
+unchanged. If the question cannot be answered from the brief and evidence
+ledger, the run stops rather than inventing a smoother claim.
+
+\section{The review record}
+
+Before anyone edits the paragraph, the parser maps its words to source spans
+and gives the equation reference, table reference, number, and declared result
+protected identities. The first review then records five findings. The table on
+the next page makes each one contestable.
+
+\begin{table}[H]
+\centering
+\small
+\begin{tabularx}{\textwidth}{@{}p{0.09\textwidth}p{0.22\textwidth}L p{0.22\textwidth}@{}}
+\toprule
+ID & Location & Finding and evidence & Editorial question \\
+\midrule
+F1 & Sentence 1 & "Phase-2 rescue" is a private status label; no source
+definition appears in the document. & What event does the reader need to know,
+and can it be named directly? \\
+F2 & Sentence 1 & "Like with like" names a comparison without naming its
+objects. & Which likelihood terms, observations, or paths are compared? \\
+F3 & Sentence 2 & The negative definition occupies the first clause and the
+positive mechanism is delayed. & What does the analysis establish in this
+document? \\
+F4 & Sentence 2 & The number 35 and the references to Table~3 and Equation~(12)
+are protected. & Are the unit, sign, and interpretation of the wedge explicit? \\
+F5 & Sentence 3 & "Useful for stakeholders" asserts value without naming a
+decision or evidence. & Which reader action would change if the comparison
+passes? \\
+\bottomrule
+\end{tabularx}
+\caption{A finding is located, reasoned, and contestable. It is not an automatic
+rewrite instruction.}
+\label{tab:worked-findings}
+\end{table}
+
+F1, F2, and the source-location part of F4 are deterministic. A parser can
+prove that a term is undefined in the current document. F3 and F5 remain
+editorial questions because the author must decide whether a qualification is
+necessary for an honest conclusion.
+
+The author can reject F1 if the private label is deliberately part of the
+audience's vocabulary. That rejection is recorded with a reason; it is not
+silently discarded. The author can accept F2 and F5, then revise the paragraph
+in the existing editor. Humanvoice remains beside the work rather than taking
+ownership of it.
+
+\section{The author's revision}
+
+One possible revision is:
+
+\begin{quote}\small
+"The constrained reconstruction compares the same likelihood components,
+observations, and counterfactual paths as the baseline model. In the
+illustrative calibration, the funding wedge is 35 basis points (Table~3), and
+the comparison tests whether the solver preserves that wedge and the stated
+likelihood terms (Equation~(12)). If those objects agree, the note supports a
+larger comparative run; it does not by itself establish a general policy
+effect."
+\end{quote}
+
+The revision makes the actors and objects visible, turns the number into a
+quantity with a unit, and gives the reader a decision consequence. It also
+retains a qualification because a reader could otherwise mistake a calibration
+check for a policy result. That qualification now follows the positive result
+instead of replacing it.
+
+\begin{repairpair}
+\before{"We do not claim that this proves the policy works in general; rather, it is a robust and transparent framework for checking the relevant objects."}
+\after{"If those objects agree, the note supports a larger comparative run; it does not by itself establish a general policy effect."}
+\end{repairpair}
+
+The second sentence is shorter, but brevity is not the product's objective. The
+important change is that it states what the evidence can support. The author
+could choose a different wording and still answer the same audience and
+decision.
+
+\section{The protected comparison}
+
+After the author saves the revision, the comparison engine checks the objects a
+reader can least afford to lose while the prose is being polished.
+
+The system does not freeze those objects. As Figure
+\ref{fig:protected-diff} shows, it classifies their correspondence and requires
+a human disposition when a consequential difference appears.
+
+\hvFigureProtectedDiff
+
+\begin{table}[H]
+\centering
+\small
+\begin{tabular}{@{}p{0.31\textwidth}p{0.22\textwidth}p{0.34\textwidth}@{}}
+\toprule
+Protected object & Result & What the author sees \\
+\midrule
+Equation body & unchanged & The normalized mathematical expression is unchanged;
+the surrounding explanation changed. \\
+Numerical result & unchanged & 35 basis points remains 35 basis points with the
+same sign and table anchor. \\
+Citation and cross-reference & unchanged & Table~3 and Equation~(12) still
+resolve to the same objects. \\
+Claim scope & changed explicitly & "Supports a larger comparative run" is a
+new, narrower conclusion and requires author confirmation. \\
+Private label & removed & The source map identifies the deletion and links it to
+F1. \\
+\bottomrule
+\end{tabular}
+\caption{The diff distinguishes a safe explanatory repair from a substantive
+change that needs a human decision.}
+\label{tab:protected-diff}
+\end{table}
+
+This is more informative than a red-and-green visual diff alone. A visual diff
+shows where characters moved; a protected comparison says which meaning-bearing
+objects survived and which changed. It also creates a useful evaluation record:
+the author accepted F1, F2, and F5, edited F3, and confirmed the preserved
+number and equation.
+
+\section{The reader's turn}
+
+The final step is not another model score. A reader who has not seen the
+project history receives the rendered note and answers five questions:
+
+\begin{enumerate}
+\item What comparison is being made?
+\item What does the 35-basis-point quantity represent?
+\item Which objects must agree before the team begins the larger run?
+\item What does the paragraph not establish?
+\item What action should the reader take if the checks pass?
+\end{enumerate}
+
+Suppose the reader answers the first four correctly but says that the requested
+action is still unclear. That is a useful failure. The author has learned that
+the paragraph is more precise but the document's decision boundary is not yet
+visible. Humanvoice records a reader revision request rather than converting
+the four correct answers into a passing score.
+
+\begin{takeawaybox}{The result of one review}
+For one document and one version, Humanvoice produces a source snapshot, a
+small set of located findings, an author decision for each finding, a protected
+before-and-after comparison, and a reader decision with elapsed time and
+requested changes. The packet is inspectable by an author, measurable by an
+evaluator, and priceable by a sponsor.
+\end{takeawaybox}
+
+\section{The six capabilities}
+
+For this case, an implementer needs six connected capabilities. Each one
+changes a real decision in the writing path; none is a list of packages to
+install.
+
+\begin{description}
+\item[Brief compiler.] Turn the reader, decision, genre, prior knowledge,
+  evidence boundary, protected objects, and named exemplars into a versioned
+  authoring brief. Critical blanks remain visible and block drafting.
+\item[Argument planner.] Build a claim map, concept-dependency graph, section
+  jobs, terminology plan, and visual plan. It checks the order of ideas before
+  prose makes the error expensive to find.
+\item[Bounded writer.] Draft one section or paragraph card at a time from the
+  approved brief and evidence. A replaceable model may write, but it cannot
+  widen the claim, add a citation, or skip a prerequisite without a recorded
+  decision.
+\item[Pre-human preflight.] Run hard integrity checks, structural writing
+  checks, evidence checks, and calibrated reconstruction critics. Unknown or
+  conflicting results fail closed.
+\item[Located repair and comparison.] Map a failed check to a specific repair,
+  rebuild the affected unit, detect oscillation, and compare protected
+  equations, numbers, citations, tables, quotations, and claims.
+\item[Review release.] Produce a clean reader packet only after the gates pass,
+  with the decision question and a short rubric but none of the private repair
+  trail. The named human still owns acceptance.
+\end{description}
+
+The MVP does not need to train a new text-generation model. It needs a stable
+contract around a replaceable writer: the model receives only approved context,
+the unit it is writing, and the evidence it may use; the preflight controller
+can reject its output and request a cause-specific repair. This distinction is
+what keeps a fluent first draft from becoming a human debugging task.
+
+\section{The minimum useful interface}
+
+An author starts with a brief and evidence, not with a request to polish a
+finished manuscript (shown across lines for legibility):
+
+\begin{quote}\small
+\texttt{hv init --brief brief.yaml --evidence sources/}\par
+\texttt{hv plan --reader "investment committee"}\par
+\texttt{hv draft --unit section-01}\par
+\texttt{hv preflight --fail-closed}\par
+\texttt{hv repair --max-cycles 3}\par
+\texttt{hv release --reader-packet}
+\end{quote}
+
+The six verbs are stages of one path, not six independent products. \texttt{hv
+init} refuses a brief with unresolved critical fields. \texttt{hv plan} refuses
+to draft when a load-bearing claim has no evidence or a concept is used before
+its prerequisite. \texttt{hv draft} writes a bounded unit. \texttt{hv preflight}
+checks the unit and the assembled document. \texttt{hv repair} applies only a
+named repair strategy, rebuilds, and stops on oscillation. \texttt{hv release}
+creates the human packet only when every required result is pass or an explicit
+owner-approved exception. A missing result is a failure, not a pass.
+
+The older capture, inspect, and compare services remain useful internally, but
+they no longer define the author's journey. The important property is that
+every service refers to an immutable brief, blueprint, source version, and
+render hash rather than to an unowned draft.
+
+The same record should be usable from a command line, a notebook, or an editor
+extension. A sponsor should not need to know which parser or linter produced a
+finding in order to understand the decision. Conversely, an engineer should
+be able to replace a parser without changing the reader rubric or the primary
+evaluation outcome.
+
+\section{The boundary of the first version}
+
+The first version focuses on prepared authoring, revision, and reader
+understanding, not on judging whether an individual document is ``human.''
+Detector studies show high
+false-positive risk for formal and non-native writing and easy evasion through paraphrase
+\citep{liang2023detectors,weberwulff2023testing,krishna2023paraphrasing}. A
+population-level monitoring question may be studied later, but it is outside
+the revision problem described here.
+
+The system also leaves the source in the author's hands, keeps acceptance with
+the named reader, and treats style rules as observations rather than a
+universal house style. Bounded generation is in scope; unbounded autonomous
+rewriting and autonomous acceptance are not. Those choices keep the measurable
+outcome aligned with the reader's decision while ensuring that bad prose is
+stopped before it consumes that reader's time.

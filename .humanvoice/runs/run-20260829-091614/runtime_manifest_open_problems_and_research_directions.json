@@ -1,0 +1,33 @@
+{
+  "record_type": "RuntimeManifest",
+  "schema_version": "HV-SCHEMA-1.0",
+  "record_id": "draft-Open Problems and Research Directions-2026-08-29T09:16:14.301079+00:00",
+  "run_id": "run-20260829-091614",
+  "created_at": "2026-08-29T09:16:14.301087+00:00",
+  "mode": "inference",
+  "compiler": {
+    "name": "none",
+    "version": "n/a",
+    "executable_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+    "flags": []
+  },
+  "runtime_type": "claude-api",
+  "model_version_string": "claude-opus-5",
+  "model_artifact_hash_if_local": null,
+  "prompt_template_hash": "9203411fa7aff6ff124cf6da2711ea561db874ee9c54134733d4c47785a79d74",
+  "sampling": {
+    "temperature": 0.0
+  },
+  "seed_if_applicable": null,
+  "api_endpoint": "https://api.anthropic.com/v1/messages",
+  "request_id_if_available": null,
+  "timestamp": "2026-08-29T09:16:14.301091+00:00",
+  "latency_ms": 0,
+  "input_tokens": 582,
+  "output_tokens": 13,
+  "output_hash": "7ade36578f8a087a6aff408776a3c6fcc4c7896922c8ed6160c75d5e3ad79514",
+  "not_applicable_reason": null,
+  "hardware": null,
+  "network_policy": "api-only",
+  "resource_limits": null
+}

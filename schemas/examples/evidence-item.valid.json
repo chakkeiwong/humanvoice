@@ -1,0 +1,32 @@
+{
+  "record_type": "EvidenceItem",
+  "schema_version": "HV-SCHEMA-1.0",
+  "record_id": "EV-20260826-001",
+  "run_id": "run-evidence-20260826-140000",
+  "created_at": "2026-08-26T14:00:00Z",
+  "source_path_or_url": "evidence/q3_incidents.json",
+  "source_hash": "d6f8e0d5c4b7a9f8e7d6c5b8a0f9e8d7c6b0a8f9e7d6c5b4a9f8e0d6c7b9a6f0",
+  "observation": "Three Q3 production incidents: August 15 (23 minutes), September 3 (8 minutes), October 12 (45 minutes). All three attributed to database topology issues under 85% read pool utilization.",
+  "provenance": {
+    "kind": "internal-document",
+    "obtained_at": "2026-08-26T12:00:00Z",
+    "obtained_by": "ops-team-export",
+    "measuring_party": "incident-response-team",
+    "measurement_window": "2026-08-01 to 2026-10-31",
+    "citation_key": null
+  },
+  "appraisal_state": "single-source",
+  "supports": [
+    {
+      "target_kind": "claim",
+      "target_id": "capacity-plan-claim-1",
+      "load_bearing": true
+    }
+  ],
+  "limitations": [
+    "Root cause analysis is not complete for all three incidents; topology attribution is provisional"
+  ],
+  "contradicts": [],
+  "privacy_class": "internal",
+  "rights_record_id": null
+}

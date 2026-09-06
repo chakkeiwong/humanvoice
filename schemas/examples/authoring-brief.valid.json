@@ -1,0 +1,16 @@
+{
+  "record_type": "AuthoringBrief",
+  "schema_version": "HV-SCHEMA-1.0",
+  "record_id": "brief-001",
+  "run_id": "run-001",
+  "created_at": "2026-08-26T00:00:00Z",
+  "reader": "executive economist",
+  "decision": "Decide whether to fund the protected-source core.",
+  "genre": "product proposal",
+  "known_vocabulary": ["LaTeX", "citation"],
+  "exemplars": ["economist-technology-session-01"],
+  "evidence_boundary": ["implementation contract", "fixture results"],
+  "privacy_class": "internal",
+  "protected_objects": ["equations", "citations", "numbers"],
+  "unknowns": []
+}

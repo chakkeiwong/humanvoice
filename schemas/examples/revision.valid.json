@@ -1,0 +1,12 @@
+{
+  "record_type": "Revision",
+  "schema_version": "HV-SCHEMA-1.0",
+  "record_id": "revision-001",
+  "run_id": "run-001",
+  "created_at": "2026-08-26T00:00:00Z",
+  "parent_hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+  "child_hash": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+  "changed_spans": [],
+  "protected_comparison": {"status": "unchanged"},
+  "author_decision": "accepted"
+}

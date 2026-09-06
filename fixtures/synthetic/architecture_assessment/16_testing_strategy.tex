@@ -1,0 +1,67 @@
+\section{Testing Strategy for Distributed Systems}
+
+Testing a distributed system requires strategies beyond those sufficient for a monolith. This section details the testing pyramid for the microservices architecture, the tooling required to implement it, and the defects each layer is designed to catch.
+
+\subsection{Unit Testing}
+
+Unit tests verify individual functions and classes in isolation. Target coverage is 80\% statement coverage and 70\% branch coverage, enforced by the deployment pipeline. Tests execute in under 5 minutes per service to provide rapid feedback.
+
+The challenge in unit testing event-driven code is mocking asynchronous dependencies. When a function publishes an event to a message broker, the test must verify that the event was published with correct content but should not require a real broker. The solution is dependency injection: the message broker client is passed as a parameter, allowing tests to substitute a mock that records published events for assertion.
+
+Unit test quality varies across services. Authorization Engine has 91\% statement coverage with comprehensive edge-case testing. Settlement Coordinator has 68\% statement coverage with gaps in error-handling paths. The coverage difference reflects team experience: Authorization Engine was developed by engineers with TDD background, while Settlement Coordinator was developed under schedule pressure that led to deferring test authorship until after implementation.
+
+False positives from poorly-written tests are a persistent problem. Tests that pass when code is correct but fail intermittently due to timing assumptions, or tests that pass even when the tested behavior is broken, erode trust. The pilot identified 23 unreliable tests across twelve services, all flagged for remediation.
+
+\subsection{Integration Testing}
+
+Integration tests verify that a service correctly implements its API contract when deployed with real infrastructure dependencies. Each service's integration tests deploy the service to an ephemeral test environment with a real database, message broker, and cache, then execute requests and verify responses.
+
+Contract testing is bidirectional. Producer contracts verify that a service correctly implements the API it exposes, using test cases derived from the OpenAPI specification. Consumer contracts verify that a service correctly calls the APIs it depends on, using test cases that stub upstream services and assert on the requests made.
+
+The consumer contract approach, originated by the Pact testing framework, catches breaking changes before they reach production. When Service B changes its API, Service A's consumer contracts fail during Service A's pipeline run, even though Service A's code did not change. This forces coordination: Service B cannot deploy its breaking change until Service A has updated its consumer contracts and deployed.
+
+Integration test environments are ephemeral: created on-demand for each pipeline run, destroyed after tests complete. Provisioning time is 2--3 minutes, dominated by database initialization. Parallelizing integration tests across multiple ephemeral environments improves throughput but increases infrastructure cost. The pilot used a pool of five concurrent environments, allowing five integration test runs simultaneously, at a cost of \$340 monthly.
+
+\subsection{End-to-End Testing}
+
+End-to-end tests verify complete workflows spanning multiple services. A test might simulate a payment transaction: create account, authorize payment, confirm settlement, verify ledger entry. These tests run against a staging environment that mirrors production topology.
+
+E2E tests are expensive to write, slow to execute, and fragile. They are sensitive to timing issues: a test that expects a balance update to appear within 100ms may fail if event processing is slow. They are sensitive to data dependencies: a test that assumes account ID 12345 exists will fail if the staging database is reset. They require coordination: if three teams are modifying services involved in a workflow, E2E tests may break for reasons unrelated to any single team's changes.
+
+The strategy is to minimize E2E tests, investing in lower-level testing instead. The test suite includes 180 E2E scenarios covering critical paths, risk areas, and regulatory requirements. E2E tests run nightly against staging, not on every commit. Failure rate is approximately 5\%, split between true defects (2\%) and test flakiness (3\%). Flakiness remediation is ongoing.
+
+E2E test ownership is unclear. In the monolith, the single team owned all tests. With twelve services and no single team owning cross-service workflows, E2E test maintenance falls to a "platform quality" team, but this team has incomplete context on service internals. The result is that E2E test failures are investigated slowly, and tests are disabled rather than fixed approximately 30\% of the time.
+
+\subsection{Chaos Engineering}
+
+Chaos experiments inject failures into production to verify that the system behaves correctly under degraded conditions. Experiments run during low-traffic windows with blast radius limits and automated abort conditions.
+
+The experiment catalog includes: terminate random instance, isolate availability zone, inject network latency, fail database primary, exhaust instance CPU, exhaust instance memory, fill disk, drop messages, return errors from dependency. Each experiment has a hypothesis ("terminating one instance will not affect error rate"), an execution procedure, success criteria, and a rollback procedure.
+
+Experiments progress from single-instance failures to multi-service failures. Early experiments terminate one instance and verify recovery; later experiments combine zone isolation with database failure to verify behavior under multiple concurrent failures. This progressive approach builds confidence before attempting high-severity experiments.
+
+Chaos experiments discovered four defects in the pilot. A memory leak in Balance Tracker caused instance termination after 72 hours of operation; this was invisible in normal operations because deployments occurred more frequently, but appeared when chaos experiments repeatedly targeted long-running instances. A database failover script had a bug that left stale connections in the pool, causing 30 seconds of elevated errors after failover; this was invisible in manual failover tests but appeared in automated chaos experiments that injected failures rapidly. A circuit breaker misconfiguration meant that Authorization Engine never reopened after a partition healed, requiring manual intervention; this appeared when chaos experiments injected transient failures. A logging configuration error meant that structured context was lost during instance restart, making incident investigation difficult; this appeared when chaos experiments terminated instances mid-request.
+
+These are defects that conventional testing missed and that might have appeared first in production incidents. Chaos engineering shifted them left to a controlled environment.
+
+\subsection{Load Testing}
+
+Load tests verify that services meet performance objectives under sustained throughput. Tests ramp to target load over 10 minutes, sustain for 60 minutes, then ramp down. Metrics collected include throughput, latency distribution, error rate, CPU and memory utilization, and database connection pool saturation.
+
+Load test profiles match production traffic patterns. Authorization Engine's load profile includes 62\% payment authorizations, 24\% balance inquiries, 9\% settlement operations, and 5\% reconciliation queries, matching the workload characterization from Section 2. Load tests replay anonymized production traces to preserve temporal patterns: bursts, diurnal cycles, and correlation between transaction types.
+
+Load test infrastructure uses the same container images and configuration as production, deployed in a dedicated load test environment sized at 20\% of production capacity. The reduced size trades cost for realism; full-scale load testing would require provisioning a complete production replica at \$180,000 monthly.
+
+Load test results from the pilot validate the throughput projections in Section 5. Authorization Engine sustained 100,000 TPS with p99 latency of 118ms, matching predictions within 3\%. Balance Tracker exhibited unexpected memory growth under sustained load, diagnosed as a projection cache eviction policy defect, requiring a fix before production deployment. Fraud Detection sustained target throughput but exhibited p99.9 latency spikes to 1,400ms, traced to a lock contention in the scoring algorithm that appears only under high parallelism.
+
+\subsection{Security Testing}
+
+Security testing includes static analysis, dynamic analysis, dependency scanning, and penetration testing. SAST runs in the deployment pipeline; DAST and penetration testing occur quarterly.
+
+Static analysis examines source code for vulnerabilities without executing it. Tools check for SQL injection, path traversal, command injection, hardcoded credentials, weak cryptography, and insecure deserialization. False positive rate is approximately 40\%: many flagged issues are not exploitable in context. Triaging false positives consumes approximately 2 hours per service per month.
+
+Dynamic analysis executes the application in a test environment while probing for vulnerabilities. Tools send malicious inputs, monitor responses, and detect anomalies like error messages disclosing internal state, timing differences revealing information, and authentication bypasses. DAST caught two vulnerabilities in the pilot: an endpoint that returned stack traces in error messages, disclosing internal architecture to attackers, and an error-handling path that logged sensitive data.
+
+Dependency scanning compares libraries against known-vulnerability databases. The deployment pipeline fails if critical or high-severity CVEs are present without documented exceptions. This aggressive policy caused initial friction: 11\% of builds failed due to dependency vulnerabilities in the pilot's first month, requiring urgent remediation or exception requests. The friction decreased as teams learned to monitor vulnerability disclosures and upgrade dependencies proactively.
+
+Penetration testing is performed quarterly by an external firm. Testers receive production-like access and attempt to compromise the system. The scope includes external attack surface, service-to-service communication, and insider threat scenarios. Findings are scored by severity and remediated according to the same Severity 1--4 classification as security incidents. The first penetration test identified eight findings: two Severity 2, four Severity 3, two Severity 4. The Severity 2 findings were both authorization issues: endpoints that failed to validate caller permissions correctly.

@@ -1,0 +1,31 @@
+[build-system]
+requires = ["setuptools>=68.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "humanvoice"
+version = "0.1.0"
+description = "Local-first authoring and revision system for technical documents"
+readme = "README.md"
+requires-python = ">=3.10"
+license = {text = "Proprietary"}
+authors = [
+    {name = "Humanvoice project"}
+]
+dependencies = [
+    "jsonschema>=4.26.0",
+    "referencing>=0.30.0",
+]
+
+[project.scripts]
+hv = "humanvoice.cli:main"
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.4.0",
+    "pytest-timeout>=2.1.0",
+]
+
+[tool.setuptools]
+packages = ["humanvoice"]
+package-dir = {"" = "src"}

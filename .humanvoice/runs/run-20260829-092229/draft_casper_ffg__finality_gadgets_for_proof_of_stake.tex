@@ -1,0 +1,27 @@
+\section{Casper FFG: Finality Gadgets for Proof-of-Stake}
+
+Casper the Friendly Finality Gadget (Casper FFG)~\cite{buterin2020combining} represents a distinct approach to Byzantine consensus that overlays checkpoint-based finality atop arbitrary block proposal mechanisms. Unlike monolithic consensus protocols that tightly couple proposal, voting, and finalization, Casper FFG decouples finality from block production, enabling proof-of-stake systems to achieve economic finality guarantees without constraining the underlying chain growth mechanism.
+
+\subsection{Checkpoint-Based Finality Overlay}
+
+The core architectural innovation of Casper FFG lies in its separation of concerns between block proposal and finality. The underlying blockchain grows through any available mechanism---proof-of-work, proof-of-authority, or another consensus protocol---while Casper FFG periodically checkpoints this growing chain at epoch boundaries. Validators participate in a two-phase voting protocol over these checkpoints, casting \emph{prepare} votes to justify checkpoints and \emph{commit} votes to finalize them.
+
+A checkpoint becomes \emph{justified} when it receives prepare votes from validators controlling at least two-thirds of the total stake. A justified checkpoint becomes \emph{finalized} when the immediately following checkpoint becomes justified, creating a supermajority link across consecutive epochs. This two-phase structure ensures that once finalized, a checkpoint cannot be reverted without destroying at least one-third of the total staked value through slashing.
+
+The checkpoint-based approach provides several architectural advantages. First, it accommodates variable block times and fork-choice rules in the proposal layer without compromising finality guarantees. Second, it reduces communication overhead by aggregating finality decisions to epoch boundaries rather than requiring per-block consensus. Third, it enables gradual migration paths for existing blockchain systems to adopt economic finality without full protocol replacement.
+
+\subsection{Slashing Conditions for Provable Byzantine Behavior}
+
+Casper FFG's security model relies on \emph{accountable safety}: Byzantine behavior that violates safety must produce cryptographically attributable evidence enabling economic punishment. Two slashing conditions enforce this accountability. The \emph{double-vote} condition prohibits validators from casting conflicting votes for the same target epoch, preventing equivocation attacks. The \emph{surround-vote} condition prohibits validators from casting votes that surround or are surrounded by their previous votes, preventing long-range reversion attacks.
+
+Formally, a validator violates the surround-vote condition if they cast votes $(s_1, t_1)$ and $(s_2, t_2)$ where $s_1 < s_2 < t_2 < t_1$ or $s_2 < s_1 < t_1 < t_2$, with $s$ denoting source checkpoints and $t$ denoting target checkpoints. Any validator producing evidence of either slashing condition faces destruction of their staked deposit, creating economic incentives aligned with protocol safety.
+
+The slashing mechanism addresses the fundamental difference between proof-of-stake and proof-of-work systems: the "nothing-at-stake" problem. In proof-of-work, mining on multiple forks incurs real resource costs. In proof-of-stake, validators could costlessly vote for conflicting chains without slashing. By making Byzantine behavior provably expensive, Casper FFG achieves security under the assumption that validators controlling at least two-thirds of stake act rationally to preserve their deposits.
+
+\subsection{Integration Patterns with Block Proposal Mechanisms}
+
+Casper FFG's design as a finality gadget rather than a complete consensus protocol necessitates integration with underlying proposal mechanisms. The Ethereum 2.0 deployment combines Casper FFG finality with LMD-GHOST fork choice for block proposal, creating a hybrid protocol where validators simultaneously participate in per-slot block voting and per-epoch finality voting. This integration requires careful attention to the boundary conditions between the two layers.
+
+The finality gadget must respect the fork-choice rule's canonical chain while the fork-choice rule must respect finalized checkpoints as immutable. This bidirectional constraint creates a coherent total ordering: blocks following finalized checkpoints inherit finality, while the fork-choice rule resolves ambiguity only among non-finalized branches. The integration pattern demonstrates how modular consensus design can combine different security models---probabilistic fork-choice and deterministic finality---within a single system.
+
+Alternative integration patterns remain possible. Casper FFG could overlay proof-of-work chains to add economic finality to Nakamoto consensus, or combine with DAG-based proposal layers to finalize partial orders. The modularity comes at the cost of increased protocol complexity and the need to reason about the interaction between proposal and finality layers under adversarial conditions.

@@ -1,0 +1,70 @@
+{
+  "fixture_name": "correspondence_baseline",
+  "created": "2026-09-01",
+  "purpose": "Gold standard for protected-object extraction testing",
+  "rights": "synthetic content, internal use only",
+  "source_file": "source.tex",
+  "source_file_hash": null,
+  "protected_objects": {
+    "equations": {
+      "count": 50,
+      "labels": [
+        "eq:001", "eq:002", "eq:003", "eq:004", "eq:005",
+        "eq:006", "eq:007", "eq:008", "eq:009", "eq:010",
+        "eq:011", "eq:012", "eq:013", "eq:014", "eq:015",
+        "eq:016", "eq:017", "eq:018", "eq:019", "eq:020",
+        "eq:021", "eq:022", "eq:023", "eq:024", "eq:025",
+        "eq:026", "eq:027", "eq:028", "eq:029", "eq:030",
+        "eq:031", "eq:032", "eq:033", "eq:034", "eq:035",
+        "eq:036", "eq:037", "eq:038", "eq:039", "eq:040",
+        "eq:041", "eq:042", "eq:043", "eq:044", "eq:045",
+        "eq:046", "eq:047", "eq:048", "eq:049", "eq:050"
+      ],
+      "environments": ["equation", "align"]
+    },
+    "displaymath": {
+      "count": 10,
+      "note": "Unnumbered display math environments using \\[ \\]"
+    },
+    "tables": {
+      "count": 5,
+      "labels": ["tab:001", "tab:002", "tab:003", "tab:004", "tab:005"]
+    },
+    "labels": {
+      "count": 66,
+      "note": "Actual \\label{} commands in source: 11 sections + 50 equations + 5 tables",
+      "types": {
+        "sections": 11,
+        "equations": 50,
+        "tables": 5
+      },
+      "all_labels": [
+        "sec:intro", "sec:equations", "subsec:basic", "subsec:intermediate",
+        "subsec:align", "subsec:advanced", "subsec:final", "sec:displaymath",
+        "sec:tables", "sec:labels", "sec:conclusion",
+        "eq:001", "eq:002", "eq:003", "eq:004", "eq:005", "eq:006", "eq:007",
+        "eq:008", "eq:009", "eq:010", "eq:011", "eq:012", "eq:013", "eq:014",
+        "eq:015", "eq:016", "eq:017", "eq:018", "eq:019", "eq:020", "eq:021",
+        "eq:022", "eq:023", "eq:024", "eq:025", "eq:026", "eq:027", "eq:028",
+        "eq:029", "eq:030", "eq:031", "eq:032", "eq:033", "eq:034", "eq:035",
+        "eq:036", "eq:037", "eq:038", "eq:039", "eq:040", "eq:041", "eq:042",
+        "eq:043", "eq:044", "eq:045", "eq:046", "eq:047", "eq:048", "eq:049",
+        "eq:050", "tab:001", "tab:002", "tab:003", "tab:004", "tab:005"
+      ]
+    }
+  },
+  "acceptance_criteria": {
+    "extraction_accuracy": "≥95% of manually inventoried objects found",
+    "parser_agreement": "≥90% consensus across parsers",
+    "equation_threshold": 0.95,
+    "assembly_threshold": 0.99
+  },
+  "test_scenarios": [
+    "complete extraction (all parsers)",
+    "parser bake-off agreement measurement",
+    "per-object identity tracking by hash",
+    "stale manifest detection",
+    "missing disposition enforcement",
+    "type-specific threshold verification"
+  ]
+}

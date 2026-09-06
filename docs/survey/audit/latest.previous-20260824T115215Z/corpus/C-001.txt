@@ -1,0 +1,1 @@
+The estimate is identified from variation in the policy threshold. We report the coefficient and its standard error, then discuss the assumptions required for interpretation.

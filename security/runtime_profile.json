@@ -1,0 +1,60 @@
+{
+  "profile_id": "HV-RUNTIME-LINUX-BWRAP-2026-08-26",
+  "profile_version": "1.0",
+  "profile_status": "verified",
+  "g0_readiness": "ready",
+  "supported_host": {
+    "os": "Ubuntu 22.04.5 LTS",
+    "kernel": "Linux 6.8.0-40-generic x86_64"
+  },
+  "isolation": {
+    "mechanism": "bubblewrap",
+    "version": "0.6.1",
+    "executable": "/usr/bin/bwrap",
+    "executable_sha256": "d78807229d616606e339c5988392b9e0ab4a6a6998fa51e4590837f426a12fca",
+    "rootless": true,
+    "network": "unshared and disabled",
+    "source_mount": "read-only",
+    "scratch_mount": "per-run writable allowlist",
+    "capabilities": "none",
+    "no_new_privileges": true,
+    "unsandboxed_fallback": false
+  },
+  "limits": {
+    "wall_clock_seconds": 1800,
+    "memory_mib": 32768,
+    "processes": 256,
+    "source_tree_mib": 250,
+    "output_mib": 250,
+    "enforcement": [
+      "/usr/bin/prlimit",
+      "/usr/bin/timeout",
+      "bubblewrap namespaces and mounts"
+    ]
+  },
+  "build": {
+    "compiler": "pdfTeX 3.141592653-2.6-1.40.22",
+    "compiler_path": "/usr/bin/pdflatex",
+    "compiler_sha256": "01a7ab54ebf2fd89865aa0743ae9eaeec37ba4be75ca7cd254631cba6fb76cf9",
+    "tex_distribution": "TeX Live 2022/dev/Debian",
+    "required_flags": [
+      "-no-shell-escape",
+      "-halt-on-error",
+      "-file-line-error"
+    ],
+    "source_date_epoch": "required per run"
+  },
+  "verification": {
+    "attempted_at": "2026-08-29T20:32:58.400452+00:00",
+    "command": "python3 tools/verify_runtime_isolation.py",
+    "result": "passed",
+    "controls": {
+      "T1": true,
+      "T2": true,
+      "T3": true,
+      "T4": true,
+      "T5": true
+    },
+    "observation": "All T1-T5 controls verified"
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "record_type": "CliResult",
+  "schema_version": "HV-SCHEMA-1.0",
+  "record_id": "cli-result-001",
+  "run_id": "run-001",
+  "created_at": "2026-08-26T00:00:00Z",
+  "contract_version": "HV-IC-2026-08-26",
+  "command": "hv preflight",
+  "status": "abstain",
+  "exit_code": 2,
+  "record_paths": [".humanvoice/runs/run-001/preflight.json"],
+  "blocking_reasons": ["parser could not resolve a protected object"],
+  "source_hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+  "result_hash": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+}

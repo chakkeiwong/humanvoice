@@ -1,0 +1,53 @@
+
+Abstention: Project vocabulary configuration required to classify ambiguous terms
+{
+  "preflight_id": "preflight-20260829-091700",
+  "mode": "deterministic",
+  "snapshot_id": "snapshot-20260829-090615",
+  "checked_at": "2026-08-29T09:17:00.761461+00:00",
+  "findings": [],
+  "deterministic_gate": "pass",
+  "protected_objects": {
+    "count": 6,
+    "types": {
+      "citation": 6
+    },
+    "parser": "pylatexenc",
+    "parse_time_seconds": 0.04355168342590332,
+    "samples": {
+      "citation": [
+        {
+          "id": "cite_0",
+          "location": 724,
+          "length": 26,
+          "raw_preview": "\\cite{castro1999practical}"
+        },
+        {
+          "id": "cite_1",
+          "location": 1520,
+          "length": 28,
+          "raw_preview": "\\cite{buchman2016tendermint}"
+        },
+        {
+          "id": "cite_2",
+          "location": 1559,
+          "length": 22,
+          "raw_preview": "\\cite{yin2019hotstuff}"
+        }
+      ]
+    }
+  },
+  "abstention": {
+    "reason": "Project vocabulary configuration required to classify ambiguous terms",
+    "ambiguous_term_count": 8,
+    "sample_terms": [
+      "GST",
+      "DAG",
+      "BLS",
+      "TLA",
+      "PBFT"
+    ]
+  },
+  "status": "abstention",
+  "exit_code": 2
+}

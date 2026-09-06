@@ -1,0 +1,495 @@
+\chapter{Component and market records}
+\label{app:component-records}
+
+Chapter~\ref{ch:software-dossiers} follows one research note through the
+component decision. This appendix preserves the fuller technical and market
+record behind that argument. A prose linter may catch a repeated opener and
+miss a changed equation. A LaTeX parser may preserve structure and still say
+nothing about whether a reader understands the request. Each candidate is
+therefore recorded by the job it can perform, not the size of its feature list.
+
+The inventory is a snapshot, not a promise about future releases. Vendored
+repositories have pinned commits in the audit record; remote-only candidates
+are identified as such. A documentation page establishes availability and
+intended use. It does not establish effectiveness on Humanvoice documents.
+The disposition of every candidate therefore remains conditional on a fixture
+replay and a human-burden observation.
+
+The adoption path in Figure~\ref{fig:package-funnel} prevents four different
+kinds of evidence from collapsing into ``supported.'' A listed project has not
+yet earned a runtime role, and a successful installation has not yet earned an
+editor's attention.
+
+\section{The capability map}
+\label{sec:software-capabilities}
+
+The first build has to do six jobs that vendors often sell as one ``AI
+writing'' feature. An author needs to be able to:
+
+\begin{enumerate}
+\item parse a source document and retain locations for equations, tables,
+      citations, labels, and prose;
+\item build the document and expose cross-reference or compilation failures;
+\item locate lexical, structural, or citation findings without changing text;
+\item compare protected objects across two revisions;
+\item run optional local inference while keeping source material inside the
+      declared trust boundary; and
+\item evaluate a rendered document with a named reader and a reproducible
+      record.
+\end{enumerate}
+
+No candidate in the current inventory performs all six. That is not a defect in
+the individual projects. It is a reason to compose small components behind a
+narrow Humanvoice record instead of asking one package to become an editor,
+parser, judge, and compliance system at once.
+
+\begin{table}[H]
+\centering
+\small
+\begin{tabularx}{\textwidth}{@{}p{0.19\textwidth}p{0.25\textwidth}L p{0.21\textwidth}@{}}
+\toprule
+Job & Candidate families & Evidence a candidate can provide & Evidence it
+cannot provide alone \\
+\midrule
+Source representation & pylatexenc, plasTeX, LaTeXML, tree-sitter-LT, Pandoc &
+Locations, syntax trees, conversion behavior on fixtures & Semantic correctness
+of an equation or reader comprehension \\
+Build and cross-reference & TeX, latexdiff, LaTeX tooling & Reproducible PDF,
+undefined-reference and visual-diff observations & Preservation of an author's
+intended claim \\
+Prose findings & Vale, textlint, LanguageTool, proselint, Textidote & Rule hits,
+locations, configurable style checks & Priority, genre fit, or a useful repair \\
+AI-tell diagnostics & sloptrim, slop-forensics, fast-detect-gpt & Aggregate
+distributional signals under a declared corpus & Individual authorship or
+quality \\
+Private inference & llama.cpp and compatible local models & A local execution
+path and resource profile & Truth, citation support, or reader acceptance \\
+Evaluation & Inspect AI plus a human protocol & Replayable tasks and judge
+adapters & The named expert's final decision \\
+\bottomrule
+\end{tabularx}
+\caption{The package field supplies components, not a finished product.}
+\label{tab:software-capability-map}
+\end{table}
+
+\section{Representing and building technical documents}
+\label{sec:software-parsers}
+
+\subsection{Lightweight and full-model LaTeX parsers}
+
+pylatexenc offers a relatively small Python-level route for tokenizing and
+interpreting LaTeX fragments \citep{pylatexenc2026}. Its attraction is
+proportionate scope: a first adapter can recover command spans, groups, and
+source offsets without committing the product to a full document model. The
+failure case is equally clear. A token stream does not know whether a macro
+represents a theorem, a number in a table, or an author's private shorthand.
+The adapter must retain the raw span and abstain when a macro cannot be
+interpreted.
+
+plasTeX builds a richer object model and can expose sectioning, counters, and
+cross-references \citep{plastex2026}. It is a stronger candidate when the
+product needs to reason about a document's visible hierarchy. It also brings a
+larger compatibility surface: custom packages, macro definitions, and
+environment side effects can make the object tree differ from the PDF a local
+TeX installation produces. The benchmark must compare both the parsed model
+and the compiled output.
+
+LaTeXML translates TeX into XML and HTML-oriented structures and is useful when
+the same source must support multiple renderings \citep{latexml2026}. Its
+strength is explicit semantic markup for many mathematical constructs. Its
+boundary is practical: a translation that looks correct in HTML can still
+alter spacing, numbering, or a custom macro in the PDF used by the reader.
+LaTeXML therefore belongs in an adapter experiment, not as an unexamined
+replacement for the project's build.
+
+unified-latex adds a serious JavaScript/TypeScript candidate. Its parser and
+unified-style transformation utilities make it attractive for an editor or web
+interface that needs source positions and typed nodes
+\citep{unifiedlatex2026}. TexSoup sits at the opposite end of the design space:
+its tolerant Python interface makes navigation and small transformations easy,
+including on imperfect input \citep{texsoup2026}. Tolerance is useful for an
+editor and dangerous for a safety claim. Both candidates must expose unknown
+constructs and preserve raw spans; neither may convert a best-effort parse into
+a false ``protected'' result.
+
+\subsection{tree-sitter, Pandoc, and latexdiff}
+
+tree-sitter's incremental parsing model is attractive for an editor that must
+show a finding while a source file is being changed
+\citep{treesitterlatex2026}. The current grammar is a structural aid, not a
+semantic LaTeX proof. A malformed environment or an unsupported macro should
+produce an explicit ``unparsed'' record, not a best-effort protected-object
+comparison.
+
+Pandoc supplies mature conversion and filter hooks across document formats
+\citep{pandoc2026filters}. It can help create a detexed prose view for
+aggregate diagnostics and a plain-text reader packet. It cannot be the source
+of truth for equation preservation when the canonical source is LaTeX. The
+source-to-PDF build remains authoritative; Pandoc output is a secondary view
+with its own hash and conversion report.
+
+latexdiff is valuable precisely because it is narrow. It highlights visible
+source changes and helps a reader inspect a revision, but its markup is not a
+semantic correspondence algorithm \citep{latexdiff2026}. Humanvoice should
+use it as a view over the protected comparison, never as the comparison
+itself. A number can move from a macro definition to a table, and an equation
+can remain algebraically equivalent while its text changes; character markup
+cannot resolve either case by itself.
+
+The canonical build should also use the standard LaTeX toolchain rather than
+hide it behind a bespoke command. latexmk can orchestrate repeat compilation
+and bibliography dependencies \citep{latexmk2026}; ChkTeX can add source-level
+warnings \citep{chktex2026}. These tools establish build and syntax facts. They
+do not inspect rendered pages, compare protected claims, or decide whether a
+reader understands the result, so they remain components behind the Humanvoice
+build record rather than substitutes for it.
+
+\begin{cardexample}{a parser failure that must remain visible}
+The fixture defines a custom command \texttt{\\riskterm} that expands to a
+number in one table and to a prose label in another. A parser that records only
+the expanded text can report two unrelated values; a parser that preserves the
+macro call and its expansion can ask the author to confirm the correspondence.
+The second behavior is slower and safer. The first is an attractive false pass.
+\end{cardexample}
+
+\section{Prose and citation diagnostics}
+\label{sec:software-prose}
+
+Vale is a rule-based prose linter with configurable styles and targeted text
+segments \citep{vale2026docs}. It is a good host for explicit project rules:
+private path leakage, a banned internal phase label, or a required definition
+of an acronym. The rule should report the passage and a reason. A rule that
+rewrites the sentence or treats a hit as an error in every genre would violate
+the product boundary.
+
+textlint offers a pluggable natural-language linting model and machine-readable
+formatters \citep{textlint2026docs}. It is useful for composing independent
+checks and for feeding findings into an editor. Its Node ecosystem becomes a
+maintenance consideration in a mostly Python and TeX repository; the adapter
+should consume stable JSON rather than embed textlint's internal objects.
+
+LanguageTool and LTeX+ provide grammar and language checks across ordinary
+prose and, in the latter case, LaTeX-aware editing workflows
+\citep{languagetool2026dev,ltexplus2026}. Their value is local correctness:
+agreement, spelling, punctuation, and a limited class of usage problems. They
+should be run after the argument and protected objects are stable. Otherwise
+the author receives a large queue of low-consequence corrections before seeing
+the missing mechanism.
+
+proselint and Textidote occupy a similar but useful niche. They encode style
+and usage advice, including vague language and passive constructions, and can
+serve as additional rule sources. The system should retain the source rule and
+version in each finding because a recommendation is not a fact about the
+document. A former professor may deliberately choose a passive construction to
+foreground a result, and a methods section may need a different register from
+an executive opening.
+
+When a sentence carries a citation, two different checks follow. First, a
+resolver checks whether the key, identifier, title, and author record agree.
+Second, a human or a checked source-support process asks whether the cited work
+supports the sentence.
+GROBID can help recover bibliographic fields from PDFs, but the current
+inventory treats it as a candidate pending local deployment and fixture
+results \citep{grobid2026}. No resolver should be named a ``citation validator''
+if it checks identity only.
+
+\section{AI-tell tools and the temptation to optimize the surface}
+\label{sec:software-tells}
+
+sloptrim and the related slop-forensics project are useful because they turn a
+maintained pattern list into inspectable counts and spans. The repository audit
+found a calibration in which a mechanically clean rejected draft scored better
+than a document a human reader accepted. That result is not a failure of the
+tools; it is a boundary observation. They can direct an author's attention to
+repeated vocabulary, formulaic transitions, and sentence shapes. They cannot
+decide whether the document has a mechanism or a persuasive reason to fund it.
+
+fast-detect-gpt implements a probability-curvature family of AI detectors. Its
+official repository and benchmark literature make it a useful reference for
+aggregate drift experiments, but the false-positive and evasion results in
+Chapter~\ref{sec:literature} rule out per-document use. Any adapter must
+discard individual labels and retain only corpus-level distributions, with a
+minimum cell size and a human interpretation of a change.
+
+The same rule applies to the installed humanizer guidance. It supplies useful
+patterns, such as inflated significance, vague sources, repeated headings, and
+formulaic outlook sections. It is not a substitute for a writer's ear or for a
+technical explanation. The main route therefore presents these projects as
+diagnostic components; this appendix retains their operational details.
+
+\section{Adjacent products an executive will compare}
+\label{sec:software-adjacent}
+
+An implementation proposal should not define its market only by the packages
+its authors have already installed. A sponsor will reasonably ask why the team
+cannot buy an existing writing assistant, use the review functions in its
+LaTeX editor, or add a specialist academic service to the current workflow.
+Use a deliberately modest standard to answer that question. A vendor's
+documentation establishes a documented capability and a stated trust boundary.
+It does not establish effectiveness on the Humanvoice population, and a
+product page is not a substitute for a held-out comparison.
+
+\subsection{General communication assistants}
+
+Grammarly's current enterprise offering is broad: it works across the tools in
+which teams write and combines writing suggestions with a more general agent
+layer \citep{grammarly2026enterprise}. Its privacy documentation describes
+how generative features may pass prompt text and context to service providers,
+even while enterprise controls and consent are offered
+\citep{grammarly2026privacy}. This is a credible alternative for ordinary
+business communication. It can reduce the cost of local wording edits and may
+be the correct incumbent for a short memorandum.
+
+The documented strength is also the boundary. The assistant's unit is a
+selected passage or a communication context. Humanvoice's unit is a versioned
+technical document with equations, data, citations, claims, and a named
+decision. A rewrite that is excellent at tone can still change a denominator,
+drop a qualification, or make a claim sound more certain. The product wedge
+therefore does not compete on generic fluency. It asks whether an assistant
+can be placed behind a source map and a protected comparison, with the reader
+outcome measured rather than inferred from acceptance of a suggestion.
+
+\subsection{Academic writing assistants}
+
+Writefull is closer to the target genre. Its Overleaf integration advertises
+language support trained on published research and includes revision, style,
+paraphrase, and other writing functions inside the LaTeX editor
+\citep{writefull2026overleaf}. That makes it a serious candidate for a
+language-diagnostic adapter or an incumbent arm. It does not, on the
+documentation inspected, provide the complete Humanvoice record: a declared
+reading brief, object-level correspondence for equations and claims, and a
+reader decision that can be compared across workflows. Those absences are
+questions for a fixture run, not accusations about the product.
+
+Paperpal presents a broader academic suite, including contextual rewriting,
+reference discovery, citation styles, submission checks, and integrations for
+researchers \citep{paperpal2026assistant}. Its breadth is useful evidence that
+the market already pays for language and submission support. It also creates a
+measurement problem. Several checks and generative functions arrive in one
+interface, so a positive user reaction cannot identify which component changed
+the document or whether a protected object moved. Paperpal's stated privacy
+position should be recorded in procurement, but the product still needs a
+local or redacted path for restricted manuscripts.
+
+Trinka is another relevant comparison because it positions itself for academic
+and technical writing and documents privacy, institutional, integration, and
+API options \citep{trinka2026privacy}. This may make it a plausible private
+deployment or grammar adapter. The same discipline applies: a privacy feature
+is not a proof of source correspondence, and an API is not a reader study.
+The benchmark should test whether a Trinka finding can be tied to a source span,
+whether an author can reject it without losing provenance, and whether its
+processing mode meets the document owner's declared boundary.
+
+\subsection{Authoring and review environments}
+
+Overleaf already supplies several functions a new product should not
+reimplement. Its documentation describes collaborative editing, comments,
+version history, and Track Changes for accepting or rejecting collaborators'
+edits \citep{overleaf2026trackchanges}. These features solve a real social
+problem: multiple authors can inspect a manuscript and discuss a proposed
+change in context. Humanvoice should integrate with that workflow where it is
+the chosen incumbent, export a stable source snapshot, and return a reader
+packet that does not expose private review history.
+
+Track Changes remains a change display, not a semantic invariant. It tells a
+reviewer which source text was edited and who made the edit; it does not by
+itself establish that an equation is equivalent, a citation still supports a
+claim, or a reader can make the intended decision. A product that treated
+Overleaf's accept/reject control as proof of meaning preservation would repeat
+the same category error as treating a grammar score as proof of comprehension.
+
+\subsection{The comparison in one view}
+
+The following table records the buy, adapt, or build question at the level of
+the job rather than the brand. ``Documented'' means that the vendor describes
+the capability. ``Unestablished'' means that the Humanvoice benchmark still
+needs to observe it on a locked fixture and a named reader.
+
+\begin{table}[H]
+\centering
+\small
+\begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash}p{0.20\textwidth}
+                              >{\raggedright\arraybackslash}p{0.24\textwidth}L
+                              >{\raggedright\arraybackslash}p{0.23\textwidth}@{}}
+\toprule
+Alternative & Documented strength & Missing link for this proposal & Initial
+disposition \\
+\midrule
+Grammarly / enterprise assistant & Broad inline suggestions, rewriting, and
+organizational controls across common applications & No demonstrated
+equation--claim lineage or named-reader endpoint in the inspected material &
+Retain as an incumbent comparator; do not rebuild its general grammar layer \\
+Writefull for Overleaf & Research-trained language support integrated with a
+LaTeX editor & Source-level protected-object record and reader-outcome
+measurement remain unestablished & Benchmark as a language adapter and
+possible incumbent \\
+Paperpal & Academic editing, references, submission checks, and multiple
+integrations & One interface combines many interventions; causal contribution
+and protected correspondence are not identified & Include in market scan;
+test only declared functions \\
+Trinka & Academic/technical language assistance with privacy and integration
+options & Efficacy, source maps, and reader acceptance for the target genres
+remain unestablished & Evaluate as a private-service or API candidate \\
+Overleaf review layer & Comments, collaboration, version history, and
+accept/reject Track Changes & Character/source changes are not an invariant
+for equations, claims, or citations & Integrate as the authoring incumbent \\
+Humanvoice core & Located findings, protected comparison, and a reader decision
+by someone unfamiliar with the project in one record & No efficacy result and no broad market proof
+yet & Build only the connective layer, then test its value \\
+\bottomrule
+\end{tabularx}
+\caption{Adjacent products define the incumbent bundle and the falsifiable
+Humanvoice wedge.}
+\label{tab:software-adjacent}
+\end{table}
+
+\subsection{Buy, adapt, or build}
+
+This comparison leads to a restrained implementation choice. Buy or reuse
+general grammar, collaborative editing, and document-building capabilities
+when their licensing and privacy terms fit the organization. Adapt a package
+when it can emit a stable location, version, and explanation without taking
+ownership of the document. Build the narrow connective layer that the current
+alternatives leave implicit: a source snapshot, a protected-object schema, a
+finding record, an author decision, and a reader outcome joined by immutable
+identifiers.
+
+That distinction affects the budget. Reimplementing a mature grammar engine
+would spend the MVP budget on a capability that is already available. Reusing a
+cloud editor without an object-level boundary would save engineering time while
+moving the largest risk into an opaque service. The proposed pilot should price three configurations: a fully local stack; an
+incumbent-editor stack with Humanvoice adapters; and a hosted academic
+assistant used only on explicitly authorized excerpts. The measured reader and
+operator burden, not a feature checklist, chooses among them.
+
+\subsection{Tests that could overturn the position}
+
+The product should be abandoned or repositioned if an adjacent product can
+already produce the same source-to-reader record at lower total burden. The
+test is concrete. Give each candidate the same source snapshot, protected
+object manifest, and reading brief. Ask it to locate a deliberate
+qualification loss, compare a changed number and citation, and produce a
+reader packet that hides private workflow labels. Record abstentions, false
+passes, operator minutes, network calls, and reader completion. A candidate
+that wins this comparison should become the incumbent, even if it is not
+open-source and even if it makes the Humanvoice implementation unnecessary.
+
+Conversely, a candidate that wins a fluency preference but cannot explain a
+protected change has not falsified the wedge; it has supplied a useful
+component. This is why the software survey reports capability and evidence in
+separate columns. The investment buys an option to learn whether the
+connection among those components earns its cost, not a license to describe a
+familiar product as a competitor it has not actually beaten.
+
+\section{Local inference and reader evaluation}
+\label{sec:software-inference}
+
+llama.cpp is the leading local execution candidate in the inventory
+\citep{llamacpp2026}. Its value is a deployment option when a document cannot
+leave the organization's boundary. The product still needs a model card, a
+prompt and sampling record, a resource profile, and a comparison against a
+remote baseline. Local execution reduces one class of privacy exposure; it
+does not make a generated suggestion correct or remove the need for disclosure.
+
+Inspect AI supplies an evaluation harness for tasks, solvers, and graders
+\citep{inspectai2026}. It can replay a fixed reader question, randomize version
+order, and store machine-judge outputs beside human labels. It cannot recruit
+the former professor whose decision defines the product. The first release
+should keep it optional for model experiments.
+
+The timed human task needs a simpler instrument. jsPsych can present local web
+trials, randomize order, record responses and elapsed time, and export a
+structured trial record \citep{jspsych2026}. A self-hosted jsPsych page is the
+leading candidate for the feasibility reader packet because it does not make
+model evaluation infrastructure a dependency of the human outcome. The
+benchmark must still test keyboard accessibility, resume behavior, browser
+logging, and export correctness; the library supplies instrumentation, not an
+expert-reader sample.
+
+\begin{table}[H]
+\centering
+\small
+\begin{tabularx}{\textwidth}{@{}p{0.21\textwidth}p{0.24\textwidth}L p{0.22\textwidth}@{}}
+\toprule
+Candidate & First fixture & Disposition & Reason for
+the boundary \\
+\midrule
+pylatexenc & Custom macro plus equation and table & adapt & Preserve raw spans;
+abstain on unknown macros \\
+unified-latex & Source positions, custom environments, and editor round trip &
+pilot & Strong web-editor fit; unknown-construct behavior remains untested \\
+TexSoup & Malformed input and compact Python traversal & pilot & Useful tolerant
+fallback only if ambiguity remains explicit \\
+plasTeX & Sections, labels, counters, and malformed environment & pilot &
+Richer tree, but compatibility must match the canonical build \\
+latexdiff & Number, citation, and equation moved across paragraphs & adapt &
+Useful view, not semantic truth \\
+Vale/textlint & Private label, vague referent, intentional technical term &
+adopt as adapters & Findings need rule and context, not automatic rewrites \\
+sloptrim & Accepted and rejected internal repair pair & pilot aggregate-only &
+Calibrate against reader labels; no individual authorship score \\
+llama.cpp & Same finding prompt under local and remote models & pilot & Measure
+privacy, latency, and suggestion differences \\
+Inspect AI & Order-swapped pairwise reader task & adapt & Organize replay; human
+decision remains primary \\
+jsPsych & Timed, randomized reconstruction task in a local browser & pilot &
+Instrument human sessions without coupling them to a model harness \\
+\bottomrule
+\end{tabularx}
+\caption{Initial software dispositions are hypotheses to be tested on a locked
+fixture set.}
+\label{tab:software-dispositions}
+\end{table}
+
+\section{The held-out fixture set}
+\label{sec:software-fixtures}
+
+The fixture set is deliberately small but varied. It contains a clean passage,
+a passage with a private identifier, an equation whose exponent changes, a
+table with a denominator mismatch, a citation with a valid identity but weak
+support, a custom macro, a malformed environment, and a paragraph whose
+repeated structure is intentional. Each fixture has a source file, a rendered
+reference, a protected-object manifest, and an expected failure behavior.
+
+For candidate $k$ and fixture $i$, record a capability result $C_{ki}$, a
+false-pass indicator $S_{ki}$, runtime $t_{ki}$, and operator burden $b_{ki}$.
+The benchmark summary is a matrix rather than a single package score:
+\begin{equation}
+  B_k = \{(C_{ki},S_{ki},t_{ki},b_{ki}): i=1,\ldots,I\}.
+  \label{eq:software-benchmark-matrix}
+\end{equation}
+An adapter may be adopted only when it identifies the positive fixture, fails
+or abstains on the negative fixture, and emits a location that a second
+operator can replay. A fast false pass is worse than a slow abstention because
+the former can change a scientific document without attracting attention.
+
+The benchmark also records installation and maintenance facts. A package with
+an incompatible license can remain a reference implementation. A package with
+no recent release can be acceptable for a frozen migration and unsuitable for
+a continuously operated service. A package that requires network access during
+inference may be excluded from a private document even if its output is useful.
+These are engineering facts, not aesthetic preferences, and they belong beside
+the functional result.
+
+\section{Composition and ownership}
+\label{sec:software-composition}
+
+The proposed stack has one owner for each boundary. The source adapter owns
+locations and abstentions. The build wrapper owns the canonical PDF and
+cross-reference diagnostics. The protected-object extractor owns normalized
+equations, numbers, citations, and tables. The finding adapters own rule
+identities and context. The local-model adapter owns prompts, sampling, and
+network policy. The reader protocol owns the final outcome.
+
+This division prevents a package from silently acquiring authority that its
+evidence does not support. It also makes replacement possible. If a better
+LaTeX parser appears, the source adapter can be replaced while the protected
+object schema and reader protocol remain stable. If a model judge is retired,
+the human labels and pairwise task remain. The product is the composition and
+the evidence around it, not the brand of any one dependency.
+
+The current inventory is therefore enough to begin a feasibility build, but not
+enough to claim a validated software stack. The held-out benchmark, license
+review, and independent replay remain release conditions. Part~III now turns
+these dispositions into an architecture whose records can be implemented and
+tested.

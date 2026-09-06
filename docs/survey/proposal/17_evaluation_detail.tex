@@ -1,0 +1,333 @@
+\chapter{A comparative test}
+\label{ch:evaluation-detail}
+
+Give an author a smoother paragraph and a reader may still ask the same
+question. That is why ``the prose looked better'' is not an estimand, and a
+lower detector score is not one either. The outcome we can test is the
+attention and meaning cost of getting a technical document to a named reader's
+decision. We write that outcome down, choose comparisons that can identify it,
+and show how a small feasibility sample can teach us without
+pretending to be a definitive efficacy trial.
+
+\section{The target population and unit of analysis}
+\label{sec:eval-population}
+
+The pilot needs documents whose authors and readers know enough of the field to
+evaluate an argument, but not so much project history that private labels become
+self-explanatory. Candidate documents include research proposals, model notes,
+investment memoranda, and technical survey chapters. Each one must have a named
+decision, at least one meaning-bearing object, and a reader who can describe the
+decision context.
+
+The unit of treatment is a document revision path. The unit of reader outcome
+is a reader--version encounter. The unit of protected-object safety is an
+object--version comparison. Keeping these units distinct prevents a document
+with many equations from receiving more weight merely because it has more
+tokens, and prevents one reader who spends a long time on a single draft from
+being mistaken for many independent observations.
+
+Let $d$ index documents, $v\in\{0,1\}$ denote the incumbent and Humanvoice
+paths, and $j$ index readers. The protocol fixes $K$ review cycles and $H$
+calendar days before assignment. Define
+\begin{equation}
+  Y_{djv} = \left(T^H_{djv},\ A^H_{dv},\ Q_{djv},\ R^K_{dv},\
+  D^H_{dv},\ M_{dv}\right),
+  \label{eq:eval-outcome-vector}
+\end{equation}
+where $T^H$ is cumulative reader time through the horizon, $A^H$ is acceptance
+by the horizon, $Q$ is reconstruction-task completion, $R^K$ is restricted
+feedback rounds, $D^H$ is the terminal disposition, and $M$ counts unresolved
+protected-object changes. The two primary contrasts are
+\begin{equation}
+  \tau_A=\mathbb E[A^H_{d1}-A^H_{d0}],
+  \qquad
+  \tau_T=\mathbb E[T^H_{dj1}-T^H_{dj0}].
+  \label{eq:eval-primary-estimand}
+\end{equation}
+
+All assigned documents remain in those contrasts. Accepted, still in revision,
+declined, author-withdrawn, and operationally incomplete documents appear as
+separate dispositions. The analysis does not condition the primary estimate on
+meaning safety after assignment, because that would remove precisely the
+failures the product is meant to prevent. It reports $M$ as a safety endpoint
+that can stop adoption regardless of favorable time or acceptance.
+
+For the declared reader task, let $Q_{djv}=1$ when the reader identifies the
+object, mechanism, evidence, qualification, and requested action within the
+time budget. The contrast
+\begin{equation}
+  \tau_Q=\mathbb E[Q_{dj1}-Q_{dj0}]
+  \label{eq:eval-completion-estimand}
+\end{equation}
+is reported with a confidence interval and the complete answer distribution.
+The project should not trade a small time saving for a lower probability of a
+correct reconstruction or a higher decline rate.
+
+\section{The comparisons}
+\label{sec:eval-arms}
+
+Three arms separate the value of diagnosis from the value of the full workflow:
+
+\begin{description}[style=nextline,leftmargin=37mm,labelindent=0mm]
+\item[Incumbent] The author's ordinary revision process, with the usual
+grammar, version-control, and expert-review tools.
+\item[Diagnostic path] Humanvoice findings and protected comparison are
+available, but the author receives no model-generated rewrite.
+\item[Full path] The diagnostic path plus optional local suggestions, with the
+same author control, protected comparison, and reader task.
+\end{description}
+
+The diagnostic arm is important. If the full path improves the result, the
+project needs to know whether the improvement came from located attention,
+from wording suggestions, or from extra review time induced by the interface.
+If the diagnostic arm performs as well as the full path, a smaller and easier
+to govern product may be the better investment. If both arms fail against the
+incumbent, the product claim should be revised rather than rescued by a
+surface metric.
+
+The first feasibility run can use a within-document crossover when the author
+can produce two protected versions and the reader can be blinded to the path.
+For a stronger causal comparison, later documents should be randomized to an
+arm and readers should be randomized to version order. A crossover is efficient
+for learning but vulnerable to carryover: a reader who saw one version knows
+the decision before seeing the other. The protocol records order and analyzes
+it rather than assuming it away.
+
+Figure~\ref{fig:paired-design} illustrates the counterbalanced form. The exact
+allocation will depend on document arrival and reader availability, but the
+same outcomes must be recorded in both orders.
+
+\hvFigurePairedDesign
+
+\begin{table}[H]
+\centering
+\small
+\begin{tabularx}{\textwidth}{@{}p{0.21\textwidth}L p{0.27\textwidth}@{}}
+\toprule
+Design choice & What it identifies & Main threat \\
+\midrule
+Within-document crossover & Difference for the same source and author & Reader
+carryover and learning \\
+Document-level randomization & Average effect across independent documents &
+Small sample and heterogeneous genres \\
+Reader order randomization & Position-adjusted comparison of versions & Incomplete
+blinding if the interface leaves traces \\
+Diagnostic versus full path & Contribution of model suggestions beyond findings &
+Different author effort and novelty effects \\
+\bottomrule
+\end{tabularx}
+\caption{The feasibility design and the stronger comparative design answer
+different questions.}
+\label{tab:eval-design-choices}
+\end{table}
+
+\section{The reader instrument}
+\label{sec:eval-reader-instrument}
+
+The reader instrument begins with context, not a style rubric. A reader is told
+the decision, the role they occupy, the time budget, and the information they
+would normally have. The instrument then asks four forced-choice questions and
+one open question:
+
+\begin{enumerate}
+\item Which action is the author requesting?
+\item What mechanism connects the proposed change to the outcome?
+\item Which observation or calculation is the main support?
+\item What condition or qualification limits the inference?
+\item What would you ask the author before acting?
+\end{enumerate}
+
+The first four answers are coded for correctness against a document-specific
+answer key prepared before randomization. The open question is retained for
+diagnosis and is independently classified as a request for definition,
+evidence, mechanism, scope, or action. The answer key is not a hidden test of
+whether the reader shares the author's conclusion. A reader can disagree with
+the recommendation and still understand it.
+
+Time is measured from the first page shown to the final answer, with pauses and
+clarification requests recorded separately. A reader who stops because the
+document is clear has a different experience from one who stops after giving
+up. The protocol therefore asks for a short reason whenever the reader ends
+early, the page or section at which the stop occurred, and a short quoted span
+that triggered the question. It also records the missing relation the reader
+was trying to recover and whether the reader consulted a reference or source link;
+that behavior is part of the document's burden, not an error to be removed.
+
+\section{Sample size and uncertainty}
+\label{sec:eval-size}
+
+The feasibility study is for design learning, so its sample size is chosen to
+estimate variance and failure modes rather than to promise a conventional
+five-percent result. Suppose the primary outcome is paired reader time, with
+within-document difference $D_d=T_{d1}-T_{d0}$. An approximate standard error
+for the mean difference is
+\begin{equation}
+  se(\bar D)=\frac{s_D}{\sqrt{n}},
+  \label{eq:eval-se}
+\end{equation}
+where $s_D$ is the observed standard deviation and $n$ is the number of
+documents with usable paired readings. A planning interval of half-width $h$
+requires approximately
+\begin{equation}
+  n \approx \left(\frac{z_{1-\alpha/2}s_D}{h}\right)^2.
+  \label{eq:eval-n}
+\end{equation}
+The pilot does not know $s_D$ in advance. The one live feasibility case cannot
+estimate it. Baseline records and a small observational set can provide a rough
+planning range; the feasibility run then tests the timing instrument. Seeded
+safety fixtures expose several meaning failures without asking a live author to
+create them. Those inputs produce a range of sample sizes for the comparative
+study rather than a spurious single number.
+
+For task completion, a paired binary difference is less stable than a time
+difference. Report the full two-by-two table of reader outcomes and use a
+paired interval or a randomization distribution rather than a normal
+approximation when the sample is small. Heterogeneity is not a nuisance to be
+averaged away. A workflow that helps a junior author and burdens a senior
+author has a different business case from one with a uniform effect. Report
+document genre, author experience, reader role, and assistance condition with
+each estimate.
+
+The feasibility report should include a precision table before data collection:
+
+\begin{table}[H]
+\centering
+\small
+\begin{tabularx}{\textwidth}{@{}p{0.24\textwidth}p{0.19\textwidth}L@{}}
+\toprule
+Quantity & Planning value & Why it is recorded \\
+\midrule
+Documents & At least one complete document in each selected genre slice &
+Prevents a single friendly case from defining the product \\
+Readers per version & Two or more independent readers where feasible &
+Separates reader disagreement from document effect \\
+Protected objects & A mixture of equations, numbers, citations, tables, and
+qualifications & Tests the safety boundary rather than prose alone \\
+Time budget & Declared before showing the document & Makes completion comparable
+across versions \\
+\bottomrule
+\end{tabularx}
+\caption{The feasibility sample is designed to expose variance and failure
+modes before a larger effect study is priced.}
+\label{tab:eval-precision-plan}
+\end{table}
+
+\section{Agreement and adjudication}
+\label{sec:eval-agreement}
+
+Reader judgments are not perfectly reproducible, and a product should not hide
+that fact behind a majority vote. For each question, retain the individual
+answer, the answer key, the reader's confidence, and any explanation. A second
+reader independently codes the open question. Disagreement is then adjudicated
+by an evaluation reviewer who did not write the diagnostic or edit the tested
+version. A domain reviewer may resolve a dispute about technical meaning, but
+does not see the workflow assignment until the coding is frozen.
+
+For finding labels, report agreement by category and prevalence, not just one
+overall percentage. A rare but consequential meaning failure can disappear in
+an aggregate agreement statistic. For model judges, calibrate against the
+human-labeled pairs and measure position flips, length sensitivity, and
+self-preference. Zheng et al., Panickssery et al., and Dubois et al. show why
+these checks are necessary \citep{zheng2023judging,panickssery2024llm,
+dubois2024length}.
+
+The adjudicator does not rewrite the document during coding. That separation
+keeps the outcome independent of the proposed repair. If a reader asks for a
+change that the answer key did not anticipate, the request is preserved as a
+new qualitative category and the key is updated only for a subsequent round.
+This is how the instrument learns without moving its target after seeing the
+result.
+
+\section{Threats to interpretation}
+\label{sec:eval-threats}
+
+Several threats are predictable.
+
+\begin{description}[style=nextline,leftmargin=37mm,labelindent=0mm]
+\item[Novelty] A reader may spend more time on a new interface simply because
+it is unfamiliar. The protocol gives the incumbent arm an equivalent context
+and records the first-session effect.
+\item[Selection] Authors may submit documents that they believe are especially
+well suited to the tool. The feasibility report describes the intake process
+and keeps rejected documents in an eligibility log.
+\item[Contamination] A reader may have seen an earlier version or the source
+history. The reader form asks about prior exposure. The assigned encounter
+remains in the main analysis with a contamination flag; a pre-specified
+sensitivity analysis reports uncontaminated encounters separately.
+\item[Learning] In a crossover, the second reading benefits from the first.
+Order is randomized, and the primary feasibility interpretation treats the
+paired difference as descriptive when carryover is substantial.
+\item[Hawthorne effect] Authors may work more carefully because they know a
+study is observing them. The incumbent arm receives the same timing and
+documentation burden where possible.
+\item[Domain mismatch] A result in an economics note may not transfer to a
+mathematical appendix or an investment memorandum. Genre and reader role are
+reported rather than pooled silently.
+\end{description}
+
+The jagged-frontier evidence suggests an additional interaction: assistance
+may be helpful for a task the model can perform and harmful when the task
+requires knowledge it lacks \citep{dellacqua2026jagged}. The protocol therefore
+asks the author to identify which parts of the document are ordinary language
+editing and which parts require domain reasoning. A positive result confined
+to the first category is still useful, but it supports a narrower product.
+
+\section{From observations to an economic decision}
+\label{sec:eval-economic-decision}
+
+The economic model in Equation~\eqref{eq:value} needs observations from the
+comparative test: restricted reader time, author and operator time, the
+distribution of terminal decisions, protected-object incidents, document
+volume, and local loaded rates. Table
+\ref{tab:value-sensitivity} converts them into break-even questions without
+inventing a dollar forecast.
+
+The feasibility build also has learning value, but the proposal does not assign
+that value a decorative probability. The observable decision is simpler: did
+the build reveal enough about feasibility, burden, and variance to make the
+comparative study cheaper to price than before? The result memorandum lists
+which uncertainties narrowed and which remained untouched. That account lets
+the sponsor value the option using its own alternatives and budget.
+
+\section{Pre-specified decision rules}
+\label{sec:eval-rules}
+
+At the end of the feasibility run, the sponsor receives four results together:
+reader time and task completion, protected-object safety, author burden, and
+operating cost. The recommendation follows a simple set of conditions:
+
+\begin{enumerate}
+\item \textbf{Proceed to a comparative study} when the complete path is
+      usable, no unresolved protected-object change remains, the reader outcome
+      is measurable, and the precision calculation supports a priced next
+      sample.
+\item \textbf{Revise the product} when the reader outcome is promising but a
+      named parser, finding family, privacy assumption, or interface causes
+      avoidable burden.
+\item \textbf{Stop or redirect} when meaning correspondence cannot be made
+      reliable, the reader cannot recover the decision, or the operating cost
+      exceeds any plausible attention saving in the chosen beachhead.
+\end{enumerate}
+
+These rules are intentionally qualitative at the feasibility stage. The study
+should not manufacture a numerical pass threshold before the baseline and
+variance are known. Once the comparative sample is specified, the sponsor can
+set a minimum practically important time saving and a maximum tolerable
+meaning-error rate. The current document records that future decision rather
+than filling it with invented precision.
+
+\section{Reporting the result}
+\label{sec:eval-reporting}
+
+Write the result like a small empirical paper. State the population, eligibility,
+arms, reader context, order randomization, missing observations, protected-
+object rules, and analysis before showing estimates. Show individual document
+trajectories and reader questions alongside means. Keep a source result, a
+local calculation, and a project hypothesis distinct in ordinary prose.
+
+The forms can sit in the appendix. The main result should answer three
+questions in sequence: did the workflow change the reader's task, did it keep
+the document's meaning intact, and was the change worth the author's, reader's,
+and operator's time? A model score may support those answers, never replace
+them. That order keeps the proposal a decision document rather than a
+collection of attractive diagnostics.

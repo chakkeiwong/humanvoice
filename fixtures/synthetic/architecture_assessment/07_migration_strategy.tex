@@ -1,0 +1,81 @@
+\section{Migration Strategy and Timeline}
+
+The migration from monolith to microservices cannot occur as a single cutover. The risk is unacceptable, the verification burden is prohibitive, and the business cannot tolerate a maintenance window long enough to execute it. Instead, the strategy employs the strangler pattern~\cite{newman-monolith-to-microservices-2019}: incrementally extracting bounded contexts while keeping the system operational.
+
+\subsection{Strangler Pattern Application}
+
+The strangler pattern introduces a routing layer that directs traffic to either the monolith or extracted services based on capability. Initially all traffic routes to the monolith. As each service is extracted, tested, and verified, the router begins sending a fraction of production traffic to it. The fraction increases gradually: 1\%, 5\%, 25\%, 50\%, 100\% over a period of days to weeks depending on the service's criticality. Once a service carries 100\% of traffic for a sustained period, the corresponding monolith code is deleted.
+
+The router is itself a new component, but a simple one: an HTTP reverse proxy with route tables stored in Configuration Manager. Latency overhead is approximately 3ms at the median. The router provides the critical capability of instantaneous rollback: if a newly-extracted service exhibits unacceptable behavior, reverting traffic to the monolith requires changing a configuration value rather than redeploying code.
+
+The extraction order is determined by dependency analysis. Services with no inbound dependencies from other services are extracted first. Services with complex internal state or high-volume traffic are deferred to later phases when operational experience has accumulated. The ordering also considers business value: extracting Notification Dispatcher early provides rapid feedback on the architecture while affecting a non-critical path.
+
+Figure~\ref{fig:deployment-topology} illustrates the routing layer and the parallel execution of monolith and microservices during the transition period.
+
+\begin{figure}[htbp]
+\centering
+\rule{0.8\textwidth}{0.4\textwidth}
+\caption{Deployment topology during transition showing routing layer and parallel execution}
+\label{fig:deployment-topology}
+\end{figure}
+
+\subsection{Data Migration Approach}
+
+Each service extraction requires migrating its subset of the monolithic database to an independent data store. The approach is change-data-capture: the monolith database's write-ahead log is consumed by a replication process that writes corresponding records to the service's data store. This establishes eventual consistency: changes in the monolith propagate to the service with typical lag of 200ms.
+
+Once replication has been running long enough to transfer the full historical dataset (approximately 18 hours for the largest services), the service is ready for read traffic. It continues receiving writes via replication while serving reads independently. At cutover, the service begins accepting writes directly and replication stops.
+
+The 400TB transactional history cannot migrate in full to all twelve services; each service requires only its relevant subset. Ledger receives the complete transaction log (280TB); Balance Tracker receives only current balances and 90-day history (8TB); Reconciliation receives 18-month history (95TB); other services receive only active reference data. The aggregate storage requirement of 412TB is 3\% above the monolithic requirement, a acceptable cost for the decomposition.
+
+\subsection{Phase Decomposition}
+
+The 24-month program decomposes into four phases.
+
+\paragraph{Phase 1: Platform Preparation (Months 1--6)}
+Provision the service mesh infrastructure, observability stack, and message broker cluster. Deploy the routing layer in front of the monolith with 100\% pass-through to establish that the router itself does not introduce defects. Build deployment pipelines for twelve services. Conduct chaos engineering baseline measurements against the monolith to establish target availability and latency metrics.
+
+Deliverables: operational service mesh, deployed router, twelve empty service scaffolds with functional CI/CD, baseline chaos experiment results.
+
+\paragraph{Phase 2: First Wave (Months 7--12)}
+Extract Notification Dispatcher, Audit Logger, Configuration Manager, and Reporting Aggregator. These four services are selected for low criticality, low coupling, and tolerance of eventual consistency. Run each at 1\% traffic for two weeks, 10\% for two weeks, 50\% for one week, then 100\% indefinitely before beginning the next extraction.
+
+Deliverables: four services carrying production traffic, monolith code for those capabilities deleted, organizational learning about service operations.
+
+\paragraph{Phase 3: Core Services (Months 13--20)}
+Extract Authorization Engine, Balance Tracker, Ledger, Payment Gateway, and Fraud Detection. These five represent the critical path and the majority of throughput. Authorization Engine and Balance Tracker must be extracted together due to their synchronous dependency. Run each at 5\% traffic for three weeks given the elevated risk, then 25\% for two weeks, 75\% for one week, then 100\%.
+
+Deliverables: nine services in production, 85\% of monolith traffic migrated, measurable reduction in monolith resource consumption.
+
+\paragraph{Phase 4: Final Services and Verification (Months 21--24)}
+Extract Account Management, Settlement Coordinator, and Reconciliation. Conduct six-week full-system verification with synthetic load at 1.5× peak, chaos experiments injecting multiple concurrent failures, and regression testing of all cross-service transaction paths. Decommission the monolith.
+
+Deliverables: all twelve services operational, monolith decommissioned, complete documentation of operational runbooks, post-migration performance report.
+
+Figure~\ref{fig:migration-roadmap} presents the timeline with phase boundaries, service extraction ordering, and key milestones.
+
+\begin{figure}[htbp]
+\centering
+\rule{0.8\textwidth}{0.5\textwidth}
+\caption{24-month migration timeline with service extraction sequence}
+\label{fig:migration-roadmap}
+\end{figure}
+
+\subsection{Risk Mitigation Checkpoints}
+
+Four decision points are identified where accumulated evidence will determine whether to proceed, pause, or abort.
+
+\textbf{Month 6 checkpoint:} Verify that the platform infrastructure is stable and that deployment pipelines function correctly. Success criteria: ten consecutive deployments of service scaffolds with zero failed attempts, chaos experiments confirm router adds <5ms p99 latency, service mesh does not introduce memory leaks over 72-hour soak test.
+
+\textbf{Month 12 checkpoint:} Verify that first-wave services operate reliably and that the organization can support them. Success criteria: four extracted services achieve 99.95\% availability over 8-week trailing window, SRE team completes incident response for three services within MTTR objective, on-call burden is within sustainable limits (<2 pages per engineer per week).
+
+\textbf{Month 20 checkpoint:} Verify that core services sustain target performance under production load. Success criteria: Authorization Engine and Balance Tracker maintain p99 latency <200ms at 100,000 TPS, saga-based transactions complete within timeout budget 99.7\% of attempts, no data inconsistencies detected in reconciliation sweeps over 6-week window.
+
+\textbf{Month 23 checkpoint:} Verify full-system behavior before decommissioning the monolith. Success criteria: all twelve services sustain 1.5× peak load for 8 hours with <0.01\% error rate, chaos experiments with two concurrent failures (e.g., zone isolation + database primary failure) recover within 60 seconds, cross-service transaction audits find zero discrepancies.
+
+At each checkpoint, pause and remediate if criteria are not met. Abort and plan reversion if remediation does not resolve issues within one month.
+
+\subsection{Rollback Planning}
+
+Until the monolith is decommissioned at month 24, rollback is always possible. The router can revert traffic to the monolith within seconds for any service. Database replication runs bidirectionally during the transition: changes in service data stores replicate back to the monolith, ensuring that a rollback does not lose data written during the microservices period.
+
+After decommissioning, rollback is no longer feasible. This is the point of maximum commitment and the reason for the month-23 verification checkpoint. Proceeding to decommissioning without meeting checkpoint criteria would leave the organization without recourse if latent defects surface.
