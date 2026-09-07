@@ -78,6 +78,13 @@ def build_parser():
     assemble_parser.add_argument('--skip-blackline', action='store_true',
                                  help='Skip blacklined comparison (draft review only; release will block)')
 
+    # hv validate-blueprint
+    validate_bp_parser = subparsers.add_parser('validate-blueprint',
+                                                help='Check if blueprint subsections fit within token ceiling')
+    validate_bp_parser.add_argument('blueprint', type=Path, help='Blueprint JSON file')
+    validate_bp_parser.add_argument('-v', '--verbose', action='store_true',
+                                     help='Show all subsections, not just unsafe ones')
+
     # hv preflight
     preflight_parser = subparsers.add_parser('preflight', help='Run independent critics and structural checks')
     preflight_parser.add_argument('snapshot', type=Path, help='Snapshot directory from hv init')
@@ -127,6 +134,9 @@ def main():
     elif args.command == 'plan':
         from humanvoice.commands import plan_command
         return plan_command.run(args)
+    elif args.command == 'validate-blueprint':
+        from humanvoice.commands import validate_blueprint_command
+        return validate_blueprint_command.main(sys.argv[2:])
     elif args.command == 'draft':
         from humanvoice.commands import draft_command
         return draft_command.run(args)

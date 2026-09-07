@@ -219,12 +219,13 @@ Each subsection should target 800-1200 words to fit within per-unit output limit
 }}
 
 **Subsection sizing rule (critical for documents ≥5k words):**
-Every subsection must stay between 500-700 words, targeting 600 words for safety.
+Every subsection must stay between 400-600 words, targeting 500 words for safety.
 If a conceptual unit would naturally be longer, split it across multiple subsections.
-Example: a 3,000-word chapter becomes 5 subsections of ~600 words each, NOT three
+Example: a 3,000-word chapter becomes 6 subsections of ~500 words each, NOT three
 1,000-word subsections.
 
-Exceeding 700 words per subsection risks truncation during drafting.
+Exceeding 600 words per subsection risks hitting the 8192-token output ceiling during
+drafting (at 4 tokens/word × 1.2 variance, 600 words uses ~2880 tokens with safe margin).
 
 **Guidelines:**
 - Sections/subsections should sum to the word target (±10%)
