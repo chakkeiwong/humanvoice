@@ -70,6 +70,35 @@ def _output_ceiling_tokens(section: Dict[str, Any]) -> int:
     return max(MIN_OUTPUT_CEILING_TOKENS, int(allowed_words * WORDS_TO_TOKENS))
 
 
+def _extract_draft_metadata(latex: str) -> Dict[str, Any]:
+    """
+    Derive word count and citation keys from raw LaTeX, without a model call.
+
+    Issue 6's plan proposed a second inference call to extract this. That doubles
+    the cost per unit and introduces a failure branch ("what if the metadata call
+    fails?") for two values the code can compute exactly. A model asked to count
+    its own words would be estimating; this counts them.
+
+    Word counting matches assemble_command's rule (\\w+ over the whole unit) so a
+    draft's recorded count and its assembled count cannot disagree. That is a
+    deliberate choice of consistency over precision: both include LaTeX command
+    names, both are wrong in the same direction, and the budget check compares
+    like with like.
+    """
+    word_count = len(re.findall(r'\w+', latex))
+
+    # \cite, \citep, \citet, \parencite ... each taking one or more comma-separated
+    # keys, optionally with [pre][post] arguments before the key group.
+    citations: List[str] = []
+    for match in re.finditer(r'\\[a-zA-Z]*cite[a-zA-Z]*\s*(?:\[[^\]]*\]\s*)*\{([^}]*)\}', latex):
+        for key in match.group(1).split(','):
+            key = key.strip()
+            if key and key not in citations:
+                citations.append(key)
+
+    return {"word_count": word_count, "citations_needed": citations}
+
+
 def _load_budget_tracker() -> BudgetTracker:
     """
     Build a document-level budget tracker from the inference profile.
@@ -364,30 +393,26 @@ def _build_draft_prompt(
 
 **Output format:**
 
-Return JSON matching this schema:
-{{
-  "draft": {{
-    "latex": "LaTeX source code for this section",
-    "word_count": {word_budget},
-    "citations_needed": ["list", "of", "citation", "keys"]
-  }}
-}}
+Respond with raw LaTeX only. No JSON, no code fences, no markdown, no commentary
+before or after. Begin with \\section or \\subsection and end after your final
+paragraph.
 
-IMPORTANT: The response must always have a top-level "draft" key.
+If evidence is insufficient to fulfil the purpose, or contradicts the
+blueprint's premise, respond with exactly:
 
-If evidence is insufficient to fulfill the purpose, return:
-{{
-  "draft": {{
-    "latex": "",
-    "word_count": 0,
-    "abstention": "Explanation of what evidence is missing"
-  }}
-}}
+ABSTAIN: <one line explaining what evidence is missing or contradictory>
 
-If evidence contradicts the blueprint's premise, abstain with the contradiction explained.
+and nothing else.
 """
 
     return prompt
+
+
+# A draft that opens with this marker is an abstention, not prose. Raw-LaTeX
+# output has no JSON envelope to carry an abstention field, so the signal has to
+# live in the text and be unambiguous against real LaTeX -- no section starts
+# with a bare capitalised word followed by a colon.
+ABSTAIN_MARKER = "ABSTAIN:"
 
 
 def _check_register_violations(latex: str, brief: Dict[str, Any]) -> List[str]:
@@ -738,29 +763,21 @@ def run(args) -> int:
                 # overhead, so a tight conversion would truncate correct drafts.
                 ceiling = _output_ceiling_tokens(section)
 
-                # Issue 6: Two-call workflow
-                # Call 1: Generate raw LaTeX (no JSON, no escaping)
+                # Issue 6: the model returns raw LaTeX. The prompt asks for it
+                # directly (see _build_draft_prompt) rather than patching a JSON
+                # instruction after the fact.
                 print(f"Generating draft for '{section_title}' with {config.model_version} "
                       f"(ceiling {ceiling} tokens)...",
                       file=sys.stderr)
 
-                latex_prompt = prompt.replace(
-                    "Respond in JSON matching this schema:",
-                    "Respond with raw LaTeX only. No code fences, no JSON wrapper, no markdown."
-                ).replace(
-                    f'"Respond in JSON with: {{"draft": {{"latex": "...", "word_count": N, "citations_needed": [...], "abstention": null}}}}."',
-                    "Start with \\section or \\subsection and end after your last paragraph."
-                )
-
                 latex_response = adapter.invoke(
-                    prompt=latex_prompt,
+                    prompt=prompt,
                     system_prompt=system_prompt,
-                    schema=None,  # No schema for raw LaTeX
+                    schema=None,  # Raw LaTeX has no JSON shape to validate
                     purpose="draft_generation",
                     max_tokens=ceiling,
                 )
 
-                # Check for abstention or truncation
                 if latex_response.abstention:
                     raise ValueError(f"Model abstained: {latex_response.abstention}")
 
@@ -772,45 +789,29 @@ def run(args) -> int:
 
                 latex_content = latex_response.text.strip()
 
-                # Call 2: Extract metadata from the generated LaTeX
-                metadata_prompt = f"""Given this LaTeX draft, extract:
-1. Word count (prose only, exclude LaTeX commands)
-2. Citations needed (list of citation keys like \\cite{{key}})
-3. Whether the model abstained (null if completed normally)
+                # Raw output carries no abstention field, so the marker is the
+                # signal. Checked before anything else parses the text as prose.
+                if latex_content.startswith(ABSTAIN_MARKER):
+                    reason = latex_content[len(ABSTAIN_MARKER):].strip()
+                    raise ValueError(f"Model abstained: {reason or 'no reason given'}")
 
-LaTeX draft:
-```
-{latex_content}
-```
-
-Respond in JSON: {{"word_count": N, "citations_needed": [...], "abstention": null}}"""
-
-                metadata_response = adapter.invoke(
-                    prompt=metadata_prompt,
-                    system_prompt="You are a precise metadata extractor.",
-                    schema={"word_count": "integer", "citations_needed": ["string"], "abstention": "string | null"},
-                    purpose="metadata_extraction",
-                    max_tokens=500,  # Metadata is tiny
-                )
-
-                try:
-                    metadata = json.loads(metadata_response.text)
-                except json.JSONDecodeError:
-                    # Fallback: estimate word count
-                    metadata = {
-                        "word_count": len(re.findall(r'\w+', latex_content)),
-                        "citations_needed": [],
-                        "abstention": None
-                    }
+                # Metadata is computed locally, not asked for in a second call.
+                #
+                # The plan proposed a second inference call to extract word count
+                # and citations. That doubles cost and adds a failure branch for
+                # data the code can derive exactly: assemble_command already counts
+                # words this way, and citation keys are a regex over \cite. A model
+                # asked to count its own words would also be guessing.
+                metadata = _extract_draft_metadata(latex_content)
+                word_count = metadata["word_count"]
 
                 # Check register compliance
                 violations = _check_register_violations(latex_content, brief)
                 if violations:
                     raise ValueError(f"Register violations: {', '.join(violations)}")
 
-                # Validate non-empty
-                word_count = metadata.get("word_count", 0)
-                if word_count == 0 or not latex_content.strip():
+                # A zero-word draft is a missing unit, not a budget variance.
+                if word_count == 0 or not latex_content:
                     raise ValueError("Draft contains no prose (word_count=0)")
 
                 # Check word budget (±20% variance allowed)
@@ -819,13 +820,14 @@ Respond in JSON: {{"word_count": N, "citations_needed": [...], "abstention": nul
                     print(f"Warning: Word count {word_count} outside target range "
                           f"[{int(target*0.8)}, {int(target*1.2)}]", file=sys.stderr)
 
-                # Reconstruct draft structure for backward compatibility with _write_draft
+                # _write_draft still takes the nested shape; it is now built here
+                # from raw text rather than parsed out of the model's response.
                 draft = {
                     "draft": {
                         "latex": latex_content,
                         "word_count": word_count,
-                        "citations_needed": metadata.get("citations_needed", []),
-                        "abstention": metadata.get("abstention")
+                        "citations_needed": metadata["citations_needed"],
+                        "abstention": None,
                     }
                 }
 
@@ -842,8 +844,8 @@ Respond in JSON: {{"word_count": N, "citations_needed": [...], "abstention": nul
                         "temperature": config.temperature,
                         "api_endpoint": config.api_endpoint,
                         "request_id": latex_response.request_id,
-                        "input_tokens": latex_response.input_tokens + metadata_response.input_tokens,
-                        "output_tokens": latex_response.output_tokens + metadata_response.output_tokens,
+                        "input_tokens": latex_response.input_tokens,
+                        "output_tokens": latex_response.output_tokens,
                     }
                 )
 
@@ -873,9 +875,8 @@ Respond in JSON: {{"word_count": N, "citations_needed": [...], "abstention": nul
                 print(f"✓ Section {section_index} '{section_title}': {word_count} words, "
                       f"{len(citations)} citations needed")
                 print(f"  Output: {latex_path}")
-                total_input = latex_response.input_tokens + metadata_response.input_tokens
-                total_output = latex_response.output_tokens + metadata_response.output_tokens
-                print(f"  Tokens: {total_input} input / {total_output} output (2 calls)")
+                print(f"  Tokens: {latex_response.input_tokens} input / "
+                      f"{latex_response.output_tokens} output")
 
                 successes.append(section_index)
 
