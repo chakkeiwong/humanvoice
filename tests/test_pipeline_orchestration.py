@@ -150,6 +150,8 @@ class StubModel:
         self.repair_changes = repair_changes if repair_changes is not None else []
         self.purposes = []
         self.max_tokens_seen = []
+        # Issue 6: Track last LaTeX generated for metadata extraction
+        self.last_latex = None
 
     def __call__(
         self,
@@ -171,12 +173,26 @@ class StubModel:
                 "total_words": sum(s.get("word_budget", 100) for s in self.sections),
             }}
         elif purpose == "draft_generation":
+            # Issue 6: First call - return raw LaTeX, no JSON
             latex = self._draft_for(prompt)
-            payload = {"draft": {
-                "latex": latex,
-                "word_count": len(latex.split()),
+            self.last_latex = latex  # Save for metadata extraction
+            return ModelResponse(
+                text=latex,
+                prompt_hash="stub_hash",
+                model_version="claude-opus-5",
+                input_tokens=50,
+                output_tokens=100,
+                temperature=0.0,
+                truncated=False,
+            )
+        elif purpose == "metadata_extraction":
+            # Issue 6: Second call - extract metadata from last_latex
+            word_count = len(self.last_latex.split()) if self.last_latex else 0
+            payload = {
+                "word_count": word_count,
                 "citations_needed": [],
-            }}
+                "abstention": None
+            }
         elif purpose.startswith("repair"):
             payload = {"repair": {
                 "changes": self.repair_changes,

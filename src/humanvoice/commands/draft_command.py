@@ -738,49 +738,78 @@ def run(args) -> int:
                 # overhead, so a tight conversion would truncate correct drafts.
                 ceiling = _output_ceiling_tokens(section)
 
+                # Issue 6: Two-call workflow
+                # Call 1: Generate raw LaTeX (no JSON, no escaping)
                 print(f"Generating draft for '{section_title}' with {config.model_version} "
                       f"(ceiling {ceiling} tokens)...",
                       file=sys.stderr)
-                response = adapter.invoke(
-                    prompt=prompt,
+
+                latex_prompt = prompt.replace(
+                    "Respond in JSON matching this schema:",
+                    "Respond with raw LaTeX only. No code fences, no JSON wrapper, no markdown."
+                ).replace(
+                    f'"Respond in JSON with: {{"draft": {{"latex": "...", "word_count": N, "citations_needed": [...], "abstention": null}}}}."',
+                    "Start with \\section or \\subsection and end after your last paragraph."
+                )
+
+                latex_response = adapter.invoke(
+                    prompt=latex_prompt,
                     system_prompt=system_prompt,
-                    schema=DRAFT_SCHEMA,
+                    schema=None,  # No schema for raw LaTeX
                     purpose="draft_generation",
                     max_tokens=ceiling,
                 )
 
                 # Check for abstention or truncation
-                if response.abstention:
-                    raise ValueError(f"Model abstained: {response.abstention}")
+                if latex_response.abstention:
+                    raise ValueError(f"Model abstained: {latex_response.abstention}")
 
-                # Truncation means the output was incomplete -- treating it as success
-                # would write a partial unit into the snapshot and report convergence
-                # when the document is still broken. Rejecting it here forces the operator
-                # to diagnose (unit too large? ceiling misconfigured? prompt wasteful?)
-                # before proceeding.
-                if response.truncated:
+                if latex_response.truncated:
                     raise ValueError(
-                        f"Output truncated at {response.output_tokens} tokens "
+                        f"Output truncated at {latex_response.output_tokens} tokens "
                         f"(ceiling was {ceiling}). Unit may be too large for its budget."
                     )
 
-                # Parse and validate draft
+                latex_content = latex_response.text.strip()
+
+                # Call 2: Extract metadata from the generated LaTeX
+                metadata_prompt = f"""Given this LaTeX draft, extract:
+1. Word count (prose only, exclude LaTeX commands)
+2. Citations needed (list of citation keys like \\cite{{key}})
+3. Whether the model abstained (null if completed normally)
+
+LaTeX draft:
+```
+{latex_content}
+```
+
+Respond in JSON: {{"word_count": N, "citations_needed": [...], "abstention": null}}"""
+
+                metadata_response = adapter.invoke(
+                    prompt=metadata_prompt,
+                    system_prompt="You are a precise metadata extractor.",
+                    schema={"word_count": "integer", "citations_needed": ["string"], "abstention": "string | null"},
+                    purpose="metadata_extraction",
+                    max_tokens=500,  # Metadata is tiny
+                )
+
                 try:
-                    draft = json.loads(response.text)
-                except json.JSONDecodeError as e:
-                    raise ValueError(f"Model output is not valid JSON: {e}")
+                    metadata = json.loads(metadata_response.text)
+                except json.JSONDecodeError:
+                    # Fallback: estimate word count
+                    metadata = {
+                        "word_count": len(re.findall(r'\w+', latex_content)),
+                        "citations_needed": [],
+                        "abstention": None
+                    }
 
                 # Check register compliance
-                latex_content = draft["draft"].get("latex", "")
                 violations = _check_register_violations(latex_content, brief)
-
                 if violations:
                     raise ValueError(f"Register violations: {', '.join(violations)}")
 
-                # A zero-word draft is a missing unit, not a budget variance. Writing it
-                # starves downstream repair (which has no text to edit) and lets an empty
-                # section reach release.
-                word_count = draft["draft"].get("word_count", 0)
+                # Validate non-empty
+                word_count = metadata.get("word_count", 0)
                 if word_count == 0 or not latex_content.strip():
                     raise ValueError("Draft contains no prose (word_count=0)")
 
@@ -789,6 +818,16 @@ def run(args) -> int:
                 if word_count < target * 0.8 or word_count > target * 1.2:
                     print(f"Warning: Word count {word_count} outside target range "
                           f"[{int(target*0.8)}, {int(target*1.2)}]", file=sys.stderr)
+
+                # Reconstruct draft structure for backward compatibility with _write_draft
+                draft = {
+                    "draft": {
+                        "latex": latex_content,
+                        "word_count": word_count,
+                        "citations_needed": metadata.get("citations_needed", []),
+                        "abstention": metadata.get("abstention")
+                    }
+                }
 
                 # Write output
                 latex_path = _write_draft(
@@ -802,9 +841,9 @@ def run(args) -> int:
                         "prompt_template_hash": config.prompt_template_hash,
                         "temperature": config.temperature,
                         "api_endpoint": config.api_endpoint,
-                        "request_id": response.request_id,
-                        "input_tokens": response.input_tokens,
-                        "output_tokens": response.output_tokens,
+                        "request_id": latex_response.request_id,
+                        "input_tokens": latex_response.input_tokens + metadata_response.input_tokens,
+                        "output_tokens": latex_response.output_tokens + metadata_response.output_tokens,
                     }
                 )
 
@@ -834,7 +873,9 @@ def run(args) -> int:
                 print(f"✓ Section {section_index} '{section_title}': {word_count} words, "
                       f"{len(citations)} citations needed")
                 print(f"  Output: {latex_path}")
-                print(f"  Tokens: {response.input_tokens} input / {response.output_tokens} output")
+                total_input = latex_response.input_tokens + metadata_response.input_tokens
+                total_output = latex_response.output_tokens + metadata_response.output_tokens
+                print(f"  Tokens: {total_input} input / {total_output} output (2 calls)")
 
                 successes.append(section_index)
 

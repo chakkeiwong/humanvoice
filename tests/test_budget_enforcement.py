@@ -74,20 +74,41 @@ class TestCeilingEnforcement:
 
         The model must see the limit for it to matter. The 1.3 conversion is
         conservative (GPT tokenizer, English prose).
+
+        Issue 6: Two-call workflow means we verify the LaTeX generation call
+        (first call) uses the ceiling, and the metadata call (second) uses a
+        small fixed limit.
         """
         # Patch the invoke call to capture what max_tokens was actually sent
         captured = {}
+        call_count = [0]
 
         def mock_invoke(self, prompt, system_prompt, schema, purpose, max_tokens=None):
-            captured["max_tokens"] = max_tokens
-            return ModelResponse(
-                text='{"draft": {"latex": "\\\\section{Test}\\n\\nSome prose.\\n", "word_count": 50, "citations_needed": []}}',
-                prompt_hash="test_hash",
-                model_version="claude-opus-5",
-                input_tokens=100,
-                output_tokens=150,
-                temperature=0.0,
-            )
+            call_count[0] += 1
+
+            # First call: LaTeX generation with ceiling
+            if call_count[0] == 1:
+                captured["max_tokens"] = max_tokens
+                return ModelResponse(
+                    text="\\section{Test}\n\nSome prose content here.",
+                    prompt_hash="test_hash",
+                    model_version="claude-opus-5",
+                    input_tokens=100,
+                    output_tokens=200,
+                    temperature=0.0,
+                    truncated=False,
+                )
+            # Second call: metadata extraction with small fixed limit
+            else:
+                return ModelResponse(
+                    text='{"word_count": 50, "citations_needed": [], "abstention": null}',
+                    prompt_hash="test_hash",
+                    model_version="claude-opus-5",
+                    input_tokens=50,
+                    output_tokens=20,
+                    temperature=0.0,
+                    truncated=False,
+                )
 
         snapshot_dir = tmp_path / "snap"
         snapshot_dir.mkdir()
