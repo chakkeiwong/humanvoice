@@ -164,7 +164,9 @@ Generate a blueprint with sections covering:
 3. Which evidence is decisive for each claim
 4. What qualifications change the interpretation
 
-Return JSON matching this schema:
+**Output format:**
+
+For documents under 5,000 words, return flat sections:
 {{
   "blueprint": {{
     "sections": [
@@ -180,14 +182,55 @@ Return JSON matching this schema:
     ],
     "total_words": {max_words}
   }}
+}}
+
+For documents 5,000+ words, organize as chapters with subsections:
+{{
+  "blueprint": {{
+    "chapters": [
+      {{
+        "title": "Chapter 1: Problem Statement",
+        "purpose": "Establish the decision context",
+        "subsections": [
+          {{
+            "title": "Background",
+            "purpose": "Contextual foundation",
+            "evidence_needed": ["source/intro.tex"],
+            "word_budget": 800,
+            "source_file": "source/intro.tex",
+            "source_start_line": 1,
+            "source_end_line": 50
+          }},
+          {{
+            "title": "Key challenges",
+            "purpose": "State the core problem",
+            "evidence_needed": ["source/intro.tex"],
+            "word_budget": 900,
+            "source_file": "source/intro.tex",
+            "source_start_line": 51,
+            "source_end_line": 120
+          }}
+        ]
+      }}
+    ],
+    "total_words": {max_words}
   }}
 }}
 
-The sections should:
-- Sum to the word target (±10%)
+**Subsection sizing rule:**
+Each subsection should target 800-1200 words. If a chapter would naturally be
+longer than 1200 words, divide it into multiple subsections rather than one
+large section. This ensures every unit can be drafted in a single model call
+without truncation.
+
+Example: a 3,000-word chapter becomes 3 subsections of ~1,000 words each, not
+one 3,000-word section.
+
+**Guidelines:**
+- Sections/subsections should sum to the word target (±10%)
 - Map evidence to specific claims
 - Build from problem → mechanism → evidence → qualifications
-- Avoid protected objects in section titles (they appear in content)
+- Avoid protected objects in titles (they appear in content)
 
 **Critical constraint on evidence_needed:**
 Every entry in "evidence_needed" MUST be copied verbatim from the

@@ -437,6 +437,7 @@ PLAN_SCHEMA = {
         "blueprint": {
             "type": "object",
             "properties": {
+                # Legacy format: flat sections array
                 "sections": {
                     "type": "array",
                     "items": {
@@ -453,10 +454,37 @@ PLAN_SCHEMA = {
                         "required": ["title", "purpose"]
                     }
                 },
+                # New format: chapters with subsections
+                "chapters": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "title": {"type": "string"},
+                            "purpose": {"type": "string"},
+                            "subsections": {
+                                "type": "array",
+                                "items": {
+                                    "type": "object",
+                                    "properties": {
+                                        "title": {"type": "string"},
+                                        "purpose": {"type": "string"},
+                                        "evidence_needed": {"type": "array", "items": {"type": "string"}},
+                                        "word_budget": {"type": "number"},
+                                        "source_file": {"type": "string"},
+                                        "source_start_line": {"type": "integer", "minimum": 1},
+                                        "source_end_line": {"type": "integer", "minimum": 1}
+                                    },
+                                    "required": ["title", "purpose"]
+                                }
+                            }
+                        },
+                        "required": ["title", "purpose", "subsections"]
+                    }
+                },
                 "total_words": {"type": "number"},
                 "abstention": {"type": "string"}
             },
-            "required": ["sections"],
             # Either provide total_words (normal case) or abstention (insufficient evidence)
             "anyOf": [
                 {"required": ["total_words"]},

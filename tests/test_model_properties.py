@@ -177,8 +177,9 @@ class TestSchemaConformance(PropertyTestCase):
             # Check required top-level structure
             if "blueprint" not in output:
                 return False, "Missing 'blueprint' key"
-            if "sections" not in output["blueprint"]:
-                return False, "Missing 'sections' in blueprint"
+            # Accept either sections (legacy) or chapters (new format)
+            if "sections" not in output["blueprint"] and "chapters" not in output["blueprint"]:
+                return False, "Missing 'sections' or 'chapters' in blueprint"
             if "total_words" not in output["blueprint"]:
                 return False, "Missing 'total_words' in blueprint"
             return True, "Valid plan structure"
