@@ -110,7 +110,7 @@ def _build_plan_prompt(
     reader = brief.get("reader", "expert technical reader")
     decision = brief.get("decision", "unspecified decision")
     genre = brief.get("genre", "technical document")
-    max_words = brief.get("max_words", 5000)
+    max_words = brief.get("max_words") or brief.get("target_word_count", 5000)
     known_vocab = brief.get("known_vocabulary", [])
     protected = brief.get("protected_objects", [])
 
@@ -184,7 +184,8 @@ For documents under 5,000 words, return flat sections:
   }}
 }}
 
-For documents 5,000+ words, organize as chapters with subsections:
+For documents of 5,000 words or more, organize as chapters with subsections.
+Each subsection should target 800-1200 words to fit within per-unit output limits:
 {{
   "blueprint": {{
     "chapters": [
@@ -217,14 +218,12 @@ For documents 5,000+ words, organize as chapters with subsections:
   }}
 }}
 
-**Subsection sizing rule:**
-Each subsection should target 800-1200 words. If a chapter would naturally be
-longer than 1200 words, divide it into multiple subsections rather than one
-large section. This ensures every unit can be drafted in a single model call
-without truncation.
+**Subsection sizing rule (critical for documents ≥5k words):**
+Every subsection must stay between 800-1200 words. If a conceptual unit would
+naturally be longer, split it across multiple subsections. Example: a 3,000-word
+chapter becomes 3 subsections of ~1,000 words each, NOT one 3,000-word section.
 
-Example: a 3,000-word chapter becomes 3 subsections of ~1,000 words each, not
-one 3,000-word section.
+Exceeding 1200 words per subsection causes truncation during drafting.
 
 **Guidelines:**
 - Sections/subsections should sum to the word target (±10%)
@@ -468,10 +467,21 @@ def run(args) -> int:
         )
 
         # Report success
-        num_sections = len(blueprint["blueprint"]["sections"])
+        if "sections" in blueprint["blueprint"]:
+            num_units = len(blueprint["blueprint"]["sections"])
+            unit_label = "sections"
+        elif "chapters" in blueprint["blueprint"]:
+            num_chapters = len(blueprint["blueprint"]["chapters"])
+            num_subsections = sum(len(ch["subsections"]) for ch in blueprint["blueprint"]["chapters"])
+            num_units = num_subsections
+            unit_label = f"chapters ({num_chapters} chapters, {num_subsections} subsections)"
+        else:
+            num_units = 0
+            unit_label = "units"
+
         total_words = blueprint["blueprint"].get("total_words", 0)
 
-        print(f"Blueprint generated: {num_sections} sections, {total_words} words")
+        print(f"Blueprint generated: {num_units} {unit_label}, {total_words} words")
         print(f"Output: {blueprint_path}")
         print(f"Tokens: {response.input_tokens} input / {response.output_tokens} output")
         print(f"Request ID: {response.request_id}")
