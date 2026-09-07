@@ -134,10 +134,10 @@ class TestCeilingEnforcement:
             draft_command.run(Args())
 
         # The ceiling is derived from THIS unit's budget, not the profile maximum:
-        # 500 words * 1.2 variance * 1.3 tokens/word = 780. Passing the profile
+        # 500 words * 1.2 variance * 1.5 tokens/word = 900. Passing the profile
         # maximum instead would let a 500-word section emit 2000 words and call it
         # a success, which is the budget drift this exists to prevent.
-        assert captured["max_tokens"] == 780
+        assert captured["max_tokens"] == 900
 
     def test_truncation_detected_when_output_equals_ceiling(self, tmp_path):
         """

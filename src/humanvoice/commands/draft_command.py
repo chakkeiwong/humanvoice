@@ -38,7 +38,7 @@ from humanvoice.protected_objects import ProtectedManifest
 # than plain prose: the ZLB run measured ~3.9 bytes per output token against a
 # typical ~4.5 for English text, and the JSON envelope adds its own overhead. A
 # tight conversion would truncate drafts that were the right length.
-WORDS_TO_TOKENS = 1.3
+WORDS_TO_TOKENS = 1.5
 
 # Floor for the per-unit ceiling. A blueprint that omits word_budget, or sets an
 # implausibly small one, must not produce a ceiling so low that every draft
