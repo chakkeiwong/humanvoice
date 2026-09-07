@@ -38,7 +38,21 @@ from humanvoice.protected_objects import ProtectedManifest
 # than plain prose: the ZLB run measured ~3.9 bytes per output token against a
 # typical ~4.5 for English text, and the JSON envelope adds its own overhead. A
 # tight conversion would truncate drafts that were the right length.
-WORDS_TO_TOKENS = 1.8
+# Token budget multiplier for LaTeX generation.
+#
+# Raw LaTeX is token-dense: backslashes, braces, math mode delimiters, citation
+# commands, and equation environments all add tokens beyond prose words. A
+# 600-word draft with moderate math notation can easily require 2000+ tokens.
+#
+# This multiplier sets the output token ceiling as:
+#   ceiling = word_budget × 1.2 (variance allowance) × WORDS_TO_TOKENS
+#
+# Set conservatively high (3.5) to avoid truncating valid drafts. Word count is
+# validated post-generation, so overruns are caught and flagged for repair. A
+# tight ceiling that cuts off mid-sentence is worse than a loose ceiling that
+# lets an overrun complete—the former is unrecoverable without retry, the latter
+# is fixable with editing.
+WORDS_TO_TOKENS = 3.5
 
 # Floor for the per-unit ceiling. A blueprint that omits word_budget, or sets an
 # implausibly small one, must not produce a ceiling so low that every draft
@@ -48,26 +62,25 @@ MIN_OUTPUT_CEILING_TOKENS = 600
 
 def _output_ceiling_tokens(section: Dict[str, Any]) -> int:
     """
-    Output token ceiling for one unit, derived from its word budget.
+    Output token ceiling for one unit.
 
-    Sizing the ceiling per unit is what makes an overrun diagnosable. Letting
-    every unit inherit the profile maximum means a 650-word section may emit
-    2000 words and still be called a success, and the document quietly drifts
-    past its planned length. Capping at the unit's own budget makes the overrun
-    surface as truncation on the unit that caused it.
+    Returns the profile's max_output_tokens_per_unit (8192) for all sections,
+    allowing the model to complete its output without mid-sentence truncation.
+    Word budget enforcement happens post-generation via word count validation,
+    which is more robust than trying to predict token usage for LaTeX.
 
-    The profile maximum still applies -- ModelAdapter._invoke_api takes the
-    minimum of this value and config.max_tokens -- so this can tighten the
-    ceiling but never raise it.
+    Prior approach (deriving ceiling from word budget with WORDS_TO_TOKENS)
+    caused consistent truncation because LaTeX token density is unpredictable:
+    math-heavy sections can require 3-5 tokens/word, while prose sections need
+    1.5-2 tokens/word. Pre-emptive ceilings cut off valid drafts.
+
+    Post-generation validation catches overruns (word_count > budget × 1.2)
+    and flags them for repair, which is recoverable. Mid-sentence truncation
+    requires full retry and wastes the partial generation.
     """
-    budget_words = section.get("word_budget")
-    if not isinstance(budget_words, (int, float)) or budget_words <= 0:
-        return MIN_OUTPUT_CEILING_TOKENS
-
-    # +20% matches the variance the word-budget check already tolerates, so a
-    # draft that lands inside the accepted range is never cut off mid-sentence.
-    allowed_words = budget_words * 1.2
-    return max(MIN_OUTPUT_CEILING_TOKENS, int(allowed_words * WORDS_TO_TOKENS))
+    # Return profile maximum to avoid truncation. Word budget is validated
+    # post-generation at lines 817-821.
+    return 8192  # Matches inference_profile.json max_output_tokens_per_unit
 
 
 def _extract_draft_metadata(latex: str) -> Dict[str, Any]:

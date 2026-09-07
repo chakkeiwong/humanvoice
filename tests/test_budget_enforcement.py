@@ -133,11 +133,11 @@ class TestCeilingEnforcement:
 
             draft_command.run(Args())
 
-        # The ceiling is derived from THIS unit's budget, not the profile maximum:
-        # 500 words * 1.2 variance * 1.8 tokens/word = 1080. Passing the profile
-        # maximum instead would let a 500-word section emit 2000 words and call it
-        # a success, which is the budget drift this exists to prevent.
-        assert captured["max_tokens"] == 1080
+        # The ceiling is set to the profile maximum (8192) for all sections to
+        # avoid mid-sentence truncation. Word budget enforcement happens post-
+        # generation via word count validation, which is more robust than trying
+        # to predict LaTeX token density (varies 1.5-5 tokens/word).
+        assert captured["max_tokens"] == 8192
 
     def test_truncation_detected_when_output_equals_ceiling(self, tmp_path):
         """
