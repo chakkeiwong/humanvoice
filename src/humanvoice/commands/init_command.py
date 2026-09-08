@@ -117,10 +117,11 @@ def run(args) -> int:
         else:
             snapshot_source = output / "source"
             shutil.copytree(source, snapshot_source, symlinks=False)
-            # Hash all .tex files
+            # Hash all .tex and .bib files (.bib required for bibliography compilation)
             source_files = []
-            for tex_file in snapshot_source.rglob("*.tex"):
-                source_files.append(str(tex_file.relative_to(output)))
+            for pattern in ["*.tex", "*.bib"]:
+                for file in snapshot_source.rglob(pattern):
+                    source_files.append(str(file.relative_to(output)))
             # Compute aggregate hash
             source_hash = sha256()
             for file_path in sorted(source_files):

@@ -189,15 +189,36 @@ def _extract_preamble(source_content: str) -> str:
 
 def _extract_postamble(source_content: str) -> str:
     """
-    Extract LaTeX postamble (everything after \\end{document}).
+    Extract LaTeX postamble (bibliography commands + everything after \\end{document}).
 
-    Usually empty or contains only comments.
+    Bibliography commands (\\bibliographystyle, \\bibliography{}) often appear
+    before \\end{document} but must be preserved in the assembled output.
     """
     match = re.search(r'\\end\{document\}', source_content)
-    if match:
-        return source_content[match.end():].strip()
+    if not match:
+        return ""
 
-    return ""
+    # Extract content after \end{document}
+    post_end = source_content[match.end():].strip()
+
+    # Extract bibliography commands before \end{document}
+    # These are typically the last non-whitespace lines before \end{document}
+    before_end = source_content[:match.start()]
+
+    # Look for bibliography commands in the last ~10 lines before \end{document}
+    lines_before = before_end.rstrip().split('\n')[-10:]
+    bib_commands = []
+    for line in lines_before:
+        stripped = line.strip()
+        if stripped.startswith('\\bibliographystyle') or stripped.startswith('\\bibliography{'):
+            bib_commands.append(line)
+
+    if bib_commands:
+        # Return bibliography commands + post-\end{document} content
+        bib_block = '\n'.join(bib_commands)
+        return f"{bib_block}\n{post_end}" if post_end else bib_block
+
+    return post_end
 
 
 def _assemble_document(
@@ -210,7 +231,7 @@ def _assemble_document(
 
     sections: List of dicts with 'content', 'title', 'index'
     preamble: LaTeX preamble
-    postamble: LaTeX postamble (usually empty)
+    postamble: Bibliography commands and content after \\end{document}
 
     Returns complete LaTeX document as string.
     """
@@ -225,11 +246,14 @@ def _assemble_document(
 
     body = '\n\n'.join(body_parts)
 
-    # Assemble complete document
-    document = f"{preamble}\n\\begin{{document}}\n\n{body}\n\n\\end{{document}}"
+    # Assemble: preamble + body + postamble (bibliography commands) + \end{document}
+    # Postamble may contain bibliography commands that must come before \end{document}
+    document = f"{preamble}\n\\begin{{document}}\n\n{body}\n\n"
 
     if postamble:
-        document += f"\n{postamble}"
+        document += f"{postamble}\n\n"
+
+    document += "\\end{document}"
 
     return document
 

@@ -45,30 +45,64 @@ def _load_brief(brief_path: Path) -> Dict[str, Any]:
 
 def _extract_section_structure(source_text: str, source_file: str) -> List[Dict[str, Any]]:
     """
-    Parse \\section{...} from LaTeX source, compute line ranges.
+    Parse \\section{...} and \\subsection{...} from LaTeX source, compute line ranges.
 
-    Returns list of dicts with keys: title, start_line, end_line, source_file.
+    Returns list of dicts with keys: title, start_line, end_line, source_file, subsections.
     If the source has no \\section{} blocks, returns a single implicit section
     covering the entire file.
     """
     lines = source_text.split('\n')
     sections = []
+    subsections = []
 
+    # Extract sections and subsections
     for i, line in enumerate(lines, start=1):
-        m = re.search(r'\\section\{([^}]+)\}', line)
-        if m:
+        # Check for section
+        m_sec = re.search(r'\\section\{([^}]+)\}', line)
+        if m_sec:
             sections.append({
-                'title': m.group(1).strip(),
+                'title': m_sec.group(1).strip(),
                 'start_line': i,
                 'source_file': source_file,
+                'subsections': []
+            })
+            continue
+
+        # Check for subsection
+        m_sub = re.search(r'\\subsection\{([^}]+)\}', line)
+        if m_sub:
+            subsections.append({
+                'title': m_sub.group(1).strip(),
+                'start_line': i,
             })
 
-    # Compute end_line: next section's start - 1, or EOF
+    # Compute section end_line
     for idx, sec in enumerate(sections):
         if idx + 1 < len(sections):
             sec['end_line'] = sections[idx + 1]['start_line'] - 1
         else:
             sec['end_line'] = len(lines)
+
+    # Assign subsections to their parent sections and compute subsection end_line
+    for sub in subsections:
+        # Find parent section
+        parent = None
+        for sec in sections:
+            if sec['start_line'] <= sub['start_line'] <= sec['end_line']:
+                parent = sec
+                break
+
+        if parent:
+            parent['subsections'].append(sub)
+
+    # Compute subsection end_line within each section
+    for sec in sections:
+        subs = sec['subsections']
+        for idx, sub in enumerate(subs):
+            if idx + 1 < len(subs):
+                sub['end_line'] = subs[idx + 1]['start_line'] - 1
+            else:
+                sub['end_line'] = sec['end_line']
 
     # Front matter (abstract, preamble equations/citations) sits before the first
     # \section{}. Without this, those protected objects belong to no section, are
@@ -85,6 +119,7 @@ def _extract_section_structure(source_text: str, source_file: str) -> List[Dict[
             'start_line': 1,
             'end_line': len(lines),
             'source_file': source_file,
+            'subsections': []
         })
 
     return sections
@@ -133,13 +168,26 @@ def _build_plan_prompt(
             "(equations, labels, citations) can be correctly routed. Include \"source_file\",\n"
             "\"source_start_line\", and \"source_end_line\" fields in each blueprint section to\n"
             "specify which source lines it draws from.\n\n"
+            "IMPORTANT: When the source has rich subsection structure (many subsections within a section),\n"
+            "your blueprint should create roughly one blueprint subsection per source subsection to avoid\n"
+            "massive content loss. Do not compress 10+ source subsections into 1-2 blueprint subsections.\n\n"
         )
         current_file = None
         for sec in all_sections:
             if sec['source_file'] != current_file:
                 current_file = sec['source_file']
                 structure_text += f"File: {current_file}\n"
-            structure_text += f"  - \"{sec['title']}\" (lines {sec['start_line']}-{sec['end_line']})\n"
+
+            # Show section
+            structure_text += f"  - \"{sec['title']}\" (lines {sec['start_line']}-{sec['end_line']})"
+
+            # Show subsection count if any
+            if sec.get('subsections'):
+                structure_text += f" — contains {len(sec['subsections'])} subsections:\n"
+                for sub in sec['subsections']:
+                    structure_text += f"      • \"{sub['title']}\" (lines {sub['start_line']}-{sub['end_line']})\n"
+            else:
+                structure_text += "\n"
         structure_text += "\n"
 
     prompt = f"""Generate a narrative blueprint for a {genre}.
@@ -226,6 +274,20 @@ Example: a 3,000-word chapter becomes 6 subsections of ~500 words each, NOT thre
 
 Exceeding 600 words per subsection risks hitting the 8192-token output ceiling during
 drafting (at 4 tokens/word × 1.2 variance, 600 words uses ~2880 tokens with safe margin).
+
+**Source structure preservation (CRITICAL to avoid content loss):**
+When the source contains rich subsection structure (5+ subsections in a section), you MUST
+create roughly one blueprint subsection per source subsection. Do NOT compress many source
+subsections into one or two blueprint subsections—this causes massive content loss during drafting.
+
+Example BAD plan: Source has 18 subsections in lines 533-725, blueprint creates 2 subsections.
+Example GOOD plan: Source has 18 subsections, blueprint creates 15-20 subsections (one per source subsection or small groups).
+
+When mapping source subsections to blueprint subsections:
+- Each blueprint subsection should cover 1-3 source subsections maximum
+- Preserve source subsection boundaries in source_start_line/source_end_line
+- Use source subsection titles as guidance for blueprint subsection titles
+- Allocate 400-600 words per blueprint subsection
 
 **Guidelines:**
 - Sections/subsections should sum to the word target (±10%)
