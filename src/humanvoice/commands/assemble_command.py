@@ -266,7 +266,10 @@ def _extract_chapters(latex_doc: str) -> List[str]:
     Text before the first heading (front matter, preamble prose) is returned as
     its own part rather than discarded, so it still participates in the diff.
     """
-    pattern = r'(\\(?:chapter|section)\{)'
+    # Match complete section/chapter commands including their titles
+    # This prevents latexdiff from seeing title changes as in-command edits,
+    # which breaks LaTeX syntax (\section{old%DIFDELCMD...} leaves unclosed braces)
+    pattern = r'(\\(?:chapter|section)\{[^}]*\})'
     parts = re.split(pattern, latex_doc)
 
     if len(parts) == 1:
@@ -358,8 +361,16 @@ def _generate_blacklined_diff(
             label = _chapter_label(original_part or assembled_part, index)
 
             try:
+                # --exclude-textcmd tells latexdiff to treat section/chapter as atomic units
+                # When a section title changes, it's marked as deleted+added rather than
+                # diffed internally, preventing malformed LaTeX like \section{\DIFdel{...}
                 result = subprocess.run(
-                    ['latexdiff', str(original_chunk), str(assembled_chunk)],
+                    [
+                        'latexdiff',
+                        '--exclude-textcmd=section,chapter,subsection',
+                        str(original_chunk),
+                        str(assembled_chunk)
+                    ],
                     capture_output=True,
                     timeout=DIFF_TIMEOUT_PER_CHAPTER_SECONDS,
                     text=True,
