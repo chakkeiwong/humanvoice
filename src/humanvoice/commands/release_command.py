@@ -567,6 +567,40 @@ def check_protected_manifest_correspondence(snapshot_dir: Path) -> Optional[dict
                 "retention_vs_source": retention_vs_source,
             }
 
+        # Gate 2: Check source→assembly retention (catches drafting losses)
+        # This gate was missing, allowing 24% content loss to pass in ZLB test case
+        SOURCE_RETENTION_THRESHOLD = 0.95
+        if retention_vs_source < SOURCE_RETENTION_THRESHOLD:
+            # Load correspondence details to report what was lost
+            corr_manifest = assembly_data.get("correspondence_manifest")
+            missing_count = 0
+            total_source = 0
+
+            if corr_manifest:
+                corr_path = snapshot_dir / ".humanvoice" / "revisions" / "assembled" / Path(corr_manifest).name
+                if corr_path.exists():
+                    try:
+                        corr_data = json.loads(corr_path.read_text())
+                        corr_to_source = corr_data.get("correspondence_to_source", {})
+                        missing_count = len(corr_to_source.get("missing", []))
+                        total_source = len(corr_to_source.get("preserved", [])) + missing_count
+                    except Exception:
+                        pass  # Use retention ratio alone if can't load details
+
+            return {
+                "reason": "source_correspondence",
+                "detail": (
+                    f"Source retention {retention_vs_source:.1%} below {SOURCE_RETENTION_THRESHOLD:.0%} threshold. "
+                    f"{missing_count}/{total_source} objects lost during drafting. "
+                    "This indicates planning created subsections too coarse for the source structure, "
+                    "forcing the drafter to compress content heavily."
+                ),
+                "retention_vs_source": retention_vs_source,
+                "retention_vs_drafts": retention_vs_drafts,
+                "missing_count": missing_count,
+                "total_source": total_source,
+            }
+
     # All checks pass
     return None
 
