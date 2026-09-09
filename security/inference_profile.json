@@ -50,9 +50,9 @@
   },
   "budget": {
     "max_input_tokens_per_unit": 12000,
-    "max_output_tokens_per_unit": 8192,
+    "max_output_tokens_per_unit": 16384,
     "max_document_input_tokens": 250000,
-    "max_document_output_tokens": 50000,
+    "max_document_output_tokens": 100000,
     "timeout_seconds": 300,
     "on_exceeded": "fail explicitly with exit code 2 and record the limit; never continue unbounded"
   },

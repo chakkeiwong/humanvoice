@@ -133,11 +133,12 @@ class TestCeilingEnforcement:
 
             draft_command.run(Args())
 
-        # The ceiling is set to the profile maximum (8192) for all sections to
+        # The ceiling is set to the profile maximum (16384) for all sections to
         # avoid mid-sentence truncation. Word budget enforcement happens post-
         # generation via word count validation, which is more robust than trying
         # to predict LaTeX token density (varies 1.5-5 tokens/word).
-        assert captured["max_tokens"] == 8192
+        # Increased from 8192 to 16384 (2026-09-09) after ZLB test.
+        assert captured["max_tokens"] == 16384
 
     def test_truncation_detected_when_output_equals_ceiling(self, tmp_path):
         """
@@ -315,14 +316,14 @@ class TestDocumentBudgetGate:
 
     def test_blocks_on_output_and_input_overrun(self, tmp_path):
         snapshot_dir = self._runtime_manifest(
-            tmp_path / "snapshot", "s1", "inference", 300000, 60000
+            tmp_path / "snapshot", "s1", "inference", 300000, 120000
         )
 
         block = check_document_budget(snapshot_dir)
 
         assert block is not None
         assert block["reason"] == "document_budget_exceeded"
-        assert "output 60,000/50,000" in block["detail"]
+        assert "output 120,000/100,000" in block["detail"]
         assert "input 300,000/250,000" in block["detail"]
 
     def test_passes_under_limit(self, tmp_path):
@@ -339,13 +340,13 @@ class TestDocumentBudgetGate:
         """
         snapshot_dir = tmp_path / "snapshot"
         for i in range(3):
-            self._runtime_manifest(snapshot_dir, f"s{i}", "inference", 5000, 20000)
+            self._runtime_manifest(snapshot_dir, f"s{i}", "inference", 5000, 40000)
 
         block = check_document_budget(snapshot_dir)
 
         assert block is not None
         assert block["units_counted"] == 3
-        assert block["total_output_tokens"] == 60000
+        assert block["total_output_tokens"] == 120000
 
     def test_ignores_mock_runs(self, tmp_path):
         """Mock mode transmits nothing, so it spends nothing."""

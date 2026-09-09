@@ -64,7 +64,7 @@ def _output_ceiling_tokens(section: Dict[str, Any]) -> int:
     """
     Output token ceiling for one unit.
 
-    Returns the profile's max_output_tokens_per_unit (8192) for all sections,
+    Returns the profile's max_output_tokens_per_unit (16384) for all sections,
     allowing the model to complete its output without mid-sentence truncation.
     Word budget enforcement happens post-generation via word count validation,
     which is more robust than trying to predict token usage for LaTeX.
@@ -77,10 +77,13 @@ def _output_ceiling_tokens(section: Dict[str, Any]) -> int:
     Post-generation validation catches overruns (word_count > budget × 1.2)
     and flags them for repair, which is recoverable. Mid-sentence truncation
     requires full retry and wastes the partial generation.
+
+    Increased from 8192 to 16384 (2026-09-09) after ZLB test revealed large
+    subsections exceeding the original ceiling even with fine-grained planning.
     """
     # Return profile maximum to avoid truncation. Word budget is validated
     # post-generation at lines 817-821.
-    return 8192  # Matches inference_profile.json max_output_tokens_per_unit
+    return 16384  # Matches inference_profile.json max_output_tokens_per_unit
 
 
 def _extract_draft_metadata(latex: str) -> Dict[str, Any]:
