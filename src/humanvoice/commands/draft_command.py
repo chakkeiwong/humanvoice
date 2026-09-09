@@ -401,11 +401,34 @@ def _build_draft_prompt(
 
     prompt += """
 **Requirements:**
-- Write in third-person technical register (no "I", "we", "our" unless quoting evidence)
 - Preserve all protected objects exactly as shown (equations, labels, citations, displaymath, tables)
 - Stay within word budget (±20%)
 - Use LaTeX commands appropriate for the reader's vocabulary
 - If evidence is insufficient or contradictory, abstain with explanation
+
+**Register Requirements (CRITICAL):**
+You MUST write in third-person technical register. Never use first-person pronouns.
+
+Examples of INCORRECT register (DO NOT use these patterns):
+✗ "We survey the HMC methods..."
+✗ "We derive the kernel..."
+✗ "We show that..."
+✗ "Our approach demonstrates..."
+✗ "In this paper, we present..."
+
+Examples of CORRECT register (USE these patterns):
+✓ "This survey covers the HMC methods..."
+✓ "The kernel is derived as follows..."
+✓ "The analysis shows that..."
+✓ "This approach demonstrates..."
+✓ "This paper presents..."
+
+Alternative correct constructions:
+- Use passive voice: "It is shown that..." instead of "We show that..."
+- Use neutral subjects: "The paper demonstrates..." instead of "We demonstrate..."
+- Use impersonal constructions: "The following section derives..." instead of "We derive..."
+
+First-person pronouns are ONLY allowed when directly quoting evidence text verbatim.
 
 **Output format:**
 
@@ -753,10 +776,12 @@ def run(args) -> int:
                 # Build prompt
                 prompt = _build_draft_prompt(section, brief, evidence_content, protected_objects)
                 system_prompt = (
-                    "You are a technical writing assistant. Generate LaTeX prose for the "
-                    "specified section using the evidence provided. Respond with valid JSON "
-                    "matching the requested schema. Maintain third-person technical register "
-                    "unless evidence itself is first-person data."
+                    "You are a technical writing assistant generating LaTeX prose. "
+                    "CRITICAL CONSTRAINT: Always write in third-person technical register. "
+                    "Never use first-person pronouns (I, we, our, my, me, us) in your generated prose. "
+                    "Generate LaTeX for the specified section using the evidence provided. "
+                    "Respond with raw LaTeX only. "
+                    "Third-person register applies unless evidence itself is first-person data being quoted."
                 )
 
                 adapter = ModelAdapter(

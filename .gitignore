@@ -5,3 +5,4 @@
 *.blg
 *.toc
 __pycache__/
+validation_results/
