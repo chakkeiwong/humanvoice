@@ -75,6 +75,34 @@ def _safe_title(section_title: str) -> str:
     return safe.replace(" ", "_")[:50]
 
 
+def _flatten_blueprint_sections(blueprint: Dict[str, Any]) -> List[Dict[str, Any]]:
+    """
+    Extract sections from blueprint, handling both flat sections and chapters with subsections.
+
+    Blueprints use either:
+    - "sections": flat list for documents < 5000 words
+    - "chapters": list of chapters, each with subsections, for documents >= 5000 words
+
+    This flattens chapters.subsections into a flat list compatible with draft and assembly.
+    """
+    bp = blueprint.get("blueprint", {})
+
+    if "sections" in bp:
+        return bp["sections"]
+    elif "chapters" in bp:
+        sections = []
+        for chapter_idx, chapter in enumerate(bp["chapters"]):
+            for subsection_idx, subsection in enumerate(chapter.get("subsections", [])):
+                # Preserve chapter context for potential use by drafting/assembly
+                subsection["chapter_index"] = chapter_idx
+                subsection["chapter_title"] = chapter.get("title", f"Chapter {chapter_idx}")
+                subsection["subsection_index"] = subsection_idx
+                sections.append(subsection)
+        return sections
+    else:
+        return []
+
+
 class PipelineState:
     """
     Track pipeline execution state across stages.
@@ -191,7 +219,7 @@ def _run_plan_stage(state: PipelineState, mock: bool = False) -> int:
 
     state.blueprint_path = blueprint_path
     state.blueprint = json.loads(blueprint_path.read_text())
-    sections = state.blueprint.get("blueprint", {}).get("sections", [])
+    sections = _flatten_blueprint_sections(state.blueprint)
 
     # A zero-section blueprint is not a plan. Proceeding would assemble an empty
     # document and hand it to the release gate as if it were a document, which is
@@ -244,7 +272,8 @@ def _run_draft_section(
 
     # draft_command writes draft_<safe_title>.tex directly into the run
     # directory it was given, not into a drafted/ subdirectory.
-    section_title = state.blueprint["blueprint"]["sections"][section_index].get(
+    sections = _flatten_blueprint_sections(state.blueprint)
+    section_title = sections[section_index].get(
         "title", f"section_{section_index}"
     )
     draft_path = state.run_dir / f"draft_{_safe_title(section_title)}.tex"
@@ -592,7 +621,7 @@ def run(args) -> int:
         # rather than aborting — assembly will record gaps, and those gaps will
         # fail the release gate, giving the user the partial document plus a
         # precise list of what needs manual retry.
-        sections = state.blueprint["blueprint"]["sections"]
+        sections = _flatten_blueprint_sections(state.blueprint)
         print(f"\n=== STAGE 3: DRAFT ({len(sections)} sections) ===", file=sys.stderr)
         draft_failures = []
         for section_idx in range(len(sections)):
