@@ -378,11 +378,16 @@ def _build_draft_prompt(
     reader = brief.get("reader", "expert technical reader")
     known_vocab = brief.get("known_vocabulary", [])
 
+    # Calculate target guidance and absolute guardrail
+    target_guidance = word_budget
+    absolute_maximum = min(word_budget * 4, 2000)
+
     prompt = f"""Generate a LaTeX draft for this section of a technical document.
 
 **Section title:** {title}
 **Purpose:** {purpose}
-**Word budget:** {word_budget} (±20% acceptable)
+**Target length:** {target_guidance} words (guidance, not a hard limit)
+**Maximum allowed:** {absolute_maximum} words (guardrail only - do not target this)
 **Reader:** {reader}
 **Reader knows:** {', '.join(known_vocab[:10]) if known_vocab else 'general technical vocabulary'}
 
@@ -399,10 +404,31 @@ def _build_draft_prompt(
     else:
         prompt += "None in this section.\n"
 
-    prompt += """
+    prompt += f"""
+**Length Guidelines:**
+Your primary goal is to write a complete, clear explanation that preserves all important
+content from the source material.
+
+Target length: {target_guidance} words
+- This is GUIDANCE for reasonable brevity
+- If explaining well requires {int(target_guidance * 1.3)} words, use them
+- If you can be complete in {int(target_guidance * 0.8)} words, that's fine too
+
+Absolute maximum: {absolute_maximum} words
+- This is a GUARDRAIL to prevent excessive length
+- Only relevant if you're writing far beyond what's needed
+- Do NOT try to write up to this limit
+- Typical good sections are {target_guidance}-{int(target_guidance * 1.5)} words
+
+**Quality matters more than hitting an exact word count.**
+
 **Requirements:**
+- Preserve all important content from source (definitions, key explanations, foundational concepts)
+- Explain concepts clearly and completely
+- Maintain technical precision
+- Remove only: pure repetition without variation, unnecessary verbosity
+- Keep: variations that aid understanding
 - Preserve all protected objects exactly as shown (equations, labels, citations, displaymath, tables)
-- Stay within word budget (±20%)
 - Use LaTeX commands appropriate for the reader's vocabulary
 - If evidence is insufficient or contradictory, abstain with explanation
 
@@ -855,11 +881,31 @@ def run(args) -> int:
                 if word_count == 0 or not latex_content:
                     raise ValueError("Draft contains no prose (word_count=0)")
 
-                # Check word budget (±20% variance allowed)
+                # Check word count against guardrail only
                 target = section.get("word_budget", 500)
-                if word_count < target * 0.8 or word_count > target * 1.2:
-                    print(f"Warning: Word count {word_count} outside target range "
-                          f"[{int(target*0.8)}, {int(target*1.2)}]", file=sys.stderr)
+                absolute_maximum = min(target * 4, 2000)
+
+                # Guardrail check (rarely triggered)
+                if word_count > absolute_maximum:
+                    raise ValueError(
+                        f"Draft exceeds absolute maximum: {word_count} words > {absolute_maximum}. "
+                        f"Target was {target} words (guidance). Maximum is {absolute_maximum} words (guardrail). "
+                        f"This section may need to be split into smaller subsections."
+                    )
+
+                # Information logging (not an error)
+                if word_count > target * 1.5:
+                    print(
+                        f"Note: Section '{section_title}' is {word_count} words "
+                        f"(target guidance was {target}). This is acceptable if content completeness requires it.",
+                        file=sys.stderr
+                    )
+                elif word_count < target * 0.5:
+                    print(
+                        f"Note: Section '{section_title}' is {word_count} words "
+                        f"(target guidance was {target}). Consider if more explanation would help readers.",
+                        file=sys.stderr
+                    )
 
                 # _write_draft still takes the nested shape; it is now built here
                 # from raw text rather than parsed out of the model's response.
