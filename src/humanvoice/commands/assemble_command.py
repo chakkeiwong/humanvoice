@@ -388,10 +388,18 @@ def _generate_blacklined_diff(
                 # --exclude-textcmd tells latexdiff to treat section/chapter as atomic units
                 # When a section title changes, it's marked as deleted+added rather than
                 # diffed internally, preventing malformed LaTeX like \section{\DIFdel{...}
+                #
+                # --type=CTRADITIONAL provides clear visual distinction:
+                #   - Deletions: red strikethrough text
+                #   - Additions: blue text
+                #   - Unchanged: normal black text
+                # This is more readable than default UNDERLINE (wavy underlines can be unclear)
                 result = subprocess.run(
                     [
                         'latexdiff',
+                        '--type=CTRADITIONAL',
                         '--exclude-textcmd=section,chapter,subsection',
+                        '--config=PICTUREENV=(?:picture|tikzpicture|pgfpicture|DIFnomarkup)[\\w\\d*@]*',
                         str(original_chunk),
                         str(assembled_chunk)
                     ],
@@ -962,6 +970,12 @@ def run(args) -> int:
             "preamble_source": "original",
             "diff_tool": diff_tool,
             "diff_tool_version": diff_tool_version,
+            "diff_markup_style": "CTRADITIONAL",
+            "diff_markup_legend": {
+                "deletions": "red strikethrough text",
+                "additions": "blue text",
+                "unchanged": "black text"
+            },
             # Counts describe what the document actually carries, so gap markers
             # are excluded. The full blueprint length stays recoverable from
             # len(sections) above, and the shortfall from assembly_gaps.json.
