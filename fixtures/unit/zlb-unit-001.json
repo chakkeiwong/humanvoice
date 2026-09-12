@@ -1,0 +1,18 @@
+{
+  "fixture_id": "zlb-unit-001",
+  "fixture_type": "unit",
+  "source_text": "When nominal interest rates approach zero, the central bank cannot cut rates further to stimulate the economy. This constraint is known as the zero lower bound (ZLB).",
+  "concepts": [
+    "zlb-constraint",
+    "monetary-policy-limit",
+    "nominal-interest-rate"
+  ],
+  "obligations": [
+    "definition",
+    "mechanism"
+  ],
+  "expected_concept_retention": 1.0,
+  "expected_mutations_blocked": [],
+  "description": "Core ZLB constraint explanation with definition",
+  "rationale": "Tests that fundamental ZLB concept is retained with adequate explanation of the constraint mechanism"
+}

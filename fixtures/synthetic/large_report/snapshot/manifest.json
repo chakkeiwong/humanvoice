@@ -83,5 +83,447 @@
     }
   },
   "brief_valid": true,
-  "snapshot_immutable": true
+  "snapshot_immutable": true,
+  "transmission_log": [
+    {
+      "timestamp": "2026-09-11T16:42:13.473512+00:00",
+      "action": "api_invocation",
+      "destination": "https://api.anthropic.com/v1/messages",
+      "purpose": "concept_extraction",
+      "content_summary": "sha256:08850e580a0ad9c4 (471 in / 67 out)",
+      "authorized_by": "operator"
+    },
+    {
+      "timestamp": "2026-09-11T16:42:19.966997+00:00",
+      "action": "api_invocation",
+      "destination": "https://api.anthropic.com/v1/messages",
+      "purpose": "concept_extraction",
+      "content_summary": "sha256:ab8e35f323e9e68d (490 in / 111 out)",
+      "authorized_by": "operator"
+    },
+    {
+      "timestamp": "2026-09-11T16:42:26.226787+00:00",
+      "action": "api_invocation",
+      "destination": "https://api.anthropic.com/v1/messages",
+      "purpose": "concept_extraction",
+      "content_summary": "sha256:fc8e174b99aabf24 (484 in / 71 out)",
+      "authorized_by": "operator"
+    },
+    {
+      "timestamp": "2026-09-11T16:42:30.970305+00:00",
+      "action": "api_invocation",
+      "destination": "https://api.anthropic.com/v1/messages",
+      "purpose": "concept_extraction",
+      "content_summary": "sha256:64e4e9e211a3c7f2 (483 in / 72 out)",
+      "authorized_by": "operator"
+    },
+    {
+      "timestamp": "2026-09-11T16:42:35.615718+00:00",
+      "action": "api_invocation",
+      "destination": "https://api.anthropic.com/v1/messages",
+      "purpose": "concept_extraction",
+      "content_summary": "sha256:3ceb48745e817d04 (53 in / 149 out)",
+      "authorized_by": "operator"
+    },
+    {
+      "timestamp": "2026-09-11T16:42:39.765494+00:00",
+      "action": "api_invocation",
+      "destination": "https://api.anthropic.com/v1/messages",
+      "purpose": "concept_extraction",
+      "content_summary": "sha256:33754ec737193ab3 (475 in / 57 out)",
+      "authorized_by": "operator"
+    },
+    {
+      "timestamp": "2026-09-11T16:42:51.814260+00:00",
+      "action": "api_invocation",
+      "destination": "https://api.anthropic.com/v1/messages",
+      "purpose": "concept_extraction",
+      "content_summary": "sha256:52b77ba9d353ec9f (482 in / 109 out)",
+      "authorized_by": "operator"
+    },
+    {
+      "timestamp": "2026-09-11T16:42:57.446342+00:00",
+      "action": "api_invocation",
+      "destination": "https://api.anthropic.com/v1/messages",
+      "purpose": "concept_extraction",
+      "content_summary": "sha256:fdc7a204510ec2aa (487 in / 154 out)",
+      "authorized_by": "operator"
+    },
+    {
+      "timestamp": "2026-09-11T16:43:02.050695+00:00",
+      "action": "api_invocation",
+      "destination": "https://api.anthropic.com/v1/messages",
+      "purpose": "concept_extraction",
+      "content_summary": "sha256:7929a2485df66722 (53 in / 161 out)",
+      "authorized_by": "operator"
+    },
+    {
+      "timestamp": "2026-09-11T16:43:06.828229+00:00",
+      "action": "api_invocation",
+      "destination": "https://api.anthropic.com/v1/messages",
+      "purpose": "concept_extraction",
+      "content_summary": "sha256:a4e9d892dc08e7ec (479 in / 82 out)",
+      "authorized_by": "operator"
+    },
+    {
+      "timestamp": "2026-09-11T16:43:12.597540+00:00",
+      "action": "api_invocation",
+      "destination": "https://api.anthropic.com/v1/messages",
+      "purpose": "concept_extraction",
+      "content_summary": "sha256:a09d4df7a604646a (488 in / 66 out)",
+      "authorized_by": "operator"
+    },
+    {
+      "timestamp": "2026-09-11T16:43:21.125316+00:00",
+      "action": "api_invocation",
+      "destination": "https://api.anthropic.com/v1/messages",
+      "purpose": "concept_extraction",
+      "content_summary": "sha256:d52a52c73eff7880 (495 in / 55 out)",
+      "authorized_by": "operator"
+    },
+    {
+      "timestamp": "2026-09-11T16:43:26.900666+00:00",
+      "action": "api_invocation",
+      "destination": "https://api.anthropic.com/v1/messages",
+      "purpose": "concept_extraction",
+      "content_summary": "sha256:157a34daca76ca90 (412 in / 113 out)",
+      "authorized_by": "operator"
+    },
+    {
+      "timestamp": "2026-09-11T17:24:45.865460+00:00",
+      "action": "api_invocation",
+      "destination": "https://api.anthropic.com/v1/messages",
+      "purpose": "concept_extraction",
+      "content_summary": "sha256:08850e580a0ad9c4 (51 in / 166 out)",
+      "authorized_by": "operator"
+    },
+    {
+      "timestamp": "2026-09-11T17:24:51.311737+00:00",
+      "action": "api_invocation",
+      "destination": "https://api.anthropic.com/v1/messages",
+      "purpose": "concept_extraction",
+      "content_summary": "sha256:ab8e35f323e9e68d (54 in / 193 out)",
+      "authorized_by": "operator"
+    },
+    {
+      "timestamp": "2026-09-11T17:24:57.233990+00:00",
+      "action": "api_invocation",
+      "destination": "https://api.anthropic.com/v1/messages",
+      "purpose": "concept_extraction",
+      "content_summary": "sha256:fc8e174b99aabf24 (484 in / 70 out)",
+      "authorized_by": "operator"
+    },
+    {
+      "timestamp": "2026-09-11T17:25:02.116343+00:00",
+      "action": "api_invocation",
+      "destination": "https://api.anthropic.com/v1/messages",
+      "purpose": "concept_extraction",
+      "content_summary": "sha256:64e4e9e211a3c7f2 (53 in / 201 out)",
+      "authorized_by": "operator"
+    },
+    {
+      "timestamp": "2026-09-11T17:25:08.290528+00:00",
+      "action": "api_invocation",
+      "destination": "https://api.anthropic.com/v1/messages",
+      "purpose": "concept_extraction",
+      "content_summary": "sha256:3ceb48745e817d04 (475 in / 119 out)",
+      "authorized_by": "operator"
+    },
+    {
+      "timestamp": "2026-09-11T17:25:13.537450+00:00",
+      "action": "api_invocation",
+      "destination": "https://api.anthropic.com/v1/messages",
+      "purpose": "concept_extraction",
+      "content_summary": "sha256:33754ec737193ab3 (53 in / 172 out)",
+      "authorized_by": "operator"
+    },
+    {
+      "timestamp": "2026-09-11T17:25:23.146628+00:00",
+      "action": "api_invocation",
+      "destination": "https://api.anthropic.com/v1/messages",
+      "purpose": "concept_extraction",
+      "content_summary": "sha256:52b77ba9d353ec9f (482 in / 70 out)",
+      "authorized_by": "operator"
+    },
+    {
+      "timestamp": "2026-09-11T17:25:27.924343+00:00",
+      "action": "api_invocation",
+      "destination": "https://api.anthropic.com/v1/messages",
+      "purpose": "concept_extraction",
+      "content_summary": "sha256:fdc7a204510ec2aa (54 in / 179 out)",
+      "authorized_by": "operator"
+    },
+    {
+      "timestamp": "2026-09-11T17:25:32.833722+00:00",
+      "action": "api_invocation",
+      "destination": "https://api.anthropic.com/v1/messages",
+      "purpose": "concept_extraction",
+      "content_summary": "sha256:7929a2485df66722 (53 in / 160 out)",
+      "authorized_by": "operator"
+    },
+    {
+      "timestamp": "2026-09-11T17:25:37.594210+00:00",
+      "action": "api_invocation",
+      "destination": "https://api.anthropic.com/v1/messages",
+      "purpose": "concept_extraction",
+      "content_summary": "sha256:a4e9d892dc08e7ec (479 in / 76 out)",
+      "authorized_by": "operator"
+    },
+    {
+      "timestamp": "2026-09-11T17:25:42.616093+00:00",
+      "action": "api_invocation",
+      "destination": "https://api.anthropic.com/v1/messages",
+      "purpose": "concept_extraction",
+      "content_summary": "sha256:a09d4df7a604646a (488 in / 76 out)",
+      "authorized_by": "operator"
+    },
+    {
+      "timestamp": "2026-09-11T17:25:47.064018+00:00",
+      "action": "api_invocation",
+      "destination": "https://api.anthropic.com/v1/messages",
+      "purpose": "concept_extraction",
+      "content_summary": "sha256:d52a52c73eff7880 (495 in / 79 out)",
+      "authorized_by": "operator"
+    },
+    {
+      "timestamp": "2026-09-11T17:25:51.748618+00:00",
+      "action": "api_invocation",
+      "destination": "https://api.anthropic.com/v1/messages",
+      "purpose": "concept_extraction",
+      "content_summary": "sha256:157a34daca76ca90 (412 in / 81 out)",
+      "authorized_by": "operator"
+    },
+    {
+      "timestamp": "2026-09-11T17:35:41.511089+00:00",
+      "action": "api_invocation",
+      "destination": "https://api.anthropic.com/v1/messages",
+      "purpose": "concept_extraction",
+      "content_summary": "sha256:9932956d11b7b9f0 (792 in / 89 out)",
+      "authorized_by": "operator"
+    },
+    {
+      "timestamp": "2026-09-11T17:35:49.529873+00:00",
+      "action": "api_invocation",
+      "destination": "https://api.anthropic.com/v1/messages",
+      "purpose": "concept_extraction",
+      "content_summary": "sha256:5f9d31aa81a963c0 (889 in / 440 out)",
+      "authorized_by": "operator"
+    },
+    {
+      "timestamp": "2026-09-11T17:36:07.564741+00:00",
+      "action": "api_invocation",
+      "destination": "https://api.anthropic.com/v1/messages",
+      "purpose": "concept_extraction",
+      "content_summary": "sha256:047ed2bbbf0b9275 (107 in / 1662 out)",
+      "authorized_by": "operator"
+    },
+    {
+      "timestamp": "2026-09-11T17:36:29.509463+00:00",
+      "action": "api_invocation",
+      "destination": "https://api.anthropic.com/v1/messages",
+      "purpose": "concept_extraction",
+      "content_summary": "sha256:fff13f7996614050 (956 in / 1694 out)",
+      "authorized_by": "operator"
+    },
+    {
+      "timestamp": "2026-09-11T17:36:50.726128+00:00",
+      "action": "api_invocation",
+      "destination": "https://api.anthropic.com/v1/messages",
+      "purpose": "concept_extraction",
+      "content_summary": "sha256:5a18275b019b7b9c (1040 in / 1589 out)",
+      "authorized_by": "operator"
+    },
+    {
+      "timestamp": "2026-09-11T17:37:14.896309+00:00",
+      "action": "api_invocation",
+      "destination": "https://api.anthropic.com/v1/messages",
+      "purpose": "concept_extraction",
+      "content_summary": "sha256:93ba6b1e19f789b2 (981 in / 1380 out)",
+      "authorized_by": "operator"
+    },
+    {
+      "timestamp": "2026-09-11T17:41:20.627178+00:00",
+      "action": "api_invocation",
+      "destination": "https://api.anthropic.com/v1/messages",
+      "purpose": "concept_extraction",
+      "content_summary": "sha256:d24ddd9d472e324c (791 in / 86 out)",
+      "authorized_by": "operator"
+    },
+    {
+      "timestamp": "2026-09-11T17:41:29.286143+00:00",
+      "action": "api_invocation",
+      "destination": "https://api.anthropic.com/v1/messages",
+      "purpose": "concept_extraction",
+      "content_summary": "sha256:89a4a2b4387dfe7b (888 in / 593 out)",
+      "authorized_by": "operator"
+    },
+    {
+      "timestamp": "2026-09-11T17:41:42.128193+00:00",
+      "action": "api_invocation",
+      "destination": "https://api.anthropic.com/v1/messages",
+      "purpose": "reconstruction_verification",
+      "content_summary": "sha256:9232e5508e28b0ca (444 in / 530 out)",
+      "authorized_by": "operator"
+    },
+    {
+      "timestamp": "2026-09-11T17:41:51.278851+00:00",
+      "action": "api_invocation",
+      "destination": "https://api.anthropic.com/v1/messages",
+      "purpose": "coverage_verification",
+      "content_summary": "sha256:8106c849c950f62d (1214 in / 560 out)",
+      "authorized_by": "operator"
+    },
+    {
+      "timestamp": "2026-09-11T17:42:05.898877+00:00",
+      "action": "api_invocation",
+      "destination": "https://api.anthropic.com/v1/messages",
+      "purpose": "concept_extraction",
+      "content_summary": "sha256:8509ce2a93c5f7c3 (1021 in / 1341 out)",
+      "authorized_by": "operator"
+    },
+    {
+      "timestamp": "2026-09-11T17:42:30.744000+00:00",
+      "action": "api_invocation",
+      "destination": "https://api.anthropic.com/v1/messages",
+      "purpose": "reconstruction_verification",
+      "content_summary": "sha256:b958ae103247a509 (926 in / 1294 out)",
+      "authorized_by": "operator"
+    },
+    {
+      "timestamp": "2026-09-11T17:42:40.918715+00:00",
+      "action": "api_invocation",
+      "destination": "https://api.anthropic.com/v1/messages",
+      "purpose": "coverage_verification",
+      "content_summary": "sha256:02ea45f627906261 (172 in / 1010 out)",
+      "authorized_by": "operator"
+    },
+    {
+      "timestamp": "2026-09-11T17:42:57.489431+00:00",
+      "action": "api_invocation",
+      "destination": "https://api.anthropic.com/v1/messages",
+      "purpose": "concept_extraction",
+      "content_summary": "sha256:65d822a567812f9d (954 in / 1400 out)",
+      "authorized_by": "operator"
+    },
+    {
+      "timestamp": "2026-09-11T17:43:19.037741+00:00",
+      "action": "api_invocation",
+      "destination": "https://api.anthropic.com/v1/messages",
+      "purpose": "reconstruction_verification",
+      "content_summary": "sha256:272b09fbab81a9c6 (904 in / 1155 out)",
+      "authorized_by": "operator"
+    },
+    {
+      "timestamp": "2026-09-11T17:43:30.544077+00:00",
+      "action": "api_invocation",
+      "destination": "https://api.anthropic.com/v1/messages",
+      "purpose": "coverage_verification",
+      "content_summary": "sha256:a0d5249c22951611 (1641 in / 835 out)",
+      "authorized_by": "operator"
+    },
+    {
+      "timestamp": "2026-09-11T17:43:48.692785+00:00",
+      "action": "api_invocation",
+      "destination": "https://api.anthropic.com/v1/messages",
+      "purpose": "concept_extraction",
+      "content_summary": "sha256:2abddb9b304e88df (1038 in / 1583 out)",
+      "authorized_by": "operator"
+    },
+    {
+      "timestamp": "2026-09-11T17:44:14.923080+00:00",
+      "action": "api_invocation",
+      "destination": "https://api.anthropic.com/v1/messages",
+      "purpose": "reconstruction_verification",
+      "content_summary": "sha256:ba7de68151fe5f5a (1048 in / 1551 out)",
+      "authorized_by": "operator"
+    },
+    {
+      "timestamp": "2026-09-11T17:44:32.582031+00:00",
+      "action": "api_invocation",
+      "destination": "https://api.anthropic.com/v1/messages",
+      "purpose": "coverage_verification",
+      "content_summary": "sha256:ad8db583f25e680e (1748 in / 832 out)",
+      "authorized_by": "operator"
+    },
+    {
+      "timestamp": "2026-09-11T17:44:52.362068+00:00",
+      "action": "api_invocation",
+      "destination": "https://api.anthropic.com/v1/messages",
+      "purpose": "concept_extraction",
+      "content_summary": "sha256:2db0bd856c4f952a (980 in / 1754 out)",
+      "authorized_by": "operator"
+    },
+    {
+      "timestamp": "2026-09-11T17:45:18.165138+00:00",
+      "action": "api_invocation",
+      "destination": "https://api.anthropic.com/v1/messages",
+      "purpose": "reconstruction_verification",
+      "content_summary": "sha256:ad3b72d846f9f31e (1128 in / 1533 out)",
+      "authorized_by": "operator"
+    },
+    {
+      "timestamp": "2026-09-11T17:45:38.262361+00:00",
+      "action": "api_invocation",
+      "destination": "https://api.anthropic.com/v1/messages",
+      "purpose": "coverage_verification",
+      "content_summary": "sha256:521a41d292d33a15 (1841 in / 991 out)",
+      "authorized_by": "operator"
+    },
+    {
+      "timestamp": "2026-09-11T17:45:57.495266+00:00",
+      "action": "api_invocation",
+      "destination": "https://api.anthropic.com/v1/messages",
+      "purpose": "concept_extraction",
+      "content_summary": "sha256:fe20a54f51070c36 (110 in / 2000 out)",
+      "authorized_by": "operator"
+    },
+    {
+      "timestamp": "2026-09-11T17:46:25.327155+00:00",
+      "action": "api_invocation",
+      "destination": "https://api.anthropic.com/v1/messages",
+      "purpose": "reconstruction_verification",
+      "content_summary": "sha256:31e96e1240322a13 (1234 in / 1825 out)",
+      "authorized_by": "operator"
+    },
+    {
+      "timestamp": "2026-09-11T17:46:35.686881+00:00",
+      "action": "api_invocation",
+      "destination": "https://api.anthropic.com/v1/messages",
+      "purpose": "coverage_verification",
+      "content_summary": "sha256:7b2cae23266a913d (1915 in / 644 out)",
+      "authorized_by": "operator"
+    },
+    {
+      "timestamp": "2026-09-11T17:46:53.528829+00:00",
+      "action": "api_invocation",
+      "destination": "https://api.anthropic.com/v1/messages",
+      "purpose": "concept_extraction",
+      "content_summary": "sha256:b8fc3933f6da5557 (964 in / 1359 out)",
+      "authorized_by": "operator"
+    },
+    {
+      "timestamp": "2026-09-11T17:47:14.682975+00:00",
+      "action": "api_invocation",
+      "destination": "https://api.anthropic.com/v1/messages",
+      "purpose": "reconstruction_verification",
+      "content_summary": "sha256:59444f2f3dc0fb84 (910 in / 1098 out)",
+      "authorized_by": "operator"
+    },
+    {
+      "timestamp": "2026-09-11T17:47:28.692080+00:00",
+      "action": "api_invocation",
+      "destination": "https://api.anthropic.com/v1/messages",
+      "purpose": "coverage_verification",
+      "content_summary": "sha256:f0dcef9ebe89f42f (1651 in / 840 out)",
+      "authorized_by": "operator"
+    },
+    {
+      "timestamp": "2026-09-11T17:47:50.740364+00:00",
+      "action": "api_invocation",
+      "destination": "https://api.anthropic.com/v1/messages",
+      "purpose": "concept_extraction",
+      "content_summary": "sha256:48fd620ba681d002 (1118 in / 1843 out)",
+      "authorized_by": "operator"
+    }
+  ]
 }

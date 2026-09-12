@@ -1,0 +1,17 @@
+{
+  "record_type": "RuntimeManifest",
+  "schema_version": "HV-SCHEMA-2.0",
+  "record_id": "runtime-record-1",
+  "run_id": "run-v2-example",
+  "created_at": "2026-09-11T12:00:00Z",
+  "runtime_type": "deterministic-only",
+  "tool_version": "humanvoice-0.2.0",
+  "compiler": {
+    "name": "pdfTeX",
+    "version": "1.40",
+    "executable_sha256": "3333333333333333333333333333333333333333333333333333333333333333",
+    "flags": ["-no-shell-escape"]
+  },
+  "model_version_string": null,
+  "termination": "complete"
+}

@@ -30,12 +30,19 @@
       "id": "HIST-ZLB-CURRENT-TEX",
       "repository": "BayesFilter",
       "repository_relative_path": "docs/surveys/zlb_discontinuous_hmc/zlb_discontinuous_hmc_survey.tex",
-      "sha256": "fa73f4d21a73ed21dc499b3b458fcdedbd600c586445a190903e8db3148e68cf",
+      "sha256": "ff582d8aa7352b2de6f6e3b3cafc8ab0cfb74119a5ca6e5c575baff0ce1f89bf",
       "observed_rows": null,
       "availability": "located-rights-pending",
       "replay_status": "unavailable",
       "rights_record_id": "CORP-ZLB",
-      "reason": "The current source is located, but the historical comparison requires the missing pass-two snapshot, an answer key, and permission."
+      "reason": "The current source is located, but the historical comparison requires the missing pass-two snapshot, an answer key, and permission.",
+      "superseded_hashes": [
+        {
+          "sha256": "fa73f4d21a73ed21dc499b3b458fcdedbd600c586445a190903e8db3148e68cf",
+          "observed_until": "2026-09-11",
+          "drift_note": "The sibling BayesFilter repository committed further edits to this manuscript after the locator was recorded. No humanvoice result depended on the earlier content: availability was located-rights-pending and replay_status unavailable. A v2 benchmark run must re-initialize from a fresh immutable snapshot and record its own hash."
+        }
+      ]
     },
     {
       "id": "HIST-ZLB-CURRENT-PDF",

@@ -1,0 +1,43 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://humanvoice.local/schema/v2/rewrite-unit.schema.json",
+  "title": "Humanvoice v2 rewrite unit",
+  "$comment": "The shared record validator checks all links against the frozen baseline, canonicalizes unit_spec_hash, and rejects overlapping accepted units unless they implement an explicit move.",
+  "type": "object",
+  "required": ["record_type", "schema_version", "record_id", "run_id", "created_at", "plan_id", "baseline_id", "baseline_hash", "unit_id", "unit_spec_hash", "source_file", "source_span_ids", "source_hash", "contiguous", "concept_ids", "dependency_ids", "explanation_obligation_ids", "protected_object_ids", "neighbor_context", "planned_operation", "estimated_output_words", "segmentation_triggered", "parent_unit_id", "child_unit_ids", "continuation_state", "status"],
+  "properties": {
+    "record_type": {"const": "RewriteUnit"},
+    "schema_version": {"type": "string", "pattern": "^HV-SCHEMA-2\\.[0-9]+$"},
+    "record_id": {"type": "string", "minLength": 1},
+    "run_id": {"type": "string", "minLength": 1},
+    "created_at": {"type": "string", "format": "date-time"},
+    "plan_id": {"type": "string", "minLength": 1},
+    "baseline_id": {"type": "string", "minLength": 1},
+    "baseline_hash": {"type": "string", "pattern": "^[A-Fa-f0-9]{64}$"},
+    "unit_id": {"type": "string", "minLength": 1},
+    "unit_spec_hash": {"type": "string", "pattern": "^[A-Fa-f0-9]{64}$"},
+    "source_file": {"type": "string", "minLength": 1},
+    "source_span_ids": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1}, "uniqueItems": true},
+    "source_hash": {"type": "string", "pattern": "^[A-Fa-f0-9]{64}$"},
+    "contiguous": {"type": "boolean", "default": true},
+    "concept_ids": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1}, "uniqueItems": true},
+    "dependency_ids": {"type": "array", "items": {"type": "string", "minLength": 1}, "uniqueItems": true},
+    "explanation_obligation_ids": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1}, "uniqueItems": true},
+    "protected_object_ids": {"type": "array", "items": {"type": "string", "minLength": 1}, "uniqueItems": true},
+    "neighbor_context": {"type": "object", "required": ["preceding_span_ids", "following_span_ids", "context_hash"], "properties": {"preceding_span_ids": {"type": "array", "items": {"type": "string", "minLength": 1}}, "following_span_ids": {"type": "array", "items": {"type": "string", "minLength": 1}}, "context_hash": {"type": "string", "pattern": "^[A-Fa-f0-9]{64}$"}}, "additionalProperties": false},
+    "planned_operation": {"enum": ["retain", "paraphrase", "expand", "merge", "split", "reorder", "mixed"]},
+    "estimated_output_words": {"type": "integer", "minimum": 0, "description": "Pre-call segmentation diagnostic only; never a prose target or maximum."},
+    "segmentation_triggered": {"type": "boolean"},
+    "parent_unit_id": {"type": ["string", "null"]},
+    "child_unit_ids": {"type": "array", "items": {"type": "string", "minLength": 1}, "uniqueItems": true},
+    "continuation_state": {"type": ["object", "null"], "properties": {"sequence_index": {"type": "integer", "minimum": 1}, "sequence_count": {"type": "integer", "minimum": 2}, "previous_unit_id": {"type": ["string", "null"]}, "carried_obligation_ids": {"type": "array", "items": {"type": "string", "minLength": 1}, "uniqueItems": true}}, "required": ["sequence_index", "sequence_count", "previous_unit_id", "carried_obligation_ids"], "additionalProperties": false},
+    "status": {"enum": ["planned", "split", "ready", "in_progress", "accepted", "failed", "unresolved"]},
+    "extensions": {"type": "object"}
+  },
+  "allOf": [
+    {"if": {"properties": {"estimated_output_words": {"exclusiveMinimum": 2000}}}, "then": {"properties": {"segmentation_triggered": {"const": true}, "child_unit_ids": {"minItems": 2}, "status": {"enum": ["split", "unresolved"]}}}},
+    {"if": {"properties": {"status": {"const": "split"}}}, "then": {"properties": {"segmentation_triggered": {"const": true}, "child_unit_ids": {"minItems": 2}}}},
+    {"if": {"properties": {"parent_unit_id": {"type": "string"}}}, "then": {"properties": {"continuation_state": {"type": "object"}}}}
+  ],
+  "additionalProperties": false
+}

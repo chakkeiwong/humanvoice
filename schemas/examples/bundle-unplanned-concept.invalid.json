@@ -1,0 +1,848 @@
+[
+  {
+    "record_type": "HumanizationBrief",
+    "schema_version": "HV-SCHEMA-2.0",
+    "record_id": "brief-1",
+    "run_id": "run-v2-example",
+    "created_at": "2026-09-11T12:00:00Z",
+    "source_entry_point": "main.tex",
+    "reader": {
+      "role": "trained technical reader",
+      "prior_knowledge": [
+        "calculus"
+      ],
+      "reading_context": "Read the complete survey without repository context."
+    },
+    "purpose": "Understand the model and its limiting cases.",
+    "decision": null,
+    "genre": "technical survey",
+    "known_vocabulary": [
+      "derivative"
+    ],
+    "exemplars": [],
+    "evidence_boundary": "Use only the frozen manuscript and linked evidence.",
+    "privacy_class": "internal",
+    "remote_inference": {
+      "authorized": false,
+      "provider": null,
+      "purpose": null,
+      "approved_by": null
+    },
+    "voice_constraints": {
+      "register": "clear technical prose",
+      "person": "source_dependent",
+      "additional": []
+    },
+    "protected_object_policy": "Preserve exact equations, citations, labels, and numbers.",
+    "unresolved_assumptions": [],
+    "authorizing_action": {
+      "actor": "document-owner",
+      "role": "document_owner",
+      "action": "humanize_finished_manuscript",
+      "authorized_at": "2026-09-11T12:00:00Z"
+    },
+    "policy_sources": [
+      {
+        "path": "policies/humanizer.md",
+        "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+      }
+    ]
+  },
+  {
+    "record_type": "SourceSnapshot",
+    "schema_version": "HV-SCHEMA-2.0",
+    "record_id": "snapshot-record-1",
+    "run_id": "run-v2-example",
+    "created_at": "2026-09-11T12:00:00Z",
+    "snapshot_id": "snapshot-1",
+    "source_hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "source_entry_point": "main.tex",
+    "source_files": [
+      {
+        "path": "main.tex",
+        "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "byte_size": 200
+      }
+    ],
+    "source_tree_bytes": 200,
+    "humanization_brief_id": "brief-1",
+    "humanization_brief_hash": "02c482215fe4e79cec436f134ea2e871d46937848dbefb613b9696c8243c5039",
+    "brief_valid": true,
+    "snapshot_immutable": true,
+    "snapshot_closed_at": "2026-09-11T12:00:00Z",
+    "source_root": "/example/source",
+    "scratch_path": "scratch",
+    "privacy_class": "internal"
+  },
+  {
+    "record_type": "SourceSpan",
+    "schema_version": "HV-SCHEMA-2.0",
+    "record_id": "span-1",
+    "run_id": "run-v2-example",
+    "created_at": "2026-09-11T12:00:00Z",
+    "snapshot_id": "snapshot-1",
+    "source_hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "source_file": "main.tex",
+    "byte_start": 0,
+    "byte_end": 60,
+    "line_start": 1,
+    "line_end": 2,
+    "exact_text_hash": "2ba283c67dc55c35165dfd91e7b83c8a5e76ba54a54be3f19e20c07ba085de00",
+    "span_kind": "prose",
+    "reader_facing": true,
+    "structural_parent_id": null,
+    "coverage_disposition": "concept_bearing",
+    "concept_ids": [
+      "concept-1"
+    ],
+    "protected_object_ids": [],
+    "scaffolding_disposition_ids": []
+  },
+  {
+    "record_type": "SourceSpan",
+    "schema_version": "HV-SCHEMA-2.0",
+    "record_id": "span-2",
+    "run_id": "run-v2-example",
+    "created_at": "2026-09-11T12:00:00Z",
+    "snapshot_id": "snapshot-1",
+    "source_hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "source_file": "main.tex",
+    "byte_start": 60,
+    "byte_end": 140,
+    "line_start": 3,
+    "line_end": 5,
+    "exact_text_hash": "8bae85ebb798b57a78b81a556d9aee858f2e6a9eb10e8d025789ce97e46b0748",
+    "span_kind": "prose",
+    "reader_facing": true,
+    "structural_parent_id": null,
+    "coverage_disposition": "concept_bearing",
+    "concept_ids": [
+      "concept-2"
+    ],
+    "protected_object_ids": [
+      "eq_0"
+    ],
+    "scaffolding_disposition_ids": []
+  },
+  {
+    "record_type": "SourceSpan",
+    "schema_version": "HV-SCHEMA-2.0",
+    "record_id": "span-3",
+    "run_id": "run-v2-example",
+    "created_at": "2026-09-11T12:00:00Z",
+    "snapshot_id": "snapshot-1",
+    "source_hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "source_file": "main.tex",
+    "byte_start": 140,
+    "byte_end": 200,
+    "line_start": 6,
+    "line_end": 7,
+    "exact_text_hash": "a70f0c53c7b376264b7b32bd65fc0c2733bafe6f7de53314b3d211de700f0f02",
+    "span_kind": "comment",
+    "reader_facing": false,
+    "structural_parent_id": null,
+    "coverage_disposition": "non_substantive_scaffolding",
+    "concept_ids": [],
+    "protected_object_ids": [],
+    "scaffolding_disposition_ids": [
+      "scaffolding-1"
+    ]
+  },
+  {
+    "record_type": "SourceConcept",
+    "schema_version": "HV-SCHEMA-2.0",
+    "record_id": "concept-record-1",
+    "run_id": "run-v2-example",
+    "created_at": "2026-09-11T12:00:00Z",
+    "baseline_id": "baseline-1",
+    "snapshot_id": "snapshot-1",
+    "concept_id": "concept-1",
+    "identity_basis": {
+      "snapshot_hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "ordered_span_ids_hash": "28b3ad41b2766925fc48ffe4854153ca7e8974bbe6535ee6aebfdcad335f593c",
+      "identity_hash": "dd3afbdae214738f17967df2646ca5a35038a88b28abc88bd7c86970f8761a90"
+    },
+    "proposition": "A continuous map has no jump at the threshold.",
+    "concept_type": "definition",
+    "source_span_ids": [
+      "span-1"
+    ],
+    "occurrences": [
+      {
+        "span_id": "span-1",
+        "teaching_role": "define"
+      }
+    ],
+    "supporting_claims": [],
+    "evidence_ids": [],
+    "protected_object_ids": [],
+    "assumptions": [],
+    "qualifications": [],
+    "reader_prerequisites": [],
+    "explanation_obligation_ids": [
+      "obligation-1"
+    ],
+    "extraction_confidence": 0.91,
+    "review_status": "accepted",
+    "lineage": {
+      "parent_concept_ids": [],
+      "change_reason": null,
+      "adjudicated_by": null,
+      "adjudicated_at": null
+    }
+  },
+  {
+    "record_type": "SourceConcept",
+    "schema_version": "HV-SCHEMA-2.0",
+    "record_id": "concept-record-2",
+    "run_id": "run-v2-example",
+    "created_at": "2026-09-11T12:00:00Z",
+    "baseline_id": "baseline-1",
+    "snapshot_id": "snapshot-1",
+    "concept_id": "concept-2",
+    "identity_basis": {
+      "snapshot_hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "ordered_span_ids_hash": "9ba3819128891b9a5a83aeba0543cc68079fcd30534c5003699c29d8dfeff88c",
+      "identity_hash": "4003e029baa001335af44748f60b7ba039518cfde1620b5cc5c2f87a4c785151"
+    },
+    "proposition": "A kink is distinct from a true discontinuity.",
+    "concept_type": "distinction",
+    "source_span_ids": [
+      "span-2"
+    ],
+    "occurrences": [
+      {
+        "span_id": "span-2",
+        "teaching_role": "contrast"
+      }
+    ],
+    "supporting_claims": [],
+    "evidence_ids": [],
+    "protected_object_ids": [
+      "eq_0"
+    ],
+    "assumptions": [],
+    "qualifications": [
+      "The distinction concerns continuity of the map itself."
+    ],
+    "reader_prerequisites": [
+      "continuous function"
+    ],
+    "explanation_obligation_ids": [
+      "obligation-2"
+    ],
+    "extraction_confidence": 0.91,
+    "review_status": "accepted",
+    "lineage": {
+      "parent_concept_ids": [],
+      "change_reason": null,
+      "adjudicated_by": null,
+      "adjudicated_at": null
+    }
+  },
+  {
+    "record_type": "ExplanationObligation",
+    "schema_version": "HV-SCHEMA-2.0",
+    "record_id": "obligation-record-1",
+    "run_id": "run-v2-example",
+    "created_at": "2026-09-11T12:00:00Z",
+    "baseline_id": "baseline-1",
+    "obligation_id": "obligation-1",
+    "parent_record_id": null,
+    "concept_id": "concept-1",
+    "required_teaching_functions": [
+      "definition"
+    ],
+    "source_assessment": {
+      "status": "partial",
+      "evidence_span_ids": [
+        "span-1"
+      ]
+    },
+    "reader_rationale": "The reader must know what continuity means here before the contrast.",
+    "genre_rationale": "A survey must teach terminology before using it.",
+    "active": true,
+    "deactivation": null,
+    "fulfillment_status": "unassessed",
+    "fulfillment_evidence": [],
+    "obligation_spec_hash": "bf7203de5a5093838e37178d864e419b8e1ad5a6f73d9a7e6a20fd4d6dcfe745"
+  },
+  {
+    "record_type": "ExplanationObligation",
+    "schema_version": "HV-SCHEMA-2.0",
+    "record_id": "obligation-record-2",
+    "run_id": "run-v2-example",
+    "created_at": "2026-09-11T12:00:00Z",
+    "baseline_id": "baseline-1",
+    "obligation_id": "obligation-2",
+    "parent_record_id": null,
+    "concept_id": "concept-2",
+    "required_teaching_functions": [
+      "definition",
+      "contrast"
+    ],
+    "source_assessment": {
+      "status": "partial",
+      "evidence_span_ids": [
+        "span-2"
+      ]
+    },
+    "reader_rationale": "The reader must distinguish the nearby cases.",
+    "genre_rationale": "A survey must teach terminology before using it.",
+    "active": true,
+    "deactivation": null,
+    "fulfillment_status": "unassessed",
+    "fulfillment_evidence": [],
+    "obligation_spec_hash": "a3cc04222565d065c3c3a1fdf96716b528d234ab43ea819bed4e92f34b1010e9"
+  },
+  {
+    "record_type": "ConceptDependency",
+    "schema_version": "HV-SCHEMA-2.0",
+    "record_id": "dependency-record-1",
+    "run_id": "run-v2-example",
+    "created_at": "2026-09-11T12:00:00Z",
+    "baseline_id": "baseline-1",
+    "dependency_id": "dependency-1",
+    "prerequisite_concept_id": "concept-1",
+    "dependent_concept_id": "concept-2",
+    "relation": "prerequisite",
+    "rationale": "Continuity must be known before the distinction is explained.",
+    "preview_exemption": {
+      "active": false,
+      "reason": null,
+      "authorized_by": null
+    },
+    "review_status": "accepted"
+  },
+  {
+    "record_type": "ScaffoldingDisposition",
+    "schema_version": "HV-SCHEMA-2.0",
+    "record_id": "scaffolding-record-1",
+    "run_id": "run-v2-example",
+    "created_at": "2026-09-11T12:00:00Z",
+    "baseline_id": "baseline-1",
+    "disposition_id": "scaffolding-1",
+    "source_span_ids": [
+      "span-3"
+    ],
+    "disposition": "remove_nonconcept",
+    "reader_relevance_reason": "The text reports internal workflow state only.",
+    "embedded_concept_ids": [],
+    "backstage_target": null,
+    "review_status": "accepted",
+    "adjudication": {
+      "reviewer": "editor",
+      "reviewed_at": "2026-09-11T12:00:00Z",
+      "reason": "No domain meaning is present."
+    }
+  },
+  {
+    "record_type": "ConceptBaseline",
+    "schema_version": "HV-SCHEMA-2.0",
+    "record_id": "baseline-record-1",
+    "run_id": "run-v2-example",
+    "created_at": "2026-09-11T12:00:00Z",
+    "baseline_id": "baseline-1",
+    "snapshot_id": "snapshot-1",
+    "source_hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "humanization_brief_id": "brief-1",
+    "humanization_brief_hash": "02c482215fe4e79cec436f134ea2e871d46937848dbefb613b9696c8243c5039",
+    "parent_baseline_id": null,
+    "component_records": {
+      "source_spans": [
+        "span-1",
+        "span-2",
+        "span-3"
+      ],
+      "source_concepts": [
+        "concept-record-1",
+        "concept-record-2"
+      ],
+      "concept_dependencies": [
+        "dependency-record-1"
+      ],
+      "explanation_obligations": [
+        "obligation-record-1",
+        "obligation-record-2"
+      ],
+      "scaffolding_dispositions": [
+        "scaffolding-record-1"
+      ]
+    },
+    "component_hashes": {
+      "source_spans": "3bf7e90a8a8a6969b1b4e6875e94da9b51a5e94eefb20aa8f12c98c392ded701",
+      "source_concepts": "ebdedd8c203fc5ef2464beca2336cce215566dad0c4ac8bf84a29e47a787e0ed",
+      "concept_dependencies": "89aa23ccb3f716fafbdeb3a45b4ad6f28bf4d656ad69671c2f97ee256b88a3fb",
+      "explanation_obligations": "f1d74b1b9a03f3d5c4e51303bbba1ca465ef917934583da4af81c83cc6607a84",
+      "scaffolding_dispositions": "f8d2e40033bbb39aa4b32c3fbdc573e093807d59f48f2ffd9674aec044deed8c"
+    },
+    "component_counts": {
+      "source_spans": 3,
+      "reader_facing_spans": 2,
+      "source_concepts": 2,
+      "concept_dependencies": 1,
+      "active_explanation_obligations": 2,
+      "scaffolding_dispositions": 1
+    },
+    "partition": {
+      "source_bytes": 200,
+      "covered_bytes": 200,
+      "reader_facing_complete": true,
+      "non_overlapping": true,
+      "exact_hashes_verified": true
+    },
+    "coverage_reviews": {
+      "source_to_concepts": {
+        "critic_id": "critic-forward",
+        "critic_version": "1.0",
+        "prompt_hash": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+        "independent_of_extractor": true,
+        "verdict": "supported",
+        "finding_ids": []
+      },
+      "concepts_to_source": {
+        "critic_id": "critic-reverse",
+        "critic_version": "1.0",
+        "prompt_hash": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+        "independent_of_extractor": true,
+        "verdict": "supported",
+        "finding_ids": []
+      }
+    },
+    "unresolved": {
+      "span_ids": [],
+      "concept_ids": [],
+      "dependency_ids": [],
+      "obligation_ids": [],
+      "scaffolding_disposition_ids": []
+    },
+    "review_decision": {
+      "status": "frozen",
+      "reviewer": "baseline-reviewer",
+      "reviewed_at": "2026-09-11T12:00:00Z",
+      "reason": "All surfaced ambiguities were resolved and bidirectional coverage passed."
+    },
+    "frozen": true,
+    "frozen_at": "2026-09-11T12:00:00Z",
+    "baseline_hash": "6c62cce2d62f7ac652def8eefbb0f42f78daa8a49bb87d80369c0c2a664a7c53",
+    "lineage_reason": null
+  },
+  {
+    "record_type": "ProtectedManifest",
+    "schema_version": "HV-SCHEMA-2.0",
+    "record_id": "protected-record-1",
+    "run_id": "run-v2-example",
+    "created_at": "2026-09-11T12:00:00Z",
+    "source_hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "objects": [
+      {
+        "object_id": "eq_0",
+        "object_type": "equation",
+        "raw_form": "\\[ f(x) = \\max(x, 0) \\]",
+        "normalized_form": "f(x)=\\max(x,0)",
+        "location": {
+          "char_offset": 70,
+          "line": 4,
+          "column": 0,
+          "length": 24
+        },
+        "metadata": {
+          "environment": "displaymath"
+        }
+      }
+    ],
+    "parser_name": "fixture-parser",
+    "parser_version": "1.0",
+    "abstentions": [],
+    "comparison": null
+  },
+  {
+    "record_type": "RewriteUnit",
+    "schema_version": "HV-SCHEMA-2.0",
+    "record_id": "rewrite-unit-record-1",
+    "run_id": "run-v2-example",
+    "created_at": "2026-09-11T12:00:00Z",
+    "plan_id": "plan-1",
+    "baseline_id": "baseline-1",
+    "baseline_hash": "6c62cce2d62f7ac652def8eefbb0f42f78daa8a49bb87d80369c0c2a664a7c53",
+    "unit_id": "unit-1",
+    "unit_spec_hash": "f6eb0f574baaeb087746203304fd3ec200e9d6bd3a0be2a2bf3306c3004a9e1c",
+    "source_file": "main.tex",
+    "source_span_ids": [
+      "span-1"
+    ],
+    "source_hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "contiguous": true,
+    "concept_ids": [
+      "concept-1"
+    ],
+    "dependency_ids": [],
+    "explanation_obligation_ids": [
+      "obligation-1"
+    ],
+    "protected_object_ids": [],
+    "neighbor_context": {
+      "preceding_span_ids": [],
+      "following_span_ids": [
+        "span-2"
+      ],
+      "context_hash": "a44c77c1341e2756ceb45873a284777cfc76cb35895047fae378df99942f60a9"
+    },
+    "planned_operation": "expand",
+    "estimated_output_words": 450,
+    "segmentation_triggered": false,
+    "parent_unit_id": null,
+    "child_unit_ids": [],
+    "continuation_state": null,
+    "status": "ready"
+  },
+  {
+    "record_type": "RewriteUnit",
+    "schema_version": "HV-SCHEMA-2.0",
+    "record_id": "rewrite-unit-record-2",
+    "run_id": "run-v2-example",
+    "created_at": "2026-09-11T12:00:00Z",
+    "plan_id": "plan-1",
+    "baseline_id": "baseline-1",
+    "baseline_hash": "6c62cce2d62f7ac652def8eefbb0f42f78daa8a49bb87d80369c0c2a664a7c53",
+    "unit_id": "unit-2",
+    "unit_spec_hash": "629983e279e108d63bd87ea6adc4515a9eef7d190d7eabf410976db1037b84b3",
+    "source_file": "main.tex",
+    "source_span_ids": [
+      "span-2"
+    ],
+    "source_hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "contiguous": true,
+    "concept_ids": [
+      "concept-2"
+    ],
+    "dependency_ids": [
+      "dependency-1"
+    ],
+    "explanation_obligation_ids": [
+      "obligation-2"
+    ],
+    "protected_object_ids": [
+      "eq_0"
+    ],
+    "neighbor_context": {
+      "preceding_span_ids": [
+        "span-1"
+      ],
+      "following_span_ids": [],
+      "context_hash": "a06bea7dbc8b7a9bbf39862237cbf025c1466a6ac4b088148ed3907ea5b2ff6e"
+    },
+    "planned_operation": "expand",
+    "estimated_output_words": 450,
+    "segmentation_triggered": false,
+    "parent_unit_id": null,
+    "child_unit_ids": [],
+    "continuation_state": null,
+    "status": "ready"
+  },
+  {
+    "record_type": "ConceptDisposition",
+    "schema_version": "HV-SCHEMA-2.0",
+    "record_id": "concept-disposition-record-1",
+    "run_id": "run-v2-example",
+    "created_at": "2026-09-11T12:00:00Z",
+    "baseline_id": "baseline-1",
+    "baseline_hash": "6c62cce2d62f7ac652def8eefbb0f42f78daa8a49bb87d80369c0c2a664a7c53",
+    "plan_id": "plan-1",
+    "disposition_id": "concept-disposition-1",
+    "source_concept_ids": [
+      "concept-1"
+    ],
+    "rewrite_unit_ids": [
+      "unit-1"
+    ],
+    "operation": "expand",
+    "rationale": "Explain the concept more fully without changing its content.",
+    "planned_teaching_roles": [
+      "define"
+    ],
+    "review_status": "accepted"
+  },
+  {
+    "record_type": "Revision",
+    "schema_version": "HV-SCHEMA-2.0",
+    "record_id": "revision-record-1",
+    "run_id": "run-v2-example",
+    "created_at": "2026-09-11T12:00:00Z",
+    "revision_id": "revision-1",
+    "baseline_id": "baseline-1",
+    "baseline_hash": "6c62cce2d62f7ac652def8eefbb0f42f78daa8a49bb87d80369c0c2a664a7c53",
+    "snapshot_id": "snapshot-1",
+    "source_hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "parent_revision_id": null,
+    "parent_hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "child_hash": "1111111111111111111111111111111111111111111111111111111111111111",
+    "candidate_tree": "candidate/revision-1",
+    "patches": [
+      {
+        "patch_id": "patch-1",
+        "source_file": "main.tex",
+        "byte_start": 0,
+        "byte_end": 60,
+        "expected_text_hash": "2ba283c67dc55c35165dfd91e7b83c8a5e76ba54a54be3f19e20c07ba085de00",
+        "replacement_hash": "2222222222222222222222222222222222222222222222222222222222222222",
+        "operation": "replace",
+        "rewrite_unit_ids": [
+          "unit-1"
+        ],
+        "move_target": null
+      },
+      {
+        "patch_id": "patch-2",
+        "source_file": "main.tex",
+        "byte_start": 60,
+        "byte_end": 140,
+        "expected_text_hash": "8bae85ebb798b57a78b81a556d9aee858f2e6a9eb10e8d025789ce97e46b0748",
+        "replacement_hash": "8888888888888888888888888888888888888888888888888888888888888888",
+        "operation": "replace",
+        "rewrite_unit_ids": [
+          "unit-2"
+        ],
+        "move_target": null
+      }
+    ],
+    "untouched_bytes_verified": true,
+    "protected_comparison_path": "audit/protected.json",
+    "correspondence_paths": [
+      "audit/correspondence-1.json"
+    ],
+    "status": "accepted",
+    "decision_by": "editor",
+    "decision_at": "2026-09-11T12:00:00Z",
+    "failure_reasons": []
+  },
+  {
+    "record_type": "ConceptCorrespondence",
+    "schema_version": "HV-SCHEMA-2.0",
+    "record_id": "correspondence-record-1",
+    "run_id": "run-v2-example",
+    "created_at": "2026-09-11T12:00:00Z",
+    "baseline_id": "baseline-1",
+    "baseline_hash": "6c62cce2d62f7ac652def8eefbb0f42f78daa8a49bb87d80369c0c2a664a7c53",
+    "revision_id": "revision-1",
+    "candidate_hash": "1111111111111111111111111111111111111111111111111111111111111111",
+    "correspondence_id": "correspondence-1",
+    "source_concept_ids": [
+      "concept-1"
+    ],
+    "operation": "expand",
+    "output_spans": [
+      {
+        "output_file": "main.tex",
+        "byte_start": 0,
+        "byte_end": 120,
+        "text_hash": "8d063082f0d0111f15ee43caf8cd73b679e496f581ae3cb76487073e80fe9d83",
+        "teaching_roles": [
+          "define"
+        ]
+      }
+    ],
+    "rationale": "The revised passage states and explains the same content.",
+    "writer_report": {
+      "claimed_complete": true
+    },
+    "verifier": {
+      "critic_id": "retention-critic",
+      "critic_kind": "deterministic",
+      "prompt_hash": null,
+      "model_or_rule_version": "1.0",
+      "independent_of_writer": true,
+      "calibration_record_id": null
+    },
+    "verdict": "supported",
+    "verdict_reason": "The continuity criterion is defined in the output.",
+    "unresolved_reason": null
+  },
+  {
+    "record_type": "ConceptCorrespondence",
+    "schema_version": "HV-SCHEMA-2.0",
+    "record_id": "correspondence-record-2",
+    "run_id": "run-v2-example",
+    "created_at": "2026-09-11T12:00:00Z",
+    "baseline_id": "baseline-1",
+    "baseline_hash": "6c62cce2d62f7ac652def8eefbb0f42f78daa8a49bb87d80369c0c2a664a7c53",
+    "revision_id": "revision-1",
+    "candidate_hash": "1111111111111111111111111111111111111111111111111111111111111111",
+    "correspondence_id": "correspondence-2",
+    "source_concept_ids": [
+      "concept-2"
+    ],
+    "operation": "expand",
+    "output_spans": [
+      {
+        "output_file": "main.tex",
+        "byte_start": 120,
+        "byte_end": 320,
+        "text_hash": "33f9553f50f36f797729dde2f36cce2746ab837312b4f2145c71eb6304b2dbe8",
+        "teaching_roles": [
+          "define",
+          "contrast"
+        ]
+      }
+    ],
+    "rationale": "The revised passage states and explains the same content.",
+    "writer_report": {
+      "claimed_complete": true
+    },
+    "verifier": {
+      "critic_id": "retention-critic",
+      "critic_kind": "deterministic",
+      "prompt_hash": null,
+      "model_or_rule_version": "1.0",
+      "independent_of_writer": true,
+      "calibration_record_id": null
+    },
+    "verdict": "supported",
+    "verdict_reason": "Both cases and the continuity criterion are located in the output.",
+    "unresolved_reason": null
+  },
+  {
+    "record_type": "SemanticPreflightResult",
+    "schema_version": "HV-SCHEMA-2.0",
+    "record_id": "preflight-record-1",
+    "run_id": "run-v2-example",
+    "created_at": "2026-09-11T12:00:00Z",
+    "preflight_id": "preflight-1",
+    "baseline_id": "baseline-1",
+    "baseline_hash": "6c62cce2d62f7ac652def8eefbb0f42f78daa8a49bb87d80369c0c2a664a7c53",
+    "revision_id": "revision-1",
+    "candidate_hash": "1111111111111111111111111111111111111111111111111111111111111111",
+    "critic_records": [
+      {
+        "critic_id": "deterministic-critic",
+        "critic_kind": "deterministic",
+        "version": "1.0",
+        "prompt_hash": null,
+        "independent_of_writer": true,
+        "calibration_record_id": null
+      }
+    ],
+    "source_span_coverage": {
+      "status": "pass",
+      "checked_ids": [
+        "check-1"
+      ],
+      "failed_ids": [],
+      "unresolved_ids": [],
+      "evidence_paths": [
+        "audit/check-1.json"
+      ],
+      "verifier_ids": [
+        "deterministic-critic"
+      ]
+    },
+    "concept_coverage": {
+      "status": "pass",
+      "checked_ids": [
+        "concept-1",
+        "concept-2"
+      ],
+      "failed_ids": [],
+      "unresolved_ids": [],
+      "evidence_paths": [
+        "audit/check-1.json"
+      ],
+      "verifier_ids": [
+        "deterministic-critic"
+      ],
+      "frozen_concept_count": 2,
+      "supported_concept_count": 2,
+      "retention": 1.0
+    },
+    "obligation_fulfillment": {
+      "status": "pass",
+      "checked_ids": [
+        "check-1"
+      ],
+      "failed_ids": [],
+      "unresolved_ids": [],
+      "evidence_paths": [
+        "audit/check-1.json"
+      ],
+      "verifier_ids": [
+        "deterministic-critic"
+      ]
+    },
+    "dependency_order": {
+      "status": "pass",
+      "checked_ids": [
+        "check-1"
+      ],
+      "failed_ids": [],
+      "unresolved_ids": [],
+      "evidence_paths": [
+        "audit/check-1.json"
+      ],
+      "verifier_ids": [
+        "deterministic-critic"
+      ]
+    },
+    "unsupported_additions": {
+      "status": "pass",
+      "checked_ids": [
+        "check-1"
+      ],
+      "failed_ids": [],
+      "unresolved_ids": [],
+      "evidence_paths": [
+        "audit/check-1.json"
+      ],
+      "verifier_ids": [
+        "deterministic-critic"
+      ]
+    },
+    "scaffolding": {
+      "status": "pass",
+      "checked_ids": [
+        "check-1"
+      ],
+      "failed_ids": [],
+      "unresolved_ids": [],
+      "evidence_paths": [
+        "audit/check-1.json"
+      ],
+      "verifier_ids": [
+        "deterministic-critic"
+      ]
+    },
+    "exact_object_integrity": {
+      "status": "pass",
+      "checked_ids": [
+        "check-1"
+      ],
+      "failed_ids": [],
+      "unresolved_ids": [],
+      "evidence_paths": [
+        "audit/check-1.json"
+      ],
+      "verifier_ids": [
+        "deterministic-critic"
+      ]
+    },
+    "build_integrity": {
+      "status": "pass",
+      "checked_ids": [
+        "check-1"
+      ],
+      "failed_ids": [],
+      "unresolved_ids": [],
+      "evidence_paths": [
+        "audit/check-1.json"
+      ],
+      "verifier_ids": [
+        "deterministic-critic"
+      ]
+    },
+    "blocking_finding_ids": [],
+    "unresolved_finding_ids": [],
+    "diagnostic_finding_ids": [],
+    "adjudication_status": "not_required",
+    "adjudication_ids": [],
+    "status": "pass"
+  }
+]

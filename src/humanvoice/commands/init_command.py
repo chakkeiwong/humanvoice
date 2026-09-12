@@ -24,16 +24,21 @@ def _hash_file(path: Path) -> str:
     return digest.hexdigest()
 
 
-def _validate_brief(brief: dict) -> tuple[bool, list[str]]:
-    """
-    Validate reader brief completeness.
+def _is_v2_brief(brief: dict) -> bool:
+    """True when the file declares itself a v2 HumanizationBrief."""
+    return brief.get("record_type") == "HumanizationBrief"
 
-    Required fields per implementation contract §5.1:
-    - reader_role: who will make the decision
-    - decision_type: what kind of decision
-    - time_available_minutes: reading budget
-    - prior_knowledge: what the reader already knows
-    - success_criteria: what makes a good outcome
+
+def _validate_v1_brief(brief: dict) -> tuple[bool, list[str]]:
+    """Validate a legacy v1 reader brief.
+
+    Retained only so existing v1 snapshots and their tests keep working during
+    migration. A v1 brief cannot authorize a v2 humanization run: it has no
+    genre, no voice constraints, no protected-object policy, no evidence
+    boundary, and no recorded authorizing action.
+
+    Note `time_available_minutes`, which v2 drops deliberately. A reading-time
+    budget invites shortening a document to fit it, and v2 has no length target.
     """
     required = ['reader_role', 'decision_type', 'time_available_minutes',
                 'prior_knowledge', 'success_criteria']
@@ -54,6 +59,25 @@ def _validate_brief(brief: dict) -> tuple[bool, list[str]]:
             errors.append("time_available_minutes must be an integer")
 
     return len(errors) == 0, errors
+
+
+def _validate_brief(brief: dict) -> tuple[bool, list[str]]:
+    """Validate a brief through the one definition that applies to it.
+
+    A v2 brief is checked against schemas/humanization-brief.schema.json via
+    the shared registry, so the command and the schema can no longer disagree
+    about what a brief is. Anything else falls back to the v1 field check and
+    is treated as legacy.
+    """
+    if _is_v2_brief(brief):
+        from humanvoice.brief import assess_brief
+
+        assessment = assess_brief(brief)
+        return (
+            assessment.ready_for_rewrite,
+            assessment.errors + assessment.critical_blanks,
+        )
+    return _validate_v1_brief(brief)
 
 
 def run(args) -> int:

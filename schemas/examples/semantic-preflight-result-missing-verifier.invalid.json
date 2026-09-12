@@ -1,0 +1,54 @@
+{
+  "record_type": "SemanticPreflightResult",
+  "schema_version": "HV-SCHEMA-2.0",
+  "record_id": "preflight-record-1",
+  "run_id": "run-v2-example",
+  "created_at": "2026-09-11T12:00:00Z",
+  "preflight_id": "preflight-1",
+  "baseline_id": "baseline-1",
+  "baseline_hash": "6c62cce2d62f7ac652def8eefbb0f42f78daa8a49bb87d80369c0c2a664a7c53",
+  "revision_id": "revision-1",
+  "candidate_hash": "1111111111111111111111111111111111111111111111111111111111111111",
+  "critic_records": [],
+  "source_span_coverage": {
+    "status": "pass",
+    "checked_ids": ["check-1"],
+    "failed_ids": [],
+    "unresolved_ids": [],
+    "evidence_paths": ["audit/check-1.json"],
+    "verifier_ids": []
+  },
+  "concept_coverage": {
+    "status": "pass",
+    "checked_ids": ["concept-1"],
+    "failed_ids": [],
+    "unresolved_ids": [],
+    "evidence_paths": [],
+    "verifier_ids": ["deterministic-critic"],
+    "frozen_concept_count": 2,
+    "supported_concept_count": 1,
+    "retention": 0.5
+  },
+  "obligation_fulfillment": {
+    "status": "pass",
+    "checked_ids": ["check-1"],
+    "failed_ids": [],
+    "unresolved_ids": [],
+    "evidence_paths": [],
+    "verifier_ids": ["deterministic-critic"]
+  },
+  "dependency_order": {
+    "status": "pass",
+    "checked_ids": [],
+    "failed_ids": [],
+    "unresolved_ids": [],
+    "evidence_paths": [],
+    "verifier_ids": []
+  },
+  "blocking_finding_ids": [],
+  "unresolved_finding_ids": [],
+  "diagnostic_finding_ids": [],
+  "adjudication_status": "not_required",
+  "adjudication_ids": [],
+  "status": "pass"
+}

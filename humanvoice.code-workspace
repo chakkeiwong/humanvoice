@@ -5,6 +5,9 @@
 		},
 		{
 			"path": "../claudecodex"
+		},
+		{
+			"path": "../cardnpv"
 		}
 	],
 	"settings": {}

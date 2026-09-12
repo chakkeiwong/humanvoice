@@ -1,13 +1,13 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://humanvoice.local/schema/evidence-item.schema.json",
-  "title": "Humanvoice evidence item",
-  "description": "A source or software observation tied to a claim, a fixture, or a product choice, with provenance and appraisal state. Per architecture §2: an evidence item may motivate a finding rule or a reader question, but it cannot silently alter a document. Per release_authority, missing critical evidence for a load-bearing claim is a never-except condition.",
+  "$id": "https://humanvoice.local/schema/v2/evidence-item.schema.json",
+  "title": "Humanvoice v2 evidence item",
+  "description": "A source or software observation tied to a concept, claim, fixture, or product choice, with provenance and appraisal state.",
   "type": "object",
   "required": ["record_type", "schema_version", "record_id", "run_id", "created_at", "source_path_or_url", "source_hash", "observation", "provenance", "appraisal_state", "supports"],
   "properties": {
     "record_type": {"const": "EvidenceItem"},
-    "schema_version": {"type": "string", "pattern": "^HV-SCHEMA-[0-9]+\\.[0-9]+$"},
+    "schema_version": {"type": "string", "pattern": "^HV-SCHEMA-2\\.[0-9]+$"},
     "record_id": {"type": "string", "minLength": 1},
     "run_id": {"type": "string", "minLength": 1},
     "created_at": {"type": "string", "format": "date-time"},
@@ -65,7 +65,7 @@
         "properties": {
           "target_kind": {
             "type": "string",
-            "enum": ["claim", "fixture", "product-choice", "finding-rule", "reader-question"],
+            "enum": ["claim", "concept", "explanation-obligation", "fixture", "product-choice", "finding-rule", "reader-question"],
             "description": "What this evidence is tied to"
           },
           "target_id": {"type": "string", "minLength": 1},

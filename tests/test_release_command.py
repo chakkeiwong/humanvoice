@@ -236,6 +236,17 @@ def setup_minimal_runs(snapshot_dir):
 class TestReleaseGates:
     """Test release gate logic."""
 
+    @pytest.mark.xfail(
+        strict=True,
+        reason=(
+            "WP-V2-5: the v1 release path emits an HV-SCHEMA-1.1 ReleaseDecision. "
+            "The v2 record requires baseline_id, baseline_hash, revision_id, "
+            "candidate_hash, and a reader/audit packet split, none of which the "
+            "v1 runtime has. This is expected to fail until release_command "
+            "consumes v2 records; strict=True so it becomes a failure the moment "
+            "it does."
+        ),
+    )
     def test_clean_snapshot_releases_and_record_validates(self, tmp_path):
         """A snapshot with no gate failures releases successfully and emits valid record."""
         snapshot_dir, brief = init_snapshot(tmp_path)

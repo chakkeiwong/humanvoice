@@ -1,0 +1,26 @@
+{
+  "fixture_id": "zlb-unit-005",
+  "fixture_type": "unit",
+  "source_text": "The Taylor rule suggests that central banks should adjust interest rates based on deviations of inflation from target and output from potential. However, this prescription breaks down when the computed rate falls below zero.",
+  "concepts": [
+    "taylor-rule",
+    "interest-rate-adjustment",
+    "inflation-targeting",
+    "output-gap",
+    "policy-prescription-failure"
+  ],
+  "obligations": [
+    {
+      "type": "definition",
+      "target": "taylor-rule"
+    },
+    {
+      "type": "example",
+      "target": "policy-prescription-failure"
+    }
+  ],
+  "protected_objects": [],
+  "expected_concept_retention": 1.0,
+  "description": "Test policy rule framework with constraint violation",
+  "rationale": "Tests handling of established frameworks encountering ZLB constraint"
+}

@@ -1,0 +1,35 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://humanvoice.local/schema/v2/explanation-obligation.schema.json",
+  "title": "Humanvoice v2 explanation obligation",
+  "$comment": "The shared record validator requires supported output evidence for every required teaching function before fulfillment is accepted and validates all byte ranges.",
+  "type": "object",
+  "required": ["record_type", "schema_version", "record_id", "run_id", "created_at", "baseline_id", "obligation_id", "obligation_spec_hash", "parent_record_id", "concept_id", "required_teaching_functions", "source_assessment", "reader_rationale", "genre_rationale", "active", "deactivation", "fulfillment_status", "fulfillment_evidence"],
+  "properties": {
+    "record_type": {"const": "ExplanationObligation"},
+    "schema_version": {"type": "string", "pattern": "^HV-SCHEMA-2\\.[0-9]+$"},
+    "record_id": {"type": "string", "minLength": 1},
+    "run_id": {"type": "string", "minLength": 1},
+    "created_at": {"type": "string", "format": "date-time"},
+    "baseline_id": {"type": "string", "minLength": 1},
+    "obligation_id": {"type": "string", "minLength": 1},
+    "obligation_spec_hash": {"type": "string", "pattern": "^[A-Fa-f0-9]{64}$"},
+    "parent_record_id": {"type": ["string", "null"]},
+    "concept_id": {"type": "string", "minLength": 1},
+    "required_teaching_functions": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"enum": ["definition", "motivation", "mechanism", "assumption", "intermediate_derivation", "interpretation", "qualification", "contrast", "example", "counterexample", "limiting_case", "visual_relation"]}},
+    "source_assessment": {"type": "object", "required": ["status", "evidence_span_ids"], "properties": {"status": {"enum": ["adequate", "partial", "missing", "unresolved"]}, "evidence_span_ids": {"type": "array", "items": {"type": "string", "minLength": 1}, "uniqueItems": true}}, "additionalProperties": false},
+    "reader_rationale": {"type": "string", "minLength": 1},
+    "genre_rationale": {"type": "string", "minLength": 1},
+    "active": {"type": "boolean"},
+    "deactivation": {"type": ["object", "null"], "properties": {"reason": {"type": "string", "minLength": 1}, "adjudicated_by": {"type": "string", "minLength": 1}, "adjudicated_at": {"type": "string", "format": "date-time"}}, "required": ["reason", "adjudicated_by", "adjudicated_at"], "additionalProperties": false},
+    "fulfillment_status": {"enum": ["unassessed", "fulfilled", "unmet", "unresolved", "not_applicable"]},
+    "fulfillment_evidence": {"type": "array", "items": {"type": "object", "required": ["teaching_function", "output_file", "byte_start", "byte_end", "text_hash", "critic_id", "verdict"], "properties": {"teaching_function": {"enum": ["definition", "motivation", "mechanism", "assumption", "intermediate_derivation", "interpretation", "qualification", "contrast", "example", "counterexample", "limiting_case", "visual_relation"]}, "output_file": {"type": "string", "minLength": 1}, "byte_start": {"type": "integer", "minimum": 0}, "byte_end": {"type": "integer", "minimum": 1}, "text_hash": {"type": "string", "pattern": "^[A-Fa-f0-9]{64}$"}, "critic_id": {"type": "string", "minLength": 1}, "verdict": {"enum": ["supported", "contradicted", "unresolved"]}}, "additionalProperties": false}},
+    "extensions": {"type": "object"}
+  },
+  "allOf": [
+    {"if": {"properties": {"active": {"const": true}}}, "then": {"properties": {"deactivation": {"type": "null"}, "fulfillment_status": {"not": {"const": "not_applicable"}}}}},
+    {"if": {"properties": {"active": {"const": false}}}, "then": {"properties": {"deactivation": {"type": "object"}, "fulfillment_status": {"const": "not_applicable"}, "fulfillment_evidence": {"maxItems": 0}}}},
+    {"if": {"properties": {"fulfillment_status": {"const": "fulfilled"}}}, "then": {"properties": {"active": {"const": true}, "fulfillment_evidence": {"minItems": 1, "items": {"properties": {"verdict": {"const": "supported"}}}}}}}
+  ],
+  "additionalProperties": false
+}

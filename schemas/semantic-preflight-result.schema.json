@@ -1,0 +1,49 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://humanvoice.local/schema/v2/semantic-preflight-result.schema.json",
+  "title": "Humanvoice v2 semantic preflight result",
+  "$comment": "The shared record validator verifies that pass means exact 1.0 retention, every check passes, every active obligation is supported, model critics are calibrated, and no blocking or unresolved ID remains.",
+  "type": "object",
+  "required": ["record_type", "schema_version", "record_id", "run_id", "created_at", "preflight_id", "baseline_id", "baseline_hash", "revision_id", "candidate_hash", "critic_records", "source_span_coverage", "concept_coverage", "obligation_fulfillment", "dependency_order", "unsupported_additions", "scaffolding", "exact_object_integrity", "build_integrity", "blocking_finding_ids", "unresolved_finding_ids", "diagnostic_finding_ids", "adjudication_status", "adjudication_ids", "status"],
+  "properties": {
+    "record_type": {"const": "SemanticPreflightResult"},
+    "schema_version": {"type": "string", "pattern": "^HV-SCHEMA-2\\.[0-9]+$"},
+    "record_id": {"type": "string", "minLength": 1},
+    "run_id": {"type": "string", "minLength": 1},
+    "created_at": {"type": "string", "format": "date-time"},
+    "preflight_id": {"type": "string", "minLength": 1},
+    "baseline_id": {"type": "string", "minLength": 1},
+    "baseline_hash": {"type": "string", "pattern": "^[A-Fa-f0-9]{64}$"},
+    "revision_id": {"type": "string", "minLength": 1},
+    "candidate_hash": {"type": "string", "pattern": "^[A-Fa-f0-9]{64}$"},
+    "critic_records": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/critic"}},
+    "source_span_coverage": {"$ref": "#/$defs/check"},
+    "concept_coverage": {"$ref": "#/$defs/concept_check"},
+    "obligation_fulfillment": {"$ref": "#/$defs/check"},
+    "dependency_order": {"$ref": "#/$defs/check"},
+    "unsupported_additions": {"$ref": "#/$defs/check"},
+    "scaffolding": {"$ref": "#/$defs/check"},
+    "exact_object_integrity": {"$ref": "#/$defs/check"},
+    "build_integrity": {"$ref": "#/$defs/check"},
+    "blocking_finding_ids": {"$ref": "#/$defs/ids"},
+    "unresolved_finding_ids": {"$ref": "#/$defs/ids"},
+    "diagnostic_finding_ids": {"$ref": "#/$defs/ids"},
+    "adjudication_status": {"enum": ["not_required", "pending", "complete"]},
+    "adjudication_ids": {"$ref": "#/$defs/ids"},
+    "status": {"enum": ["pass", "blocked", "unresolved"]},
+    "extensions": {"type": "object"}
+  },
+  "$defs": {
+    "ids": {"type": "array", "items": {"type": "string", "minLength": 1}, "uniqueItems": true},
+    "critic": {"type": "object", "required": ["critic_id", "critic_kind", "version", "prompt_hash", "independent_of_writer", "calibration_record_id"], "properties": {"critic_id": {"type": "string", "minLength": 1}, "critic_kind": {"enum": ["deterministic", "model", "human"]}, "version": {"type": "string", "minLength": 1}, "prompt_hash": {"type": ["string", "null"], "pattern": "^[A-Fa-f0-9]{64}$"}, "independent_of_writer": {"const": true}, "calibration_record_id": {"type": ["string", "null"]}}, "additionalProperties": false},
+    "check": {"type": "object", "required": ["status", "checked_ids", "failed_ids", "unresolved_ids", "evidence_paths", "verifier_ids"], "properties": {"status": {"enum": ["pass", "fail", "unresolved"]}, "checked_ids": {"$ref": "#/$defs/ids"}, "failed_ids": {"$ref": "#/$defs/ids"}, "unresolved_ids": {"$ref": "#/$defs/ids"}, "evidence_paths": {"type": "array", "items": {"type": "string", "minLength": 1}}, "verifier_ids": {"$ref": "#/$defs/ids"}}, "additionalProperties": false},
+    "concept_check": {"type": "object", "required": ["status", "checked_ids", "failed_ids", "unresolved_ids", "evidence_paths", "verifier_ids", "frozen_concept_count", "supported_concept_count", "retention"], "properties": {"status": {"enum": ["pass", "fail", "unresolved"]}, "checked_ids": {"$ref": "#/$defs/ids"}, "failed_ids": {"$ref": "#/$defs/ids"}, "unresolved_ids": {"$ref": "#/$defs/ids"}, "evidence_paths": {"type": "array", "items": {"type": "string", "minLength": 1}}, "verifier_ids": {"$ref": "#/$defs/ids"}, "frozen_concept_count": {"type": "integer", "minimum": 1}, "supported_concept_count": {"type": "integer", "minimum": 0}, "retention": {"type": "number", "minimum": 0, "maximum": 1}}, "additionalProperties": false},
+    "passing_check": {"properties": {"status": {"const": "pass"}, "failed_ids": {"maxItems": 0}, "unresolved_ids": {"maxItems": 0}, "evidence_paths": {"minItems": 1}, "verifier_ids": {"minItems": 1}}},
+    "passing_concept_check": {"properties": {"status": {"const": "pass"}, "failed_ids": {"maxItems": 0}, "unresolved_ids": {"maxItems": 0}, "evidence_paths": {"minItems": 1}, "verifier_ids": {"minItems": 1}, "retention": {"const": 1.0}}}
+  },
+  "allOf": [
+    {"if": {"properties": {"status": {"const": "pass"}}}, "then": {"properties": {"source_span_coverage": {"$ref": "#/$defs/passing_check"}, "concept_coverage": {"$ref": "#/$defs/passing_concept_check"}, "obligation_fulfillment": {"$ref": "#/$defs/passing_check"}, "dependency_order": {"$ref": "#/$defs/passing_check"}, "unsupported_additions": {"$ref": "#/$defs/passing_check"}, "scaffolding": {"$ref": "#/$defs/passing_check"}, "exact_object_integrity": {"$ref": "#/$defs/passing_check"}, "build_integrity": {"$ref": "#/$defs/passing_check"}, "blocking_finding_ids": {"maxItems": 0}, "unresolved_finding_ids": {"maxItems": 0}, "adjudication_status": {"enum": ["not_required", "complete"]}}}},
+    {"if": {"properties": {"critic_records": {"contains": {"properties": {"critic_kind": {"const": "model"}}, "required": ["critic_kind"]}}}}, "then": {"properties": {"critic_records": {"items": {"if": {"properties": {"critic_kind": {"const": "model"}}}, "then": {"properties": {"prompt_hash": {"type": "string", "pattern": "^[A-Fa-f0-9]{64}$"}, "calibration_record_id": {"type": "string", "minLength": 1}}}}}}}}
+  ],
+  "additionalProperties": false
+}

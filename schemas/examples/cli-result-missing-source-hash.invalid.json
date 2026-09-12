@@ -1,14 +1,17 @@
 {
   "record_type": "CliResult",
-  "schema_version": "HV-SCHEMA-1.0",
-  "record_id": "cli-result-invalid-001",
-  "run_id": "run-invalid-002",
-  "created_at": "2026-08-26T00:00:00Z",
-  "contract_version": "HV-IC-2026-08-26",
+  "schema_version": "HV-SCHEMA-2.0",
+  "record_id": "cli-record-1",
+  "run_id": "run-v2-example",
+  "created_at": "2026-09-11T12:00:00Z",
+  "contract_id": "HV-IC-2026-09-11",
+  "contract_version": "2.0.0",
   "command": "hv preflight",
   "status": "pass",
   "exit_code": 0,
-  "record_paths": [],
+  "record_paths": [
+    "audit/preflight.json"
+  ],
   "blocking_reasons": [],
-  "result_hash": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+  "result_hash": "fe49b264ce2c12e9e9fe72dd315717ad99c840f420955a78f51e0d20fe5f5024"
 }

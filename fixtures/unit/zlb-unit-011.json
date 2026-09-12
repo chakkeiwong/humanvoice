@@ -1,0 +1,25 @@
+{
+  "fixture_id": "zlb-unit-011",
+  "fixture_type": "unit",
+  "source_text": "Japan's experience in the 1990s provided the first modern case study of prolonged operation at the zero lower bound, demonstrating both the difficulty of escaping deflationary pressures and the limited effectiveness of conventional policy tools.",
+  "concepts": [
+    "japan-1990s-case",
+    "prolonged-zlb-episode",
+    "deflationary-persistence",
+    "policy-tool-limitations"
+  ],
+  "obligations": [
+    {
+      "type": "example",
+      "target": "prolonged-zlb-episode"
+    },
+    {
+      "type": "evidence",
+      "target": "policy-tool-limitations"
+    }
+  ],
+  "protected_objects": [],
+  "expected_concept_retention": 1.0,
+  "description": "Test historical case study with empirical lessons",
+  "rationale": "Tests handling of historical evidence supporting theoretical claims"
+}

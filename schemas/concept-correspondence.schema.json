@@ -1,0 +1,37 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://humanvoice.local/schema/v2/concept-correspondence.schema.json",
+  "title": "Humanvoice v2 verified concept correspondence",
+  "$comment": "The shared record validator checks output byte ranges, verifies hashes, enforces complete forward and reverse coverage, and rejects a writer as its own verifier. A missing output is recorded with an allowed planned operation and a contradicted verdict; omission is not an operation.",
+  "type": "object",
+  "required": ["record_type", "schema_version", "record_id", "run_id", "created_at", "baseline_id", "baseline_hash", "revision_id", "candidate_hash", "correspondence_id", "source_concept_ids", "operation", "output_spans", "rationale", "writer_report", "verifier", "verdict", "verdict_reason", "unresolved_reason"],
+  "properties": {
+    "record_type": {"const": "ConceptCorrespondence"},
+    "schema_version": {"type": "string", "pattern": "^HV-SCHEMA-2\\.[0-9]+$"},
+    "record_id": {"type": "string", "minLength": 1},
+    "run_id": {"type": "string", "minLength": 1},
+    "created_at": {"type": "string", "format": "date-time"},
+    "baseline_id": {"type": "string", "minLength": 1},
+    "baseline_hash": {"type": "string", "pattern": "^[A-Fa-f0-9]{64}$"},
+    "revision_id": {"type": "string", "minLength": 1},
+    "candidate_hash": {"type": "string", "pattern": "^[A-Fa-f0-9]{64}$"},
+    "correspondence_id": {"type": "string", "minLength": 1},
+    "source_concept_ids": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1}, "uniqueItems": true},
+    "operation": {"enum": ["retain", "paraphrase", "expand", "merge", "split", "reorder"]},
+    "output_spans": {"type": "array", "items": {"type": "object", "required": ["output_file", "byte_start", "byte_end", "text_hash", "teaching_roles"], "properties": {"output_file": {"type": "string", "minLength": 1}, "byte_start": {"type": "integer", "minimum": 0}, "byte_end": {"type": "integer", "minimum": 1}, "text_hash": {"type": "string", "pattern": "^[A-Fa-f0-9]{64}$"}, "teaching_roles": {"type": "array", "minItems": 1, "items": {"enum": ["introduce", "define", "motivate", "derive", "illustrate", "contrast", "qualify", "interpret", "recall", "transition", "other"]}}}, "additionalProperties": false}},
+    "rationale": {"type": "string", "minLength": 1},
+    "writer_report": {"type": ["object", "null"]},
+    "verifier": {"type": "object", "required": ["critic_id", "critic_kind", "prompt_hash", "model_or_rule_version", "independent_of_writer", "calibration_record_id"], "properties": {"critic_id": {"type": "string", "minLength": 1}, "critic_kind": {"enum": ["deterministic", "model", "human"]}, "prompt_hash": {"type": ["string", "null"], "pattern": "^[A-Fa-f0-9]{64}$"}, "model_or_rule_version": {"type": "string", "minLength": 1}, "independent_of_writer": {"const": true}, "calibration_record_id": {"type": ["string", "null"]}}, "additionalProperties": false},
+    "verdict": {"enum": ["supported", "contradicted", "unresolved"]},
+    "verdict_reason": {"type": "string", "minLength": 1},
+    "unresolved_reason": {"type": ["string", "null"]},
+    "extensions": {"type": "object"}
+  },
+  "allOf": [
+    {"if": {"properties": {"verdict": {"const": "supported"}}}, "then": {"properties": {"output_spans": {"minItems": 1}, "unresolved_reason": {"type": "null"}}}},
+    {"if": {"properties": {"verdict": {"const": "unresolved"}}}, "then": {"properties": {"unresolved_reason": {"type": "string", "minLength": 1}}}},
+    {"if": {"properties": {"verdict": {"const": "contradicted"}}}, "then": {"properties": {"unresolved_reason": {"type": "null"}}}},
+    {"if": {"properties": {"verifier": {"properties": {"critic_kind": {"const": "model"}}}}}, "then": {"properties": {"verifier": {"properties": {"prompt_hash": {"type": "string", "pattern": "^[A-Fa-f0-9]{64}$"}, "calibration_record_id": {"type": "string", "minLength": 1}}}}}}
+  ],
+  "additionalProperties": false
+}

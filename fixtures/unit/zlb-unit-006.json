@@ -1,0 +1,30 @@
+{
+  "fixture_id": "zlb-unit-006",
+  "fixture_type": "unit",
+  "source_text": "Deflationary spirals pose particular risks at the zero lower bound. As prices fall, real interest rates rise even when nominal rates are constrained at zero, further depressing aggregate demand and creating a self-reinforcing cycle.",
+  "concepts": [
+    "deflationary-spiral",
+    "real-interest-rates",
+    "nominal-rates",
+    "aggregate-demand",
+    "self-reinforcing-dynamics"
+  ],
+  "obligations": [
+    {
+      "type": "definition",
+      "target": "deflationary-spiral"
+    },
+    {
+      "type": "mechanism",
+      "target": "self-reinforcing-dynamics"
+    },
+    {
+      "type": "causal_chain",
+      "target": "deflationary-spiral"
+    }
+  ],
+  "protected_objects": [],
+  "expected_concept_retention": 1.0,
+  "description": "Test complex causal mechanism with feedback loops",
+  "rationale": "Tests handling of multi-step causal reasoning and dynamic interactions"
+}

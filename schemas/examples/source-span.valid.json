@@ -1,0 +1,24 @@
+{
+  "record_type": "SourceSpan",
+  "schema_version": "HV-SCHEMA-2.0",
+  "record_id": "span-1",
+  "run_id": "run-v2-example",
+  "created_at": "2026-09-11T12:00:00Z",
+  "snapshot_id": "snapshot-1",
+  "source_hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+  "source_file": "main.tex",
+  "byte_start": 0,
+  "byte_end": 60,
+  "line_start": 1,
+  "line_end": 2,
+  "exact_text_hash": "2ba283c67dc55c35165dfd91e7b83c8a5e76ba54a54be3f19e20c07ba085de00",
+  "span_kind": "prose",
+  "reader_facing": true,
+  "structural_parent_id": null,
+  "coverage_disposition": "concept_bearing",
+  "concept_ids": [
+    "concept-1"
+  ],
+  "protected_object_ids": [],
+  "scaffolding_disposition_ids": []
+}

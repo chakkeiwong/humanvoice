@@ -314,12 +314,33 @@ class TestDocumentBudgetGate:
         }))
         return snapshot_dir
 
+    def _profile(self, tmp_path, max_input, max_output):
+        """
+        Pin the caps this test reasons about.
+
+        The gate reads the live inference profile, whose real caps track the
+        largest manuscript the product supports and change as that support
+        grows. A cost-gate test must not depend on those production numbers:
+        it is testing accumulation and reporting, not the current ceiling.
+        """
+        profile = tmp_path / "inference_profile.json"
+        profile.write_text(json.dumps({
+            "budget": {
+                "max_document_input_tokens": max_input,
+                "max_document_output_tokens": max_output,
+            }
+        }))
+        return patch(
+            "humanvoice.commands.release_command.PROFILE_PATH", profile
+        )
+
     def test_blocks_on_output_and_input_overrun(self, tmp_path):
         snapshot_dir = self._runtime_manifest(
             tmp_path / "snapshot", "s1", "inference", 300000, 120000
         )
 
-        block = check_document_budget(snapshot_dir)
+        with self._profile(tmp_path, 250000, 100000):
+            block = check_document_budget(snapshot_dir)
 
         assert block is not None
         assert block["reason"] == "document_budget_exceeded"
@@ -330,7 +351,8 @@ class TestDocumentBudgetGate:
         snapshot_dir = self._runtime_manifest(
             tmp_path / "snapshot", "s1", "inference", 10000, 3000
         )
-        assert check_document_budget(snapshot_dir) is None
+        with self._profile(tmp_path, 250000, 100000):
+            assert check_document_budget(snapshot_dir) is None
 
     def test_accumulates_across_units(self, tmp_path):
         """
@@ -342,11 +364,27 @@ class TestDocumentBudgetGate:
         for i in range(3):
             self._runtime_manifest(snapshot_dir, f"s{i}", "inference", 5000, 40000)
 
-        block = check_document_budget(snapshot_dir)
+        with self._profile(tmp_path, 250000, 100000):
+            block = check_document_budget(snapshot_dir)
 
         assert block is not None
         assert block["units_counted"] == 3
         assert block["total_output_tokens"] == 120000
+
+    def test_live_profile_caps_are_operational_not_prose_targets(self, tmp_path):
+        """
+        The real profile's caps must be high enough that an ordinary humanized
+        manuscript never trips them. A cap low enough to bite during normal
+        work becomes a de facto length target, which is exactly what v2
+        forbids.
+        """
+        from humanvoice.model import PROFILE_PATH
+
+        budget = json.loads(PROFILE_PATH.read_text())["budget"]
+        # A 1,000-page manuscript rewritten with expansion room.
+        assert budget["max_document_output_tokens"] >= 1000000
+        assert budget["max_document_input_tokens"] >= 1000000
+        assert "never authorizes deleting a concept" in budget["on_exceeded"]
 
     def test_ignores_mock_runs(self, tmp_path):
         """Mock mode transmits nothing, so it spends nothing."""

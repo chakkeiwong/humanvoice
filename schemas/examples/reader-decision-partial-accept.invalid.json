@@ -1,0 +1,79 @@
+{
+  "record_type": "ReaderDecision",
+  "schema_version": "HV-SCHEMA-2.0",
+  "record_id": "reader-record-1",
+  "run_id": "run-v2-example",
+  "created_at": "2026-09-11T12:00:00Z",
+  "reader_id": "reader-1",
+  "reader_name": "Independent Technical Reader",
+  "reader_role": "technical reviewer",
+  "technical_qualification": "Graduate training in the manuscript domain.",
+  "independent_from_rule_tuning": true,
+  "repository_context_used": false,
+  "prior_exposure": "topic-familiar",
+  "assignment": "revision",
+  "reader_packet_hash": "6666666666666666666666666666666666666666666666666666666666666666",
+  "source_document_hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+  "revised_document_hash": "1111111111111111111111111111111111111111111111111111111111111111",
+  "baseline_id": "baseline-1",
+  "revision_id": "revision-1",
+  "rubric_responses": [
+    {
+      "question_id": "q-1",
+      "construct": "problem",
+      "response": "Correct reconstruction of problem.",
+      "confidence": "high",
+      "adjudication": "partial",
+      "failure_locations": []
+    },
+    {
+      "question_id": "q-2",
+      "construct": "mechanism",
+      "response": "Correct reconstruction of mechanism.",
+      "confidence": "high",
+      "adjudication": "correct",
+      "failure_locations": []
+    },
+    {
+      "question_id": "q-3",
+      "construct": "evidence",
+      "response": "Correct reconstruction of evidence.",
+      "confidence": "high",
+      "adjudication": "correct",
+      "failure_locations": []
+    },
+    {
+      "question_id": "q-4",
+      "construct": "distinction",
+      "response": "Correct reconstruction of distinction.",
+      "confidence": "high",
+      "adjudication": "correct",
+      "failure_locations": []
+    },
+    {
+      "question_id": "q-5",
+      "construct": "assumption",
+      "response": "Correct reconstruction of assumption.",
+      "confidence": "high",
+      "adjudication": "correct",
+      "failure_locations": []
+    },
+    {
+      "question_id": "q-6",
+      "construct": "qualification",
+      "response": "Correct reconstruction of qualification.",
+      "confidence": "high",
+      "adjudication": "correct",
+      "failure_locations": []
+    }
+  ],
+  "comfort": {
+    "rating": 5,
+    "reread_locations": [],
+    "stop_locations": [],
+    "comments": "The distinction is comfortable to follow."
+  },
+  "elapsed_minutes": 12.0,
+  "decision": "accept",
+  "requested_changes": []
+}

@@ -1,0 +1,91 @@
+{
+  "record_type": "ConceptBaseline",
+  "schema_version": "HV-SCHEMA-2.0",
+  "record_id": "baseline-record-1",
+  "run_id": "run-v2-example",
+  "created_at": "2026-09-11T12:00:00Z",
+  "baseline_id": "baseline-1",
+  "snapshot_id": "snapshot-1",
+  "source_hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+  "humanization_brief_id": "brief-1",
+  "humanization_brief_hash": "02c482215fe4e79cec436f134ea2e871d46937848dbefb613b9696c8243c5039",
+  "parent_baseline_id": null,
+  "component_records": {
+    "source_spans": [
+      "span-1",
+      "span-2",
+      "span-3"
+    ],
+    "source_concepts": [
+      "concept-record-1",
+      "concept-record-2"
+    ],
+    "concept_dependencies": [
+      "dependency-record-1"
+    ],
+    "explanation_obligations": [
+      "obligation-record-1",
+      "obligation-record-2"
+    ],
+    "scaffolding_dispositions": [
+      "scaffolding-record-1"
+    ]
+  },
+  "component_hashes": {
+    "source_spans": "3bf7e90a8a8a6969b1b4e6875e94da9b51a5e94eefb20aa8f12c98c392ded701",
+    "source_concepts": "ebdedd8c203fc5ef2464beca2336cce215566dad0c4ac8bf84a29e47a787e0ed",
+    "concept_dependencies": "89aa23ccb3f716fafbdeb3a45b4ad6f28bf4d656ad69671c2f97ee256b88a3fb",
+    "explanation_obligations": "f1d74b1b9a03f3d5c4e51303bbba1ca465ef917934583da4af81c83cc6607a84",
+    "scaffolding_dispositions": "f8d2e40033bbb39aa4b32c3fbdc573e093807d59f48f2ffd9674aec044deed8c"
+  },
+  "component_counts": {
+    "source_spans": 3,
+    "reader_facing_spans": 2,
+    "source_concepts": 2,
+    "concept_dependencies": 1,
+    "active_explanation_obligations": 2,
+    "scaffolding_dispositions": 1
+  },
+  "partition": {
+    "source_bytes": 200,
+    "covered_bytes": 200,
+    "reader_facing_complete": true,
+    "non_overlapping": true,
+    "exact_hashes_verified": true
+  },
+  "coverage_reviews": {
+    "source_to_concepts": {
+      "critic_id": "critic-forward",
+      "critic_version": "1.0",
+      "prompt_hash": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+      "independent_of_extractor": true,
+      "verdict": "supported",
+      "finding_ids": []
+    },
+    "concepts_to_source": {
+      "critic_id": "critic-reverse",
+      "critic_version": "1.0",
+      "prompt_hash": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+      "independent_of_extractor": true,
+      "verdict": "supported",
+      "finding_ids": []
+    }
+  },
+  "unresolved": {
+    "span_ids": [],
+    "concept_ids": [],
+    "dependency_ids": [],
+    "obligation_ids": [],
+    "scaffolding_disposition_ids": []
+  },
+  "review_decision": {
+    "status": "frozen",
+    "reviewer": "baseline-reviewer",
+    "reviewed_at": "2026-09-11T12:00:00Z",
+    "reason": "All surfaced ambiguities were resolved and bidirectional coverage passed."
+  },
+  "frozen": true,
+  "frozen_at": "2026-09-11T12:00:00Z",
+  "baseline_hash": "6c62cce2d62f7ac652def8eefbb0f42f78daa8a49bb87d80369c0c2a664a7c53",
+  "lineage_reason": null
+}

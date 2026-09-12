@@ -1,0 +1,27 @@
+{
+  "record_type": "ExplanationObligation",
+  "schema_version": "HV-SCHEMA-2.0",
+  "record_id": "obligation-record-1",
+  "run_id": "run-v2-example",
+  "created_at": "2026-09-11T12:00:00Z",
+  "baseline_id": "baseline-1",
+  "obligation_id": "obligation-1",
+  "parent_record_id": null,
+  "concept_id": "concept-1",
+  "required_teaching_functions": [
+    "definition"
+  ],
+  "source_assessment": {
+    "status": "partial",
+    "evidence_span_ids": [
+      "span-1"
+    ]
+  },
+  "reader_rationale": "The reader must know what continuity means here before the contrast.",
+  "genre_rationale": "A survey must teach terminology before using it.",
+  "active": true,
+  "deactivation": null,
+  "fulfillment_status": "unassessed",
+  "fulfillment_evidence": [],
+  "obligation_spec_hash": "bf7203de5a5093838e37178d864e419b8e1ad5a6f73d9a7e6a20fd4d6dcfe745"
+}

@@ -1,0 +1,35 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://humanvoice.local/schema/v2/humanization-brief.schema.json",
+  "title": "Humanvoice v2 humanization brief",
+  "type": "object",
+  "required": ["record_type", "schema_version", "record_id", "run_id", "created_at", "source_entry_point", "reader", "purpose", "decision", "genre", "known_vocabulary", "exemplars", "evidence_boundary", "privacy_class", "remote_inference", "voice_constraints", "protected_object_policy", "unresolved_assumptions", "authorizing_action", "policy_sources"],
+  "properties": {
+    "record_type": {"const": "HumanizationBrief"},
+    "schema_version": {"type": "string", "pattern": "^HV-SCHEMA-2\\.[0-9]+$"},
+    "record_id": {"type": "string", "minLength": 1},
+    "run_id": {"type": "string", "minLength": 1},
+    "created_at": {"type": "string", "format": "date-time"},
+    "source_entry_point": {"type": "string", "minLength": 1},
+    "reader": {"type": "object", "required": ["role", "prior_knowledge", "reading_context"], "properties": {"role": {"type": "string", "minLength": 1}, "prior_knowledge": {"type": "array", "items": {"type": "string", "minLength": 1}, "uniqueItems": true}, "reading_context": {"type": "string", "minLength": 1}}, "additionalProperties": false},
+    "purpose": {"type": "string", "minLength": 1},
+    "decision": {"type": ["string", "null"]},
+    "genre": {"type": "string", "minLength": 1},
+    "known_vocabulary": {"type": "array", "items": {"type": "string", "minLength": 1}, "uniqueItems": true},
+    "exemplars": {"type": "array", "items": {"type": "object", "required": ["path", "sha256", "use"], "properties": {"path": {"type": "string", "minLength": 1}, "sha256": {"type": "string", "pattern": "^[A-Fa-f0-9]{64}$"}, "use": {"enum": ["teaching_order", "pacing", "genre", "other"]}}, "additionalProperties": false}},
+    "evidence_boundary": {"type": "string", "minLength": 1},
+    "privacy_class": {"enum": ["public", "internal", "confidential", "restricted"]},
+    "remote_inference": {"type": "object", "required": ["authorized", "provider", "purpose", "approved_by"], "properties": {"authorized": {"type": "boolean"}, "provider": {"type": ["string", "null"]}, "purpose": {"type": ["string", "null"]}, "approved_by": {"type": ["string", "null"]}}, "additionalProperties": false},
+    "voice_constraints": {"type": "object", "required": ["register", "person", "additional"], "properties": {"register": {"type": "string", "minLength": 1}, "person": {"enum": ["first", "second", "third", "mixed", "source_dependent"]}, "additional": {"type": "array", "items": {"type": "string", "minLength": 1}}}, "additionalProperties": false},
+    "protected_object_policy": {"type": "string", "minLength": 1},
+    "unresolved_assumptions": {"type": "array", "items": {"type": "string", "minLength": 1}},
+    "authorizing_action": {"type": "object", "required": ["actor", "role", "action", "authorized_at"], "properties": {"actor": {"type": "string", "minLength": 1}, "role": {"enum": ["author", "editor", "document_owner"]}, "action": {"const": "humanize_finished_manuscript"}, "authorized_at": {"type": "string", "format": "date-time"}}, "additionalProperties": false},
+    "policy_sources": {"type": "array", "minItems": 1, "items": {"type": "object", "required": ["path", "sha256"], "properties": {"path": {"type": "string", "minLength": 1}, "sha256": {"type": "string", "pattern": "^[A-Fa-f0-9]{64}$"}}, "additionalProperties": false}},
+    "extensions": {"type": "object"}
+  },
+  "allOf": [
+    {"if": {"properties": {"remote_inference": {"properties": {"authorized": {"const": true}}}}}, "then": {"properties": {"remote_inference": {"properties": {"provider": {"type": "string", "minLength": 1}, "purpose": {"type": "string", "minLength": 1}, "approved_by": {"type": "string", "minLength": 1}}}}}},
+    {"if": {"properties": {"remote_inference": {"properties": {"authorized": {"const": false}}}}}, "then": {"properties": {"remote_inference": {"properties": {"provider": {"type": "null"}, "purpose": {"type": "null"}, "approved_by": {"type": "null"}}}}}}
+  ],
+  "additionalProperties": false
+}

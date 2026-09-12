@@ -1,0 +1,66 @@
+{
+  "record_type": "Revision",
+  "schema_version": "HV-SCHEMA-2.0",
+  "record_id": "revision-record-1",
+  "run_id": "run-v2-example",
+  "created_at": "2026-09-11T12:00:00Z",
+  "revision_id": "revision-1",
+  "baseline_id": "baseline-1",
+  "baseline_hash": "6c62cce2d62f7ac652def8eefbb0f42f78daa8a49bb87d80369c0c2a664a7c53",
+  "snapshot_id": "snapshot-1",
+  "source_hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+  "parent_revision_id": null,
+  "parent_hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+  "child_hash": "1111111111111111111111111111111111111111111111111111111111111111",
+  "candidate_tree": "candidate/revision-1",
+  "patches": [
+    {
+      "patch_id": "patch-1",
+      "source_file": "main.tex",
+      "byte_start": 0,
+      "byte_end": 60,
+      "expected_text_hash": "2ba283c67dc55c35165dfd91e7b83c8a5e76ba54a54be3f19e20c07ba085de00",
+      "replacement_hash": "2222222222222222222222222222222222222222222222222222222222222222",
+      "operation": "replace",
+      "rewrite_unit_ids": [
+        "unit-1"
+      ],
+      "move_target": null
+    },
+    {
+      "patch_id": "patch-2",
+      "source_file": "main.tex",
+      "byte_start": 60,
+      "byte_end": 140,
+      "expected_text_hash": "8bae85ebb798b57a78b81a556d9aee858f2e6a9eb10e8d025789ce97e46b0748",
+      "replacement_hash": "8888888888888888888888888888888888888888888888888888888888888888",
+      "operation": "replace",
+      "rewrite_unit_ids": [
+        "unit-2"
+      ],
+      "move_target": null
+    },
+    {
+      "patch_id": "patch-2",
+      "source_file": "main.tex",
+      "byte_start": 50,
+      "byte_end": 60,
+      "expected_text_hash": "2ba283c67dc55c35165dfd91e7b83c8a5e76ba54a54be3f19e20c07ba085de00",
+      "replacement_hash": "2222222222222222222222222222222222222222222222222222222222222222",
+      "operation": "replace",
+      "rewrite_unit_ids": [
+        "unit-1"
+      ],
+      "move_target": null
+    }
+  ],
+  "untouched_bytes_verified": true,
+  "protected_comparison_path": "audit/protected.json",
+  "correspondence_paths": [
+    "audit/correspondence-1.json"
+  ],
+  "status": "accepted",
+  "decision_by": "editor",
+  "decision_at": "2026-09-11T12:00:00Z",
+  "failure_reasons": []
+}

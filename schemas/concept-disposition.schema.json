@@ -1,0 +1,27 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://humanvoice.local/schema/v2/concept-disposition.schema.json",
+  "title": "Humanvoice v2 planned concept disposition",
+  "$comment": "The shared record validator checks complete one-or-more disposition coverage over the frozen concept set. Substantive omission is intentionally not an operation.",
+  "type": "object",
+  "required": ["record_type", "schema_version", "record_id", "run_id", "created_at", "baseline_id", "baseline_hash", "plan_id", "disposition_id", "source_concept_ids", "rewrite_unit_ids", "operation", "rationale", "planned_teaching_roles", "review_status"],
+  "properties": {
+    "record_type": {"const": "ConceptDisposition"},
+    "schema_version": {"type": "string", "pattern": "^HV-SCHEMA-2\\.[0-9]+$"},
+    "record_id": {"type": "string", "minLength": 1},
+    "run_id": {"type": "string", "minLength": 1},
+    "created_at": {"type": "string", "format": "date-time"},
+    "baseline_id": {"type": "string", "minLength": 1},
+    "baseline_hash": {"type": "string", "pattern": "^[A-Fa-f0-9]{64}$"},
+    "plan_id": {"type": "string", "minLength": 1},
+    "disposition_id": {"type": "string", "minLength": 1},
+    "source_concept_ids": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1}, "uniqueItems": true},
+    "rewrite_unit_ids": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1}, "uniqueItems": true},
+    "operation": {"enum": ["retain", "paraphrase", "expand", "merge", "split", "reorder"]},
+    "rationale": {"type": "string", "minLength": 1},
+    "planned_teaching_roles": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"enum": ["introduce", "define", "motivate", "derive", "illustrate", "contrast", "qualify", "interpret", "recall", "transition", "other"]}},
+    "review_status": {"enum": ["proposed", "accepted", "unresolved", "superseded"]},
+    "extensions": {"type": "object"}
+  },
+  "additionalProperties": false
+}

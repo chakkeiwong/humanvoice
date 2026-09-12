@@ -1,0 +1,22 @@
+{
+  "record_type": "ScaffoldingDisposition",
+  "schema_version": "HV-SCHEMA-2.0",
+  "record_id": "scaffolding-record-1",
+  "run_id": "run-v2-example",
+  "created_at": "2026-09-11T12:00:00Z",
+  "baseline_id": "baseline-1",
+  "disposition_id": "scaffolding-1",
+  "source_span_ids": [
+    "span-3"
+  ],
+  "disposition": "remove_nonconcept",
+  "reader_relevance_reason": "The text reports internal workflow state only.",
+  "embedded_concept_ids": [],
+  "backstage_target": null,
+  "review_status": "accepted",
+  "adjudication": {
+    "reviewer": "editor",
+    "reviewed_at": "2026-09-11T12:00:00Z",
+    "reason": "No domain meaning is present."
+  }
+}

@@ -13,77 +13,78 @@ without exposing the private review trail in the manuscript.
 
 \hvFigureThreeViews
 
-\section{Before a reader sees a draft}
+\section{Before a reader sees a revision}
 
 The expensive mistake is to give a senior reader a document that was never
-ready for a senior reader. Humanvoice therefore begins before prose. The owner
-states who will read the document, what decision it must support, what the
-reader already knows, which claims must appear, which evidence is allowed, and
-which objects may not change silently. If one of those answers is missing, the
-system records the uncertainty and stops the long draft. It does not turn an
-unfinished brief into something that looks finished.
+ready for a senior reader. Humanvoice therefore begins before any prose changes.
+The author states who will read the revision, what the reader already knows,
+which objects may not change silently, and what voice the genre requires, then
+invokes \texttt{hv humanize} on a finished manuscript. That invocation is the
+authorization to change text. The manuscript itself is immutable: the system
+copies it and writes a separate child revision.
 
-The first output is an argument blueprint. It is a short, inspectable plan with
-one job for each section, a claim map, a concept-dependency graph, a list of
-protected objects, and a visual plan. A claim without evidence is marked as a
-question. A concept used before its prerequisite is taught is moved or marked
-as an intentional exception. A figure has to earn its place by carrying a
-relationship that prose alone would make harder to see. The blueprint is not a
-new report for the sponsor; it is the construction drawing that keeps the
-report from becoming a pile of fluent paragraphs.
+The first output is a concept inventory over the source, not a plan for a new
+document. Humanvoice partitions every reader-facing span, records each
+substantive concept it carries---definitions, distinctions, claims, mechanisms,
+assumptions, derivation steps, qualifications, examples, counterexamples,
+evidence interpretations, and teaching transitions---and states what each
+concept must do for this reader. A second, independent pass reads the inventory
+back against the source to catch anything the first pass missed. Ambiguities go
+to a human, who adjudicates them and freezes the baseline. Everything downstream
+is measured against that frozen baseline.
 
-Consider the teaching case in this chapter. The owner might write:
-
-\begin{quote}\small
-The reader is an investment committee. The decision is whether to run the
-constrained reconstruction at larger scale. The reader knows ordinary model
-comparison but not the project's private phase names. The document must explain
-the comparison, the 35-basis-point funding wedge, the evidence needed before a
-larger run, and the limit of what the calibration can establish.
-\end{quote}
-
-Humanvoice turns that brief into a sequence the writer can actually follow:
+Consider the teaching case in this chapter. The source paragraph carries several
+concepts: the comparison between the two models, the funding wedge and its unit,
+which likelihood terms and observations are compared, what agreement would and
+would not authorize, and the limit of the calibration. Humanvoice records each
+one, notes that the wedge is stated without its unit and that the calibration
+limit is asserted without a mechanism, and assigns each concept the explanation
+it owes the reader:
 
 \begin{enumerate}
-\item open with the decision and the two models;
-\item show the funding wedge in its unit and location;
-\item explain which likelihood terms, observations, and paths are compared;
-\item state what agreement would authorize next and what it would not prove; and
-\item use one diagram to connect the objects, checks, and decision.
+\item define the two models before comparing them;
+\item state the funding wedge with its unit and location;
+\item name which likelihood terms, observations, and paths are compared;
+\item derive why agreement authorizes the next step, and where it stops; and
+\item interpret the diagram against the objects it connects.
 \end{enumerate}
 
-Only after the owner accepts that sequence does the writer draft one bounded
-unit at a time. Each unit is rebuilt and checked before the next unit inherits
-its terminology. This is slower for the machine and faster for the person who
-would otherwise have to discover the missing argument at the end.
+Only after the author accepts that inventory does the writer rewrite one source
+passage at a time. Each unit receives the exact source span, its assigned
+concepts and obligations, the protected objects it contains, and enough
+neighboring context to keep transitions coherent. A unit that cannot discharge
+its obligations within one call is split on concept boundaries and resumed. It is
+never trimmed to fit. This is slower for the machine and faster for the person
+who would otherwise have to reconstruct the argument while reading.
 
 \begin{figure}[H]
 \centering
 \resizebox{0.98\textwidth}{!}{%
 \begin{tikzpicture}[font=\small,node distance=5mm and 4mm]
-  \node[hvstage,text width=25mm] (brief) {Reader brief\\\footnotesize audience, decision, evidence};
-  \node[hvstage,right=of brief,text width=25mm] (plan) {Argument blueprint\\\footnotesize claims, dependencies, sections, figures};
-  \node[hvgoldbox,right=of plan,text width=25mm] (draft) {Bounded draft\\\footnotesize one unit, concrete first};
-  \node[hvwarn,right=of draft,text width=25mm] (check) {Pre-human preflight\\\footnotesize integrity, structure, evidence, reconstruction};
-  \node[hvbluebox,right=of check,text width=25mm] (packet) {Review-ready packet\\\footnotesize only after every gate passes};
+  \node[hvstage,text width=25mm] (source) {Immutable source\\\footnotesize finished manuscript};
+  \node[hvstage,right=of source,text width=25mm] (plan) {Frozen concept baseline\\\footnotesize concepts, obligations, dependencies};
+  \node[hvgoldbox,right=of plan,text width=25mm] (draft) {Source-grounded rewrite\\\footnotesize one passage at a time};
+  \node[hvwarn,right=of draft,text width=25mm] (check) {Semantic preflight\\\footnotesize retention, explanation, integrity};
+  \node[hvbluebox,right=of check,text width=25mm] (packet) {Reader packet\\\footnotesize only after every gate passes};
   \node[hvbluebox,right=of packet,text width=25mm] (reader) {Human reader\\\footnotesize one expensive final decision};
-  \draw[hvflow] (brief)--(plan)--(draft)--(check)--(packet)--(reader);
-  \draw[hvback] (check.south) to[bend right=28] node[below,hvnote]{failed gate: repair and rebuild} (draft.south);
+  \draw[hvflow] (source)--(plan)--(draft)--(check)--(packet)--(reader);
+  \draw[hvback] (check.south) to[bend right=28] node[below,hvnote]{failed gate: located repair and rebuild} (draft.south);
   \node[hvguard,fit=(check)(packet),inner sep=3mm] {};
 \end{tikzpicture}}
 \caption{Humanvoice spends scarce reader attention at the end of the path. A
-failed pre-human check returns the draft to a located repair; it cannot produce
-a review packet by default.}
+failed check returns the revision to a located repair; it cannot produce a
+reader packet by default.}
 \label{fig:pre-human-pipeline}
 \end{figure}
 
 The guard in Figure~\ref{fig:pre-human-pipeline} is a product contract, not a
 promise that a machine can certify taste. It says something narrower and more
-useful: an incomplete brief, an ungrounded load-bearing claim, an unknown
-concept order, an unexplained protected-object change, a broken build, or an
-unresolved high-risk preflight finding cannot be packaged as ready for a human
-reader. The system may still save an internal draft for repair. It does not ask
-an expensive reader to serve as its debugger.
+useful: an unfrozen baseline, a source concept without verified correspondence in
+the revision, a concept named but not explained, an unsupported addition, a
+concept used before its prerequisite, an unexplained protected-object change, a
+broken build, or an unresolved finding cannot be packaged as ready for a human
+reader. The system may still keep an internal revision for repair. It does not
+ask an expensive reader to serve as its debugger.
 
 \section{A draft that should never reach the reader}
 
@@ -110,7 +111,7 @@ negative definition delays the positive mechanism. "Stakeholders" is an
 abstract actor. The reader cannot tell whether the 35 basis points are an
 estimated effect, a calibration input, or an illustrative value.
 
-The paragraph fails several blueprint and preflight checks. The private phase
+The paragraph fails several baseline and preflight checks. The private phase
 name is absent from the approved vocabulary; the comparison has no named
 objects; the number has no stated role; and the final sentence names no action.
 Those are located failures, not invitations to score the whole document. The
@@ -268,60 +269,76 @@ changes a real decision in the writing path; none is a list of packages to
 install.
 
 \begin{description}
-\item[Brief compiler.] Turn the reader, decision, genre, prior knowledge,
-  evidence boundary, protected objects, and named exemplars into a versioned
-  authoring brief. Critical blanks remain visible and block drafting.
-\item[Argument planner.] Build a claim map, concept-dependency graph, section
-  jobs, terminology plan, and visual plan. It checks the order of ideas before
-  prose makes the error expensive to find.
-\item[Bounded writer.] Draft one section or paragraph card at a time from the
-  approved brief and evidence. A replaceable model may write, but it cannot
-  widen the claim, add a citation, or skip a prerequisite without a recorded
-  decision.
-\item[Pre-human preflight.] Run hard integrity checks, structural writing
-  checks, evidence checks, and calibrated reconstruction critics. Unknown or
-  conflicting results fail closed.
-\item[Located repair and comparison.] Map a failed check to a specific repair,
+\item[Humanization brief compiler.] Turn the reader, genre, prior knowledge,
+  evidence boundary, protected-object policy, voice constraints, and named
+  exemplars into a versioned brief bound to one immutable source. Critical
+  blanks remain visible and block rewriting.
+\item[Concept inventory and baseline.] Partition every reader-facing source
+  span, record the substantive concepts it carries, assign each concept the
+  explanation it owes this reader, order prerequisites, and freeze the reviewed
+  result. An independent reverse pass reads the inventory back against the
+  source; a model may not certify its own extraction.
+\item[Source-grounded writer.] Rewrite one source passage at a time from the
+  exact span, its assigned concepts and obligations, and its protected objects.
+  A replaceable model may write, but it cannot drop a concept, widen a claim,
+  add a citation, or skip a prerequisite without a recorded decision.
+\item[Semantic preflight.] Verify the candidate revision, not just the source:
+  concept correspondence over the frozen baseline, explanation fulfillment with
+  located evidence, dependency order, unsupported additions, scaffolding
+  decisions, and exact-object integrity. Unknown or conflicting results fail
+  closed.
+\item[Located repair and comparison.] Map a failed check to one causal repair,
   rebuild the affected unit, detect oscillation, and compare protected
   equations, numbers, citations, tables, quotations, and claims.
-\item[Review release.] Produce a clean reader packet only after the gates pass,
-  with the decision question and a short rubric but none of the private repair
-  trail. The named human still owns acceptance.
+\item[Patch assembly and release.] Apply accepted replacements to a copy of the
+  source tree by stable offsets, leave untouched bytes byte-identical, compile
+  the revision and a whole-tree comparison, and produce a clean reader packet
+  only after the gates pass. The named human still owns acceptance.
 \end{description}
 
-The MVP does not need to train a new text-generation model. It needs a stable
-contract around a replaceable writer: the model receives only approved context,
-the unit it is writing, and the evidence it may use; the preflight controller
-can reject its output and request a cause-specific repair. This distinction is
-what keeps a fluent first draft from becoming a human debugging task.
+The system does not need to train a new text-generation model. It needs a stable
+contract around a replaceable writer: the model receives only the source span it
+is rewriting, the concepts it must preserve, and the evidence it may use; the
+preflight controller can reject its output and request a cause-specific repair.
+That distinction is what keeps fluent prose from silently losing content.
 
 \section{The minimum useful interface}
 
-An author starts with a brief and evidence, not with a request to polish a
-finished manuscript (shown across lines for legibility):
+An author starts from a finished manuscript and asks for a humanized revision:
 
 \begin{quote}\small
-\texttt{hv init --brief brief.yaml --evidence sources/}\par
-\texttt{hv plan --reader "investment committee"}\par
-\texttt{hv draft --unit section-01}\par
-\texttt{hv preflight --fail-closed}\par
-\texttt{hv repair --max-cycles 3}\par
-\texttt{hv release --reader-packet}
+\texttt{hv humanize manuscript/ --brief brief.yaml}
 \end{quote}
 
-The six verbs are stages of one path, not six independent products. \texttt{hv
-init} refuses a brief with unresolved critical fields. \texttt{hv plan} refuses
-to draft when a load-bearing claim has no evidence or a concept is used before
-its prerequisite. \texttt{hv draft} writes a bounded unit. \texttt{hv preflight}
-checks the unit and the assembled document. \texttt{hv repair} applies only a
-named repair strategy, rebuilds, and stops on oscillation. \texttt{hv release}
-creates the human packet only when every required result is pass or an explicit
-owner-approved exception. A missing result is a failure, not a pass.
+That single command orchestrates the resumable phases, each of which can also be
+run directly for inspection or recovery:
+
+\begin{quote}\small
+\texttt{hv init} \quad \texttt{hv inventory} \quad \texttt{hv plan} \quad
+\texttt{hv rewrite}\par
+\texttt{hv preflight} \quad \texttt{hv repair} \quad \texttt{hv assemble} \quad
+\texttt{hv release}
+\end{quote}
+
+These verbs are stages of one path, not independent products. \texttt{hv init}
+snapshots the immutable source and refuses a brief with unresolved critical
+fields. \texttt{hv inventory} builds the concept baseline and refuses to proceed
+while a reader-facing span is uncovered or a classification is unresolved.
+\texttt{hv plan} assigns concepts, obligations, and rewrite units in dependency
+order. \texttt{hv rewrite} rewrites one source passage and publishes nothing on
+truncation or incomplete correspondence. \texttt{hv preflight} verifies the
+assembled candidate. \texttt{hv repair} applies one named causal repair,
+rebuilds, and stops on oscillation. \texttt{hv assemble} patches a copy of the
+source tree and builds the revision and its comparison. \texttt{hv release}
+creates the reader packet only when every required result is a pass. A missing
+result is a failure, not a pass, and there is no generic release exception.
+Greenfield authoring from a brief remains available only under an explicit
+\texttt{hv legacy} namespace and cannot satisfy a release gate.
 
 The older capture, inspect, and compare services remain useful internally, but
-they no longer define the author's journey. The important property is that
-every service refers to an immutable brief, blueprint, source version, and
-render hash rather than to an unowned draft.
+they no longer define the author's journey. The important property is that every
+service refers to an immutable source snapshot, a frozen baseline, and a render
+hash rather than to an unowned draft.
 
 The same record should be usable from a command line, a notebook, or an editor
 extension. A sponsor should not need to know which parser or linter produced a
@@ -331,17 +348,18 @@ evaluation outcome.
 
 \section{The boundary of the first version}
 
-The first version focuses on prepared authoring, revision, and reader
-understanding, not on judging whether an individual document is ``human.''
+The system focuses on humanizing finished manuscripts for reader understanding,
+not on judging whether an individual document is ``human.''
 Detector studies show high
 false-positive risk for formal and non-native writing and easy evasion through paraphrase
 \citep{liang2023detectors,weberwulff2023testing,krishna2023paraphrasing}. A
 population-level monitoring question may be studied later, but it is outside
 the revision problem described here.
 
-The system also leaves the source in the author's hands, keeps acceptance with
-the named reader, and treats style rules as observations rather than a
-universal house style. Bounded generation is in scope; unbounded autonomous
-rewriting and autonomous acceptance are not. Those choices keep the measurable
-outcome aligned with the reader's decision while ensuring that bad prose is
-stopped before it consumes that reader's time.
+The system also leaves the source untouched and in the author's hands, keeps
+acceptance with the named reader, and treats style rules as observations rather
+than a universal house style. Authorized humanization of a finished manuscript is
+in scope; summarization, shortening to a length target, and autonomous acceptance
+are not. Those choices keep the measurable outcome aligned with the reader's
+decision while ensuring that unreadable prose is repaired before it consumes that
+reader's time.

@@ -1,19 +1,26 @@
 {
   "record_type": "SourceSnapshot",
-  "schema_version": "HV-SCHEMA-1.0",
-  "record_id": "SNAP-20260826-002",
-  "run_id": "run-init-20260826-150000",
-  "created_at": "2026-08-26T15:00:00Z",
-  "snapshot_id": "snapshot-20260826-150000",
-  "source_hash": "e7f9e1d6c5b8a0f9e8d7c6b9a1f0e9d8c7b1a9f0e8d7c6b5a0f9e1d7c8b0a7f1",
-  "source_files": ["source/main.tex"],
-  "brief": {
-    "reader_role": "operations lead",
-    "decision_type": "capacity planning",
-    "time_available_minutes": 30,
-    "prior_knowledge": "database operations",
-    "success_criteria": "reader can identify the proposed change"
-  },
+  "schema_version": "HV-SCHEMA-2.0",
+  "record_id": "snapshot-record-1",
+  "run_id": "run-v2-example",
+  "created_at": "2026-09-11T12:00:00Z",
+  "snapshot_id": "snapshot-1",
+  "source_hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+  "source_entry_point": "main.tex",
+  "source_files": [
+    {
+      "path": "main.tex",
+      "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "byte_size": 200
+    }
+  ],
+  "source_tree_bytes": 200,
+  "humanization_brief_id": "brief-1",
+  "humanization_brief_hash": "02c482215fe4e79cec436f134ea2e871d46937848dbefb613b9696c8243c5039",
   "brief_valid": true,
-  "snapshot_immutable": false
+  "snapshot_immutable": false,
+  "snapshot_closed_at": "2026-09-11T12:00:00Z",
+  "source_root": "/example/source",
+  "scratch_path": "scratch",
+  "privacy_class": "internal"
 }

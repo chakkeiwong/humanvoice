@@ -1,4 +1,4 @@
-\contentsline {table}{\numberline {1}{\ignorespaces The proposal separates what is known from what the first build must observe.}}{3}{table.0.1}%
+\contentsline {table}{\numberline {1}{\ignorespaces The proposal separates what is known from what the first build must observe.}}{4}{table.0.1}%
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \contentsline {table}{\numberline {2.1}{\ignorespaces The BGS paragraph audit's defect taxonomy (top ten of nineteen codes by count, out of 815 repaired paragraphs in a 2{,}775-paragraph volume). The counts are from \texttt {frozen\_repair\_map\_v7.jsonl}.}}{13}{table.2.1}%
@@ -28,8 +28,8 @@
 \contentsline {table}{\numberline {13.1}{\ignorespaces A finding is located, reasoned, and contestable. It is not an automatic rewrite instruction.}}{103}{table.13.1}%
 \contentsline {table}{\numberline {13.2}{\ignorespaces The diff distinguishes a safe explanatory repair from a substantive change that needs a human decision.}}{104}{table.13.2}%
 \addvspace {10\p@ }
-\contentsline {table}{\numberline {14.1}{\ignorespaces The record model connects intent, argument, prose, checks, and reader judgment. It is deliberately small enough to inspect and rich enough to stop an unfinished draft before release.}}{109}{table.14.1}%
-\contentsline {table}{\numberline {14.2}{\ignorespaces The reader-facing map of the implementation path. The canonical acceptance register is in Appendix\nobreakspace {}\ref {app:requirements}; exit codes and execution boundaries are in the implementation contract annex.}}{114}{table.14.2}%
+\contentsline {table}{\numberline {14.1}{\ignorespaces The record model connects intent, source meaning, prose, checks, and reader judgment. It is deliberately small enough to inspect and rich enough to stop a lossy revision before release.}}{109}{table.14.1}%
+\contentsline {table}{\numberline {14.2}{\ignorespaces The reader-facing map of the implementation path. The canonical acceptance register is in Appendix\nobreakspace {}\ref {app:requirements} (requirements R1--R29); exit codes and execution boundaries are in the implementation contract annex. This table provides a high-level narrative view; R1--R29 is the authoritative release gate.}}{114}{table.14.2}%
 \addvspace {10\p@ }
 \contentsline {table}{\numberline {15.1}{\ignorespaces A snapshot joins the source, its rendering, and the reader task.}}{117}{table.15.1}%
 \contentsline {table}{\numberline {15.2}{\ignorespaces The same revision has three views because the three people have different jobs.}}{120}{table.15.2}%
@@ -93,8 +93,10 @@
 \contentsline {table}{\numberline {E.4}{\ignorespaces A finding record is an editorial question with provenance.}}{232}{table.E.4}%
 \contentsline {table}{\numberline {E.5}{\ignorespaces A scholarly omission is recorded as a question with a next action.}}{234}{table.E.5}%
 \addvspace {10\p@ }
-\contentsline {table}{\numberline {F.1}{\ignorespaces The protected core is the week-six go/no-go decision. The full path is conditional, so an ambitious model extension cannot silently consume the whole feasibility horizon.}}{238}{table.F.1}%
+\contentsline {table}{\numberline {F.1}{\ignorespaces Staged gates for the humanization path. Each gate reports one evidence state; a later state is never inferred from an earlier one.}}{238}{table.F.1}%
 \contentsline {table}{\numberline {F.2}{\ignorespaces The threat model turns local-first and prompt-injection language into checks a build team can run.}}{239}{table.F.2}%
 \contentsline {table}{\numberline {F.3}{\ignorespaces Model candidates are pinned experimental inputs, not a claim that a particular model is already suitable.}}{240}{table.F.3}%
-\contentsline {table}{\numberline {F.4}{\ignorespaces Initial operating limits. They are scope controls and cost inputs, not promises of speed.}}{241}{table.F.4}%
-\contentsline {table}{\numberline {F.5}{\ignorespaces Stable command outcomes. Exit codes carry coarse control flow; the JSON result carries the reasons.}}{242}{table.F.5}%
+\contentsline {table}{\numberline {F.4}{\ignorespaces Operating controls. They are scope controls and cost inputs, not promises of speed and not limits on the length of an adequate explanation.}}{241}{table.F.4}%
+\contentsline {table}{\numberline {F.5}{\ignorespaces Historical v1 cost observations (2026-08-29), retained for sizing only. Cost varied roughly 16$\times $ across units because of source size and context accumulation. Under v2 these are diagnostics: no figure in this table is a target or a ceiling on an adequate explanation.}}{242}{table.F.5}%
+\contentsline {table}{\numberline {F.6}{\ignorespaces Stable command outcomes. Exit codes carry coarse control flow; the JSON result carries the reasons.}}{243}{table.F.6}%
+\contentsline {table}{\numberline {F.7}{\ignorespaces Role coverage for R1--R24 requirements. For the MVP, the product engineer implements controls for all requirements. Acceptance observations requiring domain expertise (R1, R6, R10, R18) or security approval (R11) escalate to the sponsor. The independent reader is recruited externally for R8.}}{244}{table.F.7}%

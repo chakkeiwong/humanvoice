@@ -58,20 +58,20 @@
           "LLM judge writing quality",
           "AI writing citation accuracy",
           "writing assistance collective diversity",
-          "AI writing reader perception"
-          ,"language model simulated student revisions"
-          ,"PRISMA S reporting literature searches"
-          ,"generative AI workplace email field experiment"
-          ,"large language models creative diversity writing"
-          ,"generative artificial intelligence productivity experiment college professionals"
-          ,"generative AI creativity collective diversity experiment"
-          ,"ChatGPT generated scientific abstracts human reviewers detection"
-          ,"human AI co-writing user demands writing process"
-          ,"systematic review AI assisted academic writing outcomes measurement"
-          ,"generative AI automated writing evaluation validity systematic review"
-          ,"LLM assisted writing in the wild collaboration behavior"
-          ,"generative AI workplace conversational assistant productivity heterogeneity"
-          ,"interaction aware co-writing editing cost acceptance"
+          "AI writing reader perception",
+          "language model simulated student revisions",
+          "PRISMA S reporting literature searches",
+          "generative AI workplace email field experiment",
+          "large language models creative diversity writing",
+          "generative artificial intelligence productivity experiment college professionals",
+          "generative AI creativity collective diversity experiment",
+          "ChatGPT generated scientific abstracts human reviewers detection",
+          "human AI co-writing user demands writing process",
+          "systematic review AI assisted academic writing outcomes measurement",
+          "generative AI automated writing evaluation validity systematic review",
+          "LLM assisted writing in the wild collaboration behavior",
+          "generative AI workplace conversational assistant productivity heterogeneity",
+          "interaction aware co-writing editing cost acceptance"
         ]
       },
       {
@@ -102,16 +102,16 @@
           "generative artificial intelligence productivity experiment college professionals",
           "generative AI creativity collective diversity experiment",
           "ChatGPT generated scientific abstracts human reviewers detection",
-          "human AI co-writing user demands writing process"
-          ,"language model simulated student revisions"
-          ,"PRISMA S reporting literature searches"
-          ,"generative AI workplace email field experiment"
-          ,"large language models creative diversity writing"
-          ,"systematic review AI assisted academic writing outcomes measurement"
-          ,"generative AI automated writing evaluation validity systematic review"
-          ,"LLM assisted writing in the wild collaboration behavior"
-          ,"generative AI workplace conversational assistant productivity heterogeneity"
-          ,"interaction aware co-writing editing cost acceptance"
+          "human AI co-writing user demands writing process",
+          "language model simulated student revisions",
+          "PRISMA S reporting literature searches",
+          "generative AI workplace email field experiment",
+          "large language models creative diversity writing",
+          "systematic review AI assisted academic writing outcomes measurement",
+          "generative AI automated writing evaluation validity systematic review",
+          "LLM assisted writing in the wild collaboration behavior",
+          "generative AI workplace conversational assistant productivity heterogeneity",
+          "interaction aware co-writing editing cost acceptance"
         ]
       }
     ],
@@ -131,7 +131,12 @@
         "name": "ACL Anthology",
         "kind": "public-bibliography",
         "url": "https://aclanthology.org/anthology.bib.gz",
-        "required_metadata": ["source_url", "retrieved_at", "sha256", "query_or_filter"]
+        "required_metadata": [
+          "source_url",
+          "retrieved_at",
+          "sha256",
+          "query_or_filter"
+        ]
       },
       {
         "id": "nber",
@@ -139,21 +144,44 @@
         "kind": "public-search-export",
         "url": "https://www.nber.org/papers",
         "api_url": "https://www.nber.org/api/v1/search",
-        "required_metadata": ["source_url", "retrieved_at", "query_or_filter", "record_url"]
+        "required_metadata": [
+          "source_url",
+          "retrieved_at",
+          "query_or_filter",
+          "record_url"
+        ]
       },
       {
         "id": "iclr-proceedings",
         "name": "ICLR Proceedings",
         "kind": "public-search-export",
         "url": "https://proceedings.iclr.cc/papers/search",
-        "required_metadata": ["source_url", "retrieved_at", "query_or_filter", "record_url"]
+        "required_metadata": [
+          "source_url",
+          "retrieved_at",
+          "query_or_filter",
+          "record_url"
+        ]
       }
     ],
-    "accepted_export_formats": ["csv", "json", "bib", "bibtex"],
-    "export_provenance_fields": ["database", "source_url", "retrieved_at", "sha256", "query_or_filter"],
+    "accepted_export_formats": [
+      "csv",
+      "json",
+      "bib",
+      "bibtex"
+    ],
+    "export_provenance_fields": [
+      "database",
+      "source_url",
+      "retrieved_at",
+      "sha256",
+      "query_or_filter"
+    ],
     "eligibility": {
       "scope": "Evidence about AI-assisted human writing, writing feedback or evaluation, reader response, scholarly integrity, professional writing work, and implementation components needed by humanvoice.",
-      "languages": ["English"],
+      "languages": [
+        "English"
+      ],
       "date_policy": "No lower bound for foundational writing, readability, or evaluation methods; generative-AI evidence searched through the protocol cutoff date.",
       "include": [
         "Empirical studies with a human writer, editor, reviewer, reader, or workplace outcome relevant to Q1-Q4.",
@@ -163,19 +191,48 @@
         "Official reporting standards, governance policies, API documentation, and primary software documentation relevant to Q5-Q6."
       ],
       "exclude": [
-        {"code": "E1", "reason": "No AI-assisted writing, feedback, reader, or writing-evaluation construct."},
-        {"code": "E2", "reason": "Generation-only benchmark with no human-writing workflow or transferable evaluation result."},
-        {"code": "E3", "reason": "Opinion, commentary, marketing claim, or tutorial without reviewable methods; official policy and documentation excepted."},
-        {"code": "E4", "reason": "Detector-evasion or misconduct-enablement objective; detector validity studies may remain eligible for risk analysis."},
-        {"code": "E5", "reason": "Duplicate report of the same study without additional methods or results."},
-        {"code": "E6", "reason": "Insufficient bibliographic identity or inaccessible evidence for the claim proposed."},
-        {"code": "E7", "reason": "Non-English full text not assessable within the declared review resources."}
+        {
+          "code": "E1",
+          "reason": "No AI-assisted writing, feedback, reader, or writing-evaluation construct."
+        },
+        {
+          "code": "E2",
+          "reason": "Generation-only benchmark with no human-writing workflow or transferable evaluation result."
+        },
+        {
+          "code": "E3",
+          "reason": "Opinion, commentary, marketing claim, or tutorial without reviewable methods; official policy and documentation excepted."
+        },
+        {
+          "code": "E4",
+          "reason": "Detector-evasion or misconduct-enablement objective; detector validity studies may remain eligible for risk analysis."
+        },
+        {
+          "code": "E5",
+          "reason": "Duplicate report of the same study without additional methods or results."
+        },
+        {
+          "code": "E6",
+          "reason": "Insufficient bibliographic identity or inaccessible evidence for the claim proposed."
+        },
+        {
+          "code": "E7",
+          "reason": "Non-English full text not assessable within the declared review resources."
+        }
       ],
-      "decision_values": ["include", "exclude", "uncertain"],
+      "decision_values": [
+        "include",
+        "exclude",
+        "uncertain"
+      ],
       "screening_rule": "Two reviewers independently apply the same criteria; disagreements require a recorded adjudication and excluded full texts require one exclusion code."
     },
     "critical_appraisal": {
-      "required_for": ["primary-study", "field-experiment", "systematic-review"],
+      "required_for": [
+        "primary-study",
+        "field-experiment",
+        "systematic-review"
+      ],
       "design_tools": {
         "randomized-experiment": "RoB 2 domains adapted to the reported outcome",
         "nonrandomized-intervention": "ROBINS-I domains",
@@ -185,7 +242,13 @@
         "measurement-study": "construct validity, reliability, reference standard, and external validation checklist",
         "primary-empirical-uncoded": "design must be classified before appraisal"
       },
-      "status_values": ["pending", "completed-low-concern", "completed-some-concerns", "completed-high-concern", "not-applicable"],
+      "status_values": [
+        "pending",
+        "completed-low-concern",
+        "completed-some-concerns",
+        "completed-high-concern",
+        "not-applicable"
+      ],
       "rule": "No empirical or review source may carry a release-ready load-bearing claim until its design, outcome anchor, limitations, and independent appraisal are recorded."
     },
     "known_items": [
@@ -244,7 +307,9 @@
         "doi": "10.18653/v1/2025.acl-long.1254",
         "url": "https://aclanthology.org/2025.acl-long.1254/",
         "query": "LLM writing feedback evaluation corrupted stories",
-        "challenge_queries": ["Help Me Write a Story Evaluating LLMs Ability to Generate Writing Feedback"]
+        "challenge_queries": [
+          "Help Me Write a Story Evaluating LLMs Ability to Generate Writing Feedback"
+        ]
       },
       {
         "id": "KI-09",
@@ -252,7 +317,9 @@
         "doi": "10.3386/w33795",
         "url": "https://www.nber.org/papers/w33795",
         "query": "generative AI workplace writing randomized field experiment",
-        "challenge_queries": ["Shifting Work Patterns with Generative AI"],
+        "challenge_queries": [
+          "Shifting Work Patterns with Generative AI"
+        ],
         "public_challenge_source": "nber"
       },
       {
@@ -260,7 +327,9 @@
         "title": "Does writing with language models reduce content diversity?",
         "url": "https://proceedings.iclr.cc/paper_files/paper/2024/hash/02dec8877fb7c6aa9a79f81661baca7c-Abstract-Conference.html",
         "query": "writing language models content diversity InstructGPT",
-        "challenge_queries": ["Does Writing with Language Models Reduce Content Diversity"],
+        "challenge_queries": [
+          "Does Writing with Language Models Reduce Content Diversity"
+        ],
         "public_challenge_source": "iclr-proceedings"
       },
       {
@@ -269,7 +338,9 @@
         "doi": "10.1016/j.jeap.2026.101726",
         "url": "https://doi.org/10.1016/j.jeap.2026.101726",
         "query": "AI assisted academic writing tools measures effects systematic review",
-        "challenge_queries": ["A systematic review of AI-assisted academic writing Tools measures and effects"]
+        "challenge_queries": [
+          "A systematic review of AI-assisted academic writing Tools measures and effects"
+        ]
       },
       {
         "id": "KI-12",
@@ -277,7 +348,9 @@
         "doi": "10.1016/j.asw.2026.101041",
         "url": "https://doi.org/10.1016/j.asw.2026.101041",
         "query": "generative AI automated writing evaluation efficacy validity systematic review",
-        "challenge_queries": ["Generative artificial intelligence for automated writing evaluation systematic review trends efficacy challenges"]
+        "challenge_queries": [
+          "Generative artificial intelligence for automated writing evaluation systematic review trends efficacy challenges"
+        ]
       },
       {
         "id": "KI-13",
@@ -285,7 +358,9 @@
         "doi": "10.18653/v1/2025.emnlp-main.852",
         "url": "https://aclanthology.org/2025.emnlp-main.852/",
         "query": "LLM assisted writing in the wild collaboration behavior multi turn",
-        "challenge_queries": ["Prototypical Human AI Collaboration Behaviors from LLM Assisted Writing in the Wild"]
+        "challenge_queries": [
+          "Prototypical Human AI Collaboration Behaviors from LLM Assisted Writing in the Wild"
+        ]
       },
       {
         "id": "KI-14",
@@ -293,14 +368,18 @@
         "doi": "10.1093/qje/qjae044",
         "url": "https://doi.org/10.1093/qje/qjae044",
         "query": "generative AI conversational assistant workplace productivity heterogeneous workers",
-        "challenge_queries": ["Generative AI at Work Brynjolfsson Li Raymond"]
+        "challenge_queries": [
+          "Generative AI at Work Brynjolfsson Li Raymond"
+        ]
       },
       {
         "id": "KI-15",
         "title": "The Science of Scientific Writing",
         "url": "https://scholars.duke.edu/publication/881487",
         "query": "The Science of Scientific Writing Gopen Swan",
-        "challenge_queries": ["Gopen Swan reader expectations scientific writing"]
+        "challenge_queries": [
+          "Gopen Swan reader expectations scientific writing"
+        ]
       },
       {
         "id": "KI-16",
@@ -308,21 +387,27 @@
         "doi": "10.1002/acp.1178",
         "url": "https://doi.org/10.1002/acp.1178",
         "query": "Oppenheimer problems using long words needlessly",
-        "challenge_queries": ["Consequences of Erudite Vernacular Oppenheimer"]
+        "challenge_queries": [
+          "Consequences of Erudite Vernacular Oppenheimer"
+        ]
       },
       {
         "id": "KI-17",
         "title": "A Watermark for Large Language Models",
         "url": "https://proceedings.mlr.press/v202/kirchenbauer23a.html",
         "query": "A Watermark for Large Language Models Kirchenbauer",
-        "challenge_queries": ["language model watermark provenance robustness Kirchenbauer"]
+        "challenge_queries": [
+          "language model watermark provenance robustness Kirchenbauer"
+        ]
       },
       {
         "id": "KI-18",
         "title": "Can AI-Generated Text Be Reliably Detected?",
         "url": "https://arxiv.org/abs/2303.11156",
         "query": "Can AI Generated Text Be Reliably Detected Sadasivan",
-        "challenge_queries": ["AI generated text detection impossibility paraphrasing Sadasivan"]
+        "challenge_queries": [
+          "AI generated text detection impossibility paraphrasing Sadasivan"
+        ]
       }
     ]
   },
@@ -590,10 +675,32 @@
   },
   "software_audit": {
     "selection_rule": "Metadata establishes availability; only a reproducible adapter on a locked, human-labelled corpus can establish effectiveness.",
-    "required_provenance": ["repository", "version_or_commit", "license", "retrieved_at", "sha256_or_commit"],
-    "required_benchmark_fields": ["corpus_id", "task", "gold_label", "prediction", "metric", "result", "run_command"],
-    "survey_only_categories": ["ai-detector", "editing-guidance", "discovered"],
-    "privacy_constraints": ["no unapproved remote upload", "record model/provider and retention policy", "preserve protected text and citations"]
+    "required_provenance": [
+      "repository",
+      "version_or_commit",
+      "license",
+      "retrieved_at",
+      "sha256_or_commit"
+    ],
+    "required_benchmark_fields": [
+      "corpus_id",
+      "task",
+      "gold_label",
+      "prediction",
+      "metric",
+      "result",
+      "run_command"
+    ],
+    "survey_only_categories": [
+      "ai-detector",
+      "editing-guidance",
+      "discovered"
+    ],
+    "privacy_constraints": [
+      "no unapproved remote upload",
+      "record model/provider and retention policy",
+      "preserve protected text and citations"
+    ]
   },
   "product_requirements": [
     {
@@ -601,7 +708,10 @@
       "title": "Reader-facing separation",
       "statement": "Keep the reader-facing manuscript separate from the audit and provenance record, linked by immutable document and version identifiers; internal workflow vocabulary must not leak into the manuscript.",
       "acceptance_test": "A low-context reader can state the purpose, object, and requested action, the leak fixture finds no forbidden internal register, and every released file traces to a source hash and version.",
-      "evidence_ids": ["E-INT-001", "E-INT-002"],
+      "evidence_ids": [
+        "E-INT-001",
+        "E-INT-002"
+      ],
       "phase": "P1,P4"
     },
     {
@@ -609,7 +719,11 @@
       "title": "Configurable policy precedence",
       "statement": "Resolve conflicts in the order correctness, source fidelity, domain meaning, reader comprehension, then template regularity; store project and format overrides in configuration rather than manuscript prose.",
       "acceptance_test": "Conflict fixtures resolve in the declared order and LaTeX-specific configuration disables rules that would alter protected syntax.",
-      "evidence_ids": ["E-INT-002", "E-SW-003", "E-SW-013"],
+      "evidence_ids": [
+        "E-INT-002",
+        "E-SW-003",
+        "E-SW-013"
+      ],
       "phase": "P1"
     },
     {
@@ -617,7 +731,11 @@
       "title": "Located diagnostics without automatic rewriting",
       "statement": "Diagnostics emit categories, source spans, measurements, context, and editorial questions; only an explicit author or editor action may change text.",
       "acceptance_test": "Every diagnostic fixture returns stable locations and no command mutates its input; accepted edits are remeasured and recorded separately.",
-      "evidence_ids": ["E-INT-002", "E-SW-003", "E-SW-013"],
+      "evidence_ids": [
+        "E-INT-002",
+        "E-SW-003",
+        "E-SW-013"
+      ],
       "phase": "P2,P4"
     },
     {
@@ -625,7 +743,10 @@
       "title": "Layered diagnosis and repair",
       "statement": "Diagnose and repair register leakage, mechanical repetition, defensive prose, substance, and reader comprehension in that order while retaining intermediate results.",
       "acceptance_test": "Historical replay preserves a result for every layer and prevents a later-layer score from concealing an unresolved earlier defect.",
-      "evidence_ids": ["E-INT-001", "E-EXT-007"],
+      "evidence_ids": [
+        "E-INT-001",
+        "E-EXT-007"
+      ],
       "phase": "P2,P4"
     },
     {
@@ -633,7 +754,12 @@
       "title": "Protected meaning-preserving diff",
       "statement": "Represent equations, labels, citations, numbers, claims, code, tables, and quoted text as protected content and explain every substantive change between versions.",
       "acceptance_test": "Repair replay produces zero unexplained protected-token changes and blocks promotion on any unexplained deletion, insertion, or mutation.",
-      "evidence_ids": ["E-INT-001", "E-SW-006", "E-SW-007", "E-SW-008"],
+      "evidence_ids": [
+        "E-INT-001",
+        "E-SW-006",
+        "E-SW-007",
+        "E-SW-008"
+      ],
       "phase": "P1,P2"
     },
     {
@@ -641,7 +767,11 @@
       "title": "Citation identity and claim support",
       "statement": "Resolve bibliographic identity separately from source-to-claim support, retain a sentence-level claim anchor, and block release on an unresolved load-bearing citation.",
       "acceptance_test": "Seeded valid, nonexistent, wrong-DOI, duplicate, and title-mismatch cases are classified correctly, and every load-bearing claim has a human-verified full-text anchor.",
-      "evidence_ids": ["E-EXT-015", "E-METHOD-005", "E-METHOD-007"],
+      "evidence_ids": [
+        "E-EXT-015",
+        "E-METHOD-005",
+        "E-METHOD-007"
+      ],
       "phase": "P0,P2"
     },
     {
@@ -649,7 +779,11 @@
       "title": "Calibrated model judging",
       "statement": "Use model judges only for construct-specific screening after pair-order randomization, length control, cross-family checking, and calibration against recorded human labels.",
       "acceptance_test": "A frozen human-labelled set reports agreement and order, verbosity, and family-sensitivity diagnostics before a judge result can enter analysis.",
-      "evidence_ids": ["E-EXT-008", "E-EXT-016", "E-EXT-018"],
+      "evidence_ids": [
+        "E-EXT-008",
+        "E-EXT-016",
+        "E-EXT-018"
+      ],
       "phase": "P3"
     },
     {
@@ -657,7 +791,10 @@
       "title": "Named human acceptance",
       "statement": "A human reader, not a surface metric or model judge, is the promotion authority for a specific document version.",
       "acceptance_test": "Every promoted document records the pseudonymous reader, immutable document hash, rubric response, decision, requested changes, and elapsed time.",
-      "evidence_ids": ["E-INT-001", "E-METHOD-006"],
+      "evidence_ids": [
+        "E-INT-001",
+        "E-METHOD-006"
+      ],
       "phase": "P3,P4,P5"
     },
     {
@@ -665,7 +802,11 @@
       "title": "Held-out behavioral evaluation",
       "statement": "Evaluate diagnostic packages and the complete workflow on documents not used for rule tuning, and separate surface, process, higher-order, and acceptance outcomes.",
       "acceptance_test": "Tuning and holdout hashes are frozen before execution, each package has a human-labelled scorecard, and no smoke test is reported as effectiveness.",
-      "evidence_ids": ["E-INT-002", "E-EXT-017", "E-EXT-018"],
+      "evidence_ids": [
+        "E-INT-002",
+        "E-EXT-017",
+        "E-EXT-018"
+      ],
       "phase": "P0,P3,P5"
     },
     {
@@ -673,7 +814,10 @@
       "title": "Minimal process surface",
       "statement": "Use one bounded plan and one result record per work package; do not expose audit ledgers, gate names, or orchestration state in reader-facing prose.",
       "acceptance_test": "The release packet contains the required provenance records while the manuscript passes the internal-register leak test and a reader can identify the argument without process context.",
-      "evidence_ids": ["E-INT-001", "E-INT-002"],
+      "evidence_ids": [
+        "E-INT-001",
+        "E-INT-002"
+      ],
       "phase": "P1,P4"
     },
     {
@@ -681,7 +825,10 @@
       "title": "Privacy and disclosure",
       "statement": "Keep protected manuscripts local by default and record provider, model, purpose, retention policy, disclosure status, and approval for every remote call.",
       "acceptance_test": "An unapproved remote route is blocked, approved calls produce a complete disclosure record, and the minimum-content retention policy is enforced.",
-      "evidence_ids": ["E-METHOD-004", "E-METHOD-006"],
+      "evidence_ids": [
+        "E-METHOD-004",
+        "E-METHOD-006"
+      ],
       "phase": "P1,P4,P5"
     },
     {
@@ -689,7 +836,11 @@
       "title": "Population-level convergence without attribution",
       "statement": "Monitor aggregate vocabulary and structural convergence against an appropriate pre-assistance baseline, but never classify the authorship of an individual document.",
       "acceptance_test": "The drift command refuses single-document analysis, suppresses small cells, and reports uncertainty and baseline sensitivity for aggregate trends.",
-      "evidence_ids": ["E-EXT-004", "E-EXT-005", "E-EXT-012"],
+      "evidence_ids": [
+        "E-EXT-004",
+        "E-EXT-005",
+        "E-EXT-012"
+      ],
       "phase": "P2,P3,P5"
     },
     {
@@ -697,7 +848,11 @@
       "title": "Interaction telemetry",
       "statement": "Record writer intent, suggestion, acceptance, edit, rejection, and rollback events without retaining unnecessary manuscript content.",
       "acceptance_test": "End-to-end replay reconstructs the intervention path from hashes and event records, distinguishes edited acceptance from direct acceptance, and applies the retention class.",
-      "evidence_ids": ["E-EXT-002", "E-EXT-019", "E-EXT-021"],
+      "evidence_ids": [
+        "E-EXT-002",
+        "E-EXT-019",
+        "E-EXT-021"
+      ],
       "phase": "P3,P4,P5"
     },
     {
@@ -705,7 +860,12 @@
       "title": "Heterogeneous outcomes",
       "statement": "Report effects by baseline writer skill, document task and genre, and reader role; do not deploy from an average effect that conceals subgroup harm.",
       "acceptance_test": "The preregistered analysis reports uncertainty for each prespecified stratum and applies the stop rule if expert writers or a task class are harmed.",
-      "evidence_ids": ["E-EXT-013", "E-EXT-017", "E-EXT-018", "E-EXT-020"],
+      "evidence_ids": [
+        "E-EXT-013",
+        "E-EXT-017",
+        "E-EXT-018",
+        "E-EXT-020"
+      ],
       "phase": "P3,P5"
     },
     {
@@ -713,7 +873,13 @@
       "title": "Format-aware parser contract",
       "statement": "All parser adapters must emit the same source-map and protected-span contract; no parser is authoritative merely because it accepts a document.",
       "acceptance_test": "Pandoc, pylatexenc, plasTeX, LaTeXML, and tree-sitter candidates are benchmarked on malformed, unknown-macro, nested-environment, comment, math, citation, location, and round-trip fixtures before selection.",
-      "evidence_ids": ["E-SW-006", "E-SW-007", "E-SW-014", "E-SW-015", "E-SW-016"],
+      "evidence_ids": [
+        "E-SW-006",
+        "E-SW-007",
+        "E-SW-014",
+        "E-SW-015",
+        "E-SW-016"
+      ],
       "phase": "P1"
     },
     {
@@ -721,7 +887,11 @@
       "title": "Evidence-tiered package adoption",
       "statement": "Treat package availability, operational suitability, and writing effectiveness as separate decisions; only a held-out human-labelled benchmark supports adoption.",
       "acceptance_test": "Every adoption candidate has one provenance record and one explicit hold or adopt decision, and adoption is impossible unless its benchmark status is effectiveness-pass and independent review is recorded.",
-      "evidence_ids": ["E-INT-002", "E-SW-003", "E-SW-013"],
+      "evidence_ids": [
+        "E-INT-002",
+        "E-SW-003",
+        "E-SW-013"
+      ],
       "phase": "P0,P1,P3"
     },
     {
@@ -729,7 +899,10 @@
       "title": "Complete authoring brief",
       "statement": "Require the intended reader, decision, genre, known vocabulary, named exemplars, evidence boundary, privacy class, protected objects, and unresolved assumptions before long-form drafting; critical unknowns block the run.",
       "acceptance_test": "Seeded missing critical fields fail before writer invocation; complete briefs produce a stable hash and an explicit list of noncritical unknowns.",
-      "evidence_ids": ["E-INT-001", "E-INT-002"],
+      "evidence_ids": [
+        "E-INT-001",
+        "E-INT-002"
+      ],
       "phase": "P1,P4"
     },
     {
@@ -737,7 +910,11 @@
       "title": "Argument blueprint before prose",
       "statement": "Compile a claim map, evidence anchors, concept-dependency graph, section jobs, terminology order, and visual plan before bounded drafting.",
       "acceptance_test": "Seeded missing warrants, use-before-teach concepts, duplicate section jobs, and figures without a teaching purpose block promotion; the plan has a stable hash.",
-      "evidence_ids": ["E-INT-001", "E-INT-002", "E-EXT-007"],
+      "evidence_ids": [
+        "E-INT-001",
+        "E-INT-002",
+        "E-EXT-007"
+      ],
       "phase": "P1,P2,P4"
     },
     {
@@ -745,7 +922,11 @@
       "title": "Bounded evidence-constrained drafting",
       "statement": "Give a replaceable writer one approved unit at a time with only the context and evidence named in the blueprint; widening a claim or inventing evidence requires an author decision.",
       "acceptance_test": "A unit can be rebuilt independently, records its prompt context and evidence anchors, and cannot advance the next unit while its own checks are unresolved.",
-      "evidence_ids": ["E-INT-002", "E-EXT-019", "E-EXT-021"],
+      "evidence_ids": [
+        "E-INT-002",
+        "E-EXT-019",
+        "E-EXT-021"
+      ],
       "phase": "P2,P4"
     },
     {
@@ -753,7 +934,10 @@
       "title": "Fail-closed pre-human release",
       "statement": "Do not emit a human-review packet until integrity, argument, writing, evidence, and reconstruction gates pass or a named owner approves an explicit exception; missing or unknown results block release.",
       "acceptance_test": "Each seeded gate failure produces no reader packet, preserves a located repair record, and leaves the source available for inspection.",
-      "evidence_ids": ["E-INT-001", "E-INT-002"],
+      "evidence_ids": [
+        "E-INT-001",
+        "E-INT-002"
+      ],
       "phase": "P2,P4,P5"
     },
     {
@@ -761,7 +945,11 @@
       "title": "Construct-specific preflight critics",
       "statement": "Use isolated critics for concept order, evidence and scope, concrete mechanism, and low-context reconstruction; calibrate them on held-out human labels and never treat one model's self-assessment as certification.",
       "acceptance_test": "A frozen held-out set reports false-positive, false-negative, order, verbosity, and family-sensitivity results before a critic enters the release path.",
-      "evidence_ids": ["E-EXT-008", "E-EXT-016", "E-EXT-018"],
+      "evidence_ids": [
+        "E-EXT-008",
+        "E-EXT-016",
+        "E-EXT-018"
+      ],
       "phase": "P3,P4,P5"
     },
     {
@@ -769,7 +957,11 @@
       "title": "Adversarial mutation testing",
       "statement": "Inject known integrity, evidence, dependency, pacing, register, citation, and repair-oscillation failures into valid plans and drafts before trusting the release gate.",
       "acceptance_test": "All critical deterministic mutations are caught or explicitly abstained from; rhetorical mutation rates and uncertainty are reported from a frozen test set.",
-      "evidence_ids": ["E-INT-002", "E-EXT-017", "E-EXT-018"],
+      "evidence_ids": [
+        "E-INT-002",
+        "E-EXT-017",
+        "E-EXT-018"
+      ],
       "phase": "P2,P3,P4"
     },
     {
@@ -777,7 +969,11 @@
       "title": "Bounded causal repair",
       "statement": "Map each failed gate to a named repair strategy, rebuild and recheck within a fixed cycle limit, detect oscillation, and escalate an unresolved choice to the author.",
       "acceptance_test": "Seeded failures converge or stop with a located unresolved choice; no repair loop silently hands an unfinished document to the reader.",
-      "evidence_ids": ["E-INT-001", "E-INT-002", "E-EXT-019"],
+      "evidence_ids": [
+        "E-INT-001",
+        "E-INT-002",
+        "E-EXT-019"
+      ],
       "phase": "P2,P4"
     },
     {
@@ -785,8 +981,67 @@
       "title": "Human-attention budget",
       "statement": "Treat scarce expert reading time as a product constraint: release only after pre-human checks, measure escalations, repair cycles, reader time, and routine debugging avoided, and compare them with the incumbent workflow.",
       "acceptance_test": "The feasibility record reports first-draft release rate, author and reader minutes, abstentions, and meaning errors; no model score substitutes for the human outcome.",
-      "evidence_ids": ["E-INT-001", "E-METHOD-006", "E-EXT-017"],
+      "evidence_ids": [
+        "E-INT-001",
+        "E-METHOD-006",
+        "E-EXT-017"
+      ],
       "phase": "P3,P4,P5"
+    },
+    {
+      "id": "R25",
+      "title": "Finished-manuscript humanization",
+      "statement": "Make finished-manuscript humanization the primary production operation: preserve the immutable source and create a separate revision for a declared reader under explicit author or editor authority.",
+      "acceptance_test": "A fresh invocation snapshots the finished source, records explicit author/editor authorization, creates only a separate child revision, and routes production through hv humanize rather than the legacy plan-to-draft pipeline.",
+      "phase": "V2-P0,V2-P3,V2-P5",
+      "evidence_ids": [
+        "E-INT-001",
+        "E-INT-002"
+      ]
+    },
+    {
+      "id": "R26",
+      "title": "Complete frozen concept baseline",
+      "statement": "Partition all reader-facing source spans and freeze a human-reviewed inventory of every substantive definition, distinction, proposition, mechanism, assumption, derivation step, qualification, example, evidence interpretation, and teaching transition before rewriting.",
+      "acceptance_test": "Every reader-facing source span has a deterministic disposition; independent forward and reverse coverage checks pass; every ambiguity is adjudicated; and the signed baseline hash exists before any rewrite call.",
+      "phase": "V2-P1,V2-P2,V2-P4",
+      "evidence_ids": [
+        "E-INT-001",
+        "E-INT-002"
+      ]
+    },
+    {
+      "id": "R27",
+      "title": "Complete semantic correspondence",
+      "statement": "Require verified concept correspondence exactly 1.0 over the frozen baseline; allow paraphrase, expansion, merge, split, and reorder only with explicit mapping, and treat uncertainty as unresolved rather than partial credit.",
+      "acceptance_test": "Every frozen concept has one or more verified output spans, every output correspondence points back to source concepts, merge/split/reorder lineage is explicit, and any uncertain match blocks release; the measured retention is exactly 1.0.",
+      "phase": "V2-P2,V2-P3,V2-P4,V2-P5",
+      "evidence_ids": [
+        "E-INT-001",
+        "E-INT-002"
+      ]
+    },
+    {
+      "id": "R28",
+      "title": "Active explanation obligations",
+      "statement": "Represent and verify the explanation each declared reader needs, including definitions, motivations, mechanisms, assumptions, intermediate derivations, interpretations, qualifications, contrasts, examples, limiting cases, counterexamples, and visual relations where applicable.",
+      "acceptance_test": "Every concept has typed reader- and genre-specific obligations; each active obligation has located fulfillment evidence in the candidate and an independent supported verdict; mention-only and detached-qualification mutations fail.",
+      "phase": "V2-P2,V2-P3,V2-P4,V2-P5",
+      "evidence_ids": [
+        "E-INT-001",
+        "E-EXT-007"
+      ]
+    },
+    {
+      "id": "R29",
+      "title": "Accountable scaffolding and patch release",
+      "statement": "Remove or move reader-irrelevant workflow scaffolding only through accountable span dispositions after preserving embedded domain meaning, and release by patching an immutable source-tree copy rather than concatenating regenerated sections.",
+      "acceptance_test": "Every proposed scaffolding removal has exact source spans, an accepted disposition, and extracted embedded concepts; assembly applies validated non-overlapping patches to a source-tree copy, preserves untouched bytes, and produces clean revised and blackline builds.",
+      "phase": "V2-P1,V2-P2,V2-P3,V2-P5",
+      "evidence_ids": [
+        "E-INT-001",
+        "E-INT-002"
+      ]
     }
   ],
   "proposal": {
@@ -805,7 +1060,11 @@
     "efficacy_design": "paired or stepped rollout over live documents, selected before outcomes are inspected",
     "sample_size_rule": "simulate power or precision from the observed baseline distribution of feedback rounds and reader clustering; do not choose an arbitrary document count",
     "estimand": "change in human-feedback rounds to reader acceptance, subject to no increase in meaning-preservation violations or reader time",
-    "stratification": ["baseline writer skill", "document task and genre", "reader role"],
+    "stratification": [
+      "baseline writer skill",
+      "document task and genre",
+      "reader role"
+    ],
     "planning_horizon_weeks": 12,
     "planning_scope": "Twelve weeks covers implementation and one feasibility document; efficacy timing follows the power or precision analysis and live-document arrival rate.",
     "resource_assumption": "one product engineer, one research/evaluation lead, a domain editor, a part-time security or policy owner, and independent coding and reader review; the authoring extension is conditional on the week-six protected-core checkpoint; planning assumption, not an observed cost",
@@ -838,5 +1097,13 @@
     ]
   },
   "manual_import_dir": "docs/survey/audit/imports",
-  "external_signoff_file": "docs/survey/audit/review_signoff.json"
+  "external_signoff_file": "docs/survey/audit/review_signoff.json",
+  "change_log": [
+    {
+      "date": "2026-09-11",
+      "change": "Added R25-R29 for the v2 finished-manuscript humanization contract.",
+      "authority": "docs/plans/humanvoice_v2_contract_change_2026-09-11.md",
+      "note": "R1-R24 text is unchanged; their v2 applicability is amended only through the change record."
+    }
+  ]
 }

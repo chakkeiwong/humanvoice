@@ -4,9 +4,9 @@
 Open a finished review packet and four things should be easy to find: the
 version the reader saw, the changes the author made, the technical objects that
 survived, and the reader's decision. The packet exists only because an earlier
-brief, blueprint, and pre-human release record cleared the path. Parsers,
-linters, models, and build tools support those steps; none of them owns the
-document.
+brief, frozen concept baseline, and verification record cleared the path.
+Parsers, linters, models, and build tools support those steps; none of them owns
+the document.
 
 That practical test drives the engineering. The system records explicit
 correspondence and abstains when it cannot establish one. The author sees
@@ -25,12 +25,14 @@ because the software stores them, not because the finished document should
 expose them as labels.
 
 \begin{description}[style=nextline,leftmargin=37mm,labelindent=0mm]
-\item[Authoring brief] The intended reader, decision, genre, known vocabulary,
-named exemplars, evidence boundary, privacy class, protected objects, and
-explicit unknowns.
-\item[Argument blueprint] The claim map, evidence anchors, concept-dependency
-graph, section jobs, terminology order, and visual plan approved before
-long-form drafting.
+\item[Humanization brief] The intended reader, genre, known vocabulary, named
+exemplars, evidence boundary, privacy class, remote-inference authorization,
+protected-object policy, voice constraints, and explicit unknowns, bound to one
+immutable source.
+\item[Concept baseline] The complete source-span partition, substantive concepts
+and their teaching roles, explanation obligations, dependency order, scaffolding
+dispositions, bidirectional coverage reviews, and the named freeze decision
+recorded before any rewriting.
 \item[Document] The stable identity of a work, its genre, intended reader, and
 declared decision.
 \item[Source snapshot] The exact source tree, build environment, compiler
@@ -43,19 +45,20 @@ optional machine suggestion, and the author's decision.
 author, time, changed spans, and explanations.
 \item[Reader session] A rendered version, reader role, context supplied, task
 questions, time observations, and decision.
-\item[Preflight run] The build, integrity, argument, writing, evidence,
-reconstruction, mutation, abstention, and repair results for a candidate
-version.
-\item[Release decision] The gate results, explicit exceptions, packet hash,
-unresolved risks, and named owner of release.
+\item[Semantic preflight result] The build, integrity, concept-correspondence,
+obligation-fulfillment, dependency-order, unsupported-addition, scaffolding,
+writing, mutation, abstention, and repair results for a candidate revision.
+\item[Release decision] The gate results, packet hashes, blocking reasons, and
+named owner of release.
 \item[Evidence item] A source or software observation tied to a claim, a
 fixture, or a product choice, with provenance and appraisal state.
 \end{description}
 
-The relationships are more important than the field names. A brief owns a
-blueprint; a blueprint owns bounded units; a finding belongs to a source
-snapshot and a preflight run; a revision answers one or more findings; a
-protected-object comparison links parent and child snapshots; and a reader
+The relationships are more important than the field names. A brief and an
+immutable snapshot own a frozen baseline; the baseline owns concepts,
+obligations, and the rewrite units assigned to them; a finding belongs to a
+source snapshot and a verification run; a revision answers one or more findings;
+a protected-object comparison links parent and child snapshots; and a reader
 session sees only one released version at a time. An evidence item may motivate
 a finding rule or a reader question, but it cannot silently alter a document.
 
@@ -68,7 +71,7 @@ lineage is
   \label{eq:architecture-lineage}
 \end{equation}
 The arrows carry a person and a time. A generated suggestion is not an arrow
-until it is accepted into a bounded unit and the source changes; a candidate is
+until it is accepted as a patch against an approved rewrite unit; a candidate is
 not a release until its preflight record passes. This simple rule makes
 it possible to answer a later question such as ``who changed the denominator
 in Table 3, and why?'' without reading a prompt transcript.
@@ -115,10 +118,10 @@ Build environment & pdfTeX version, packages, date epoch & Makes a PDF
 replayable and distinguishes source from rendering noise \\
 Protected manifest & Object IDs, spans, normalized values & Makes a changed
 number or equation visible \\
-Authoring brief & Role, decision, time budget, disclosure, evidence boundary &
+Humanization brief & Reader, genre, voice, disclosure, evidence boundary &
 Defines the task and the material the writer may use \\
-Blueprint hash & Claims, dependencies, unit jobs, visual plan & Makes the
-argument order and writer context reproducible \\
+Baseline hash & Concepts, obligations, dependencies, unit assignments & Makes the
+preserved meaning and writer context reproducible \\
 Preflight and release & Gate results, mutations, abstentions, packet hash &
 Shows why the reader was asked to spend time \\
 \bottomrule
@@ -289,26 +292,38 @@ sentences can re-identify a source even after obvious names are removed.
 \section{Interfaces and commands}
 \label{sec:architecture-interfaces}
 
-The first command surface has the same six verbs introduced in
-Chapter~\ref{ch:product} and specified in Chapter~\ref{ch:proposal}:
+The production entry point is \texttt{hv humanize}, which orchestrates the
+resumable phases introduced in Chapter~\ref{ch:product} and specified in
+Chapter~\ref{ch:proposal}:
 
 \begin{description}[style=nextline,leftmargin=30mm,labelindent=0mm]
-\item[\texttt{hv init}] Validates the authoring brief, evidence boundary,
-privacy class, and protected-object declarations. Critical blanks block the
-writer.
-\item[\texttt{hv plan}] Builds the claim map, dependency graph, unit jobs,
-terminology order, and visual plan. Missing warrants become questions.
-\item[\texttt{hv draft}] Invokes the replaceable writer for one approved unit
-and records the context and evidence it received.
-\item[\texttt{hv preflight}] Runs build, integrity, argument, writing,
-evidence, reconstruction, and mutation checks. Unknown results remain
-blockers.
-\item[\texttt{hv repair}] Applies a named repair, rebuilds, reruns preflight,
-and stops on a cycle limit or oscillation.
+\item[\texttt{hv init}] Snapshots the immutable source and validates the
+humanization brief, evidence boundary, privacy class, and protected-object
+declarations. Critical blanks block the writer.
+\item[\texttt{hv inventory}] Partitions every source span, extracts concepts and
+teaching roles, runs the independent reverse coverage review, classifies
+scaffolding, and freezes the reviewed baseline. An uncovered span or unresolved
+classification blocks rewriting.
+\item[\texttt{hv plan}] Assigns concepts, obligations, and dependencies to
+rewrite units in prerequisite order and splits units on semantic boundaries.
+\item[\texttt{hv rewrite}] Invokes the replaceable writer for one approved source
+passage and records the context, concepts, and correspondence it returned.
+\item[\texttt{hv preflight}] Runs build, integrity, correspondence, obligation,
+dependency, addition, scaffolding, writing, and mutation checks against the
+candidate revision. Unknown results remain blockers.
+\item[\texttt{hv repair}] Applies a named causal repair, rebuilds, reruns
+verification, and stops on a cycle limit or oscillation.
+\item[\texttt{hv assemble}] Applies accepted patches to a copy of the source tree
+by stable offsets, verifies untouched bytes, and builds the revision and its
+whole-tree comparison.
 \item[\texttt{hv release}] Presents a clean version and records the named
 reader's task outcome only after the release gate passes. A report is an export
 of this record, not another top-level command.
 \end{description}
+
+Greenfield authoring from a brief remains reachable only under an explicit
+\texttt{hv legacy} namespace. It is experimental, and its records cannot satisfy
+a release gate.
 
 The commands exchange versioned JSON records, not hidden global state. A
 minimal finding record can be represented as
@@ -350,25 +365,27 @@ network policy, and the reader protocol records task completion and questions.
 Those records are what we mean by observability. A single ``quality'' number
 would hide the failed boundary and make repair harder.
 
-The operational envelope for the feasibility build is intentionally modest and
-is stated numerically in Appendix~\ref{app:implementation-contract}: a 300-page
-cap, 2,000 protected objects, bounded scratch space, and fixed deterministic
-and model-assisted time limits on the reference machine. Those are planning
-caps, not performance claims. Week six records the actual distributions and
-either revises the caps openly or narrows the supported document class.
+The operational envelope is stated numerically in
+Appendix~\ref{app:implementation-contract}: caps on source-tree size, rendered
+pages, protected objects, repair cycles per unit, and model time on the reference
+machine. Those are operating controls, not performance claims and never prose
+targets. Exhausting one pauses or blocks work; it never authorizes deleting
+content or releasing an incomplete revision. Measured runs either revise the caps
+openly or narrow the supported document class.
 
 \section{The result of this architecture}
 \label{sec:architecture-conclusion}
 
-Follow one document through the system and the promise becomes testable. The
-brief identifies the reader and decision; the blueprint explains why each unit
-exists; a bounded draft records its evidence; preflight exposes a failure before
-release; a revision records a human choice; a protected comparison exposes a
-meaning-bearing change; and a clean reader view supplies the outcome. Engineers
-can replace a component as long as it respects those boundaries.
+Follow one manuscript through the system and the promise becomes testable. The
+brief identifies the reader; the frozen baseline states every concept that must
+survive and what each owes the reader; each rewritten passage records its
+correspondence; preflight exposes a loss before release; a revision records a
+human choice; a protected comparison exposes a meaning-bearing change; and a
+clean reader view supplies the outcome. Engineers can replace a component as long
+as it respects those boundaries.
 
 The architecture does not guarantee a persuasive document. It makes the
-failure legible and makes a comparative experiment possible. That is the
-appropriate ambition for the first investment. The next Part specifies the
+failure legible and makes a comparative experiment possible. The next Part
+specifies the
 experiment, the economic decision rule, and the operating work required if the
 path earns a larger trial.

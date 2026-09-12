@@ -1,6 +1,9 @@
 {
-  "protocol_id": "HV-AUDIT-2026-08-22",
-  "requirement_count": 24,
+  "protocol_id": "HV-PRODUCT-REQUIREMENTS-2026-09-11",
+  "register_version": "2.0.0",
+  "supersedes": "HV-AUDIT-2026-08-22 without changing R1-R24 historical text",
+  "change_record": "docs/plans/humanvoice_v2_contract_change_2026-09-11.md",
+  "requirement_count": 29,
   "requirements": [
     {
       "acceptance_test": "A low-context reader can state the purpose, object, and requested action, the leak fixture finds no forbidden internal register, and every released file traces to a source hash and version.",
@@ -286,6 +289,46 @@
       "phase": "P3,P4,P5",
       "statement": "Treat scarce expert reading time as a product constraint: release only after pre-human checks, measure escalations, repair cycles, reader time, and routine debugging avoided, and compare them with the incumbent workflow.",
       "title": "Human-attention budget"
+    },
+    {
+      "acceptance_test": "A fresh invocation snapshots the finished source, records explicit author/editor authorization, creates only a separate child revision, and routes production through hv humanize rather than the legacy plan-to-draft pipeline.",
+      "evidence_ids": ["E-INT-001", "E-INT-002"],
+      "id": "R25",
+      "phase": "V2-P0,V2-P3,V2-P5",
+      "statement": "Make finished-manuscript humanization the primary production operation: preserve the immutable source and create a separate revision for a declared reader under explicit author or editor authority.",
+      "title": "Finished-manuscript humanization"
+    },
+    {
+      "acceptance_test": "Every reader-facing source span has a deterministic disposition; independent forward and reverse coverage checks pass; every ambiguity is adjudicated; and the signed baseline hash exists before any rewrite call.",
+      "evidence_ids": ["E-INT-001", "E-INT-002"],
+      "id": "R26",
+      "phase": "V2-P1,V2-P2,V2-P4",
+      "statement": "Partition all reader-facing source spans and freeze a human-reviewed inventory of every substantive definition, distinction, proposition, mechanism, assumption, derivation step, qualification, example, evidence interpretation, and teaching transition before rewriting.",
+      "title": "Complete frozen concept baseline"
+    },
+    {
+      "acceptance_test": "Every frozen concept has one or more verified output spans, every output correspondence points back to source concepts, merge/split/reorder lineage is explicit, and any uncertain match blocks release; the measured retention is exactly 1.0.",
+      "evidence_ids": ["E-INT-001", "E-INT-002"],
+      "id": "R27",
+      "phase": "V2-P2,V2-P3,V2-P4,V2-P5",
+      "statement": "Require verified concept correspondence exactly 1.0 over the frozen baseline; allow paraphrase, expansion, merge, split, and reorder only with explicit mapping, and treat uncertainty as unresolved rather than partial credit.",
+      "title": "Complete semantic correspondence"
+    },
+    {
+      "acceptance_test": "Every concept has typed reader- and genre-specific obligations; each active obligation has located fulfillment evidence in the candidate and an independent supported verdict; mention-only and detached-qualification mutations fail.",
+      "evidence_ids": ["E-INT-001", "E-EXT-007"],
+      "id": "R28",
+      "phase": "V2-P2,V2-P3,V2-P4,V2-P5",
+      "statement": "Represent and verify the explanation each declared reader needs, including definitions, motivations, mechanisms, assumptions, intermediate derivations, interpretations, qualifications, contrasts, examples, limiting cases, counterexamples, and visual relations where applicable.",
+      "title": "Active explanation obligations"
+    },
+    {
+      "acceptance_test": "Every proposed scaffolding removal has exact source spans, an accepted disposition, and extracted embedded concepts; assembly applies validated non-overlapping patches to a source-tree copy, preserves untouched bytes, and produces clean revised and blackline builds.",
+      "evidence_ids": ["E-INT-001", "E-INT-002"],
+      "id": "R29",
+      "phase": "V2-P1,V2-P2,V2-P3,V2-P5",
+      "statement": "Remove or move reader-irrelevant workflow scaffolding only through accountable span dispositions after preserving embedded domain meaning, and release by patching an immutable source-tree copy rather than concatenating regenerated sections.",
+      "title": "Accountable scaffolding and patch release"
     }
   ]
 }

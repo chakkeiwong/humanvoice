@@ -1,14 +1,14 @@
 {
   "record_type": "CorpusItem",
-  "schema_version": "HV-SCHEMA-1.0",
-  "record_id": "corpus-invalid-001",
-  "run_id": "rights-invalid-001",
-  "created_at": "2026-08-26T00:00:00Z",
-  "source_path_or_url": "fixtures/synthetic/example.tex",
+  "schema_version": "HV-SCHEMA-2.0",
+  "record_id": "corpus-record-1",
+  "run_id": "run-v2-example",
+  "created_at": "2026-09-11T12:00:00Z",
+  "source_path_or_url": "main.tex",
   "source_hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-  "owner": "Humanvoice project",
-  "license_or_permission": "project-owned synthetic fixture",
-  "permitted_use": "engineering only",
+  "owner": "document-owner",
+  "license_or_permission": "owner permission",
+  "permitted_use": "internal evaluation",
   "redistribution_status": "cleared-internal",
-  "retention_class": "project-source"
+  "retention_class": "project"
 }

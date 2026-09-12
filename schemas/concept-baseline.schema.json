@@ -1,0 +1,44 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://humanvoice.local/schema/v2/concept-baseline.schema.json",
+  "title": "Humanvoice v2 frozen concept baseline",
+  "$comment": "The shared record validator recomputes sorted component digests and counts, verifies complete source-byte partitioning and links, and computes baseline_hash as SHA-256 over canonical JSON for this record with baseline_hash omitted before accepting frozen=true.",
+  "type": "object",
+  "required": ["record_type", "schema_version", "record_id", "run_id", "created_at", "baseline_id", "snapshot_id", "source_hash", "humanization_brief_id", "humanization_brief_hash", "parent_baseline_id", "component_records", "component_hashes", "component_counts", "partition", "coverage_reviews", "unresolved", "review_decision", "frozen", "frozen_at", "baseline_hash", "lineage_reason"],
+  "properties": {
+    "record_type": {"const": "ConceptBaseline"},
+    "schema_version": {"type": "string", "pattern": "^HV-SCHEMA-2\\.[0-9]+$"},
+    "record_id": {"type": "string", "minLength": 1},
+    "run_id": {"type": "string", "minLength": 1},
+    "created_at": {"type": "string", "format": "date-time"},
+    "baseline_id": {"type": "string", "minLength": 1},
+    "snapshot_id": {"type": "string", "minLength": 1},
+    "source_hash": {"type": "string", "pattern": "^[A-Fa-f0-9]{64}$"},
+    "humanization_brief_id": {"type": "string", "minLength": 1},
+    "humanization_brief_hash": {"type": "string", "pattern": "^[A-Fa-f0-9]{64}$"},
+    "parent_baseline_id": {"type": ["string", "null"]},
+    "component_records": {"type": "object", "required": ["source_spans", "source_concepts", "concept_dependencies", "explanation_obligations", "scaffolding_dispositions"], "properties": {"source_spans": {"$ref": "#/$defs/ids"}, "source_concepts": {"$ref": "#/$defs/nonempty_ids"}, "concept_dependencies": {"$ref": "#/$defs/ids"}, "explanation_obligations": {"$ref": "#/$defs/nonempty_ids"}, "scaffolding_dispositions": {"$ref": "#/$defs/ids"}}, "additionalProperties": false},
+    "component_hashes": {"type": "object", "required": ["source_spans", "source_concepts", "concept_dependencies", "explanation_obligations", "scaffolding_dispositions"], "properties": {"source_spans": {"$ref": "#/$defs/hash"}, "source_concepts": {"$ref": "#/$defs/hash"}, "concept_dependencies": {"$ref": "#/$defs/hash"}, "explanation_obligations": {"$ref": "#/$defs/hash"}, "scaffolding_dispositions": {"$ref": "#/$defs/hash"}}, "additionalProperties": false},
+    "component_counts": {"type": "object", "required": ["source_spans", "reader_facing_spans", "source_concepts", "concept_dependencies", "active_explanation_obligations", "scaffolding_dispositions"], "properties": {"source_spans": {"type": "integer", "minimum": 1}, "reader_facing_spans": {"type": "integer", "minimum": 1}, "source_concepts": {"type": "integer", "minimum": 1}, "concept_dependencies": {"type": "integer", "minimum": 0}, "active_explanation_obligations": {"type": "integer", "minimum": 1}, "scaffolding_dispositions": {"type": "integer", "minimum": 0}}, "additionalProperties": false},
+    "partition": {"type": "object", "required": ["source_bytes", "covered_bytes", "reader_facing_complete", "non_overlapping", "exact_hashes_verified"], "properties": {"source_bytes": {"type": "integer", "minimum": 1}, "covered_bytes": {"type": "integer", "minimum": 0}, "reader_facing_complete": {"type": "boolean"}, "non_overlapping": {"type": "boolean"}, "exact_hashes_verified": {"type": "boolean"}}, "additionalProperties": false},
+    "coverage_reviews": {"type": "object", "required": ["source_to_concepts", "concepts_to_source"], "properties": {"source_to_concepts": {"$ref": "#/$defs/review"}, "concepts_to_source": {"$ref": "#/$defs/review"}}, "additionalProperties": false},
+    "unresolved": {"type": "object", "required": ["span_ids", "concept_ids", "dependency_ids", "obligation_ids", "scaffolding_disposition_ids"], "properties": {"span_ids": {"$ref": "#/$defs/ids"}, "concept_ids": {"$ref": "#/$defs/ids"}, "dependency_ids": {"$ref": "#/$defs/ids"}, "obligation_ids": {"$ref": "#/$defs/ids"}, "scaffolding_disposition_ids": {"$ref": "#/$defs/ids"}}, "additionalProperties": false},
+    "review_decision": {"type": "object", "required": ["status", "reviewer", "reviewed_at", "reason"], "properties": {"status": {"enum": ["pending", "frozen", "rejected"]}, "reviewer": {"type": ["string", "null"]}, "reviewed_at": {"type": ["string", "null"], "format": "date-time"}, "reason": {"type": ["string", "null"]}}, "additionalProperties": false},
+    "frozen": {"type": "boolean"},
+    "frozen_at": {"type": ["string", "null"], "format": "date-time"},
+    "baseline_hash": {"type": "string", "pattern": "^[A-Fa-f0-9]{64}$"},
+    "lineage_reason": {"type": ["string", "null"]},
+    "extensions": {"type": "object"}
+  },
+  "$defs": {
+    "ids": {"type": "array", "items": {"type": "string", "minLength": 1}, "uniqueItems": true},
+    "nonempty_ids": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1}, "uniqueItems": true},
+    "hash": {"type": "string", "pattern": "^[A-Fa-f0-9]{64}$"},
+    "review": {"type": "object", "required": ["critic_id", "critic_version", "prompt_hash", "independent_of_extractor", "verdict", "finding_ids"], "properties": {"critic_id": {"type": "string", "minLength": 1}, "critic_version": {"type": "string", "minLength": 1}, "prompt_hash": {"type": ["string", "null"], "pattern": "^[A-Fa-f0-9]{64}$"}, "independent_of_extractor": {"const": true}, "verdict": {"enum": ["supported", "contradicted", "unresolved"]}, "finding_ids": {"$ref": "#/$defs/ids"}}, "additionalProperties": false}
+  },
+  "allOf": [
+    {"if": {"properties": {"frozen": {"const": true}}}, "then": {"properties": {"partition": {"properties": {"reader_facing_complete": {"const": true}, "non_overlapping": {"const": true}, "exact_hashes_verified": {"const": true}}}, "coverage_reviews": {"properties": {"source_to_concepts": {"properties": {"verdict": {"const": "supported"}, "finding_ids": {"maxItems": 0}}}, "concepts_to_source": {"properties": {"verdict": {"const": "supported"}, "finding_ids": {"maxItems": 0}}}}}, "unresolved": {"properties": {"span_ids": {"maxItems": 0}, "concept_ids": {"maxItems": 0}, "dependency_ids": {"maxItems": 0}, "obligation_ids": {"maxItems": 0}, "scaffolding_disposition_ids": {"maxItems": 0}}}, "review_decision": {"properties": {"status": {"const": "frozen"}, "reviewer": {"type": "string", "minLength": 1}, "reviewed_at": {"type": "string", "format": "date-time"}, "reason": {"type": "string", "minLength": 1}}}, "frozen_at": {"type": "string", "format": "date-time"}}}},
+    {"if": {"properties": {"parent_baseline_id": {"type": "string"}}}, "then": {"properties": {"lineage_reason": {"type": "string", "minLength": 1}}}}
+  ],
+  "additionalProperties": false
+}

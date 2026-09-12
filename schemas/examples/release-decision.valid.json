@@ -1,12 +1,104 @@
 {
   "record_type": "ReleaseDecision",
-  "schema_version": "HV-SCHEMA-1.0",
-  "record_id": "release-001",
-  "run_id": "run-001",
-  "created_at": "2026-08-26T00:00:00Z",
-  "gate_results": {"G0": "pass"},
-  "packet_hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+  "schema_version": "HV-SCHEMA-2.0",
+  "record_id": "release-record-1",
+  "run_id": "run-v2-example",
+  "created_at": "2026-09-11T12:00:00Z",
+  "baseline_id": "baseline-1",
+  "baseline_hash": "6c62cce2d62f7ac652def8eefbb0f42f78daa8a49bb87d80369c0c2a664a7c53",
+  "revision_id": "revision-1",
+  "candidate_hash": "1111111111111111111111111111111111111111111111111111111111111111",
+  "gate_results": {
+    "baseline_complete": {
+      "status": "pass",
+      "evidence_paths": [
+        "audit/evidence.json"
+      ]
+    },
+    "concept_correspondence": {
+      "status": "pass",
+      "evidence_paths": [
+        "audit/evidence.json"
+      ]
+    },
+    "active_obligations": {
+      "status": "pass",
+      "evidence_paths": [
+        "audit/evidence.json"
+      ]
+    },
+    "dependency_order": {
+      "status": "pass",
+      "evidence_paths": [
+        "audit/evidence.json"
+      ]
+    },
+    "unsupported_additions": {
+      "status": "pass",
+      "evidence_paths": [
+        "audit/evidence.json"
+      ]
+    },
+    "scaffolding": {
+      "status": "pass",
+      "evidence_paths": [
+        "audit/evidence.json"
+      ]
+    },
+    "exact_objects": {
+      "status": "pass",
+      "evidence_paths": [
+        "audit/evidence.json"
+      ]
+    },
+    "source_integrity": {
+      "status": "pass",
+      "evidence_paths": [
+        "audit/evidence.json"
+      ]
+    },
+    "assembly_integrity": {
+      "status": "pass",
+      "evidence_paths": [
+        "audit/evidence.json"
+      ]
+    },
+    "revised_build": {
+      "status": "pass",
+      "evidence_paths": [
+        "audit/evidence.json"
+      ]
+    },
+    "blackline_build": {
+      "status": "pass",
+      "evidence_paths": [
+        "audit/evidence.json"
+      ]
+    },
+    "transmission": {
+      "status": "pass",
+      "evidence_paths": [
+        "audit/evidence.json"
+      ]
+    },
+    "policy_manifest": {
+      "status": "pass",
+      "evidence_paths": [
+        "audit/evidence.json"
+      ]
+    },
+    "runtime_manifest": {
+      "status": "pass",
+      "evidence_paths": [
+        "audit/evidence.json"
+      ]
+    }
+  },
+  "reader_packet_hash": "6666666666666666666666666666666666666666666666666666666666666666",
+  "audit_packet_hash": "7777777777777777777777777777777777777777777777777777777777777777",
   "status": "released",
-  "authorized_by": "named project owner",
-  "exceptions": []
+  "authorized_by": "Independent Technical Reader",
+  "reader_decision_id": "reader-record-1",
+  "adjudication_ids": [],
+  "blocking_reasons": []
 }

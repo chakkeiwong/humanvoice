@@ -1,0 +1,24 @@
+{
+  "fixture_id": "zlb-mutation-005",
+  "fixture_type": "mutation",
+  "source_text": "The natural rate of interest equals the real interest rate consistent with output at potential and stable inflation. When this rate turns negative, the zero lower bound prevents the central bank from achieving equilibrium.",
+  "concepts": [
+    "natural-rate-of-interest",
+    "real-interest-rate",
+    "potential-output",
+    "inflation-stability",
+    "zlb-constraint"
+  ],
+  "obligations": [
+    {
+      "type": "definition",
+      "target": "natural-rate-of-interest"
+    }
+  ],
+  "expected_concept_retention": 1.0,
+  "expected_mutations_blocked": [
+    "unsupported_addition"
+  ],
+  "description": "Test blocking addition of concepts not in source",
+  "rationale": "Verifies that rewrite cannot introduce new concepts beyond source inventory"
+}

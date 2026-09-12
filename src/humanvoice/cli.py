@@ -2,15 +2,16 @@
 """
 Humanvoice CLI entry point.
 
-The eight-command surface:
+The v2 command surface:
   hv init       - Create immutable source snapshot and validate brief
-  hv pipeline   - Master orchestration: plan→draft→repair→assemble→release
-  hv plan       - Generate narrative blueprint from brief and evidence
-  hv draft      - Produce unit-level draft with bounded extension
-  hv assemble   - Assemble drafted sections into complete document
+  hv inventory  - Extract and freeze complete concept baseline
+  hv plan       - Build dependency-aware teaching plan from frozen baseline
+  hv rewrite    - Rewrite source passages with concept preservation
   hv preflight  - Run independent critics and structural checks
   hv repair     - Apply bounded repairs (max 3 cycles with oscillation detection)
+  hv assemble   - Assemble rewritten units via source patches
   hv release    - Generate immutable reader packet (human acceptance is separate)
+  hv pipeline   - Master orchestration (legacy v1)
 
 Exit codes per implementation contract:
   0 - pass or released
@@ -42,6 +43,10 @@ def build_parser():
     init_parser.add_argument('--brief', type=Path, required=True, help='Reader brief (JSON)')
     init_parser.add_argument('--output', type=Path, required=True, help='Output directory for snapshot')
 
+    # hv inventory
+    inventory_parser = subparsers.add_parser('inventory', help='Extract and freeze complete concept baseline')
+    inventory_parser.add_argument('snapshot', type=Path, help='Snapshot directory from hv init')
+
     # hv pipeline
     pipeline_parser = subparsers.add_parser('pipeline', help='Master orchestration: plan→draft→repair→assemble→release')
     pipeline_parser.add_argument('snapshot', type=Path, help='Snapshot directory from hv init')
@@ -50,10 +55,16 @@ def build_parser():
     pipeline_parser.add_argument('--mock', action='store_true', help='Use mock mode (no API calls)')
 
     # hv plan
-    plan_parser = subparsers.add_parser('plan', help='Generate narrative blueprint from brief and evidence')
+    plan_parser = subparsers.add_parser('plan', help='Build dependency-aware teaching plan from frozen baseline')
     plan_parser.add_argument('snapshot', type=Path, help='Snapshot directory from hv init')
-    plan_parser.add_argument('--brief', type=Path, required=True, help='Reader brief (JSON)')
-    plan_parser.add_argument('--mock', action='store_true', help='Use mock mode (no API calls)')
+    plan_parser.add_argument('--baseline-id', required=True, help='Baseline ID (e.g., baseline-001)')
+
+    # hv rewrite
+    rewrite_parser = subparsers.add_parser('rewrite', help='Rewrite source passages with concept preservation')
+    rewrite_parser.add_argument('snapshot', type=Path, help='Snapshot directory from hv init')
+    rewrite_parser.add_argument('--baseline-id', required=True, help='Baseline ID (e.g., baseline-001)')
+    rewrite_parser.add_argument('--plan-id', required=True, help='Plan ID (e.g., plan-001)')
+    rewrite_parser.add_argument('--mock', action='store_true', help='Use mock mode (no model calls)')
 
     # hv draft
     draft_parser = subparsers.add_parser('draft', help='Produce unit-level draft within blueprint boundary')
@@ -125,6 +136,9 @@ def main():
     if args.command == 'init':
         from humanvoice.commands import init_command
         return init_command.run(args)
+    elif args.command == 'inventory':
+        from humanvoice.commands import inventory_command
+        return inventory_command.run(args)
     elif args.command == 'pipeline':
         from humanvoice.commands import pipeline_command
         return pipeline_command.run(args)
@@ -134,6 +148,9 @@ def main():
     elif args.command == 'plan':
         from humanvoice.commands import plan_command
         return plan_command.run(args)
+    elif args.command == 'rewrite':
+        from humanvoice.commands import rewrite_command
+        return rewrite_command.main()
     elif args.command == 'validate-blueprint':
         from humanvoice.commands import validate_blueprint_command
         return validate_blueprint_command.main(sys.argv[2:])

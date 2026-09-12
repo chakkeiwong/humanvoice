@@ -1,0 +1,25 @@
+{
+  "fixture_id": "zlb-unit-010",
+  "fixture_type": "unit",
+  "source_text": "The liquidity trap describes a situation where monetary policy loses traction because agents hoard cash rather than spending or investing. This condition is closely related to but conceptually distinct from the zero lower bound constraint.",
+  "concepts": [
+    "liquidity-trap",
+    "cash-hoarding-behavior",
+    "monetary-policy-ineffectiveness",
+    "zlb-relationship"
+  ],
+  "obligations": [
+    {
+      "type": "definition",
+      "target": "liquidity-trap"
+    },
+    {
+      "type": "contrast",
+      "target": "zlb-relationship"
+    }
+  ],
+  "protected_objects": [],
+  "expected_concept_retention": 1.0,
+  "description": "Test conceptual distinction between related phenomena",
+  "rationale": "Tests handling of subtle conceptual boundaries"
+}

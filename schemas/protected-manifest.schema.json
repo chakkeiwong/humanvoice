@@ -1,16 +1,40 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://humanvoice.local/schema/protected-manifest.schema.json",
-  "title": "Humanvoice protected object manifest",
-  "description": "Records protected objects extracted from a source snapshot with their raw and normalized forms, plus correspondence status when comparing two versions. Per implementation contract §6.3: preserves both objects and correspondence status so human review can audit the automated classification. Per release_authority, unresolved protected-object correspondence is a never-except condition that blocks release.",
+  "$id": "https://humanvoice.local/schema/v2/protected-manifest.schema.json",
+  "title": "Humanvoice v2 protected object manifest",
+  "description": "Records exact protected objects and located correspondence. Exact-object integrity complements, but never substitutes for, concept correspondence.",
   "type": "object",
-  "required": ["record_type", "schema_version", "record_id", "run_id", "created_at", "source_hash", "objects", "parser_name", "parser_version"],
+  "required": [
+    "record_type",
+    "schema_version",
+    "record_id",
+    "run_id",
+    "created_at",
+    "source_hash",
+    "objects",
+    "parser_name",
+    "parser_version"
+  ],
   "properties": {
-    "record_type": {"const": "ProtectedManifest"},
-    "schema_version": {"type": "string", "pattern": "^HV-SCHEMA-[0-9]+\\.[0-9]+$"},
-    "record_id": {"type": "string", "minLength": 1},
-    "run_id": {"type": "string", "minLength": 1},
-    "created_at": {"type": "string", "format": "date-time"},
+    "record_type": {
+      "const": "ProtectedManifest"
+    },
+    "schema_version": {
+      "type": "string",
+      "pattern": "^HV-SCHEMA-2\\.[0-9]+$"
+    },
+    "record_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "run_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time"
+    },
     "source_hash": {
       "type": "string",
       "pattern": "^[A-Fa-f0-9]{64}$",
@@ -20,7 +44,12 @@
       "type": "array",
       "items": {
         "type": "object",
-        "required": ["object_id", "object_type", "raw_form", "location"],
+        "required": [
+          "object_id",
+          "object_type",
+          "raw_form",
+          "location"
+        ],
         "properties": {
           "object_id": {
             "type": "string",
@@ -29,7 +58,16 @@
           },
           "object_type": {
             "type": "string",
-            "enum": ["equation", "citation", "table", "label", "macro", "quotation", "number", "qualification"],
+            "enum": [
+              "equation",
+              "citation",
+              "table",
+              "label",
+              "macro",
+              "quotation",
+              "number",
+              "qualification"
+            ],
             "description": "Protected object types per parser.py ObjectType enum"
           },
           "raw_form": {
@@ -38,17 +76,55 @@
             "description": "Exact source text as extracted from the document"
           },
           "normalized_form": {
-            "type": ["string", "null"],
+            "type": [
+              "string",
+              "null"
+            ],
             "description": "Canonical representation for correspondence matching. Normalization is type-specific: equations strip whitespace/comments, citations extract keys, labels extract names."
           },
           "location": {
             "type": "object",
-            "required": ["char_offset"],
+            "required": [
+              "char_offset"
+            ],
             "properties": {
-              "char_offset": {"type": "integer", "minimum": 0},
-              "line": {"type": ["integer", "null"], "minimum": 1},
-              "column": {"type": ["integer", "null"], "minimum": 0},
-              "length": {"type": "integer", "minimum": 0}
+              "char_offset": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "line": {
+                "type": [
+                  "integer",
+                  "null"
+                ],
+                "minimum": 1
+              },
+              "column": {
+                "type": [
+                  "integer",
+                  "null"
+                ],
+                "minimum": 0
+              },
+              "length": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "byte_start": {
+                "type": "integer",
+                "minimum": 0,
+                "description": "Byte offset of the object's first byte in its source file."
+              },
+              "byte_end": {
+                "type": "integer",
+                "minimum": 0,
+                "description": "Byte offset just past the object's last byte."
+              },
+              "source_file": {
+                "type": "string",
+                "minLength": 1,
+                "description": "Snapshot-relative path of the file containing the object."
+              }
             },
             "additionalProperties": false,
             "description": "Stable source location from parser.py SourceLocation"
@@ -56,6 +132,16 @@
           "metadata": {
             "type": "object",
             "description": "Parser-specific annotations, e.g. environment name for equations, depth"
+          },
+          "content_hash": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{64}$",
+            "description": "SHA-256 of the normalized form. Identity for correspondence tracking, so formatting alone is not read as a substantive change."
+          },
+          "parser_source": {
+            "type": "string",
+            "minLength": 1,
+            "description": "Which extractor found this object, retained so parser bake-off disagreement stays attributable rather than averaged away."
           }
         },
         "additionalProperties": false
@@ -81,19 +167,40 @@
       "type": "array",
       "items": {
         "type": "object",
-        "required": ["construct", "reason"],
+        "required": [
+          "construct",
+          "reason"
+        ],
         "properties": {
-          "construct": {"type": "string", "minLength": 1},
-          "reason": {"type": "string", "minLength": 1},
-          "location": {"type": ["object", "null"]}
+          "construct": {
+            "type": "string",
+            "minLength": 1
+          },
+          "reason": {
+            "type": "string",
+            "minLength": 1
+          },
+          "location": {
+            "type": [
+              "object",
+              "null"
+            ]
+          }
         }
       },
       "description": "Constructs the parser could not safely extract"
     },
     "comparison": {
-      "type": ["object", "null"],
+      "type": [
+        "object",
+        "null"
+      ],
       "description": "Present when this manifest records a correspondence comparison between a baseline and revised version",
-      "required": ["baseline_hash", "revised_hash", "correspondences"],
+      "required": [
+        "baseline_hash",
+        "revised_hash",
+        "correspondences"
+      ],
       "properties": {
         "baseline_hash": {
           "type": "string",
@@ -109,19 +216,36 @@
           "type": "array",
           "items": {
             "type": "object",
-            "required": ["status", "confidence", "rationale"],
+            "required": [
+              "status",
+              "confidence",
+              "rationale"
+            ],
             "properties": {
               "object_baseline": {
-                "type": ["string", "null"],
+                "type": [
+                  "string",
+                  "null"
+                ],
                 "description": "object_id from baseline manifest, null if this is an added object"
               },
               "object_revised": {
-                "type": ["string", "null"],
+                "type": [
+                  "string",
+                  "null"
+                ],
                 "description": "object_id from revised manifest, null if this is a removed object"
               },
               "status": {
                 "type": "string",
-                "enum": ["unchanged", "explained_change", "substantive_change", "added", "removed", "unresolved"],
+                "enum": [
+                  "unchanged",
+                  "explained_change",
+                  "substantive_change",
+                  "added",
+                  "removed",
+                  "unresolved"
+                ],
                 "description": "Correspondence status per compare.py CorrespondenceStatus enum"
               },
               "confidence": {
@@ -154,7 +278,9 @@
       },
       "additionalProperties": false
     },
-    "extensions": {"type": "object"}
+    "extensions": {
+      "type": "object"
+    }
   },
   "additionalProperties": false
 }

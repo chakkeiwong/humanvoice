@@ -1,0 +1,49 @@
+{
+  "record_type": "HumanizationBrief",
+  "schema_version": "HV-SCHEMA-2.0",
+  "record_id": "brief-1",
+  "run_id": "run-v2-example",
+  "created_at": "2026-09-11T12:00:00Z",
+  "source_entry_point": "main.tex",
+  "reader": {
+    "role": "trained technical reader",
+    "prior_knowledge": [
+      "calculus"
+    ],
+    "reading_context": "Read the complete survey without repository context."
+  },
+  "purpose": "Understand the model and its limiting cases.",
+  "decision": null,
+  "genre": "technical survey",
+  "known_vocabulary": [
+    "derivative"
+  ],
+  "exemplars": [],
+  "evidence_boundary": "Use only the frozen manuscript and linked evidence.",
+  "privacy_class": "internal",
+  "remote_inference": {
+    "authorized": false,
+    "provider": null,
+    "purpose": null,
+    "approved_by": null
+  },
+  "voice_constraints": {
+    "register": "clear technical prose",
+    "person": "source_dependent",
+    "additional": []
+  },
+  "protected_object_policy": "Preserve exact equations, citations, labels, and numbers.",
+  "unresolved_assumptions": [],
+  "authorizing_action": {
+    "actor": "document-owner",
+    "role": "document_owner",
+    "action": "humanize_finished_manuscript",
+    "authorized_at": "2026-09-11T12:00:00Z"
+  },
+  "policy_sources": [
+    {
+      "path": "policies/humanizer.md",
+      "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+    }
+  ]
+}

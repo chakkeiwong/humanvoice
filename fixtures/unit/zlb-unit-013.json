@@ -1,0 +1,25 @@
+{
+  "fixture_id": "zlb-unit-013",
+  "fixture_type": "unit",
+  "source_text": "Fiscal policy gains relative effectiveness at the zero lower bound because accommodative monetary policy cannot offset any crowding-out effects. The fiscal multiplier may exceed unity under these conditions.",
+  "concepts": [
+    "fiscal-policy-effectiveness",
+    "crowding-out",
+    "fiscal-multiplier",
+    "monetary-fiscal-interaction"
+  ],
+  "obligations": [
+    {
+      "type": "mechanism",
+      "target": "fiscal-policy-effectiveness"
+    },
+    {
+      "type": "contrast",
+      "target": "monetary-fiscal-interaction"
+    }
+  ],
+  "protected_objects": [],
+  "expected_concept_retention": 1.0,
+  "description": "Test policy interaction and relative effectiveness",
+  "rationale": "Tests handling of comparative policy effectiveness under constraints"
+}

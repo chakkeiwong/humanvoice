@@ -1,0 +1,43 @@
+{
+  "record_type": "SourceConcept",
+  "schema_version": "HV-SCHEMA-2.0",
+  "record_id": "concept-record-1",
+  "run_id": "run-v2-example",
+  "created_at": "2026-09-11T12:00:00Z",
+  "baseline_id": "baseline-1",
+  "snapshot_id": "snapshot-1",
+  "concept_id": "concept-1",
+  "identity_basis": {
+    "snapshot_hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "ordered_span_ids_hash": "28b3ad41b2766925fc48ffe4854153ca7e8974bbe6535ee6aebfdcad335f593c",
+    "identity_hash": "dd3afbdae214738f17967df2646ca5a35038a88b28abc88bd7c86970f8761a90"
+  },
+  "proposition": "A continuous map has no jump at the threshold.",
+  "concept_type": "definition",
+  "source_span_ids": [
+    "span-1"
+  ],
+  "occurrences": [
+    {
+      "span_id": "span-1",
+      "teaching_role": "define"
+    }
+  ],
+  "supporting_claims": [],
+  "evidence_ids": [],
+  "protected_object_ids": [],
+  "assumptions": [],
+  "qualifications": [],
+  "reader_prerequisites": [],
+  "explanation_obligation_ids": [
+    "obligation-1"
+  ],
+  "extraction_confidence": 0.91,
+  "review_status": "accepted",
+  "lineage": {
+    "parent_concept_ids": [],
+    "change_reason": null,
+    "adjudicated_by": null,
+    "adjudicated_at": null
+  }
+}

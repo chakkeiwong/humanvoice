@@ -1,0 +1,36 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://humanvoice.local/schema/v2/source-span.schema.json",
+  "title": "Humanvoice v2 source span",
+  "$comment": "The shared record validator enforces byte_end > byte_start and line_end >= line_start; bundle/source validation enforces in-file non-overlap, contiguous partition coverage, and exact byte hashes.",
+  "type": "object",
+  "required": ["record_type", "schema_version", "record_id", "run_id", "created_at", "snapshot_id", "source_hash", "source_file", "byte_start", "byte_end", "line_start", "line_end", "exact_text_hash", "span_kind", "reader_facing", "structural_parent_id", "coverage_disposition", "concept_ids", "protected_object_ids", "scaffolding_disposition_ids"],
+  "properties": {
+    "record_type": {"const": "SourceSpan"},
+    "schema_version": {"type": "string", "pattern": "^HV-SCHEMA-2\\.[0-9]+$"},
+    "record_id": {"type": "string", "minLength": 1},
+    "run_id": {"type": "string", "minLength": 1},
+    "created_at": {"type": "string", "format": "date-time"},
+    "snapshot_id": {"type": "string", "minLength": 1},
+    "source_hash": {"type": "string", "pattern": "^[A-Fa-f0-9]{64}$"},
+    "source_file": {"type": "string", "minLength": 1},
+    "byte_start": {"type": "integer", "minimum": 0},
+    "byte_end": {"type": "integer", "minimum": 1},
+    "line_start": {"type": "integer", "minimum": 1},
+    "line_end": {"type": "integer", "minimum": 1},
+    "exact_text_hash": {"type": "string", "pattern": "^[A-Fa-f0-9]{64}$"},
+    "span_kind": {"enum": ["prose", "heading", "comment", "math", "float", "bibliography", "command", "whitespace", "other"]},
+    "reader_facing": {"type": "boolean"},
+    "structural_parent_id": {"type": ["string", "null"]},
+    "coverage_disposition": {"enum": ["concept_bearing", "protected_structural", "non_substantive_scaffolding", "unresolved"]},
+    "concept_ids": {"type": "array", "items": {"type": "string", "minLength": 1}, "uniqueItems": true},
+    "protected_object_ids": {"type": "array", "items": {"type": "string", "minLength": 1}, "uniqueItems": true},
+    "scaffolding_disposition_ids": {"type": "array", "items": {"type": "string", "minLength": 1}, "uniqueItems": true},
+    "extensions": {"type": "object"}
+  },
+  "allOf": [
+    {"if": {"properties": {"coverage_disposition": {"const": "concept_bearing"}}}, "then": {"properties": {"concept_ids": {"minItems": 1}}}},
+    {"if": {"properties": {"coverage_disposition": {"const": "non_substantive_scaffolding"}}}, "then": {"properties": {"scaffolding_disposition_ids": {"minItems": 1}}}}
+  ],
+  "additionalProperties": false
+}

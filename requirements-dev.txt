@@ -1,5 +1,6 @@
-# Pinned validator used by WP0 schema and contract checks.
+# Pinned validator for the v2 schema, contract, and program checks.
+# The pin is exact because the checkers assert on validator error strings.
 jsonschema==4.26.0
 
-# API model adapter for WP4 authoring extension (contract 1.1.0)
+# API model adapter for source-grounded rewriting (contract 2.0.0, WP-V2-3).
 anthropic==0.42.0

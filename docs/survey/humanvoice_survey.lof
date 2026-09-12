@@ -35,10 +35,10 @@
 \contentsline {figure}{\numberline {12.1}{\ignorespaces The unit of work is one document version moving from brief to release, with a bounded return when pre-human checks find a repair.}}{93}{figure.12.1}%
 \addvspace {10\p@ }
 \contentsline {figure}{\numberline {13.1}{\ignorespaces Three people see different interfaces over one version record; the reader does not receive the project's private audit trail.}}{100}{figure.13.1}%
-\contentsline {figure}{\numberline {13.2}{\ignorespaces Humanvoice spends scarce reader attention at the end of the path. A failed pre-human check returns the draft to a located repair; it cannot produce a review packet by default.}}{101}{figure.13.2}%
+\contentsline {figure}{\numberline {13.2}{\ignorespaces Humanvoice spends scarce reader attention at the end of the path. A failed check returns the revision to a located repair; it cannot produce a reader packet by default.}}{101}{figure.13.2}%
 \contentsline {figure}{\numberline {13.3}{\ignorespaces Protected comparison does not forbid change. It prevents a substantive change from disappearing inside fluent prose.}}{104}{figure.13.3}%
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {14.1}{\ignorespaces The common record keeps a flawed draft inside a bounded repair loop. Only a passed release gate reaches the expensive human reader.}}{108}{figure.14.1}%
+\contentsline {figure}{\numberline {14.1}{\ignorespaces The common record keeps a defective revision inside a bounded repair loop. Only a passed release gate reaches the expensive human reader.}}{108}{figure.14.1}%
 \addvspace {10\p@ }
 \contentsline {figure}{\numberline {15.1}{\ignorespaces A small record model links source facts to editorial choices and reader outcomes without treating any diagnostic as a verdict.}}{115}{figure.15.1}%
 \addvspace {10\p@ }

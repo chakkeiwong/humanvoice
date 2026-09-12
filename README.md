@@ -1,14 +1,25 @@
 # humanvoice
 
-Helping technical authors reach a human reader with fewer wasted revisions.
+Making a finished technical manuscript comfortably readable without losing
+anything it says.
 
-Humanvoice is a proposed LaTeX-first authoring and revision system. It turns a
-reader brief into an argument blueprint, drafts in bounded units, runs
-fail-closed pre-human checks, protects meaning-bearing objects, and releases a
-direct decision task for a named reader only after the earlier gates pass. The
-project is meant to reduce the expert time lost to repeated diagnosis and
-rereading without turning a style score or model judgment into an acceptance
-decision.
+Humanvoice takes an immutable, finished AI-drafted LaTeX manuscript and produces
+a separate child revision that a declared trained reader can understand
+comfortably. The source is never edited in place. Before any prose changes, the
+system inventories every substantive concept the source carries and freezes that
+inventory as a human-reviewed baseline; every rewritten passage is then measured
+against it. Retention is exactly 1.0: a concept may be paraphrased, expanded,
+merged, split, or reordered, but not dropped, and naming a concept does not count
+as explaining it.
+
+This is not summarization and not shortening. There is no document, chapter, or
+section length target anywhere in the release path — an adequate explanation
+often needs more words, an intermediate derivation, an example, or a slower
+pace than the source used.
+
+**Status:** the v2 contract is specified. Nothing beyond specification is
+claimed: no v2 implementation, benchmark result, independent replay, or reader
+acceptance. See [`docs/plans/humanvoice_master_program_v2.md`](docs/plans/humanvoice_master_program_v2.md).
 
 ## Start here
 
@@ -29,10 +40,8 @@ implementation plan. The internal case record and detailed requirements are
 appendices in that same volume. Readers should not need to choose between a
 ``proposal'' and a ``survey.''
 
-The current expanded build is 266 A4 pages and approximately 95,358 extracted
-words, with about 56,558 words on the reader-facing route before the
-appendices. It contains 38 figures, 72 tables, and 110 numbered visuals
-(roughly one visual every 2.20 pages). The
+The current expanded build is 268 A4 pages, with about 56,994 words on the
+reader-facing route before the appendices. The
 volume includes a worked source-to-reader case, foundational writing
 scholarship, a discipline-level literature synthesis, an adjacent-product
 comparison, package dossiers and held-out fixtures, a concrete architecture,
@@ -94,13 +103,44 @@ required evidence or human review remains incomplete.
 
 A plausible draft can pass compilation, grammar checks, and several model
 reviews while still making an expert reader reconstruct its purpose and
-argument. Existing linters, language models, citation services, and version
-control each solve part of the writing path. Humanvoice connects them before
-the expensive read: it compiles the brief, checks the argument and concept
-order, locates repairable failures, protects substantive content during
-revision, and measures the reader outcome that matters. The MVP tests whether
-that fail-closed workflow is usable and measurable. A later comparison must
-earn any claim that it improves expert writing.
+argument. That is the ordinary condition of an AI-drafted technical manuscript:
+the concepts are present but under-taught, the prerequisites arrive after the
+things that need them, and the qualifications float free of the claims they
+limit.
+
+The tempting fix — ask a model to rewrite it more readably — loses content,
+because a fluent paragraph can quietly drop a distinction and still look
+healthy under protected-object counts and length ratios. Humanvoice's answer is
+to make the concepts the unit of account rather than the words: freeze what the
+source teaches, rewrite passage by passage against that frozen record, and
+verify correspondence and explanation independently of the writer before a
+reader is asked for anything. A later comparison must earn any claim that the
+result actually reads better.
+
+## The production path
+
+```bash
+hv humanize manuscript/ --brief brief.yaml
+```
+
+That orchestrates eight resumable phases, each runnable directly for inspection
+or recovery:
+
+```
+hv init        snapshot the immutable source; refuse an incomplete brief
+hv inventory   partition every reader-facing span; build the concept baseline
+hv plan        assign obligations and rewrite units in dependency order
+hv rewrite     rewrite one source passage; publish nothing on truncation
+hv preflight   verify the assembled candidate, not just the source
+hv repair      apply one named causal repair; stop on oscillation
+hv assemble    patch a copy of the source tree; build revision and blackline
+hv release     produce the reader packet only when every result is a pass
+```
+
+A missing result is a failure, not a pass, and there is no generic release
+exception. Greenfield authoring from a brief — the v1 product — remains
+available only under an explicit `hv legacy` namespace and cannot satisfy a
+release gate.
 
 ## Implementation surface
 
@@ -114,8 +154,21 @@ docs/plans/   execution plans and author-side review records
 
 The implementation work should add source adapters, protected-object fixtures,
 diagnostic adapters, and reader-evaluation assets only when they support the
-MVP contract in the proposal. Work-package names are deliberately not part of
-the reader-facing story.
+contract in the proposal. Work-package names are deliberately not part of the
+reader-facing story.
+
+Run records, gates, and test results from v1 remain readable and keep their
+original meaning, but they are labelled `legacy_v1` and cannot satisfy a v2
+gate. A v1 source snapshot enters v2 only by re-initialization; no migration
+infers concepts or correspondence from a v1 blueprint.
+
+Verify the current state with:
+
+```bash
+python tools/check_implementation_contract.py
+python tools/check_program_consistency.py --require-g0-ready
+python -m pytest tests/ -q
+```
 
 Non-goal: detector evasion. humanvoice improves prose under disclosure norms
 and never optimizes against an AI-text detector.

@@ -1,0 +1,22 @@
+{
+  "fixture_id": "zlb-mutation-009",
+  "fixture_type": "mutation",
+  "source_text": "The 2008 financial crisis forced multiple central banks to the zero lower bound simultaneously, creating unprecedented coordination challenges for global monetary policy.",
+  "concepts": [
+    "2008-financial-crisis",
+    "simultaneous-zlb-binding",
+    "policy-coordination-challenges"
+  ],
+  "obligations": [
+    {
+      "type": "example",
+      "target": "simultaneous-zlb-binding"
+    }
+  ],
+  "expected_concept_retention": 1.0,
+  "expected_mutations_blocked": [
+    "deletion"
+  ],
+  "description": "Test blocking deletion of historical example",
+  "rationale": "Verifies that concrete examples required by obligations are preserved"
+}

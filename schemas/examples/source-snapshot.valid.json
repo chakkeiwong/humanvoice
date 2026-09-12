@@ -1,30 +1,26 @@
 {
   "record_type": "SourceSnapshot",
-  "schema_version": "HV-SCHEMA-1.0",
-  "record_id": "SNAP-20260826-001",
-  "run_id": "run-init-20260826-143015",
-  "created_at": "2026-08-26T14:30:15Z",
-  "snapshot_id": "snapshot-20260826-143015",
-  "source_hash": "c5f7e9d4c3b6a8f7e6d5c4b7a9f8e7d6c5b9a7f8e6d5c4b3a8f7e9d5c6b8a5f9",
+  "schema_version": "HV-SCHEMA-2.0",
+  "record_id": "snapshot-record-1",
+  "run_id": "run-v2-example",
+  "created_at": "2026-09-11T12:00:00Z",
+  "snapshot_id": "snapshot-1",
+  "source_hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+  "source_entry_point": "main.tex",
   "source_files": [
-    "source/main.tex",
-    "source/intro.tex",
-    "source/method.tex",
-    "source/results.tex",
-    "source/conclusion.tex",
-    "source/references.bib"
+    {
+      "path": "main.tex",
+      "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "byte_size": 200
+    }
   ],
-  "brief": {
-    "reader_role": "operations lead",
-    "decision_type": "capacity planning",
-    "time_available_minutes": 30,
-    "prior_knowledge": "database operations, incident response procedures",
-    "success_criteria": "reader can identify the proposed change, the supporting evidence, and the stated qualification"
-  },
+  "source_tree_bytes": 200,
+  "humanization_brief_id": "brief-1",
+  "humanization_brief_hash": "02c482215fe4e79cec436f134ea2e871d46937848dbefb613b9696c8243c5039",
   "brief_valid": true,
   "snapshot_immutable": true,
-  "source_root": "/home/author/docs/capacity-plan-2026-q4",
+  "snapshot_closed_at": "2026-09-11T12:00:00Z",
+  "source_root": "/example/source",
   "scratch_path": "scratch",
-  "byte_size": 245760,
   "privacy_class": "internal"
 }

@@ -9,43 +9,48 @@ are in \path{schemas/}. If this annex and an implementation disagree, the
 implementation stops until the contract is deliberately changed and the locked
 fixtures are replayed.
 
-The canonical R1--R24 acceptance register is
+The canonical R1--R29 acceptance register is
 Table~\ref{tab:expanded-requirements} in Appendix~\ref{app:requirements}.
 This annex supplies the execution contract for that register; it does not
 create a second list of requirements.
 
-\section{Scope, precedence, and the week-six decision}
+\section{Scope, precedence, and staged gates}
 \label{sec:contract-scope}
 
-The first release has a protected-source core and an optional authoring
-extension. The core is not a consolation prize. It is the first investment's
-test of whether Humanvoice can preserve a technical document while making a
-reviewer's work more local and more reversible. The extension earns its place
-only after that test passes.
+The production operation is finished-manuscript humanization: an immutable source
+plus an explicit authorization produces a separate child revision. The protected
+source core is a prerequisite layer within that operation, not an alternative
+product. Greenfield authoring from a brief is legacy and experimental, reachable
+only under \texttt{hv legacy}, and its records cannot satisfy a release gate.
 
 \begin{table}[H]
 \centering
 \small
-\begin{tabularx}{\textwidth}{@{}p{0.18\textwidth}p{0.23\textwidth}L p{0.20\textwidth}@{}}
+\begin{tabularx}{\textwidth}{@{}p{0.24\textwidth}L p{0.24\textwidth}@{}}
 \toprule
-Stage & Weeks & Required output & Checkpoint \\
+Stage & Required output & Gate \\
 \midrule
-Protected core & 1--6 & Authoring brief, source snapshot, canonical LaTeX
-build, source map, protected-object comparison, versioned records, and safe
-command results. & A second operator replays the core, or the project narrows
-to this review utility. \\
-Authoring extension & 7--9, conditional & Blueprint, bounded unit writer,
-pre-human critics, mutation harness, bounded repair, and fail-closed release. &
-The exact runtime and model pass calibration and held-out replay; otherwise
-model-dependent gates remain abstentions. \\
-Feasibility case & 10--12 & One released packet, timed reader task, burden
-account, rights record, and proceed/revise/stop memo. & The sponsor decides
-whether a comparative study is worth funding. \\
+Protected source core & Humanization brief, immutable source snapshot, canonical
+LaTeX build, source map, protected-object comparison, versioned records, and safe
+command results. & A second operator replays the core from the frozen source and
+records. \\
+Frozen concept baseline & Complete span partition, concept inventory, explanation
+obligations, dependency order, scaffolding dispositions, independent reverse
+coverage review, and a named freeze decision. & No reader-facing span is
+uncovered and no classification is unresolved. \\
+Source-grounded rewriting & Per-passage replacements with located concept
+correspondence and obligation evidence; nothing published on truncation. &
+Mutations that drop a concept, mention without explaining, add unsupported
+content, or reorder a prerequisite block acceptance. \\
+Verification and release & Semantic preflight on the candidate, causal repair,
+patch assembly, clean revised and blackline builds, and a fail-closed packet. &
+Every never-except invariant passes; there is no generic exception. \\
+Product evidence & Benchmark manuscript, held-out manuscript, independent replay,
+and named-reader results. & Only this gate authorizes external release. \\
 \bottomrule
 \end{tabularx}
-\caption{The protected core is the week-six go/no-go decision. The full path is
-conditional, so an ambitious model extension cannot silently consume the whole
-feasibility horizon.}
+\caption{Staged gates for the humanization path. Each gate reports one evidence
+state; a later state is never inferred from an earlier one.}
 \label{tab:contract-scope}
 \end{table}
 
@@ -153,88 +158,110 @@ suggest a repair; it may not accept the document.
 \section{Operating envelope}
 \label{sec:contract-envelope}
 
-The numbers below are planning caps for the MVP, not measured performance. They
-make the parser, scratch space, and inference budget designable. Week six
-records actual distributions and either revises the caps openly or narrows the
-supported document class.
+The numbers below are operating controls, not measured performance and never
+prose targets. They make the parser, scratch space, and inference budget
+designable. Exhausting a control pauses or blocks work and requires explicit
+continuation authorization; it never authorizes dropping a concept, shortening an
+explanation, or releasing an incomplete revision. Measured runs either revise the
+controls openly or narrow the supported document class.
 
 \begin{table}[H]
 \centering
 \small
 \begin{tabularx}{\textwidth}{@{}p{0.35\textwidth}p{0.19\textwidth}L@{}}
 \toprule
-Quantity & MVP cap & Interpretation \\
+Quantity & Control & Interpretation \\
 \midrule
 Source tree & 250 MiB & Includes bibliography, images, packages, and auxiliary
 files in the snapshot. \\
-Rendered document & 300 pages & A larger document may use the protected core
-after an explicit scope decision; it is not silently truncated. \\
-Prose & 120,000 words & The cap controls extraction and critic work, not the
-author's final length. \\
-Protected objects & 2,000 & Equations, numbers, citations, tables, quotations,
+Rendered document & 1,000 pages & A larger document may use the protected core
+after an explicit scope decision; it is never silently truncated. \\
+Protected objects & 20,000 & Equations, numbers, citations, tables, quotations,
 code blocks, and declared claims. \\
 Deterministic preflight & 30 minutes & On the reference machine: eight CPU
 cores and 32 GiB RAM. \\
-Model-assisted preflight & 90 minutes & Includes bounded critic calls and
-reconstruction; timeout is an abstention. \\
+Model-assisted verification & 90 minutes & Includes critic calls and
+reconstruction; a timeout is an abstention, never a pass. \\
 Repair & 3 cycles per unit & Repeated signatures or alternating parent hashes
-stop the loop. \\
-Inference & 2 GPU-hours or 10 CPU-hours per document & Whichever limit is
-reached first; actual usage enters the cost account. \\
+stop the loop and name an unresolved author choice. \\
+Per-call output estimate & 2,000 words & A pre-call segmentation trigger only. A
+unit expected to exceed it is split on concept or dependency boundaries and
+resumed; content is never trimmed to fit. \\
+Inference & Recorded per run & Token, time, and cost totals enter the cost
+account and may pause further calls. \\
 \bottomrule
 \end{tabularx}
-\caption{Initial operating limits. They are scope controls and cost inputs,
-not promises of speed.}
+\caption{Operating controls. They are scope controls and cost inputs, not
+promises of speed and not limits on the length of an adequate explanation.}
 \label{tab:contract-envelope}
 \end{table}
 
-\subsection{Measured budgets from cost validation}
+\subsection{Historical cost observations}
 
-Cost validation runs on the architecture assessment corpus (15,642 words,
-16 source files, 18 sections) measured the following in August 2026:
+The figures below come from v1 greenfield-drafting runs in August 2026. They are
+retained as cost-sizing evidence only. They were produced under a superseded
+contract whose per-unit output ceiling caused semantic loss, and they are not
+v2 measurements:
 
 \begin{table}[H]
 \centering
 \small
 \begin{tabularx}{\textwidth}{@{}p{0.30\textwidth}p{0.22\textwidth}L@{}}
 \toprule
-Quantity & Measured & Enforcement \\
+Quantity & Observed under v1 & v2 treatment \\
 \midrule
-Document size & 15,642 words & Hard cap: 120,000 words \\
-Token cost per document & \$2.24--\$2.53 & Warning at \$15, fail at \$20 \\
-Wall-clock time (plan+draft) & 639 seconds & Hard cap: 90 min (5,400 s) \\
-Input tokens per section & 1,020--16,703 & Hard cap: 12,000 per unit \\
-Output tokens per section & 663--2,147 & Hard cap: 2,000 per unit \\
-Peak memory & Not measured & Cap: 32 GiB (from runtime profile) \\
+Document size & 15,642 words & No length control; the source defines the work \\
+Token cost per run & \$2.24--\$2.53 & Recorded; may pause further calls \\
+Wall-clock time & 639 seconds & Recorded against the time control \\
+Input tokens per call & 1,020--16,703 & Sized per unit; excess forces a split \\
+Output tokens per call & 663--2,147 & Sized per unit; a truncated call publishes
+nothing and is resumed \\
+Peak memory & Not measured & Recorded against the memory control \\
 \bottomrule
 \end{tabularx}
-\caption{Measured budgets from cost validation runs (2026-08-29). Cost
-variance is 16$\times$ across sections due to source file size and context
-accumulation. Budget enforcement (implemented in \texttt{model.py}
-BudgetTracker) uses the caps from Table~\ref{tab:contract-envelope}; this
-table provides empirical data for sizing decisions.}
+\caption{Historical v1 cost observations (2026-08-29), retained for sizing only.
+Cost varied roughly 16$\times$ across units because of source size and context
+accumulation. Under v2 these are diagnostics: no figure in this table is a target
+or a ceiling on an adequate explanation.}
 \label{tab:contract-measured-budgets}
 \end{table}
 
-The model receives at most 12,000 input tokens and returns at most 2,000 tokens
-for one bounded unit. A whole-document model context is outside the first
-release. The document-level model limits in the repository contract exist only
-for an explicitly approved assembly or reconstruction task; they do not permit
-an unbounded autonomous rewrite.
+Each call receives one source passage with enough neighboring context to keep
+transitions coherent, and returns a replacement plus its concept correspondence.
+A whole-document model context is outside the release path. A call that cannot
+discharge its obligations is split on concept boundaries and resumed; truncation
+publishes no replacement and never permits an autonomous rewrite of the
+manuscript.
 
 \section{Record and schema policy}
 \label{sec:contract-schemas}
 
 Every record carries \texttt{record\_type}, \texttt{schema\_version},
-\texttt{record\_id}, \texttt{run\_id}, and \texttt{created\_at}. The first
-release schemas live in \path{schemas/authoring-brief.schema.json},
-\path{schemas/argument-blueprint.schema.json},
+\texttt{record\_id}, \texttt{run\_id}, and \texttt{created\_at}. The record family
+is enumerated in \path{schemas/record_catalog.json} and loaded through one shared
+registry, \path{src/humanvoice/schemas.py}, so the runtime cannot hold a weaker
+duplicate schema. The semantic records are
+\path{schemas/humanization-brief.schema.json},
+\path{schemas/source-span.schema.json},
+\path{schemas/source-concept.schema.json},
+\path{schemas/concept-baseline.schema.json},
+\path{schemas/concept-dependency.schema.json},
+\path{schemas/explanation-obligation.schema.json},
+\path{schemas/scaffolding-disposition.schema.json},
+\path{schemas/rewrite-unit.schema.json},
+\path{schemas/concept-disposition.schema.json},
+\path{schemas/concept-correspondence.schema.json}, and
+\path{schemas/semantic-preflight-result.schema.json}. The release path adds
+\path{schemas/source-snapshot.schema.json},
+\path{schemas/protected-manifest.schema.json},
 \path{schemas/finding.schema.json}, \path{schemas/revision.schema.json},
-\path{schemas/preflight-run.schema.json},
 \path{schemas/release-decision.schema.json},
+\path{schemas/reader-decision.schema.json},
 \path{schemas/runtime-manifest.schema.json}, and
 \path{schemas/cli-result.schema.json}. The rights record is
-\path{schemas/corpus-item.schema.json}.
+\path{schemas/corpus-item.schema.json}. The v1 authoring brief, argument
+blueprint, and preflight-run schemas remain readable as \texttt{legacy\_v1}
+audit evidence and cannot satisfy a v2 gate.
 
 The compatibility rule is simple. A minor schema version may add optional
 fields; readers preserve unknown extension fields. A major version requires a
@@ -249,23 +276,26 @@ object and are preserved by readers. The runtime manifest records the compiler,
 runtime revision, model and tokenizer hashes when applicable, prompt-template
 hash, sampling and seed, hardware, network policy, resource limits, latency,
 peak memory, output hash, and an explicit reason for fields that do not apply.
-CLI results always include the nine stable output fields named below, and corpus
+CLI results always include the ten stable output fields named below, and corpus
 rights records include \texttt{consent\_date}, including a null value when no
 consent date is applicable.
 
-The authoring brief also requires the intended reader, decision, genre, known
-vocabulary, named exemplars, evidence boundary, privacy class, protected
-objects, and explicit unknowns. A blueprint requires evidence anchors,
-terminology order, and a stable plan hash. A finding carries a consequence,
-editorial question, rule version, and author disposition as well as its
+The humanization brief also requires the intended reader, genre, known
+vocabulary, named exemplars, evidence boundary, privacy class, remote-inference
+authorization, voice constraints, protected-object policy, the authorizing
+action, and explicit unknowns. A frozen baseline requires component hashes and
+counts, complete partition evidence, both coverage reviews, empty unresolved
+sets, and a named freeze decision. A finding carries a consequence, editorial
+question, rule version, critic identity, and author disposition as well as its
 location and observation.
 
 \section{Command-line contract}
 \label{sec:contract-cli}
 
-The six commands exchange versioned JSON records. Each invocation writes one
-machine-readable result to standard output and human progress or diagnostics to
-standard error. The stable output fields are \texttt{contract\_version},
+The production entry point \texttt{hv humanize} and its resumable phases exchange
+versioned JSON records. Each invocation writes one machine-readable result to
+standard output and human progress or diagnostics to standard error. The stable
+output fields are \texttt{contract\_id}, \texttt{contract\_version},
 \texttt{command}, \texttt{status}, \texttt{exit\_code}, \texttt{run\_id},
 \texttt{record\_paths}, \texttt{blocking\_reasons}, \texttt{source\_hash},
 and \texttt{result\_hash}. Messages, display paths, timings, and suggestions

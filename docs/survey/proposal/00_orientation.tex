@@ -32,7 +32,7 @@ searches could miss. This is a useful engineering record. It is not an efficacy
 study: there was one document, one owner, no control group, and no independent
 reader panel.
 
-\section*{The product hidden inside the rescue}
+\section*{What the rescue shows about the product}
 
 The rescue worked because four kinds of work were joined. A check located an
 observable problem. An author decided what the passage needed to mean. A
@@ -41,15 +41,17 @@ prose changed. A reader then judged the rendered document without relying on
 the repository history. Existing tools perform pieces of this sequence, but
 the pieces do not share a record or end in a reader outcome.
 
-Humanvoice is the proposed connective layer. It would sit beside the author's
-editor and repository, not replace them. It would turn a reader brief into an
-argument blueprint, draft in bounded units, and run a fail-closed pre-human
-check before it turns a version into a reader packet. A broad complaint such as
-``this is hard to read'' would become a small set of located questions; the
-objects that carry technical meaning would remain protected; and the author's
-decision would stay visible. It would never certify that prose is ``human,''
-infer authorship from one document, silently rewrite a source, or ask an
-expensive reader to serve as its ordinary debugger.
+That manuscript is a test case, not the reason the product exists. Humanvoice
+humanizes finished technical manuscripts. It sits beside the author's editor and
+repository, not in place of them. Given an immutable source and an explicit
+authorization, it inventories every substantive concept, freezes a
+human-reviewed baseline, rewrites the source passage by passage, and runs a
+fail-closed check before any version becomes a reader packet. A broad complaint
+such as ``this is hard to read'' becomes a small set of located questions; the
+objects that carry technical meaning stay protected; the author's decision stays
+visible. It never certifies that prose is ``human,'' infers authorship from one
+document, edits the source in place, shortens a manuscript to hit a length, or
+asks an expensive reader to serve as its ordinary debugger.
 
 The wager is economic as much as editorial. A locally fluent document can
 still consume several rounds of expert diagnosis and rereading. Humanvoice is
@@ -60,17 +62,15 @@ qualification, and requested action is.
 
 \section*{The proposition under test}
 
-The first investment is deliberately bounded: twelve weeks, a product
-engineer, a research and evaluation lead, a domain editor, a part-time
-security or policy owner, independent coding and reader review, a small
-adjudicated corpus, and one live-document feasibility run. Weeks 1--6 deliver
-the protected LaTeX core and its second-operator replay. The authoring
-extension, model critics, and repair loop proceed only if that checkpoint
-passes; otherwise the sponsor receives the protected review utility rather
-than an unfinished platform.
+The build proceeds in gated stages rather than one undifferentiated effort: the
+typed source and concept model, the frozen concept baseline, source-grounded
+rewriting, independent verification and repair, patch assembly and release, and
+finally product evidence. Each stage has an explicit gate, and no gate may infer
+a later evidence state from an earlier one. Specification, implementation,
+automated verification, independent reproduction, and human reader evidence are
+reported separately and never substituted for one another.
 
-At the end of twelve weeks the sponsor should be able to answer three
-questions:
+The sponsor should be able to answer three questions:
 
 \begin{enumerate}
 \item Can the system locate useful editorial questions and protect
@@ -87,10 +87,11 @@ requires new documents, readers who did not tune the rules, a declared
 comparator, and uncertainty reported around the result.
 
 \begin{decisionbox}{Recommendation}
-Fund the bounded build and feasibility run. Do not authorize deployment or an
-efficacy claim. Continue only if the system protects meaning, keeps the reader
-outcome observable, and produces a credible, priced design for the comparison
-that follows.
+Build the humanization system to production quality against the gates in this
+volume. Release externally only on reader evidence: a complete benchmark
+manuscript, a held-out manuscript the rules were not tuned on, independent
+reproduction, and named readers who can recover the meaning. Protected-object
+counts, source-length ratios, and clean builds are necessary and not sufficient.
 \end{decisionbox}
 
 \section*{Evidence strong enough to use today}

@@ -85,7 +85,9 @@ class SurveyAuditTests(unittest.TestCase):
         seeds = json.loads(DEFAULT_SEEDS.read_text(encoding="utf-8"))
         result = validate_inputs(protocol, seeds)
         self.assertEqual(result["status"], "pass", result["errors"])
-        self.assertEqual(result["counts"]["product_requirements"], 24)
+        # R1-R24 are the historical register; R25-R29 carry the v2
+        # finished-manuscript humanization contract.
+        self.assertEqual(result["counts"]["product_requirements"], 29)
 
     def test_input_validation_rejects_duplicate_evidence_and_unknown_requirement_link(self):
         protocol = json.loads(DEFAULT_PROTOCOL.read_text(encoding="utf-8"))

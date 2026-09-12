@@ -1,12 +1,12 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://humanvoice.local/schema/corpus-item.schema.json",
-  "title": "Humanvoice corpus item rights record",
+  "$id": "https://humanvoice.local/schema/v2/corpus-item.schema.json",
+  "title": "Humanvoice v2 corpus item rights record",
   "type": "object",
   "required": ["record_type", "schema_version", "record_id", "run_id", "created_at", "source_path_or_url", "source_hash", "owner", "license_or_permission", "permitted_use", "redistribution_status", "retention_class", "consent_date"],
   "properties": {
     "record_type": {"const": "CorpusItem"},
-    "schema_version": {"type": "string", "pattern": "^HV-SCHEMA-[0-9]+\\.[0-9]+$"},
+    "schema_version": {"type": "string", "pattern": "^HV-SCHEMA-2\\.[0-9]+$"},
     "record_id": {"type": "string", "minLength": 1},
     "run_id": {"type": "string", "minLength": 1},
     "created_at": {"type": "string", "format": "date-time"},

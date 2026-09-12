@@ -116,7 +116,13 @@ def document_checks(document: str, bibliography: str) -> dict[str, bool]:
         r"\\texttt\{hv (?:snapshot|revise|reader|report|gate|diff)\}",
         flags=re.IGNORECASE,
     )
-    private_requirement_ids = re.compile(r"\b(?:WP|R)(?:[1-9]|1[0-9])\b")
+    # Private work-package and bare requirement IDs must not appear in the
+    # reader-facing route. A citation to the whole acceptance register by its
+    # range ("requirements R1--R29") is not a private ID: it points the reader
+    # at a named appendix, which is the one place the register belongs.
+    private_requirement_ids = re.compile(
+        r"\b(?:WP[-\w]*\d|R(?:[1-9]|1[0-9])(?!--R\d)(?<!--R\d)\b)"
+    )
     markdown_mvp_claims = (
         "two source formats in the mvp: latex and markdown",
         "mvp is complete when one latex or markdown document",

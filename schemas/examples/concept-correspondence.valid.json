@@ -1,0 +1,42 @@
+{
+  "record_type": "ConceptCorrespondence",
+  "schema_version": "HV-SCHEMA-2.0",
+  "record_id": "correspondence-record-1",
+  "run_id": "run-v2-example",
+  "created_at": "2026-09-11T12:00:00Z",
+  "baseline_id": "baseline-1",
+  "baseline_hash": "6c62cce2d62f7ac652def8eefbb0f42f78daa8a49bb87d80369c0c2a664a7c53",
+  "revision_id": "revision-1",
+  "candidate_hash": "1111111111111111111111111111111111111111111111111111111111111111",
+  "correspondence_id": "correspondence-1",
+  "source_concept_ids": [
+    "concept-1"
+  ],
+  "operation": "expand",
+  "output_spans": [
+    {
+      "output_file": "main.tex",
+      "byte_start": 0,
+      "byte_end": 120,
+      "text_hash": "8d063082f0d0111f15ee43caf8cd73b679e496f581ae3cb76487073e80fe9d83",
+      "teaching_roles": [
+        "define"
+      ]
+    }
+  ],
+  "rationale": "The revised passage states and explains the same content.",
+  "writer_report": {
+    "claimed_complete": true
+  },
+  "verifier": {
+    "critic_id": "retention-critic",
+    "critic_kind": "deterministic",
+    "prompt_hash": null,
+    "model_or_rule_version": "1.0",
+    "independent_of_writer": true,
+    "calibration_record_id": null
+  },
+  "verdict": "supported",
+  "verdict_reason": "The continuity criterion is defined in the output.",
+  "unresolved_reason": null
+}

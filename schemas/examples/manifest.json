@@ -1,28 +1,289 @@
 {
-  "example_manifest_version": "1.0",
+  "example_manifest_version": "2.1",
   "validator": "python-jsonschema==4.26.0",
   "examples": [
-    {"schema": "authoring-brief.schema.json", "instance": "authoring-brief.valid.json", "expected": "valid"},
-    {"schema": "argument-blueprint.schema.json", "instance": "argument-blueprint.valid.json", "expected": "valid"},
-    {"schema": "finding.schema.json", "instance": "finding.valid.json", "expected": "valid"},
-    {"schema": "revision.schema.json", "instance": "revision.valid.json", "expected": "valid"},
-    {"schema": "preflight-run.schema.json", "instance": "preflight-run.valid.json", "expected": "valid"},
-    {"schema": "release-decision.schema.json", "instance": "release-decision.valid.json", "expected": "valid"},
-    {"schema": "runtime-manifest.schema.json", "instance": "runtime-deterministic.valid.json", "expected": "valid"},
-    {"schema": "runtime-manifest.schema.json", "instance": "runtime-inference.valid.json", "expected": "valid"},
-    {"schema": "runtime-manifest.schema.json", "instance": "runtime-missing-output-hash.invalid.json", "expected": "invalid", "expected_error_contains": "output_hash"},
-    {"schema": "cli-result.schema.json", "instance": "cli-result.valid.json", "expected": "valid"},
-    {"schema": "cli-result.schema.json", "instance": "cli-result-missing-source-hash.invalid.json", "expected": "invalid", "expected_error_contains": "source_hash"},
-    {"schema": "corpus-item.schema.json", "instance": "corpus-item.valid.json", "expected": "valid"},
-    {"schema": "corpus-item.schema.json", "instance": "corpus-item-missing-consent-date.invalid.json", "expected": "invalid", "expected_error_contains": "consent_date"},
-    {"schema": "finding.schema.json", "instance": "finding-extra-top-level.invalid.json", "expected": "invalid", "expected_error_contains": "Additional properties"},
-    {"schema": "source-snapshot.schema.json", "instance": "source-snapshot.valid.json", "expected": "valid"},
-    {"schema": "source-snapshot.schema.json", "instance": "source-snapshot-mutable.invalid.json", "expected": "invalid", "expected_error_contains": "True was expected"},
-    {"schema": "protected-manifest.schema.json", "instance": "protected-manifest.valid.json", "expected": "valid"},
-    {"schema": "protected-manifest.schema.json", "instance": "protected-manifest-unknown-status.invalid.json", "expected": "invalid", "expected_error_contains": "is not one of"},
-    {"schema": "evidence-item.schema.json", "instance": "evidence-item.valid.json", "expected": "valid"},
-    {"schema": "evidence-item.schema.json", "instance": "evidence-item-missing-provenance.invalid.json", "expected": "invalid", "expected_error_contains": "provenance"},
-    {"schema": "reader-decision.schema.json", "instance": "reader-decision.valid.json", "expected": "valid"},
-    {"schema": "reader-decision.schema.json", "instance": "reader-decision-incomplete-rubric.invalid.json", "expected": "invalid", "expected_error_contains": "stop_or_reread"}
+    {
+      "schema": "humanization-brief.schema.json",
+      "instance": "humanization-brief.valid.json",
+      "expected": "valid"
+    },
+    {
+      "schema": "source-snapshot.schema.json",
+      "instance": "source-snapshot.valid.json",
+      "expected": "valid"
+    },
+    {
+      "schema": "source-span.schema.json",
+      "instance": "source-span.valid.json",
+      "expected": "valid"
+    },
+    {
+      "schema": "source-concept.schema.json",
+      "instance": "source-concept.valid.json",
+      "expected": "valid"
+    },
+    {
+      "schema": "concept-baseline.schema.json",
+      "instance": "concept-baseline.valid.json",
+      "expected": "valid"
+    },
+    {
+      "schema": "concept-dependency.schema.json",
+      "instance": "concept-dependency.valid.json",
+      "expected": "valid"
+    },
+    {
+      "schema": "explanation-obligation.schema.json",
+      "instance": "explanation-obligation.valid.json",
+      "expected": "valid"
+    },
+    {
+      "schema": "scaffolding-disposition.schema.json",
+      "instance": "scaffolding-disposition.valid.json",
+      "expected": "valid"
+    },
+    {
+      "schema": "rewrite-unit.schema.json",
+      "instance": "rewrite-unit.valid.json",
+      "expected": "valid"
+    },
+    {
+      "schema": "concept-disposition.schema.json",
+      "instance": "concept-disposition.valid.json",
+      "expected": "valid"
+    },
+    {
+      "schema": "concept-correspondence.schema.json",
+      "instance": "concept-correspondence.valid.json",
+      "expected": "valid"
+    },
+    {
+      "schema": "semantic-preflight-result.schema.json",
+      "instance": "semantic-preflight-result.valid.json",
+      "expected": "valid"
+    },
+    {
+      "schema": "protected-manifest.schema.json",
+      "instance": "protected-manifest.valid.json",
+      "expected": "valid"
+    },
+    {
+      "schema": "finding.schema.json",
+      "instance": "finding.valid.json",
+      "expected": "valid"
+    },
+    {
+      "schema": "revision.schema.json",
+      "instance": "revision.valid.json",
+      "expected": "valid"
+    },
+    {
+      "schema": "runtime-manifest.schema.json",
+      "instance": "runtime-manifest.valid.json",
+      "expected": "valid"
+    },
+    {
+      "schema": "cli-result.schema.json",
+      "instance": "cli-result.valid.json",
+      "expected": "valid"
+    },
+    {
+      "schema": "release-decision.schema.json",
+      "instance": "release-decision.valid.json",
+      "expected": "valid"
+    },
+    {
+      "schema": "reader-decision.schema.json",
+      "instance": "reader-decision.valid.json",
+      "expected": "valid"
+    },
+    {
+      "schema": "evidence-item.schema.json",
+      "instance": "evidence-item.valid.json",
+      "expected": "valid"
+    },
+    {
+      "schema": "corpus-item.schema.json",
+      "instance": "corpus-item.valid.json",
+      "expected": "valid"
+    },
+    {
+      "schema": "humanization-brief.schema.json",
+      "instance": "humanization-brief-remote-unapproved.invalid.json",
+      "expected": "invalid",
+      "expected_error_contains": "provider"
+    },
+    {
+      "schema": "source-snapshot.schema.json",
+      "instance": "source-snapshot-mutable.invalid.json",
+      "expected": "invalid",
+      "expected_error_contains": "True was expected"
+    },
+    {
+      "schema": "source-span.schema.json",
+      "instance": "source-span-reversed-range.invalid.json",
+      "expected": "invalid",
+      "expected_error_contains": "byte_end must be greater"
+    },
+    {
+      "schema": "source-concept.schema.json",
+      "instance": "source-concept-wording-identity.invalid.json",
+      "expected": "invalid",
+      "expected_error_contains": "identity_basis"
+    },
+    {
+      "schema": "concept-baseline.schema.json",
+      "instance": "concept-baseline-unresolved.invalid.json",
+      "expected": "invalid",
+      "expected_error_contains": "expected to be empty"
+    },
+    {
+      "schema": "concept-dependency.schema.json",
+      "instance": "concept-dependency-self.invalid.json",
+      "expected": "invalid",
+      "expected_error_contains": "cannot depend on itself"
+    },
+    {
+      "schema": "explanation-obligation.schema.json",
+      "instance": "explanation-obligation-mention-only.invalid.json",
+      "expected": "invalid",
+      "expected_error_contains": "lacks supported evidence"
+    },
+    {
+      "schema": "scaffolding-disposition.schema.json",
+      "instance": "scaffolding-disposition-unreviewed.invalid.json",
+      "expected": "invalid",
+      "expected_error_contains": "adjudication"
+    },
+    {
+      "schema": "rewrite-unit.schema.json",
+      "instance": "rewrite-unit-unsplit.invalid.json",
+      "expected": "invalid",
+      "expected_error_contains": "child_unit_ids"
+    },
+    {
+      "schema": "concept-disposition.schema.json",
+      "instance": "concept-disposition-omission.invalid.json",
+      "expected": "invalid",
+      "expected_error_contains": "is not one of"
+    },
+    {
+      "schema": "concept-correspondence.schema.json",
+      "instance": "concept-correspondence-unsupported.invalid.json",
+      "expected": "invalid",
+      "expected_error_contains": "should be non-empty"
+    },
+    {
+      "schema": "semantic-preflight-result.schema.json",
+      "instance": "semantic-preflight-partial-pass.invalid.json",
+      "expected": "invalid",
+      "expected_error_contains": "1.0 was expected"
+    },
+    {
+      "schema": "semantic-preflight-result.schema.json",
+      "instance": "semantic-preflight-result-missing-verifier.invalid.json",
+      "expected": "invalid",
+      "expected_error_contains": "required property"
+    },
+    {
+      "schema": "protected-manifest.schema.json",
+      "instance": "protected-manifest-unknown-status.invalid.json",
+      "expected": "invalid",
+      "expected_error_contains": "is not one of"
+    },
+    {
+      "schema": "finding.schema.json",
+      "instance": "finding-extra-top-level.invalid.json",
+      "expected": "invalid",
+      "expected_error_contains": "Additional properties"
+    },
+    {
+      "schema": "revision.schema.json",
+      "instance": "revision-overlap.invalid.json",
+      "expected": "invalid",
+      "expected_error_contains": "patches overlap"
+    },
+    {
+      "schema": "runtime-manifest.schema.json",
+      "instance": "runtime-unauthorized-api.invalid.json",
+      "expected": "invalid",
+      "expected_error_contains": "authorization_record_id"
+    },
+    {
+      "schema": "runtime-manifest.schema.json",
+      "instance": "runtime-manifest-missing-activity.invalid.json",
+      "expected": "invalid",
+      "expected_error_contains": "required property"
+    },
+    {
+      "schema": "cli-result.schema.json",
+      "instance": "cli-result-missing-source-hash.invalid.json",
+      "expected": "invalid",
+      "expected_error_contains": "source_hash"
+    },
+    {
+      "schema": "release-decision.schema.json",
+      "instance": "release-decision-semantic-failure.invalid.json",
+      "expected": "invalid",
+      "expected_error_contains": "'pass' was expected"
+    },
+    {
+      "schema": "reader-decision.schema.json",
+      "instance": "reader-decision-partial-accept.invalid.json",
+      "expected": "invalid",
+      "expected_error_contains": "is not one of"
+    },
+    {
+      "schema": "evidence-item.schema.json",
+      "instance": "evidence-item-missing-provenance.invalid.json",
+      "expected": "invalid",
+      "expected_error_contains": "provenance"
+    },
+    {
+      "schema": "corpus-item.schema.json",
+      "instance": "corpus-item-missing-consent-date.invalid.json",
+      "expected": "invalid",
+      "expected_error_contains": "consent_date"
+    }
+  ],
+  "bundles": [
+    {
+      "instance": "concept-baseline.bundle.valid.json",
+      "expected": "valid"
+    },
+    {
+      "instance": "humanization-pipeline.bundle.valid.json",
+      "expected": "valid"
+    },
+    {
+      "instance": "bundle-dangling-dependency.invalid.json",
+      "expected": "invalid",
+      "expected_error_contains": "names missing concept"
+    },
+    {
+      "instance": "bundle-scaffolding-without-reverse-link.invalid.json",
+      "expected": "invalid",
+      "expected_error_contains": "lacks reverse link to scaffolding"
+    },
+    {
+      "instance": "bundle-unplanned-concept.invalid.json",
+      "expected": "invalid",
+      "expected_error_contains": "lack an accepted rewrite disposition"
+    },
+    {
+      "instance": "bundle-unknown-protected-object.invalid.json",
+      "expected": "invalid",
+      "expected_error_contains": "names unknown protected object"
+    },
+    {
+      "instance": "bundle-incomplete-file-coverage.invalid.json",
+      "expected": "invalid",
+      "expected_error_contains": "bytes"
+    },
+    {
+      "instance": "bundle-correspondence-wrong-candidate.invalid.json",
+      "expected": "invalid",
+      "expected_error_contains": "candidate_hash does not match revision"
+    }
   ]
 }

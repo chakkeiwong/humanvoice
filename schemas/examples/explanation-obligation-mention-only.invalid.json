@@ -1,0 +1,38 @@
+{
+  "record_type": "ExplanationObligation",
+  "schema_version": "HV-SCHEMA-2.0",
+  "record_id": "obligation-fulfillment-record-1",
+  "run_id": "run-v2-example",
+  "created_at": "2026-09-11T12:00:00Z",
+  "baseline_id": "baseline-1",
+  "obligation_id": "obligation-2",
+  "parent_record_id": "obligation-record-2",
+  "concept_id": "concept-2",
+  "required_teaching_functions": [
+    "definition",
+    "contrast"
+  ],
+  "source_assessment": {
+    "status": "partial",
+    "evidence_span_ids": [
+      "span-2"
+    ]
+  },
+  "reader_rationale": "The reader must distinguish the nearby cases.",
+  "genre_rationale": "A survey must teach terminology before using it.",
+  "active": true,
+  "deactivation": null,
+  "fulfillment_status": "fulfilled",
+  "fulfillment_evidence": [
+    {
+      "teaching_function": "definition",
+      "output_file": "main.tex",
+      "byte_start": 0,
+      "byte_end": 160,
+      "text_hash": "2222222222222222222222222222222222222222222222222222222222222222",
+      "critic_id": "obligation-critic",
+      "verdict": "supported"
+    }
+  ],
+  "obligation_spec_hash": "a3cc04222565d065c3c3a1fdf96716b528d234ab43ea819bed4e92f34b1010e9"
+}

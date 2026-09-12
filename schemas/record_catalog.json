@@ -1,119 +1,40 @@
 {
-  "catalog_id": "HV-RECORD-CATALOG-2026-08-26",
-  "catalog_version": "1.1",
-  "status": "wp5-working-decision",
-  "contract_id": "HV-IC-2026-08-26",
-  "contract_version": "1.1.0",
+  "catalog_id": "HV-RECORD-CATALOG-2026-09-11",
+  "catalog_version": "2.0.0",
+  "status": "specified",
+  "contract_id": "HV-IC-2026-09-11",
+  "contract_version": "2.0.0",
   "compatibility_policy": {
     "unknown_top_level_fields": "reject",
     "extension_fields": "preserve under extensions",
-    "minor_change": "may add optional fields or a new record type without changing existing meaning",
-    "major_change": "requires migration and replay of locked fixtures"
+    "minor_change": "may add optional fields without changing meaning",
+    "major_change": "requires a change record and locked-fixture replay",
+    "legacy_v1": "readable for audit only; cannot satisfy a v2 gate"
   },
   "records": [
-    {
-      "concept_id": "authoring-brief",
-      "record_type": "AuthoringBrief",
-      "representation": "standalone",
-      "schema_path": "schemas/authoring-brief.schema.json",
-      "schema_status": "present",
-      "required_by": "WP1"
-    },
-    {
-      "concept_id": "argument-blueprint",
-      "record_type": "ArgumentBlueprint",
-      "representation": "standalone",
-      "schema_path": "schemas/argument-blueprint.schema.json",
-      "schema_status": "present",
-      "required_by": "WP4"
-    },
-    {
-      "concept_id": "source-snapshot",
-      "record_type": "SourceSnapshot",
-      "representation": "standalone",
-      "schema_path": "schemas/source-snapshot.schema.json",
-      "schema_status": "present",
-      "required_by": "WP1"
-    },
-    {
-      "concept_id": "protected-object",
-      "record_type": "ProtectedManifest",
-      "representation": "standalone manifest with versioned nested objects",
-      "schema_path": "schemas/protected-manifest.schema.json",
-      "schema_status": "present",
-      "required_by": "WP2"
-    },
-    {
-      "concept_id": "finding",
-      "record_type": "Finding",
-      "representation": "standalone",
-      "schema_path": "schemas/finding.schema.json",
-      "schema_status": "present",
-      "required_by": "WP3"
-    },
-    {
-      "concept_id": "revision",
-      "record_type": "Revision",
-      "representation": "standalone",
-      "schema_path": "schemas/revision.schema.json",
-      "schema_status": "present",
-      "required_by": "WP4"
-    },
-    {
-      "concept_id": "preflight-run",
-      "record_type": "PreflightRun",
-      "representation": "standalone",
-      "schema_path": "schemas/preflight-run.schema.json",
-      "schema_status": "present",
-      "required_by": "WP1"
-    },
-    {
-      "concept_id": "release-decision",
-      "record_type": "ReleaseDecision",
-      "representation": "standalone machine decision",
-      "schema_path": "schemas/release-decision.schema.json",
-      "schema_status": "present",
-      "required_by": "WP5"
-    },
-    {
-      "concept_id": "runtime-manifest",
-      "record_type": "RuntimeManifest",
-      "representation": "standalone",
-      "schema_path": "schemas/runtime-manifest.schema.json",
-      "schema_status": "present",
-      "required_by": "WP1"
-    },
-    {
-      "concept_id": "cli-result",
-      "record_type": "CliResult",
-      "representation": "standalone command envelope",
-      "schema_path": "schemas/cli-result.schema.json",
-      "schema_status": "present",
-      "required_by": "WP1"
-    },
-    {
-      "concept_id": "reader-decision",
-      "record_type": "ReaderDecision",
-      "representation": "standalone human outcome separate from release",
-      "schema_path": "schemas/reader-decision.schema.json",
-      "schema_status": "present",
-      "required_by": "WP5"
-    },
-    {
-      "concept_id": "evidence-item",
-      "record_type": "EvidenceItem",
-      "representation": "standalone claim-source relation",
-      "schema_path": "schemas/evidence-item.schema.json",
-      "schema_status": "present",
-      "required_by": "WP4"
-    },
-    {
-      "concept_id": "corpus-rights-item",
-      "record_type": "CorpusItem",
-      "representation": "standalone",
-      "schema_path": "schemas/corpus-item.schema.json",
-      "schema_status": "present",
-      "required_by": "WP0"
-    }
+    {"concept_id": "humanization-brief", "record_type": "HumanizationBrief", "schema_path": "schemas/humanization-brief.schema.json", "schema_status": "present", "required_by": "V2-G1"},
+    {"concept_id": "source-snapshot", "record_type": "SourceSnapshot", "schema_path": "schemas/source-snapshot.schema.json", "schema_status": "present", "required_by": "V2-G1"},
+    {"concept_id": "source-span", "record_type": "SourceSpan", "schema_path": "schemas/source-span.schema.json", "schema_status": "present", "required_by": "V2-G1"},
+    {"concept_id": "source-concept", "record_type": "SourceConcept", "schema_path": "schemas/source-concept.schema.json", "schema_status": "present", "required_by": "V2-G1"},
+    {"concept_id": "concept-baseline", "record_type": "ConceptBaseline", "schema_path": "schemas/concept-baseline.schema.json", "schema_status": "present", "required_by": "V2-G1"},
+    {"concept_id": "concept-dependency", "record_type": "ConceptDependency", "schema_path": "schemas/concept-dependency.schema.json", "schema_status": "present", "required_by": "V2-G1"},
+    {"concept_id": "explanation-obligation", "record_type": "ExplanationObligation", "schema_path": "schemas/explanation-obligation.schema.json", "schema_status": "present", "required_by": "V2-G1"},
+    {"concept_id": "scaffolding-disposition", "record_type": "ScaffoldingDisposition", "schema_path": "schemas/scaffolding-disposition.schema.json", "schema_status": "present", "required_by": "V2-G1"},
+    {"concept_id": "rewrite-unit", "record_type": "RewriteUnit", "schema_path": "schemas/rewrite-unit.schema.json", "schema_status": "present", "required_by": "V2-G1"},
+    {"concept_id": "concept-disposition", "record_type": "ConceptDisposition", "schema_path": "schemas/concept-disposition.schema.json", "schema_status": "present", "required_by": "V2-G1"},
+    {"concept_id": "concept-correspondence", "record_type": "ConceptCorrespondence", "schema_path": "schemas/concept-correspondence.schema.json", "schema_status": "present", "required_by": "V2-G1"},
+    {"concept_id": "semantic-preflight-result", "record_type": "SemanticPreflightResult", "schema_path": "schemas/semantic-preflight-result.schema.json", "schema_status": "present", "required_by": "V2-G1"},
+    {"concept_id": "protected-object", "record_type": "ProtectedManifest", "schema_path": "schemas/protected-manifest.schema.json", "schema_status": "present", "required_by": "V2-G1"},
+    {"concept_id": "finding", "record_type": "Finding", "schema_path": "schemas/finding.schema.json", "schema_status": "present", "required_by": "V2-G4"},
+    {"concept_id": "revision", "record_type": "Revision", "schema_path": "schemas/revision.schema.json", "schema_status": "present", "required_by": "V2-G3"},
+    {"concept_id": "runtime-manifest", "record_type": "RuntimeManifest", "schema_path": "schemas/runtime-manifest.schema.json", "schema_status": "present", "required_by": "V2-G1"},
+    {"concept_id": "cli-result", "record_type": "CliResult", "schema_path": "schemas/cli-result.schema.json", "schema_status": "present", "required_by": "V2-G0"},
+    {"concept_id": "release-decision", "record_type": "ReleaseDecision", "schema_path": "schemas/release-decision.schema.json", "schema_status": "present", "required_by": "V2-G5"},
+    {"concept_id": "reader-decision", "record_type": "ReaderDecision", "schema_path": "schemas/reader-decision.schema.json", "schema_status": "present", "required_by": "V2-G6"},
+    {"concept_id": "evidence-item", "record_type": "EvidenceItem", "schema_path": "schemas/evidence-item.schema.json", "schema_status": "present", "required_by": "V2-G4"},
+    {"concept_id": "corpus-rights-item", "record_type": "CorpusItem", "schema_path": "schemas/corpus-item.schema.json", "schema_status": "present", "required_by": "V2-G0"},
+    {"concept_id": "legacy-authoring-brief", "record_type": "AuthoringBrief", "schema_path": "schemas/authoring-brief.schema.json", "schema_status": "legacy_v1", "required_by": "audit-only"},
+    {"concept_id": "legacy-argument-blueprint", "record_type": "ArgumentBlueprint", "schema_path": "schemas/argument-blueprint.schema.json", "schema_status": "legacy_v1", "required_by": "audit-only"},
+    {"concept_id": "legacy-preflight-run", "record_type": "PreflightRun", "schema_path": "schemas/preflight-run.schema.json", "schema_status": "legacy_v1", "required_by": "audit-only"}
   ]
 }

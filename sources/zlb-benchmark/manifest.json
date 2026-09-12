@@ -1,0 +1,47 @@
+{
+  "manifest_id": "ZLB-BENCHMARK-SOURCE-2026-09-11",
+  "manifest_version": "1.0",
+  "status": "frozen",
+  "source": {
+    "id": "zlb-benchmark-v2",
+    "origin_repository": "BayesFilter",
+    "origin_path": "docs/surveys/zlb_discontinuous_hmc/zlb_discontinuous_hmc_survey.tex",
+    "frozen_path": "sources/zlb-benchmark/zlb_source.tex",
+    "sha256": "ff582d8aa7352b2de6f6e3b3cafc8ab0cfb74119a5ca6e5c575baff0ce1f89bf",
+    "frozen_date": "2026-09-11",
+    "line_count": 3368,
+    "rights_record_id": "CORP-ZLB",
+    "rights_status": "cleared-internal-use",
+    "purpose": "Master Program v2 WP-V2-6 ZLB benchmark execution"
+  },
+  "baseline_outputs": {
+    "concept_inventory": "baselines/zlb-v2-baseline.json",
+    "rewrite_plan": "plans/zlb-v2-plan.json",
+    "rewrite_session": "sessions/zlb-v2-rewrite/",
+    "preflight_session": "sessions/zlb-v2-preflight/",
+    "revised_manuscript": "releases/zlb-v2-revised.tex",
+    "comparison_pdf": "releases/zlb-v2-comparison.pdf"
+  },
+  "immutability_contract": {
+    "rule": "The frozen source at sources/zlb-benchmark/zlb_source.tex with SHA256 ff582d8aa7352b2de6f6e3b3cafc8ab0cfb74119a5ca6e5c575baff0ce1f89bf is the sole input for this benchmark run. Any modification invalidates all derived artifacts and requires full re-execution with a new manifest ID.",
+    "verification": "sha256sum sources/zlb-benchmark/zlb_source.tex",
+    "expected_hash": "ff582d8aa7352b2de6f6e3b3cafc8ab0cfb74119a5ca6e5c575baff0ce1f89bf"
+  },
+  "execution_status": {
+    "step_1_source_frozen": true,
+    "step_2_inventory_generated": false,
+    "step_3_plan_generated": false,
+    "step_4_rewrite_complete": false,
+    "step_5_preflight_complete": false,
+    "step_6_assembly_complete": false,
+    "step_7_fixtures_validated": false,
+    "step_8_comparison_complete": false
+  },
+  "notes": [
+    "Source matches historical_sources.json entry HIST-ZLB-CURRENT-TEX",
+    "This is the current manuscript state, not the historical pass-two snapshot",
+    "Benchmark demonstrates v2 pipeline capability, not historical comparison",
+    "Full manuscript length (3368 lines) suitable for comprehensive test",
+    "Rights cleared per corpus_rights_cleared.md memory (2026-08-29)"
+  ]
+}

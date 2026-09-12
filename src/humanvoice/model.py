@@ -187,6 +187,7 @@ class ModelAdapter:
         schema: Optional[Dict[str, Any]] = None,
         purpose: str = "unspecified",
         max_tokens: Optional[int] = None,
+        record_type: Optional[str] = None,
     ) -> ModelResponse:
         """
         Invoke model with prompt.
@@ -194,7 +195,11 @@ class ModelAdapter:
         Args:
             prompt: User prompt
             system_prompt: Optional system instructions
-            schema: Optional JSON schema for validation
+            schema: Optional inline JSON schema (v1 callers only)
+            record_type: Optional v2 record type validated through the shared
+                registry, e.g. "ConceptCorrespondence". Preferred over
+                `schema`: it checks the response against the same on-disk
+                schema every other consumer uses.
 
         Returns:
             ModelResponse with text and metadata
@@ -238,7 +243,49 @@ class ModelAdapter:
         if self.budget_tracker is not None:
             self.budget_tracker.check_and_record(input_tokens, output_tokens)
 
-        # Validate against schema if provided
+        # Validate against a record type from the shared registry, if named.
+        #
+        # This is the v2 path. Passing `record_type` validates the response
+        # against the same on-disk schema every other consumer of that record
+        # checks against, so a model cannot satisfy a looser inline copy that
+        # only the runtime holds. A failure is an abstention, never a partial
+        # acceptance: unvalidated model output has no authority.
+        if record_type:
+            from humanvoice.schemas import get_registry
+
+            try:
+                parsed = json.loads(response_text)
+            except json.JSONDecodeError as error:
+                return ModelResponse(
+                    text="",
+                    prompt_hash=prompt_hash,
+                    model_version=self.config.model_version,
+                    input_tokens=input_tokens,
+                    output_tokens=output_tokens,
+                    temperature=self.config.temperature,
+                    request_id=request_id,
+                    abstention=f"Output is not valid JSON: {error}",
+                )
+            messages = get_registry().validate(
+                parsed, record_type=record_type, raise_on_error=False
+            )
+            if messages:
+                debug_text = response_text[:500] if response_text else "(empty)"
+                return ModelResponse(
+                    text="",
+                    prompt_hash=prompt_hash,
+                    model_version=self.config.model_version,
+                    input_tokens=input_tokens,
+                    output_tokens=output_tokens,
+                    temperature=self.config.temperature,
+                    request_id=request_id,
+                    abstention=(
+                        f"Output failed {record_type} validation: {messages[0]}"
+                        f"\nReceived: {debug_text}"
+                    ),
+                )
+
+        # Validate against an inline schema if provided (v1 callers only).
         if schema:
             try:
                 import jsonschema
@@ -429,131 +476,16 @@ class ModelAdapter:
         return text.strip()
 
 
-# Schemas for bounded authoring tasks
-
-PLAN_SCHEMA = {
-    "type": "object",
-    "properties": {
-        "blueprint": {
-            "type": "object",
-            "properties": {
-                # Legacy format: flat sections array
-                "sections": {
-                    "type": "array",
-                    "items": {
-                        "type": "object",
-                        "properties": {
-                            "title": {"type": "string"},
-                            "purpose": {"type": "string"},
-                            "evidence_needed": {"type": "array", "items": {"type": "string"}},
-                            "word_budget": {"type": "number"},
-                            "source_file": {"type": "string"},
-                            "source_start_line": {"type": "integer", "minimum": 1},
-                            "source_end_line": {"type": "integer", "minimum": 1}
-                        },
-                        "required": ["title", "purpose"]
-                    }
-                },
-                # New format: chapters with subsections
-                "chapters": {
-                    "type": "array",
-                    "items": {
-                        "type": "object",
-                        "properties": {
-                            "title": {"type": "string"},
-                            "purpose": {"type": "string"},
-                            "subsections": {
-                                "type": "array",
-                                "items": {
-                                    "type": "object",
-                                    "properties": {
-                                        "title": {"type": "string"},
-                                        "purpose": {"type": "string"},
-                                        "evidence_needed": {"type": "array", "items": {"type": "string"}},
-                                        "word_budget": {"type": "number"},
-                                        "source_file": {"type": "string"},
-                                        "source_start_line": {"type": "integer", "minimum": 1},
-                                        "source_end_line": {"type": "integer", "minimum": 1}
-                                    },
-                                    "required": ["title", "purpose"]
-                                }
-                            }
-                        },
-                        "required": ["title", "purpose", "subsections"]
-                    }
-                },
-                "total_words": {"type": "number"},
-                "abstention": {"type": "string"}
-            },
-            # Either provide total_words (normal case) or abstention (insufficient evidence)
-            "anyOf": [
-                {"required": ["total_words"]},
-                {"required": ["abstention"]}
-            ]
-        }
-    },
-    "required": ["blueprint"]
-}
-
-DRAFT_SCHEMA = {
-    "type": "object",
-    "properties": {
-        "draft": {
-            "type": "object",
-            "properties": {
-                "latex": {"type": "string"},
-                "word_count": {"type": "number"},
-                "citations_needed": {"type": "array", "items": {"type": "string"}},
-                "abstention": {"type": "string"}
-            },
-            "required": ["latex", "word_count"],
-            # Either provide latex content (normal case) or abstention (insufficient evidence)
-            "anyOf": [
-                {"required": ["latex"]},
-                {"required": ["abstention"]}
-            ]
-        }
-    },
-    "required": ["draft"]
-}
-
-REPAIR_SCHEMA = {
-    "type": "object",
-    "properties": {
-        "repair": {
-            "type": "object",
-            "properties": {
-                "changes": {
-                    "type": "array",
-                    "items": {
-                        "type": "object",
-                        "properties": {
-                            "finding_id": {"type": "string"},
-                            "original": {"type": "string"},
-                            "revised": {"type": "string"},
-                            "rationale": {"type": "string"}
-                        },
-                        "required": ["finding_id", "original", "revised", "rationale"]
-                    }
-                },
-                "unaddressed": {
-                    "type": "array",
-                    "items": {
-                        "type": "object",
-                        "properties": {
-                            "finding_id": {"type": "string"},
-                            "reason": {"type": "string"}
-                        },
-                        "required": ["finding_id", "reason"]
-                    }
-                },
-                "abstention": {"type": "string"}
-            },
-            "required": ["changes"]
-        }
-    },
-    "required": ["repair"]
-}
+# The v1 authoring-path model schemas (PLAN_SCHEMA, DRAFT_SCHEMA,
+# REPAIR_SCHEMA) moved to humanvoice.legacy_schemas. They are re-exported below
+# only so existing v1 callers keep working during migration; the v2 path
+# validates model output through the shared registry in humanvoice.schemas
+# instead of maintaining a second, weaker copy of a record shape here.
+from humanvoice.legacy_schemas import (  # noqa: E402  (kept for v1 callers)
+    PLAN_SCHEMA,
+    DRAFT_SCHEMA,
+    REPAIR_SCHEMA,
+)
 
 
 if __name__ == '__main__':

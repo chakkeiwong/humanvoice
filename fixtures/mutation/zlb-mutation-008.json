@@ -1,0 +1,18 @@
+{
+  "fixture_id": "zlb-mutation-008",
+  "fixture_type": "mutation",
+  "source_text": "Central banks communicate through various channels: policy statements, press conferences, meeting minutes, and speeches by officials.",
+  "concepts": [
+    "policy-statements",
+    "press-conferences",
+    "meeting-minutes",
+    "official-speeches"
+  ],
+  "obligations": [],
+  "expected_concept_retention": 1.0,
+  "expected_mutations_blocked": [
+    "mention_only"
+  ],
+  "description": "Test blocking bare enumeration without explanation",
+  "rationale": "Verifies that list-only output without teaching concepts is blocked"
+}

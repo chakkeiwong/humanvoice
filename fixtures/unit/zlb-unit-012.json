@@ -1,0 +1,31 @@
+{
+  "fixture_id": "zlb-unit-012",
+  "fixture_type": "unit",
+  "source_text": "The effective lower bound may lie above zero due to financial intermediation costs and the option value of holding cash. Estimates suggest this bound ranges from -0.5% to -1.0% depending on institutional factors and storage costs.",
+  "concepts": [
+    "effective-lower-bound",
+    "intermediation-costs",
+    "cash-storage-costs",
+    "institutional-constraints"
+  ],
+  "obligations": [
+    {
+      "type": "definition",
+      "target": "effective-lower-bound"
+    },
+    {
+      "type": "evidence",
+      "target": "effective-lower-bound"
+    }
+  ],
+  "protected_objects": [
+    {
+      "type": "numeric_range",
+      "value": "-0.5% to -1.0%",
+      "rationale": "Empirical estimate from literature"
+    }
+  ],
+  "expected_concept_retention": 1.0,
+  "description": "Test quantitative bounds with protected numeric values",
+  "rationale": "Tests preservation of specific quantitative claims"
+}

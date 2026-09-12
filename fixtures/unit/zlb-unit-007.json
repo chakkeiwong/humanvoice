@@ -1,0 +1,25 @@
+{
+  "fixture_id": "zlb-unit-007",
+  "fixture_type": "unit",
+  "source_text": "Central bank credibility becomes paramount when constrained by the zero lower bound. If private agents doubt the bank's commitment to future accommodation, forward guidance loses its power to shape expectations and influence current behavior.",
+  "concepts": [
+    "central-bank-credibility",
+    "commitment-mechanism",
+    "expectation-formation",
+    "forward-guidance-effectiveness"
+  ],
+  "obligations": [
+    {
+      "type": "definition",
+      "target": "central-bank-credibility"
+    },
+    {
+      "type": "mechanism",
+      "target": "expectation-formation"
+    }
+  ],
+  "protected_objects": [],
+  "expected_concept_retention": 1.0,
+  "description": "Test credibility and expectations mechanism",
+  "rationale": "Tests handling of institutional credibility as mechanism constraint"
+}

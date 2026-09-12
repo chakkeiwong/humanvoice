@@ -1,0 +1,40 @@
+{
+  "record_type": "RewriteUnit",
+  "schema_version": "HV-SCHEMA-2.0",
+  "record_id": "rewrite-unit-record-1",
+  "run_id": "run-v2-example",
+  "created_at": "2026-09-11T12:00:00Z",
+  "plan_id": "plan-1",
+  "baseline_id": "baseline-1",
+  "baseline_hash": "6c62cce2d62f7ac652def8eefbb0f42f78daa8a49bb87d80369c0c2a664a7c53",
+  "unit_id": "unit-1",
+  "unit_spec_hash": "f6eb0f574baaeb087746203304fd3ec200e9d6bd3a0be2a2bf3306c3004a9e1c",
+  "source_file": "main.tex",
+  "source_span_ids": [
+    "span-1"
+  ],
+  "source_hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+  "contiguous": true,
+  "concept_ids": [
+    "concept-1"
+  ],
+  "dependency_ids": [],
+  "explanation_obligation_ids": [
+    "obligation-1"
+  ],
+  "protected_object_ids": [],
+  "neighbor_context": {
+    "preceding_span_ids": [],
+    "following_span_ids": [
+      "span-2"
+    ],
+    "context_hash": "a44c77c1341e2756ceb45873a284777cfc76cb35895047fae378df99942f60a9"
+  },
+  "planned_operation": "expand",
+  "estimated_output_words": 450,
+  "segmentation_triggered": false,
+  "parent_unit_id": null,
+  "child_unit_ids": [],
+  "continuation_state": null,
+  "status": "ready"
+}

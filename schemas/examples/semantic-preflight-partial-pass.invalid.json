@@ -1,0 +1,144 @@
+{
+  "record_type": "SemanticPreflightResult",
+  "schema_version": "HV-SCHEMA-2.0",
+  "record_id": "preflight-record-1",
+  "run_id": "run-v2-example",
+  "created_at": "2026-09-11T12:00:00Z",
+  "preflight_id": "preflight-1",
+  "baseline_id": "baseline-1",
+  "baseline_hash": "6c62cce2d62f7ac652def8eefbb0f42f78daa8a49bb87d80369c0c2a664a7c53",
+  "revision_id": "revision-1",
+  "candidate_hash": "1111111111111111111111111111111111111111111111111111111111111111",
+  "critic_records": [
+    {
+      "critic_id": "deterministic-critic",
+      "critic_kind": "deterministic",
+      "version": "1.0",
+      "prompt_hash": null,
+      "independent_of_writer": true,
+      "calibration_record_id": null
+    }
+  ],
+  "source_span_coverage": {
+    "status": "pass",
+    "checked_ids": [
+      "check-1"
+    ],
+    "failed_ids": [],
+    "unresolved_ids": [],
+    "evidence_paths": [
+      "audit/check-1.json"
+    ],
+    "verifier_ids": [
+      "deterministic-critic"
+    ]
+  },
+  "concept_coverage": {
+    "status": "pass",
+    "checked_ids": [
+      "concept-1",
+      "concept-2"
+    ],
+    "failed_ids": [],
+    "unresolved_ids": [],
+    "evidence_paths": [
+      "audit/check-1.json"
+    ],
+    "verifier_ids": [
+      "deterministic-critic"
+    ],
+    "frozen_concept_count": 2,
+    "supported_concept_count": 0,
+    "retention": 0.0
+  },
+  "obligation_fulfillment": {
+    "status": "pass",
+    "checked_ids": [
+      "check-1"
+    ],
+    "failed_ids": [],
+    "unresolved_ids": [],
+    "evidence_paths": [
+      "audit/check-1.json"
+    ],
+    "verifier_ids": [
+      "deterministic-critic"
+    ]
+  },
+  "dependency_order": {
+    "status": "pass",
+    "checked_ids": [
+      "check-1"
+    ],
+    "failed_ids": [],
+    "unresolved_ids": [],
+    "evidence_paths": [
+      "audit/check-1.json"
+    ],
+    "verifier_ids": [
+      "deterministic-critic"
+    ]
+  },
+  "unsupported_additions": {
+    "status": "pass",
+    "checked_ids": [
+      "check-1"
+    ],
+    "failed_ids": [],
+    "unresolved_ids": [],
+    "evidence_paths": [
+      "audit/check-1.json"
+    ],
+    "verifier_ids": [
+      "deterministic-critic"
+    ]
+  },
+  "scaffolding": {
+    "status": "pass",
+    "checked_ids": [
+      "check-1"
+    ],
+    "failed_ids": [],
+    "unresolved_ids": [],
+    "evidence_paths": [
+      "audit/check-1.json"
+    ],
+    "verifier_ids": [
+      "deterministic-critic"
+    ]
+  },
+  "exact_object_integrity": {
+    "status": "pass",
+    "checked_ids": [
+      "check-1"
+    ],
+    "failed_ids": [],
+    "unresolved_ids": [],
+    "evidence_paths": [
+      "audit/check-1.json"
+    ],
+    "verifier_ids": [
+      "deterministic-critic"
+    ]
+  },
+  "build_integrity": {
+    "status": "pass",
+    "checked_ids": [
+      "check-1"
+    ],
+    "failed_ids": [],
+    "unresolved_ids": [],
+    "evidence_paths": [
+      "audit/check-1.json"
+    ],
+    "verifier_ids": [
+      "deterministic-critic"
+    ]
+  },
+  "blocking_finding_ids": [],
+  "unresolved_finding_ids": [],
+  "diagnostic_finding_ids": [],
+  "adjudication_status": "not_required",
+  "adjudication_ids": [],
+  "status": "pass"
+}

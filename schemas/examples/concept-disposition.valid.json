@@ -1,0 +1,23 @@
+{
+  "record_type": "ConceptDisposition",
+  "schema_version": "HV-SCHEMA-2.0",
+  "record_id": "concept-disposition-record-1",
+  "run_id": "run-v2-example",
+  "created_at": "2026-09-11T12:00:00Z",
+  "baseline_id": "baseline-1",
+  "baseline_hash": "6c62cce2d62f7ac652def8eefbb0f42f78daa8a49bb87d80369c0c2a664a7c53",
+  "plan_id": "plan-1",
+  "disposition_id": "concept-disposition-1",
+  "source_concept_ids": [
+    "concept-1"
+  ],
+  "rewrite_unit_ids": [
+    "unit-1"
+  ],
+  "operation": "expand",
+  "rationale": "Explain the concept more fully without changing its content.",
+  "planned_teaching_roles": [
+    "define"
+  ],
+  "review_status": "accepted"
+}

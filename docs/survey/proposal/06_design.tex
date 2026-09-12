@@ -1,33 +1,34 @@
 \chapter{How the product works}
 \label{ch:design}
 
-When an author starts a document, the team should be able to follow the work
-from the first brief to the final reader decision. Humanvoice keeps that
-correspondence between the intended audience, the argument plan, each bounded
-draft unit, the pre-human checks, the source and its rendering, and the outcome.
-Once the correspondence is stable, engineers can replace a parser or model
-without losing the story of why a paragraph exists or why it was released.
+When an author asks for a humanized revision, the team should be able to follow
+the work from the immutable source to the final reader decision. Humanvoice keeps
+that correspondence between the intended audience, every substantive source
+concept, each rewritten passage, the verification checks, the source and its
+rendering, and the outcome. Once the correspondence is stable, engineers can
+replace a parser or model without losing the story of why a paragraph says what
+it says or why it was released.
 
-\section{The flow of one version}
+\section{The flow of one revision}
 
-The sequence follows the author's work: define the reader's task, plan the
-argument, draft in bounded units, preflight the result, repair located failures,
-and ask the reader only after release.
+The sequence follows the work: state the reader's task, inventory and freeze the
+source concepts, rewrite passages in dependency order, verify the candidate,
+repair located failures, and ask the reader only after release.
 
 \begin{figure}[H]
 \centering
 \resizebox{\textwidth}{!}{%
 \begin{tikzpicture}[node distance=6mm and 4mm,font=\small]
-  \node[hvstage,text width=25mm] (brief) {Authoring brief\\decision, reader, evidence};
-  \node[hvstage,right=of brief,text width=25mm] (plan) {Argument blueprint\\claims, dependencies, figures};
-  \node[hvgoldbox,right=of plan,text width=25mm] (draft) {Bounded draft\\one unit at a time};
-  \node[hvwarn,right=of draft,text width=25mm] (preflight) {Pre-human preflight\\integrity and reader simulation};
+  \node[hvstage,text width=25mm] (brief) {Humanization brief\\reader, genre, voice};
+  \node[hvstage,right=of brief,text width=25mm] (plan) {Frozen baseline\\concepts, obligations, dependencies};
+  \node[hvgoldbox,right=of plan,text width=25mm] (draft) {Source rewrite\\one passage at a time};
+  \node[hvwarn,right=of draft,text width=25mm] (preflight) {Semantic preflight\\retention and explanation};
   \node[hvbluebox,right=of preflight,text width=25mm] (release) {Release gate\\clean packet or stop};
   \node[hvbluebox,right=of release,text width=25mm] (read) {Human reader\\decision and action};
   \draw[hvflow] (brief)--(plan)--(draft)--(preflight)--(release)--(read);
   \draw[hvback] (preflight.south) to[bend right=25] node[below,hvnote]{located repair} (draft.south);
   \node[below=9mm of plan,align=center,text=hvslate,text width=34mm]
-    (prov) {provenance: brief, blueprint, source and render hashes};
+    (prov) {provenance: brief, baseline, source and render hashes};
   \node[below=9mm of release,align=center,text=hvslate,text width=34mm]
     (objects) {protected objects: equations, numbers, citations, claims};
   \draw[hvflow,dashed] (plan.south)--(prov.north);
@@ -35,25 +36,26 @@ and ask the reader only after release.
   \node[hvguard,fit=(preflight)(release),inner sep=3mm] {};
 \end{tikzpicture}
 }%
-\caption{The common record keeps a flawed draft inside a bounded repair loop.
-Only a passed release gate reaches the expensive human reader.}
+\caption{The common record keeps a defective revision inside a bounded repair
+loop. Only a passed release gate reaches the expensive human reader.}
 \label{fig:product-architecture}
 \end{figure}
 
 The brief comes first because a finding means nothing without a purpose. The
-blueprint comes before prose because a fluent paragraph can still introduce a
-concept before its prerequisite or promise a result that the evidence cannot
-support. The source snapshot and protected spans are attached to each unit so
-that a repair remains reproducible. The reader decision comes last because it
-belongs to the released document, not to a model score or an internal queue.
+frozen baseline comes before any rewriting because a fluent paragraph can still
+drop a distinction, mention a concept without explaining it, or use an idea
+before its prerequisite. The source snapshot and protected spans are attached to
+each unit so that a repair remains reproducible. The reader decision comes last
+because it belongs to the released document, not to a model score or an internal
+queue.
 
 \section{The document representation}
 
-The MVP has one source format: LaTeX. The common representation can later
-admit Markdown or a word-processing adapter, but the first build earns that
-extension only after it preserves locations and protected objects in LaTeX.
-The record model now starts before the source file. Each object has one clear
-owner and one reason it exists in the path.
+The system has one source format: LaTeX. The common representation can later
+admit Markdown or a word-processing adapter, but that extension is earned only
+after locations and protected objects are preserved in LaTeX. The record model
+starts before the source file. Each object has one clear owner and one reason it
+exists in the path.
 
 \begin{table}[H]
 \centering
@@ -62,18 +64,21 @@ owner and one reason it exists in the path.
 \toprule
 Object & Required contents & Owner of the decision \\
 \midrule
-AuthoringBrief & Intended reader, decision, genre, known vocabulary, named
-exemplars, evidence boundary, protected objects, privacy class, and unresolved
-assumptions. & Owner confirms that a missing answer is safe to carry forward. \\
-Argument\\Blueprint & Claim map, evidence anchors, concept-dependency graph,
-section and unit jobs, terminology order, and visual plan. & Author and domain
-reviewer approve the argument before long-form drafting. \\
-DocumentVersion & Source hash, source format, rendered hash, author, reading
-brief, creation time, and disclosure status. & Technical owner confirms the
-snapshot. \\
-PreflightRun & Rule versions, build result, integrity findings, structural
-findings, evidence findings, reconstruction results, mutations, and abstentions.
-& Preflight controller records pass, repair, or fail-closed. \\
+HumanizationBrief & Intended reader, genre, known vocabulary, named exemplars,
+evidence boundary, protected-object policy, voice constraints, privacy class,
+remote-inference authorization, and unresolved assumptions. & Owner confirms that
+a missing answer is safe to carry forward. \\
+ConceptBaseline & Complete span partition, substantive concepts and their
+teaching roles, explanation obligations, dependency order, scaffolding
+dispositions, bidirectional coverage reviews, and the named freeze decision. &
+Author and domain reviewer adjudicate ambiguity and sign the baseline. \\
+DocumentVersion & Source hash, source format, rendered hash, author,
+humanization brief, creation time, and disclosure status. & Technical owner
+confirms the snapshot. \\
+SemanticPreflightResult & Rule and critic versions, build result, span coverage,
+concept correspondence, obligation fulfillment, dependency order, unsupported
+additions, scaffolding leakage, exact-object integrity, and abstentions. &
+Preflight controller records pass, repair, or fail-closed. \\
 ProtectedSpan & Stable identifier, source range, object type, normalized
 content hash, and allowed transformations. & Author declares what must be
 preserved. \\
@@ -82,24 +87,25 @@ version, editorial question, and disposition. & Author or editor accepts,
 rejects, or edits. \\
 RevisionRecord & Parent version, changed ranges, accepted findings, rejected
 findings, and explanation of substantive changes. & Author owns the wording. \\
-ReleaseDecision & Gate results, exceptions, packet hash, unresolved risks, and
-the person who authorized release. & System blocks by default; named owner
-approves an explicit exception. \\
+ReleaseDecision & Gate results, packet hashes, blocking reasons, and the person
+who authorized release. & System blocks by default; there is no generic release
+exception. \\
 ReaderDecision & Reader role, document hash, rubric responses, elapsed time,
 acceptance or requested changes, and confidence. & Named reader accepts or
 returns the document. \\
 \bottomrule
 \end{tabularx}
-\caption{The record model connects intent, argument, prose, checks, and reader
-judgment. It is deliberately small enough to inspect and rich enough to stop an
-unfinished draft before release.}
+\caption{The record model connects intent, source meaning, prose, checks, and
+reader judgment. It is deliberately small enough to inspect and rich enough to
+stop a lossy revision before release.}
 \label{tab:record-model}
 \end{table}
 
 Protected objects include equations, numerical literals, units, labels,
 citations, quotations, tables, code blocks, declared assumptions, and
-load-bearing claims. The blueprint adds a second class of protection: concepts
-and claims that must be introduced before a dependent explanation. Protection
+load-bearing claims. The frozen baseline adds a second, stronger class of
+protection: every substantive concept must survive with verified correspondence,
+and prerequisites must be taught before dependents. Exact-object protection
 does not make an object immutable. It makes a change visible and requires an
 explanation. An author may intentionally change an estimate or replace a
 citation; the system must distinguish that action from silent loss.
@@ -118,15 +124,15 @@ Every candidate version passes four gates:
       are located or explicitly marked unparsed; citations and references
       resolve; and no seeded change to a number, unit, sign, equation, table,
       quotation, or claim scope can pass silently.
-\item \textbf{Argument.} Every load-bearing claim has an evidence anchor or is
-      labelled a hypothesis; every section has a job; every new concept has a
-      prerequisite or an explicit exemption; and each figure has a declared
-      relationship to teach.
-\item \textbf{Writing.} Bounded units put concrete actors and objects before
-      abstractions, keep the declared register, vary sentence and paragraph
-      pace, and stay within the concept and evidence budget in the blueprint.
-      These are calibrated checks against named exemplars, not a universal
-      style score.
+\item \textbf{Meaning.} Every frozen source concept has verified correspondence
+      in the revision; every active explanation obligation is discharged with
+      located evidence; every load-bearing claim keeps its evidence anchor; no
+      unsupported claim is added; and every concept is taught before it is used
+      or carries an explicit exemption.
+\item \textbf{Writing.} Rewritten passages put concrete actors and objects before
+      abstractions, keep the declared register, and vary sentence and paragraph
+      pace. These are calibrated checks against named exemplars, not a universal
+      style score, and never a length target.
 \item \textbf{Reconstruction.} Isolated critics, calibrated on held-out human
       judgements, attempt to recover the purpose, mechanism, evidence,
       qualification, and requested action. They must report uncertainty and
@@ -140,12 +146,15 @@ another, the system stops and names the unresolved choice for the author. This
 does not certify that the prose is beautiful. It prevents predictable failure
 from being purchased with an executive's time.
 
-Only the sponsor or named project owner may grant an exception. A meaning
-exception also needs the domain editor's concurrence, and a processing
-exception needs the security or policy owner's concurrence. Unresolved protected
-correspondence, an unparsed promised object, unauthorized external transmission,
-missing load-bearing evidence, and a broken build can never be excepted. The
-full authority and record fields are fixed in Appendix~\ref{app:implementation-contract}.
+A reviewer may correct and refreeze the baseline, or deactivate an obligation that
+does not apply to this reader, with a recorded reason and lineage, before
+verification runs. That is the only adjudication available, and it is not a
+release exception. An unfrozen baseline, a source concept without verified
+correspondence, an unmet active obligation, unresolved protected correspondence,
+an unparsed promised object, unauthorized external transmission, missing
+load-bearing evidence, and a broken build can never be excepted. The full
+authority and record fields are fixed in
+Appendix~\ref{app:implementation-contract}.
 
 \begin{takeawaybox}{The human-attention budget}
 The ordinary production path asks a human for a brief confirmation and one
@@ -194,20 +203,21 @@ attempts a low-context reconstruction. Their prompts, calibration set, order,
 and disagreements are recorded. A critic that cannot beat a frozen baseline on
 held-out examples is removed from the release path.
 
-The MVP deliberately excludes per-document AI detection, population drift
-monitoring, unbounded autonomous rewriting, and a scalar acceptance score.
-Bounded drafting and cause-specific repair are core product behavior; autonomous
-acceptance is not. These exclusions keep the first decision measurable without
-asking a model to certify its own prose.
+The system deliberately excludes per-document AI detection, population drift
+monitoring, summarization, and a scalar acceptance score. Authorized
+source-grounded rewriting and cause-specific repair are core product behavior;
+autonomous acceptance is not. These exclusions keep the decision measurable
+without asking a model to certify its own prose.
 
 \section{The author and reader experience}
 
-The author opens one construction session and sees the brief, blueprint, source,
-and rendered unit together. Findings are grouped by location and gate, with the
-most consequential blockers first. Selecting a finding shows its evidence, the
-dependency or protected object it concerns, and the repair it will trigger. The
-author can revise in the existing editor, or ask the bounded writer to produce a
-new unit; Humanvoice rebuilds and preflights the result before it advances.
+The author opens one session and sees the brief, the concept baseline, the source,
+and the rendered revision together. Findings are grouped by location and gate,
+with the most consequential blockers first. Selecting a finding shows its
+evidence, the concept, obligation, or protected object it concerns, and the repair
+it will trigger. The author can revise in the existing editor, or ask the writer
+to rewrite the passage again; Humanvoice rebuilds and reverifies the result before
+it advances.
 
 The reader never sees the internal finding identifiers by default. The reader
 receives the rendered document, the declared decision question, and a short
@@ -239,21 +249,23 @@ unnoticed side effect of a linter.
 
 \section{The first release and its boundary}
 
-The MVP is complete when one LaTeX document can travel from brief to
-review-ready packet through the full path. It includes:
+The first production release is complete when one finished LaTeX manuscript can
+travel from an immutable snapshot to a reader packet through the full
+humanization path. It includes:
 
 \begin{enumerate}
-\item a brief schema and blueprint compiler with claim, dependency, and visual
-      fixtures;
+\item a humanization brief schema and a concept-baseline builder with concept,
+      dependency, obligation, and scaffolding fixtures;
 \item a parser adapter with protected-span fixtures and source locations;
-\item a bounded writer interface that accepts only approved unit context;
-\item the integrity, argument, writing, and reconstruction preflight families,
+\item a source-grounded writer interface that accepts only one approved source
+      span and its assigned concepts;
+\item the integrity, meaning, writing, and reconstruction verification families,
       with stable machine-readable output;
 \item a cause-specific repair controller with cycle and oscillation limits;
-\item an author decision view, protected comparison, and fail-closed release
-      gate; and
-\item a small calibration and held-out corpus plus a replay harness for the
-      feasibility case.
+\item an author decision view, patch assembly, protected comparison, whole-tree
+      blackline build, and fail-closed release gate; and
+\item a calibration and held-out corpus plus a replay harness for the benchmark
+      and held-out manuscripts.
 \end{enumerate}
 
 It does not include a general editor, cloud collaboration, enterprise
@@ -295,28 +307,30 @@ does not create a second set of release tests.
 \toprule
 Stage & What the team produces & What happens if it fails \\
 \midrule
-Brief and blueprint & A reader, decision, evidence boundary, concept order, and
-visual purpose are explicit before long-form prose. & Stop before writer
-invocation and ask the owner to resolve the missing field. \\
+Brief and frozen baseline & The reader, evidence boundary, every substantive
+source concept, its explanation obligations, and the dependency order are
+explicit before any prose changes. & Stop before writer invocation and ask the
+owner to resolve the missing field or ambiguity. \\
 Protected core & A LaTeX source snapshot, canonical PDF, source map, and
-protected comparison can be replayed by a second operator. & Narrow the first
-release to the protected review utility. \\
-Bounded extension & One approved unit can be drafted, rebuilt, and repaired
-without widening its evidence or claim. & Keep model-dependent work in
-abstention and return to the deterministic path. \\
-Pre-human release & Integrity, argument, writing, evidence, and reconstruction
-checks produce a located decision before a reader packet exists. & Repair or
-stop; never use the reader as the ordinary debugger. \\
-Reader packet & A named reader receives one clean PDF, decision question, and
-short reconstruction task. & Preserve the source and report noncompletion. \\
-Feasibility handoff & The sponsor receives burden, safety, rights, cost, and
-proceed/revise/stop evidence. & Do not make an efficacy or scale claim. \\
+protected comparison can be replayed by a second operator. & Narrow the release
+to the protected review utility. \\
+Source-grounded rewriting & One approved passage can be rewritten, rebuilt, and
+repaired without losing a concept or widening a claim. & Keep model-dependent
+work in abstention and return to the deterministic path. \\
+Verification and release & Meaning, integrity, writing, evidence, and
+reconstruction checks produce a located decision before a reader packet exists. &
+Repair or stop; never use the reader as the ordinary debugger. \\
+Reader packet & A named reader receives one clean PDF, its blackline comparison,
+the decision question, and a short reconstruction task. & Preserve the source and
+report noncompletion. \\
+Product evidence & The sponsor receives benchmark, held-out, replay, burden,
+safety, rights, and cost evidence. & Do not make an efficacy or scale claim. \\
 \bottomrule
 \end{tabularx}
 \caption{The reader-facing map of the implementation path. The canonical
-acceptance register is in Appendix~\ref{app:requirements} (requirements R1--R24);
+acceptance register is in Appendix~\ref{app:requirements} (requirements R1--R29);
 exit codes and execution boundaries are in the implementation contract annex.
-This table provides a high-level narrative view; R1--R24 is the authoritative
+This table provides a high-level narrative view; R1--R29 is the authoritative
 release gate.}
 \label{tab:build-path-summary}
 \end{table}

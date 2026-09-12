@@ -1,0 +1,29 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://humanvoice.local/schema/v2/concept-dependency.schema.json",
+  "title": "Humanvoice v2 concept dependency",
+  "$comment": "The shared record validator rejects self-dependencies and detects cycles across accepted prerequisite and sequence records.",
+  "type": "object",
+  "required": ["record_type", "schema_version", "record_id", "run_id", "created_at", "baseline_id", "dependency_id", "prerequisite_concept_id", "dependent_concept_id", "relation", "rationale", "preview_exemption", "review_status"],
+  "properties": {
+    "record_type": {"const": "ConceptDependency"},
+    "schema_version": {"type": "string", "pattern": "^HV-SCHEMA-2\\.[0-9]+$"},
+    "record_id": {"type": "string", "minLength": 1},
+    "run_id": {"type": "string", "minLength": 1},
+    "created_at": {"type": "string", "format": "date-time"},
+    "baseline_id": {"type": "string", "minLength": 1},
+    "dependency_id": {"type": "string", "minLength": 1},
+    "prerequisite_concept_id": {"type": "string", "minLength": 1},
+    "dependent_concept_id": {"type": "string", "minLength": 1},
+    "relation": {"enum": ["prerequisite", "sequence", "contrast", "qualification_scope", "notation", "evidence_support"]},
+    "rationale": {"type": "string", "minLength": 1},
+    "preview_exemption": {"type": "object", "required": ["active", "reason", "authorized_by"], "properties": {"active": {"type": "boolean"}, "reason": {"type": ["string", "null"]}, "authorized_by": {"type": ["string", "null"]}}, "additionalProperties": false},
+    "review_status": {"enum": ["proposed", "accepted", "unresolved", "rejected"]},
+    "extensions": {"type": "object"}
+  },
+  "allOf": [
+    {"if": {"properties": {"preview_exemption": {"properties": {"active": {"const": true}}}}}, "then": {"properties": {"preview_exemption": {"properties": {"reason": {"type": "string", "minLength": 1}, "authorized_by": {"type": "string", "minLength": 1}}}}}},
+    {"if": {"properties": {"preview_exemption": {"properties": {"active": {"const": false}}}}}, "then": {"properties": {"preview_exemption": {"properties": {"reason": {"type": "null"}, "authorized_by": {"type": "null"}}}}}}
+  ],
+  "additionalProperties": false
+}

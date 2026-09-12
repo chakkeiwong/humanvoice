@@ -1,23 +1,37 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://humanvoice.local/schema/release-decision.schema.json",
-  "title": "Humanvoice release decision",
+  "$id": "https://humanvoice.local/schema/v2/release-decision.schema.json",
+  "title": "Humanvoice v2 release decision",
+  "$comment": "The shared record validator binds each gate to its evidence record and verifies that candidate-ready and released packets contain no audit-only files.",
   "type": "object",
-  "required": ["record_type", "schema_version", "record_id", "run_id", "created_at", "gate_results", "packet_hash", "status", "authorized_by", "exceptions"],
+  "required": ["record_type", "schema_version", "record_id", "run_id", "created_at", "baseline_id", "baseline_hash", "revision_id", "candidate_hash", "gate_results", "reader_packet_hash", "audit_packet_hash", "status", "authorized_by", "reader_decision_id", "adjudication_ids", "blocking_reasons"],
   "properties": {
     "record_type": {"const": "ReleaseDecision"},
-    "schema_version": {"type": "string", "pattern": "^HV-SCHEMA-[0-9]+\\.[0-9]+$"},
+    "schema_version": {"type": "string", "pattern": "^HV-SCHEMA-2\\.[0-9]+$"},
     "record_id": {"type": "string", "minLength": 1},
     "run_id": {"type": "string", "minLength": 1},
     "created_at": {"type": "string", "format": "date-time"},
-    "gate_results": {"type": "object"},
-    "packet_hash": {"type": "string"},
-    "status": {"enum": ["released", "blocked", "exception-released", "stopped"]},
-    "authorized_by": {"type": "string", "minLength": 1},
-    "exceptions": {"type": "array", "items": {"type": "object"}},
-    "unresolved_risks": {"type": "array", "items": {"type": "string"}},
-    "expiry": {"type": ["string", "null"], "format": "date-time"},
+    "baseline_id": {"type": "string", "minLength": 1},
+    "baseline_hash": {"type": "string", "pattern": "^[A-Fa-f0-9]{64}$"},
+    "revision_id": {"type": "string", "minLength": 1},
+    "candidate_hash": {"type": "string", "pattern": "^[A-Fa-f0-9]{64}$"},
+    "gate_results": {"type": "object", "required": ["baseline_complete", "concept_correspondence", "active_obligations", "dependency_order", "unsupported_additions", "scaffolding", "exact_objects", "source_integrity", "assembly_integrity", "revised_build", "blackline_build", "transmission", "policy_manifest", "runtime_manifest"], "properties": {
+      "baseline_complete": {"$ref": "#/$defs/gate"}, "concept_correspondence": {"$ref": "#/$defs/gate"}, "active_obligations": {"$ref": "#/$defs/gate"}, "dependency_order": {"$ref": "#/$defs/gate"}, "unsupported_additions": {"$ref": "#/$defs/gate"}, "scaffolding": {"$ref": "#/$defs/gate"}, "exact_objects": {"$ref": "#/$defs/gate"}, "source_integrity": {"$ref": "#/$defs/gate"}, "assembly_integrity": {"$ref": "#/$defs/gate"}, "revised_build": {"$ref": "#/$defs/gate"}, "blackline_build": {"$ref": "#/$defs/gate"}, "transmission": {"$ref": "#/$defs/gate"}, "policy_manifest": {"$ref": "#/$defs/gate"}, "runtime_manifest": {"$ref": "#/$defs/gate"}
+    }, "additionalProperties": false},
+    "reader_packet_hash": {"type": ["string", "null"], "pattern": "^[A-Fa-f0-9]{64}$"},
+    "audit_packet_hash": {"type": ["string", "null"], "pattern": "^[A-Fa-f0-9]{64}$"},
+    "status": {"enum": ["candidate-ready", "released", "blocked", "stopped"]},
+    "authorized_by": {"type": ["string", "null"]},
+    "reader_decision_id": {"type": ["string", "null"]},
+    "adjudication_ids": {"type": "array", "items": {"type": "string", "minLength": 1}, "uniqueItems": true},
+    "blocking_reasons": {"type": "array", "items": {"type": "string", "minLength": 1}},
     "extensions": {"type": "object"}
   },
+  "$defs": {"gate": {"type": "object", "required": ["status", "evidence_paths"], "properties": {"status": {"enum": ["pass", "fail", "unresolved", "not_run"]}, "evidence_paths": {"type": "array", "items": {"type": "string", "minLength": 1}}}, "additionalProperties": false}, "all_pass": {"properties": {"baseline_complete": {"$ref": "#/$defs/pass_gate"}, "concept_correspondence": {"$ref": "#/$defs/pass_gate"}, "active_obligations": {"$ref": "#/$defs/pass_gate"}, "dependency_order": {"$ref": "#/$defs/pass_gate"}, "unsupported_additions": {"$ref": "#/$defs/pass_gate"}, "scaffolding": {"$ref": "#/$defs/pass_gate"}, "exact_objects": {"$ref": "#/$defs/pass_gate"}, "source_integrity": {"$ref": "#/$defs/pass_gate"}, "assembly_integrity": {"$ref": "#/$defs/pass_gate"}, "revised_build": {"$ref": "#/$defs/pass_gate"}, "blackline_build": {"$ref": "#/$defs/pass_gate"}, "transmission": {"$ref": "#/$defs/pass_gate"}, "policy_manifest": {"$ref": "#/$defs/pass_gate"}, "runtime_manifest": {"$ref": "#/$defs/pass_gate"}}}, "pass_gate": {"properties": {"status": {"const": "pass"}, "evidence_paths": {"minItems": 1}}}},
+  "allOf": [
+    {"if": {"properties": {"status": {"enum": ["candidate-ready", "released"]}}}, "then": {"properties": {"gate_results": {"$ref": "#/$defs/all_pass"}, "reader_packet_hash": {"type": "string", "pattern": "^[A-Fa-f0-9]{64}$"}, "audit_packet_hash": {"type": "string", "pattern": "^[A-Fa-f0-9]{64}$"}, "blocking_reasons": {"maxItems": 0}}}},
+    {"if": {"properties": {"status": {"const": "released"}}}, "then": {"properties": {"authorized_by": {"type": "string", "minLength": 1}, "reader_decision_id": {"type": "string", "minLength": 1}}}},
+    {"if": {"properties": {"status": {"enum": ["blocked", "stopped"]}}}, "then": {"properties": {"reader_packet_hash": {"type": "null"}, "blocking_reasons": {"minItems": 1}}}}
+  ],
   "additionalProperties": false
 }
