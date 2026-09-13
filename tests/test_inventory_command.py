@@ -80,12 +80,16 @@ def test_inventory_missing_source(tmp_path):
 
 
 def test_inventory_phase_1_partitioning(minimal_snapshot, capsys):
-    """Phase 1 partitions source and writes spans.jsonl."""
+    """Phase 1 partitions source and writes spans.jsonl.
+
+    Exit 3, not 0: with no model authorized, concept extraction never ran, so
+    the baseline is incomplete. Partitioning still writes its spans -- the
+    non-zero code reports the missing extraction, not a partitioning failure.
+    """
     args = Namespace(snapshot=minimal_snapshot)
     result = inventory_command.run(args)
 
-    # Should succeed but concept extraction not implemented
-    assert result == 0
+    assert result == 3
 
     # Check spans.jsonl was written
     spans_path = minimal_snapshot / ".humanvoice" / "inventory" / "spans.jsonl"
@@ -116,11 +120,15 @@ def test_inventory_phase_1_partitioning(minimal_snapshot, capsys):
 
 
 def test_inventory_stdout_json(minimal_snapshot, capsys):
-    """Inventory writes JSON result to stdout."""
+    """Inventory writes JSON result to stdout even when it exits non-zero.
+
+    Exit 3 here (no model, so no concepts); the JSON record is still emitted so
+    the caller can see what partitioning found.
+    """
     args = Namespace(snapshot=minimal_snapshot)
     result = inventory_command.run(args)
 
-    assert result == 0
+    assert result == 3
 
     captured = capsys.readouterr()
     result_json = json.loads(captured.out)

@@ -384,7 +384,7 @@ def run(args) -> int:
         return 3  # Invalid: extraction ran but produced nothing
 
     # Freeze baseline if requested
-    if args.freeze:
+    if getattr(args, 'freeze', False):
         print("", file=sys.stderr)
         print("Freezing baseline...", file=sys.stderr)
 
@@ -414,7 +414,7 @@ def run(args) -> int:
             concept_entries=baseline_entries,
             total_concepts=len(all_concepts),
             frozen_at=adjudication_date,
-            frozen_by=args.adjudicator,
+            frozen_by=getattr(args, 'adjudicator', 'unspecified'),
             adjudication_session_id=None,
             baseline_hash=None,  # Will be computed by save_baseline
         )

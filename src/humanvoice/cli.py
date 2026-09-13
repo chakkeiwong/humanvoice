@@ -7,7 +7,8 @@ The v2 command surface:
   hv inventory  - Extract and freeze complete concept baseline
   hv plan       - Build dependency-aware teaching plan from frozen baseline
   hv rewrite    - Rewrite source passages with concept preservation
-  hv preflight  - Run independent critics and structural checks
+  hv preflight  - Run independent critics and structural checks (v1, source-based)
+  hv preflight-v2 - Verify rewritten units against frozen baseline (WP-V2-4)
   hv repair     - Apply bounded repairs (max 3 cycles with oscillation detection)
   hv assemble   - Assemble rewritten units via source patches
   hv release    - Generate immutable reader packet (human acceptance is separate)
@@ -106,6 +107,12 @@ def build_parser():
     preflight_parser.add_argument('--deterministic', action='store_true',
                                    help='Deterministic mode (no model invocation)')
 
+    # hv preflight-v2
+    preflight_v2_parser = subparsers.add_parser(
+        'preflight-v2',
+        help='Verify rewritten units against frozen baseline (WP-V2-4)')
+    preflight_v2_parser.add_argument('snapshot', type=Path, help='Snapshot directory from hv init')
+
     # hv repair
     repair_parser = subparsers.add_parser('repair', help='Apply bounded repairs to a draft')
     repair_parser.add_argument('draft', type=Path, help='Draft .tex file from hv draft')
@@ -148,6 +155,9 @@ def main():
     elif args.command == 'preflight':
         from humanvoice.commands import preflight_command
         return preflight_command.run(args)
+    elif args.command == 'preflight-v2':
+        from humanvoice.commands import preflight_v2_command
+        return preflight_v2_command.run(args)
     elif args.command == 'plan':
         from humanvoice.commands import plan_v2_command
         return plan_v2_command.run(args)

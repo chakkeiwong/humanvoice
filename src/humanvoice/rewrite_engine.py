@@ -455,6 +455,24 @@ def save_rewrite_result(result: RewriteResult, output_path) -> None:
                 }
                 for c in result.concept_correspondences
             ],
+            "fulfilled_obligations": [
+                {
+                    "concept_id": o.concept_id,
+                    "functions": o.functions,
+                    "fulfilled_in_output": o.fulfilled_in_output,
+                    "output_span_ids": o.output_span_ids,
+                }
+                for o in result.fulfilled_obligations
+            ],
+            "unmet_obligations": [
+                {
+                    "concept_id": o.concept_id,
+                    "functions": o.functions,
+                    "fulfilled_in_output": o.fulfilled_in_output,
+                    "output_span_ids": o.output_span_ids,
+                }
+                for o in result.unmet_obligations
+            ],
             "protected_objects_preserved": result.protected_objects_preserved,
             "mutations": result.mutations,
             "is_acceptable": result.is_acceptable,
