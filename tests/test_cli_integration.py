@@ -66,26 +66,53 @@ def test_tier1_smoke_register_fixture(tmp_path):
     assert snapshot.exists()
     assert (snapshot / "manifest.json").exists()
 
-    # Step 2: hv inventory --mock
+    # Step 2: hv inventory --mock --freeze
     result = subprocess.run(
-        ['hv', 'inventory', str(snapshot), '--mock'],
+        ['hv', 'inventory', str(snapshot), '--mock', '--freeze', '--adjudicator', 'test-harness'],
         capture_output=True,
         text=True
     )
     assert result.returncode == 0, f"inventory failed: {result.stderr}"
 
-    # Check that spans were written
+    # Check that spans and baseline were written
     spans_file = snapshot / ".humanvoice" / "inventory" / "spans.jsonl"
     assert spans_file.exists(), "spans.jsonl not created"
 
-    # TODO: After item 3 (wire inventory to freeze_baseline), check for baseline artifact:
-    # baseline_file = snapshot / ".humanvoice" / "baselines" / "baseline-*.json"
-    # assert baseline_file.exists(), "baseline not frozen"
+    baseline_file = snapshot / ".humanvoice" / "inventory" / "baseline.json"
+    assert baseline_file.exists(), "baseline not frozen"
 
-    # Step 3: hv plan (will fail until item 4 - wire to v2 planner)
-    # Step 4: hv rewrite (will fail until plan exists)
-    # Step 5: hv preflight (will fail until rewrite output exists)
-    # Step 6: hv assemble (will fail until preflight passes)
+    # Step 3: hv plan
+    result = subprocess.run(
+        ['hv', 'plan', str(snapshot)],
+        capture_output=True,
+        text=True
+    )
+    assert result.returncode == 0, f"plan failed: {result.stderr}"
+
+    # Verify plan was created
+    import json
+    output = json.loads(result.stdout)
+    plan_id = output['plan_id']
+    plan_file = snapshot / ".humanvoice" / "plans" / f"{plan_id}.json"
+    assert plan_file.exists(), "plan not created"
+
+    # Step 4: hv rewrite --mock
+    baseline_id = output['baseline_id']
+    result = subprocess.run(
+        ['hv', 'rewrite', str(snapshot), '--baseline-id', baseline_id, '--plan-id', plan_id, '--mock'],
+        capture_output=True,
+        text=True
+    )
+    assert result.returncode == 0, f"rewrite failed: {result.stderr}"
+
+    # Verify rewrite session was saved
+    rewrite_output = json.loads(result.stdout)
+    assert rewrite_output['status'] == 'complete'
+    assert rewrite_output['correspondence_ratio'] == 1.0
+
+    # TODO: After item 5 (wire preflight/assemble), extend to full pipeline:
+    # Step 5: hv preflight
+    # Step 6: hv assemble
 
 
 def test_tier2_protected_citation_fixture(tmp_path):
