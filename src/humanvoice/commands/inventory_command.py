@@ -206,6 +206,15 @@ def run(args) -> int:
 
     if mock_mode:
         print("  Running in mock mode (no actual model calls)", file=sys.stderr)
+        # Create mock model and registry for testing
+        from humanvoice.model import ModelAdapter, ModelConfig
+        config = ModelConfig.from_profile()
+        model = ModelAdapter(
+            config=config,
+            mock_mode=True,
+            snapshot_dir=snapshot_dir,
+        )
+        registry = SchemaRegistry()
     elif not remote_authorized and 'ANTHROPIC_API_KEY' not in sys.modules.get('os', __import__('os')).environ:
         print("  Warning: No model authorization (brief.remote_inference_authorized=false and no ANTHROPIC_API_KEY)", file=sys.stderr)
         print("  Skipping model extraction", file=sys.stderr)
@@ -348,7 +357,7 @@ def run(args) -> int:
                 f.write('\n')
         print(f"Wrote {len(all_concepts)} concepts to {concepts_path.relative_to(snapshot_dir)}", file=sys.stderr)
 
-    # Return status
+    # Return status based on actual completion
     extraction_status = "not_implemented" if not model else ("complete" if all_concepts else "no_concepts")
 
     result = {
@@ -362,6 +371,56 @@ def run(args) -> int:
         "total_abstentions": len(all_abstentions),
     }
     print(json.dumps(result, indent=2))
+
+    # Exit code 0 only when extraction actually completed
+    # Exit 3 for incomplete/invalid state (no model, no concepts)
+    if not model:
+        print("Warning: No model available, extraction skipped", file=sys.stderr)
+        return 3  # Invalid: extraction required but not performed
+
+    if not all_concepts:
+        print("Warning: Zero concepts extracted", file=sys.stderr)
+        return 3  # Invalid: extraction ran but produced nothing
+
+    # Freeze baseline if requested
+    if args.freeze:
+        print("", file=sys.stderr)
+        print("Freezing baseline...", file=sys.stderr)
+
+        # Collect scaffolding candidates (stub for now)
+        from humanvoice.concept_extraction import ScaffoldingCandidate
+        scaffolding_candidates = []  # TODO: collect actual scaffolding from extraction
+
+        adjudication_date = datetime.now(timezone.utc).isoformat()
+
+        baseline_sig = freeze_baseline(
+            snapshot_id=snapshot_id,
+            source_hash=source_hash,
+            spans=span_dicts,
+            concepts=all_concepts,
+            scaffolding=scaffolding_candidates,
+            adjudicator_id=args.adjudicator,
+            adjudication_date=adjudication_date,
+        )
+
+        # Save baseline signature
+        baseline_path = inventory_dir / "baseline.json"
+        with open(baseline_path, 'w') as f:
+            json.dump({
+                "baseline_id": baseline_sig.baseline_id,
+                "baseline_hash": baseline_sig.baseline_hash,
+                "snapshot_id": baseline_sig.snapshot_id,
+                "source_hash": baseline_sig.source_hash,
+                "total_spans": baseline_sig.total_spans,
+                "total_concepts": baseline_sig.total_concepts,
+                "unresolved_items": baseline_sig.unresolved_items,
+                "adjudicator_id": baseline_sig.adjudicator_id,
+                "adjudication_date": baseline_sig.adjudication_date,
+                "signature_method": baseline_sig.signature_method,
+            }, f, indent=2)
+
+        print(f"Baseline frozen: {baseline_sig.baseline_hash[:16]}...", file=sys.stderr)
+        print(f"Wrote baseline signature to {baseline_path.relative_to(snapshot_dir)}", file=sys.stderr)
 
     return 0
 

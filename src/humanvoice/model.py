@@ -360,6 +360,20 @@ class ModelAdapter:
                     response[prop] = False
             return json.dumps(response, indent=2)
 
+        # For concept extraction (no schema, expects array of concepts)
+        # Return a minimal valid concept array with one mock concept
+        if "concept" in prompt.lower() and "extract" in prompt.lower():
+            return json.dumps([{
+                "concept_id": "mock-concept-1",
+                "proposition": "Mock concept for testing",
+                "concept_type": "definition",
+                "source_span_ids": [],
+                "teaching_roles": ["intro"],
+                "supporting_spans": [],
+                "prerequisites": [],
+                "confidence": 0.9
+            }], indent=2)
+
         return "Mock model response for prototype testing"
 
     def _invoke_api(

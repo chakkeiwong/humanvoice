@@ -46,6 +46,9 @@ def build_parser():
     # hv inventory
     inventory_parser = subparsers.add_parser('inventory', help='Extract and freeze complete concept baseline')
     inventory_parser.add_argument('snapshot', type=Path, help='Snapshot directory from hv init')
+    inventory_parser.add_argument('--mock', action='store_true', help='Use mock mode (no model calls)')
+    inventory_parser.add_argument('--freeze', action='store_true', help='Freeze baseline after extraction')
+    inventory_parser.add_argument('--adjudicator', type=str, default='test-harness', help='Adjudicator identifier')
 
     # hv pipeline
     pipeline_parser = subparsers.add_parser('pipeline', help='Master orchestration: plan→draft→repair→assemble→release')
