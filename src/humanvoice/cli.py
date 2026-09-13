@@ -60,7 +60,7 @@ def build_parser():
     # hv plan
     plan_parser = subparsers.add_parser('plan', help='Build dependency-aware teaching plan from frozen baseline')
     plan_parser.add_argument('snapshot', type=Path, help='Snapshot directory from hv init')
-    plan_parser.add_argument('--baseline-id', required=True, help='Baseline ID (e.g., baseline-001)')
+    plan_parser.add_argument('--max-unit-size', type=int, default=2000, help='Target max words per unit (default: 2000)')
 
     # hv rewrite
     rewrite_parser = subparsers.add_parser('rewrite', help='Rewrite source passages with concept preservation')
@@ -149,8 +149,8 @@ def main():
         from humanvoice.commands import preflight_command
         return preflight_command.run(args)
     elif args.command == 'plan':
-        from humanvoice.commands import plan_command
-        return plan_command.run(args)
+        from humanvoice.commands import plan_v2_command
+        return plan_v2_command.run(args)
     elif args.command == 'rewrite':
         from humanvoice.commands import rewrite_command
         return rewrite_command.main()

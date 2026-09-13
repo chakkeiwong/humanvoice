@@ -23,6 +23,7 @@ from humanvoice.concept_extraction import (
     freeze_baseline,
     ConceptCandidate,
 )
+from humanvoice.concept_baseline import ConceptBaseline, ConceptBaselineEntry, save_baseline
 from humanvoice.model_extraction import (
     extract_concepts_from_window,
     verify_reconstruction,
@@ -387,40 +388,47 @@ def run(args) -> int:
         print("", file=sys.stderr)
         print("Freezing baseline...", file=sys.stderr)
 
-        # Collect scaffolding candidates (stub for now)
-        from humanvoice.concept_extraction import ScaffoldingCandidate
-        scaffolding_candidates = []  # TODO: collect actual scaffolding from extraction
-
         adjudication_date = datetime.now(timezone.utc).isoformat()
 
-        baseline_sig = freeze_baseline(
+        # Convert ConceptCandidate objects to ConceptBaselineEntry objects
+        baseline_entries = []
+        for concept in all_concepts:
+            baseline_entries.append(ConceptBaselineEntry(
+                concept_id=concept.concept_id,
+                proposition=concept.proposition,
+                concept_type=concept.concept_type,
+                source_span_ids=concept.source_span_ids,
+                teaching_roles=concept.teaching_roles,
+                supporting_spans=concept.supporting_spans,
+                prerequisites=concept.prerequisites,
+                confidence=concept.confidence,
+                adjudication_status="accepted",
+                human_rationale=None,
+            ))
+
+        # Create ConceptBaseline object
+        baseline = ConceptBaseline(
+            baseline_id=f"baseline-{snapshot_id}",
             snapshot_id=snapshot_id,
             source_hash=source_hash,
-            spans=span_dicts,
-            concepts=all_concepts,
-            scaffolding=scaffolding_candidates,
-            adjudicator_id=args.adjudicator,
-            adjudication_date=adjudication_date,
+            concept_entries=baseline_entries,
+            total_concepts=len(all_concepts),
+            frozen_at=adjudication_date,
+            frozen_by=args.adjudicator,
+            adjudication_session_id=None,
+            baseline_hash=None,  # Will be computed by save_baseline
         )
 
-        # Save baseline signature
-        baseline_path = inventory_dir / "baseline.json"
-        with open(baseline_path, 'w') as f:
-            json.dump({
-                "baseline_id": baseline_sig.baseline_id,
-                "baseline_hash": baseline_sig.baseline_hash,
-                "snapshot_id": baseline_sig.snapshot_id,
-                "source_hash": baseline_sig.source_hash,
-                "total_spans": baseline_sig.total_spans,
-                "total_concepts": baseline_sig.total_concepts,
-                "unresolved_items": baseline_sig.unresolved_items,
-                "adjudicator_id": baseline_sig.adjudicator_id,
-                "adjudication_date": baseline_sig.adjudication_date,
-                "signature_method": baseline_sig.signature_method,
-            }, f, indent=2)
+        # Compute and set baseline hash
+        from humanvoice.concept_baseline import compute_baseline_hash
+        baseline.baseline_hash = compute_baseline_hash(baseline)
 
-        print(f"Baseline frozen: {baseline_sig.baseline_hash[:16]}...", file=sys.stderr)
-        print(f"Wrote baseline signature to {baseline_path.relative_to(snapshot_dir)}", file=sys.stderr)
+        # Save complete baseline
+        baseline_path = inventory_dir / "baseline.json"
+        save_baseline(baseline, baseline_path)
+
+        print(f"Baseline frozen: {baseline.baseline_hash[:16]}...", file=sys.stderr)
+        print(f"Wrote baseline to {baseline_path.relative_to(snapshot_dir)}", file=sys.stderr)
 
     return 0
 
