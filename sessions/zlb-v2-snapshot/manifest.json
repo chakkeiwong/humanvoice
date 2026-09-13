@@ -1,0 +1,74 @@
+{
+  "snapshot_id": "snapshot-20260912-192038",
+  "created_at": "2026-09-12T19:20:38.739030+00:00",
+  "source_hash": "ff582d8aa7352b2de6f6e3b3cafc8ab0cfb74119a5ca6e5c575baff0ce1f89bf",
+  "source_files": [
+    "source/zlb_source.tex"
+  ],
+  "brief": {
+    "record_type": "HumanizationBrief",
+    "schema_version": "HV-SCHEMA-2.0",
+    "record_id": "brief-zlb-v2-001",
+    "run_id": "run-zlb-v2-benchmark",
+    "created_at": "2026-09-13T00:00:00Z",
+    "source_entry_point": "zlb_source.tex",
+    "reader": {
+      "role": "graduate economics student with econometrics training",
+      "prior_knowledge": [
+        "Bayesian inference",
+        "state-space models",
+        "Kalman filtering",
+        "MCMC",
+        "New Keynesian models"
+      ],
+      "reading_context": "Reads the complete survey without access to the source repository or the authors, deciding which sampler to use for a zero-lower-bound model."
+    },
+    "purpose": "Understand the four posterior geometries a zero lower bound can induce and which sampling method each one calls for.",
+    "decision": "Which sampler to use for a given zero-lower-bound model specification.",
+    "genre": "technical survey",
+    "known_vocabulary": [
+      "posterior",
+      "likelihood",
+      "particle filter",
+      "Hamiltonian Monte Carlo",
+      "zero lower bound",
+      "censoring"
+    ],
+    "exemplars": [],
+    "evidence_boundary": "Use only the frozen ZLB manuscript at sources/zlb-benchmark/zlb_source.tex. No external literature may be introduced.",
+    "privacy_class": "internal",
+    "remote_inference": {
+      "authorized": true,
+      "provider": "Anthropic",
+      "purpose": "Concept extraction, source-grounded rewriting, and independent critic verification for the WP-V2-6 ZLB benchmark.",
+      "approved_by": "document-owner"
+    },
+    "voice_constraints": {
+      "register": "clear technical prose in the third person",
+      "person": "third",
+      "additional": [
+        "No first-person narration of the revision process.",
+        "Preserve the survey's expository stance toward the literature."
+      ]
+    },
+    "protected_object_policy": "Preserve exact equations, displayed math, citations, labels, cross-references, table content, and all numerals. No protected object may be altered, renumbered, or dropped.",
+    "unresolved_assumptions": [],
+    "authorizing_action": {
+      "actor": "document-owner",
+      "role": "document_owner",
+      "action": "humanize_finished_manuscript",
+      "authorized_at": "2026-09-13T00:00:00Z"
+    },
+    "policy_sources": [
+      {
+        "path": "docs/survey/humanvoice_survey.tex",
+        "sha256": "2c9b069c0108969c0f4c991eff8ab5da86c9cef29f0df962d4a254c7f639df24"
+      }
+    ]
+  },
+  "brief_valid": true,
+  "snapshot_immutable": true,
+  "source_protected_manifest": ".humanvoice/protected_objects/source_manifest.json",
+  "protected_objects_count": 306,
+  "parser_agreement_score": 1.0
+}
