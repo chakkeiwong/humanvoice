@@ -153,7 +153,7 @@ def main():
         return plan_v2_command.run(args)
     elif args.command == 'rewrite':
         from humanvoice.commands import rewrite_command
-        return rewrite_command.main()
+        return rewrite_command.rewrite_command(args)
     elif args.command == 'validate-blueprint':
         from humanvoice.commands import validate_blueprint_command
         return validate_blueprint_command.main(sys.argv[2:])

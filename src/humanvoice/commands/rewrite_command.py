@@ -135,10 +135,10 @@ def rewrite_command(args):
     mock = args.mock
 
     # Resolve paths
-    baseline_dir = snapshot_path / ".humanvoice" / "baseline"
+    inventory_dir = snapshot_path / ".humanvoice" / "inventory"
     plan_dir = snapshot_path / ".humanvoice" / "plans"
 
-    baseline_path = baseline_dir / f"{baseline_id}.json"
+    baseline_path = inventory_dir / "baseline.json"
     plan_path = plan_dir / f"{plan_id}.json"
 
     brief_path = snapshot_path / ".humanvoice" / "brief.json"
