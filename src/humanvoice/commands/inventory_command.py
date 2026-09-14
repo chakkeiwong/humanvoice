@@ -390,9 +390,20 @@ def run(args) -> int:
 
         adjudication_date = datetime.now(timezone.utc).isoformat()
 
+        # Regenerate unique concept IDs (model may produce duplicates across windows)
+        for i, concept in enumerate(all_concepts, start=1):
+            concept.concept_id = f"concept-{i:03d}"
+        print(f"  Assigned unique IDs to {len(all_concepts)} concepts", file=sys.stderr)
+
+        # Reconcile duplicate concepts before freezing
+        reconciled_concepts, merge_decisions = reconcile_duplicates(all_concepts)
+        print(f"  Reconciled {len(all_concepts)} raw concepts to {len(reconciled_concepts)} unique concepts", file=sys.stderr)
+        if merge_decisions:
+            print(f"  Merged {len(merge_decisions)} duplicate pairs", file=sys.stderr)
+
         # Convert ConceptCandidate objects to ConceptBaselineEntry objects
         baseline_entries = []
-        for concept in all_concepts:
+        for concept in reconciled_concepts:
             baseline_entries.append(ConceptBaselineEntry(
                 concept_id=concept.concept_id,
                 proposition=concept.proposition,
@@ -412,7 +423,7 @@ def run(args) -> int:
             snapshot_id=snapshot_id,
             source_hash=source_hash,
             concept_entries=baseline_entries,
-            total_concepts=len(all_concepts),
+            total_concepts=len(reconciled_concepts),
             frozen_at=adjudication_date,
             frozen_by=getattr(args, 'adjudicator', 'unspecified'),
             adjudication_session_id=None,

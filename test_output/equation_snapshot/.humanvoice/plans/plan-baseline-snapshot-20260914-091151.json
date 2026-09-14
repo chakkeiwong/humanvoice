@@ -1,0 +1,33 @@
+{
+  "plan_id": "plan-baseline-snapshot-20260914-091151",
+  "baseline_id": "baseline-snapshot-20260914-091151",
+  "snapshot_id": "snapshot-20260914-091151",
+  "total_units": 1,
+  "total_concepts": 5,
+  "max_unit_size": 2000,
+  "units": [
+    {
+      "unit_id": "unit-001",
+      "concept_ids": [
+        "concept-001",
+        "concept-002",
+        "concept-003",
+        "concept-004",
+        "concept-005"
+      ],
+      "source_span_ids": [
+        "span-05bdba853bfdb569",
+        "span-974867625c33b39c",
+        "span-ecb3fba70b8ad141",
+        "span-fa9966abbbca3f2a"
+      ],
+      "prerequisites": [
+        "integral_calculus"
+      ],
+      "estimated_words": 0,
+      "unit_type": "semantic",
+      "teaching_sequence": 1,
+      "split_rationale": null
+    }
+  ]
+}

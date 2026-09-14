@@ -1,0 +1,28 @@
+{
+  "snapshot_id": "snapshot-20260914-091151",
+  "baseline_id": "baseline-snapshot-20260914-091151",
+  "dependencies": [
+    {
+      "dependent_concept_id": "concept-004",
+      "prerequisite_concept_id": "integral_calculus",
+      "dependency_type": "definition",
+      "strength": "required",
+      "justification": null
+    },
+    {
+      "dependent_concept_id": "concept-005",
+      "prerequisite_concept_id": "concept-001",
+      "dependency_type": "definition",
+      "strength": "required",
+      "justification": null
+    }
+  ],
+  "resolved_cycles": [],
+  "teaching_order": [
+    "concept-001",
+    "concept-002",
+    "concept-003",
+    "concept-004",
+    "concept-005"
+  ]
+}

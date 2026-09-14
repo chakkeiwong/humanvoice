@@ -23,12 +23,42 @@
     "temperature": 0.0,
     "rationale": "Lowest-variance sampling for repeatable structure. Reproducibility is behavioral, not bitwise: the same brief and model version satisfy the same declared properties, but token sequences may differ."
   },
-  "prompt_template": {
-    "template_id": "HV-CRITIC-V1",
-    "template_path": "security/prompt_template_critic.txt",
-    "template_sha256": "9203411fa7aff6ff124cf6da2711ea561db874ee9c54134733d4c47785a79d74",
-    "status": "legacy_v1",
-    "note": "Retained for audit of v1 runs. The v2 extraction, rewrite, and critic templates are WP-V2-1 through WP-V2-4 deliverables and must be hashed here before any v2 invocation."
+  "prompt_templates": {
+    "v1_critic": {
+      "template_id": "HV-CRITIC-V1",
+      "template_path": "security/prompt_template_critic.txt",
+      "template_sha256": "9203411fa7aff6ff124cf6da2711ea561db874ee9c54134733d4c47785a79d74",
+      "status": "legacy_v1",
+      "note": "Retained for audit of v1 runs."
+    },
+    "v2_extraction": {
+      "template_id": "HV-EXTRACTION-V2",
+      "template_function": "src/humanvoice/model_extraction.py::_extraction_prompt",
+      "template_sha256": "0dfac2c2556a7f66d6068b24615097c7be955d3dfcdae6c847ba1ab5f40b8d05",
+      "status": "active_v2",
+      "note": "WP-V2-1 deliverable. Extracts concepts from source spans with reader profile and genre."
+    },
+    "v2_reconstruction": {
+      "template_id": "HV-RECONSTRUCTION-V2",
+      "template_function": "src/humanvoice/model_extraction.py::_reconstruction_prompt",
+      "template_sha256": "a85287c431c60e0741e24ce8bd70dff3416d246303e27f302e5cbde6fc4eed90",
+      "status": "active_v2",
+      "note": "WP-V2-2 deliverable. Reconstruction critic for concept verification."
+    },
+    "v2_coverage": {
+      "template_id": "HV-COVERAGE-V2",
+      "template_function": "src/humanvoice/model_extraction.py::_coverage_prompt",
+      "template_sha256": "08989aa25f1a18903ff93ce4550e94069d9d8e57130e1541c84bfd83a0604d00",
+      "status": "active_v2",
+      "note": "WP-V2-3 deliverable. Coverage critic for gap detection."
+    },
+    "v2_rewrite": {
+      "template_id": "HV-REWRITE-V2",
+      "template_function": "src/humanvoice/rewrite_engine.py::build_rewrite_prompt",
+      "template_sha256": "8c24fca27d0392f22f017e7bd76ddccb1fc1a73cdd1ddbe68e1af93784fff5d1",
+      "status": "active_v2",
+      "note": "WP-V2-4 deliverable. Rewriting prompt with concept preservation constraints."
+    }
   },
   "reproducibility": {
     "level": "behavioral",

@@ -1,0 +1,43 @@
+{
+  "source_file": "/home/ubuntu/workspace/humanvoice/test_output/equation_snapshot/source/001.tex",
+  "source_file_hash": "5f775273a32a7ed4da2c92e6f5526719261d6260bc384e98b6ec8bc90738a432",
+  "snapshot_id": "snapshot-20260914-091151",
+  "extraction_timestamp": "2026-09-14T09:11:51.041517+00:00",
+  "parser_version": "pylatexenc:2.11+regex:builtin",
+  "model_version": null,
+  "parent_artifact_hash": null,
+  "equations": [
+    {
+      "type": "equation",
+      "content": "\\begin{equation}\n\\label{eq:pythagorean}\na^2 + b^2 = c^2\n\\end{equation}",
+      "content_normalized": "\\begin{equation} \\label{eq:pythagorean} a^2 + b^2 = c^2 \\end{equation}",
+      "source_file": "/home/ubuntu/workspace/humanvoice/test_output/equation_snapshot/source/001.tex",
+      "source_file_hash": "5f775273a32a7ed4da2c92e6f5526719261d6260bc384e98b6ec8bc90738a432",
+      "line": 10,
+      "context_before": "\nA display equation:\n\\begin{equation}",
+      "context_after": "\\begin{equation}\n\\label{eq:pythagorean}\na^2 + b^2 = c^2",
+      "hash": "7776f0ec132664ac",
+      "parser_source": "pylatexenc+regex"
+    }
+  ],
+  "labels": [
+    {
+      "type": "label",
+      "content": "eq:pythagorean",
+      "content_normalized": "eq:pythagorean",
+      "source_file": "/home/ubuntu/workspace/humanvoice/test_output/equation_snapshot/source/001.tex",
+      "source_file_hash": "5f775273a32a7ed4da2c92e6f5526719261d6260bc384e98b6ec8bc90738a432",
+      "line": 11,
+      "context_before": "\\begin{equation}\n\\label{eq:pythagorean}",
+      "context_after": "\\label{eq:pythagorean}\na^2 + b^2 = c^2",
+      "hash": "caa797b2a093ba04",
+      "parser_source": "regex"
+    }
+  ],
+  "citations": [],
+  "displaymath": [],
+  "tables": [],
+  "total_count": 2,
+  "extraction_method": "parser_bakeoff_with_provenance",
+  "parser_agreement_score": 1.0
+}

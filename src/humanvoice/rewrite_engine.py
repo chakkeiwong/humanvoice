@@ -266,7 +266,6 @@ def rewrite_unit(
         response = model.invoke(
             prompt=prompt,
             record_type=None,
-            temperature=0.3,
             max_tokens=8000,
         )
 

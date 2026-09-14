@@ -1,0 +1,55 @@
+{
+  "record_type": "HumanizationBrief",
+  "schema_version": "HV-SCHEMA-2.0",
+  "record_id": "brief-equation-001",
+  "run_id": "run-v2-equation-001-test",
+  "created_at": "2026-09-11T00:00:00Z",
+  "source_entry_point": "001.tex",
+  "reader": {
+    "role": "undergraduate physics student",
+    "prior_knowledge": [
+      "basic algebra",
+      "special relativity concepts",
+      "integral calculus"
+    ],
+    "reading_context": "Reading a pedagogical document on fundamental equations"
+  },
+  "purpose": "Understand the mathematical relationships demonstrated in the examples",
+  "decision": null,
+  "genre": "pedagogical test document",
+  "known_vocabulary": [
+    "equation",
+    "inline",
+    "display",
+    "label",
+    "reference"
+  ],
+  "exemplars": [],
+  "evidence_boundary": "Use only the frozen manuscript content",
+  "privacy_class": "internal",
+  "remote_inference": {
+    "authorized": false,
+    "provider": null,
+    "purpose": null,
+    "approved_by": null
+  },
+  "voice_constraints": {
+    "register": "clear pedagogical prose",
+    "person": "source_dependent",
+    "additional": []
+  },
+  "protected_object_policy": "Preserve exact equations ($E = mc^2$, \\ref{eq:pythagorean}), labels (\\label{eq:pythagorean}), and mathematical notation",
+  "unresolved_assumptions": [],
+  "authorizing_action": {
+    "actor": "test-runner",
+    "role": "document_owner",
+    "action": "humanize_finished_manuscript",
+    "authorized_at": "2026-09-11T00:00:00Z"
+  },
+  "policy_sources": [
+    {
+      "path": "policies/humanizer.md",
+      "sha256": "0000000000000000000000000000000000000000000000000000000000000000"
+    }
+  ]
+}

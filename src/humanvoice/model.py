@@ -124,12 +124,34 @@ class ModelConfig:
                 "Contract violation: model_version is required before invocation"
             )
 
-        template = profile.get("prompt_template", {})
-        template_hash = template.get("template_sha256")
-        if not template_hash or template_hash == "pending":
+        # Validate that all active v2 prompt templates have recorded hashes
+        templates = profile.get("prompt_templates", {})
+        if not templates:
             raise ValueError(
-                "Contract violation: prompt_template_hash is required before invocation"
+                "Contract violation: prompt_templates section is required before invocation"
             )
+
+        # Check that all active_v2 templates have valid hashes
+        active_v2_templates = [k for k, v in templates.items() if v.get("status") == "active_v2"]
+        if not active_v2_templates:
+            raise ValueError(
+                "Contract violation: at least one active_v2 template is required"
+            )
+
+        missing_hashes = []
+        for template_key in active_v2_templates:
+            template = templates[template_key]
+            template_hash = template.get("template_sha256")
+            if not template_hash or template_hash == "pending":
+                missing_hashes.append(template_key)
+
+        if missing_hashes:
+            raise ValueError(
+                f"Contract violation: prompt_template_hash is required for templates: {', '.join(missing_hashes)}"
+            )
+
+        # Store all template hashes as a dict for reference
+        template_hash = {k: templates[k].get("template_sha256") for k in active_v2_templates}
 
         config = cls(
             runtime_type=runtime.get("type", "claude-api"),

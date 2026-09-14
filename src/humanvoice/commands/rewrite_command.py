@@ -171,7 +171,14 @@ def rewrite_command(args):
     model = None
     if not mock:
         print(f"Initializing model adapter", file=sys.stderr)
-        model = ModelAdapter()
+        from humanvoice.model import ModelConfig
+        config = ModelConfig.from_profile()
+        model = ModelAdapter(
+            config=config,
+            mock_mode=False,
+            snapshot_dir=snapshot_path,
+        )
+        print(f"  Model adapter ready: {config.model_version}", file=sys.stderr)
 
     # Run rewrite phase
     print(f"", file=sys.stderr)

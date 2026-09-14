@@ -1,0 +1,99 @@
+{
+  "baseline_id": "baseline-snapshot-20260914-091151",
+  "snapshot_id": "snapshot-20260914-091151",
+  "source_hash": "5f775273a32a7ed4da2c92e6f5526719261d6260bc384e98b6ec8bc90738a432",
+  "frozen_at": "2026-09-14T13:45:16.055683+00:00",
+  "frozen_by": "test-harness",
+  "adjudication_session_id": null,
+  "baseline_hash": "a34f30ecd226ec4685ec2548eabda5f03da3f7b6d83e3e08228e53ec8ca33d91",
+  "total_concepts": 5,
+  "concept_entries": [
+    {
+      "concept_id": "concept-001",
+      "proposition": "Energy equals mass times the speed of light squared (E = mc\u00b2)",
+      "concept_type": "definition",
+      "source_span_ids": [
+        "span-05bdba853bfdb569"
+      ],
+      "teaching_roles": [
+        "example"
+      ],
+      "supporting_spans": [],
+      "prerequisites": [],
+      "confidence": 0.95,
+      "adjudication_status": "accepted",
+      "human_rationale": null
+    },
+    {
+      "concept_id": "concept-002",
+      "proposition": "In a right triangle, the sum of the squares of the two legs equals the square of the hypotenuse (a\u00b2 + b\u00b2 = c\u00b2)",
+      "concept_type": "definition",
+      "source_span_ids": [
+        "span-974867625c33b39c"
+      ],
+      "teaching_roles": [
+        "example"
+      ],
+      "supporting_spans": [],
+      "prerequisites": [],
+      "confidence": 0.95,
+      "adjudication_status": "accepted",
+      "human_rationale": null
+    },
+    {
+      "concept_id": "concept-003",
+      "proposition": "The Pythagorean theorem states that in a right triangle, the sum of the squares of the two legs equals the square of the hypotenuse: a\u00b2 + b\u00b2 = c\u00b2",
+      "concept_type": "definition",
+      "source_span_ids": [
+        "span-974867625c33b39c"
+      ],
+      "teaching_roles": [
+        "initial"
+      ],
+      "supporting_spans": [],
+      "prerequisites": [],
+      "confidence": 0.95,
+      "adjudication_status": "accepted",
+      "human_rationale": null
+    },
+    {
+      "concept_id": "concept-004",
+      "proposition": "The Gaussian integral from 0 to infinity equals \u221a\u03c0/2",
+      "concept_type": "claim",
+      "source_span_ids": [
+        "span-fa9966abbbca3f2a"
+      ],
+      "teaching_roles": [
+        "initial"
+      ],
+      "supporting_spans": [],
+      "prerequisites": [
+        "integral_calculus"
+      ],
+      "confidence": 0.95,
+      "adjudication_status": "accepted",
+      "human_rationale": null
+    },
+    {
+      "concept_id": "concept-005",
+      "proposition": "The Pythagorean relationship is fundamental",
+      "concept_type": "claim",
+      "source_span_ids": [
+        "span-ecb3fba70b8ad141"
+      ],
+      "teaching_roles": [
+        "repeated",
+        "qualified"
+      ],
+      "supporting_spans": [
+        "span-974867625c33b39c"
+      ],
+      "prerequisites": [
+        "concept-001"
+      ],
+      "confidence": 0.85,
+      "adjudication_status": "accepted",
+      "human_rationale": null
+    }
+  ]
+}
