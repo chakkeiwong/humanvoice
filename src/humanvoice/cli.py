@@ -84,7 +84,7 @@ def build_parser():
 
     draft_parser.add_argument('--mock', action='store_true', help='Use mock mode (no API calls)')
 
-    # hv assemble
+    # hv assemble (v1)
     assemble_parser = subparsers.add_parser('assemble', help='Assemble drafted sections into complete document')
     assemble_parser.add_argument('snapshot', type=Path, help='Snapshot directory from hv init')
     assemble_parser.add_argument('--brief', type=Path, required=True, help='Reader brief (JSON)')
@@ -92,6 +92,10 @@ def build_parser():
                                  help='Output directory (default: <snapshot>/.humanvoice/revisions/assembled)')
     assemble_parser.add_argument('--skip-blackline', action='store_true',
                                  help='Skip blacklined comparison (draft review only; release will block)')
+
+    # hv assemble-v2 (v2)
+    assemble_v2_parser = subparsers.add_parser('assemble-v2', help='Apply verified patches and verify byte-identity')
+    assemble_v2_parser.add_argument('snapshot', type=Path, help='Snapshot directory from hv init')
 
     # hv validate-blueprint
     validate_bp_parser = subparsers.add_parser('validate-blueprint',
@@ -158,6 +162,9 @@ def main():
     elif args.command == 'preflight-v2':
         from humanvoice.commands import preflight_v2_command
         return preflight_v2_command.run(args)
+    elif args.command == 'assemble-v2':
+        from humanvoice.commands import assemble_v2_command
+        return assemble_v2_command.run(args)
     elif args.command == 'plan':
         from humanvoice.commands import plan_v2_command
         return plan_v2_command.run(args)

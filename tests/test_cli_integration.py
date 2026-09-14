@@ -159,9 +159,36 @@ def test_tier1_smoke_register_fixture(tmp_path):
     assert rewrite_output['status'] == 'complete'
     assert rewrite_output['correspondence_ratio'] == 1.0
 
-    # TODO: After item 5 (wire preflight/assemble), extend to full pipeline:
-    # Step 5: hv preflight
-    # Step 6: hv assemble
+    # Step 5: hv preflight-v2
+    result = subprocess.run(
+        ['hv', 'preflight-v2', str(snapshot)],
+        capture_output=True,
+        text=True
+    )
+    assert result.returncode == 0, f"preflight-v2 failed: {result.stderr}"
+
+    preflight_output = json.loads(result.stdout)
+    assert preflight_output['status'] == 'pass'
+
+    # Step 6: hv assemble-v2
+    result = subprocess.run(
+        ['hv', 'assemble-v2', str(snapshot)],
+        capture_output=True,
+        text=True
+    )
+    assert result.returncode == 0, f"assemble-v2 failed: {result.stderr}"
+
+    # Verify assembled output exists
+    assembled_file = snapshot / ".humanvoice" / "assembled" / "assembled.tex"
+    assert assembled_file.exists(), "assembled output not created"
+
+    # Verify assembly result was saved
+    result_file = snapshot / ".humanvoice" / "assembled" / "assembly_result.json"
+    assert result_file.exists(), "assembly result not created"
+
+    assembly_result = json.loads(result_file.read_text())
+    assert assembly_result['assembly_complete'] is True
+    assert assembly_result['patches_failed'] == 0
 
 
 def test_tier2_protected_citation_fixture(tmp_path):

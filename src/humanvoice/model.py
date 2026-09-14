@@ -18,6 +18,7 @@ tool authority or modifies canonical source directly.
 
 import json
 import os
+import re
 import sys
 from dataclasses import dataclass
 from hashlib import sha256
@@ -361,13 +362,21 @@ class ModelAdapter:
             return json.dumps(response, indent=2)
 
         # For concept extraction (no schema, expects array of concepts)
-        # Return a minimal valid concept array with one mock concept
+        # Return a minimal valid concept array with one mock concept.
+        #
+        # The concept must cite the span IDs it came from. A mock that returned
+        # an empty source_span_ids would be structurally impossible output --
+        # downstream planning and patch assembly key off byte offsets reached
+        # through those spans, so an empty list silently produces a pipeline
+        # with nothing to patch. The prompt lists its spans as "[span-id]: text",
+        # so echo those back.
         if "concept" in prompt.lower() and "extract" in prompt.lower():
+            span_ids = re.findall(r'^\[([^\]]+)\]:', prompt, re.MULTILINE)
             return json.dumps([{
                 "concept_id": "mock-concept-1",
                 "proposition": "Mock concept for testing",
                 "concept_type": "definition",
-                "source_span_ids": [],
+                "source_span_ids": span_ids,
                 "teaching_roles": ["intro"],
                 "supporting_spans": [],
                 "prerequisites": [],
