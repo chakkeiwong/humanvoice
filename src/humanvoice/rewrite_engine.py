@@ -269,6 +269,12 @@ def rewrite_unit(
             max_tokens=8000,
         )
 
+        # Debug: Log raw response
+        import sys
+        print(f"DEBUG: Raw response text length: {len(response.text)}", file=sys.stderr)
+        print(f"DEBUG: Response text preview: {response.text[:500]}", file=sys.stderr)
+        print(f"DEBUG: Abstention: {response.abstention}", file=sys.stderr)
+
         # Handle abstention
         if response.abstention:
             return RewriteResult(

@@ -1,0 +1,13 @@
+{
+  "snapshot_id": "snapshot-20260914-091151",
+  "total_patches": 1,
+  "patches_applied": 1,
+  "patches_failed": 0,
+  "original_source_hash": "5f775273a32a7ed4da2c92e6f5526719261d6260bc384e98b6ec8bc90738a432",
+  "revised_source_hash": "e5f2f29c1c9ce533f42902225b4e37974dab5313a8ac39113dd7d101425dc043",
+  "untouched_bytes": 142,
+  "revised_bytes": 1036,
+  "assembly_complete": true,
+  "document_builds": false,
+  "comparison_generated": false
+}

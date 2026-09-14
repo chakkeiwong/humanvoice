@@ -130,15 +130,32 @@ def run_rewrite_phase(
 
 
 def _load_source_texts(snapshot_dir) -> dict:
-    """Load all source texts from spans.jsonl."""
+    """Load all source texts by reading from source files using span byte offsets."""
     source_texts = {}
     spans_path = snapshot_dir / ".humanvoice" / "inventory" / "spans.jsonl"
+
+    # Load source files into memory
+    source_dir = snapshot_dir / "source"
+    source_files = {}
 
     if spans_path.exists():
         with open(spans_path) as f:
             for line in f:
                 span = json.loads(line)
-                source_texts[span["record_id"]] = span.get("exact_text", "")
+                source_file = span.get("source_file")
+
+                # Load source file if not already loaded
+                if source_file and source_file not in source_files:
+                    source_path = source_dir / source_file
+                    if source_path.exists():
+                        source_files[source_file] = source_path.read_bytes()
+
+                # Extract text using byte offsets
+                if source_file and source_file in source_files:
+                    byte_start = span.get("byte_start", 0)
+                    byte_end = span.get("byte_end", 0)
+                    exact_text = source_files[source_file][byte_start:byte_end].decode('utf-8', errors='replace')
+                    source_texts[span["record_id"]] = exact_text
 
     return source_texts
 

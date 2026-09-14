@@ -1,0 +1,16 @@
+{
+  "session_id": "rewrite-2026-09-14T14:37:33.813625",
+  "baseline_id": "baseline-snapshot-20260914-091151",
+  "plan_id": "plan-baseline-snapshot-20260914-091151",
+  "snapshot_id": "snapshot-20260914-091151",
+  "units_completed": [
+    "unit-001"
+  ],
+  "units_failed": [],
+  "total_completed": 1,
+  "total_failed": 0,
+  "total_concepts_mapped": 5,
+  "total_concepts_unmet": 0,
+  "started_at": "2026-09-14T14:37:33.813632",
+  "completed_at": "2026-09-14T14:37:51.056061"
+}

@@ -6,33 +6,64 @@
     "span-ecb3fba70b8ad141",
     "span-fa9966abbbca3f2a"
   ],
-  "output_hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-  "output_latex": "",
-  "concept_correspondences": [],
-  "fulfilled_obligations": [],
-  "unmet_obligations": [],
-  "protected_objects_preserved": [],
-  "mutations": [
+  "output_hash": "192ac668b0f405b6821d652cbc5739463ba74e219263bc9f198da4a42f88547e",
+  "output_latex": "Einstein's mass-energy equivalence relation, $E = mc^2$, establishes that energy equals mass times the speed of light squared, revealing the fundamental convertibility between mass and energy.\n\nThe Pythagorean theorem states that in a right triangle, the sum of the squares of the two legs equals the square of the hypotenuse:\n\\begin{equation}\n\\label{eq:pythagorean}\na^2 + b^2 = c^2\n\\end{equation}\nwhere $a$ and $b$ represent the lengths of the two legs, and $c$ represents the length of the hypotenuse. This relationship, referenced by~\\ref{eq:pythagorean}, is fundamental to Euclidean geometry and underlies numerous results in mathematics and physics.\n\nThe Gaussian integral evaluates to a closed form:\n\\begin{equation*}\n\\int_{0}^{\\infty} e^{-x^2} dx = \\frac{\\sqrt{\\pi}}{2}\n\\end{equation*}\ndemonstrating that the integral of the Gaussian function from zero to infinity equals $\\sqrt{\\pi}/2$.",
+  "concept_correspondences": [
     {
-      "type": "concept_deletion",
-      "concepts": [
-        "concept-001",
-        "concept-002",
-        "concept-003",
-        "concept-004",
-        "concept-005"
+      "source_concept_id": "concept-001",
+      "output_span_ids": [
+        "out-span-001"
       ],
-      "severity": "BLOCK"
+      "mapping_type": "expansion",
+      "output_text_preview": "Einstein's mass-energy equivalence relation, $E =...",
+      "rationale": "Expanded inline equation into full explanation that energy equals mass times the speed of light squared, adding context about mass-energy convertibility"
     },
     {
-      "type": "output_truncation",
-      "output_length": 0,
-      "severity": "BLOCK"
+      "source_concept_id": "concept-002",
+      "output_span_ids": [
+        "out-span-002"
+      ],
+      "mapping_type": "paraphrase",
+      "output_text_preview": "where $a$ and $b$ represent the lengths of the tw...",
+      "rationale": "Added explicit explanation of the Pythagorean relationship components immediately after the equation"
+    },
+    {
+      "source_concept_id": "concept-003",
+      "output_span_ids": [
+        "out-span-003"
+      ],
+      "mapping_type": "direct",
+      "output_text_preview": "The Pythagorean theorem states that in a right tr...",
+      "rationale": "Preserved the complete statement as the initial teaching of the theorem, introducing the labeled equation"
+    },
+    {
+      "source_concept_id": "concept-004",
+      "output_span_ids": [
+        "out-span-004"
+      ],
+      "mapping_type": "expansion",
+      "output_text_preview": "The Gaussian integral evaluates to a closed form:...",
+      "rationale": "Expanded the bare integral with explanation that it evaluates from 0 to infinity and equals \u221a\u03c0/2"
+    },
+    {
+      "source_concept_id": "concept-005",
+      "output_span_ids": [
+        "out-span-005"
+      ],
+      "mapping_type": "qualification",
+      "output_text_preview": "This relationship, referenced by~\\ref{eq:pythago...",
+      "rationale": "Preserved the claim that the Pythagorean relationship is fundamental, qualified with context about its importance to Euclidean geometry"
     }
   ],
-  "is_acceptable": false,
-  "rejection_reasons": [
-    "Deleted concepts: {'concept-003', 'concept-005', 'concept-001', 'concept-004', 'concept-002'}",
-    "Output truncated or empty"
-  ]
+  "fulfilled_obligations": [],
+  "unmet_obligations": [],
+  "protected_objects_preserved": [
+    "equation \\label{eq:pythagorean} a^2 + b^2 = c^2",
+    "equation* \\int_{0}^{\\infty} e^{-x^2} dx = \\frac{\\sqrt{\\pi}}{2}",
+    "inline equation $E = mc^2$",
+    "reference ~\\ref{eq:pythagorean}"
+  ],
+  "mutations": [],
+  "is_acceptable": true,
+  "rejection_reasons": []
 }
