@@ -270,18 +270,30 @@ def rewrite_unit(
         )
 
         # Handle abstention
-        if response.abstained or response.error:
+        if response.abstention:
             return RewriteResult(
                 unit_id=unit.unit_id,
                 source_span_ids=unit.source_span_ids,
                 output_latex="",
                 output_hash="",
-                rejection_reasons=[response.error or "model_abstained"],
+                rejection_reasons=[response.abstention],
                 is_acceptable=False,
             )
 
-        # Parse response
-        if not isinstance(response.parsed, dict):
+        # Parse JSON response
+        try:
+            parsed = json.loads(response.text)
+        except json.JSONDecodeError as e:
+            return RewriteResult(
+                unit_id=unit.unit_id,
+                source_span_ids=unit.source_span_ids,
+                output_latex="",
+                output_hash="",
+                rejection_reasons=[f"json_decode_failed: {e}"],
+                is_acceptable=False,
+            )
+
+        if not isinstance(parsed, dict):
             return RewriteResult(
                 unit_id=unit.unit_id,
                 source_span_ids=unit.source_span_ids,
@@ -292,12 +304,12 @@ def rewrite_unit(
             )
 
         # Extract output
-        output_latex = response.parsed.get("replacement_latex", "")
+        output_latex = parsed.get("replacement_latex", "")
         output_hash = sha256(output_latex.encode()).hexdigest()
 
         # Parse correspondences
         correspondences = []
-        for corr_data in response.parsed.get("concept_correspondences", []):
+        for corr_data in parsed.get("concept_correspondences", []):
             correspondences.append(ConceptCorrespondence(
                 source_concept_id=corr_data.get("source_concept_id", ""),
                 output_span_ids=corr_data.get("output_span_ids", []),
@@ -312,7 +324,7 @@ def rewrite_unit(
             baseline=baseline,
             output_latex=output_latex,
             correspondences=correspondences,
-            protected_objects_preserved=response.parsed.get("protected_objects_preserved", []),
+            protected_objects_preserved=parsed.get("protected_objects_preserved", []),
         )
 
         result.unit_id = unit.unit_id

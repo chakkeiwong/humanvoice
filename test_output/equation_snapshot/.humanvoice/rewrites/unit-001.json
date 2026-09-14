@@ -6,15 +6,33 @@
     "span-ecb3fba70b8ad141",
     "span-fa9966abbbca3f2a"
   ],
-  "output_hash": "",
+  "output_hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
   "output_latex": "",
   "concept_correspondences": [],
   "fulfilled_obligations": [],
   "unmet_obligations": [],
   "protected_objects_preserved": [],
-  "mutations": [],
+  "mutations": [
+    {
+      "type": "concept_deletion",
+      "concepts": [
+        "concept-001",
+        "concept-002",
+        "concept-003",
+        "concept-004",
+        "concept-005"
+      ],
+      "severity": "BLOCK"
+    },
+    {
+      "type": "output_truncation",
+      "output_length": 0,
+      "severity": "BLOCK"
+    }
+  ],
   "is_acceptable": false,
   "rejection_reasons": [
-    "rewrite_failed: 'ModelResponse' object has no attribute 'abstained'"
+    "Deleted concepts: {'concept-003', 'concept-005', 'concept-001', 'concept-004', 'concept-002'}",
+    "Output truncated or empty"
   ]
 }
