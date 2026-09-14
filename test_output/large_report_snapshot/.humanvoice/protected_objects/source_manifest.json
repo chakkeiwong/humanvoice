@@ -1,0 +1,78 @@
+{
+  "source_file": "/home/ubuntu/workspace/humanvoice/test_output/large_report_snapshot/source/source.tex",
+  "source_file_hash": "ec1728966e65bf348c16431015298311fff0239dfc390ee3ea87cb9e9e97bf4a",
+  "snapshot_id": "snapshot-20260914-152021",
+  "extraction_timestamp": "2026-09-14T15:20:21.836075+00:00",
+  "parser_version": "pylatexenc:2.11+regex:builtin",
+  "model_version": null,
+  "parent_artifact_hash": null,
+  "equations": [],
+  "labels": [],
+  "citations": [
+    {
+      "type": "citation",
+      "content": "castro1999practical",
+      "content_normalized": "castro1999practical",
+      "source_file": "/home/ubuntu/workspace/humanvoice/test_output/large_report_snapshot/source/source.tex",
+      "source_file_hash": "ec1728966e65bf348c16431015298311fff0239dfc390ee3ea87cb9e9e97bf4a",
+      "line": 20,
+      "context_before": "\nByzantine fault tolerance remains a fundamental challenge in distributed systems. The problem, formalized by Lamport et al., asks how a network of processes can reach agreement when some fraction may behave arbitrarily. Classical protocols like PBFT~\\cite{castro1999practical} established the theoretical foundation with the $n > 3f$ safety requirement, where $n$ represents total nodes and $f$ denotes Byzantine faults.",
+      "context_after": "Byzantine fault tolerance remains a fundamental challenge in distributed systems. The problem, formalized by Lamport et al., asks how a network of processes can reach agreement when some fraction may behave arbitrarily. Classical protocols like PBFT~\\cite{castro1999practical} established the theoretical foundation with the $n > 3f$ safety requirement, where $n$ represents total nodes and $f$ denotes Byzantine faults.\n",
+      "hash": "5f9368faa53a3f0a",
+      "parser_source": "regex"
+    },
+    {
+      "type": "citation",
+      "content": "buchman2016tendermint",
+      "content_normalized": "buchman2016tendermint",
+      "source_file": "/home/ubuntu/workspace/humanvoice/test_output/large_report_snapshot/source/source.tex",
+      "source_file_hash": "ec1728966e65bf348c16431015298311fff0239dfc390ee3ea87cb9e9e97bf4a",
+      "line": 24,
+      "context_before": "\nThis survey examines advances in Byzantine fault tolerant consensus from 2015 to 2026, with emphasis on scalability approaches, performance characteristics, and formal verification methods. We analyze how modern variants like Tendermint~\\cite{buchman2016tendermint}, HotStuff~\\cite{yin2019hotstuff}, and Casper~\\cite{buterin2020combining} address the limitations of classical PBFT, and evaluate empirical performance data from production deployments.",
+      "context_after": "This survey examines advances in Byzantine fault tolerant consensus from 2015 to 2026, with emphasis on scalability approaches, performance characteristics, and formal verification methods. We analyze how modern variants like Tendermint~\\cite{buchman2016tendermint}, HotStuff~\\cite{yin2019hotstuff}, and Casper~\\cite{buterin2020combining} address the limitations of classical PBFT, and evaluate empirical performance data from production deployments.\n",
+      "hash": "9fb7ab6101425fc5",
+      "parser_source": "regex"
+    },
+    {
+      "type": "citation",
+      "content": "yin2019hotstuff",
+      "content_normalized": "yin2019hotstuff",
+      "source_file": "/home/ubuntu/workspace/humanvoice/test_output/large_report_snapshot/source/source.tex",
+      "source_file_hash": "ec1728966e65bf348c16431015298311fff0239dfc390ee3ea87cb9e9e97bf4a",
+      "line": 24,
+      "context_before": "\nThis survey examines advances in Byzantine fault tolerant consensus from 2015 to 2026, with emphasis on scalability approaches, performance characteristics, and formal verification methods. We analyze how modern variants like Tendermint~\\cite{buchman2016tendermint}, HotStuff~\\cite{yin2019hotstuff}, and Casper~\\cite{buterin2020combining} address the limitations of classical PBFT, and evaluate empirical performance data from production deployments.",
+      "context_after": "This survey examines advances in Byzantine fault tolerant consensus from 2015 to 2026, with emphasis on scalability approaches, performance characteristics, and formal verification methods. We analyze how modern variants like Tendermint~\\cite{buchman2016tendermint}, HotStuff~\\cite{yin2019hotstuff}, and Casper~\\cite{buterin2020combining} address the limitations of classical PBFT, and evaluate empirical performance data from production deployments.\n",
+      "hash": "c49138cae6384548",
+      "parser_source": "regex"
+    },
+    {
+      "type": "citation",
+      "content": "buterin2020combining",
+      "content_normalized": "buterin2020combining",
+      "source_file": "/home/ubuntu/workspace/humanvoice/test_output/large_report_snapshot/source/source.tex",
+      "source_file_hash": "ec1728966e65bf348c16431015298311fff0239dfc390ee3ea87cb9e9e97bf4a",
+      "line": 72,
+      "context_before": "\nEthereum's transition to proof-of-stake uses Casper FFG~\\cite{buterin2020combining} as a finality gadget over a proposal mechanism. The protocol finalizes blocks in two epochs (approximately 13 minutes) with 400,000+ validators aggregated through BLS signature schemes. This demonstrates that cryptographic aggregation can push validator participation to unprecedented scales, though finality latency grows with epoch duration.",
+      "context_after": "Ethereum's transition to proof-of-stake uses Casper FFG~\\cite{buterin2020combining} as a finality gadget over a proposal mechanism. The protocol finalizes blocks in two epochs (approximately 13 minutes) with 400,000+ validators aggregated through BLS signature schemes. This demonstrates that cryptographic aggregation can push validator participation to unprecedented scales, though finality latency grows with epoch duration.\n",
+      "hash": "8db7d7ef18e1ca43",
+      "parser_source": "regex"
+    },
+    {
+      "type": "citation",
+      "content": "danezis2022narwhal",
+      "content_normalized": "danezis2022narwhal",
+      "source_file": "/home/ubuntu/workspace/humanvoice/test_output/large_report_snapshot/source/source.tex",
+      "source_file_hash": "ec1728966e65bf348c16431015298311fff0239dfc390ee3ea87cb9e9e97bf4a",
+      "line": 46,
+      "context_before": "\nDAG-based protocols like Narwhal~\\cite{danezis2022narwhal} decouple data dissemination from consensus ordering. Narwhal's mempool DAG enables parallel block broadcasting with $\\mathcal{O}(n)$ reliable broadcast complexity, while the consensus layer orders causally connected blocks. Production measurements show throughput exceeding 100,000 transactions per second with 50 validators, demonstrating that architectural innovations can overcome quadratic bottlenecks.",
+      "context_after": "DAG-based protocols like Narwhal~\\cite{danezis2022narwhal} decouple data dissemination from consensus ordering. Narwhal's mempool DAG enables parallel block broadcasting with $\\mathcal{O}(n)$ reliable broadcast complexity, while the consensus layer orders causally connected blocks. Production measurements show throughput exceeding 100,000 transactions per second with 50 validators, demonstrating that architectural innovations can overcome quadratic bottlenecks.\n",
+      "hash": "2758fd9298d69ac9",
+      "parser_source": "regex"
+    }
+  ],
+  "displaymath": [],
+  "tables": [],
+  "total_count": 5,
+  "extraction_method": "parser_bakeoff_with_provenance",
+  "parser_agreement_score": 1.0
+}

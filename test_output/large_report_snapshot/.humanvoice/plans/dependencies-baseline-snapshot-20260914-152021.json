@@ -1,0 +1,1724 @@
+{
+  "snapshot_id": "snapshot-20260914-152021",
+  "baseline_id": "baseline-snapshot-20260914-152021",
+  "dependencies": [
+    {
+      "dependent_concept_id": "concept-002",
+      "prerequisite_concept_id": "concept-001",
+      "dependency_type": "definition",
+      "strength": "required",
+      "justification": null
+    },
+    {
+      "dependent_concept_id": "concept-003",
+      "prerequisite_concept_id": "concept-001",
+      "dependency_type": "definition",
+      "strength": "required",
+      "justification": null
+    },
+    {
+      "dependent_concept_id": "concept-004",
+      "prerequisite_concept_id": "concept-001",
+      "dependency_type": "definition",
+      "strength": "required",
+      "justification": null
+    },
+    {
+      "dependent_concept_id": "concept-008",
+      "prerequisite_concept_id": "concept-002",
+      "dependency_type": "definition",
+      "strength": "required",
+      "justification": null
+    },
+    {
+      "dependent_concept_id": "concept-013",
+      "prerequisite_concept_id": "concept-001",
+      "dependency_type": "definition",
+      "strength": "required",
+      "justification": null
+    },
+    {
+      "dependent_concept_id": "concept-013",
+      "prerequisite_concept_id": "concept-002",
+      "dependency_type": "definition",
+      "strength": "required",
+      "justification": null
+    },
+    {
+      "dependent_concept_id": "concept-014",
+      "prerequisite_concept_id": "byzantine_fault_tolerance",
+      "dependency_type": "definition",
+      "strength": "required",
+      "justification": null
+    },
+    {
+      "dependent_concept_id": "concept-015",
+      "prerequisite_concept_id": "concept-001",
+      "dependency_type": "definition",
+      "strength": "required",
+      "justification": null
+    },
+    {
+      "dependent_concept_id": "concept-015",
+      "prerequisite_concept_id": "network_partitioning",
+      "dependency_type": "definition",
+      "strength": "required",
+      "justification": null
+    },
+    {
+      "dependent_concept_id": "concept-016",
+      "prerequisite_concept_id": "concept-001",
+      "dependency_type": "definition",
+      "strength": "required",
+      "justification": null
+    },
+    {
+      "dependent_concept_id": "concept-017",
+      "prerequisite_concept_id": "byzantine_consensus_basics",
+      "dependency_type": "definition",
+      "strength": "required",
+      "justification": null
+    },
+    {
+      "dependent_concept_id": "concept-018",
+      "prerequisite_concept_id": "concept-004",
+      "dependency_type": "definition",
+      "strength": "required",
+      "justification": null
+    },
+    {
+      "dependent_concept_id": "concept-018",
+      "prerequisite_concept_id": "partial_synchrony",
+      "dependency_type": "definition",
+      "strength": "required",
+      "justification": null
+    },
+    {
+      "dependent_concept_id": "concept-019",
+      "prerequisite_concept_id": "concept-004",
+      "dependency_type": "definition",
+      "strength": "required",
+      "justification": null
+    },
+    {
+      "dependent_concept_id": "concept-019",
+      "prerequisite_concept_id": "computational_complexity",
+      "dependency_type": "definition",
+      "strength": "required",
+      "justification": null
+    },
+    {
+      "dependent_concept_id": "concept-020",
+      "prerequisite_concept_id": "concept-006",
+      "dependency_type": "definition",
+      "strength": "required",
+      "justification": null
+    },
+    {
+      "dependent_concept_id": "concept-021",
+      "prerequisite_concept_id": "concept-004",
+      "dependency_type": "definition",
+      "strength": "required",
+      "justification": null
+    },
+    {
+      "dependent_concept_id": "concept-021",
+      "prerequisite_concept_id": "blockchain_consensus",
+      "dependency_type": "definition",
+      "strength": "required",
+      "justification": null
+    },
+    {
+      "dependent_concept_id": "concept-022",
+      "prerequisite_concept_id": "concept-008",
+      "dependency_type": "definition",
+      "strength": "required",
+      "justification": null
+    },
+    {
+      "dependent_concept_id": "concept-022",
+      "prerequisite_concept_id": "digital_signatures",
+      "dependency_type": "definition",
+      "strength": "required",
+      "justification": null
+    },
+    {
+      "dependent_concept_id": "concept-023",
+      "prerequisite_concept_id": "concept-006",
+      "dependency_type": "definition",
+      "strength": "required",
+      "justification": null
+    },
+    {
+      "dependent_concept_id": "concept-023",
+      "prerequisite_concept_id": "concept-008",
+      "dependency_type": "definition",
+      "strength": "required",
+      "justification": null
+    },
+    {
+      "dependent_concept_id": "concept-024",
+      "prerequisite_concept_id": "pbft_consensus",
+      "dependency_type": "definition",
+      "strength": "required",
+      "justification": null
+    },
+    {
+      "dependent_concept_id": "concept-025",
+      "prerequisite_concept_id": "concept-001",
+      "dependency_type": "definition",
+      "strength": "required",
+      "justification": null
+    },
+    {
+      "dependent_concept_id": "concept-026",
+      "prerequisite_concept_id": "concept-001",
+      "dependency_type": "definition",
+      "strength": "required",
+      "justification": null
+    },
+    {
+      "dependent_concept_id": "concept-027",
+      "prerequisite_concept_id": "concept-001",
+      "dependency_type": "definition",
+      "strength": "required",
+      "justification": null
+    },
+    {
+      "dependent_concept_id": "concept-028",
+      "prerequisite_concept_id": "concept-001",
+      "dependency_type": "definition",
+      "strength": "required",
+      "justification": null
+    },
+    {
+      "dependent_concept_id": "concept-029",
+      "prerequisite_concept_id": "concept-003",
+      "dependency_type": "definition",
+      "strength": "required",
+      "justification": null
+    },
+    {
+      "dependent_concept_id": "concept-029",
+      "prerequisite_concept_id": "concept-004",
+      "dependency_type": "definition",
+      "strength": "required",
+      "justification": null
+    },
+    {
+      "dependent_concept_id": "concept-029",
+      "prerequisite_concept_id": "concept-005",
+      "dependency_type": "definition",
+      "strength": "required",
+      "justification": null
+    },
+    {
+      "dependent_concept_id": "concept-030",
+      "prerequisite_concept_id": "consensus_protocols",
+      "dependency_type": "definition",
+      "strength": "required",
+      "justification": null
+    },
+    {
+      "dependent_concept_id": "concept-031",
+      "prerequisite_concept_id": "concept-007",
+      "dependency_type": "definition",
+      "strength": "required",
+      "justification": null
+    },
+    {
+      "dependent_concept_id": "concept-032",
+      "prerequisite_concept_id": "concept-003",
+      "dependency_type": "definition",
+      "strength": "required",
+      "justification": null
+    },
+    {
+      "dependent_concept_id": "concept-032",
+      "prerequisite_concept_id": "concept-007",
+      "dependency_type": "definition",
+      "strength": "required",
+      "justification": null
+    },
+    {
+      "dependent_concept_id": "concept-032",
+      "prerequisite_concept_id": "concept-008",
+      "dependency_type": "definition",
+      "strength": "required",
+      "justification": null
+    },
+    {
+      "dependent_concept_id": "concept-033",
+      "prerequisite_concept_id": "concept-007",
+      "dependency_type": "definition",
+      "strength": "required",
+      "justification": null
+    },
+    {
+      "dependent_concept_id": "concept-034",
+      "prerequisite_concept_id": "consensus_basics",
+      "dependency_type": "definition",
+      "strength": "required",
+      "justification": null
+    },
+    {
+      "dependent_concept_id": "concept-034",
+      "prerequisite_concept_id": "validator_set",
+      "dependency_type": "definition",
+      "strength": "required",
+      "justification": null
+    },
+    {
+      "dependent_concept_id": "concept-034",
+      "prerequisite_concept_id": "validator_set_basics",
+      "dependency_type": "definition",
+      "strength": "required",
+      "justification": null
+    },
+    {
+      "dependent_concept_id": "concept-035",
+      "prerequisite_concept_id": "concept-001",
+      "dependency_type": "definition",
+      "strength": "required",
+      "justification": null
+    },
+    {
+      "dependent_concept_id": "concept-035",
+      "prerequisite_concept_id": "concept-011",
+      "dependency_type": "definition",
+      "strength": "required",
+      "justification": null
+    },
+    {
+      "dependent_concept_id": "concept-036",
+      "prerequisite_concept_id": "concept-011",
+      "dependency_type": "definition",
+      "strength": "required",
+      "justification": null
+    },
+    {
+      "dependent_concept_id": "concept-037",
+      "prerequisite_concept_id": "concept-011",
+      "dependency_type": "definition",
+      "strength": "required",
+      "justification": null
+    },
+    {
+      "dependent_concept_id": "concept-037",
+      "prerequisite_concept_id": "concept-013",
+      "dependency_type": "definition",
+      "strength": "required",
+      "justification": null
+    },
+    {
+      "dependent_concept_id": "concept-038",
+      "prerequisite_concept_id": "concept-011",
+      "dependency_type": "definition",
+      "strength": "required",
+      "justification": null
+    },
+    {
+      "dependent_concept_id": "concept-038",
+      "prerequisite_concept_id": "byzantine_fault_tolerance",
+      "dependency_type": "definition",
+      "strength": "required",
+      "justification": null
+    },
+    {
+      "dependent_concept_id": "concept-041",
+      "prerequisite_concept_id": "concept-001",
+      "dependency_type": "definition",
+      "strength": "required",
+      "justification": null
+    },
+    {
+      "dependent_concept_id": "concept-042",
+      "prerequisite_concept_id": "concept-003",
+      "dependency_type": "definition",
+      "strength": "required",
+      "justification": null
+    },
+    {
+      "dependent_concept_id": "concept-043",
+      "prerequisite_concept_id": "bft_threshold",
+      "dependency_type": "definition",
+      "strength": "required",
+      "justification": null
+    },
+    {
+      "dependent_concept_id": "concept-043",
+      "prerequisite_concept_id": "concept-001",
+      "dependency_type": "definition",
+      "strength": "required",
+      "justification": null
+    },
+    {
+      "dependent_concept_id": "concept-044",
+      "prerequisite_concept_id": "concept-005",
+      "dependency_type": "definition",
+      "strength": "required",
+      "justification": null
+    },
+    {
+      "dependent_concept_id": "concept-045",
+      "prerequisite_concept_id": "consensus_basics",
+      "dependency_type": "definition",
+      "strength": "required",
+      "justification": null
+    },
+    {
+      "dependent_concept_id": "concept-046",
+      "prerequisite_concept_id": "concept-007",
+      "dependency_type": "definition",
+      "strength": "required",
+      "justification": null
+    },
+    {
+      "dependent_concept_id": "concept-047",
+      "prerequisite_concept_id": "concept-008",
+      "dependency_type": "definition",
+      "strength": "required",
+      "justification": null
+    },
+    {
+      "dependent_concept_id": "concept-047",
+      "prerequisite_concept_id": "complexity_notation",
+      "dependency_type": "definition",
+      "strength": "required",
+      "justification": null
+    },
+    {
+      "dependent_concept_id": "concept-048",
+      "prerequisite_concept_id": "concept-008",
+      "dependency_type": "definition",
+      "strength": "required",
+      "justification": null
+    },
+    {
+      "dependent_concept_id": "concept-049",
+      "prerequisite_concept_id": "concept-008",
+      "dependency_type": "definition",
+      "strength": "required",
+      "justification": null
+    },
+    {
+      "dependent_concept_id": "concept-050",
+      "prerequisite_concept_id": "concept-011",
+      "dependency_type": "definition",
+      "strength": "required",
+      "justification": null
+    },
+    {
+      "dependent_concept_id": "concept-050",
+      "prerequisite_concept_id": "quadratic_consensus_bottleneck",
+      "dependency_type": "definition",
+      "strength": "required",
+      "justification": null
+    },
+    {
+      "dependent_concept_id": "concept-051",
+      "prerequisite_concept_id": "leader_based_consensus",
+      "dependency_type": "definition",
+      "strength": "required",
+      "justification": null
+    },
+    {
+      "dependent_concept_id": "concept-052",
+      "prerequisite_concept_id": "concept-013",
+      "dependency_type": "definition",
+      "strength": "required",
+      "justification": null
+    },
+    {
+      "dependent_concept_id": "concept-052",
+      "prerequisite_concept_id": "threshold_signatures",
+      "dependency_type": "definition",
+      "strength": "required",
+      "justification": null
+    },
+    {
+      "dependent_concept_id": "concept-053",
+      "prerequisite_concept_id": "concept-014",
+      "dependency_type": "definition",
+      "strength": "required",
+      "justification": null
+    },
+    {
+      "dependent_concept_id": "concept-053",
+      "prerequisite_concept_id": "complexity_notation",
+      "dependency_type": "definition",
+      "strength": "required",
+      "justification": null
+    },
+    {
+      "dependent_concept_id": "concept-054",
+      "prerequisite_concept_id": "concept-015",
+      "dependency_type": "definition",
+      "strength": "required",
+      "justification": null
+    },
+    {
+      "dependent_concept_id": "concept-055",
+      "prerequisite_concept_id": "bft_protocol_basics",
+      "dependency_type": "definition",
+      "strength": "required",
+      "justification": null
+    },
+    {
+      "dependent_concept_id": "concept-055",
+      "prerequisite_concept_id": "communication_complexity",
+      "dependency_type": "definition",
+      "strength": "required",
+      "justification": null
+    },
+    {
+      "dependent_concept_id": "concept-056",
+      "prerequisite_concept_id": "concept-001",
+      "dependency_type": "definition",
+      "strength": "required",
+      "justification": null
+    },
+    {
+      "dependent_concept_id": "concept-057",
+      "prerequisite_concept_id": "formal_verification_basics",
+      "dependency_type": "definition",
+      "strength": "required",
+      "justification": null
+    },
+    {
+      "dependent_concept_id": "concept-057",
+      "prerequisite_concept_id": "bft_protocol_basics",
+      "dependency_type": "definition",
+      "strength": "required",
+      "justification": null
+    },
+    {
+      "dependent_concept_id": "concept-058",
+      "prerequisite_concept_id": "concept-003",
+      "dependency_type": "definition",
+      "strength": "required",
+      "justification": null
+    },
+    {
+      "dependent_concept_id": "concept-059",
+      "prerequisite_concept_id": "concept-003",
+      "dependency_type": "definition",
+      "strength": "required",
+      "justification": null
+    },
+    {
+      "dependent_concept_id": "concept-060",
+      "prerequisite_concept_id": "formal_verification_basics",
+      "dependency_type": "definition",
+      "strength": "required",
+      "justification": null
+    },
+    {
+      "dependent_concept_id": "concept-061",
+      "prerequisite_concept_id": "concept-006",
+      "dependency_type": "definition",
+      "strength": "required",
+      "justification": null
+    },
+    {
+      "dependent_concept_id": "concept-062",
+      "prerequisite_concept_id": "concept-006",
+      "dependency_type": "definition",
+      "strength": "required",
+      "justification": null
+    },
+    {
+      "dependent_concept_id": "concept-063",
+      "prerequisite_concept_id": "formal_verification_basics",
+      "dependency_type": "definition",
+      "strength": "required",
+      "justification": null
+    },
+    {
+      "dependent_concept_id": "concept-064",
+      "prerequisite_concept_id": "concept-009",
+      "dependency_type": "definition",
+      "strength": "required",
+      "justification": null
+    },
+    {
+      "dependent_concept_id": "concept-065",
+      "prerequisite_concept_id": "bft_protocol_basics",
+      "dependency_type": "definition",
+      "strength": "required",
+      "justification": null
+    },
+    {
+      "dependent_concept_id": "concept-066",
+      "prerequisite_concept_id": "bft_protocol_basics",
+      "dependency_type": "definition",
+      "strength": "required",
+      "justification": null
+    },
+    {
+      "dependent_concept_id": "concept-066",
+      "prerequisite_concept_id": "finality_concept",
+      "dependency_type": "definition",
+      "strength": "required",
+      "justification": null
+    },
+    {
+      "dependent_concept_id": "concept-067",
+      "prerequisite_concept_id": "concept-009",
+      "dependency_type": "definition",
+      "strength": "required",
+      "justification": null
+    },
+    {
+      "dependent_concept_id": "concept-068",
+      "prerequisite_concept_id": "bft_protocol_basics",
+      "dependency_type": "definition",
+      "strength": "required",
+      "justification": null
+    },
+    {
+      "dependent_concept_id": "concept-068",
+      "prerequisite_concept_id": "performance_metrics",
+      "dependency_type": "definition",
+      "strength": "required",
+      "justification": null
+    },
+    {
+      "dependent_concept_id": "concept-069",
+      "prerequisite_concept_id": "consensus_protocols",
+      "dependency_type": "definition",
+      "strength": "required",
+      "justification": null
+    },
+    {
+      "dependent_concept_id": "concept-069",
+      "prerequisite_concept_id": "quadratic_communication_complexity",
+      "dependency_type": "definition",
+      "strength": "required",
+      "justification": null
+    },
+    {
+      "dependent_concept_id": "concept-069",
+      "prerequisite_concept_id": "validator_sets",
+      "dependency_type": "definition",
+      "strength": "required",
+      "justification": null
+    },
+    {
+      "dependent_concept_id": "concept-069",
+      "prerequisite_concept_id": "concept-014",
+      "dependency_type": "definition",
+      "strength": "required",
+      "justification": null
+    },
+    {
+      "dependent_concept_id": "concept-070",
+      "prerequisite_concept_id": "concept-014",
+      "dependency_type": "definition",
+      "strength": "required",
+      "justification": null
+    },
+    {
+      "dependent_concept_id": "concept-070",
+      "prerequisite_concept_id": "concept-015",
+      "dependency_type": "definition",
+      "strength": "required",
+      "justification": null
+    },
+    {
+      "dependent_concept_id": "concept-070",
+      "prerequisite_concept_id": "linear_communication_complexity",
+      "dependency_type": "definition",
+      "strength": "required",
+      "justification": null
+    },
+    {
+      "dependent_concept_id": "concept-072",
+      "prerequisite_concept_id": "consensus_protocols",
+      "dependency_type": "definition",
+      "strength": "required",
+      "justification": null
+    },
+    {
+      "dependent_concept_id": "concept-072",
+      "prerequisite_concept_id": "validator_sets",
+      "dependency_type": "definition",
+      "strength": "required",
+      "justification": null
+    },
+    {
+      "dependent_concept_id": "concept-073",
+      "prerequisite_concept_id": "distributed_consensus",
+      "dependency_type": "definition",
+      "strength": "required",
+      "justification": null
+    },
+    {
+      "dependent_concept_id": "concept-074",
+      "prerequisite_concept_id": "consensus_latency",
+      "dependency_type": "definition",
+      "strength": "required",
+      "justification": null
+    },
+    {
+      "dependent_concept_id": "concept-075",
+      "prerequisite_concept_id": "consensus_latency",
+      "dependency_type": "definition",
+      "strength": "required",
+      "justification": null
+    },
+    {
+      "dependent_concept_id": "concept-075",
+      "prerequisite_concept_id": "network_delays",
+      "dependency_type": "definition",
+      "strength": "required",
+      "justification": null
+    },
+    {
+      "dependent_concept_id": "concept-076",
+      "prerequisite_concept_id": "consensus_latency",
+      "dependency_type": "definition",
+      "strength": "required",
+      "justification": null
+    },
+    {
+      "dependent_concept_id": "concept-077",
+      "prerequisite_concept_id": "partial_synchrony",
+      "dependency_type": "definition",
+      "strength": "required",
+      "justification": null
+    },
+    {
+      "dependent_concept_id": "concept-077",
+      "prerequisite_concept_id": "timeout_mechanisms",
+      "dependency_type": "definition",
+      "strength": "required",
+      "justification": null
+    },
+    {
+      "dependent_concept_id": "concept-078",
+      "prerequisite_concept_id": "byzantine_fault_tolerance",
+      "dependency_type": "definition",
+      "strength": "required",
+      "justification": null
+    },
+    {
+      "dependent_concept_id": "concept-079",
+      "prerequisite_concept_id": "byzantine_fault_tolerance",
+      "dependency_type": "definition",
+      "strength": "required",
+      "justification": null
+    },
+    {
+      "dependent_concept_id": "concept-080",
+      "prerequisite_concept_id": "fault_models",
+      "dependency_type": "definition",
+      "strength": "required",
+      "justification": null
+    },
+    {
+      "dependent_concept_id": "concept-080",
+      "prerequisite_concept_id": "independent_failure_assumption",
+      "dependency_type": "definition",
+      "strength": "required",
+      "justification": null
+    },
+    {
+      "dependent_concept_id": "concept-081",
+      "prerequisite_concept_id": "tendermint_consensus",
+      "dependency_type": "definition",
+      "strength": "required",
+      "justification": null
+    },
+    {
+      "dependent_concept_id": "concept-081",
+      "prerequisite_concept_id": "validator_concept",
+      "dependency_type": "definition",
+      "strength": "required",
+      "justification": null
+    },
+    {
+      "dependent_concept_id": "concept-082",
+      "prerequisite_concept_id": "proof_of_stake",
+      "dependency_type": "definition",
+      "strength": "required",
+      "justification": null
+    },
+    {
+      "dependent_concept_id": "concept-082",
+      "prerequisite_concept_id": "validator_voting",
+      "dependency_type": "definition",
+      "strength": "required",
+      "justification": null
+    },
+    {
+      "dependent_concept_id": "concept-083",
+      "prerequisite_concept_id": "liveness_property",
+      "dependency_type": "definition",
+      "strength": "required",
+      "justification": null
+    },
+    {
+      "dependent_concept_id": "concept-084",
+      "prerequisite_concept_id": "hotstuff_protocol",
+      "dependency_type": "definition",
+      "strength": "required",
+      "justification": null
+    },
+    {
+      "dependent_concept_id": "concept-084",
+      "prerequisite_concept_id": "permissioned_blockchain",
+      "dependency_type": "definition",
+      "strength": "required",
+      "justification": null
+    },
+    {
+      "dependent_concept_id": "concept-085",
+      "prerequisite_concept_id": "consensus_rounds",
+      "dependency_type": "definition",
+      "strength": "required",
+      "justification": null
+    },
+    {
+      "dependent_concept_id": "concept-085",
+      "prerequisite_concept_id": "byzantine_leaders",
+      "dependency_type": "definition",
+      "strength": "required",
+      "justification": null
+    },
+    {
+      "dependent_concept_id": "concept-086",
+      "prerequisite_concept_id": "linear_protocol_complexity",
+      "dependency_type": "definition",
+      "strength": "required",
+      "justification": null
+    },
+    {
+      "dependent_concept_id": "concept-087",
+      "prerequisite_concept_id": "finality_gadget",
+      "dependency_type": "definition",
+      "strength": "required",
+      "justification": null
+    },
+    {
+      "dependent_concept_id": "concept-087",
+      "prerequisite_concept_id": "proof_of_stake",
+      "dependency_type": "definition",
+      "strength": "required",
+      "justification": null
+    },
+    {
+      "dependent_concept_id": "concept-088",
+      "prerequisite_concept_id": "block_finality",
+      "dependency_type": "definition",
+      "strength": "required",
+      "justification": null
+    },
+    {
+      "dependent_concept_id": "concept-088",
+      "prerequisite_concept_id": "bls_signatures",
+      "dependency_type": "definition",
+      "strength": "required",
+      "justification": null
+    },
+    {
+      "dependent_concept_id": "concept-089",
+      "prerequisite_concept_id": "signature_aggregation",
+      "dependency_type": "definition",
+      "strength": "required",
+      "justification": null
+    },
+    {
+      "dependent_concept_id": "concept-089",
+      "prerequisite_concept_id": "epoch_based_consensus",
+      "dependency_type": "definition",
+      "strength": "required",
+      "justification": null
+    },
+    {
+      "dependent_concept_id": "concept-090",
+      "prerequisite_concept_id": "byzantine_fault",
+      "dependency_type": "definition",
+      "strength": "required",
+      "justification": null
+    },
+    {
+      "dependent_concept_id": "concept-090",
+      "prerequisite_concept_id": "validator_behavior",
+      "dependency_type": "definition",
+      "strength": "required",
+      "justification": null
+    },
+    {
+      "dependent_concept_id": "concept-091",
+      "prerequisite_concept_id": "equivocation_detection",
+      "dependency_type": "definition",
+      "strength": "required",
+      "justification": null
+    },
+    {
+      "dependent_concept_id": "concept-091",
+      "prerequisite_concept_id": "slashing_mechanism",
+      "dependency_type": "definition",
+      "strength": "required",
+      "justification": null
+    },
+    {
+      "dependent_concept_id": "concept-092",
+      "prerequisite_concept_id": "equivocation_detection",
+      "dependency_type": "definition",
+      "strength": "required",
+      "justification": null
+    },
+    {
+      "dependent_concept_id": "concept-093",
+      "prerequisite_concept_id": "liveness_safety_distinction",
+      "dependency_type": "definition",
+      "strength": "required",
+      "justification": null
+    },
+    {
+      "dependent_concept_id": "concept-093",
+      "prerequisite_concept_id": "liveness_property",
+      "dependency_type": "definition",
+      "strength": "required",
+      "justification": null
+    },
+    {
+      "dependent_concept_id": "concept-093",
+      "prerequisite_concept_id": "partially_synchronous_model",
+      "dependency_type": "definition",
+      "strength": "required",
+      "justification": null
+    },
+    {
+      "dependent_concept_id": "concept-093",
+      "prerequisite_concept_id": "partial_synchrony",
+      "dependency_type": "definition",
+      "strength": "required",
+      "justification": null
+    },
+    {
+      "dependent_concept_id": "concept-094",
+      "prerequisite_concept_id": "safety_liveness_distinction",
+      "dependency_type": "definition",
+      "strength": "required",
+      "justification": null
+    },
+    {
+      "dependent_concept_id": "concept-094",
+      "prerequisite_concept_id": "network_adversary",
+      "dependency_type": "definition",
+      "strength": "required",
+      "justification": null
+    },
+    {
+      "dependent_concept_id": "concept-095",
+      "prerequisite_concept_id": "network_partition_attack",
+      "dependency_type": "definition",
+      "strength": "required",
+      "justification": null
+    },
+    {
+      "dependent_concept_id": "concept-095",
+      "prerequisite_concept_id": "network_partition_attacks",
+      "dependency_type": "definition",
+      "strength": "required",
+      "justification": null
+    },
+    {
+      "dependent_concept_id": "concept-097",
+      "prerequisite_concept_id": "safety_liveness_tradeoff",
+      "dependency_type": "definition",
+      "strength": "required",
+      "justification": null
+    },
+    {
+      "dependent_concept_id": "concept-099",
+      "prerequisite_concept_id": "proof_of_stake",
+      "dependency_type": "definition",
+      "strength": "required",
+      "justification": null
+    },
+    {
+      "dependent_concept_id": "concept-099",
+      "prerequisite_concept_id": "blockchain_consensus",
+      "dependency_type": "definition",
+      "strength": "required",
+      "justification": null
+    },
+    {
+      "dependent_concept_id": "concept-100",
+      "prerequisite_concept_id": "long_range_attacks",
+      "dependency_type": "definition",
+      "strength": "required",
+      "justification": null
+    },
+    {
+      "dependent_concept_id": "concept-101",
+      "prerequisite_concept_id": "pbft_protocol",
+      "dependency_type": "definition",
+      "strength": "required",
+      "justification": null
+    },
+    {
+      "dependent_concept_id": "concept-102",
+      "prerequisite_concept_id": "pbft_protocol",
+      "dependency_type": "definition",
+      "strength": "required",
+      "justification": null
+    },
+    {
+      "dependent_concept_id": "concept-103",
+      "prerequisite_concept_id": "pbft_protocol",
+      "dependency_type": "definition",
+      "strength": "required",
+      "justification": null
+    },
+    {
+      "dependent_concept_id": "concept-103",
+      "prerequisite_concept_id": "consensus_correctness_proofs",
+      "dependency_type": "definition",
+      "strength": "required",
+      "justification": null
+    },
+    {
+      "dependent_concept_id": "concept-104",
+      "prerequisite_concept_id": "pbft_protocol",
+      "dependency_type": "definition",
+      "strength": "required",
+      "justification": null
+    },
+    {
+      "dependent_concept_id": "concept-105",
+      "prerequisite_concept_id": "pbft_protocol",
+      "dependency_type": "definition",
+      "strength": "required",
+      "justification": null
+    },
+    {
+      "dependent_concept_id": "concept-105",
+      "prerequisite_concept_id": "tendermint_protocol",
+      "dependency_type": "definition",
+      "strength": "required",
+      "justification": null
+    },
+    {
+      "dependent_concept_id": "concept-106",
+      "prerequisite_concept_id": "complexity_analysis",
+      "dependency_type": "definition",
+      "strength": "required",
+      "justification": null
+    },
+    {
+      "dependent_concept_id": "concept-106",
+      "prerequisite_concept_id": "tendermint_protocol",
+      "dependency_type": "definition",
+      "strength": "required",
+      "justification": null
+    },
+    {
+      "dependent_concept_id": "concept-107",
+      "prerequisite_concept_id": "tendermint_protocol",
+      "dependency_type": "definition",
+      "strength": "required",
+      "justification": null
+    },
+    {
+      "dependent_concept_id": "concept-107",
+      "prerequisite_concept_id": "proof_of_stake",
+      "dependency_type": "definition",
+      "strength": "required",
+      "justification": null
+    },
+    {
+      "dependent_concept_id": "concept-108",
+      "prerequisite_concept_id": "hotstuff_protocol",
+      "dependency_type": "definition",
+      "strength": "required",
+      "justification": null
+    },
+    {
+      "dependent_concept_id": "concept-108",
+      "prerequisite_concept_id": "threshold_signatures",
+      "dependency_type": "definition",
+      "strength": "required",
+      "justification": null
+    },
+    {
+      "dependent_concept_id": "concept-109",
+      "prerequisite_concept_id": "hotstuff_protocol",
+      "dependency_type": "definition",
+      "strength": "required",
+      "justification": null
+    },
+    {
+      "dependent_concept_id": "concept-109",
+      "prerequisite_concept_id": "scalability_analysis",
+      "dependency_type": "definition",
+      "strength": "required",
+      "justification": null
+    },
+    {
+      "dependent_concept_id": "concept-110",
+      "prerequisite_concept_id": "permissioned_consensus",
+      "dependency_type": "definition",
+      "strength": "required",
+      "justification": null
+    },
+    {
+      "dependent_concept_id": "concept-110",
+      "prerequisite_concept_id": "formal_verification",
+      "dependency_type": "definition",
+      "strength": "required",
+      "justification": null
+    },
+    {
+      "dependent_concept_id": "concept-110",
+      "prerequisite_concept_id": "hotstuff_protocol",
+      "dependency_type": "definition",
+      "strength": "required",
+      "justification": null
+    },
+    {
+      "dependent_concept_id": "concept-111",
+      "prerequisite_concept_id": "hotstuff_protocol",
+      "dependency_type": "definition",
+      "strength": "required",
+      "justification": null
+    },
+    {
+      "dependent_concept_id": "concept-111",
+      "prerequisite_concept_id": "consensus_latency",
+      "dependency_type": "definition",
+      "strength": "required",
+      "justification": null
+    },
+    {
+      "dependent_concept_id": "concept-112",
+      "prerequisite_concept_id": "consensus_protocols",
+      "dependency_type": "definition",
+      "strength": "required",
+      "justification": null
+    },
+    {
+      "dependent_concept_id": "concept-112",
+      "prerequisite_concept_id": "threshold_signatures",
+      "dependency_type": "definition",
+      "strength": "required",
+      "justification": null
+    },
+    {
+      "dependent_concept_id": "concept-112",
+      "prerequisite_concept_id": "computational_complexity",
+      "dependency_type": "definition",
+      "strength": "required",
+      "justification": null
+    },
+    {
+      "dependent_concept_id": "concept-113",
+      "prerequisite_concept_id": "concept-001",
+      "dependency_type": "definition",
+      "strength": "required",
+      "justification": null
+    },
+    {
+      "dependent_concept_id": "concept-115",
+      "prerequisite_concept_id": "consensus_latency",
+      "dependency_type": "definition",
+      "strength": "required",
+      "justification": null
+    },
+    {
+      "dependent_concept_id": "concept-115",
+      "prerequisite_concept_id": "finality",
+      "dependency_type": "definition",
+      "strength": "required",
+      "justification": null
+    },
+    {
+      "dependent_concept_id": "concept-116",
+      "prerequisite_concept_id": "consensus_protocols",
+      "dependency_type": "definition",
+      "strength": "required",
+      "justification": null
+    },
+    {
+      "dependent_concept_id": "concept-116",
+      "prerequisite_concept_id": "finality_mechanisms",
+      "dependency_type": "definition",
+      "strength": "required",
+      "justification": null
+    },
+    {
+      "dependent_concept_id": "concept-117",
+      "prerequisite_concept_id": "concept-005",
+      "dependency_type": "definition",
+      "strength": "required",
+      "justification": null
+    },
+    {
+      "dependent_concept_id": "concept-118",
+      "prerequisite_concept_id": "BLS_signatures",
+      "dependency_type": "definition",
+      "strength": "required",
+      "justification": null
+    },
+    {
+      "dependent_concept_id": "concept-118",
+      "prerequisite_concept_id": "signature_aggregation",
+      "dependency_type": "definition",
+      "strength": "required",
+      "justification": null
+    },
+    {
+      "dependent_concept_id": "concept-119",
+      "prerequisite_concept_id": "concept-007",
+      "dependency_type": "definition",
+      "strength": "required",
+      "justification": null
+    },
+    {
+      "dependent_concept_id": "concept-120",
+      "prerequisite_concept_id": "epoch_based_consensus",
+      "dependency_type": "definition",
+      "strength": "required",
+      "justification": null
+    },
+    {
+      "dependent_concept_id": "concept-120",
+      "prerequisite_concept_id": "committee_based_consensus",
+      "dependency_type": "definition",
+      "strength": "required",
+      "justification": null
+    },
+    {
+      "dependent_concept_id": "concept-121",
+      "prerequisite_concept_id": "BFT_consensus",
+      "dependency_type": "definition",
+      "strength": "required",
+      "justification": null
+    },
+    {
+      "dependent_concept_id": "concept-121",
+      "prerequisite_concept_id": "cryptographic_verification",
+      "dependency_type": "definition",
+      "strength": "required",
+      "justification": null
+    },
+    {
+      "dependent_concept_id": "concept-122",
+      "prerequisite_concept_id": "computational_complexity",
+      "dependency_type": "definition",
+      "strength": "required",
+      "justification": null
+    },
+    {
+      "dependent_concept_id": "concept-122",
+      "prerequisite_concept_id": "BFT_protocols",
+      "dependency_type": "definition",
+      "strength": "required",
+      "justification": null
+    },
+    {
+      "dependent_concept_id": "concept-123",
+      "prerequisite_concept_id": "concept-011",
+      "dependency_type": "definition",
+      "strength": "required",
+      "justification": null
+    },
+    {
+      "dependent_concept_id": "concept-123",
+      "prerequisite_concept_id": "threshold_signatures",
+      "dependency_type": "definition",
+      "strength": "required",
+      "justification": null
+    },
+    {
+      "dependent_concept_id": "concept-124",
+      "prerequisite_concept_id": "signature_verification",
+      "dependency_type": "definition",
+      "strength": "required",
+      "justification": null
+    },
+    {
+      "dependent_concept_id": "concept-124",
+      "prerequisite_concept_id": "cryptographic_optimization",
+      "dependency_type": "definition",
+      "strength": "required",
+      "justification": null
+    },
+    {
+      "dependent_concept_id": "concept-125",
+      "prerequisite_concept_id": "concept-013",
+      "dependency_type": "definition",
+      "strength": "required",
+      "justification": null
+    },
+    {
+      "dependent_concept_id": "concept-126",
+      "prerequisite_concept_id": "distributed_state_management",
+      "dependency_type": "definition",
+      "strength": "required",
+      "justification": null
+    },
+    {
+      "dependent_concept_id": "concept-127",
+      "prerequisite_concept_id": "blockchain_replay",
+      "dependency_type": "definition",
+      "strength": "required",
+      "justification": null
+    },
+    {
+      "dependent_concept_id": "concept-128",
+      "prerequisite_concept_id": "merkle_trees",
+      "dependency_type": "definition",
+      "strength": "required",
+      "justification": null
+    },
+    {
+      "dependent_concept_id": "concept-128",
+      "prerequisite_concept_id": "concept-015",
+      "dependency_type": "definition",
+      "strength": "required",
+      "justification": null
+    },
+    {
+      "dependent_concept_id": "concept-129",
+      "prerequisite_concept_id": "concept-017",
+      "dependency_type": "definition",
+      "strength": "required",
+      "justification": null
+    },
+    {
+      "dependent_concept_id": "concept-130",
+      "prerequisite_concept_id": "network_topology",
+      "dependency_type": "definition",
+      "strength": "required",
+      "justification": null
+    },
+    {
+      "dependent_concept_id": "concept-130",
+      "prerequisite_concept_id": "consensus_protocols",
+      "dependency_type": "definition",
+      "strength": "required",
+      "justification": null
+    },
+    {
+      "dependent_concept_id": "concept-131",
+      "prerequisite_concept_id": "network_topology",
+      "dependency_type": "definition",
+      "strength": "required",
+      "justification": null
+    },
+    {
+      "dependent_concept_id": "concept-131",
+      "prerequisite_concept_id": "computational_complexity",
+      "dependency_type": "definition",
+      "strength": "required",
+      "justification": null
+    },
+    {
+      "dependent_concept_id": "concept-132",
+      "prerequisite_concept_id": "network_topology_basics",
+      "dependency_type": "definition",
+      "strength": "required",
+      "justification": null
+    },
+    {
+      "dependent_concept_id": "concept-132",
+      "prerequisite_concept_id": "computational_complexity",
+      "dependency_type": "definition",
+      "strength": "required",
+      "justification": null
+    },
+    {
+      "dependent_concept_id": "concept-133",
+      "prerequisite_concept_id": "concept-001",
+      "dependency_type": "definition",
+      "strength": "required",
+      "justification": null
+    },
+    {
+      "dependent_concept_id": "concept-134",
+      "prerequisite_concept_id": "concept-001",
+      "dependency_type": "definition",
+      "strength": "required",
+      "justification": null
+    },
+    {
+      "dependent_concept_id": "concept-134",
+      "prerequisite_concept_id": "concept-002",
+      "dependency_type": "definition",
+      "strength": "required",
+      "justification": null
+    },
+    {
+      "dependent_concept_id": "concept-136",
+      "prerequisite_concept_id": "threshold_cryptography",
+      "dependency_type": "definition",
+      "strength": "required",
+      "justification": null
+    },
+    {
+      "dependent_concept_id": "concept-136",
+      "prerequisite_concept_id": "bls_signatures",
+      "dependency_type": "definition",
+      "strength": "required",
+      "justification": null
+    },
+    {
+      "dependent_concept_id": "concept-137",
+      "prerequisite_concept_id": "threshold_cryptography",
+      "dependency_type": "definition",
+      "strength": "required",
+      "justification": null
+    },
+    {
+      "dependent_concept_id": "concept-137",
+      "prerequisite_concept_id": "consensus_mechanisms",
+      "dependency_type": "definition",
+      "strength": "required",
+      "justification": null
+    },
+    {
+      "dependent_concept_id": "concept-138",
+      "prerequisite_concept_id": "bft_basics",
+      "dependency_type": "definition",
+      "strength": "required",
+      "justification": null
+    },
+    {
+      "dependent_concept_id": "concept-138",
+      "prerequisite_concept_id": "liveness_properties",
+      "dependency_type": "definition",
+      "strength": "required",
+      "justification": null
+    },
+    {
+      "dependent_concept_id": "concept-139",
+      "prerequisite_concept_id": "concept-007",
+      "dependency_type": "definition",
+      "strength": "required",
+      "justification": null
+    },
+    {
+      "dependent_concept_id": "concept-140",
+      "prerequisite_concept_id": "concept-007",
+      "dependency_type": "definition",
+      "strength": "required",
+      "justification": null
+    },
+    {
+      "dependent_concept_id": "concept-141",
+      "prerequisite_concept_id": "consensus_protocol_basics",
+      "dependency_type": "definition",
+      "strength": "required",
+      "justification": null
+    },
+    {
+      "dependent_concept_id": "concept-141",
+      "prerequisite_concept_id": "cryptographic_proofs",
+      "dependency_type": "definition",
+      "strength": "required",
+      "justification": null
+    },
+    {
+      "dependent_concept_id": "concept-142",
+      "prerequisite_concept_id": "concept-010",
+      "dependency_type": "definition",
+      "strength": "required",
+      "justification": null
+    },
+    {
+      "dependent_concept_id": "concept-143",
+      "prerequisite_concept_id": "concept-010",
+      "dependency_type": "definition",
+      "strength": "required",
+      "justification": null
+    },
+    {
+      "dependent_concept_id": "concept-144",
+      "prerequisite_concept_id": "byzantine_fault_tolerance_basics",
+      "dependency_type": "definition",
+      "strength": "required",
+      "justification": null
+    },
+    {
+      "dependent_concept_id": "concept-144",
+      "prerequisite_concept_id": "pbft_protocol",
+      "dependency_type": "definition",
+      "strength": "required",
+      "justification": null
+    },
+    {
+      "dependent_concept_id": "concept-145",
+      "prerequisite_concept_id": "communication_complexity",
+      "dependency_type": "definition",
+      "strength": "required",
+      "justification": null
+    },
+    {
+      "dependent_concept_id": "concept-145",
+      "prerequisite_concept_id": "quadratic_bottleneck",
+      "dependency_type": "definition",
+      "strength": "required",
+      "justification": null
+    },
+    {
+      "dependent_concept_id": "concept-146",
+      "prerequisite_concept_id": "signature_aggregation",
+      "dependency_type": "definition",
+      "strength": "required",
+      "justification": null
+    },
+    {
+      "dependent_concept_id": "concept-146",
+      "prerequisite_concept_id": "bls_signatures",
+      "dependency_type": "definition",
+      "strength": "required",
+      "justification": null
+    },
+    {
+      "dependent_concept_id": "concept-147",
+      "prerequisite_concept_id": "formal_verification",
+      "dependency_type": "definition",
+      "strength": "required",
+      "justification": null
+    },
+    {
+      "dependent_concept_id": "concept-147",
+      "prerequisite_concept_id": "safety_properties",
+      "dependency_type": "definition",
+      "strength": "required",
+      "justification": null
+    },
+    {
+      "dependent_concept_id": "concept-148",
+      "prerequisite_concept_id": "throughput_metrics",
+      "dependency_type": "definition",
+      "strength": "required",
+      "justification": null
+    },
+    {
+      "dependent_concept_id": "concept-149",
+      "prerequisite_concept_id": "finality_concept",
+      "dependency_type": "definition",
+      "strength": "required",
+      "justification": null
+    },
+    {
+      "dependent_concept_id": "concept-150",
+      "prerequisite_concept_id": "concept-005",
+      "dependency_type": "definition",
+      "strength": "required",
+      "justification": null
+    },
+    {
+      "dependent_concept_id": "concept-150",
+      "prerequisite_concept_id": "concept-006",
+      "dependency_type": "definition",
+      "strength": "required",
+      "justification": null
+    },
+    {
+      "dependent_concept_id": "concept-151",
+      "prerequisite_concept_id": "permissioned_vs_permissionless",
+      "dependency_type": "definition",
+      "strength": "required",
+      "justification": null
+    },
+    {
+      "dependent_concept_id": "concept-151",
+      "prerequisite_concept_id": "concept-002",
+      "dependency_type": "definition",
+      "strength": "required",
+      "justification": null
+    },
+    {
+      "dependent_concept_id": "concept-152",
+      "prerequisite_concept_id": "permissioned_vs_permissionless",
+      "dependency_type": "definition",
+      "strength": "required",
+      "justification": null
+    },
+    {
+      "dependent_concept_id": "concept-152",
+      "prerequisite_concept_id": "concept-003",
+      "dependency_type": "definition",
+      "strength": "required",
+      "justification": null
+    },
+    {
+      "dependent_concept_id": "concept-153",
+      "prerequisite_concept_id": "concept-007",
+      "dependency_type": "definition",
+      "strength": "required",
+      "justification": null
+    },
+    {
+      "dependent_concept_id": "concept-153",
+      "prerequisite_concept_id": "concept-008",
+      "dependency_type": "definition",
+      "strength": "required",
+      "justification": null
+    },
+    {
+      "dependent_concept_id": "concept-153",
+      "prerequisite_concept_id": "concept-009",
+      "dependency_type": "definition",
+      "strength": "required",
+      "justification": null
+    }
+  ],
+  "resolved_cycles": [],
+  "teaching_order": [
+    "concept-001",
+    "concept-002",
+    "concept-003",
+    "concept-004",
+    "concept-005",
+    "concept-006",
+    "concept-007",
+    "concept-008",
+    "concept-009",
+    "concept-010",
+    "concept-011",
+    "concept-012",
+    "concept-013",
+    "concept-014",
+    "concept-015",
+    "concept-016",
+    "concept-017",
+    "concept-018",
+    "concept-019",
+    "concept-020",
+    "concept-021",
+    "concept-022",
+    "concept-023",
+    "concept-024",
+    "concept-025",
+    "concept-026",
+    "concept-027",
+    "concept-028",
+    "concept-029",
+    "concept-030",
+    "concept-031",
+    "concept-032",
+    "concept-033",
+    "concept-034",
+    "concept-035",
+    "concept-036",
+    "concept-037",
+    "concept-038",
+    "concept-041",
+    "concept-042",
+    "concept-043",
+    "concept-044",
+    "concept-045",
+    "concept-046",
+    "concept-047",
+    "concept-048",
+    "concept-049",
+    "concept-050",
+    "concept-051",
+    "concept-052",
+    "concept-053",
+    "concept-054",
+    "concept-055",
+    "concept-056",
+    "concept-057",
+    "concept-058",
+    "concept-059",
+    "concept-060",
+    "concept-061",
+    "concept-062",
+    "concept-063",
+    "concept-064",
+    "concept-065",
+    "concept-066",
+    "concept-067",
+    "concept-068",
+    "concept-069",
+    "concept-070",
+    "concept-072",
+    "concept-073",
+    "concept-074",
+    "concept-075",
+    "concept-076",
+    "concept-077",
+    "concept-078",
+    "concept-079",
+    "concept-080",
+    "concept-081",
+    "concept-082",
+    "concept-083",
+    "concept-084",
+    "concept-085",
+    "concept-086",
+    "concept-087",
+    "concept-088",
+    "concept-089",
+    "concept-090",
+    "concept-091",
+    "concept-092",
+    "concept-093",
+    "concept-094",
+    "concept-095",
+    "concept-097",
+    "concept-099",
+    "concept-100",
+    "concept-101",
+    "concept-102",
+    "concept-103",
+    "concept-104",
+    "concept-105",
+    "concept-106",
+    "concept-107",
+    "concept-108",
+    "concept-109",
+    "concept-110",
+    "concept-111",
+    "concept-112",
+    "concept-113",
+    "concept-115",
+    "concept-116",
+    "concept-117",
+    "concept-118",
+    "concept-119",
+    "concept-120",
+    "concept-121",
+    "concept-122",
+    "concept-123",
+    "concept-124",
+    "concept-125",
+    "concept-126",
+    "concept-127",
+    "concept-128",
+    "concept-129",
+    "concept-130",
+    "concept-131",
+    "concept-132",
+    "concept-133",
+    "concept-134",
+    "concept-135",
+    "concept-136",
+    "concept-137",
+    "concept-138",
+    "concept-139",
+    "concept-140",
+    "concept-141",
+    "concept-142",
+    "concept-143",
+    "concept-144",
+    "concept-145",
+    "concept-146",
+    "concept-147",
+    "concept-148",
+    "concept-149",
+    "concept-150",
+    "concept-151",
+    "concept-152",
+    "concept-153"
+  ]
+}
