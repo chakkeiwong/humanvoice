@@ -1,0 +1,29 @@
+{
+  "unit_id": "unit-001",
+  "baseline_id": "baseline-snapshot-20260912-192038",
+  "concept_correspondence_ratio": 1.0,
+  "obligation_fulfillment_ratio": 1.0,
+  "protected_objects_intact": true,
+  "is_acceptable": true,
+  "can_repair": true,
+  "repair_targets": [],
+  "findings": [
+    {
+      "finding_id": "unit-001-correspondence-00",
+      "severity": "INFO",
+      "category": "concept_correspondence_verified",
+      "concept_id": null,
+      "evidence": "All source concepts mapped in output",
+      "verdict": "supported"
+    },
+    {
+      "finding_id": "unit-001-protected-00",
+      "severity": "INFO",
+      "category": "protected_objects_intact",
+      "concept_id": null,
+      "evidence": "All protected objects preserved",
+      "verdict": "supported"
+    }
+  ],
+  "blocking_findings_count": 0
+}

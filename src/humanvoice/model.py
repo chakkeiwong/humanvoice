@@ -100,7 +100,7 @@ class ModelConfig:
     # below this; this value is the profile-level cap that no unit may exceed.
     max_tokens: int = 8192
     timeout_seconds: int = 300
-    prompt_template_hash: Optional[str] = None  # SHA256 from profile, required for non-mock invocation
+    prompt_template_hash: Optional[dict] = None  # Dict of template_key -> SHA256 from profile, required for non-mock invocation
 
     @classmethod
     def from_profile(cls, profile_path: Path = PROFILE_PATH) -> "ModelConfig":

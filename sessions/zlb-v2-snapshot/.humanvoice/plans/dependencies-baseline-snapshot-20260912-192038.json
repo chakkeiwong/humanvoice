@@ -1,0 +1,9 @@
+{
+  "snapshot_id": "snapshot-20260912-192038",
+  "baseline_id": "baseline-snapshot-20260912-192038",
+  "dependencies": [],
+  "resolved_cycles": [],
+  "teaching_order": [
+    "concept-001"
+  ]
+}

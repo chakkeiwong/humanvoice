@@ -133,6 +133,7 @@ def rewrite_command(args):
     baseline_id = args.baseline_id
     plan_id = args.plan_id
     mock = args.mock
+    timeout_seconds = args.timeout
 
     # Resolve paths
     inventory_dir = snapshot_path / ".humanvoice" / "inventory"
@@ -173,6 +174,7 @@ def rewrite_command(args):
         print(f"Initializing model adapter", file=sys.stderr)
         from humanvoice.model import ModelConfig
         config = ModelConfig.from_profile()
+        config.timeout_seconds = timeout_seconds
         model = ModelAdapter(
             config=config,
             mock_mode=False,

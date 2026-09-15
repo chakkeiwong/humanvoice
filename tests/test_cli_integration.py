@@ -27,6 +27,20 @@ def create_minimal_brief(path: Path) -> None:
     path.write_text(json.dumps(brief, indent=2))
 
 
+def create_live_model_brief(path: Path) -> None:
+    """Create brief that authorizes live model inference (for tier 5 tests)."""
+    brief = {
+        "reader_role": "graduate_student",
+        "decision_type": "research",
+        "time_available_minutes": 60,
+        "prior_knowledge": "graduate_level",
+        "success_criteria": "understand_key_concepts",
+        "genre": "technical",
+        "remote_inference_authorized": True,  # Required for live model
+    }
+    path.write_text(json.dumps(brief, indent=2))
+
+
 def run_pipeline_through_rewrite(tmp_path: Path, fixture: str = "register/001.tex") -> Path:
     """Run init -> inventory --freeze -> plan -> rewrite in mock mode.
 
@@ -357,5 +371,94 @@ def test_tier4_multi_file_architecture_assessment(tmp_path):
         pytest.skip("Architecture assessment fixture not found")
 
     # TODO: Multi-file init support - check if hv init accepts directory
-    # or needs modification to handle multi-file sources
-    pytest.skip("Multi-file init not yet confirmed")
+
+
+def test_tier5_live_model_equation_fixture(tmp_path):
+    """Tier 5: Live model execution on equation/001.tex (22 lines).
+
+    This test exercises the full pipeline WITH live model inference:
+    init -> inventory --freeze -> plan -> rewrite (NO --mock) -> preflight -> assemble
+
+    This validates that ModelConfig.from_profile() works through the CLI and that
+    timeout configuration allows model calls to complete.
+
+    Uses equation/001.tex (22 lines of real technical content with LaTeX equations).
+    """
+    fixture_path = Path("fixtures/synthetic/equation/001.tex")
+    if not fixture_path.exists():
+        pytest.skip("Equation fixture not found")
+
+    brief_path = tmp_path / "brief.json"
+    create_live_model_brief(brief_path)  # Use live model brief
+    snapshot = tmp_path / "snapshot"
+
+    # Step 1: hv init
+    result = subprocess.run(
+        ['hv', 'init', str(fixture_path), '--brief', str(brief_path), '--output', str(snapshot)],
+        capture_output=True,
+        text=True
+    )
+    assert result.returncode == 0, f"init failed: {result.stderr}"
+
+    # Step 2: hv inventory --freeze (LIVE MODEL for real concept extraction)
+    result = subprocess.run(
+        ['hv', 'inventory', str(snapshot), '--freeze', '--adjudicator', 'live-test'],
+        capture_output=True,
+        text=True,
+        timeout=600  # 10 minutes for live extraction
+    )
+    assert result.returncode == 0, f"inventory failed: {result.stderr}"
+
+    # Step 3: hv plan (v2)
+    result = subprocess.run(
+        ['hv', 'plan', str(snapshot)],
+        capture_output=True,
+        text=True
+    )
+    assert result.returncode == 0, f"plan failed: {result.stderr}"
+    plan_output = json.loads(result.stdout)
+    baseline_id = plan_output['baseline_id']
+    plan_id = plan_output['plan_id']
+
+    # Step 4: hv rewrite WITH LIVE MODEL (no --mock flag) and extended timeout
+    result = subprocess.run(
+        ['hv', 'rewrite', str(snapshot),
+         '--baseline-id', baseline_id,
+         '--plan-id', plan_id,
+         '--timeout', '1800'],  # 30 minutes for live model
+        capture_output=True,
+        text=True,
+        timeout=2000  # Subprocess timeout: 33+ minutes
+    )
+    assert result.returncode == 0, f"rewrite with live model failed: {result.stderr}"
+
+    rewrite_output = json.loads(result.stdout)
+    assert rewrite_output['status'] == 'complete', f"rewrite failed: {rewrite_output}"
+    assert rewrite_output['correspondence_ratio'] == 1.0, "correspondence must be 100%"
+    assert rewrite_output['units_completed'] > 0, "no units completed"
+
+    # Step 5: hv preflight-v2
+    result = subprocess.run(
+        ['hv', 'preflight-v2', str(snapshot)],
+        capture_output=True,
+        text=True
+    )
+    assert result.returncode == 0, f"preflight-v2 failed: {result.stderr}"
+
+    preflight_output = json.loads(result.stdout)
+    assert preflight_output['status'] == 'pass'
+
+    # Step 6: hv assemble-v2
+    result = subprocess.run(
+        ['hv', 'assemble-v2', str(snapshot)],
+        capture_output=True,
+        text=True
+    )
+    assert result.returncode == 0, f"assemble-v2 failed: {result.stderr}"
+
+    assembled_file = snapshot / ".humanvoice" / "assembled" / "assembled.tex"
+    assert assembled_file.exists(), "assembled output not created"
+
+    assembly_result = json.loads((snapshot / ".humanvoice" / "assembled" / "assembly_result.json").read_text())
+    assert assembly_result['assembly_complete'] is True
+    assert assembly_result['patches_failed'] == 0

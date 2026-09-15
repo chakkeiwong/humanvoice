@@ -69,6 +69,7 @@ def build_parser():
     rewrite_parser.add_argument('--baseline-id', required=True, help='Baseline ID (e.g., baseline-001)')
     rewrite_parser.add_argument('--plan-id', required=True, help='Plan ID (e.g., plan-001)')
     rewrite_parser.add_argument('--mock', action='store_true', help='Use mock mode (no model calls)')
+    rewrite_parser.add_argument('--timeout', type=int, default=1200, help='Timeout in seconds for model API calls (default: 1200)')
 
     # hv draft
     draft_parser = subparsers.add_parser('draft', help='Produce unit-level draft within blueprint boundary')
