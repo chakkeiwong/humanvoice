@@ -11,21 +11,22 @@ A background agent (aac456b8617bbe35c) was executing the full v2 pipeline on the
 
 ### Pipeline Progress at Reboot
 
-**Step 1 of 5: Baseline Inventory Extraction**
-- **Command**: `hv inventory --freeze . --adjudicator test-harness` (LIVE MODEL, no --mock)
+**Step 3 of 5: Live Model Rewrite IN PROGRESS**
 - **Location**: `sessions/zlb-v2-snapshot/`
-- **Status**: Running in background (PID 2096156)
-- **Progress**: Window 4 of 146 completed
-- **Source**: 3,368 lines (189,829 bytes) across 1,751 spans
-- **Estimated Time Remaining**: 2-5 hours for step 1 alone
+- **Status**: Running in background via agent aac456b8617bbe35c
+- **Progress**: Rewriting unit-001 (1,162 concepts)
+- **Estimated Time Remaining**: 30-60 minutes for rewrite, then 5-10 min for preflight + assembly
 
-**Steps Not Yet Started**:
-- Step 2: `hv plan .` - Generate rewrite plan from baseline
-- Step 3: `hv rewrite . --timeout 3600` - Live model rewrite (30-60 min)
-- Step 4: `hv preflight-v2 .` - Verify correspondence and obligations
-- Step 5: `hv assemble-v2 .` - Generate blackline.tex comparison
+**Steps Completed** ✅:
+- Step 1: `hv inventory --freeze .` - COMPLETE (1,162 concepts extracted)
+- Step 2: `hv plan .` - COMPLETE (1 rewrite unit created)
 
-**Total Expected Runtime**: 3-6 hours (revised from initial 30-60 min estimate)
+**Steps Remaining**:
+- Step 3: `hv rewrite .` - IN PROGRESS (running now)
+- Step 4: `hv preflight-v2 .` - Pending
+- Step 5: `hv assemble-v2 .` - Pending (will generate blackline.tex)
+
+**Total Expected Runtime**: 30-60 minutes remaining (rewrite phase)
 
 ---
 
@@ -91,58 +92,84 @@ Added blackline PDF generation to assemble-v2:
 
 ## How to Resume After Reboot
 
-### Option A: Check if Process Survived Reboot (Unlikely)
+### Option A: Check if Agent Process Survived Reboot
+
+The rewrite was running via background agent aac456b8617bbe35c. After reboot, check if the background process survived:
 
 ```bash
-ps aux | grep "hv inventory"
+ps aux | grep "hv rewrite"
 ```
 
-If PID 2096156 is still running, wait for it to complete, then resume agent.
+If the process is still running, the agent should complete automatically. Check for completion:
 
-### Option B: Restart from Beginning (Most Likely)
+```bash
+cd /home/ubuntu/workspace/humanvoice/sessions/zlb-v2-snapshot
+ls -lh .humanvoice/rewrites/session-rewrite-*.json
+cat .humanvoice/assembled/assembly_result.json 2>/dev/null
+```
 
-The background inventory process was killed by reboot. Start fresh:
+If assembly_result.json exists with `blackline_status: "generated"`, the pipeline completed successfully before reboot.
+
+### Option B: Check Pipeline State and Resume
+
+If reboot killed the process, determine what completed:
 
 ```bash
 cd /home/ubuntu/workspace/humanvoice/sessions/zlb-v2-snapshot
 
-# Step 1: Inventory (LIVE MODEL - will take 2-5 hours)
-hv inventory --freeze . --adjudicator test-harness
+# Check what exists
+ls -1 .humanvoice/inventory/baseline-*.json 2>/dev/null | tail -1
+ls -1 .humanvoice/plans/plan-*.json 2>/dev/null | tail -1
+ls -1 .humanvoice/rewrites/session-rewrite-*.json 2>/dev/null | tail -1
+ls -1 .humanvoice/assembled/assembly_result.json 2>/dev/null
 
-# Capture baseline ID from output
-# Example: baseline-20260916-143022
+# Get baseline and plan IDs from the files
+BASELINE_ID=$(jq -r '.baseline_id' .humanvoice/inventory/baseline-*.json | tail -1)
+PLAN_ID=$(jq -r '.plan_id' .humanvoice/plans/plan-*.json | tail -1)
 
-# Step 2: Plan
-hv plan . --baseline-id <baseline-id>
+echo "Baseline ID: $BASELINE_ID"
+echo "Plan ID: $PLAN_ID"
+```
 
-# Capture plan ID from output
+**Resume from where it stopped:**
 
-# Step 3: Rewrite (LIVE MODEL - will take 30-60 minutes)
-hv rewrite . --baseline-id <baseline-id> --plan-id <plan-id> --timeout 3600
+**If rewrite didn't complete** (no rewrite session file or status != "complete"):
+```bash
+# Resume rewrite step
+hv rewrite . --baseline-id $BASELINE_ID --plan-id $PLAN_ID --timeout 3600
+```
 
-# Step 4: Preflight
+**If rewrite completed** (session-rewrite-*.json exists with status: "complete"):
+```bash
+# Continue with preflight
 hv preflight-v2 .
 
-# Step 5: Assemble with blackline
+# Then assembly with blackline
 hv assemble-v2 .
-
-# Check results
-cat .humanvoice/assembled/assembly_result.json | jq '.blackline_status'
-ls -lh .humanvoice/assembled/blackline.tex
 ```
 
-### Option C: Resume with Agent
+### Option C: Restart Entire Pipeline (If inventory/plan missing)
 
-Launch a new agent to continue:
+If baseline or plan files don't exist, restart from beginning:
+
+If baseline or plan files don't exist, restart from beginning:
 
 ```bash
-# From humanvoice repo root
-claude code
+cd /home/ubuntu/workspace/humanvoice/sessions/zlb-v2-snapshot
+
+# Step 1: Inventory (LIVE MODEL - 2-5 hours)
+hv inventory --freeze . --adjudicator test-harness
+
+# Capture baseline ID, then continue with steps 2-5 as above
 ```
 
-Then tell the agent:
+### Option D: Resume with Agent (Recommended)
 
-> "Resume the ZLB blackline generation from REBOOT_RESUME.md. The previous run was interrupted by reboot. Restart the full pipeline from inventory extraction."
+The background agent (aac456b8617bbe35c) was monitoring the rewrite. After reboot, resume the agent to check status and continue:
+
+From the humanvoice repo, tell Claude:
+
+> "Check the ZLB pipeline status in sessions/zlb-v2-snapshot according to REBOOT_RESUME.md. The rewrite was running when we rebooted. Resume from wherever it stopped and complete the blackline generation."
 
 ---
 
@@ -151,16 +178,17 @@ Then tell the agent:
 ### ZLB Snapshot
 - **Location**: `sessions/zlb-v2-snapshot/`
 - **Source**: `source.tex` (3,368 lines, 189,829 bytes)
-- **Previous Mock Baseline**: `.humanvoice/inventory/baseline.json` (1,276 concepts - MOCK DATA, not real)
-- **Live Baseline**: Will be created at `.humanvoice/inventory/baseline-<timestamp>.json`
+- **Live Baseline**: `.humanvoice/inventory/baseline-<timestamp>.json` (1,162 concepts extracted)
+- **Plan**: `.humanvoice/plans/plan-<id>.json` (1 rewrite unit)
+- **Rewrite**: IN PROGRESS when reboot occurred
 
 ### Expected Outputs
-- **Baseline**: `.humanvoice/inventory/baseline-<id>.json` (~58KB, 1,276 concepts)
-- **Plan**: `.humanvoice/plans/plan-<id>.json` (1 unit, 2,131 dependencies expected)
-- **Rewrite**: `.humanvoice/rewrites/session-rewrite-<timestamp>.json` (~51KB)
-- **Assembly**: `.humanvoice/assembled/assembled.tex` (humanized version)
-- **Blackline**: `.humanvoice/assembled/blackline.tex` (comparison with DIF markup)
-- **Result**: `.humanvoice/assembled/assembly_result.json` (status + metadata)
+- **Baseline**: `.humanvoice/inventory/baseline-<id>.json` (✅ COMPLETE - 1,162 concepts)
+- **Plan**: `.humanvoice/plans/plan-<id>.json` (✅ COMPLETE - 1 unit created)
+- **Rewrite**: `.humanvoice/rewrites/session-rewrite-<timestamp>.json` (⏳ IN PROGRESS when reboot occurred)
+- **Assembly**: `.humanvoice/assembled/assembled.tex` (⏳ PENDING)
+- **Blackline**: `.humanvoice/assembled/blackline.tex` (⏳ PENDING - final deliverable)
+- **Result**: `.humanvoice/assembled/assembly_result.json` (⏳ PENDING)
 
 ### Documentation
 - **Master Program Status**: `docs/MASTER_PROGRAM_V2_COMPLETE.md`
@@ -171,17 +199,20 @@ Then tell the agent:
 
 ## Important Notes
 
-1. **Runtime**: Full pipeline takes 3-6 hours (not 30-60 min as initially estimated)
-   - Inventory extraction: 2-5 hours (146 windows)
-   - Rewrite: 30-60 minutes
-   - Preflight + Assembly: <5 minutes
+1. **Runtime**: Pipeline was ~60% complete at reboot
+   - Inventory extraction: ✅ COMPLETE (1,162 concepts)
+   - Plan generation: ✅ COMPLETE (1 unit)
+   - Rewrite: ⏳ IN PROGRESS (30-60 min, may have completed)
+   - Preflight + Assembly: ⏳ PENDING (<5 minutes once rewrite done)
 
 2. **Live Model Required**: This is NOT a mock run. Requires:
    - API credentials configured
    - `--mock` flag MUST NOT be used
    - Budget for ~1,500-2,000 model calls
 
-3. **Previous Mock Data**: The existing baseline.json in zlb-v2-snapshot was created with `--mock` and contains only 1 fake concept. It must be regenerated with live model.
+3. **Background Process**: Rewrite was running via agent aac456b8617bbe35c
+   - Check if it completed before reboot
+   - If incomplete, resume from rewrite step with existing baseline/plan IDs
 
 4. **Timeout Configuration**: Rewrite requires `--timeout 3600` (1 hour) for large documents
 
@@ -198,23 +229,23 @@ cd sessions/zlb-v2-snapshot
 
 # 1. Baseline created with real concepts
 jq '.concept_entries | length' .humanvoice/inventory/baseline-*.json
-# Expected: ~1,276
+# Expected: 1,162 (✅ COMPLETE)
 
 # 2. Plan created
 jq '.total_units' .humanvoice/plans/plan-*.json
-# Expected: 1 (may need tuning)
+# Expected: 1 (✅ COMPLETE)
 
 # 3. Rewrite completed
 jq '.status, .correspondence_ratio' .humanvoice/rewrites/session-rewrite-*.json
-# Expected: "complete", 1.0
+# Expected: "complete", 1.0 (⏳ CHECK AFTER REBOOT)
 
 # 4. Assembly succeeded
 jq '.assembly_complete' .humanvoice/assembled/assembly_result.json
-# Expected: true
+# Expected: true (⏳ PENDING)
 
 # 5. Blackline generated
 jq '.blackline_status' .humanvoice/assembled/assembly_result.json
-# Expected: "generated"
+# Expected: "generated" (⏳ PENDING - FINAL DELIVERABLE)
 
 ls -lh .humanvoice/assembled/blackline.tex
 # Expected: file exists, ~190KB+
@@ -229,7 +260,12 @@ User's exact words:
 
 **User Goal**: See the blackline.tex comparison PDF showing original vs humanized ZLB manuscript
 
-**Status**: In progress, interrupted by reboot at window 4 of 146 (3% complete)
+**Status**: In progress, interrupted by reboot at step 3 of 5 (~60% complete)
+- ✅ Step 1: Inventory complete (1,162 concepts)
+- ✅ Step 2: Plan complete (1 unit)
+- ⏳ Step 3: Rewrite in progress (may have completed before reboot)
+- ⏳ Step 4: Preflight pending
+- ⏳ Step 5: Assembly + blackline pending
 
 ---
 
@@ -243,4 +279,4 @@ All implementation work is committed and pushed. No code changes needed, only ex
 
 ---
 
-**Resume Action**: Restart inventory extraction with live model, let it complete (2-5 hours), then proceed through remaining 4 pipeline steps.
+**Resume Action**: After reboot, check if rewrite completed. If yes, run preflight + assembly (~5 min). If no, resume rewrite with existing baseline/plan IDs (~30-60 min remaining).
