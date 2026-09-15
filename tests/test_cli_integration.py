@@ -448,7 +448,7 @@ def test_tier5_live_model_equation_fixture(tmp_path):
     preflight_output = json.loads(result.stdout)
     assert preflight_output['status'] == 'pass'
 
-    # Step 6: hv assemble-v2
+    # Step 6: hv assemble-v2 (default: blackline generation enabled)
     result = subprocess.run(
         ['hv', 'assemble-v2', str(snapshot)],
         capture_output=True,
@@ -462,3 +462,12 @@ def test_tier5_live_model_equation_fixture(tmp_path):
     assembly_result = json.loads((snapshot / ".humanvoice" / "assembled" / "assembly_result.json").read_text())
     assert assembly_result['assembly_complete'] is True
     assert assembly_result['patches_failed'] == 0
+
+    # Verify blackline was generated (or properly recorded as unavailable/failed)
+    blackline_status = assembly_result.get('blackline_status', 'not_generated')
+    assert blackline_status in ['generated', 'tool_unavailable', 'generation_failed'], \
+        f"unexpected blackline_status: {blackline_status}"
+
+    if blackline_status == 'generated':
+        blackline_file = snapshot / ".humanvoice" / "assembled" / "blackline.tex"
+        assert blackline_file.exists(), "blackline.tex not created despite status=generated"

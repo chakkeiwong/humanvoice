@@ -46,6 +46,10 @@ class PatchAssemblyResult:
     document_builds: bool = False
     comparison_generated: bool = False
 
+    # Blackline generation status
+    blackline_status: str = "not_generated"
+    blackline_errors: Optional[List[str]] = None
+
 
 def sort_patches_reverse(patches: List[SourcePatch]) -> List[SourcePatch]:
     """Sort patches by end_offset in descending order.

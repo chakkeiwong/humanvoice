@@ -25,6 +25,10 @@ from humanvoice.patch_assembly import (
     SourcePatch,
     PatchAssemblyResult,
 )
+from humanvoice.blackline_generator import (
+    check_latexdiff_available,
+    generate_blacklined_diff,
+)
 
 
 def _load_manifest(snapshot_dir: Path) -> Dict:
@@ -216,14 +220,48 @@ def run(args) -> int:
         save_patched_source(revised_source, output_path)
 
         # Calculate untouched bytes (V2-G5 property)
-        # Build set of byte offsets covered by patches
         patched_offsets = set()
         for patch in patches:
             for i in range(patch.start_offset, patch.end_offset):
                 patched_offsets.add(i)
 
-        # Count bytes not covered by any patch
         untouched_bytes_count = len(original_source) - len(patched_offsets)
+
+        # Generate blackline comparison
+        blackline_status = "not_generated"
+        blackline_path = None
+        blackline_errors = []
+
+        skip_blackline = getattr(args, 'skip_blackline', False)
+
+        if skip_blackline:
+            blackline_status = "skipped_by_operator"
+            print("\nBlackline comparison skipped (--skip-blackline)")
+        elif not check_latexdiff_available():
+            blackline_status = "tool_unavailable"
+            print("\nWarning: latexdiff not available, skipping blackline", file=sys.stderr)
+        else:
+            print("\nGenerating blackline comparison...")
+            # Save original source for comparison
+            original_path = output_dir / "original.tex"
+            original_path.write_text(original_source)
+
+            blackline_path = output_dir / "blackline.tex"
+            success, errors = generate_blacklined_diff(
+                original_path,
+                output_path,
+                blackline_path
+            )
+
+            if success:
+                blackline_status = "generated"
+                print(f"  Blackline: {blackline_path}")
+            else:
+                blackline_status = "generation_failed"
+                blackline_errors = errors
+                print(f"Warning: Blackline generation failed:", file=sys.stderr)
+                for error in errors:
+                    print(f"  {error}", file=sys.stderr)
 
         # Save assembly result metadata
         from hashlib import sha256
@@ -237,6 +275,8 @@ def run(args) -> int:
             untouched_bytes_count=untouched_bytes_count,
             revised_bytes_count=len(revised_source),
             assembly_complete=len(failed_patches) == 0,
+            blackline_status=blackline_status,
+            blackline_errors=blackline_errors if blackline_errors else None,
         )
 
         result_path = output_dir / "assembly_result.json"
@@ -246,6 +286,7 @@ def run(args) -> int:
         print(f"  Output: {output_path}")
         print(f"  Patches applied: {result.patches_applied}/{result.total_patches}")
         print(f"  Byte identity: {result.untouched_bytes_count}/{len(original_source)} bytes unchanged")
+        print(f"  Blackline: {blackline_status}")
         print(f"  Result: {result_path}")
 
         return 0

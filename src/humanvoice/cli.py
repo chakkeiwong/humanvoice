@@ -97,6 +97,8 @@ def build_parser():
     # hv assemble-v2 (v2)
     assemble_v2_parser = subparsers.add_parser('assemble-v2', help='Apply verified patches and verify byte-identity')
     assemble_v2_parser.add_argument('snapshot', type=Path, help='Snapshot directory from hv init')
+    assemble_v2_parser.add_argument('--skip-blackline', action='store_true',
+                                     help='Skip blacklined comparison (draft review only; release will block)')
 
     # hv validate-blueprint
     validate_bp_parser = subparsers.add_parser('validate-blueprint',
