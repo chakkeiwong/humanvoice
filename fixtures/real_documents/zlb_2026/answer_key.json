@@ -1,0 +1,62 @@
+{
+  "document_id": "zlb_2026",
+  "description": "Zero Lower Bound and Japanese Economy (2026 manuscript)",
+  "source_file": "manuscript.tex",
+  "source_hash": "sha256:ff582d8aa7352b2de6f6e3b3cafc8ab0cfb74119a5ca6e5c575baff0ce1f89bf",
+  "source_stats": {
+    "lines": 3368,
+    "bytes": 189841,
+    "sections": 6,
+    "equations": 47,
+    "citations": 54
+  },
+  "expected_extraction": {
+    "concepts": 1113,
+    "concepts_tolerance": 50,
+    "extraction_mode": "live_model"
+  },
+  "expected_planning": {
+    "units": 50,
+    "units_tolerance": 10,
+    "max_unit_gap_kb": 10,
+    "expected_overlaps": 0,
+    "contiguity_required": true
+  },
+  "expected_rewrite": {
+    "correspondence_ratio": 1.0,
+    "units_failed": 0,
+    "timeout_seconds": 3600
+  },
+  "expected_preflight": {
+    "status": "pass",
+    "units_blocked": 0
+  },
+  "expected_assembly": {
+    "assembly_complete": true,
+    "patches_failed": 0,
+    "coverage_percent_min": 95.0,
+    "byte_identity_required": true
+  },
+  "expected_artifacts": [
+    ".humanvoice/inventory/baseline.json",
+    ".humanvoice/inventory/concepts.jsonl",
+    ".humanvoice/inventory/spans.jsonl",
+    ".humanvoice/plans/plan-*.json",
+    ".humanvoice/rewrites/unit-*.json",
+    ".humanvoice/assembled/assembled.tex",
+    ".humanvoice/assembled/assembly_result.json"
+  ],
+  "critical_concepts": [
+    "zero_lower_bound",
+    "hamiltonian_monte_carlo",
+    "particle_filter",
+    "dsge_model",
+    "monetary_policy"
+  ],
+  "test_configuration": {
+    "cost_per_run_usd": 10,
+    "time_limit_minutes": 30,
+    "requires_live_model": true,
+    "ci_schedule": "nightly"
+  }
+}

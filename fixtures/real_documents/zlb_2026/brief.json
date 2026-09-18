@@ -1,0 +1,9 @@
+{
+  "reader_role": "graduate_student",
+  "decision_type": "research",
+  "time_available_minutes": 60,
+  "prior_knowledge": "graduate_level",
+  "success_criteria": "understand_key_concepts",
+  "genre": "technical",
+  "remote_inference_authorized": true
+}

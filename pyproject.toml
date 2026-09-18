@@ -29,3 +29,10 @@ dev = [
 [tool.setuptools]
 packages = ["humanvoice"]
 package-dir = {"" = "src"}
+
+[tool.pytest.ini_options]
+markers = [
+    "real: Tests using real manuscript fixtures",
+    "expensive: Tests taking >5 minutes or costing >$1",
+    "requires_model: Tests requiring live model access",
+]
