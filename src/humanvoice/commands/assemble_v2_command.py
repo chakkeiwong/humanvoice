@@ -64,12 +64,21 @@ def _load_unit_result(snapshot_dir: Path, unit_id: str) -> Dict:
         return json.load(f)
 
 
-def _collect_patches(snapshot_dir: Path, session: Dict) -> List[SourcePatch]:
+def _collect_patches(snapshot_dir: Path, session: Dict, allow_incomplete: bool = False) -> tuple:
     """Collect all patches from completed units.
 
     Each unit produces one patch covering its span range with the rewritten text.
+
+    Args:
+        snapshot_dir: Snapshot directory
+        session: Rewrite session metadata
+        allow_incomplete: If True, skip units where is_acceptable=False
+
+    Returns:
+        (patches, skipped_units): List of patches and list of unit IDs that were skipped
     """
     patches = []
+    skipped_units = []
 
     # Load spans to get byte offsets
     spans_path = snapshot_dir / ".humanvoice" / "inventory" / "spans.jsonl"
@@ -87,6 +96,16 @@ def _collect_patches(snapshot_dir: Path, session: Dict) -> List[SourcePatch]:
         try:
             result = _load_unit_result(snapshot_dir, unit_id)
 
+            # Check if unit is acceptable
+            is_acceptable = result.get("is_acceptable", True)
+            if not is_acceptable:
+                if allow_incomplete:
+                    skipped_units.append(unit_id)
+                    continue
+                else:
+                    print(f"Error: Unit {unit_id} has is_acceptable=False (use --allow-incomplete to skip)", file=sys.stderr)
+                    sys.exit(3)
+
             # Unit covers multiple source spans - find the byte range
             source_span_ids = result.get("source_span_ids", [])
             if not source_span_ids:
@@ -101,11 +120,26 @@ def _collect_patches(snapshot_dir: Path, session: Dict) -> List[SourcePatch]:
             if not unit_spans:
                 continue
 
+            # Sort spans by byte position to check contiguity
+            sorted_spans = sorted(unit_spans, key=lambda s: s["byte_start"])
+
+            # Verify unit contiguity (should be guaranteed by planner)
+            max_gap_kb = 10
+            for i in range(len(sorted_spans) - 1):
+                gap = sorted_spans[i+1]["byte_start"] - sorted_spans[i]["byte_end"]
+                if gap > max_gap_kb * 1024:
+                    print(
+                        f"Error: Unit {unit_id} has non-contiguous spans (gap: {gap} bytes). "
+                        "This should have been caught by planner validation.",
+                        file=sys.stderr
+                    )
+                    sys.exit(4)
+
             # Find min start and max end byte offset
             start_offset = min(s["byte_start"] for s in unit_spans)
             end_offset = max(s["byte_end"] for s in unit_spans)
 
-            # Get original text from source file
+            # Get original text from full byte range (including gaps between spans)
             source_file = unit_spans[0]["source_file"]
             source_path = snapshot_dir / "source" / source_file
             with open(source_path, 'rb') as f:
@@ -135,7 +169,7 @@ def _collect_patches(snapshot_dir: Path, session: Dict) -> List[SourcePatch]:
             print(f"Error processing {unit_id}: {e}", file=sys.stderr)
             sys.exit(4)
 
-    return patches
+    return patches, skipped_units
 
 
 def _load_original_source(snapshot_dir: Path, manifest: Dict) -> str:
@@ -182,10 +216,19 @@ def run(args) -> int:
             return 3
 
         # Collect patches from all completed units
-        patches = _collect_patches(snapshot_dir, session)
+        allow_incomplete = getattr(args, 'allow_incomplete', False)
+        patches, skipped_units = _collect_patches(snapshot_dir, session, allow_incomplete)
+
+        if skipped_units:
+            print(f"\nPartial assembly mode: skipping {len(skipped_units)} failed units")
+            for unit_id in skipped_units:
+                print(f"  Skipped: {unit_id}")
 
         if not patches:
-            print("Warning: No patches to apply (units completed but produced no patches)")
+            if skipped_units and allow_incomplete:
+                print("Warning: All units were skipped (no patches to apply)")
+            else:
+                print("Warning: No patches to apply (units completed but produced no patches)")
             # This is valid — units might have zero changes
 
         # Apply patches
@@ -274,9 +317,10 @@ def run(args) -> int:
             revised_source_hash=sha256(revised_source.encode()).hexdigest(),
             untouched_bytes_count=untouched_bytes_count,
             revised_bytes_count=len(revised_source),
-            assembly_complete=len(failed_patches) == 0,
+            assembly_complete=len(failed_patches) == 0 and len(skipped_units) == 0,
             blackline_status=blackline_status,
             blackline_errors=blackline_errors if blackline_errors else None,
+            skipped_units=skipped_units if skipped_units else None,
         )
 
         result_path = output_dir / "assembly_result.json"
@@ -285,6 +329,8 @@ def run(args) -> int:
         print(f"\nAssembly complete:")
         print(f"  Output: {output_path}")
         print(f"  Patches applied: {result.patches_applied}/{result.total_patches}")
+        if skipped_units:
+            print(f"  Units skipped: {len(skipped_units)}")
         print(f"  Byte identity: {result.untouched_bytes_count}/{len(original_source)} bytes unchanged")
         print(f"  Blackline: {blackline_status}")
         print(f"  Result: {result_path}")
