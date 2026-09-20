@@ -401,6 +401,84 @@ def run(args) -> int:
         if merge_decisions:
             print(f"  Merged {len(merge_decisions)} duplicate pairs", file=sys.stderr)
 
+        # Phase 1: Validate concept locality
+        print(f"  Validating concept locality (max span range: 10KB)...", file=sys.stderr)
+        from humanvoice.concept_locality import (
+            validate_all_concepts_locality,
+            build_span_position_map,
+        )
+
+        # Build span position map from spans.jsonl
+        span_offsets = build_span_position_map(str(spans_path))
+
+        # Validate all concepts
+        valid_concepts, invalid_concepts = validate_all_concepts_locality(
+            reconciled_concepts,
+            span_offsets,
+            max_span_range_kb=10
+        )
+
+        if invalid_concepts:
+            print(f"  WARNING: {len(invalid_concepts)} concepts exceed locality threshold:", file=sys.stderr)
+            for item in invalid_concepts[:5]:  # Show first 5
+                concept_id = item['concept_id']
+                span_range_kb = item['span_range_bytes'] / 1024 if item['span_range_bytes'] else 0
+                print(f"    - {concept_id}: {span_range_kb:.1f}KB span range", file=sys.stderr)
+            if len(invalid_concepts) > 5:
+                print(f"    ... and {len(invalid_concepts) - 5} more", file=sys.stderr)
+            print(f"  Using {len(valid_concepts)} concepts that meet locality threshold", file=sys.stderr)
+        else:
+            print(f"  ✓ All {len(valid_concepts)} concepts meet locality threshold", file=sys.stderr)
+
+        # Validate span existence
+        print(f"  Validating span existence...", file=sys.stderr)
+
+        # Load span ID set from spans.jsonl
+        span_ids_in_inventory = set()
+        with open(spans_path, 'r') as f:
+            for line in f:
+                if line.strip():
+                    record = json.loads(line)
+                    span_ids_in_inventory.add(record['record_id'])
+
+        # Filter concepts: must have at least one valid source span
+        concepts_with_spans = []
+        filtered_no_source_spans = []
+        filtered_invalid_spans = []
+
+        for concept in valid_concepts:
+            # Check if any source_span_ids exist in inventory
+            valid_source_spans = [
+                sid for sid in concept.source_span_ids
+                if sid in span_ids_in_inventory
+            ]
+
+            if valid_source_spans:
+                # Keep concept
+                concepts_with_spans.append(concept)
+            else:
+                # Reject concept
+                if len(concept.source_span_ids) == 0:
+                    filtered_no_source_spans.append(concept.concept_id)
+                else:
+                    filtered_invalid_spans.append(concept.concept_id)
+
+        # Report filtering
+        if filtered_no_source_spans:
+            print(f"  Filtered {len(filtered_no_source_spans)} concepts with no source_span_ids", file=sys.stderr)
+        if filtered_invalid_spans:
+            print(f"  Filtered {len(filtered_invalid_spans)} concepts with invalid span IDs", file=sys.stderr)
+
+        # Use filtered concepts for baseline
+        reconciled_concepts = concepts_with_spans
+
+        # Exit with error if no valid concepts remain
+        if not reconciled_concepts:
+            print(f"Error: No concepts with valid source spans remain", file=sys.stderr)
+            return 4
+
+        print(f"  ✓ {len(reconciled_concepts)} concepts with valid source spans", file=sys.stderr)
+
         # Convert ConceptCandidate objects to ConceptBaselineEntry objects
         baseline_entries = []
         for concept in reconciled_concepts:
@@ -437,6 +515,21 @@ def run(args) -> int:
         # Save complete baseline
         baseline_path = inventory_dir / "baseline.json"
         save_baseline(baseline, baseline_path)
+
+        # Print extraction quality metrics
+        total_extracted = len(reconciled_concepts_after_dedup)
+        total_filtered_locality = len(invalid_concepts) if invalid_concepts else 0
+        total_filtered_no_spans = len(filtered_no_source_spans)
+        total_filtered_invalid_spans = len(filtered_invalid_spans)
+        retention_rate = (len(reconciled_concepts) / total_extracted * 100) if total_extracted > 0 else 0
+
+        print(f"", file=sys.stderr)
+        print(f"Extraction quality:", file=sys.stderr)
+        print(f"  Retention rate: {retention_rate:.1f}%", file=sys.stderr)
+        print(f"  Filtered (no source spans): {total_filtered_no_spans}", file=sys.stderr)
+        print(f"  Filtered (invalid span IDs): {total_filtered_invalid_spans}", file=sys.stderr)
+        print(f"  Filtered (locality >10KB): {total_filtered_locality}", file=sys.stderr)
+        print(f"", file=sys.stderr)
 
         print(f"Baseline frozen: {baseline.baseline_hash[:16]}...", file=sys.stderr)
         print(f"Wrote baseline to {baseline_path.relative_to(snapshot_dir)}", file=sys.stderr)

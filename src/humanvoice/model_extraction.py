@@ -89,9 +89,15 @@ For each concept:
 1. Identify the proposition (what is being taught)
 2. Classify the concept type
 3. Note the teaching role (initial, repeated, expanded, contrasted)
-4. Link to source span IDs
+4. Link to source span IDs — ONLY the minimal spans that directly state this concept
 5. List supporting span IDs (for evidence, equations, citations)
 6. State confidence (0.0-1.0)
+
+CRITICAL: source_span_ids must be DISJOINT across concepts.
+- If multiple concepts come from one long span, you must identify which sentences/clauses ground each concept
+- Each span ID should appear in exactly ONE concept's source_span_ids
+- If a span provides context but not the core claim, use supporting_spans instead
+- When in doubt, assign the span to the most specific concept
 
 Abstain (return empty list) if:
 - Source is purely structural (headings, labels, navigation)
@@ -102,7 +108,7 @@ Return a JSON array of objects with these fields:
 - concept_id: string (unique identifier)
 - proposition: string (the actual concept/claim being taught)
 - concept_type: string (definition|distinction|claim|mechanism|derivation|finding|example|counterexample)
-- source_span_ids: array of strings (span IDs this concept comes from)
+- source_span_ids: array of strings (span IDs where this concept is directly stated)
 - teaching_roles: array of strings (initial|repeated|qualified|contrasted|example|prerequisite)
 - supporting_spans: array of strings (span IDs providing evidence/support)
 - prerequisites: array of strings (concepts reader needs first)
@@ -114,11 +120,21 @@ Example response format:
     "concept_id": "concept-001",
     "proposition": "Zero lower bound constrains monetary policy when nominal rates approach zero",
     "concept_type": "claim",
-    "source_span_ids": ["span-001", "span-002"],
+    "source_span_ids": ["span-001"],
     "teaching_roles": ["initial"],
-    "supporting_spans": [],
+    "supporting_spans": ["span-002"],
     "prerequisites": ["monetary_policy_basics"],
     "confidence": 0.9
+  }},
+  {{
+    "concept_id": "concept-002",
+    "proposition": "When rates hit zero, central banks lose their primary policy lever",
+    "concept_type": "mechanism",
+    "source_span_ids": ["span-002"],
+    "teaching_roles": ["initial"],
+    "supporting_spans": [],
+    "prerequisites": ["concept-001"],
+    "confidence": 0.85
   }}
 ]"""
 
@@ -195,6 +211,55 @@ For each span:
 Skip spans with kind "whitespace", "command", "float" (these are structural).
 
 Return JSON array of CoverageVerdict records."""
+
+
+def validate_concept_locality(
+    concept: ConceptCandidate,
+    span_offsets: dict[str, dict],
+    max_span_range_kb: int = 10
+) -> tuple[bool, Optional[str]]:
+    """
+    Validate that all spans for a concept are within max_span_range_kb of each other.
+
+    This enforces the "concept locality" requirement: concepts should reference
+    spans that are close together in the source document, not scattered across
+    140KB gaps (which breaks assembly).
+
+    Args:
+        concept: Concept to validate
+        span_offsets: Map of span_id -> {byte_start, byte_end}
+        max_span_range_kb: Maximum distance in KB from first to last span
+
+    Returns:
+        (is_valid, failure_reason)
+        - (True, None) if valid
+        - (False, reason_string) if invalid
+    """
+    if not concept.source_span_ids:
+        return False, "no_source_spans"
+
+    # Get byte positions for all spans
+    positions = []
+    for span_id in concept.source_span_ids:
+        if span_id not in span_offsets:
+            return False, f"span_id_not_found: {span_id}"
+
+        span = span_offsets[span_id]
+        positions.append((span['byte_start'], span['byte_end']))
+
+    # Sort by start position
+    positions.sort()
+
+    # Calculate total range (first start to last end)
+    first_start = positions[0][0]
+    last_end = positions[-1][1]
+    total_range = last_end - first_start
+    max_range_bytes = max_span_range_kb * 1024
+
+    if total_range > max_range_bytes:
+        return False, f"span_range_exceeds_threshold: {total_range} bytes > {max_range_bytes} bytes ({total_range/1024:.1f}KB > {max_span_range_kb}KB)"
+
+    return True, None
 
 
 def extract_concepts_from_window(
