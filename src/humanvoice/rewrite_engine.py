@@ -47,8 +47,9 @@ class RewriteResult:
     """Output of rewriting one unit."""
     unit_id: str
     source_span_ids: list[str]
-    output_latex: str
-    output_hash: str
+    input_concept_ids: list[str] = field(default_factory=list)  # Concepts this unit should preserve
+    output_latex: str = ""
+    output_hash: str = ""
     concept_correspondences: list[ConceptCorrespondence] = field(default_factory=list)
     fulfilled_obligations: list[ExplanationObligation] = field(default_factory=list)
     unmet_obligations: list[ExplanationObligation] = field(default_factory=list)
@@ -83,8 +84,9 @@ def build_rewrite_context(
     Returns:
         Dict with all context needed by rewriter
     """
-    # Collect source text
-    source_text = "\n".join(
+    # Collect source text by concatenating span texts directly
+    # (no inserted separators - spans already contain original spacing)
+    source_text = "".join(
         source_texts.get(sid, "") for sid in unit.source_span_ids
     )
 
@@ -262,11 +264,10 @@ def rewrite_unit(
     prompt_hash = sha256(prompt.encode()).hexdigest()
 
     try:
-        # Call model
+        # Call model (use profile's max_output_tokens_per_unit)
         response = model.invoke(
             prompt=prompt,
             record_type=None,
-            max_tokens=8000,
         )
 
         # Debug: Log raw response
@@ -280,6 +281,7 @@ def rewrite_unit(
             return RewriteResult(
                 unit_id=unit.unit_id,
                 source_span_ids=unit.source_span_ids,
+                input_concept_ids=unit.concept_ids,
                 output_latex="",
                 output_hash="",
                 rejection_reasons=[response.abstention],
@@ -293,6 +295,7 @@ def rewrite_unit(
             return RewriteResult(
                 unit_id=unit.unit_id,
                 source_span_ids=unit.source_span_ids,
+                input_concept_ids=unit.concept_ids,
                 output_latex="",
                 output_hash="",
                 rejection_reasons=[f"json_decode_failed: {e}"],
@@ -303,6 +306,7 @@ def rewrite_unit(
             return RewriteResult(
                 unit_id=unit.unit_id,
                 source_span_ids=unit.source_span_ids,
+                input_concept_ids=unit.concept_ids,
                 output_latex="",
                 output_hash="",
                 rejection_reasons=["expected_dict_got_other"],
@@ -324,6 +328,26 @@ def rewrite_unit(
                 rationale=corr_data.get("rationale"),
             ))
 
+        # Validate: All required concepts must be mapped
+        # The model is instructed to REJECT if it cannot preserve all concepts,
+        # but we enforce this constraint here to catch non-compliance immediately.
+        required_concept_ids = set(unit.concept_ids)
+        mapped_concept_ids = {c.source_concept_id for c in correspondences}
+        missing_concepts = required_concept_ids - mapped_concept_ids
+
+        if missing_concepts:
+            return RewriteResult(
+                unit_id=unit.unit_id,
+                source_span_ids=unit.source_span_ids,
+                input_concept_ids=unit.concept_ids,
+                output_latex="",
+                output_hash="",
+                rejection_reasons=[
+                    f"incomplete_concept_mapping: {len(missing_concepts)} concepts not mapped: {sorted(missing_concepts)}"
+                ],
+                is_acceptable=False,
+            )
+
         # Verify mutation safety
         result = verify_mutation_safety(
             unit=unit,
@@ -335,6 +359,7 @@ def rewrite_unit(
 
         result.unit_id = unit.unit_id
         result.source_span_ids = unit.source_span_ids
+        result.input_concept_ids = unit.concept_ids
         result.output_latex = output_latex
         result.output_hash = output_hash
         result.concept_correspondences = correspondences
@@ -345,6 +370,7 @@ def rewrite_unit(
         return RewriteResult(
             unit_id=unit.unit_id,
             source_span_ids=unit.source_span_ids,
+            input_concept_ids=unit.concept_ids,
             output_latex="",
             output_hash="",
             rejection_reasons=[f"rewrite_failed: {str(e)}"],
@@ -381,6 +407,7 @@ def verify_mutation_safety(
     result = RewriteResult(
         unit_id=unit.unit_id,
         source_span_ids=unit.source_span_ids,
+        input_concept_ids=unit.concept_ids,
         output_latex=output_latex,
         output_hash=sha256(output_latex.encode()).hexdigest(),
         protected_objects_preserved=protected_objects_preserved,

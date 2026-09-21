@@ -79,26 +79,44 @@ def run_rewrite_phase(
     print(f"  Mock mode: {mock}", file=sys.stderr)
     print(f"", file=sys.stderr)
 
+    # Retry configuration: allow up to 2 attempts per unit
+    MAX_RETRIES = 2
+
     for i, unit in enumerate(session.units_to_rewrite, 1):
         print(f"  Unit {i}/{len(session.units_to_rewrite)}: {unit.unit_id}", file=sys.stderr)
 
-        if mock:
-            # Mock rewrite for testing
-            result = _mock_rewrite_unit(unit, baseline)
-        else:
-            # Real rewrite
-            result = rewrite_unit(
-                unit=unit,
-                baseline=baseline,
-                plan=plan,
-                model=model,
-                source_texts=source_texts,
-                protected_objects=protected_objects,
-                brief=brief,
-                policy_snapshot=policy_snapshot,
-            )
+        # Retry loop: attempt rewrite up to MAX_RETRIES times
+        result = None
+        for attempt in range(MAX_RETRIES):
+            if mock:
+                # Mock rewrite for testing
+                result = _mock_rewrite_unit(unit, baseline)
+            else:
+                # Real rewrite
+                result = rewrite_unit(
+                    unit=unit,
+                    baseline=baseline,
+                    plan=plan,
+                    model=model,
+                    source_texts=source_texts,
+                    protected_objects=protected_objects,
+                    brief=brief,
+                    policy_snapshot=policy_snapshot,
+                )
 
-        # Save result
+            # If acceptable, break out of retry loop
+            if result.is_acceptable:
+                break
+
+            # If not acceptable and retries remain, log and retry
+            if attempt < MAX_RETRIES - 1:
+                reason_preview = result.rejection_reasons[0] if result.rejection_reasons else "unknown"
+                # Truncate reason to first 80 chars for readability
+                if len(reason_preview) > 80:
+                    reason_preview = reason_preview[:77] + "..."
+                print(f"    Retry {attempt + 1}/{MAX_RETRIES - 1}: {reason_preview}", file=sys.stderr)
+
+        # Save final result (whether acceptable or not)
         result_path = snapshot_dir / ".humanvoice" / "rewrites" / f"{unit.unit_id}.json"
         save_rewrite_result(result, result_path)
 
@@ -201,6 +219,7 @@ def _mock_rewrite_unit(unit, baseline):
     result = RewriteResult(
         unit_id=unit.unit_id,
         source_span_ids=unit.source_span_ids,
+        input_concept_ids=unit.concept_ids,
         output_latex=output_latex,
         output_hash=sha256(output_latex.encode()).hexdigest(),
         concept_correspondences=correspondences,
