@@ -517,11 +517,12 @@ def run(args) -> int:
         save_baseline(baseline, baseline_path)
 
         # Print extraction quality metrics
-        total_extracted = len(reconciled_concepts_after_dedup)
+        total_after_dedup = len(all_concepts)  # Before reconciliation
+        total_after_reconcile = baseline.total_concepts  # After all filtering
         total_filtered_locality = len(invalid_concepts) if invalid_concepts else 0
         total_filtered_no_spans = len(filtered_no_source_spans)
         total_filtered_invalid_spans = len(filtered_invalid_spans)
-        retention_rate = (len(reconciled_concepts) / total_extracted * 100) if total_extracted > 0 else 0
+        retention_rate = (total_after_reconcile / total_after_dedup * 100) if total_after_dedup > 0 else 0
 
         print(f"", file=sys.stderr)
         print(f"Extraction quality:", file=sys.stderr)
