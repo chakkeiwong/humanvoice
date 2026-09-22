@@ -13,12 +13,15 @@ Critical properties:
 
 import json
 from dataclasses import dataclass, field
-from typing import Optional
+from typing import Optional, Tuple
 from hashlib import sha256
+import logging
 
 from humanvoice.model import ModelAdapter, ModelResponse
 from humanvoice.schemas import SchemaRegistry
 from humanvoice.concept_extraction import ConceptCandidate, ExtractionWindow
+
+logger = logging.getLogger(__name__)
 
 
 @dataclass
@@ -49,6 +52,67 @@ class CoverageVerdict:
     verdict: str  # "covered" | "gap" | "unresolved"
     explanation: str
     mapped_concept_ids: list[str] = field(default_factory=list)
+
+
+def validate_concept_locality(
+    concept: ConceptCandidate,
+    span_index: dict[str, dict[str, int]],
+    max_span_range_kb: int = 10
+) -> Tuple[bool, Optional[str]]:
+    """
+    Validate that all spans for a concept are within max_span_range_kb.
+
+    Enforces the concept locality constraint: concepts should reference
+    spans that are close together in the source document, not scattered
+    across the entire document.
+
+    Args:
+        concept: ConceptCandidate object to validate
+        span_index: Dict mapping span_id -> {'byte_start': int, 'byte_end': int}
+        max_span_range_kb: Maximum allowed range in KB (default 10)
+
+    Returns:
+        (is_valid, failure_reason)
+        - (True, None) if valid
+        - (False, reason_string) if invalid
+
+    Example:
+        >>> concept = ConceptCandidate(source_span_ids=["span-1", "span-2"])
+        >>> span_index = {
+        ...     "span-1": {"byte_start": 1000, "byte_end": 1500},
+        ...     "span-2": {"byte_start": 2000, "byte_end": 2500}
+        ... }
+        >>> validate_concept_locality(concept, span_index, max_span_range_kb=10)
+        (True, None)
+    """
+    source_span_ids = concept.source_span_ids
+
+    if not source_span_ids:
+        # Concept with no spans should have been filtered at extraction
+        return False, "no_source_spans"
+
+    # Get byte positions for all spans
+    positions = []
+    for span_id in source_span_ids:
+        if span_id not in span_index:
+            return False, f"span_not_found: {span_id}"
+
+        span = span_index[span_id]
+        positions.append((span['byte_start'], span['byte_end']))
+
+    # Sort by start position
+    positions.sort()
+
+    # Calculate total range (first start to last end)
+    first_start = positions[0][0]
+    last_end = positions[-1][1]
+    total_range_bytes = last_end - first_start
+    max_range_bytes = max_span_range_kb * 1024
+
+    if total_range_bytes > max_range_bytes:
+        return False, f"span_range_too_large: {total_range_bytes} bytes > {max_range_bytes} bytes"
+
+    return True, None
 
 
 def _extraction_prompt(window: ExtractionWindow, brief: dict, adjacent_context: dict, span_texts: dict) -> str:
@@ -269,6 +333,7 @@ def extract_concepts_from_window(
     registry: SchemaRegistry,
     adjacent_context: Optional[dict] = None,
     span_texts: Optional[dict] = None,
+    span_index: Optional[dict] = None,
 ) -> ExtractionResult:
     """Extract concepts from one window with model assistance.
 
@@ -279,6 +344,7 @@ def extract_concepts_from_window(
         registry: Schema registry for validation
         adjacent_context: Previously accepted terminology (optional)
         span_texts: Map of span_id -> exact text (optional)
+        span_index: Map of span_id -> {'byte_start': int, 'byte_end': int} (optional)
 
     Returns:
         ExtractionResult with concepts or abstentions
@@ -352,13 +418,41 @@ def extract_concepts_from_window(
             )
             concepts.append(concept)
 
-        return ExtractionResult(
-            window_index=window.span_ids[0] if window.span_ids else 0,
-            concepts=concepts,
-            abstentions=[],
-            prompt_hash=prompt_hash,
-            model_response=response,
-        )
+        # Validate concept locality before returning (if span_index provided)
+        if span_index:
+            validated_concepts = []
+            rejected_concepts = []
+
+            for concept in concepts:
+                is_valid, reason = validate_concept_locality(
+                    concept,
+                    span_index,
+                    max_span_range_kb=10
+                )
+                if is_valid:
+                    validated_concepts.append(concept)
+                else:
+                    rejected_concepts.append((concept.concept_id, reason))
+                    logger.warning(f"Rejected concept {concept.concept_id}: {reason}")
+
+            abstentions = [f"locality_violation: {c[0]} - {c[1]}" for c in rejected_concepts] if rejected_concepts else []
+
+            return ExtractionResult(
+                window_index=window.span_ids[0] if window.span_ids else 0,
+                concepts=validated_concepts,
+                abstentions=abstentions,
+                prompt_hash=prompt_hash,
+                model_response=response,
+            )
+        else:
+            # No span_index provided, skip locality validation
+            return ExtractionResult(
+                window_index=window.span_ids[0] if window.span_ids else 0,
+                concepts=concepts,
+                abstentions=[],
+                prompt_hash=prompt_hash,
+                model_response=response,
+            )
 
     except Exception as e:
         return ExtractionResult(

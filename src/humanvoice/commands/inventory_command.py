@@ -244,6 +244,8 @@ def run(args) -> int:
     if model and registry:
         # Build span_id -> text map by reading source files
         span_texts = {}
+        # Build span_id -> byte position map for locality validation
+        span_index = {}
         for rel_path, spans in by_file.items():
             source_file = source_dir / rel_path
             try:
@@ -255,6 +257,7 @@ def run(args) -> int:
                         byte_start = span_dict['byte_start']
                         byte_end = span_dict['byte_end']
                         span_texts[span_id] = file_bytes[byte_start:byte_end].decode('utf-8', errors='replace')
+                        span_index[span_id] = {'byte_start': byte_start, 'byte_end': byte_end}
             except Exception as e:
                 print(f"  Warning: Could not read source file {rel_path}: {e}", file=sys.stderr)
 
@@ -268,6 +271,7 @@ def run(args) -> int:
                 model=model,
                 registry=registry,
                 span_texts=span_texts,
+                span_index=span_index,
             )
 
             if result.abstentions:
