@@ -1,30 +1,35 @@
 # Ensemble implementation and evaluation master program
 
-Operational refresh, 19 October 2026: master 3.28 / ensemble 118.
-The [identifier correction and continuation](WRITER_IDENTIFIER_REPAIR_2026-10-19.md) preserves all spent writer responses.
+Operational refresh, 20 October 2026: master 3.29 / ensemble 119.
+The [bounded review-request recovery](REVIEW_REQUEST_RECOVERY_2026-10-20.md) preserves all completed work.
 Only final acceptance of the immutable actual ZLB output requires human content review.
 
 <!-- current-benchmark-execution -->
-Current execution: master 3.28 / ensemble 118; observed 2026-10-19T10:48:37.181089+00:00.
-Status: writer_identifier_ready. Repair: docs/plans/WRITER_IDENTIFIER_REPAIR_2026-10-19.md.
-Held-out writers 001-013 are accepted and retained. Unit-014 has one malformed concept identifier.
-Correct only the uniquely matched deletion in its identifier; preserve manuscript text, evidence spans and the original provider response.
-Derive a separate bound result, replay unchanged native checks, and keep the original rejected attempt and receipt.
-The isolated continuation performs 14 unit reviews and 27 assembled reviews, with 15 existing transport extras (56 maximum attempts).
-No writer response is purchased again; no human intermediate review or additional Claude call is required.
+Current execution: master 3.29 / ensemble 119; refreshed 20 October 2026 Shanghai.
+Status: review_request_validation. Repair: docs/plans/REVIEW_REQUEST_RECOVERY_2026-10-20.md.
+All fourteen held-out writers are retained, including the verified identifier derivation.
+The first independent review returned no answer or usage. Its gateway reported an unprocessed request.
+Its model/profile/schema/instructions match earlier successful reviews; the exact gateway cause remains unknown.
+Verify native failure evidence and the successful contract, then independently probe the unchanged request with provider calls disabled.
+Permit one diagnostic retry after 900 seconds; repeated unprocessed-request errors stop.
+Preserve the failed receipt, its 544,000-token unknown charge, and all pre-transmission denial evidence.
+Require 14 unit reviews and 27 assembled reviews, with 14 remaining transport extras: 55 maximum new attempts.
+Stop immediately after an unresolved review invocation and expose its actual provider diagnostic.
+No completed response is purchased again; no intermediate human or Claude review is required.
 Writer acceptance remains 100,000 input / 32,000 output; proven size failures split to depth 3 with at most 14 children per root.
 Use 16 independent verification workers; provider calls and accounting remain sequential.
 Eligible response-free network failures wait 900 seconds. Audits remain 900 seconds/$4.
-Calls: 694/2000 used; 1306 available; 0 reserved.
-Settlements: 198/198; token ceiling 274,048,487/600,000,000.
+Calls: 695/2000 used; 1305 available; 0 reserved.
+Settlements: 199/199; token ceiling 274,592,487/600,000,000.
 Historical failed receipts and unknown charges remain unchanged. SSD is working storage; soft is archive-only.
 Read historical evidence through checksum-bound archive aliases; preserve logical paths and all native content checks.
 Archived evidence remains read-only; new execution and its outputs stay on SSD.
 Remaining: held-out independent reviews and reproduction verification; full ZLB inventory/humanization/review/release;
 independent ZLB reproduction; automatic final admission; human acceptance of the immutable actual ZLB output.
 Every phase boundary or stop: inspect, settle, independently verify, repair prospectively, refresh both masters, continue eligible work.
-Next: Identifier repair frozen; resume independent reviews and the full ZLB sequence.
-Stop: none.
+Next: Complete regressions, commit the repair, and supervise diagnosis/probe/freeze before live continuation.
+Last stop: 19 October 23:14 Shanghai; first independent review failed with no response or reported usage.
+Provider cause: stream disconnected before completion: The request could not be processed. Please check the request parameters.
 <!-- end-current-benchmark-execution -->
 
 The following checkpoints are historical.
