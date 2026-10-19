@@ -25,13 +25,13 @@ from tools.parallel_verification_replay import cached_parallel_verification
 BASE, EVIDENCE = continuation.BASE, continuation.EVIDENCE
 PROOF = EVIDENCE / "verification.json"
 REGRESSION = EVIDENCE / "regression.xml"
-PROBE = EVIDENCE / "probe-03/verification.json"
+PROBE = EVIDENCE / "probe-04/verification.json"
 PLAN = "docs/plans/WRITER_IDENTIFIER_REPAIR_2026-10-19.md"
 SUFFIX = "writer-identifier-20261019-01"
 GRANT, PROGRESS = previous.previous.GRANT, previous.previous.PROGRESS
 FILES = (*continuation.FILES, "tools/probe_writer_identifier_20261019.py",
          "tools/run_writer_identifier_program_20261019.py", "tools/supervise_writer_identifier_program_20261019.py",
-         "tests/test_writer_identifier_repair.py", PLAN)
+         "tests/test_writer_identifier_repair.py", "tests/test_archive_evidence.py", PLAN)
 ACTIVE = False
 
 
@@ -47,6 +47,10 @@ def proof_inputs():
             or not {"test_identifier_correction_preserves_every_other_field", "test_identifier_correction_rejects_ambiguous_ids",
                     "test_native_identifier_replay_retains_original_response", "test_identifier_controller_routes_and_restores"} <= cases):
         raise ValueError("Identifier repair lacks its required passing regressions")
+    if not {"test_archive_preserves_native_account_reservation_identity",
+            "test_archive_settlement_cache_rechecks_original_bytes", "test_archive_individual_file_and_child_process",
+            "test_archive_rejects_changed_aliases", "test_archive_rejects_unapproved_symlinks"} <= cases:
+        raise ValueError("Identifier repair lacks verified archive regression coverage")
     probe, parent = read_json(PROBE), continuation.predecessor_evidence()
     if (probe["status"] != "pass" or probe["model_calls"] != 0 or probe["workers"] != 16
             or not probe["independent_process"] or probe["retained_writers"] != 13 or probe["derived_writers"] != 1
@@ -90,7 +94,7 @@ def refresh(next_action, stop=None):
     progress = read_json(PROGRESS) if PROGRESS.exists() else {}
     status = ("writer_identifier_stopped" if stop else "writer_identifier_running" if ACTIVE
               else "writer_identifier_ready" if PROOF.exists() else "writer_identifier_preparation")
-    state.update(master_version="3.27", ensemble_version=117, local_date="2026-10-19",
+    state.update(master_version="3.28", ensemble_version=118, local_date="2026-10-19",
         status=status, repair_plan=PLAN, next_action=next_action, stop=stop,
         writer_identifier_cursor=cursor, writer_identifier_execution=read_json(PROOF) if PROOF.exists() else None,
         resume_controller=str(Path(__file__).relative_to(ROOT)) if PROOF.exists() else None,
@@ -111,7 +115,7 @@ def refresh(next_action, stop=None):
             phase["status"] = "completed"
     if progress.get("final_admission"):
         state.update(status="awaiting_final_immutable_ZLB_acceptance", resume_controller=None, active_model_execution=None)
-    note = (f"\nCurrent execution: master 3.27 / ensemble 117; observed {datetime.now(timezone.utc).isoformat()}.\n"
+    note = (f"\nCurrent execution: master 3.28 / ensemble 118; observed {datetime.now(timezone.utc).isoformat()}.\n"
         f"Status: {state['status']}. Repair: {PLAN}.\n"
         "Held-out writers 001-013 are accepted and retained. Unit-014 has one malformed concept identifier.\n"
         "Correct only the uniquely matched deletion in its identifier; preserve manuscript text, evidence spans and the original provider response.\n"
@@ -125,6 +129,8 @@ def refresh(next_action, stop=None):
         f"{grant['used']}/{grant['maximum']} used; {grant['available']} available; {grant['reserved_remaining']} reserved.\n"
         f"Settlements: {len(settled)}/{len(account['plans'])}; token ceiling {account['reservation_ceiling']:,}/{account['allowance']:,}.\n"
         "Historical failed receipts and unknown charges remain unchanged. SSD is working storage; soft is archive-only.\n"
+        "Read historical evidence through checksum-bound archive aliases; preserve logical paths and all native content checks.\n"
+        "Archived evidence remains read-only; new execution and its outputs stay on SSD.\n"
         "Remaining: held-out independent reviews and reproduction verification; full ZLB inventory/humanization/review/release;\n"
         "independent ZLB reproduction; automatic final admission; human acceptance of the immutable actual ZLB output.\n"
         "Every phase boundary or stop: inspect, settle, independently verify, repair prospectively, refresh both masters, continue eligible work.\n"
@@ -135,7 +141,7 @@ def refresh(next_action, stop=None):
         content = path.read_text()
         heading, _ = content.split("\n", 1)
         _, tail = content.split("<!-- end-current-benchmark-execution -->", 1)
-        intro = ("\nOperational refresh, 19 October 2026: master 3.27 / ensemble 117.\n"
+        intro = ("\nOperational refresh, 19 October 2026: master 3.28 / ensemble 118.\n"
                  "The [identifier correction and continuation](WRITER_IDENTIFIER_REPAIR_2026-10-19.md) preserves all spent writer responses.\n"
                  "Only final acceptance of the immutable actual ZLB output requires human content review.\n\n")
         path.write_text(heading + "\n" + intro + "<!-- current-benchmark-execution -->" + note
@@ -197,6 +203,8 @@ def benchmark_chain(name, row, campaign, bounds):
 def run():
     global ACTIVE
     with ExitStack() as bindings:
+        bindings.callback(setattr, scope, "RUNNER", scope.RUNNER)
+        scope.RUNNER = ROOT / "tools/writer_identifier_runner.py"
         for name, value in (("refresh", refresh), ("continuation", continuation), ("benchmark_chain", benchmark_chain),
                             ("recovery_command", recovery_command), ("EVIDENCE", EVIDENCE)):
             bindings.callback(setattr, previous, name, getattr(previous, name))
@@ -221,7 +229,7 @@ def main():
         try:
             continuation.ensure_execution_paths()
         except ValueError as error:
-            refresh("Restore archived execution dependencies to their original SSD paths; rerun the isolated probe, freeze, commit and resume.",
+            refresh("Verify archive checksums and aliases; rerun the isolated probe, freeze, commit and resume.",
                     str(error))
             raise
         with scope.accounting_scope(), continuation.pipeline(), cached_parallel_verification(
@@ -248,4 +256,5 @@ def main():
 
 
 if __name__ == "__main__":
-    raise SystemExit(main())
+    with continuation.archive.access():
+        raise SystemExit(main())

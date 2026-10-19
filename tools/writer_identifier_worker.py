@@ -32,4 +32,5 @@ def execute(root, *, probe=False):
 
 
 if __name__ == "__main__":
-    raise SystemExit(execute(sys.argv[1], probe="--probe" in sys.argv[2:]))
+    with continuation.archive.access():
+        raise SystemExit(execute(sys.argv[1], probe="--probe" in sys.argv[2:]))

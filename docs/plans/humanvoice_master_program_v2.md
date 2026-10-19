@@ -1,12 +1,12 @@
 # Humanvoice Master Program v2
 
-Operational refresh, 19 October 2026: master 3.27 / ensemble 117.
+Operational refresh, 19 October 2026: master 3.28 / ensemble 118.
 The [identifier correction and continuation](WRITER_IDENTIFIER_REPAIR_2026-10-19.md) preserves all spent writer responses.
 Only final acceptance of the immutable actual ZLB output requires human content review.
 
 <!-- current-benchmark-execution -->
-Current execution: master 3.27 / ensemble 117; observed 2026-10-19T06:19:12.889321+00:00.
-Status: writer_identifier_stopped. Repair: docs/plans/WRITER_IDENTIFIER_REPAIR_2026-10-19.md.
+Current execution: master 3.28 / ensemble 118; observed 2026-10-19T10:48:37.181089+00:00.
+Status: writer_identifier_ready. Repair: docs/plans/WRITER_IDENTIFIER_REPAIR_2026-10-19.md.
 Held-out writers 001-013 are accepted and retained. Unit-014 has one malformed concept identifier.
 Correct only the uniquely matched deletion in its identifier; preserve manuscript text, evidence spans and the original provider response.
 Derive a separate bound result, replay unchanged native checks, and keep the original rejected attempt and receipt.
@@ -15,14 +15,16 @@ No writer response is purchased again; no human intermediate review or additiona
 Writer acceptance remains 100,000 input / 32,000 output; proven size failures split to depth 3 with at most 14 children per root.
 Use 16 independent verification workers; provider calls and accounting remain sequential.
 Eligible response-free network failures wait 900 seconds. Audits remain 900 seconds/$4.
-Calls (last verified; storage-path validation currently blocked): 694/2000 used; 1306 available; 0 reserved.
+Calls: 694/2000 used; 1306 available; 0 reserved.
 Settlements: 198/198; token ceiling 274,048,487/600,000,000.
 Historical failed receipts and unknown charges remain unchanged. SSD is working storage; soft is archive-only.
+Read historical evidence through checksum-bound archive aliases; preserve logical paths and all native content checks.
+Archived evidence remains read-only; new execution and its outputs stay on SSD.
 Remaining: held-out independent reviews and reproduction verification; full ZLB inventory/humanization/review/release;
 independent ZLB reproduction; automatic final admission; human acceptance of the immutable actual ZLB output.
 Every phase boundary or stop: inspect, settle, independently verify, repair prospectively, refresh both masters, continue eligible work.
-Next: Restore archived execution dependencies to their original SSD paths; rerun the isolated probe, freeze, commit and resume.
-Stop: Historical execution dependencies were archived behind symlinks: 45 paths; restore original SSD directories before execution (baseline-dependency-replay-20261013, bounded-writer-recovery-20261013, critic-transport-continuation-20261013).
+Next: Identifier repair frozen; resume independent reviews and the full ZLB sequence.
+Stop: none.
 <!-- end-current-benchmark-execution -->
 
 The following checkpoints are historical.

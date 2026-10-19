@@ -45,4 +45,6 @@ def main():
 
 
 if __name__ == "__main__":
-    raise SystemExit(main())
+    with continuation.archive.access():
+        scope.RUNNER = Path(__file__).resolve()
+        raise SystemExit(main())

@@ -12,6 +12,7 @@ from pathlib import Path
 from humanvoice import artifacts, automatic_reproduction
 from humanvoice.artifacts import digest, load_session, read_json, validated_session, write_json
 from humanvoice.model import ModelAdapter
+from tools import archive_evidence as archive
 from tools import process_accounting_scope as scope
 from tools import writer_identifier_repair as repair
 from tools import writer_size_continuation as previous
@@ -21,21 +22,21 @@ from tools.math_redline_continuation import require_settled
 ROOT, BASE, PRIOR, EVIDENCE = repair.ROOT, repair.BASE, repair.PRIOR, repair.EVIDENCE
 authority = previous.authority
 VERSION = "writer-identifier-continuation-v1"
-FILES = ("tools/writer_identifier_repair.py", "tools/writer_identifier_continuation.py",
+FILES = ("tools/archive_evidence.py", "tools/writer_identifier_repair.py", "tools/writer_identifier_continuation.py",
          "tools/writer_identifier_worker.py", "tools/writer_identifier_runner.py")
 SETTLEMENT_READER = (previous.verify_settlement,)
 
 
 def ensure_execution_paths(base=BASE):
-    relocated = sorted(path.name for path in Path(base).iterdir() if path.is_symlink())
-    if relocated:
-        raise ValueError("Historical execution dependencies were archived behind symlinks: "
-                         + str(len(relocated)) + " paths; restore original SSD directories before execution ("
-                         + ", ".join(relocated[:3]) + ")")
+    with archive.access():
+        unverified = sorted(path.name for path in Path(base).iterdir() if path.is_symlink())
+        if unverified:
+            raise ValueError("Execution contains unverified archive aliases: " + ", ".join(unverified[:3]))
 
 
 def extension():
     return {"version": VERSION, "policy": repair.POLICY, "diagnostic_identity": repair.report()["identity"],
+            "archive": archive.identity(),
             "files": {name: digest((ROOT / name).read_bytes()) for name in FILES}}
 
 
@@ -246,10 +247,11 @@ def validate_accounted_calls(root, plan, new_calls):
 
 
 def verify_settlement(output):
-    if "writer_identifier_extension" not in read_json(Path(output) / "plan.json"):
-        return SETTLEMENT_READER[0](output)
-    with scope.accounting_scope(), pipeline(), scope.verification_only():
-        return previous.previous.repair.network.SETTLEMENT_READER[0](output)
+    with archive.access():
+        if "writer_identifier_extension" not in read_json(Path(output) / "plan.json"):
+            return SETTLEMENT_READER[0](output)
+        with scope.accounting_scope(), pipeline(), scope.verification_only():
+            return previous.previous.repair.network.SETTLEMENT_READER[0](output)
 
 
 @contextmanager
@@ -257,7 +259,8 @@ def pipeline(*, planning=(), snapshots=(), authorization=previous.previous.repai
     from tools import automatic_reproduction_worker, parallel_verification_replay
 
     enabled = {(str(Path(snapshot).resolve()), stage) for snapshot, stage in planning}
-    with previous.pipeline(planning=planning, snapshots=snapshots, authorization=authorization), repair.consumer_validation():
+    with archive.access(), previous.pipeline(planning=planning, snapshots=snapshots,
+            authorization=authorization), repair.consumer_validation():
         native_plan = previous.previous.repair.manuscript.plan_for
         native_worker_plan = automatic_reproduction_worker.plan_for
         native_command, native_verifier = automatic_reproduction._command, automatic_reproduction.validate_accounted_calls

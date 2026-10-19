@@ -205,7 +205,7 @@ def test_relocated_execution_dependencies_stop_before_spending(tmp_path):
     stages.mkdir()
     continuation.ensure_execution_paths(stages)
     (stages / "held-out-history").symlink_to(archive, target_is_directory=True)
-    with pytest.raises(ValueError, match="restore original SSD directories"):
+    with pytest.raises(ValueError, match="unverified archive aliases"):
         continuation.ensure_execution_paths(stages)
 
 

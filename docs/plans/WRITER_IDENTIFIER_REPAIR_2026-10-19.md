@@ -8,7 +8,7 @@ rows, but one source identifier lost two characters:
 rejected the response. This is outside size splitting and network recovery.
 
 The user authorized repair, master refresh, a git commit and continued execution.
-Master 3.27 / ensemble 117 implements the following bounded continuation:
+Master 3.28 / ensemble 118 implements the following bounded continuation:
 
 1. Independently verify the stopped process, all nine paid receipts, settlement,
    source bindings and the thirteen accepted results. Preserve the sealed stage.
@@ -62,21 +62,33 @@ it does not silently reinterpret future writer responses.
 
 ## Concurrent storage migration
 
-During validation, the separate storage-cleanup-20261019 operation archived
-49 directories in the master execution tree and replaced their original paths
-with symlinks. Frozen accounting receipts bind the original real paths, and
-native evidence validation rejects symlinked history. The first two new probes
-therefore stopped before provider calls. The identifier diagnostic had completed
-successfully before this relocation.
+The completed storage-cleanup-20261019 operation relocated 52 historical paths,
+including 45 directories at the execution root, into a read-only SquashFS archive.
+The original paths are readable symlinks. The first two probes stopped because
+native readers resolved those links to physical archive paths before comparing
+them with frozen receipt identities. No allowance or evidence bytes had changed.
 
-Restore required historical directories from the verified archive into SSD
-staging, verify membership and content hashes, and replace only matching archive
-symlinks with the verified directories. Preserve the archive and all receipt
-bytes. Coordinate this restoration with the storage cleanup owner; do not weaken
-the frozen path checks or rewrite accounting identities. The controller detects
-relocated execution dependencies before spending and records the concrete stop
-in both masters. Rerun the independent probe after restoration before freezing
-and activating the repair.
+Use the archive directly through `tools/archive_evidence.py`. Bind the exact
+completed relocation receipt and archive image to their SHA-256 checksums, require
+the read-only mount, and accept only the receipt's nonoverlapping completed aliases.
+The prospective access scope preserves original logical path identities while
+reading the archived bytes. Changed targets, missing archives, unexpected nested
+links and unlisted aliases remain errors. Native content, membership, settlement,
+source and receipt checks remain required. Directory-descriptor verification uses
+the checked physical location, while its reports retain their original identity.
+
+Recursive evidence scans include the approved archived trees. Existing empty
+historical lock files are opened read-only for advisory locking; other archive
+writes are rejected. Spawned settlement workers initialize the same access scope.
+Native command dispatch carries it through inventory, preparation, execution and
+verification children. Freeze this adapter's source hashes with the identifier
+extension. Preserve all original receipts and prior implementation hashes.
+
+Keep new replicas, logs and results on SSD. Leave archive symlinks and image in
+place; do not restore entire historical trees or purchase completed responses
+again. Regress original account identities, changed targets and bytes, unknown
+links, read-only locks, process propagation and restoration of the access scope.
+Require the independent zero-provider continuation probe before activation.
 
 ## Validation at commit
 
@@ -87,8 +99,12 @@ five earlier accepted writers, verifies all nine paid calls and their 553,470
 reported tokens, and leaves history/account bytes unchanged. It admits no phase
 and spends no provider calls.
 
-The independent workflow probe is blocked by the concurrent storage migration,
-before any new provider transmission. Consequently no activation proof has been
-frozen and live execution has not resumed. Both masters record this limitation;
-the 41-review continuation is implemented but awaits the successful isolated
-probe after the original execution paths are restored.
+The combined identifier, archive, size-recovery and process-accounting suite now
+passes 113 tests. The real archive-backed parent and child each independently
+verify all 198 settlements with 16 workers. Account and grant verification passes
+with 694 calls used, 1,306 available, no live reservation and unchanged historical
+unknown charges. The independent `probe-04/verification.json` passes: thirteen
+retained writers, one derived identifier result, first independent review reached,
+no provider calls and unchanged account, grant and predecessor bytes. Freeze this
+proof before activation; the adapter does not itself admit the manuscript or
+authorize additional spending.
