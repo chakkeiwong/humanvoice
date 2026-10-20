@@ -1,30 +1,31 @@
 # Ensemble implementation and evaluation master program
 
-Operational refresh, 20 October 2026: master 3.30 / ensemble 120.
-The [bounded reproduction semantic repair](REPRODUCTION_SEMANTIC_REPAIR_2026-10-20.md) preserves completed judgments.
+Operational refresh, 20 October 2026: master 3.31 / ensemble 121.
+The [assembled-review size recovery](ASSEMBLED_REVIEW_SIZE_RECOVERY_2026-10-20.md) preserves completed work.
 Only final acceptance of the immutable actual ZLB output requires human content review.
 
 <!-- current-benchmark-execution -->
-Current execution: master 3.30 / ensemble 120; observed 2026-10-20T01:02:30.812620+00:00.
-Status: reproduction_semantic_running. Repair: docs/plans/REPRODUCTION_SEMANTIC_REPAIR_2026-10-20.md.
-The previous execution completed fourteen unit reviews: twelve pass, units 003 and 013 reject unsupported additions.
-All eighteen attempts are settled, including four recovered network failures with 2,176,000 retained unknown tokens.
-Preserve every original response and judgment. Revise only the two rejected units using exact retained feedback.
-One revision per rejected unit and one review per changed candidate; unchanged rejection cannot buy another judgment.
-The bounded successor has 31 logical calls, 28 possible split children and ten unspent network extras: at most 69 attempts.
-An independent zero-provider probe and passing regressions are mandatory before live repair.
-Native source-fidelity, independent reproduction, assembly, build, release and settlement checks remain mandatory.
-Writer limits remain 100,000 input / 32,000 output; proven size failures split to depth 3, at most 14 children/root.
+Current execution: master 3.31 / ensemble 121; observed 2026-10-20T09:15:06.406263+00:00.
+Status: review_size_validation. Repair: docs/plans/ASSEMBLED_REVIEW_SIZE_RECOVERY_2026-10-20.md.
+Both directed writer repairs and their unit reviews passed. Fifteen of twenty-seven assembled reviews are retained.
+The next review completed with 76,106 input and 40,963 output tokens; output exceeded the unchanged 32,000 ceiling.
+Its seventy concepts and ninety-eight functions pass native semantic checks, but the oversized answer is not admitted.
+Automatically partition only proven size failures, preserving full source/candidate context and all concept obligations.
+Never repurchase the failed parent or completed reviews. Substantive rejection, malformed evidence and unknown failures stop.
+Held-out successor: 179 finite logical slots plus five unspent network extras, at most 184 attempts; actual use may be lower.
+Review limits remain 80,000 input / 32,000 output; writer limits remain 100,000 input / 32,000 output.
+Both size mechanisms allow depth 3 and at most 14 child calls/root. All failed receipts and incomplete charges remain intact.
+Independent zero-provider exact-child probe and native accounting/admission regressions are required before execution.
 Use 16 verification workers; provider calls/accounting remain sequential. Eligible network failures wait 900 seconds.
-Audits remain 900 seconds/$4. SSD is working storage; verified historical archive aliases remain read-only.
-Calls: 713/2000 used; 1287 available; 0 reserved.
-Settlements: 200/200; token ceiling 277,508,650/600,000,000.
-Remaining: held-out semantic repair, assembled reviews and reproduction verification; full ZLB inventory/humanization/review/release;
+Audits remain 900 seconds/$4. SSD is working storage; verified archive aliases remain read-only.
+Calls: 738/2000 used; 1262 available; 0 reserved.
+Settlements: 201/201; token ceiling 281,884,033/600,000,000.
+Remaining: held-out assembled reviews and reproduction verification; full ZLB inventory/humanization/review/release;
 independent ZLB reproduction; automatic final admission; human acceptance of the immutable actual ZLB output.
-No intermediate human or Claude review is required. Every phase boundary or stop: inspect, settle, verify, repair, refresh both masters.
-Next: Execute and separately verify held-out-reproduction-semantic-repair-20261020-01.
+Only final acceptance requires human content review. Every phase boundary or stop: inspect, settle, verify, repair, refresh both masters.
+Next: Run the independent zero-provider probe of the exact first split review.
 Stop: none.
-Cause: none in this successor.
+Cause: historical review output-size breach; successor not yet failed.
 <!-- end-current-benchmark-execution -->
 
 The following checkpoints are historical.
