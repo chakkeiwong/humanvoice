@@ -48,12 +48,22 @@ The native regression suite covers response-free network failures before an
 oversized parent and before its child, exact-request retries, cached child replay,
 independent receipt validation, retained failure charges and activation waiting
 for concurrent validation before it can execute.
-All 72 regression cases passed on 20 October 2026, with no failures or skips.
+All 73 regression cases passed on 20 October 2026, with no failures or skips.
 The independent real-data probe must also pass before freezing the execution
 proof. Its output is under
-`docs/audits/2026-10-05/master-program/automatic-execution/assembled-review-size-recovery-20261020/probe-01`.
+`docs/audits/2026-10-05/master-program/automatic-execution/assembled-review-size-recovery-20261020/probe-02`.
 It revalidates the retained units and assembly, then stops at the exact first
 35-concept child without making a provider call or changing the prior account.
+
+The first real-data probe found a session-identity defect before any new call:
+restarting humanization rebuilt the same text under a new session and assembly
+path, invalidating the retained canonical findings. Preserve that failed probe.
+Resume the native release command against the exact original session and assembly;
+it still validates unit reviews, patches, compilation and every completed assembled
+review before reaching missing review work. Bind the current-session pointer,
+session bytes and assembly record to predecessor hashes. A native regression must
+exercise a completed review followed by a size failure, replica continuation,
+cached findings reuse, child review and final runtime admission.
 
 Later ZLB stages calculate their reservations from the completed inventory.
 The existing 600-slot stage cap remains enforced. If the combined writer and

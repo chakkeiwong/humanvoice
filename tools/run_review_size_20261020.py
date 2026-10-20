@@ -23,7 +23,7 @@ from tools.parallel_verification_replay import cached_parallel_verification
 
 scope = continuation.scope
 BASE, EVIDENCE = continuation.BASE, continuation.EVIDENCE
-PROOF, REGRESSION, PROBE = EVIDENCE / "verification.json", EVIDENCE / "regression.xml", EVIDENCE / "probe-01/verification.json"
+PROOF, REGRESSION, PROBE = EVIDENCE / "verification.json", EVIDENCE / "regression-02.xml", EVIDENCE / "probe-02/verification.json"
 PLAN = "docs/plans/ASSEMBLED_REVIEW_SIZE_RECOVERY_2026-10-20.md"
 SUFFIX = "review-size-20261020-01"
 GRANT, PROGRESS = previous.GRANT, previous.PROGRESS
@@ -44,6 +44,7 @@ def regressions():
                 "test_review_guard_rejects_completed_or_changed_work",
                 "test_review_size_pipeline_restores_functions",
                 "test_review_size_controller_routes_and_restores",
+                "test_native_resume_preserves_cached_assembled_findings",
                 "test_activation_waits_for_in_progress_validation"}
     if not suites or not required <= cases or any(int(suite.attrib.get(key, 0)) for suite in suites
             for key in ("failures", "errors", "skipped")):
@@ -111,6 +112,7 @@ def refresh(next_action, stop=None):
         "The next review completed with 76,106 input and 40,963 output tokens; output exceeded the unchanged 32,000 ceiling.\n"
         "Its seventy concepts and ninety-eight functions pass native semantic checks, but the oversized answer is not admitted.\n"
         "Automatically partition only proven size failures, preserving full source/candidate context and all concept obligations.\n"
+        "Resume native release against the original session and assembly, preserving the identity of cached findings.\n"
         "Never repurchase the failed parent or completed reviews. Substantive rejection, malformed evidence and unknown failures stop.\n"
         "Held-out successor: 179 finite logical slots plus five unspent network extras, at most 184 attempts; actual use may be lower.\n"
         "Review limits remain 80,000 input / 32,000 output; writer limits remain 100,000 input / 32,000 output.\n"

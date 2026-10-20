@@ -257,3 +257,77 @@ def test_native_size_accounting_preserves_failed_charge(rejected, authorized, mo
         assert len(requests) == len(set(requests)) == 5
         replay = audit_activity(snapshot, require_live=True)
         assert replay["api_attempts"] == admission["api_attempts"] and len(requests) == 5
+
+
+@pytest.mark.parametrize("codex", [900], indirect=True)
+def test_native_resume_preserves_cached_assembled_findings(rejected, authorized, monkeypatch):
+    import shutil
+    from humanvoice import assembled_review, codex_runtime
+    from humanvoice.artifacts import load_session
+    from humanvoice.runtime_admission import audit_activity
+    from tools import assembled_budget_runtime as budget
+    from tools import semantic_repair_protocol as protocol
+    from tools.inventory_transport_continuation import tree_hashes
+
+    fixture = rejected
+    shutil.copytree(fixture.snapshot, fixture.successor)
+    snapshot = fixture.successor
+    budget.install(snapshot, authorized[0])
+    review_scope = protocol.scope_for(snapshot)
+    native_windows, native_review, native_layout = recovery.NATIVES
+
+    def windows(*arguments):
+        jobs, files = native_windows(*arguments)
+        assert len(jobs) == 1
+        root_job = jobs[0]
+        children = recovery.partition(root_job, digest(root_job["prompt"]), 0)
+        for child, name in zip(children, ("retained review", "pending review"), strict=True):
+            child["prompt"] = child["prompt"].replace("Review scope: " + child["scope"] + "\n", "Review scope: " + name + "\n")
+            child["scope"] = name
+        return children, files
+
+    monkeypatch.setattr(assembled_review, "assembled_windows", windows)
+    monkeypatch.setattr(recovery, "NATIVES", (windows, native_review, native_layout))
+    original_launch, requests = codex_runtime.launch, []
+
+    def launch(arguments, prompt, directory, timeout):
+        requests.append(digest(prompt))
+        settings = read_json(fixture.codex.settings)
+        oversized = "Review scope: pending review\n" in prompt
+        write_json(fixture.codex.settings, settings | {"output_tokens": 40963 if oversized else 100})
+        return original_launch(arguments, prompt, directory, timeout)
+
+    monkeypatch.setattr(codex_runtime, "launch", launch)
+    with budget.runtime_extension(), protocol.guarded_requests(snapshot, review_scope):
+        with pytest.raises(RuntimeError, match=recovery.ERROR):
+            protocol.run_consumer(snapshot.parent / "initial-reviews", snapshot, review_scope)
+    session, baseline, candidate, jobs, files = continuation.jobs_for(snapshot)
+    failed = jobs[-1]
+    child = recovery.partition(failed, digest(failed["prompt"]), 0)[0]
+    request_for = lambda job: canonical_request(None, (), {"prompt": job["prompt"],
+        "purpose": "assembled_candidate_verification", "response_schema": "critic-response"})
+    before = tree_hashes(snapshot)
+    proof = {"replica": str(snapshot), "replica_hashes": before, "semantic_scope": review_scope,
+             "retained_files": continuation.retained_files(before), "unit_results": session["results"],
+             "failed_job": failed, "completed": [{"request_hash": digest(request_for(jobs[0]))}],
+             "first_request_hash": digest(request_for(child)), "retained_assembled_reviews": 1}
+    monkeypatch.setattr(continuation, "validate_extension", lambda plan: plan)
+    count = len(requests)
+    with budget.runtime_extension(), recovery.runtime():
+        for probe in (True, False):
+            root = snapshot.parent / ("resume-probe" if probe else "resume-live")
+            write_json(root / "master-accounting-plan.json", {"technical_restart": proof})
+            assert continuation.resume(root, probe=probe) == 0
+            replica = root / "replica"
+            assert load_session(replica) == session
+            assert (replica / ".humanvoice/assembled/assembly_result.json").read_bytes() == (
+                snapshot / ".humanvoice/assembled/assembly_result.json").read_bytes()
+            assert tree_hashes(snapshot) == before
+            activity = read_json(root / "review-size-execution.json")
+            assert activity["status"] == "pass" and activity["probe"] is probe
+            assert len(activity["requests"]) == (1 if probe else 2)
+            assert len(requests) == count + (0 if probe else 2)
+            if not probe:
+                admission = audit_activity(replica, require_live=True)
+                assert admission["status"] == "pass"
+                assert all(value == 1 for value in admission["api_attempts"].values())

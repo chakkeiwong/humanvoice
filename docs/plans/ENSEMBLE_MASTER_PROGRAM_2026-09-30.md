@@ -5,12 +5,13 @@ The [assembled-review size recovery](ASSEMBLED_REVIEW_SIZE_RECOVERY_2026-10-20.m
 Only final acceptance of the immutable actual ZLB output requires human content review.
 
 <!-- current-benchmark-execution -->
-Current execution: master 3.31 / ensemble 121; observed 2026-10-20T09:15:06.406263+00:00.
+Current execution: master 3.31 / ensemble 121; observed 2026-10-20T10:22:04.443675+00:00.
 Status: review_size_validation. Repair: docs/plans/ASSEMBLED_REVIEW_SIZE_RECOVERY_2026-10-20.md.
 Both directed writer repairs and their unit reviews passed. Fifteen of twenty-seven assembled reviews are retained.
 The next review completed with 76,106 input and 40,963 output tokens; output exceeded the unchanged 32,000 ceiling.
 Its seventy concepts and ninety-eight functions pass native semantic checks, but the oversized answer is not admitted.
 Automatically partition only proven size failures, preserving full source/candidate context and all concept obligations.
+Resume native release against the original session and assembly, preserving the identity of cached findings.
 Never repurchase the failed parent or completed reviews. Substantive rejection, malformed evidence and unknown failures stop.
 Held-out successor: 179 finite logical slots plus five unspent network extras, at most 184 attempts; actual use may be lower.
 Review limits remain 80,000 input / 32,000 output; writer limits remain 100,000 input / 32,000 output.

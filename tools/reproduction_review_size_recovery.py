@@ -8,6 +8,7 @@ import sys
 from contextlib import ExitStack, contextmanager
 from functools import wraps
 from pathlib import Path
+from types import SimpleNamespace
 
 from humanvoice import artifacts, automatic_reproduction
 from humanvoice.artifacts import confined_path, digest, implementation_hash, read_json, write_json
@@ -84,6 +85,11 @@ def verify_retained(snapshot, proof):
     session = artifacts.load_session(Path(snapshot))
     if session["results"] != proof["unit_results"]:
         raise ValueError("Review-only recovery changed a completed writer")
+    current = ".humanvoice/rewrites/current.json"
+    names = [current, ".humanvoice/assembled/assembly_result.json",
+             ".humanvoice/rewrites/" + read_json(Path(snapshot) / current)["path"]]
+    if any(digest(confined_path(snapshot, name).read_bytes()) != proof["replica_hashes"].get(name) for name in names):
+        raise ValueError("Review-only recovery changed its retained session or assembly")
     return session
 
 
@@ -278,6 +284,22 @@ def guarded_reviews(snapshot, proof, *, probe=False):
         ModelAdapter.invoke = native
 
 
+def release_retained(snapshot, proof):
+    from humanvoice.cli_records import validate_cli_result
+    from humanvoice.commands import release_v2_command
+
+    verify_retained(snapshot, proof)
+    arguments = SimpleNamespace(snapshot=Path(snapshot), output=None)
+    code = release_v2_command.run(arguments)
+    reference = getattr(arguments, "_cli_record", None)
+    if reference:
+        if validate_cli_result(snapshot, reference)["exit_code"] != code:
+            raise ValueError("Retained release exit differs from its canonical CLI evidence")
+    elif code == 0:
+        raise ValueError("Successful retained release lacks canonical CLI evidence")
+    return code
+
+
 def resume(root, *, probe=False):
     root = Path(root).resolve()
     plan = validate_extension(read_json(root / "master-accounting-plan.json"))
@@ -289,7 +311,7 @@ def resume(root, *, probe=False):
     stop = None
     with guarded_reviews(snapshot, proof, probe=probe) as (requests, boundary):
         try:
-            code = MANUSCRIPT.run_manuscript_consumer(root, snapshot, "humanize")
+            code = release_retained(snapshot, proof)
         except boundary:
             if not probe or len(requests) != 1:
                 raise
