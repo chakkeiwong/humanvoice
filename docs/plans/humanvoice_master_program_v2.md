@@ -1,32 +1,31 @@
 # Humanvoice Master Program v2
 
-Operational refresh, 20 October 2026: master 3.31 / ensemble 121.
-The [assembled-review size recovery](ASSEMBLED_REVIEW_SIZE_RECOVERY_2026-10-20.md) preserves completed work.
+Operational refresh, 21 October 2026: master 3.32 / ensemble 122.
+The [response-free overload repair](REVIEW_OVERLOAD_RECOVERY_2026-10-21.md) preserves completed work and charges.
 Only final acceptance of the immutable actual ZLB output requires human content review.
 
 <!-- current-benchmark-execution -->
-Current execution: master 3.31 / ensemble 121; observed 2026-10-20T10:22:04.443675+00:00.
-Status: review_size_validation. Repair: docs/plans/ASSEMBLED_REVIEW_SIZE_RECOVERY_2026-10-20.md.
-Both directed writer repairs and their unit reviews passed. Fifteen of twenty-seven assembled reviews are retained.
-The next review completed with 76,106 input and 40,963 output tokens; output exceeded the unchanged 32,000 ceiling.
-Its seventy concepts and ninety-eight functions pass native semantic checks, but the oversized answer is not admitted.
-Automatically partition only proven size failures, preserving full source/candidate context and all concept obligations.
-Resume native release against the original session and assembly, preserving the identity of cached findings.
-Never repurchase the failed parent or completed reviews. Substantive rejection, malformed evidence and unknown failures stop.
-Held-out successor: 179 finite logical slots plus five unspent network extras, at most 184 attempts; actual use may be lower.
+Current execution: master 3.32 / ensemble 122; observed 2026-10-20T18:31:15.650770+00:00.
+Status: review_overload_validation. Repair: docs/plans/REVIEW_OVERLOAD_RECOVERY_2026-10-21.md.
+Predecessor retained both writer repairs, all unit reviews and 25 of 28 assembled leaf reviews.
+Three original review windows remain. The interrupted request has no response or usage; its last gateway error reports overload.
+Recognize only the exact overload diagnostic after native receipt, process, no-response and no-usage checks.
+Resume native release with the original session, assembly and completed findings. Never repurchase a completed review or size parent.
+The 900-second delay survives restarts. Two failed attempts keep their full charges; retries are not replenished.
+Successor bound: 45 logical slots including possible size splits, plus three inherited network extras; at most 48 attempts.
 Review limits remain 80,000 input / 32,000 output; writer limits remain 100,000 input / 32,000 output.
-Both size mechanisms allow depth 3 and at most 14 child calls/root. All failed receipts and incomplete charges remain intact.
-Independent zero-provider exact-child probe and native accounting/admission regressions are required before execution.
-Use 16 verification workers; provider calls/accounting remain sequential. Eligible network failures wait 900 seconds.
-Audits remain 900 seconds/$4. SSD is working storage; verified archive aliases remain read-only.
-Calls: 738/2000 used; 1262 available; 0 reserved.
-Settlements: 201/201; token ceiling 281,884,033/600,000,000.
-Remaining: held-out assembled reviews and reproduction verification; full ZLB inventory/humanization/review/release;
+Both size mechanisms allow depth 3 and at most 14 child calls/root. Semantic rejection and unknown evidence stop.
+Independent zero-provider request probe and native accounting/admission regressions precede activation.
+Use 16 verification workers; provider calls/accounting remain sequential. Audits remain 900 seconds/$4.
+SSD is working storage; checksum-bound archive aliases remain read-only.
+Calls: 750/2000 used; 1250 available; 0 reserved.
+Settlements: 202/202; token ceiling 283,437,199/600,000,000.
+Remaining: finish held-out reviews and independent reproduction verification; full ZLB inventory/humanization/review/release;
 independent ZLB reproduction; automatic final admission; human acceptance of the immutable actual ZLB output.
-Only final acceptance requires human content review. Every phase boundary or stop: inspect, settle, verify, repair, refresh both masters.
-Next: Run the independent zero-provider probe of the exact first split review.
+If ZLB split reservations exceed 600 slots, bounded batching must be implemented and verified before that stage.
+Every phase boundary or stop: inspect, settle, verify, repair and refresh both masters. Only final output acceptance requires human review.
+Next: Run the independent zero-provider probe of the exact interrupted review.
 Stop: none.
-Cause: historical review output-size breach; successor not yet failed.
 <!-- end-current-benchmark-execution -->
 
 The following checkpoints are historical.
