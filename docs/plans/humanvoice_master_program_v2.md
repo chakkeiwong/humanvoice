@@ -1,35 +1,30 @@
 # Humanvoice Master Program v2
 
-Operational refresh, 20 October 2026: master 3.29 / ensemble 119.
-The [bounded review-request recovery](REVIEW_REQUEST_RECOVERY_2026-10-20.md) preserves all completed work.
+Operational refresh, 20 October 2026: master 3.30 / ensemble 120.
+The [bounded reproduction semantic repair](REPRODUCTION_SEMANTIC_REPAIR_2026-10-20.md) preserves completed judgments.
 Only final acceptance of the immutable actual ZLB output requires human content review.
 
 <!-- current-benchmark-execution -->
-Current execution: master 3.29 / ensemble 119; refreshed 20 October 2026 Shanghai.
-Status: review_request_validation. Repair: docs/plans/REVIEW_REQUEST_RECOVERY_2026-10-20.md.
-All fourteen held-out writers are retained, including the verified identifier derivation.
-The first independent review returned no answer or usage. Its gateway reported an unprocessed request.
-Its model/profile/schema/instructions match earlier successful reviews; the exact gateway cause remains unknown.
-Verify native failure evidence and the successful contract, then independently probe the unchanged request with provider calls disabled.
-Permit one diagnostic retry after 900 seconds; repeated unprocessed-request errors stop.
-Preserve the failed receipt, its 544,000-token unknown charge, and all pre-transmission denial evidence.
-Require 14 unit reviews and 27 assembled reviews, with 14 remaining transport extras: 55 maximum new attempts.
-Stop immediately after an unresolved review invocation and expose its actual provider diagnostic.
-No completed response is purchased again; no intermediate human or Claude review is required.
-Writer acceptance remains 100,000 input / 32,000 output; proven size failures split to depth 3 with at most 14 children per root.
-Use 16 independent verification workers; provider calls and accounting remain sequential.
-Eligible response-free network failures wait 900 seconds. Audits remain 900 seconds/$4.
-Calls: 695/2000 used; 1305 available; 0 reserved.
-Settlements: 199/199; token ceiling 274,592,487/600,000,000.
-Historical failed receipts and unknown charges remain unchanged. SSD is working storage; soft is archive-only.
-Read historical evidence through checksum-bound archive aliases; preserve logical paths and all native content checks.
-Archived evidence remains read-only; new execution and its outputs stay on SSD.
-Remaining: held-out independent reviews and reproduction verification; full ZLB inventory/humanization/review/release;
+Current execution: master 3.30 / ensemble 120; observed 2026-10-20T00:21:27.446870+00:00.
+Status: reproduction_semantic_validation. Repair: docs/plans/REPRODUCTION_SEMANTIC_REPAIR_2026-10-20.md.
+The previous execution completed fourteen unit reviews: twelve pass, units 003 and 013 reject unsupported additions.
+All eighteen attempts are settled, including four recovered network failures with 2,176,000 retained unknown tokens.
+Preserve every original response and judgment. Revise only the two rejected units using exact retained feedback.
+One revision per rejected unit and one review per changed candidate; unchanged rejection cannot buy another judgment.
+The bounded successor has 31 logical calls, 28 possible split children and ten unspent network extras: at most 69 attempts.
+An independent zero-provider probe and passing regressions are mandatory before live repair.
+Native source-fidelity, independent reproduction, assembly, build, release and settlement checks remain mandatory.
+Writer limits remain 100,000 input / 32,000 output; proven size failures split to depth 3, at most 14 children/root.
+Use 16 verification workers; provider calls/accounting remain sequential. Eligible network failures wait 900 seconds.
+Audits remain 900 seconds/$4. SSD is working storage; verified historical archive aliases remain read-only.
+Calls: 713/2000 used; 1287 available; 0 reserved.
+Settlements: 200/200; token ceiling 277,508,650/600,000,000.
+Remaining: held-out semantic repair, assembled reviews and reproduction verification; full ZLB inventory/humanization/review/release;
 independent ZLB reproduction; automatic final admission; human acceptance of the immutable actual ZLB output.
-Every phase boundary or stop: inspect, settle, independently verify, repair prospectively, refresh both masters, continue eligible work.
-Next: Complete regressions, commit the repair, and supervise diagnosis/probe/freeze before live continuation.
-Last stop: 19 October 23:14 Shanghai; first independent review failed with no response or reported usage.
-Provider cause: stream disconnected before completion: The request could not be processed. Please check the request parameters.
+No intermediate human or Claude review is required. Every phase boundary or stop: inspect, settle, verify, repair, refresh both masters.
+Next: Verify completed unit judgments, retained writers, independent process and settlement.
+Stop: none.
+Cause: {"reason": "unit_review_rejections", "units": [{"unit_id": "unit-003", "failure_stage": "critic_semantic", "unsupported_additions": ["\"It also explains why the next request is limited to fact-finding: no authorized Card record has been assessed.\" adds a specific causal explanation for the request's limitation. The supplied source expressly connects the unassessed authorized records to the absence of a Card point NPV, but does not identify that fact as the reason the next request is limited to fact-finding. The source could remain true while that limitation had a different rationale; retaining both underlying facts does not establish this additional causal connection."]}, {"unit_id": "unit-013", "failure_stage": "critic_semantic", "unsupported_additions": ["The gloss \"stable identifiers used to link records across systems\" adds a cross-system-use qualification to stable join keys. The source requests approval of source systems, versions, event meanings, and stable join keys, but does not establish that the joined records must come from different systems. Stable keys linking records within a system could satisfy the source without satisfying this added characterization."]}]}.
 <!-- end-current-benchmark-execution -->
 
 The following checkpoints are historical.
