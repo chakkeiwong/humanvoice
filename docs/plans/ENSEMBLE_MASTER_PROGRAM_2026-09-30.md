@@ -5,8 +5,8 @@ The [bounded reproduction semantic repair](REPRODUCTION_SEMANTIC_REPAIR_2026-10-
 Only final acceptance of the immutable actual ZLB output requires human content review.
 
 <!-- current-benchmark-execution -->
-Current execution: master 3.30 / ensemble 120; observed 2026-10-20T00:21:27.446870+00:00.
-Status: reproduction_semantic_validation. Repair: docs/plans/REPRODUCTION_SEMANTIC_REPAIR_2026-10-20.md.
+Current execution: master 3.30 / ensemble 120; observed 2026-10-20T01:02:30.812620+00:00.
+Status: reproduction_semantic_running. Repair: docs/plans/REPRODUCTION_SEMANTIC_REPAIR_2026-10-20.md.
 The previous execution completed fourteen unit reviews: twelve pass, units 003 and 013 reject unsupported additions.
 All eighteen attempts are settled, including four recovered network failures with 2,176,000 retained unknown tokens.
 Preserve every original response and judgment. Revise only the two rejected units using exact retained feedback.
@@ -22,9 +22,9 @@ Settlements: 200/200; token ceiling 277,508,650/600,000,000.
 Remaining: held-out semantic repair, assembled reviews and reproduction verification; full ZLB inventory/humanization/review/release;
 independent ZLB reproduction; automatic final admission; human acceptance of the immutable actual ZLB output.
 No intermediate human or Claude review is required. Every phase boundary or stop: inspect, settle, verify, repair, refresh both masters.
-Next: Verify completed unit judgments, retained writers, independent process and settlement.
+Next: Execute and separately verify held-out-reproduction-semantic-repair-20261020-01.
 Stop: none.
-Cause: {"reason": "unit_review_rejections", "units": [{"unit_id": "unit-003", "failure_stage": "critic_semantic", "unsupported_additions": ["\"It also explains why the next request is limited to fact-finding: no authorized Card record has been assessed.\" adds a specific causal explanation for the request's limitation. The supplied source expressly connects the unassessed authorized records to the absence of a Card point NPV, but does not identify that fact as the reason the next request is limited to fact-finding. The source could remain true while that limitation had a different rationale; retaining both underlying facts does not establish this additional causal connection."]}, {"unit_id": "unit-013", "failure_stage": "critic_semantic", "unsupported_additions": ["The gloss \"stable identifiers used to link records across systems\" adds a cross-system-use qualification to stable join keys. The source requests approval of source systems, versions, event meanings, and stable join keys, but does not establish that the joined records must come from different systems. Stable keys linking records within a system could satisfy the source without satisfying this added characterization."]}]}.
+Cause: none in this successor.
 <!-- end-current-benchmark-execution -->
 
 The following checkpoints are historical.
