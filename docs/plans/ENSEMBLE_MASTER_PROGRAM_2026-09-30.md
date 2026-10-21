@@ -1,28 +1,28 @@
 # Ensemble implementation and evaluation master program
 
-Operational refresh, 21 October 2026: master 3.34 / ensemble 124.
-The [ZLB SSD workspace repair](ZLB_SSD_WORKSPACE_2026-10-21.md) preserves the completed held-out test and archived evidence.
+Operational refresh, 22 October 2026: master 3.35 / ensemble 125.
+The [inventory punctuation repair](INVENTORY_PUNCTUATION_REPAIR_2026-10-22.md) preserves completed judgments and native admission checks.
 
 <!-- current-benchmark-execution -->
-Current execution: master 3.34 / ensemble 124; observed 2026-10-21T14:48:10.124622+00:00.
-Status: zlb_ssd_stopped. Repair: docs/plans/ZLB_SSD_WORKSPACE_2026-10-21.md.
-Held-out reproduction, all 28 assembled leaf reviews, separate boundary verification and settlement pass.
-Full ZLB preparation stopped before any provider call because its old working snapshot had been archived read-only.
-Independent SSD preparation then exposed candidate-only math/redline planning on inventory.
-Inventory now uses native inventory validation, bounded 900-second transport recovery and current historical accounting readers.
-Candidate writer/review/redline planning remains scoped to candidate stages; every preparation attempt keeps separate logs.
-Continue on SSD at docs/audits/2026-10-05/master-program/automatic-execution/zlb-ssd-20261021-snapshot using a byte-verified copy of the original snapshot.
-Keep archive aliases, historical proofs, receipts and all failed charges unchanged. Reuse the completed held-out boundary.
-Native independent preparation must pass with zero provider calls and unchanged account, grant and archive bytes.
-Use 16 verification workers with sequential provider calls/accounting; eligible network failures wait 900 seconds.
-Writer limits: 100k input / 32k output. Assembled reviewer: 80k / 32k. Splits: depth 3, 14 children/root. Audits: 900 seconds/$4.
+Current execution: master 3.35 / ensemble 125; observed 2026-10-21T18:18:27.737157+00:00.
+Status: inventory_coverage_running. Repair: docs/plans/INVENTORY_PUNCTUATION_REPAIR_2026-10-22.md.
+ZLB stopped after 18 complete positive calls because a standalone colon lacked concept ownership.
+The original transport-only continuation correctly refused this completed validation failure.
+A prospective deterministic rule attaches only unambiguous punctuation bracketed by already supported math spans.
+Raw critic verdicts, source bytes, receipts and the failed stage stay unchanged; native baseline replay reproduces the derivation.
+Replay the exact 18 responses, then execute 522 remaining logical calls with 16 existing transport extras.
+Independent zero-provider probe: pass.
+Held-out reproduction, all 28 assembled leaf reviews and separate boundary verification pass and are reused.
+SSD snapshot: docs/audits/2026-10-05/master-program/automatic-execution/zlb-inventory-coverage-20261022-02-snapshot. Archive remains read-only.
+Use 16 verification workers; provider calls/accounting remain sequential. Eligible network retries wait 900 seconds.
+Writer: 100k input/32k output. Assembled reviewer: 80k/32k. Splits: depth 3, 14 children/root. Audits: 900 seconds/$4.
 Calls: 771/2000 used; 1229 available; 0 reserved.
 Settlements: 204/204; token ceiling 283,915,132/600,000,000.
 Remaining: full ZLB inventory/humanization/review/release; independent ZLB reproduction; automatic final admission; final human acceptance.
-If split reservations exceed 600 slots, implement and verify bounded batching before that stage.
+If later split reservations exceed 600 slots, implement and verify bounded batching before launch.
 At every boundary or stop: inspect, settle, verify, repair and refresh both masters. Only final immutable output acceptance requires human review.
-Next: Inspect retained cause, repair prospectively and refresh before continuing.
-Stop: ValueError: Inventory stop is not a complete prefix followed by a response-free failure.
+Next: Repair frozen; continue the held-out reproduction and full ZLB sequence.
+Stop: none.
 <!-- end-current-benchmark-execution -->
 
 The following checkpoints are historical.
