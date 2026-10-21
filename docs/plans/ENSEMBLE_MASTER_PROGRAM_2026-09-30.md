@@ -4,8 +4,8 @@ Operational refresh, 21 October 2026: master 3.34 / ensemble 124.
 The [ZLB SSD workspace repair](ZLB_SSD_WORKSPACE_2026-10-21.md) preserves the completed held-out test and archived evidence.
 
 <!-- current-benchmark-execution -->
-Current execution: master 3.34 / ensemble 124; observed 2026-10-21T13:42:21.893284+00:00.
-Status: zlb_ssd_ready. Repair: docs/plans/ZLB_SSD_WORKSPACE_2026-10-21.md.
+Current execution: master 3.34 / ensemble 124; observed 2026-10-21T14:48:10.124622+00:00.
+Status: zlb_ssd_stopped. Repair: docs/plans/ZLB_SSD_WORKSPACE_2026-10-21.md.
 Held-out reproduction, all 28 assembled leaf reviews, separate boundary verification and settlement pass.
 Full ZLB preparation stopped before any provider call because its old working snapshot had been archived read-only.
 Independent SSD preparation then exposed candidate-only math/redline planning on inventory.
@@ -16,13 +16,13 @@ Keep archive aliases, historical proofs, receipts and all failed charges unchang
 Native independent preparation must pass with zero provider calls and unchanged account, grant and archive bytes.
 Use 16 verification workers with sequential provider calls/accounting; eligible network failures wait 900 seconds.
 Writer limits: 100k input / 32k output. Assembled reviewer: 80k / 32k. Splits: depth 3, 14 children/root. Audits: 900 seconds/$4.
-Calls: 753/2000 used; 1247 available; 0 reserved.
-Settlements: 203/203; token ceiling 283,571,417/600,000,000.
+Calls: 771/2000 used; 1229 available; 0 reserved.
+Settlements: 204/204; token ceiling 283,915,132/600,000,000.
 Remaining: full ZLB inventory/humanization/review/release; independent ZLB reproduction; automatic final admission; final human acceptance.
 If split reservations exceed 600 slots, implement and verify bounded batching before that stage.
 At every boundary or stop: inspect, settle, verify, repair and refresh both masters. Only final immutable output acceptance requires human review.
-Next: SSD repair proof passes; continue full ZLB using its prepared inventory stage.
-Stop: none.
+Next: Inspect retained cause, repair prospectively and refresh before continuing.
+Stop: ValueError: Inventory stop is not a complete prefix followed by a response-free failure.
 <!-- end-current-benchmark-execution -->
 
 The following checkpoints are historical.
