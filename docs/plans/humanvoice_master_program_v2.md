@@ -1,28 +1,27 @@
 # Humanvoice Master Program v2
 
-Operational refresh, 21 October 2026: master 3.33 / ensemble 123.
-The [boundary dispatch repair](REVIEW_BOUNDARY_DISPATCH_2026-10-21.md) preserves all 28 passing held-out reviews.
-Only final acceptance of the immutable actual ZLB output requires human content review.
+Operational refresh, 21 October 2026: master 3.34 / ensemble 124.
+The [ZLB SSD workspace repair](ZLB_SSD_WORKSPACE_2026-10-21.md) preserves the completed held-out test and archived evidence.
 
 <!-- current-benchmark-execution -->
-Current execution: master 3.33 / ensemble 123; observed 2026-10-21T09:17:16.900629+00:00.
-Status: review_boundary_ready. Repair: docs/plans/REVIEW_BOUNDARY_DISPATCH_2026-10-21.md.
-Held-out reproduction execution passed. All 28 of 28 assembled leaf reviews pass; its last stage used three calls.
-Separate held-out boundary: pending verification.
-The prior boundary used a writer-checkpoint verifier for a retained-review continuation and rejected its completed judgments.
-Route that exact continuation to its frozen predecessor verifier, checking account, snapshot, bound and full proof equality.
-The native boundary still verifies independent reproduction, actual receipts, settlement and account; provider calls are prohibited during verification.
-Keep all completed reviews, sealed stage evidence, frozen code and failed charges. Resume the existing stage identity without new model reservations.
-Use 16 verification workers; provider calls/accounting remain sequential. Eligible response-free network failures wait 900 seconds.
-Writer limits: 100k input / 32k output. Assembled reviewer: 80k / 32k. Size splits: depth 3 and 14 children/root.
-Audits: 900 seconds/$4. SSD working storage; checksum-bound archive aliases stay read-only.
+Current execution: master 3.34 / ensemble 124; observed 2026-10-21T13:42:21.893284+00:00.
+Status: zlb_ssd_ready. Repair: docs/plans/ZLB_SSD_WORKSPACE_2026-10-21.md.
+Held-out reproduction, all 28 assembled leaf reviews, separate boundary verification and settlement pass.
+Full ZLB preparation stopped before any provider call because its old working snapshot had been archived read-only.
+Independent SSD preparation then exposed candidate-only math/redline planning on inventory.
+Inventory now uses native inventory validation, bounded 900-second transport recovery and current historical accounting readers.
+Candidate writer/review/redline planning remains scoped to candidate stages; every preparation attempt keeps separate logs.
+Continue on SSD at docs/audits/2026-10-05/master-program/automatic-execution/zlb-ssd-20261021-snapshot using a byte-verified copy of the original snapshot.
+Keep archive aliases, historical proofs, receipts and all failed charges unchanged. Reuse the completed held-out boundary.
+Native independent preparation must pass with zero provider calls and unchanged account, grant and archive bytes.
+Use 16 verification workers with sequential provider calls/accounting; eligible network failures wait 900 seconds.
+Writer limits: 100k input / 32k output. Assembled reviewer: 80k / 32k. Splits: depth 3, 14 children/root. Audits: 900 seconds/$4.
 Calls: 753/2000 used; 1247 available; 0 reserved.
 Settlements: 203/203; token ceiling 283,571,417/600,000,000.
-Remaining: complete separate held-out boundary; full ZLB inventory/humanization/review/release; independent ZLB reproduction;
-automatic final admission; human acceptance of the immutable actual ZLB output.
-If ZLB split reservations exceed 600 slots, implement and verify bounded batching before activation.
-At every phase boundary or stop: inspect, settle, verify, repair and refresh both masters. Only final output acceptance requires human review.
-Next: Boundary dispatch proof passes; resume native separate verification and full ZLB.
+Remaining: full ZLB inventory/humanization/review/release; independent ZLB reproduction; automatic final admission; final human acceptance.
+If split reservations exceed 600 slots, implement and verify bounded batching before that stage.
+At every boundary or stop: inspect, settle, verify, repair and refresh both masters. Only final immutable output acceptance requires human review.
+Next: SSD repair proof passes; continue full ZLB using its prepared inventory stage.
 Stop: none.
 <!-- end-current-benchmark-execution -->
 
