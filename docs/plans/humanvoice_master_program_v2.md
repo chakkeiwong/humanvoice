@@ -1,27 +1,30 @@
 # Humanvoice Master Program v2
 
-Operational refresh, 22 October 2026: master 3.36 / ensemble 126.
-The [inventory context repair](INVENTORY_CONTEXT_REPAIR_2026-10-22.md) restores complete source context and bounds automatic semantic repair.
+Operational refresh, 22 October 2026: master 3.37 / ensemble 127.
+The [inventory deadline repair](INVENTORY_DEADLINE_REPAIR_2026-10-22.md) resumes the accepted prefix and adds bounded response-free timeout recovery.
 
 <!-- current-benchmark-execution -->
-Current execution: master 3.36 / ensemble 126; observed 2026-10-22T07:46:45.293474+00:00.
-Status: inventory_context_ready. Repair: docs/plans/INVENTORY_CONTEXT_REPAIR_2026-10-22.md.
-The punctuation repair succeeded. Window 10 then stopped on two unresolved fragments: fixed windows cut sentences and coverage omitted math context.
-Preserve all 27 responses and the charged network failure. Replay 24 accepted requests; replace the rejected three-call window with complete sentence context.
+Current execution: master 3.37 / ensemble 127; observed 2026-10-22T10:17:39.134695+00:00.
+Status: inventory_deadline_ready. Repair: docs/plans/INVENTORY_DEADLINE_REPAIR_2026-10-22.md.
+Sentence-context repair passed: 21 reconstructed concepts and all 19 coverage targets accepted in window 10.
+The next extraction reached its 900-second process deadline without response, reasoning, usage or provider rejection. The cause remains unknown.
+Replay 27 accepted requests; retain the three superseded responses and every prior charge, including the timeout.
+Prospective response-free inventory deadlines retry the identical request after a durable 900-second wait, within the existing sixteen-attempt allowance.
+Completed answers, partial output, usage, rejection, malformed evidence and exhausted limits remain blocking. No timeout increase or semantic reroll.
 Future windows expand to sentence boundaries within 10 KiB; coverage receives all math and prose context.
 Automatic semantic repairs regenerate concepts and run both independent critics: at most two repairs/window and eight repairs/stage. Every rejected response remains replayable.
-Reserve 516 base requests, up to 24 changed-input repair requests and 16 response-free transport retries. Existing aggregate authority is unchanged.
+Reserve 513 base requests, up to 24 changed-input repair requests and 16 response-free transport retries. Existing aggregate authority is unchanged.
 Independent zero-provider probe: pass.
 Held-out reproduction, all 28 assembled leaf reviews and separate boundary verification pass and are reused.
-SSD snapshot: docs/audits/2026-10-05/master-program/automatic-execution/zlb-inventory-context-20261022-01-snapshot. Archive remains read-only.
+SSD snapshot: docs/audits/2026-10-05/master-program/automatic-execution/zlb-inventory-deadline-20261022-01-snapshot. Archive remains read-only.
 Use 16 verification workers; provider calls/accounting remain sequential. Eligible network retries wait 900 seconds.
 Writer: 100k input/32k output. Assembled reviewer: 80k/32k. Splits: depth 3, 14 children/root. Audits: 900 seconds/$4.
-Calls: 781/2000 used; 1219 available; 0 reserved.
-Settlements: 205/205; token ceiling 284,587,385/600,000,000.
+Calls: 785/2000 used; 1215 available; 0 reserved.
+Settlements: 206/206; token ceiling 285,214,069/600,000,000.
 Remaining: full ZLB inventory/humanization/review/release; independent ZLB reproduction; automatic final admission; final human acceptance.
 If later split reservations exceed 600 slots, implement and verify bounded batching before launch.
 At every boundary or stop: inspect, settle, verify, repair and refresh both masters. Only final immutable output acceptance requires human review.
-Next: Context repair is verified and prepared; continue supervised ZLB execution.
+Next: Deadline recovery is verified and prepared; continue supervised ZLB execution.
 Stop: none.
 <!-- end-current-benchmark-execution -->
 
