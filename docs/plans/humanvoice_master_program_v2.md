@@ -1,27 +1,27 @@
 # Humanvoice Master Program v2
 
-Operational refresh, 22 October 2026: master 3.35 / ensemble 125.
-The [inventory punctuation repair](INVENTORY_PUNCTUATION_REPAIR_2026-10-22.md) preserves completed judgments and native admission checks.
+Operational refresh, 22 October 2026: master 3.36 / ensemble 126.
+The [inventory context repair](INVENTORY_CONTEXT_REPAIR_2026-10-22.md) restores complete source context and bounds automatic semantic repair.
 
 <!-- current-benchmark-execution -->
-Current execution: master 3.35 / ensemble 125; observed 2026-10-21T18:18:27.737157+00:00.
-Status: inventory_coverage_running. Repair: docs/plans/INVENTORY_PUNCTUATION_REPAIR_2026-10-22.md.
-ZLB stopped after 18 complete positive calls because a standalone colon lacked concept ownership.
-The original transport-only continuation correctly refused this completed validation failure.
-A prospective deterministic rule attaches only unambiguous punctuation bracketed by already supported math spans.
-Raw critic verdicts, source bytes, receipts and the failed stage stay unchanged; native baseline replay reproduces the derivation.
-Replay the exact 18 responses, then execute 522 remaining logical calls with 16 existing transport extras.
+Current execution: master 3.36 / ensemble 126; observed 2026-10-22T07:46:45.293474+00:00.
+Status: inventory_context_ready. Repair: docs/plans/INVENTORY_CONTEXT_REPAIR_2026-10-22.md.
+The punctuation repair succeeded. Window 10 then stopped on two unresolved fragments: fixed windows cut sentences and coverage omitted math context.
+Preserve all 27 responses and the charged network failure. Replay 24 accepted requests; replace the rejected three-call window with complete sentence context.
+Future windows expand to sentence boundaries within 10 KiB; coverage receives all math and prose context.
+Automatic semantic repairs regenerate concepts and run both independent critics: at most two repairs/window and eight repairs/stage. Every rejected response remains replayable.
+Reserve 516 base requests, up to 24 changed-input repair requests and 16 response-free transport retries. Existing aggregate authority is unchanged.
 Independent zero-provider probe: pass.
 Held-out reproduction, all 28 assembled leaf reviews and separate boundary verification pass and are reused.
-SSD snapshot: docs/audits/2026-10-05/master-program/automatic-execution/zlb-inventory-coverage-20261022-02-snapshot. Archive remains read-only.
+SSD snapshot: docs/audits/2026-10-05/master-program/automatic-execution/zlb-inventory-context-20261022-01-snapshot. Archive remains read-only.
 Use 16 verification workers; provider calls/accounting remain sequential. Eligible network retries wait 900 seconds.
 Writer: 100k input/32k output. Assembled reviewer: 80k/32k. Splits: depth 3, 14 children/root. Audits: 900 seconds/$4.
-Calls: 771/2000 used; 1229 available; 0 reserved.
-Settlements: 204/204; token ceiling 283,915,132/600,000,000.
+Calls: 781/2000 used; 1219 available; 0 reserved.
+Settlements: 205/205; token ceiling 284,587,385/600,000,000.
 Remaining: full ZLB inventory/humanization/review/release; independent ZLB reproduction; automatic final admission; final human acceptance.
 If later split reservations exceed 600 slots, implement and verify bounded batching before launch.
 At every boundary or stop: inspect, settle, verify, repair and refresh both masters. Only final immutable output acceptance requires human review.
-Next: Repair frozen; continue the held-out reproduction and full ZLB sequence.
+Next: Context repair is verified and prepared; continue supervised ZLB execution.
 Stop: none.
 <!-- end-current-benchmark-execution -->
 
