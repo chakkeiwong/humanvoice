@@ -1,32 +1,819 @@
 # Ensemble implementation and evaluation master program
 
-Operational refresh, 22 October 2026: master 3.37 / ensemble 127.
-The [inventory deadline repair](INVENTORY_DEADLINE_REPAIR_2026-10-22.md) resumes the accepted prefix and adds bounded response-free timeout recovery.
+Current execution checkpoint, 28 October 2026: master 4.11 / ensemble 201.
+The installed-authority/ownership/bootstrap slice passes 524 focused tests with
+16 workers; source and production authority are unchanged. Actual read-only
+installed-authority capture passes. This does not close full TX3 or resume ZLB.
+Closure order, corner cases, test requirements and phase/stop refresh rules:
+`docs/plans/INVENTORY_RECOVERY_CLOSURE_2026-10-28.md`. Evidence and boundaries:
+`docs/reviews/INVENTORY_RECOVERY_INSTALLED_EXECUTION_2026-10-28.md`.
+Independent review's path-alias finding is repaired and closed in follow-up.
+Next after this checkpoint: public admission/transaction integration.
+Do not substitute component passes for public-entrypoint or live receipts.
 
+CI1 is independently closed. TX1 restart membership preserves cumulative
+allowance; one-shot storage failures and repeated outbox-failure bursts now
+retain retryable publication instead of becoming permanent engineering blocks.
+Stop/admission/ownership and unrelated corruption blockers remain enforced.
+The 148-case fast regression set passed, including 1/4/12 reporting failures,
+persistent reporting failure with stop, and before/after restart publication.
+
+TX2 now binds the admitted canonical journal and sealed stage consumption.
+The initial candidate passed 62 journal/policy/native-executor cases in
+754.79 seconds, including a genuine oversize-to-split successor. Review found
+forged cancellation and uncheckpointed consumption loss; these were repaired
+with validated cancellation transitions and a write-ahead consumption head.
+The new head commits pending intent → journal → committed floor on every
+mutation, rejecting deleted or rolled-back consumption before checkpointing.
+The 93 journal/policy/registration/history regressions pass in 30.32 seconds.
+The broad native run was interrupted after 82 failures / 65 passes: old
+execution/resume fixtures omitted the newly required canonical journal
+admission descriptor. Production guards remained strict. Corrected fixtures
+pass 91 resume/execution/allocation cases in 42.20 seconds; requests fixtures
+now bind the descriptor too. Independent follow-up closes TX2-F1, TX2-F2 and
+TX1-IO1 within the inspected slices, not the campaign integration gates.
+Read-only journal status no longer reconciles pending consumption writes.
+The 16-worker full validation completed at
+`validation/0a17039ddd70a9ec6e5c/566e559888e0`: 646 passed / 1 failed in
+1259.33 seconds. The remaining crash test patched the old persistence module;
+its journal-publication hook now targets journal_history too. Frozen production
+guards were not weakened. The receipt is historical after subsequent edits.
+
+The TX5 safety slice now rejects stale unspent account authority before a new
+grant hold and under the claim lock, preserves pending intent, and rechecks
+stop/ownership after replay and before native publications. Exact already-held
+reservations can finish after lawful sibling growth. All 66 focused claim,
+owner and capacity tests pass. Broader native execution/resume/allocation/
+requests coverage passed 108 cases in 122.76 seconds. Independent review then
+found the actual ledger writer lacked a post-lock veto and the stop test reused
+the owner callback. Both are repaired: a private guarded native initializer
+checks at ledger publication, and distinct stop/owner predicates cover replay,
+lock and reserved-tail/sibling cuts. The combined claim/owner/capacity/campaign
+set passes 123 cases in 8.65 seconds. Bounded independent follow-up closes
+both claim findings. Repeated native execution/resume coverage passes all
+108 cases in 123.30 seconds. These are not full current-source release gates.
+Automatic retirement/repreparation and canonical campaign integration remain
+open; a safe blocker does not close them.
+
+A prospective campaign_history component now implements intent-first offline
+initialization, monotonic exact transition membership, pending head/cursor/
+repair reconciliation, read-only coherent status, fixed generation paths,
+exclusive ownership and publication vetoes. Its 47 component tests pass,
+including real process death, repeated I/O failures, impossible-state rejection
+and two synthetic successors. This is NOT the canonical campaign factory or
+the required genuine native two-successor/combined soak. CP3 restart/campaign
+composition and public cold-entry integration remain open.
+Storage review found CS1–CS4: atomic temporary-file false blockers, stable
+malformed initialization mistaken for publication progress, lost committed
+plan/probe evidence accepted, and a missing successful guard return. Repairs
+use a separate temporary namespace, pre-parse head sampling, exact committed
+plan/probe byte membership and a strict True guard contract. The 134-case
+storage/journal/policy run passes in 6.19 seconds, including real process
+death inside atomic replace and concurrent read-only status. Independent storage
+follow-up closes CS1–CS4 within the inspected repairs, with no residual finding
+in that slice. The inspector is closed. This is not full campaign integration
+or release closure; CP1–CP4 retain their public-entrypoint acceptance gates.
+
+The native read-only preparation descriptor test passes in 83.71 seconds,
+including cold historical replay, unchanged artifact bytes/mtimes, late veto
+and a malformed prepared marker. It is verification, not an automatic preparer
+or canonical campaign admission. Its first run exposed an unconfigured cold
+history test fixture; the production validation was retained and fixture fixed.
+
+The 16-worker full exact-source validation passed all 746 tests in 1534.02
+seconds at `validation/9b5678d92cd617c677a0/c6c6ddc13c53`, with unchanged
+source and authority. That receipt is historical after the following bootstrap
+repair. No actual preflight or live execution is running.
+
+Continuation crossed midnight into 28 October. Bounded initialization review
+identified IN1–IN4: journal bootstrap crash recovery, strict pending/complete
+and legacy compatibility, nonmutating status, and acyclic admission binding.
+A temporary-directory reproduction confirms IN1: fail the first head write
+after marker publication and reopen returns BLOCKED_ACCOUNTING, permanently
+stranding a never-spent journal. The prospective repair now uses a permanent
+full initialization intent, pending/complete markers, an exact six-write empty
+transaction, and an identity carried by later journal consumption. Legacy
+journals reopen without upgrade; lost committed evidence remains blocked.
+Construction/status no longer create directories or locks. False predicates
+veto writes. The first 235-case focused suite passes after moving corrupt-state
+inspection before lock creation. Added atomic-write process-death, bool-alias
+and unstable-observation coverage passed 298 cases. Independent implementation
+review found missing-J reconstruction through ordinary legacy reconciliation
+and present-null intent misclassification. Both are repaired with shared-path
+missing-J rejection and object-typed observation; bounded follow-up closes II1
+and II2. Final focused/native compatibility passes 448 cases in 128.01 seconds
+with 16 workers. Ruff passes. This is bounded bootstrap closure, not release.
+
+The OFFLINE campaign_initialization candidate joins already prepared generation
+zero, independent native replay, an acyclic proposal, one fixed journal,
+inherited consumption and the campaign seed. The initial 225-case suite passed
+in 110.10 seconds. Bounded binding review found a late grant-replacement gap
+alongside the known verifier-to-publication and generation-zero status gaps.
+Repairs bind exact preparation/probe/snapshot/source evidence before every
+proposal/journal/seed publication, retain the verified grant/account prefix,
+reject new target allocations/holds, and preserve lawful sibling extensions.
+Native seeds have a distinct version and mandatory initial membership; coherent
+read-only status rejects lost/changed plan/probe/transition/proposal evidence
+and present non-object JSON. Inherited descriptors retain the outer lock.
+
+Added deterministic source/grant/stop/allocation races, inherited-lock rejection,
+24 composed process-death cuts, restart idempotence and nonmutating status
+regressions. The first native-inclusive run finished 340 passed / 4 failed in
+114.14 seconds. All four failures occurred before fault injection because the
+new tests omitted the existing cold-history fixture setup; that fixture was
+corrected without weakening production checks. The rerun passed all 344 cases
+in 113.49 seconds with 16 workers; Ruff passed. Bounded independent follow-up
+addresses all three inspected bootstrap findings and found no new concrete
+defect. That inspector is closed; subsequent integration is recorded next.
+The real offline-preparation command now prepares campaign/generation-00 and
+uses the single bootstrap journal rather than a scratch journal. Its guard
+checks actual held predecessor/program locks, source, production cursor and
+authority throughout publication. The public cold-entry native test returned
+PASS on both calls with identical seed/journal identities; its broad mtime
+assertion incorrectly included deliberate probe revalidation working files.
+The assertion now excludes only the probe snapshot/revalidation working trees;
+all canonical control, journal, prepared files and the main snapshot remain
+covered. All 339 integration/component cases pass in 96.20 seconds. Bounded
+preflight review found no new actionable defect; that inspector is also closed.
+Added generation-zero membership loss after zero/one/two successors and final
+post-completion grant/stop veto tests. The combined source/authority-bound run
+passed all 360 cases in 112.68 seconds at bootstrap-validation/b5f6f3f7b5b8:
+zero failures/errors/skips, source and production account/grant/stages unchanged.
+Ruff passes for all changed Python files. No test or inspector remains active.
+The new bootstrap regression module is in the canonical full validator's fixed
+test list. The retained checkpoint has hashed XML/logs and explicit nonrelease
+scope; it does not substitute for final exact-membership release validation.
+This is not canonical installed-supervisor admission, public live execution
+or release acceptance. Earlier full-suite receipts remain historical.
+
+The bounded protocol review found CP1–CP4: first initialization write cuts,
+impossible pending artifact combinations, restart-receipt/cursor composition,
+and coherent concurrent status reads. The repair plan now contains explicit
+dispositions and regression obligations for each. They await implementation
+and executable integration acceptance; no production restart is authorized.
+
+Do not confuse these component results with release completion. TX3 canonical
+installed-supervisor admission, TX4 campaign transaction/head/cursor recovery,
+TX5 stale prepared authority, TX6 verified-receipt progress, TX7 replay-cost
+bounds and the combined two-successor/long-document soak remain open.
+Fresh exact-source full validation, actual no-call preflight and grouped new
+limit/deployment approval must precede production. Repair → retest → review →
+refresh remains mandatory after every phase and interruption.
+Production remains stopped at 166 retained / 439 unfinished. No live calls,
+account/grant/service mutations, commit or push. The proposed 535 calls and
+291,040,000 tokens remain unadmitted. Final actual ZLB acceptance stays human;
+intermediate checks are automatic regression tests.
+
+Historical execution checkpoint, 27 October 2026: master 4.00 / ensemble 190.
+## Historical checkpoint before the current repair
+
+The exact-source 16-worker validation completed with 548 passes at
+`validation/11178f9ae8d2920091fd/9df3783a48f6`; source and authority were unchanged.
+Actual no-call preparation `preparation/4e6390b2750ff59be77e` completed with
+OFFLINE_PREPARATION_PASS in 1120.10 seconds: 166 retained / 439 unfinished,
+168 observations, eight historical sequences and idempotent history import.
+It made zero model calls, reservations or production authority/cursor changes.
+Both passing receipts are historical after the subsequent CI1/TX1 edits;
+no full validation or preflight remains running at this checkpoint.
+
+CI1 now restores aliases imported during document/qualification scopes and
+deactivates retained qualification wrappers on exit; 26 semantic tests pass.
+TX1 now uses a source/run/ceiling-bound restart head, initialization marker,
+exact committed membership and one recoverable pending receipt. Missing
+committed files cannot renew restart allowance. Combined semantic, restart,
+supervisor and launch coverage passes 110 cases, including 14 process-death
+cuts, stop/disk failures and missing-head/receipt rejection. Independent
+follow-up is pending; component evidence is not campaign/release acceptance.
+
+Next: close that follow-up, enforce canonical cross-generation journal
+authority (TX2), then integrate durable campaign transactions and canonical
+installed-supervisor handover (TX3–TX5), receipt-only business progress (TX6),
+and measured ancestry replay bounds (TX7). Require public multi-generation
+and long-document failure soak, fresh exact-source validation/preflight,
+and grouped prospective admission before any production launch. The TX
+closure matrix in the repair plan remains mandatory; no gate is waived.
+Repair → retest → bounded review → refresh applies after every phase/stop.
+Production remains stopped: 166 retained / 439 unfinished; proposed 535 calls /
+291,040,000 tokens are not admitted. No paid calls, authority/service changes,
+commit or push. Intermediate checks are automatic; only final ZLB content
+acceptance requires human review.
+Current repair delta: CI1 is independently closed. TX1-F1's one-shot disk
+publication defect is repaired; 125 focused cases pass. Follow-up TX1-IO1
+finds repeated reporting-outbox failures can still become terminal on reopen;
+this is the next repair and must cover error-handler/observer/entry-flush cuts.
+TX2 canonical journal binding and sealed stage consumption checkpoints are
+implemented as a candidate; 16-worker journal/policy/native-executor tests are
+running. Do not edit source until that source-bound native run finishes.
+Neither TX1 nor TX2 has full integration acceptance yet.
+
+Historical execution checkpoint, 27 October 2026: master 3.99 / ensemble 189.
+The actual ZLB ownership preflight PASSED in687.82 seconds at
+preparation/892aa313ce903e79a301:166 retained/439 unfinished,8 historical recovery
+sequences,3 sharing window0054 and1 on its unfinished child. Exact fresh-pair
+eligibility and idempotent import pass; zero model calls/new reservations,
+unchanged source/account/grant/cursor. Rule-context follow-up independently
+closes the receipt-scope defect. The501-case full suite is historical after edits.
+Semantic origin/scope repairs pass60 focused cases. Follow-up closed SM1/SM2
+and identified a remaining historical critic ancestry substitution in SM3.
+The graph now reconstructs exact native parent prompts, context and complete
+chains for historical as well as new rules;18 semantic tests pass, including
+coverage/reconstruction A/B ancestry versus unrelated X. Independent follow-up
+closes that defect. Native oversize-to-split-to-completion and failed-canary
+continuation tests now pass (2 cases,332.82 seconds), including cold reopen,
+exact-once expansion charge and no duplicate execution. Initial scoped native
+preparation/completion also pass. Broader preparation/crash tests and bounded
+continuation review remain in progress; these are not release acceptance.
+Production preflight now explicitly switches historical to document semantics.
+The recursive ancestry/native/cold-probe set passed9 cases in642.61 seconds.
+CD2-F1 now binds the complete accepted probe report/transcript digest into
+the admitted native plan; rehashed observation/report mutations are tested
+against the sealed plan. Exact 16-worker validation completed with 541 passes
+and one failure in 859.28 seconds at
+`validation/9720dfe3740c77adf406/9193886f5920`: the native ownership fixture
+still selected historical semantics for a document-policy plan. Keep the
+production ownership guard and update the fixture to the versioned runtime.
+Actual no-call preflight `preparation/f4911c92ee64fd8b71e2` failed after
+262.75 seconds: its historical accounting context remained active when it
+installed document semantics. Fully unwind that context, validate origin in
+a temporary historical scope, then install document hooks before reentering
+history. Add exception/nesting regressions and rerun both failed boundaries.
+Context lifetime and the native ownership fixture are repaired: 39 focused
+cases pass in 89.14 seconds, including exception cleanup and wrong nesting.
+The next actual preflight, `preparation/23a28f15063581b078a4`, failed in
+484.75 seconds with unchanged source/authority and zero calls. Qualification
+corpus replay was intercepted by the document-only critic ownership hooks.
+Qualification now evaluates through its captured native critic bindings while
+document calls still reject missing extraction ownership. All24 semantic
+regressions pass, including exact qualification requests, sensitivity membership,
+no observation contamination, interruption restoration and orphan rejection.
+Actual no-call preflight is running at `preparation/4e6390b2750ff59be77e`;
+exact-source 16-worker validation is running at
+`validation/11178f9ae8d2920091fd/9df3783a48f6`. Failed receipts remain
+engineering evidence, not deployment acceptance. No production restart.
+The bounded transaction design review identifies TX1–TX7: lost restart
+membership, cross-generation journal substitution, omitted inherited stops,
+pending head/cursor reconciliation, stale pre-claim authority, receipt-based
+progress and repeated ancestry cost. These are open implementation gates, not
+closed by documentation or the running tests. See the repair plan's TX closure
+matrix and the independent transaction design review for exact regressions.
+Continuation review CD1/CD2/CD2-F1 is closed at the inspected code boundaries:
+canonical qualification persistence, bounded recursive preparation/source checks,
+and sealed full-probe report binding. Qualification mutation boundary:6 passes;
+recursive native/cold-probe set:9 passes before the final transcript patch.
+The current full suite, actual preflight, transactional campaign integration,
+canonical supervisor admission and combined long-document soak remain release
+gates. These component closures do not authorize production deployment.
+Remaining: finish semantic closure, generic settled successors, durable repair/
+cursor transactions, canonical admission/supervision, combined long-document
+soak, then exact-source release/preflight and concrete grouped admission.
+Repair/retest/refresh remains mandatory between phases and after interruptions.
+Production has NOT resumed.535 calls/291,040,000 tokens remain unadmitted.
+No live provider calls, production authority changes or service restart.
+Intermediate verification is automated; final actual ZLB review remains human.
+
+Historical execution checkpoint, 27 October 2026: master 3.91 / ensemble 181.
+EX1 is repaired: late stops publish a durable pause while preserving any sealed
+terminal; 30 executor/owner/terminal regressions pass. Actual offline production
+preparation replayed all166 retained responses and reached the exact439-request
+continuation with unchanged source, account, grant and cursor. That receipt and
+the earlier465-case suite predate current migration edits and are historical.
+Root migration now imports allocated historical consumption separately from new
+funded pairs. The unadmitted proposal distinguishes3 sequences per lineage and
+12 shared per root, preserving all8 old diagnostics and the independent17-charge
+carry-forward. Fresh diagnostic-only continuation consumes a new funded pair.
+Review found RI1 (rehashed history omission at direct validation) and RI2 (valid
+zero-process cancellation/resume rejected by adjacency). Repairs and genuine
+native regressions are running with16 workers; follow-up review is pending.
+The offline probe now retains complete normalized source observations for the
+required actual eight-sequence/window0054 ownership preflight and crash replay.
+Next gates: this ownership proof, prospective semantic bounds, durable campaign
+transitions, canonical supervisor admission/handover, combined long-document
+failure soak, then exact-source release validation and grouped admission.
+Repair/retest/refresh remains mandatory after every phase and stop.
+Production has NOT resumed:166 retained/439 unfinished; no live calls or
+production authority/service mutations.535 calls/291,040,000 tokens remain a
+proposal, not newly admitted authority.
+
+Historical execution checkpoint, 27 October 2026: master 3.90 / ensemble 180.
+ST1/ST2 and RQ1 are independently closed at their component boundaries.
+Native ownership now follows exact observed extraction/critic parent requests,
+including nested splits, overlapping windows and original merged context.
+The native executor verifies final artifacts, retains user pauses and uncertain
+allocations unsealed, and resumes offline finalization without new calls.
+The 32-case combined run had 31 passes and one test-reference failure; after
+correcting that reference, the completed-v3 cold-history case passes separately.
+Production successor preparation is running offline against the actual ZLB
+history. No live inference or authority/service mutation has occurred.
+Remaining release gates: import historical root recovery sequences, versioned
+semantic rules without the old global 16-rule/14-child ceiling, durable campaign
+transitions, canonical admission/handover, combined document failure soak, and
+final source-bound regression/migration/preflight. Component passes do not close
+these integration gates. Refresh both masters after each phase or interruption.
+Production has NOT resumed: last verified inventory is 166 retained/439 unfinished.
+
+Historical execution checkpoint, 27 October 2026: master 3.89 / ensemble 179.
+Successor findings SC1/SC2 are repaired and independently closed. Native
+preparation now replays retained responses and persists one authority/plan
+intent before publication. ST1/ST2 repairs validate the current grant and
+replay the original intent after account growth; exhausted capacity blocks.
+The mixed-history settlement regression exposed closure-captured legacy usage
+readers and duplicate conservative accounting. Candidate dispatch now retains
+the native reader, forwards current usage explicitly, and preserves historical
+accounting semantics. The combined focused run passed 32 cases with one cold
+entrypoint fixture failure; that corrected cold entrypoint now passes separately.
+Stage follow-up is running; a fresh combined exact-source run remains required.
+Next bind real semantic observations and inherited split ownership to dispatch,
+then complete campaign/admission, transition recovery and combined document soak.
+Repair/retest/refresh remains mandatory after every phase and interruption.
+Production has NOT resumed: last verified inventory is 166 retained/439 unfinished.
+
+Historical execution checkpoint, 27 October 2026: master 3.88 / ensemble 178.
+The repeated-stop history repair is independently closed at its component
+boundary. A durable head records transition membership and pending commits;
+lost intermediate/latest records cannot make an old stop current again.
+Sixty-nine resume regressions pass with 16 workers, including identical stop
+bytes at two control roots, independent generations, missing/wrong second-root
+resume and real process death at every history publication boundary.
+The 409-case exact-source pass predates the additional two-root coverage and
+successor work; it remains historical evidence, not current release admission.
+The prospective successor now builds directly from independently reconciled
+budget-stop evidence and carries 17 inherited charges without invoking the
+frozen 16-limit constructor. Its native regression also proves reinspection
+after legitimate account growth, while preserving original account history.
+Three focused native tests pass; bounded successor review is running.
+Next complete native preparation/probe, canonical admission and campaign,
+request-to-source lineage, transition/semantic/split recovery and combined soak.
+After every phase/stop, retain receipts, repair, retest and refresh both masters.
+Production has NOT resumed; last verified inventory is 166 retained/439 unfinished.
+
+Historical execution checkpoint, 27 October 2026: master 3.87 / ensemble 177.
+The runtime review found two resume defects after the 362-case snapshot:
+RT1 stranded a zero-launch stop after allocation; RT2 stranded an intent
+committed before allocation. Bounded follow-up then found RR1: a later valid
+stop conflicted with an earlier retired cancellation. Candidate repair now
+preserves intent-only dispatch, rechecks capacity/authority/canary freshness,
+and retains immutable authorization and stop-supersession history for exact
+zero-launch cancellation. Original UUID and charges remain immutable;
+missing/wrong/current-stop rollback continues to block. Ninety-seven focused
+RT1/RT2 tests and 25 repeated-stop tests pass with 16 workers; Ruff passes.
+Full exact-source validation and independent RR1 review are required after the
+latest edits. The preceding 385-case pass is historical for RR1.
+Next implement and test the production successor, admission and campaign;
+then transition/semantic/split recovery and the combined long-document soak.
+The repair plan contains the required boundary matrix and refresh procedure.
+Production has NOT resumed; last verified inventory is 166 retained/439 unfinished.
+
+
+Historical repair checkpoint, 27 October 2026: master 3.86 / ensemble 176.
+SO1/SO2 owner findings are repaired and independently closed at the helper
+boundary: admitted configuration determines canonical program/job ownership;
+the grant/account identity is checked under the retained grant lock before
+reservation. Twenty owner regressions pass with 16 workers, including foreign
+locks/capsules/accounts, changed request/ack, late veto and cleanup/reentry.
+Production admission remains an explicit prerequisite, not a fixture callback.
+The previous 312-case pass predates these changes and is not current admission.
+Next execute the prospective policy/runtime/layout and paired dispatch units,
+then exact allocation-to-runtime binding, native executor/campaign/transition
+and second handover integration. Test cold cuts and combined long-document
+failures before freezing sources for suite, migration and release review.
+Production remains stopped at the last verified 166 retained/439 unfinished;
+no live restart, provider call, authority increase or service change.
+
+Current repair checkpoint, 27 October 2026: master 3.85 / ensemble 175.
+The exact-source offline suite passes 312 cases with 16 workers at
+`validation/4c89a42fef4326e69892/9f13e4cf6ef3`; Ruff passes and authority is
+unchanged. Prospective launcher now inherits a parent-held per-job lock across
+Popen/ack gaps; cold tests preserve unpublished workers and recover quiescent
+never-spawned intents. Typed stop after ack remains resumable only after exact
+authorization; LH1 and same-monitor liveness received bounded review closure.
+Native pair finish now settles from exact request-bound, quiescent runtime
+evidence. Four hard-exit allocation/result cuts conserve spending; NS1 foreign
+prompt-receipt substitution is fixed and independently closed. Native owner
+holds global/execution/executor/grant locks and claims before publishing
+executor metadata; five tests pass, its bounded review is pending. Earmark
+review found no concrete high defect under continuous native ownership.
+Latest migration attempt `migration/87827503d4e4b00418be` correctly fails its
+source-stability gate because repairs changed during replay; authority stayed
+unchanged. Rerun only after the next source freeze; do not reuse older passes.
+Production remains stopped at 166 retained/439 unfinished. New-policy runtime/
+campaign and canonical admission wiring, inherited ancestry/split integration,
+complete crash matrix and combined-document soak remain release gates. No
+provider call, production write, service change, limit approval or restart.
+
+Verified repair checkpoint, 27 October 2026: master 3.84 / ensemble 174.
+The fixed exact-source offline validator passes 285 tests with 16 workers at
+`validation/bbcda114bbb8d3761ccb/0eef18912a42`; sources and production authority
+are unchanged during the run. Ruff passes. The historical ownership race is
+deterministically reproduced; a prospective monitor fixes double decisions,
+late result/ack publication and interference with a known starting worker.
+Independent follow-up closes SV1 and SV2's unsafe behavior, not full recovery:
+unpublished pre-ack workers remain observed without lock seizure or restart
+charge until an authenticated parent-owned launch handoff is implemented.
+Native pairs now persist stage-held capacity earmarks before allocation, bind
+one journal, conserve base slots and survive cold commit cuts. Capacity review
+is pending. Migration audit `migration/e2ad8621638c8d2a4a2f` passes for
+18 candidate files with zero calls/writes and unchanged authority. Production is still
+stopped: 166 retained responses, 439 unfinished requests. Release still needs
+the new-policy executor/campaign, native owner/handoff and stop integration,
+full crash/combined-document tests, exact-source review and grouped prospective
+limit/deployment approval. These component passes are not a ZLB completion or
+permission to restart. Earlier failures and source receipts remain retained.
+
+Recovery review checkpoint, 27 October 2026: master 3.83 / ensemble 173.
+The latest exact-source suite failed: 259 passed, one cold-start ownership
+case failed (260 collected). Its isolated pass is not closure. A worker can
+die between the recovery wrapper's liveness check and the durable monitor's
+second check, causing an engineering block while its inherited-lock child
+still owns execution. Add a prospective single-decision monitor and a
+deterministic regression; do not relax request/lock admission or edit frozen
+historical runtime. AL1–AL3 are independently closed for their specific
+allocation/capacity defects, not for release. Next: reproduce/repair this race,
+couple native held capacity to paired reservation, finish new-policy runtime/
+campaign and handover integration, then cold-crash and combined-document
+validation. Preserve every failed receipt and bind each new pass to exact
+sources. No candidate is deployed; production remains stopped with 166 retained
+responses and 439 unfinished requests. Grouped limit/deployment approval
+remains a prerequisite after release gates pass.
+
+Repair execution checkpoint, 27 October 2026: master 3.82 / ensemble 172.
+The resumed candidate suite passes 139 tests with 16 workers. Separate native
+held-capacity and chained-handover tests pass (1 and 4 respectively); the
+three-test native suite also passes after adding the budget migration gate.
+Implemented candidate boundaries now validate native canary receipts at retry
+dispatch, preserve typed failures before native sealing, reconcile interrupted
+account/receipt/ledger claims, and persist source-bound ancestry and split
+charges. Thirty-two independent splits and root-wide retry conservation have
+regression coverage. The dedicated source gate accepts the reconciled budget
+stop while the historical successor constructor still rejects it.
+These are offline component/native-boundary results, not production recovery.
+Sequential independent boundary review is in progress. Full native executor/
+campaign integration, complete crash matrix, source-bound handover admission,
+combined long-document soak and final-source review/preflight remain open.
+The earlier migration audit binds an older source snapshot; do not relabel it
+as current. The sealed run retains 166 responses with 439 unfinished requests.
+No paid call, production restart, changed limit, account/grant write, commit or
+push is claimed. New policy and concrete host actions still require grouped
+explicit authorization after the candidate passes release gates.
+
+Execution checkpoint, 27 October 2026: master 3.81 / ensemble 171. Independent
+corner-case review identifies six high-priority requirements (RC1–RC6); the
+recovery-limit plan now includes stage suballocation/native token units,
+multi-file crash commits, finite single-use canary adoption, frozen-reader
+compatibility, second-handover ownership/stop continuity and stable ancestry.
+Separate v3 components and 34 passing offline tests are implemented. The
+read-only migration audit verifies all 166 retained responses and 439 unfinished
+requests; authority is unchanged. A 535-call candidate fits the 576 remaining
+authorized calls but funds no new qualification. It is not admitted. Native
+integration, combined failure tests and final-source release gates remain open.
+Production remains stopped; no paid call, service restart or limit change is
+claimed. See INVENTORY_RECOVERY_LIMIT_REPAIR_2026-10-27.md and the independent
+INVENTORY_RECOVERY_PLAN_CORNER_REVIEW_2026-10-27.md findings.
+
+Repair-design checkpoint, 27 October 2026: master 3.80 / ensemble 170. The
+recovery-limit plan now specifies ordered implementation and release gates:
+reproduce/reconcile the sealed stop; preserve typed failures; unify document
+and request-lineage budgets with atomic canary/retry reservations; implement
+bounded timeout/split/fallback transitions; integrate successor progress and
+phase refresh; run combined fault/crash regressions and review the complete
+release before grouped deployment/limit approval. Reconcile the native
+17-charge carry-forward calculation against the displayed 16 in-stage extras;
+do not reset usage. Review generation and split ceilings alongside recovery
+capacity. Plan: INVENTORY_RECOVERY_LIMIT_REPAIR_2026-10-27.md.
+This is a reviewed design checkpoint, not implemented recovery or a new test
+pass. Execution remains stopped with 166 retained responses and 439 unfinished
+requests. Runtime, frozen evidence, authority and services are unchanged.
+
+Stopped-run checkpoint, 27 October 2026, 13:35 Asia/Shanghai: master 3.79 /
+ensemble 169. Execution stopped at 04:36:36 after generation-02 completed one
+new manuscript request. There are 166 retained responses and 439 unfinished
+logical requests. Automatic splitting passed, but the cumulative 16-session
+recovery allowance is now exhausted: 14 inherited charges plus two canaries.
+The worker exited with code 1 and the terminal notification was delivered.
+The reported BLOCKED_SEMANTIC label is incorrect: terminal diagnosis lost the
+structured BLOCKED_BUDGET category and mapped layout mode=request to semantic
+failure. No semantic rejection is established. No execution is currently
+continuing. Repair plan: INVENTORY_RECOVERY_LIMIT_REPAIR_2026-10-27.md.
+Preserve sealed receipts and all completed work; do not reset the recovery
+allowance or blindly restart. Both category propagation and a reviewed bounded
+recovery policy need repair before a newly admitted continuation. Earlier
+RUNNING checkpoints below are historical observations.
+
+Monitoring checkpoint, 27 October 2026, 01:47 Asia/Shanghai: master 3.78 /
+ensemble 168. The "No observed progress" desktop warning is a confirmed
+monitoring defect: the static watch list omits successor-generation files.
+The active generation has completed nine manuscript requests, independently
+checked against its ledger/runtime receipts: 150 retained, 454 unfinished.
+The next request is running. A prospective watch-list correction passes 18
+offline regressions with 16 workers, including genuine stall detection. It is
+not deployed; all 66 live contract source files remain unchanged. Integrate
+the correction through the next admitted supervisor update while preserving
+the owned worker. Plan: INVENTORY_PROGRESS_WATCH_REPAIR_2026-10-27.md.
+The reporting defect remains open; no production failure is established.
+
+Recovery checkpoint, 27 October 2026, 01:14 Asia/Shanghai: master 3.77 /
+ensemble 167. Live recovery is now demonstrated by completed manuscript work.
+The canonical generation-01 continuation passed its canary and completed three
+new manuscript requests under retained Astra/xhigh qualification. Independent
+receipt/ledger cross-checks confirm matching request/input/result/runtime hashes,
+reported usage and complete termination within the 900-second deadline. The
+previously blocked first request completed in 792 seconds; the next two took
+99 and 44 seconds. There are 144 retained responses and 460 unfinished logical
+requests at this checkpoint. The next request is running under the admitted
+monitor, worker and campaign child; monitor/reporter remain active with zero
+service restarts. Evidence: history-repair-20261026-01/live/
+verified-progress-20261027-0114.json under the failure-first audit root.
+Both master projections and the live-admission plan are refreshed. Keep this
+owned run intact and allow native bounded recovery to handle eligible failures.
+Full inventory verification, downstream ZLB writing/review/reproduction and
+final human output acceptance remain open. Existing budgets are unchanged.
+
+Live deployment checkpoint, 27 October 2026, 00:50 Asia/Shanghai: master 3.76 /
+ensemble 166. Exact-service spent-state preflight 85126307d33439b9e1fc PASS
+with zero model/account/grant writes. Desktop delivery and installed admission
+passed; the approved host helper exited successfully. Both additive units are
+active but disabled for boot; both predecessor units are inactive/disabled.
+The monitor, worker and campaign child have acknowledged ownership. Native
+advance has prepared the canonical 463-request generation-01 successor using
+retained Astra qualification; its cursor/allocation are not yet committed at
+this observation. Historical replay and admission remain in progress. The
+141-response baseline is preserved; no newly completed manuscript response
+has yet been verified. Existing generation-zero counts are historical, not
+new recovery progress. Do not reinstall or restart this surviving owned job.
+Next gate: verify the canonical cursor and a completed new manuscript response
+or retain the precise blocker. Inventory completion, downstream ZLB phases
+and final human output acceptance remain open; no budget renewal is included.
+Earlier deployment/checkpoint paragraphs below are historical observations.
+
+Deployment checkpoint, 27 October 2026: master 3.75 / ensemble 165. Final
+implementation/test review PASS binds dc40978f30202f37ff35e9a7430179998d76e978f11ec7ade2d02845707f3c9a.
+Actual spent-state diagnostic 54430bd20bb81c4c743f PASSED with unchanged source
+and authority, zero model/account writes. The grouped host deployment action
+has begun: old failure-first monitor/reporter are inactive and disabled; exact
+isolated service preflight 85126307d33439b9e1fc is running. New units remain
+uninstalled and live admission unpublished until preflight and desktop delivery
+pass. No manuscript inference has resumed at this checkpoint. The host action
+will install disabled units and request one bounded start only if all gates pass.
+Actual completed response verification remains required after launch.
+
+Latest checkpoint, 27 October 2026 (Asia/Shanghai): master 3.74 / ensemble 164.
+All 133 exact-member additive integration tests PASS at d0853fc8735f730ae518;
+the seven-file offline repair and 26 frozen runtime files remain unchanged.
+Independent bounded reviews close the ownership, cold-start, restart-observation
+and Python-startup findings. The final source-bound release review and actual
+spent-state replay are running; neither is presumed passed. The previous actual
+replay completed its semantic/account checks but failed source-drift admission
+with authority unchanged; that failed evidence is retained. New units are not
+installed and no inference has restarted. After those gates: grouped host
+approval, exact-service preflight, disabled installation, one bounded launch,
+then verification of a real manuscript response or precise blocker. Inventory
+completion, downstream ZLB stages and final human output acceptance remain open.
+No budget renewal, qualification repurchase, commit or push is included.
+
+Operational refresh, 26 October 2026: master 3.73 / ensemble 163. Historical
+accounting repair is verified offline: 278 exact-member regressions plus the
+long-document gate PASS at 978bd3fbfb1171bd455f, and the 227-settlement/141-response
+preparation PASS remains unchanged. Production is STOPPED; 463 logical requests
+remain. The additive live handover now conserves inherited restart allowance,
+keeps old owners excluded with inherited locks, and permits the replacement
+monitor to observe its surviving child after a crash. Fifty-seven targeted
+ownership/adoption tests pass; source-bound integration and independent closure
+review are in progress. Spent-state preflight, canonical successor admission,
+exact service deployment and grouped host approval remain required. The live
+launcher is deliberately fail-closed; no paid call, installation or restart has
+occurred. The original failed worker is inactive/disabled; its old reporter is
+still active/disabled and must be stopped in the approved handover. Reuse settled
+Astra qualification; never repurchase it or relocate the diagnostic successor.
+Current sequence: HISTORY_REPAIR_LIVE_ADMISSION_2026-10-26.md. Earlier operational
+paragraphs below are historical checkpoints, not current readiness claims.
+
+<!-- sol-inventory-continuation -->
+Inventory continuation: {"execution_enabled": true, "final_zlb_acceptance": false, "generation": 2, "human_evidence": false, "incident": {"action": "retain_semantic_failure_no_reroll", "automatic_repair": false, "evidence": {"incident": {"eligible": true, "eligible_after": 1793046883.943104, "provider_receipt": "codex:01a179d0-b711-7743-b31c-16f217f5ca3d", "reason": "response_free_capture_deadline", "request": {"max_tokens": null, "prompt": "Extract substantive concepts from the following source passage.\n\nA concept is a meaning-bearing proposition: definition, distinction, claim,\nmechanism, assumption, derivation step, qualification, example, counterexample,\nevidence interpretation, or teaching transition.\n\nThe inventory must jointly preserve every substantive assertion in this passage.\nWork through each sentence and clause, including abstract and introductory prose.\nRetain explicit subject scope, conditions, qualifications, comparisons, temporal\norder, list members, author assessments and statements about what the document\ncovers or derives. A list of methods and a commitment to derive their constructions\nare substantive content even when later sections explain those methods in detail.\nKeep distinct assessments distinct: usefulness and speed are separate assertions.\nDo not replace a complete inventory with selected themes or a short summary.\nReader prior knowledge does not authorize omission of stated source meaning.\n\nWhen splitting a sentence into concepts, preserve its explicit relations as well\nas its individual clauses. State each relation in a proposition, either together\nwith its related clauses or as a separate source-grounded claim. Concept array\norder and prerequisite metadata do not express a relation in proposition text.\nFor example, a hypothetical manual that introduces a sensor, then describes its\ncalibration, states an order of exposition; listing those topics separately loses\nthat order. This example is not part of the supplied source. Preserve the stated\ndirection, subject, conditions and scope of temporal, procedural and expository\nrelations. Do not turn exposition into real-world chronology, causation or logical\nnecessity. A conjunction alone does not establish order. Conditional \"if ... then\"\nstates a condition and consequence, not that either event occurred or that one\noccurred earlier. Check relations after atomizing, not just clause membership.\n\nPreserve enough explicit context in each proposition to identify its subject and\nscope; do not rely on a reader guessing them from familiar terminology. Prefer\nthe source's precise wording when paraphrasing would lose a distinction. Do not\nadd unstated definitions or interpret an incomplete fragment using outside facts.\nBefore returning, check that all substantive clauses and enumeration members are\nrepresented and that each proposition is supported by the supplied source.\n\nReader-facing titles, headings, labels, author attributions and displayed dates\ncan convey document identity or literal metadata without making a domain claim.\nRetain that explicit meaning as a claim, including the exact displayed value.\nWhen its role is unclear, state only that the source displays the quoted label;\ndo not guess whether it is the document title, an author, or a recommendation.\nA topic label does not assert a definition, finding, valuation, derivation or\nmethod's properties. Do not infer any of those from a named topic alone.\nTypography does not make readable text disposable. Preserve substantive clauses,\nnegation and qualifications alongside labels, including text inside custom macros.\nKeep formatting commands separate from the reader-facing values they surround.\n\nSource text with span IDs:\n[span-39e3a42d391dacda]: \n\n\n[span-2d0ded8b7bd6e1b0]: The hierarchy that emerges is worth stating plainly. A split or truncated\nmixture UKF is a fast, useful diagnostic and a good proposal engine. A\nbranch-corrected particle filter is the authoritative nonlinear likelihood.\nThe COPF construction of Section~\\ref{sec:copf} is the exact\npiecewise-linear benchmark. None of this, however, turns the UKF proposal\ninto an exact source of HMC gradients: an HMC scheme must target either the\ncorrected extended particle state or an explicitly acknowledged\napproximation (Sections~\\ref{sec:hmc} and~\\ref{sec:pmcmc}), and the\nshadow-rate case study of Section~\\ref{sec:shadow} shows what these\nconstructions become when the switching lives in the observation map\nrather than in the transition.\n[span-4a440fc0759dc9eb]: \n\n\n[span-8c44467b12332244]: \\section{Ordinary HMC and how the lower bound changes its geometry}\n[span-dd9c33a6fbe04148]: \\label{sec:hmc}\n[span-f65c81c412a2fde2]: \n\n\n[span-35acc78068912ab7]: Hamiltonian Monte Carlo is the natural starting point for posterior sampling\nin high-dimensional latent-variable models, and understanding precisely where\nan occasionally binding constraint breaks its assumptions is the organizing\nquestion for the rest of this survey. For a smooth posterior\n\n[span-8acfe4abd489341e]: $\\pi(q)\\propto e^{-U(q)}$\n[span-18bcf0a945d45511]: , introduce momentum \n[span-261dee1ebf146b54]: $p\\sim e^{-K(p)}$\n[span-a7bfff0e0d67f335]: , form the\nHamiltonian \n[span-643f68a21c697922]: $H=U+K$\n[span-9cef6b4b1b787a05]: , and evolve the phase point by Hamilton's equations\n(Neal 2011, Sec.~5.2)\n\n[span-dd1698b8d3952da0]: \\begin{equation}\\label{eq:54}\n \\dot q=\\nabla_pK(p),\\qquad \\dot p=-\\nabla_qU(q).\n\\end{equation}\n[span-0d60535a3e16b490]: \nWith Gaussian momentum \n[span-bbc09b38c4a97f8f]: $K(p)=\\frac12p^{\\mathsf T}M^{-1}p$\n[span-fdbffed5a84c0073]: , the leapfrog\nintegrator discretizes \\eqref{eq:54} as\n\n[span-752989d0f5b0655c]: \\begin{equation}\\label{eq:55}\n p\\leftarrow p-\\tfrac\\epsilon2\\nabla U(q),\\quad\n q\\leftarrow q+\\epsilon M^{-1}p,\\quad\n p\\leftarrow p-\\tfrac\\epsilon2\\nabla U(q).\n\\end{equation}\n[span-faa0a01dc8c59c95]: \nThe leapfrog map is reversible and volume preserving, so a final Metropolis\ncorrection with acceptance probability \n[span-1d6ada32639db26a]: $1\\wedge e^{-\\Delta H}$\n[span-0d428b290f068a6c]:  exactly\naccounts for the integration error.\n\nReader profile:\n{\n  \"role\": \"graduate economics student with econometrics training\",\n  \"prior_knowledge\": [\n    \"Bayesian inference\",\n    \"state-space models\",\n    \"Kalman filtering\",\n    \"MCMC\",\n    \"New Keynesian models\"\n  ],\n  \"reading_context\": \"Reads the complete survey without access to the source repository or the authors, deciding which sampler to use for a zero-lower-bound model.\"\n}\n\nGenre: technical survey\n\nFor each concept:\n1. Identify the proposition (what is being taught)\n2. Classify the concept type\n3. Note the teaching role (initial, repeated, expanded, contrasted)\n4. Link to source span IDs \u2014 ONLY the minimal spans that directly state this concept\n5. List supporting span IDs (for evidence, equations, citations)\n6. State confidence (0.0-1.0)\n\nMultiple concepts may share a source span. Keep distinct propositions separate.\nUse only the supplied span IDs. Prerequisites must name another concept_id from\nthis response, or an exact item from the reader's declared prior knowledge.\nDo not invent undeclared prerequisite identifiers.\n\nAbstain (return empty list) if:\n- Source contains only formatting or control syntax without reader-facing meaning\n- Cannot determine proposition boundaries\n- Ambiguous whether content is substantive\n\nThe business response payload is a JSON array of objects with these fields:\n- concept_id: string (unique identifier)\n- proposition: string (the actual concept/claim being taught)\n- concept_type: string (definition|distinction|claim|mechanism|derivation|finding|example|counterexample)\n- source_span_ids: array of strings (span IDs where this concept is directly stated)\n- teaching_roles: array of strings (initial|repeated|qualified|contrasted|example|prerequisite)\n- supporting_spans: array of strings (span IDs providing evidence/support)\n- prerequisites: array of strings (concepts reader needs first)\n- confidence: number (0.0-1.0)\n\nExample response format for the hypothetical source \"For sampled households in\n2020, spending increases with income. The survey derives filtering and sampling\nconstructions rather than merely naming them.\" These example claims are not\npart of the supplied source:\n[\n  {\n    \"concept_id\": \"concept-001\",\n    \"proposition\": \"For sampled households in 2020, spending increases with income.\",\n    \"concept_type\": \"claim\",\n    \"source_span_ids\": [\"span-001\"],\n    \"teaching_roles\": [\"initial\"],\n    \"supporting_spans\": [],\n    \"prerequisites\": [],\n    \"confidence\": 0.9\n  },\n  {\n    \"concept_id\": \"concept-002\",\n    \"proposition\": \"The survey derives filtering and sampling constructions rather than merely naming them.\",\n    \"concept_type\": \"claim\",\n    \"source_span_ids\": [\"span-002\"],\n    \"teaching_roles\": [\"initial\"],\n    \"supporting_spans\": [],\n    \"prerequisites\": [],\n    \"confidence\": 0.85\n  }\n]\n\nInventory context request: {\"policy\": \"inventory-sentence-context-v1\", \"repair_round\": 0, \"source_file\": \"zlb_source.tex\", \"window\": \"window-0054\"}", "purpose": "concept_extraction", "record_type": null, "response_schema": "extraction-response", "schema": null, "system_prompt": null}, "request_hash": "c514a74ac46e4216ee7e03685f4e01d7c80ccd35c89b76acc9d1e4926f3b84dc", "runtime_record_hash": "ac3ee7246e2100e4945b36568319f562e3c3008cf575da02cd2a7bb40c2800df"}, "output": "/home/ubuntu/workspace/humanvoice/docs/audits/2026-10-05/master-program/automatic-execution/sol-inventory-failure-first-20261026-01/campaign/generation-02", "plan_identity": "febc33c5f83ef6ced4ec2e98fe52b8d43ba971def36f791d1f69e0432ce03c3e", "terminal_sha256": "eaf770fad661e8d92434fd186bdc883c82473a1bbb26e9d0ad7fc507029b864f"}, "final_zlb_acceptance": false, "human_judgment_required": false, "identity": "6dcb206a981846867c0b46682c7d33252e4ed2d682c3120288bed1fdc70c7ebe", "mode": "request", "primary_error": "InvocationStopped: Inventory provider invocation stopped: Cumulative recovery session allowance exhausted", "status": "BLOCKED_SEMANTIC"}, "next": "Diagnose and repair from retained evidence; never reopen sealed work", "output": "/home/ubuntu/workspace/humanvoice/docs/audits/2026-10-05/master-program/automatic-execution/sol-inventory-failure-first-20261026-01/campaign/generation-02", "phase": "SOL_INVENTORY_HANDOFF", "reason": "InvocationStopped: Inventory provider invocation stopped: Cumulative recovery session allowance exhausted", "secondary_error": "RecoveryBlocked: InvocationStopped: Inventory provider invocation stopped: Cumulative recovery session allowance exhausted", "status": "BLOCKED_SEMANTIC"}
+Evidence: /home/ubuntu/workspace/humanvoice/docs/audits/2026-10-05/master-program/automatic-execution/sol-inventory-failure-first-20261026-01.
+<!-- end-sol-inventory-continuation -->
+
+<!-- qualification-capture-continuation -->
+Qualification continuation: {"allocated_calls": 212, "evaluation_hash": "f56ca3edc9e1faf8653fd782212a53e1a616a228316f78cf83a3e0f077bddaf1", "human_evidence": false, "next": "Budget-checked production handoff; no automatic allowance increase", "plan_identity": "d4bcfe6fa431b59139aa1fdba05328090002d8e9f16f169d3de9de94a6f3f848", "production_admission": false, "retained_tokens": 115328000, "status": "QUALIFICATION_VERIFIED"}
+Evidence: docs/audits/2026-10-05/master-program/automatic-execution/response-capture-qualification-20261025-02.
+<!-- end-qualification-capture-continuation -->
+
+Operational refresh, 26 October 2026: master 3.72 / ensemble 162. Execution is STOPPED at historical-accounting validation during qualified fallback preparation. There are 141 retained manuscript responses and 463 unfinished logical requests. The failed request is indivisible under native splitting; the campaign already completed and settled Astra/xhigh's 212-case qualification. That qualification must be reused, not purchased again. A changed accounting-wrapper reader identity forced historical receipts through a foreign-profile parser despite verified evidence. The new native regression reproduces this failure; a prospective verified-history boundary preserves strict parser trust, native authority checks and per-read evidence/membership verification. Seventeen focused repair tests pass; broader regressions, independent implementation review and actual offline successor preparation are in progress. All frozen v2 source/paid evidence remains unchanged. Current repair plan: FAILURE_FIRST_HISTORY_REPAIR_2026-10-26.md. The repair launcher permits offline preparation only; repaired live execution requires separate source-bound admission and any changed host launch approval. No restart, inventory completion or final ZLB acceptance is claimed.
+
+Historical validation checkpoint: dc17bb9df2ed0cd8ced1 passed its exact-source gates; later P1/C1 changes are separately certified by the current 6bb34ee6dfe7fa8c9239 passing release. The obsolete unallocated snapshot and all failed test/preparation attempts are preserved. Current live progress is authoritative in the projection above and supervision/state.json, not historical checkpoints below.
+
+Implemented prospectively: exact saved stream-disconnect classification; campaign-owned bounded repair; preserved primary/secondary causes; source-bound successor receipts; durable stop and authorized resume; no-process cancellation accounting; crash-safe result and frozen-baseline finalization; inherited child ownership and cumulative supervisor restart limits; provider-rejection precedence over output overflow; native output splitting; settled fallback reuse under a later reservation; and cold-process settlement dispatch. Unknown allocations and unsupported input-envelope decomposition remain explicit blockers. No sealed historical source or paid evidence is rewritten.
+
+Validation COMPLETE for current source: 225 regression tests (including the full 212-case qualification workflow), 627 logical long-document requests/632 allocations with faults and process restarts, exact 138-response prefix replay, 225 historical settlements, actual CLI preparation and service-bound account admission. All final gates pass with no failures/errors/skips and unchanged source/test hashes. The 14-worker regression gate and one-worker long fixture were coordinated within the requested offline worker layout. Human/on-request approval settings pass seven negative checks; no intermediate human semantic review is introduced. Earlier source-drift and fixture-failure runs remain preserved and are not substituted for current evidence.
+
+Remaining execution: complete and independently verify the resumed ZLB inventory, then admit downstream writing/reviews/release, reproduction and automatic final admission before the final human review of the actual ZLB output. The inventory-only service does not automatically admit those later stages. Preserve sequential paid calls/account mutations, 900-second receipt-bound waits, cumulative existing authority and Sol/max -> Astra/xhigh -> Sol/xhigh. Repair receipts and both master projections refresh at transitions and stops. Unsupported input-envelope decomposition and unresolved spending ambiguity remain explicit blockers, not uncontrolled retries. FinMarketing-scale readiness and full ZLB acceptance are not claimed.
+
+Historical reconnect-run status follows (superseded as the current repair plan; preserved as execution history):
+
+Operational refresh, 26 October 2026: master 3.65 / ensemble 155; reconnect execution is BLOCKED_ENGINEERING, not running or complete. Four of 470 new logical responses and one canary completed; 466 logical responses remain. Request 0004 reached its 900.221-second deadline after two stream-disconnection notices. The classifier rejected this notice form, and an unsupported successor transition obscured that original failure. The supervisor is stopped/failed; only reporting remains active. Both failed stages remain sealed and settled.
+The six-phase repair plan is SOL_INVENTORY_RECONNECT_RECOVERY_2026-10-26.md.
+The affected aggregate passes 304 regressions with 16 workers. Actual saved-session
+replay passes all 224 historical settlements and reuses all 134 retained responses,
+reaching the first unfinished request with zero inference and zero account writes.
+The full 212-case fallback qualification workflow passes its final-source
+regression, including mixed-model history and a reserved production stage.
+Implemented recovery waits 900 seconds from the receipt, runs an accounted canary,
+then retries the exact request. Repeated eligible failures use bounded native
+splitting and fully qualified ordered fallback: Sol/max -> Astra/xhigh -> Sol/xhigh.
+Canaries do not establish manuscript quality or guarantee future provider availability.
+Successor preparation recovers unallocated crash cuts, retains existing permissions
+and qualification, and never repurchases sealed work. The supervisor binds final
+generation evidence and refreshes machine-readable status at phase boundaries
+and stops. Recovery is automatic only for admitted incident types; this run
+exposes missing stream-disconnection classification and terminal-routing coverage.
+All intermediate quality judgments remain automated.
+The successor passes exact-service/account, implementation and deployment gates.
+Grouped host approval covered old v3 cleanup, desktop preflight, disabled-unit
+installation and bounded start; all completed. The reconnect supervisor has
+failed/stopped; its reporter remains active. Both are disabled at boot; old v3
+services are inactive. The status helper checks all
+15 managed units. The initial envelope is 470 logical requests plus 15 recovery
+sessions, initially reserving at most 263,840,000 tokens within existing authority.
+The six-call terminal has one unique settlement, 125,692 reported tokens and
+3,264,000 retained tokens, including one unknown-usage call; no allocation is
+unreconciled. All six runtime receipts and their sealed copies match, including
+the four completed manuscript responses. Validation is stopped, not accepted.
+The next repair must prospectively recognize this exact response-free disconnect,
+preserve the original failure through terminal routing, and pass retained-trace,
+negative-mutation, restart, accounting and notification regressions before a
+reviewed successor is admitted. Do not reopen or edit the sealed paid stage.
+Diagnosis and repair gates: ../reviews/SOL_INVENTORY_STREAM_DISCONNECT_2026-10-26.md.
+The original retry took 319.615 seconds. Systemd's inotify
+warning did not prevent worker ownership, heartbeat or provider execution.
+Inventory completion and independent replay precede writing/reviews/release,
+independent reproduction, automatic final admission and final human ZLB acceptance.
+Inventory closure, full ZLB success and FinMarketing readiness remain unproven.
+Implementation evidence: ../reviews/SOL_INVENTORY_RECONNECT_IMPLEMENTATION_2026-10-26.md.
+
+Active continuation: SOL_INVENTORY_RECONNECT_RECOVERY_2026-10-26.md. Earlier
+v2 account-admission and v3 deadline failures remain preserved unchanged under
+SOL_INVENTORY_HANDOFF_2026-10-25.md and SOL_INVENTORY_STARTUP_REPAIR_2026-10-26.md.
+Downstream manuscript stages are not launched by the inventory-only service.
+The response-capture diagnostic below remains verified historical evidence, not
+manuscript qualification. The old qualification launcher is not a safe drop-in:
+its diagnostic lineage and capture adapter require a prospective successor.
+The reviewed successor passes 247 regressions with 16 workers and Ruff. Native
+qualification retained 212 cases and a 276-session maximum. Its former inventory
+budget gap is superseded by the user's additional grant, not a coverage reduction.
+Inventory remains gated by exact-prefix replay, source-bound admission, and host
+approval. The first launch failed in historical account dispatch before
+any allocation/provider call; it is settled with zero retained usage. A
+versioned history-isolation repair passes six targeted tests and is reviewed.
+All 222 historical settlements passed inside the exact live-bound context.
+The separately approved successor completed 212/212 judgments in 212 attempts,
+with zero recoveries and no semantic rerolls. execution.json and evaluation.json
+both report pass. The allocation seal and unique settlement retain 115,328,000
+tokens against 3,626,104 reported tokens; 64 unallocated retry slots are released.
+Standalone verification exited zero and retained verified.json with status
+QUALIFICATION_VERIFIED. No production restart or ZLB completion is claimed.
+The version-4 account retains a 436,140,867 ceiling against 1,100,000,000
+authorized tokens, leaving 663,859,133. All 223 historical settlements were
+replayed before activation; no model call or call-budget increase occurred.
+Grant receipt: automatic-execution/token-epoch-20261025-500m/activation.json.
+The provisional 486-session inventory bound of 264,384,000 tokens now fits;
+recompute at admission. The 134 retained responses must be reused unchanged.
+Independent review requires explicit stopped-parent proof, original-profile
+command validation, and native qualification-oracle replay. Those gates pass;
+the durable supervisor and inactive-unit installer pass their focused tests.
+The user approved desktop preflight, inactive installation and bounded HTTP
+execution on 26 October. Supervisor-v2 now binds canonical plan identity, full
+plan bytes and verified baseline bytes before terminal reporting. Its 110
+regressions pass; the combined supervision/deployment suite passes 212 tests.
+The original acknowledged preflight is preserved; fresh v2 preflight, inactive
+installation, and exact service start completed under grouped host approval.
+The v2 worker subsequently stopped before token reservation or inference; its
+blocked notification was accepted by the desktop receiver. Both v2 services
+were stopped before v3 deployment. All installed services remain disabled at boot.
+Startup repair passes 331 focused regressions with 16 workers and Ruff.
+Independent review findings are closed; the host zero-inference check passed
+223 settlements and the account boundary. Final reviewed-source preflight,
+disabled v3 installation and bounded restart completed under grouped approval.
+The v3 worker initially acknowledged ownership, then stopped after the timeout.
+Services remain disabled at boot. The account boundary passed, all 134 inherited
+responses were replayed, but the first new request timed out at 900.249 seconds
+after a 502 reconnect. V3 execution is BLOCKED_ENGINEERING; its notification
+reached the desktop receiver. One unknown session retains 544,000 tokens.
+Before reconnect launch, the ceiling was 436,684,867; headroom was 663,315,133
+tokens and 835 calls. Live allocations now update the retained account/grant.
+SOL_INVENTORY_RECONNECT_RECOVERY_2026-10-26.md records the implemented successor,
+strict diagnosis and regression-backed production canary/split/fallback integration.
+The 42 new offline diagnosis regressions pass separately from the 331 startup tests.
+Independent diagnosis review is closed, and the new 224th native settlement
+replayed successfully. No inference ran at that diagnosis checkpoint; the
+admitted reconnect campaign above supersedes that stopped status.
+See docs/reviews/QUALIFICATION_HISTORY_REPAIR_2026-10-25.md.
+
+Recovery implementation: STANDARD_RECOVERY_IMPLEMENTATION_2026-10-25.md records
+the phased plan and seven closed architecture findings. The durable Python
+controller, accounted full-envelope synthetic adapter and automatic canary/split/
+fallback recipes are implemented. All 251 related regressions pass with 16 workers;
+Ruff is clean. The reviewed live attempt settled once after SIGXFSZ at 0.509 seconds;
+its global file-size limit was unsuitable for the shared client home. The exact
+offending file is unproven. RESPONSE_CAPTURE_REPAIR_2026-10-25.md specifies a
+versioned response-only capture successor, bounded to eight additional sessions.
+It passed on Sol 6.1/max in 14.860 seconds with the exact synthetic oracle;
+execute and independent verify exited zero. Two sessions total were used across
+the failed original and passing successor; neither was silently repurchased.
+Original sources and failed receipts stay frozen. Independent review is closed;
+installed-client FIFO compatibility also passes isolated loopback with dummy
+credentials and no remote egress. All 221 settlements replay successfully.
+This phase does not bypass manuscript qualification or restart frozen production.
+
+Latest preference: Sol 6.1/max -> Astra/xhigh -> Sol 6.1/xhigh.
+Machine-readable policy: security/model_routing_policy.json. See
+ORDERED_MODEL_CANARIES_2026-10-25.md. Only model/effort parity is superseded;
+active transport, credentials, client and human-only approvals remain checked.
+251 recovery/capture regressions pass, and the current inventory continuation
+adds 294 focused inventory, supervisor, deployment and reporting regressions;
+all pass with 16 workers and Ruff is clean. The additional 110 v2 tests also
+pass. The first worker has stopped with a retained engineering failure; owned
+execution state, not historical startup observations, determines live progress.
 <!-- current-benchmark-execution -->
-Current execution: master 3.37 / ensemble 127; observed 2026-10-22T10:17:39.134695+00:00.
-Status: inventory_deadline_ready. Repair: docs/plans/INVENTORY_DEADLINE_REPAIR_2026-10-22.md.
-Sentence-context repair passed: 21 reconstructed concepts and all 19 coverage targets accepted in window 10.
-The next extraction reached its 900-second process deadline without response, reasoning, usage or provider rejection. The cause remains unknown.
-Replay 27 accepted requests; retain the three superseded responses and every prior charge, including the timeout.
-Prospective response-free inventory deadlines retry the identical request after a durable 900-second wait, within the existing sixteen-attempt allowance.
-Completed answers, partial output, usage, rejection, malformed evidence and exhausted limits remain blocking. No timeout increase or semantic reroll.
-Future windows expand to sentence boundaries within 10 KiB; coverage receives all math and prose context.
-Automatic semantic repairs regenerate concepts and run both independent critics: at most two repairs/window and eight repairs/stage. Every rejected response remains replayable.
-Reserve 513 base requests, up to 24 changed-input repair requests and 16 response-free transport retries. Existing aggregate authority is unchanged.
-Independent zero-provider probe: pass.
-Held-out reproduction, all 28 assembled leaf reviews and separate boundary verification pass and are reused.
-SSD snapshot: docs/audits/2026-10-05/master-program/automatic-execution/zlb-inventory-deadline-20261022-01-snapshot. Archive remains read-only.
-Use 16 verification workers; provider calls/accounting remain sequential. Eligible network retries wait 900 seconds.
-Writer: 100k input/32k output. Assembled reviewer: 80k/32k. Splits: depth 3, 14 children/root. Audits: 900 seconds/$4.
-Calls: 785/2000 used; 1215 available; 0 reserved.
-Settlements: 206/206; token ceiling 285,214,069/600,000,000.
-Remaining: full ZLB inventory/humanization/review/release; independent ZLB reproduction; automatic final admission; final human acceptance.
-If later split reservations exceed 600 slots, implement and verify bounded batching before launch.
-At every boundary or stop: inspect, settle, verify, repair and refresh both masters. Only final immutable output acceptance requires human review.
-Next: Deadline recovery is verified and prepared; continue supervised ZLB execution.
-Stop: none.
+Current checkpoint: 25 October 2026; recovery implementation and reviewed response-capture successor are complete for the bounded synthetic diagnostic. Execute and independent verify both exited zero.
+Status: Sol 6.1/max completed the full production extraction instruction/schema envelope on formatting-only synthetic spans in 14.860 seconds. Exact expected JSON, completed turn, exit zero, both owned units accepted. Reported usage: 11,495 input and 72 output tokens; retained charge: 544,000 tokens. This is not manuscript-quality qualification.
+Current evidence: docs/audits/2026-10-05/master-program/automatic-execution/response-capture-recovery-20261025-01/state.json and verification.json. Incident identity: 24d3e84669f3c2e1cc105b4218a1db6024da8b7d5635f138926087a66d55463f. Both master transition acknowledgments verify.
+Repair mechanism: durable dispatch/result history, settlement before recovery, persistent 900-second wait, same-model tiny canary, exact-unit splitting and ordered fallback Sol/max -> Astra/xhigh -> Sol/xhigh. Restart reconciles retained work without duplicate inference. Caps, failed required leaves, partial/malformed responses and ambiguous execution fail closed.
+Phase refresh: every committed transition projects to both masters. Projection failure prevents the next dispatch but not settlement; terminal success requires exact master acknowledgments and all required leaves. The completed live call did not need fallback; those branches are covered by regression tests.
+Original launch incident: standard-recovery-20261025-01 stopped on SIGXFSZ after 0.509 seconds. Process-wide file limiting was unsuitable for the shared client; exact offending file is unproven. Its 544,000-token allocation remains settled. The reviewed successor uses bounded parent capture, not global file-size limits; spent files/receipts remain immutable.
+Calls: 952/2000 allocated; 1048 remaining. This recovery task consumed two sessions total, within the original nine-session ceiling. No authority is replenished by restart or repair.
+Settlements: 221/221; independent post-run replay passed all 221 using 16 workers. Token ceiling: 320,812,867/600,000,000. Final native account/grant verification passed. Provider calls/account writes remain sequential.
+Verification: 251 related regressions pass with 16 workers, including 108 recovery/capture tests; Ruff clean; independent code review closed. Installed-client FIFO capture passes isolated loopback with dummy credentials and no remote egress.
+Preserved manuscript progress: 134 retained responses; inventory window 45/182; historical production remains STOPPED_BY_USER. Earlier manuscript deadlines are not relabeled successful by this diagnostic.
+Next gated phases: model-specific manuscript qualification; mixed-profile production handoff and recovery recipe integration; budget-checked ZLB inventory continuation; humanization/reviews/release; independent reproduction and automatic final admission; final human acceptance of actual output.
+Deployment gaps: no durable host recovery service is installed, not all writer/reviewer purposes are migrated, and full FinMarketing readiness is not claimed. Intermediate judgments remain automated regression/evaluation gates; no new manual intermediate review requirement is introduced.
+Stop: this bounded diagnostic is complete and no further inference is scheduled by it. Production stays stopped pending its separate qualification and admission gates.
 <!-- end-current-benchmark-execution -->
+
+## Active-session parity repair — 24 October 2026
+
+The 24 October instruction superseded the earlier static model/effort preference:
+match the actual active session and double-check before every launch. See
+[the prospective repair plan](ACTIVE_SESSION_PARITY_2026-10-24.md). Verified active
+settings are Astra/max, VS Code client 0.162.0-alpha.17.2 and its configured direct
+HTTP route. The earlier combined suite passed 143 regressions, including ordered model routing, recovered
+streams, the synthetic transport comparison, conservative accounting and explicit
+successor qualification lineage.
+No production launch is claimed; mixed-profile handoff remains unimplemented.
+Keep human approvals, the no-tool/read-only task envelope, 134 retained responses
+and all unknown-usage reservations.
+
+The [Sol response diagnostic](SOL_RESPONSE_PROBE_2026-10-24.md) records the
+completed one-call test and retained accounting. A separate local schema pin to
+Astra masked the gateway error in the top-level terminal; neither error is a
+semantic-quality result. No diagnostic retry or production restart occurred.
+The working-session comparison additionally confirms a different endpoint and
+client: interactive traffic uses the configured direct IP/port route, while the
+frozen runner ignores user configuration and pins the HTTPS-domain route. Do not
+attribute the failures to model unavailability before a controlled parity test.
+
+## Human-only approvals — 24 October 2026
+
+Use `approval_policy = "on-request"`, `approvals_reviewer = "user"`, and the
+workspace-write sandbox; never select "approve for me", Guardian or a Luna
+approval delegate. The [approval policy](HUMAN_APPROVAL_POLICY_2026-10-24.md)
+records installed project settings, the scoped offline check/status/test allow
+list, exact command forms, and 54 passing regression tests. Group known host
+approvals before each phase. Future frozen-launcher successors must explicitly
+bind these settings because child launches ignore user configuration. This
+permission refresh authorizes neither a live diagnostic nor production restart.
+
+## Historical conditional fallback — 24 October 2026
+
+Superseded by the active-session instruction above; the following preference
+does not authorize changing the currently bound Astra/max session or fallback.
+
+The desired primary configuration is `gpt-6-astra` with `xhigh`, per the
+user's subsequent effort instruction. Sol fallback stays at `max`; do not
+increase Astra back to `max` automatically. This is the pending migration
+target, not a claim that the frozen Astra/max execution has changed.
+
+The user authorizes `gpt-6.1-sol` with `max` reasoning when Astra is unavailable.
+See [the fallback authorization and admission plan](SOL_FALLBACK_AUTHORIZATION_2026-10-24.md).
+The gateway lists the requested model. Authorization and inactive candidate
+preparation do not activate fallback: preserve the stopped Astra plan and all
+receipts until an independently reviewed mixed-profile/accounting handoff and
+fresh automatic Sol qualification pass. Existing budgets, 900-second retry
+waits and final-human-only acceptance remain unchanged.
+
+## Supervision repair — 23 October 2026
+
+The [supervision lifecycle audit](SUPERVISOR_REPAIR_LIFECYCLE_2026-10-23.md)
+supersedes the earlier chat diagnosis, not the frozen execution evidence. The
+incident motivating that repair was an invalid source-span reference in window 30 of 182, not the
+883 errors in an inherited inventory result. The former wrapper exited with its
+controller. The [implementation plan](SUPERVISOR_IMPLEMENTATION_2026-10-23.md)
+and [independent review](SUPERVISOR_REVIEW_2026-10-23.md) define the prospective
+replacement: durable acknowledged recipe workers, native validation repair,
+independent replay and promotion. The current execution block records deployment
+and observed status. General autonomous coding repair and ambiguous paid-crash
+reconciliation remain explicit gaps, not implemented capabilities. The
+[timeout checkpoint](SUPERVISOR_TIMEOUT_CHECKPOINT_2026-10-23.md) records
+the subsequent window-33 stop. The [empty-deadline recovery](SUPERVISOR_EMPTY_DEADLINE_EXECUTION_2026-10-23.md)
+has since passed regression and independent promotion checks and is deployed;
+the current execution block records its live continuation.
 
 The following checkpoints are historical.
 
@@ -954,3 +1741,21 @@ checks plus 22 subtests pass. Actual failed-audit recovery eligibility is verifi
 without a new model call. That recovery path is retained but not scheduled.
 Verify the qualification v2 changes locally, then fresh full qualification and
 the remaining product phases; do not wait for a Claude reply.
+
+<!-- standard-recovery:e170d3b1ef340916ef359da94a834b2acd032c5f3fbd1822e5a39a6d89750a31:begin -->
+Status: BLOCKED
+Transition: 6d65e5e93b1a01a50b68e21ca0f9c3ac16897d36f163fc69ac9524425b833dd2
+Sessions: 1/9
+Accepted units: 0/2
+Blocker: protocol
+Qualification: false; production admission: false
+<!-- standard-recovery:e170d3b1ef340916ef359da94a834b2acd032c5f3fbd1822e5a39a6d89750a31:end -->
+
+<!-- standard-recovery:24d3e84669f3c2e1cc105b4218a1db6024da8b7d5635f138926087a66d55463f:begin -->
+Status: DIAGNOSTIC_PASSED
+Transition: fed76aae405a19f55b1be3efda31ded5d41a2738afe07e1dd8a8be2a5529a549
+Sessions: 1/8
+Accepted units: 2/2
+Blocker: none
+Qualification: false; production admission: false
+<!-- standard-recovery:24d3e84669f3c2e1cc105b4218a1db6024da8b7d5635f138926087a66d55463f:end -->
