@@ -25,6 +25,11 @@ Execution checkpoint: independent installed derivation and cold-child
 predecessor exclusions are implemented; 524 focused tests pass with 16 workers
 and unchanged source/authority. Full TX3 public admission integration remains
 open. See the installed-execution report for exact evidence and limitations.
+Repair source is checkpointed in 2d54195. Post-commit continuation also passes
+360 native bootstrap/public-preflight cases with 16 workers, unchanged source
+and authority. Both runs are complete, not background production execution.
+Next executable work is prospective public admission/configuration/journal
+binding, followed by TX4/CP3 common ownership and cold-entry reconciliation.
 
 - Bootstrap replay validates a candidate, not installed authority; TX3 must
   precede launch and public restart integration.

@@ -50,6 +50,16 @@ The inspector is closed; no test or live process remains active at checkpoint.
 
 ## Remaining boundaries
 
+Post-commit execution of the native bootstrap/public-preflight suite passed
+**360 cases**, zero failures/errors/skips, 16 workers, 116.24 seconds wall
+(pytest 115.63 seconds). Source and production authority remained unchanged.
+Receipt:
+`docs/audits/2026-10-05/master-program/automatic-execution/sol-inventory-failure-first-20261026-01/recovery-policy-repair-20261027-01/bootstrap-validation/fc35f50d2e4a/`.
+These cases overlap the earlier suite and are not 884 distinct regressions.
+Both runs have finished. No inference or production launch was attempted.
+The installed historical state still has job=null and its sealed budget
+exhaustion blocker; the frozen legacy category is not rewritten.
+
 TX3 is not entirely closed: prospective deployment admission still needs full
 release/service readiness and canonical execution/journal authority binding.
 The fixed historical adapter is intentionally not a generic registry of future
@@ -72,3 +82,7 @@ Unrelated manuscript, session, schema and runtime edits are not staged; no
 credentials, bulk audit artifacts or interpreter caches belong in the commit.
 No push is requested. The release gate must reconcile dependency membership
 before deployment.
+
+Repair checkpoint committed: `2d54195` (95 explicitly scoped files, including
+previously untracked v3 work). This subsequent document refresh records the
+post-commit native validation. Unrelated workspace changes remain untouched.

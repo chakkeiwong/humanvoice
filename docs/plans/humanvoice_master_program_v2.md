@@ -8,7 +8,12 @@ Closure order, corner cases, test requirements and phase/stop refresh rules:
 `docs/plans/INVENTORY_RECOVERY_CLOSURE_2026-10-28.md`. Evidence and boundaries:
 `docs/reviews/INVENTORY_RECOVERY_INSTALLED_EXECUTION_2026-10-28.md`.
 Independent review's path-alias finding is repaired and closed in follow-up.
-Next after this checkpoint: public admission/transaction integration.
+Repair source is committed as 2d54195. Continued native bootstrap/public-
+preflight validation passes 360 cases in 116.24 seconds (16 workers), with
+unchanged source and authority. Both suites finished; inspector closed.
+Next: bind prospective public admission/configuration/journal authority, then
+TX4/CP3 common-ownership restart/campaign reconciliation. Live ZLB remains
+unresumed at 166 retained / 439 unfinished; this is not release completion.
 Do not substitute component passes for public-entrypoint or live receipts.
 
 CI1 is independently closed. TX1 restart membership preserves cumulative
