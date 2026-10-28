@@ -1,6 +1,6 @@
 # Humanvoice Master Program v2
 
-Current execution checkpoint, 28 October 2026: master 4.30 / ensemble 220.
+Current execution checkpoint, 28 October 2026: master 4.31 / ensemble 221.
 Crash recovery confirmed no surviving validation process and production
 inactive/disabled. Human approval remains on-request/user/workspace-write.
 The previous floors gate failed 889/890 at the native public preflight; its
@@ -19,13 +19,21 @@ at executor-f4135811ea2e under the same source binding. Both receipts verify
 unchanged source/production authority and release_acceptance=false. Sixteen
 workers and original deadlines were retained; both validation processes ended.
 The core source/test freeze ended after both gates and final hash verification.
-An isolated offline witness candidate is retained under
+An isolated offline witness/publication candidate is retained under
 .localresources/control-witness-20261028; it is not in public runtime or release
-admission. All 73 storage/transport/service tests and Ruff pass with unchanged
-candidate hashes; host writer/projection/factory
-composition and independent review remain open.
-Next remains TX3b host-authenticated control publication and public factory,
-then TX4–TX7, native multi-successor/soak and full release before live deployment.
+admission. The refreshed candidate passes 147 exact storage, transport,
+publication, initialization, native RuntimeLeaf and crash-cut cases with 16
+workers; collection and execution membership match exactly, and Ruff passes.
+The approval-policy regression passes 56 cases. The candidate fixes JSON
+`null` pending-state ambiguity and zero-sequence initialization reset in its
+offline scope. It does not close the projection TOCTOU race for writable parent
+directories: protected ownership of projection paths and a forced race
+regression are required. Protected host installation, human-request
+authentication, host-boundary review, supervisor diagnostics and
+writer/projection/factory composition remain open.
+Next are the protected host installer and initialization recovery, independent
+host-boundary review, public factory/monitor composition, then TX4–TX7,
+native multi-successor/soak and full release before live deployment.
 The temporary control-store prototype is not a trusted host witness.
 Production remains 166 retained / 439 unfinished, with no new ZLB receipt.
 Repair/retest/review/refresh is mandatory at each phase and interruption.

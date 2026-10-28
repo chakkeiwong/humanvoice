@@ -1,43 +1,15 @@
 # Candidate boundary review — 28 October 2026
 
-Coordinator review only; no independent closure or deployment claim.
+Coordinator review of the refreshed offline publication slice. The candidate is not imported by the public runtime, supplies no production admission, and installs no service.
 
-The core prevents lost pending commands through a single database transaction,
-compares both expected sequence and head, and recognizes exact old retries
-without clearing a later pending event. Real process-death tests cover committed
-and uncommitted prepare/commit states. Read transport authenticates a root peer
-and a fresh challenge through the connected Unix stream. Responses cannot be
-replayed with an old nonce; framing, length and elapsed-I/O bounds are enforced.
-The public read handler cannot call any witness mutation. The service checks
-protected paths and limits workers; malformed clients close only their request.
+The witness retains a full pending event in a durable SQLite transaction before local publication. Compare-and-swap sequence/head checks, exact request identities, idempotent retries, and monotonic initialization (`absent → pending → ready`) prevent replay, reset, and lost intent. JSON `null` pending state is treated as corruption.
 
-The following remain implementation requirements, not closed findings:
+The publisher writes exact descriptor-relative projections with `O_NOFOLLOW`, bounded regular-file checks, atomic replacement, file and parent-directory fsync, and retained before/after bytes. It repairs only the retained pending transaction. It never recreates missing committed state, regresses a committed head, accepts symlink aliases, or manufactures a resume from an existing file. The reader takes fresh authenticated snapshots before and after local inspection and performs no repair. RuntimeLeaf integration uses the native stop-authority evidence contract.
 
-1. The host writer must authenticate exact approved actions and validate their
-   root/contract/control semantics. The current Witness stores opaque JSON
-   commands; it deliberately does not infer user approval or valid stop/resume
-   semantics. Only trusted host code may call prepare or commit.
-2. Witness-first workspace publication and recovery must be implemented. A
-   pending witness veto must survive a crash before any local intent, and
-   committing the witness must require exact durable projections. The current
-   low-level commit method alone does not establish that condition.
-3. RuntimeLeaf must compare two fresh authenticated witness observations around
-   local evidence reads and pass the exact stop_authority evidence contract.
-   The candidate snapshot API is not itself permission to dispatch.
-4. Protected initialization, crash recovery after partial initialization,
-   stale listener recovery and root-owned immutable dependency installation
-   require fixed reviewed host actions. Existing/partial stores are never
-   silently reinitialized. Offline tests cannot prove the live root boundary.
-5. Full-history snapshots and database quick_check/replay are bounded by frame
-   size but still grow with history. Measure this in TX7 and implement a pinned
-   incremental/checkpoint protocol before declaring long-document readiness.
-6. The service must surface operational storage/protection failures to the
-   supervisor with durable diagnostics. It currently closes the read request
-   and vetoes the client; no complete supervisor status integration exists.
-7. Add complete application publication crash cuts, actual independent host
-   permissions, storage/fsync failure injection and the public factory matrix
-   before promotion into the source-bound release.
+Validation: 147 exact cases passed with 16 workers in the refreshed run; collection and execution membership both contain exactly 147 cases, with no skips, deselections, collection errors, or membership mismatch. Ruff passed. Approval-policy regression passed 56 tests. The XML and membership hashes are recorded in `candidate-status.json`.
 
-These constraints explain why 73 passing offline tests are component evidence,
-not full TX3b closure. The implementation is retained for continuation on SSD;
-production remains stopped with 166 retained and 439 unfinished requests.
+Coordinator review only; independent closure has not occurred. A critical authority boundary remains: `Publisher._authority` checks effective UID and database protection, but this candidate does not prove human approval or authenticate who invoked a privileged action. Do not expose `Publisher.publish` or `provision` through a root CLI/service until a fixed host broker validates an explicit human-approved request and binds it to the admitted release/configuration. Protected SQLite initialization interrupted during schema creation also needs an installer-owned recovery protocol. The current crash tests exercise local projection initialization after the witness store is complete; they do not close this host database bootstrap gap.
+
+There is also a projection race boundary. `control_files.write` rechecks retained bytes immediately before `os.replace`, but that is not an atomic compare-and-swap against an untrusted concurrent writer. If a stop projection parent or existing target remains writable by the workspace user, a change between the check and replace can be overwritten. Production installation must put projection ancestors and existing control-file inodes under protected ownership and permissions before enabling the writer, and a regression must force a competing replacement at that exact boundary. The current descriptor-relative and symlink tests do not prove this protection.
+
+Other remaining gates are a fixed protected installer/socket lifecycle, supervisor diagnostics for read-service failures, public factory/monitor composition, full-history bounded replay, TX4–TX7 integration, native multi-successor/soak, dependency-complete release, and final host authorization. Fixture subclasses deliberately relax production authority only in tests. No live launch, model call, deployment, or ZLB receipt occurred. Production remains stopped with 166 retained and 439 unfinished requests.

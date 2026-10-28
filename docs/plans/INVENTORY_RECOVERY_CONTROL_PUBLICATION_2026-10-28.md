@@ -83,6 +83,10 @@ storage. If host isolation cannot be established, admission stays blocked.
   alias/symlink, permissions drift and old external witness selection.
 - Concurrent stop versus resume, writer lock contention, read publication
   races, ENOSPC/fsync failures, newline changes and decreasing wall clock.
+- An adversarial writer changing a projection after the final retained-byte
+  check but before rename. The host installer must ensure projection ancestors
+  and existing control-file inodes are not writable by the workspace identity;
+  descriptor-relative access alone does not make compare-then-replace atomic.
 - Public CLI remains unavailable until genuine host provenance, release and
   factory composition are tested; temporary fixture stores are identified as
   fixture boundaries, never production authority.
@@ -146,3 +150,27 @@ No host action or production start is required to build and test this slice.
 5. Review corner cases and run the bounded 16-worker suite. Keep fixture
    privilege adapters explicit. Full host installation/factory/soak/release
    remain open until their own real integration evidence exists.
+
+
+## Refreshed execution checkpoint 4.31 / 221
+
+The implementation and corner review completed offline. The candidate now records
+147 exact tests, including 23 real process-death cuts (18 publication and five
+initialization), native RuntimeLeaf/stop-authority integration, read-only Unix
+socket integration, concurrent publication, repeated storage failure, fsync
+retry, symlink/race, rollback, stale/forged command, JSON-null corruption, and
+monotonic initialization-reset regressions. The exact 16-worker run passed all
+147 cases in 2.63 seconds; Ruff passed; the approval-policy regression passed
+56 tests. Collection and execution membership each contain exactly 147 cases with
+no skips, deselections, collection errors, or mismatch. Evidence is retained in
+`.localresources/control-witness-20261028/publication-final-exact.xml`,
+`publication-collected.json`, `publication-executed.json`, and
+`candidate-status.json`.
+
+The review closes the candidate-level JSON-null and zero-sequence initialization
+reset defects. The candidate remains outside public runtime admission. Protected
+host installation/database recovery, independent host-boundary review, supervisor
+diagnostics, public factory composition, bounded full-history replay, TX4–TX7,
+native multi-successor/soak, release validation, and live ZLB execution remain
+open. Production remains stopped; no model call, service start, deployment, or
+ZLB receipt was performed.

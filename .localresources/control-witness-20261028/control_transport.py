@@ -123,13 +123,14 @@ class Reader:
             response = receive(connection, deadline, MAX_BYTES)
             self._peer(connection)
         require(isinstance(response, dict) and set(response) == {"version", "genesis",
-            "configuration", "nonce", "sequence", "committed_head", "pending", "events", "identity"}
+            "configuration", "nonce", "sequence", "committed_head", "pending", "events", "publication", "identity"}
             and response["version"] == VERSION and response["genesis"] == self.genesis
             and response["configuration"] == self.configuration and response["nonce"] == nonce
             and response["identity"] == checksum({k: v for k, v in response.items() if k != "identity"})
             and type(response["sequence"]) is int and response["sequence"] >= 0
             and hash_value(response["committed_head"]) and isinstance(response["events"], list)
             and len(response["events"]) == response["sequence"]
+            and response["publication"] in {"absent", "pending", "ready"}
             and (response["pending"] is None or isinstance(response["pending"], dict)),
             "Witness response lost its fresh challenge or exact binding")
         return response

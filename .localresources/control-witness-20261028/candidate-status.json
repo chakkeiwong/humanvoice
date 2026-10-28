@@ -1,22 +1,40 @@
 {
-  "status": "offline-candidate-tests-pass",
-  "cases": 73,
-  "workers": 16,
-  "started_at": 1793174767.630209,
-  "finished_at": 1793174772.71959,
+  "cases": 147,
+  "duration_seconds": 2.63,
+  "collection_execution": {
+    "collected": 147,
+    "collection_errors": 0,
+    "collection_mismatch": false,
+    "deselected": 0,
+    "executed": 147,
+    "exit_code": 0
+  },
+  "host_service_installed": false,
+  "approval_policy_regression_cases": 56,
+  "membership_sha256": {
+    "collected": "2284414ca968ca324d7f126a7bb2f61a3b742ee366a86bab3931f15c1d9552bf",
+    "executed": "513dc671d0ef5e15f281fe850820f88c76ab6cb90f3db1456f1ef8dfcca5ea01"
+  },
+  "production_integration": false,
+  "refreshed_at": 1793200166.9907823,
+  "release_acceptance": false,
+  "ruff_pass": true,
   "source_unchanged": true,
   "sources": {
+    "conftest.py": "351127af566e6f0ae74e55aa47ea358befb9dbd587bac870ed1cdb5a6b276371",
+    "control_files.py": "32298e171bce0e2864a6238b4e6630664c05e83333d692fdba068bbec2102e1b",
+    "control_publication.py": "3c31e9404a5f29c83888923f6227b1838edc9c64cc0526ff32423557302264c2",
+    "control_semantics.py": "24ec684df383b1a348a2d64c142f79c22123f4bea793801755a5d94cd0044a56",
     "control_service.py": "92830ee18a94eadf5580addb0508c89eefda65b331ef06a924253fe67b9e5f7d",
-    "control_transport.py": "4677427c2efdf2cfd2c9f19e916b90aa0c27d7a15e646665b07343fd1f3effc2",
-    "control_witness.py": "ff135c7941bbdfb20432fd30ef767e16ce0eb5a6ee8200ea54f582eed19fed51",
+    "control_transport.py": "3861743e19ef28bd699dcd3315e9ce361668e7e79de322ce4b6c78561f37dca9",
+    "control_witness.py": "6b399d71a48cb5d6d496a97c4f43161a2c553370581ef53b8f611ccfc42c131a",
     "ruff.toml": "36c26b3d906316ae6d3f99046bc5c54069ead75c076c8fcdbc08724f59b3a752",
+    "test_control_publication.py": "f39962e57c2684bc8f763cde42a9e9cd7ee48b9239c6abc2c1827b75abc25ea1",
     "test_control_service.py": "0c99e184db2b3aedf6013642aeade772acb5274b1c45fe725d466f8687e98def",
     "test_control_transport.py": "de1ea8e489e08af432ab4196fc970ad14ac219cb5fbd1e5a8e745734fa016a35",
-    "test_control_witness.py": "bdd8ce3cae4bdd0110102cd9c703c6ddf1649dfd4a2df09500c9fd27387cc531"
+    "test_control_witness.py": "ba74ebe5bd12b5c589634ef63b50da2316ed92e5f33cf7f24978b0d5328d77eb"
   },
-  "ruff_pass": true,
-  "release_acceptance": false,
-  "host_service_installed": false,
-  "production_integration": false,
-  "xml_sha256": "334ebb2b6a3b288d8eb3214560cadf468985026178e625a0329e308a0bb8f3a2"
+  "status": "offline-candidate-tests-pass",
+  "workers": 16,
+  "xml_sha256": "6ac77eff0a16162c0facc81ab14b52c5bed4d363ec38355e1d1fcf94b67e5b7c"
 }

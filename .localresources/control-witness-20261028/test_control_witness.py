@@ -259,3 +259,34 @@ def test_writer_lock_contention_is_bounded_and_does_not_mutate(witness):
             witness.prepare(0, GENESIS, command())
         assert time.monotonic() - started < 3
         assert witness.snapshot(NONCE)["pending"] is None
+
+
+def test_json_null_cannot_erase_a_pending_command(witness):
+    witness.prepare(0, GENESIS, command())
+    with sqlite3.connect(witness.path) as connection:
+        connection.execute("UPDATE head SET pending='null'")
+    with pytest.raises(WitnessError, match="pending"):
+        witness.snapshot(NONCE)
+
+
+def test_publication_initialization_is_monotonic_and_never_reissued(witness):
+    assert witness.snapshot(NONCE)["publication"] == "absent"
+    with pytest.raises(WitnessError, match="intent"):
+        witness.finish_publication()
+    witness.begin_publication()
+    witness.begin_publication()
+    assert open_witness(witness.path).snapshot(NONCE)["publication"] == "pending"
+    witness.finish_publication()
+    witness.finish_publication()
+    assert witness.snapshot(NONCE)["publication"] == "ready"
+    with pytest.raises(WitnessError, match="already initialized"):
+        witness.begin_publication()
+
+
+def test_missing_initialization_state_is_corruption_not_a_fresh_store(witness):
+    witness.begin_publication()
+    with sqlite3.connect(witness.path) as connection:
+        connection.execute("DELETE FROM publication")
+    for operation in (lambda: witness.snapshot(NONCE), witness.begin_publication, witness.finish_publication):
+        with pytest.raises(WitnessError, match="initialization state"):
+            operation()

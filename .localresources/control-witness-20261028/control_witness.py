@@ -15,7 +15,7 @@ import stat
 from contextlib import contextmanager
 from pathlib import Path
 
-VERSION = "inventory-control-witness-v1"
+VERSION = "inventory-control-witness-v2"
 MAX_COMMAND_BYTES = 1_048_576
 
 
@@ -106,9 +106,12 @@ class Witness:
                                "sequence INTEGER NOT NULL, identity TEXT NOT NULL, pending TEXT)")
             connection.execute("CREATE TABLE events (sequence INTEGER PRIMARY KEY, identity TEXT UNIQUE NOT NULL, "
                                "request_id TEXT UNIQUE NOT NULL, body TEXT NOT NULL)")
+            connection.execute("CREATE TABLE publication (singleton INTEGER PRIMARY KEY CHECK(singleton=1), "
+                               "phase TEXT NOT NULL)")
             connection.execute("INSERT INTO binding VALUES (1,?,?,?)",
                                (VERSION, self.genesis, self.configuration))
             connection.execute("INSERT INTO head VALUES (1,0,?,NULL)", (self.genesis,))
+            connection.execute("INSERT INTO publication VALUES (1,'absent')")
         directory = os.open(path.parent, os.O_DIRECTORY | os.O_NOFOLLOW)
         try:
             os.fsync(directory)
@@ -137,6 +140,10 @@ class Witness:
                 "Witness database integrity check failed")
         require(connection.execute("SELECT singleton,version,genesis,configuration FROM binding").fetchall()
                 == [(1, VERSION, self.genesis, self.configuration)], "Witness genesis/configuration changed")
+        publication = connection.execute("SELECT singleton,phase FROM publication").fetchall()
+        require(len(publication) == 1 and publication[0][0] == 1
+                and publication[0][1] in {"absent", "pending", "ready"},
+                "Witness publication initialization state is missing or malformed")
         heads = connection.execute("SELECT singleton,sequence,identity,pending FROM head").fetchall()
         require(len(heads) == 1 and heads[0][0] == 1, "Witness head is missing or ambiguous")
         _, sequence, committed, pending_raw = heads[0]
@@ -156,14 +163,34 @@ class Witness:
             events.append(value)
         require(committed == previous, "Witness head differs from committed prefix")
         pending = json.loads(pending_raw) if pending_raw is not None else None
-        if pending is not None:
+        if pending_raw is not None:
             require(isinstance(pending, dict)
                     and pending == self.event(sequence + 1, committed, pending["command"])
                     and pending_raw == encode(pending)
                     and pending["command"]["request_id"] not in requests,
                     "Witness pending command changed or was reused")
         return {"sequence": sequence, "committed_head": committed,
-                "pending": pending, "events": events}
+                "pending": pending, "events": events, "publication": publication[0][1]}
+
+    def begin_publication(self):
+        """Host-only durable initialization intent, never resets ready state."""
+        with self._connect(write=True) as connection:
+            state = self._read(connection)
+            require(state["sequence"] == 0 and state["pending"] is None
+                    and state["publication"] in {"absent", "pending"},
+                    "Witness publication is already initialized or consumed")
+            if state["publication"] == "absent":
+                connection.execute("UPDATE publication SET phase='pending' WHERE singleton=1")
+
+    def finish_publication(self):
+        """Host-only completion after exact local genesis/head are durable."""
+        with self._connect(write=True) as connection:
+            state = self._read(connection)
+            require(state["sequence"] == 0 and state["pending"] is None
+                    and state["publication"] in {"pending", "ready"},
+                    "Publication completion lacks its retained initialization intent")
+            if state["publication"] == "pending":
+                connection.execute("UPDATE publication SET phase='ready' WHERE singleton=1")
 
     def snapshot(self, nonce):
         """Read only. Broker authenticates this fresh nonce-bound response."""
