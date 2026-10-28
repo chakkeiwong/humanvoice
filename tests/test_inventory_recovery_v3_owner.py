@@ -3,7 +3,7 @@
 import fcntl
 import importlib.util
 import os
-from contextlib import contextmanager
+from contextlib import ExitStack, contextmanager
 from types import SimpleNamespace
 
 import pytest
@@ -27,6 +27,82 @@ from tools.inventory_recovery_v3.stage_capacity import earmark_pair
 from tools.inventory_recovery_v3.stage_owner import owned_stage
 
 __all__ = ["baseline", "codex", "prepared"]
+
+
+@pytest.mark.parametrize("boundary", ["native", "head", "receipt", "ledger"])
+def test_owned_stage_cold_repairs_claim_tail_before_grant_status(prepared, tmp_path, monkeypatch, boundary):
+    from pathlib import Path
+
+    from tools.inventory_recovery_v3 import claim as claims
+    from tools.inventory_recovery_v3 import consumption_floors
+
+    with campaign(prepared, tmp_path, monkeypatch, consumption=True) as fixture:
+        authority = CampaignAuthority(fixture.implementation, **fixture.arguments)
+        fixture.consumption.check = authority.check
+        native_write, native_persist = original.epoch.write_json, consumption_floors.persist
+        native_ledger = claims.guarded_ledger
+        fired = []
+
+        def interrupt(label):
+            if label == boundary and not fired:
+                fired.append(label)
+                raise OSError("owned claim cut")
+
+        def write(path, value):
+            native_write(path, value)
+            if Path(path) == fixture.account_path:
+                interrupt("native")
+            elif Path(path).name == "account-reservation.json":
+                interrupt("receipt")
+
+        def persist(path, value, **keywords):
+            native_persist(path, value, **keywords)
+            if path.name == "account-head.json" and value["pending"] is None:
+                interrupt("head")
+
+        def ledger(*arguments, **keywords):
+            result = native_ledger(*arguments, **keywords)
+            interrupt("ledger")
+            return result
+
+        with monkeypatch.context() as patch:
+            patch.setattr(original.epoch, "write_json", write)
+            patch.setattr(consumption_floors, "persist", persist)
+            patch.setattr(claims, "guarded_ledger", ledger)
+            with pytest.raises(OSError, match="owned claim cut"), owned_stage(fixture.output, fixture.plan, authority=authority):
+                pytest.fail("Claim cut failed to interrupt")
+        before = fixture.account_path.read_bytes()
+        with owned_stage(fixture.output, fixture.plan, authority=authority) as (owner, _ledger, _receipt):
+            assert owner.check()
+            assert fixture.consumption.inspect("account")["status"] == "READY"
+        assert fixture.account_path.read_bytes() == before
+        assert read_json(fixture.output / "native-claim-intent.json")["status"] == "complete"
+
+
+@pytest.mark.parametrize("resource", ["account", "stages"])
+@pytest.mark.parametrize("defect", ["head", "transition", "rollback"])
+def test_post_claim_dispatch_checks_reject_lost_floor_membership(prepared, tmp_path, monkeypatch, resource, defect):
+    with campaign(prepared, tmp_path, monkeypatch, consumption=True) as fixture:
+        authority = CampaignAuthority(fixture.implementation, **fixture.arguments)
+        fixture.consumption.check = authority.check
+        resource_path = fixture.consumption.path(resource)
+        before = resource_path.read_bytes() if resource_path.exists() else None
+        with owned_stage(fixture.output, fixture.plan, authority=authority) as (owner, ledger, _receipt):
+            retained = resource_path.read_bytes()
+            target = fixture.consumption.root / (resource + ("-head.json" if defect == "head" else "-00000001.json"))
+            retained_evidence = target.read_bytes()
+            if defect == "rollback":
+                if before is None:
+                    resource_path.unlink()
+                else:
+                    resource_path.write_bytes(before)
+            else:
+                (fixture.consumption.root / (resource + ("-head.json" if defect == "head" else "-00000001.json"))).unlink()
+            with pytest.raises((RecoveryStop, OSError, ValueError)):
+                owner.check()
+            assert ledger.record["calls"] == []
+            resource_path.write_bytes(retained)
+            target.write_bytes(retained_evidence)
 
 
 def test_stale_preparation_does_not_acquire_a_new_grant_hold(prepared, tmp_path, monkeypatch):
@@ -59,16 +135,18 @@ def test_stale_preparation_does_not_acquire_a_new_grant_hold(prepared, tmp_path,
 
 @contextmanager
 def campaign(prepared, tmp_path, monkeypatch, *, grant_account=None, stop_bindings=None, retained_grant=None,
-             recovery_journal=None):
+             recovery_journal=None, consumption=False, cold=False, replay_scope=adapter.settlement_scope):
     _codex, account_path, plan, output, request = prepared
     grant_path = retained_grant or tmp_path / "grant.json"
     program_lock = tmp_path / "active-session-program.lock"
     root = tmp_path / "supervision"
     directory = root / "jobs/job-0001"
     directory.mkdir(parents=True)
-    with original.epoch.accounting_scope(), adapter.settlement_scope(), (
-            adapter.implementation.qualified.accounting.accounting_scope()), program_lock.open("a") as global_owner, (
+    with ExitStack() as history, program_lock.open("a") as global_owner, (
             directory / "worker.lock").open("a") as job_owner:
+        history.enter_context(original.epoch.accounting_scope())
+        history.enter_context(replay_scope())
+        history.enter_context(adapter.implementation.qualified.accounting.accounting_scope())
         fcntl.flock(global_owner, fcntl.LOCK_EX | fcntl.LOCK_NB)
         fcntl.flock(job_owner, fcntl.LOCK_EX | fcntl.LOCK_NB)
         grant = grants.status(grant_path) if retained_grant else grants.create(
@@ -79,6 +157,13 @@ def campaign(prepared, tmp_path, monkeypatch, *, grant_account=None, stop_bindin
                 "account": str(account_path), "grant": str(grant_path), "grant_identity": grant["identity"]}}
         if recovery_journal is not None:
             configuration["recovery_journal"] = recovery_journal
+        floors = None
+        if consumption:
+            from test_inventory_recovery_v3_consumption_floors import bind
+
+            configuration["campaign_root"] = str(tmp_path / "campaign-history")
+            floors = bind(configuration, lambda: True)
+            floors.initialize()
         dispatched = {"phase": "RUNNING", "command": configuration["run"], "cwd": str(tmp_path),
             "run_id": "fixture", "job_id": "job-0001", "poll_seconds": 1,
             "config_identity": durable.fingerprint(configuration)}
@@ -98,9 +183,13 @@ def campaign(prepared, tmp_path, monkeypatch, *, grant_account=None, stop_bindin
         implementation.OUTPUT = root
         arguments = {"program_descriptor": global_owner.fileno(), "command": configuration["run"],
                      "require_admission": lambda: configuration, "stop_check": lambda: None}
+        if floors is not None:
+            arguments["consumption"] = floors
+        if cold:
+            history.close()
         yield SimpleNamespace(implementation=implementation, arguments=arguments, directory=directory,
             global_owner=global_owner, job_owner=job_owner, grant_path=grant_path, root=root, request=request,
-            account_path=account_path, plan=plan, output=output, configuration=configuration)
+            account_path=account_path, plan=plan, output=output, configuration=configuration, consumption=floors)
 
 
 def test_actual_stage_owner_claims_before_executor_and_earmarks(prepared, tmp_path, monkeypatch):

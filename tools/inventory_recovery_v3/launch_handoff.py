@@ -9,7 +9,7 @@ from pathlib import Path
 from humanvoice.artifacts import digest, read_json
 from tools import durable_program_supervisor as durable
 from tools.inventory_history_handover import owner
-from tools.inventory_history_job import exclusive_descriptor
+from tools.inventory_recovery_v3.descriptors import exclusive_descriptor
 from tools.inventory_recovery_v3.failures import RecoveryStop
 from tools.inventory_recovery_v3.reservations import persist, regular_path
 
@@ -77,11 +77,9 @@ def prepare(root, job, request, *, owner_check, stop_check):
                "intent": record}
 
 
-@contextmanager
-def inherited(root, job, request, *, stop_check):
+def require_inherited(root, job, request, capsule, *, stop_check):
     binding = request_binding(root, job, request)
     record = validate(root, job, request)
-    capsule = json.loads(os.environ.get(CAPSULE, "null"))
     if (not isinstance(capsule, dict)
             or set(capsule) != {*binding, "intent_identity", "descriptor", "identity"}
             or capsule.get("identity") != digest({key: value for key, value in capsule.items()
@@ -95,5 +93,14 @@ def inherited(root, job, request, *, stop_check):
     descriptor = capsule["descriptor"]
     exclusive_descriptor(directory / "worker.lock", descriptor)
     stop_check()
+    return descriptor
+
+
+@contextmanager
+def inherited(root, job, request, *, stop_check):
+    capsule = json.loads(os.environ.get(CAPSULE, "null"))
+    descriptor = require_inherited(root, job, request, capsule, stop_check=stop_check)
+    directory = Path(root) / "jobs" / job
     with os.fdopen(os.dup(descriptor), "a") as handle:
+        exclusive_descriptor(directory / "worker.lock", handle.fileno())
         yield handle

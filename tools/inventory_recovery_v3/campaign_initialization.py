@@ -9,7 +9,6 @@ from types import SimpleNamespace
 
 from humanvoice.artifacts import digest, read_json
 from tools import sol_inventory_program as original
-from tools.inventory_history_job import exclusive_descriptor
 from tools.inventory_recovery_v3 import (
     accounting,
     ancestry,
@@ -21,6 +20,7 @@ from tools.inventory_recovery_v3.campaign_preparation import (
     require_prepared,
     verify_prepared,
 )
+from tools.inventory_recovery_v3.descriptors import exclusive_descriptor
 from tools.inventory_recovery_v3.failures import RecoveryStop
 from tools.inventory_recovery_v3.reservations import (
     RecoveryReservations,
@@ -77,9 +77,11 @@ def proposal(root, plan, transition, prepared):
 
 
 def initialize(root, *, check):
+    from humanvoice import codex_runtime
     from tools.inventory_history_adoption import no_inference
     from tools.inventory_recovery_v3 import probe
     from tools.inventory_recovery_v3.requests import NativeRequests
+    from tools.inventory_recovery_v3.stage import receipt_replay
 
     root = Path(root).absolute()
     require(".." not in root.parts, "Campaign bootstrap requires a canonical absolute root")
@@ -141,7 +143,10 @@ def initialize(root, *, check):
                     "Committed campaign lost its seed and initialization intent")
             journal.initialize()
         require(not journal.read()["sequences"], "Unadmitted campaign bootstrap contains prospective reservations")
-        with accounting.document_scope(transition):
+        with accounting.document_scope(transition), receipt_replay(
+                plan, output, plan[original.adapter.FIELD]["predecessor"],
+                codex_runtime.validate_codex_record) as checked, runtime.runtime(
+                plan, output, historical_validate=checked):
             resolver = NativeRequests(plan, output, journal, SimpleNamespace(check=guard))
             report = read_json(regular_path(output / "admission-probe.json"))
             observations = probe.observations(SimpleNamespace(output=output, transition=transition), report)

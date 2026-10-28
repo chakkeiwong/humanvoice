@@ -38,7 +38,8 @@ __all__ = ["baseline", "codex", "exhausted", "native_case"]
 
 @pytest.mark.parametrize("codex", [900], indirect=True)
 @pytest.mark.parametrize("fault", [None, "pause", "frozen_cut", "semantic", "stop_before_nonpass",
-                                   "stop_after_nonpass", "stop_after_pass", "oversized", "canary_down"])
+                                   "stop_after_nonpass", "stop_after_pass", "oversized", "canary_down",
+                                   "claim_native_cut", "claim_head_cut", "claim_receipt_cut"])
 def test_native_executor_completion_and_failures(exhausted, tmp_path, monkeypatch, fault):
     current = stage.Stage(tmp_path / "successor", exhausted.transition)
     plan = current.prepare()
@@ -94,10 +95,47 @@ def test_native_executor_completion_and_failures(exhausted, tmp_path, monkeypatc
     prepared = exhausted.codex, exhausted.account, plan, current.output, exhausted.transition["proof"]["failed_request"]
     stops = {"root": str(tmp_path / "controls"), "contract": {"fixture": "executor-stop"}}
     with campaign(prepared, tmp_path / "campaign", monkeypatch, retained_grant=exhausted.grant,
-                  stop_bindings=[stops], recovery_journal=journal_binding.descriptor(journal)) as fixture, (
+                  stop_bindings=[stops], recovery_journal=journal_binding.descriptor(journal),
+                  consumption=True) as fixture, (
             runtime.settlement_scope()):
         authority = CampaignAuthority(fixture.implementation, **fixture.arguments)
+        fixture.consumption.check = authority.check
         statuses = []
+        if fault and fault.startswith("claim_"):
+            from pathlib import Path
+
+            from tools.inventory_recovery_v3 import consumption_floors
+
+            native_write = current.implementation.epoch.write_json
+            native_persist = consumption_floors.persist
+            fired = []
+
+            def interrupt(label):
+                if fault == "claim_" + label + "_cut" and not fired:
+                    fired.append(label)
+                    raise OSError("executor claim cut")
+
+            def write(path, value):
+                native_write(path, value)
+                if Path(path) == exhausted.account:
+                    interrupt("native")
+                elif Path(path).name == "account-reservation.json":
+                    interrupt("receipt")
+
+            def persist(path, value, **keywords):
+                native_persist(path, value, **keywords)
+                if path.name == "account-head.json" and value["pending"] is None:
+                    interrupt("head")
+
+            with monkeypatch.context() as patch:
+                patch.setattr(current.implementation.epoch, "write_json", write)
+                patch.setattr(consumption_floors, "persist", persist)
+                with pytest.raises(OSError, match="executor claim cut"):
+                    executor.execute(current, authority=authority, journal=journal, refresh=statuses.append)
+            assert fired
+            assert not (current.output / "allocation-ledger.json").exists()
+            assert len([entry for entry in read_json(exhausted.account)["plans"]
+                        if entry["output"] == str(current.output)]) == 1
         if fault is None:
             substitute = RecoveryReservations(tmp_path / "substitute-pairs", journal.policy, journal.binding)
             substitute.initialize()
@@ -190,6 +228,9 @@ def test_native_executor_completion_and_failures(exhausted, tmp_path, monkeypatc
             assert summary["failure"]["category"] == "BLOCKED_ENGINEERING"
         usage = accounting.verify_settlement(current.output)["report"]
         assert usage["allocated_calls"] == summary["attempted"]
+        assert fixture.consumption.inspect("account")["status"] == "READY"
+        assert fixture.consumption.inspect("stages")["status"] == "READY"
+        assert len(fixture.consumption.inspect("account")["head"]["history"]) == 2
         before = (current.output / "allocation-ledger.json").read_bytes(), exhausted.account.read_bytes()
         assert executor.execute(current, authority=authority, journal=journal, refresh=statuses.append) == summary
         assert before == ((current.output / "allocation-ledger.json").read_bytes(), exhausted.account.read_bytes())

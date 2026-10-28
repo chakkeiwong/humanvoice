@@ -156,3 +156,27 @@ def test_runtime_environment_rechecks_human_approval_policy(installed, monkeypat
     monkeypatch.setattr(services, "environment", lambda: "different")
     with pytest.raises(ValueError, match="human approvals"):
         installed_authority.require_environment(binding)
+
+
+def test_immutable_projection_excludes_only_two_mutable_resources(installed):
+    before = installed_authority.capture()
+    projected = installed_authority.immutable_projection(before)
+    mutable = {str(installed / "account.json"), str(installed / "grant.stages.json")}
+    assert set(before["evidence"]) - set(projected["evidence"]) == mutable
+    assert str(program.GRANT) in projected["evidence"]
+    assert str(campaign.ROOT / "cursor.json") in projected["evidence"]
+    for name in ("account.json", "grant.stages.json"):
+        write_json(installed / name, {"changed": True})
+    assert installed_authority.capture() != before
+    assert installed_authority.immutable_projection(installed_authority.capture()) == projected
+    write_json(program.GRANT, {"immutable": "changed"})
+    assert installed_authority.immutable_projection(installed_authority.capture()) != projected
+
+
+@pytest.mark.parametrize("missing", ["account.json", "grant.stages.json", "grant.json"])
+def test_rehashed_projection_cannot_omit_account_or_grant(installed, missing):
+    binding = installed_authority.capture()
+    del binding["evidence"][str(installed / missing)]
+    binding["identity"] = digest({key: value for key, value in binding.items() if key != "identity"})
+    with pytest.raises(ValueError, match="canonical consumption"):
+        installed_authority.immutable_projection(binding)

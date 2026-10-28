@@ -102,3 +102,17 @@ def require_environment(binding):
 
     if services.environment() != binding["environment"]:
         raise ValueError("Handover requires the admitted service environment and human approvals")
+
+
+def immutable_projection(binding):
+    if (not isinstance(binding, dict) or binding.get("version") != "installed-history-authority-v1"
+            or binding.get("identity") != digest({key: value for key, value in binding.items() if key != "identity"})
+            or not isinstance(binding.get("evidence"), dict)):
+        raise ValueError("Immutable installation projection requires intact transfer evidence")
+    mutable = {str(canonical_path(binding["account"])),
+               str(canonical_path(binding["grant"]).with_suffix(".stages.json"))}
+    if not mutable <= binding["evidence"].keys() or str(canonical_path(binding["grant"])) not in binding["evidence"]:
+        raise ValueError("Installed transfer evidence lost its canonical consumption resources")
+    value = {key: item for key, item in binding.items() if key not in {"identity", "evidence"}}
+    value["evidence"] = {path: checksum for path, checksum in binding["evidence"].items() if path not in mutable}
+    return {**value, "identity": digest(value)}

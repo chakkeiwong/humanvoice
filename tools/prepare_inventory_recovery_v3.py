@@ -21,6 +21,7 @@ from tools.inventory_history_job import exclusive_descriptor
 from tools.inventory_recovery_v2 import campaign, program, qualification, semantics
 from tools.inventory_recovery_v3 import (
     accounting,
+    campaign_binding,
     campaign_initialization,
     journal_binding,
     probe,
@@ -40,7 +41,8 @@ def prepare():
     output.mkdir(parents=True, exist_ok=True)
     account_path, grant_path = program.predecessor.account.ACCOUNT, program.GRANT
     authority_paths = (account_path, grant_path, grant_path.with_suffix(".stages.json"))
-    before = {str(path): digest(path.read_bytes()) for path in authority_paths}
+    authority_bytes = {str(path): path.read_text() for path in authority_paths}
+    before = {path: digest(content.encode()) for path, content in authority_bytes.items()}
     started = time.time()
     result = {"status": "OFFLINE_PREPARATION_RUNNING", "sources": sources, "authority": before,
               "started_at": started, "model_calls": 0, "account_writes": 0, "grant_writes": 0,
@@ -66,6 +68,7 @@ def prepare():
                 return True
 
             check()
+            stage.immutable(output / "preparation-authority.json", authority_bytes)
             if campaign.cursor() != value:
                 raise ValueError("Production cursor changed before offline preparation")
             log = stack.enter_context((output / "preparation.log").open("a"))
@@ -93,6 +96,7 @@ def prepare():
             plan = current.prepare()
             check()
             initialized = campaign_initialization.initialize(output / "campaign", check=check)
+            bound = campaign_binding.create(output / "campaign", check=check)
             journal_descriptor = initialized["seed"]["journal"]
             journal = RecoveryReservations(Path(journal_descriptor["path"]).parent, policy,
                                            journal_descriptor["binding"])
@@ -140,6 +144,7 @@ def prepare():
                 transition_identity=transition["identity"], retained_responses=migration["retained_responses"],
                 remaining_requests=migration["remaining_requests"], successor=str(current.output),
                 campaign_seed_identity=initialized["seed"]["identity"], recovery_journal=journal_descriptor,
+                campaign_binding_identity=bound["binding"]["identity"],
                 source_unchanged=True, authority_unchanged=True, ownership=ownership)
     except (OSError, ValueError, RuntimeError, semantics.context.InvocationStopped) as error:
         (output / "preparation-error.txt").write_text(traceback.format_exc())

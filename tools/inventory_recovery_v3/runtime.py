@@ -10,6 +10,7 @@ from types import FunctionType
 from humanvoice import automatic_recovery, automatic_settlement, codex_runtime
 from humanvoice.artifacts import digest, read_json
 from tools.inventory_recovery_v2 import runtime as historical
+from tools.inventory_recovery_v3 import schema_replay
 from tools.inventory_recovery_v3.policy import integer, require_capacity
 
 FIELD = "inventory_document_recovery"
@@ -166,6 +167,7 @@ def receipt_scope(historical_validate):
 
 @contextmanager
 def runtime(plan, output, *, live=False, lock_fd=None, historical_validate=None, owner=None):
+    from tools.inventory_recovery_v3 import provider_runtime
     from tools.inventory_recovery_v3.stage_owner import StageOwner
 
     if live:
@@ -176,7 +178,9 @@ def runtime(plan, output, *, live=False, lock_fd=None, historical_validate=None,
             raise ValueError("Document runtime cannot replace its native executor descriptor")
         lock_fd = owner.executor_descriptor
     validate_plan(plan)
-    with bridge.conservative_scope(), bridge.NATIVE_RUNTIME(
+    native_runtime = provider_runtime.private_runtime(bridge.NATIVE_RUNTIME, owner=owner, plan=plan, output=output) if (
+        live) else bridge.NATIVE_RUNTIME
+    with schema_replay.scope(), bridge.conservative_scope(), native_runtime(
             plan, output, live=live, lock_fd=lock_fd, historical_validate=historical_validate), (
             receipt_scope(historical_validate)):
         if not live:
@@ -184,40 +188,7 @@ def runtime(plan, output, *, live=False, lock_fd=None, historical_validate=None,
             return
         native = codex_runtime.launch
 
-        def launch(arguments, prompt, directory, timeout):
-            from tools.inventory_recovery_v3.dispatcher import require_dispatch
-            from tools.inventory_recovery_v3.failures import failure_record
-            from tools.inventory_recovery_v3.reservations import persist, regular_path
-            from tools.inventory_recovery_v3.runtime_binding import bind
-
-            try:
-                require_dispatch(plan, output, owner)
-                bind(plan, output, directory, owner=owner)
-            except BaseException as error:
-                from tools.inventory_recovery_v3.cancellation import (
-                    capture as capture_cancellation,
-                )
-
-                directory = Path(directory)
-                if any((directory / name).exists() for name in ("process-start.json", "process.json")):
-                    raise
-                failure = failure_record(error, phase="native_launch")
-                persist(regular_path(directory / "prelaunch-rejection.json"), failure)
-                capture_cancellation(plan, output, directory, owner, failure)
-                persist(regular_path(directory / "qualification-capture.json"), {
-                    "contract": contract(), "binding_hash": digest(implementation.qualified.routing.binding_for(plan["profile"])),
-                    "profile_hash": digest(plan["profile"]), "argv_hash": digest(arguments),
-                    "status": "rejected_before_process_start"})
-                for name in ("events.jsonl", "stderr.log", "response-envelope.json"):
-                    regular_path(directory / name).touch(exist_ok=False)
-                persist(regular_path(directory / "process.json"), {"status": "error", "returncode": None,
-                    "process_started": False, "elapsed_seconds": 0, "deadline_seconds": timeout,
-                    "group_quiescent": True, "remaining_group_members": [],
-                    "enforcement": implementation.qualified.capture.ENFORCEMENT})
-                raise
-            return native(arguments, prompt, directory, timeout)
-
-        codex_runtime.launch = launch
+        codex_runtime.launch = provider_runtime.launch_boundary(native, plan=plan, output=output, owner=owner)
         try:
             yield
         finally:
@@ -246,6 +217,6 @@ def settlement_scope():
     def validate_account(record, *, usage_reader=None):
         return previous_validate(record, usage_reader=usage_reader or completed_usage)
 
-    with bridge.conservative_scope(), implementation.replaced_aliases(previous, completed_usage), (
+    with schema_replay.scope(), bridge.conservative_scope(), implementation.replaced_aliases(previous, completed_usage), (
             implementation.replaced_aliases(previous_validate, validate_account)):
         yield

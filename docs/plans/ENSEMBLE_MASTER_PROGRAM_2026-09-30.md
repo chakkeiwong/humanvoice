@@ -1,6 +1,177 @@
 # Ensemble implementation and evaluation master program
 
-Current execution checkpoint, 28 October 2026: master 4.11 / ensemble 201.
+Current execution checkpoint, 28 October 2026: master 4.30 / ensemble 220.
+Crash recovery confirmed no surviving validation process and production
+inactive/disabled. Human approval remains on-request/user/workspace-write.
+The previous floors gate failed 889/890 at the native public preflight; its
+receipt is retained, with source/authority unchanged and no release acceptance.
+A minimal diagnostic proves two incompatible fixture cursors: installed locks
+used the caller's exhausted stage, while the installed cursor named the synthetic
+old-campaign/generation-02. The fixture now binds its cursor before deriving
+shared locks and binds program.BASE before fixture capture. A fast regression
+asserts the complete cursor/program-lock membership. Production checks are
+unchanged. All 120 focused configuration/runtime-closure/native-preflight cases
+pass in 141.69 seconds with 16 workers; Ruff passes. Fixed floors validation
+PASSES all 891 exact-member cases in 779.27 test seconds at
+validation/bf6525157a631b6918e6/floors-3ca2d2557dfe, unchanged source/authority.
+Executor validation PASSES all 12 exact-member cases in 850.78 test seconds
+at executor-f4135811ea2e under the same source binding. Both receipts verify
+unchanged source/production authority and release_acceptance=false. Sixteen
+workers and original deadlines were retained; both validation processes ended.
+The core source/test freeze ended after both gates and final hash verification.
+An isolated offline witness candidate is retained under
+.localresources/control-witness-20261028; it is not in public runtime or release
+admission. All 73 storage/transport/service tests and Ruff pass with unchanged
+candidate hashes; host writer/projection/factory
+composition and independent review remain open.
+Next remains TX3b host-authenticated control publication and public factory,
+then TX4–TX7, native multi-successor/soak and full release before live deployment.
+The temporary control-store prototype is not a trusted host witness.
+Production remains 166 retained / 439 unfinished, with no new ZLB receipt.
+Repair/retest/review/refresh is mandatory at each phase and interruption.
+Evidence: docs/reviews/INVENTORY_RECOVERY_CRASH_LOCK_REPAIR_2026-10-28.md.
+
+Continuation authorized: create a scoped local Git checkpoint, then implement
+the host-writer/publication slice. Preserve unrelated dirty files and frozen
+receipts; no push or live launch. Next ordered work: exact action/root/contract
+semantics and trusted stop times; witness prepare before local publication;
+crash-recoverable projections; read-only stable-witness/runtime evidence;
+adversarial regression/review, then refresh this checkpoint. Authentication
+and protected installation remain separate gates; no fixture grants authority.
+
+
+Previous checkpoint (historical; running/closure claims below are superseded):
+Current execution checkpoint, 28 October 2026: master 4.28 / ensemble 218.
+Recovered source and retained evidence remain available on SSD. CF1-R/CF3-R
+are independently closed. The exact-member floors suite completed: 850 pass
+in 1033.08 seconds with 16 workers and unchanged source/production authority.
+Its receipt is historical after the subsequent validation-runner repair.
+Bounded review identified VR1–VR3: final checks could leave a false pass,
+ordinary leader exits could leave workers, and cleanup could wait indefinitely.
+Repairs now force terminal failure on final mismatch/read error, clean owned
+groups on all exit paths, and bound reap attempts while retaining original
+failure and incomplete-cleanup evidence. Residual VR2-R is also repaired:
+process-observation errors cannot suppress termination attempts. Fifteen runner
+regressions pass in 10.59 seconds; Ruff and 56 permission-wrapper tests pass.
+The independent residual review closes VR1–VR3/VR2-R; inspector is closed.
+Frozen-source exact floors validation passes all 861 cases in 1037.27 seconds,
+16 workers, unchanged source/authority: validation/5710efeb418e12455bfe/floors-ea2e56291fcf.
+Native executor validation at executor-9323948631d4 failed its 1800-second
+bound: 11 cases passed; oversized split execution reached pass and seal but
+its final repeatability/accounting checks did not complete. The failure receipt
+retains unchanged source/authority; cleanup completed and the test process ended.
+This is not a passing executor gate. The completed 90-second offline profile
+attributes 56.94 seconds to 261 schema-definition checks. Prospective operation-
+scoped reuse now checks exact schema bytes and checker construction identity;
+schema construction/contracts and every record/receipt check still run. Frozen
+historical files remain unchanged. Initial integration validation passed 104
+cases. Review then reproduced R1–R4: list/tuple key ambiguity, type-checker
+drift, effective registry/resource drift, and independent-context restoration.
+The executor rerun was intentionally interrupted after 6 passes in 305.25s;
+its failed receipt retains unchanged source/authority and completed cleanup.
+Repairs now restrict reusable keys to JSON-native trees, snapshot effective
+meta-validation resources/type semantics, and reject overlapping independent
+scope installation. Follow-up found one legacy resolver-default residual;
+both legacy and keyword custom resolvers now always use native checking.
+The intermediate ff905888ca5f run was interrupted before this source change
+and is retained as failed, with unchanged source/authority and clean shutdown.
+All 115 affected integration cases (35 dedicated) pass in 14.15 seconds; Ruff
+passes. Independent residual review closes R1–R4 and the inspector is closed.
+The final fixed executor gate PASSES all 12 exact-member cases in 902.11 test
+seconds (904.13 runner seconds), including oversized split and final repeat/
+accounting assertions: validation/408012e9b655b2e389b1/executor-0a3e19afec9f.
+Source and production authority are unchanged. The original 1800-second limit
+remains. Same-source floors validation PASSES all 861 exact cases in 732.963
+test seconds at floors-5dd639f5fc1e, with unchanged source/production authority.
+Both receipts are historical after the following descriptor implementation;
+the source freeze ended only after both suites completed.
+Repair contract and evidence:
+docs/plans/INVENTORY_RECOVERY_SCHEMA_REPLAY_2026-10-28.md.
+Ownership design review closes OD1–OD6 and residual OD2-R/OD6-R at design level;
+its inspector is closed. Nonmutating descriptor proof and private legacy job
+adapters pass 430 adjacent cases after repairing DR1's false-pass test oracle;
+independent recheck closes OD2/OD2-R within its scope. Canonical role/lease
+components pass 173 combined cases with 16 workers. Review LR1/LR2 found stale
+transfer cleanup closing reused descriptors and early rejection not retiring
+its capsule; both are repaired and independently closed. Complete-lease launch
+integration passes 187 combined cases in 7.49 seconds; Ruff passes. Review
+LU1–LU3 is closed: reporting failures preserve unresolved children, fallback
+rejects ambient capsules before dispatch, and malformed transfers retire safely.
+Independent verification passes 24 cases in 26.18 seconds with unchanged hashes.
+Launcher inspection is closed. The next immutable-runtime component is
+implemented: transfer-bound predecessor/qualification/source closure and
+acyclic leaf → lease → read-only floors. Configuration binds this closure.
+Review found RC1 (stop rollback) and RC2 (added source files); repairs require
+authenticated monotonic stop evidence and exact source inventory. RC1-R's
+newline-normalization defect is also repaired. All RC findings are independently
+closed; 277 combined cases pass in 12.55 seconds and Ruff passes. Inspector
+closed. Complete native callback/provider-lease integration passes 273 adjacent
+cases in 64.55 seconds with 16 workers. Review P2 exposed stage-ownership loss
+during existing claim-tail publication; shared stage ownership and twelve
+regression cases repair it. Independent recheck passes all twelve in 92.46
+seconds and closes P2; the inspector is closed. Provider collector/runtime/
+rejection integration is now implemented: full inherited descriptors at final
+spawn, private native settings checks, bounded cleanup, typed zero-launch
+outcomes, and durable exact rejection replay. Combined provider/ownership/
+execution validation initially passed 164 cases. Provider review P1 reproduced
+a false zero-launch proof after a real post-fork constructor failure. The old
+native gate executor-c097121b93b6 was intentionally interrupted after eleven
+cases; its failed receipt retains unchanged source/authority and completed
+cleanup. Repair now retains the Popen object before initialization, kills and
+reaps observed children, and records uncertainty when no PID is available.
+Only pre-spawn failures can certify zero launch. Combined repair validation
+passes 172 cases in 79.13 seconds with 16 workers; Ruff passes. Independent
+residual P1 review closes with 12 selected passes in 26.41 seconds and five
+additional child-cleanup probes; source/tests unchanged. The repaired executor
+gate passes all twelve exact-member cases in 805.56 test seconds / 808 runner
+seconds at validation/a0aaa78de204019bfc3e/executor-c9e49e928a12. Source and
+production authority are unchanged; executor phase is closed.
+Real authenticated control publication and public factory integration remain
+required. Control transaction/check matrix:
+INVENTORY_RECOVERY_CONTROL_PUBLICATION_2026-10-28.md. Execution evidence:
+INVENTORY_RECOVERY_PROVIDER_EXECUTION_2026-10-28.md.
+Full public admission, TX4–TX7 and dependency-complete release remain open.
+Production remains 166 retained / 439 unfinished, with no new ZLB receipt.
+Tracked production services are inactive/disabled; human approval settings
+remain on-request/user/workspace-write. No paid call or deployment occurred.
+
+Previous pre-crash checkpoint (superseded running/review status):
+Historical-receipt bootstrap repair passes the actual-data diagnostic in
+53.09 seconds: the unscoped path reproduces the destination failure, while
+original-snapshot/profile replay accepts the exact retained size rule.
+Source, both snapshots and production authority remain unchanged; zero calls
+or account/grant writes. Independent bounded review reports no findings.
+The repaired slice passed 648 exact-member tests with 16 workers. That receipt
+and the earlier 1,167-case full pass are historical after new source changes.
+TX3b now has a read-only canonical configuration candidate and isolated public
+inspection CLI. It derives source-bound preparation, native campaign binding,
+account/grant/journal, cumulative handover limits, both stop roots, fixed
+commands and retained profile. All live actions still fail closed before
+inspection or spending. Final configuration-slice validation: 738 exact-member
+tests pass in 211.63 seconds with 16 workers; source, harness and production
+authority unchanged. Bounded review closes C1/C2 and exact-type residual C1-R.
+Evidence: `campaign-binding-validation/ce9e31a2e13c`. This is a focused slice,
+not full release authorization. Native runtime floors are implemented at stage
+hold, claim and all three settlement paths. Nine native executor fault routes
+passed in 869.00 seconds before follow-up fixes. Bounded review found CF1–CF5:
+dispatch floor checks, racing status reads, cold claim-tail ordering, sibling
+growth after pending writes, and missing pending transition evidence. First
+repairs pass 151 focused regressions; three actual cold-executor cut tests
+remain running on frozen source. Follow-up closes CF2/CF4/CF5 but retains
+CF1-R (cold checks lack explicit mixed-history replay) and CF3-R (unlocked
+whole-account equality falsely rejects a lawful sibling append). Repair these
+with a leaf read-only native validator and a native-write veto for existing-
+only claim repair, then add cold and interleaving regressions. The workers are
+CPU-active, not proven deadlocked. No current-source full release is claimed.
+Runtime evidence: `docs/reviews/INVENTORY_RECOVERY_CONSUMPTION_FLOORS_EXECUTION_2026-10-28.md`.
+Remaining: admitted runtime floors/descriptor composition, public cold recovery,
+automatic stale-plan repair, receipt-only progress, bounded replay, native
+multi-successor/soak and full release before host-approved live deployment.
+No live ZLB resumption or new manuscript receipt: 166 retained / 439 open.
+Plan: `docs/plans/INVENTORY_RECOVERY_CLOSURE_2026-10-28.md`. Evidence:
+`docs/reviews/INVENTORY_RECOVERY_PUBLIC_CONFIGURATION_EXECUTION_2026-10-28.md`.
+
+Previous checkpoint evidence (not current-source release authorization):
 The installed-authority/ownership/bootstrap slice passes 524 focused tests with
 16 workers; source and production authority are unchanged. Actual read-only
 installed-authority capture passes. This does not close full TX3 or resume ZLB.

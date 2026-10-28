@@ -5,11 +5,12 @@ from pathlib import Path
 
 from humanvoice.artifacts import read_json
 from tools.inventory_recovery_v2 import program, qualification
-from tools.inventory_recovery_v3 import runtime
+from tools.inventory_recovery_v3 import runtime, schema_replay
 
 HISTORICAL_VERIFY = (qualification.verify_settlement,)
 
 
+@schema_replay.scope()
 def verify_settlement(output):
     plan = read_json(Path(output) / "plan.json")
     if runtime.FIELD not in plan:

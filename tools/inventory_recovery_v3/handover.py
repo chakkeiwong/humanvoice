@@ -8,9 +8,9 @@ from pathlib import Path
 
 from humanvoice.artifacts import digest
 from tools import inventory_history_handover as native
-from tools.inventory_history_job import exclusive_descriptor
 from tools.inventory_recovery_v2 import control
 from tools.inventory_recovery_v3 import installed_authority
+from tools.inventory_recovery_v3.descriptors import exclusive_descriptor
 
 DESCRIPTORS = "HUMANVOICE_CHAINED_HANDOVER_FDS"
 

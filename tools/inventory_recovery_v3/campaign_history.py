@@ -79,7 +79,7 @@ class CampaignHistory:
                     "Native campaign initial descriptor differs from its seed")
 
     def guard(self):
-        from tools.inventory_history_job import exclusive_descriptor
+        from tools.inventory_recovery_v3.descriptors import exclusive_descriptor
 
         if self.handle is None or self.owner_pid != os.getpid():
             raise RecoveryStop("BLOCKED_OWNERSHIP", "Campaign publication requires its current owner")
@@ -97,16 +97,17 @@ class CampaignHistory:
         self.root.mkdir(parents=True, exist_ok=True)
         path = regular_path(self.root / "campaign.lock")
         if descriptor is not None:
-            from tools.inventory_history_job import exclusive_descriptor
+            from tools.inventory_recovery_v3.descriptors import exclusive_descriptor
 
             exclusive_descriptor(path, descriptor)
         selected = os.dup(descriptor) if descriptor is not None else os.open(
             path, os.O_RDWR | os.O_CREAT | os.O_NOFOLLOW, 0o600)
         with os.fdopen(selected, "a") as handle:
-            try:
-                fcntl.flock(handle, fcntl.LOCK_EX | fcntl.LOCK_NB)
-            except BlockingIOError as error:
-                raise RecoveryStop("BLOCKED_OWNERSHIP", "Another owner holds campaign publication") from error
+            if descriptor is None:
+                try:
+                    fcntl.flock(handle, fcntl.LOCK_EX | fcntl.LOCK_NB)
+                except BlockingIOError as error:
+                    raise RecoveryStop("BLOCKED_OWNERSHIP", "Another owner holds campaign publication") from error
             self.handle, self.owner_pid = handle, os.getpid()
             try:
                 self.guard()

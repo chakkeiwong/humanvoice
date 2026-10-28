@@ -3,7 +3,7 @@
 import fcntl
 import multiprocessing
 import os
-from contextlib import nullcontext
+from contextlib import contextmanager, nullcontext
 from copy import deepcopy
 from types import SimpleNamespace
 
@@ -26,13 +26,19 @@ from tools.inventory_recovery_v3 import (
     journal_initialization,
     probe,
     runtime,
+    stage,
 )
 from tools.inventory_recovery_v3.failures import RecoveryStop
 from tools.inventory_recovery_v3.requests import NativeRequests
 
 
 @pytest.fixture
-def bootstrap(tmp_path, monkeypatch):
+def bootstrap(tmp_path, monkeypatch, request):
+    if getattr(request, "param", None) == "public-configuration":
+        from tools import review_inventory_recovery_v3 as review
+
+        monkeypatch.setattr(review, "OUTPUT", tmp_path)
+        tmp_path = tmp_path / "preparation" / digest(review.sources())[:20]
     root, account, grant = tmp_path / "campaign", tmp_path / "account.json", tmp_path / "grant.json"
     output = root / "generation-00"
     document = policy(inherited_recovery=0)
@@ -43,7 +49,9 @@ def bootstrap(tmp_path, monkeypatch):
               "reservation_ceiling": 0, "gross_reservation_ceiling": 0, "grant": {"identity": authority["identity"]}}
     transition = campaign_history.identified({"version": "inventory-budget-successor-v1",
                                               "recovery_history": {"identity": "fixture-history"}})
-    plan = {"snapshot": str(output / "snapshot"), "bindings": {"source": "fixture-source"}, runtime.FIELD: {
+    plan = {"snapshot": str(output / "snapshot"), "bindings": {"source": "fixture-source"},
+        "profile": {"fixture": "retained-qualified-profile"},
+        original.adapter.FIELD: {"predecessor": {"fixture": "retained-receipts"}}, runtime.FIELD: {
         "migration_identity": "fixture-migration", "policy": document, "transition": transition}}
     plan["plan_identity"] = digest(plan)
     values = {"plan.json": plan, "transition.json": transition, "prepared-authority.json": anchor,
@@ -79,6 +87,8 @@ def bootstrap(tmp_path, monkeypatch):
     monkeypatch.setattr(probe, "observations", lambda *arguments: [])
     monkeypatch.setattr(NativeRequests, "import_history", imported)
     monkeypatch.setattr(campaign_initialization.accounting, "document_scope", lambda *arguments: nullcontext())
+    monkeypatch.setattr(stage, "receipt_replay", lambda *arguments: nullcontext("fixture-validator"))
+    monkeypatch.setattr(runtime, "runtime", lambda *arguments, **keywords: nullcontext())
     return SimpleNamespace(root=root, output=output, account=account, grant=grant, verified=verified,
                            imported=imported, intent={"output": str(output), "transition": transition})
 
@@ -104,6 +114,59 @@ def mutate(case, kind):
     else:
         path = case.output / kind
         path.write_bytes(path.read_bytes() + b" ")
+
+
+@pytest.mark.parametrize("reject", [False, True])
+def test_bootstrap_import_uses_bound_nonlive_receipt_scope(bootstrap, monkeypatch, reject):
+    case, entered, active = bootstrap, [], []
+    plan = read_json(case.output / "plan.json")
+    validator = object()
+
+    @contextmanager
+    def replay(selected, output, proof, historical_validator):
+        assert selected == plan and output == case.output
+        assert proof == plan[original.adapter.FIELD]["predecessor"]
+        assert callable(historical_validator)
+        entered.append("replay")
+        active.append("replay")
+        try:
+            yield validator
+        finally:
+            assert active.pop() == "replay"
+
+    @contextmanager
+    def receipt_scope(selected, output, *, historical_validate, live=False):
+        assert selected == plan and output == case.output
+        assert historical_validate is validator and live is False
+        assert active == ["replay"]
+        entered.append("runtime")
+        active.append("runtime")
+        try:
+            yield
+        finally:
+            assert active.pop() == "runtime"
+
+    native = NativeRequests.__init__
+
+    def initialize(resolver, *arguments):
+        assert active == ["replay", "runtime"]
+        entered.append("resolver")
+        if reject:
+            raise ValueError("Historical receipt source changed")
+        return native(resolver, *arguments)
+
+    monkeypatch.setattr(stage, "receipt_replay", replay)
+    monkeypatch.setattr(runtime, "runtime", receipt_scope)
+    monkeypatch.setattr(NativeRequests, "__init__", initialize)
+    authority = case.account.read_bytes(), case.grant.read_bytes()
+    if reject:
+        with pytest.raises(ValueError, match="source changed"):
+            campaign_initialization.initialize(case.root, check=lambda: True)
+        assert not (case.root / "seed.json").exists()
+    else:
+        assert campaign_initialization.initialize(case.root, check=lambda: True)["model_calls"] == 0
+    assert entered == ["replay", "runtime", "resolver"] and active == []
+    assert authority == (case.account.read_bytes(), case.grant.read_bytes())
 
 
 @pytest.mark.parametrize("boundary", ["verified", "imported"])

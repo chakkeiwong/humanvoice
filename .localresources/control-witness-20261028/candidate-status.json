@@ -1,0 +1,22 @@
+{
+  "status": "offline-candidate-tests-pass",
+  "cases": 73,
+  "workers": 16,
+  "started_at": 1793174767.630209,
+  "finished_at": 1793174772.71959,
+  "source_unchanged": true,
+  "sources": {
+    "control_service.py": "92830ee18a94eadf5580addb0508c89eefda65b331ef06a924253fe67b9e5f7d",
+    "control_transport.py": "4677427c2efdf2cfd2c9f19e916b90aa0c27d7a15e646665b07343fd1f3effc2",
+    "control_witness.py": "ff135c7941bbdfb20432fd30ef767e16ce0eb5a6ee8200ea54f582eed19fed51",
+    "ruff.toml": "36c26b3d906316ae6d3f99046bc5c54069ead75c076c8fcdbc08724f59b3a752",
+    "test_control_service.py": "0c99e184db2b3aedf6013642aeade772acb5274b1c45fe725d466f8687e98def",
+    "test_control_transport.py": "de1ea8e489e08af432ab4196fc970ad14ac219cb5fbd1e5a8e745734fa016a35",
+    "test_control_witness.py": "bdd8ce3cae4bdd0110102cd9c703c6ddf1649dfd4a2df09500c9fd27387cc531"
+  },
+  "ruff_pass": true,
+  "release_acceptance": false,
+  "host_service_installed": false,
+  "production_integration": false,
+  "xml_sha256": "334ebb2b6a3b288d8eb3214560cadf468985026178e625a0329e308a0bb8f3a2"
+}

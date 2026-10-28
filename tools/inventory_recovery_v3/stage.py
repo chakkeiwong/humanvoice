@@ -15,7 +15,13 @@ from tools.inventory_recovery_v2 import execution as historical_execution
 from tools.inventory_recovery_v2 import qualification
 from tools.inventory_recovery_v2 import runtime as historical
 from tools.inventory_recovery_v2.replay import replay as native_replay
-from tools.inventory_recovery_v3 import continuation, runtime, semantics, successor
+from tools.inventory_recovery_v3 import (
+    continuation,
+    runtime,
+    schema_replay,
+    semantics,
+    successor,
+)
 from tools.inventory_recovery_v3.failures import RecoveryStop
 from tools.inventory_recovery_v3.reservations import persist, regular_path
 
@@ -42,6 +48,27 @@ def reconstruct(output, plan, entries):
         return historical_execution.layout(output, plan, entries)
 
 
+@contextmanager
+def receipt_replay(plan, output, proof, historical_validator):
+    def validate(root, reference):
+        folder = Path(root) / Path(reference["path"]).parent
+        capture_path = folder / "qualification-capture.json"
+        capture = read_json(capture_path) if capture_path.exists() else {}
+        for adapter in (runtime, historical, sol_inventory_reconnect_runtime):
+            if capture.get("contract") != adapter.contract():
+                continue
+            source_profile = read_json(folder / "inputs/api-request.json")["profile"]
+            implementation = adapter.implementation
+            with implementation.qualified.routing.binding_scope(), (
+                    implementation.qualified.stream.grammar_scope((source_profile,))), (
+                    implementation.active.runtime(source_profile)):
+                return implementation.capture.validate_record(root, reference)
+        return historical_validator(root, reference)
+
+    with schema_replay.scope(), native_replay(plan, output, proof, validate) as checked:
+        yield checked
+
+
 class Stage(bridge.Stage):
     def __init__(self, output, transition):
         successor.require_transition(transition)
@@ -56,7 +83,7 @@ class Stage(bridge.Stage):
             yield
             return
         self.output.mkdir(parents=True, exist_ok=True)
-        with regular_path(self.output / "prepare.lock").open("a") as lock:
+        with schema_replay.scope(), regular_path(self.output / "prepare.lock").open("a") as lock:
             try:
                 fcntl.flock(lock, fcntl.LOCK_EX | fcntl.LOCK_NB)
             except BlockingIOError as error:
@@ -90,22 +117,7 @@ class Stage(bridge.Stage):
 
     @contextmanager
     def replay(self, plan, output, proof, historical_validator):
-        def validate(root, reference):
-            folder = Path(root) / Path(reference["path"]).parent
-            capture_path = folder / "qualification-capture.json"
-            capture = read_json(capture_path) if capture_path.exists() else {}
-            for adapter in (runtime, historical, sol_inventory_reconnect_runtime):
-                if capture.get("contract") != adapter.contract():
-                    continue
-                source_profile = read_json(folder / "inputs/api-request.json")["profile"]
-                implementation = adapter.implementation
-                with implementation.qualified.routing.binding_scope(), (
-                        implementation.qualified.stream.grammar_scope((source_profile,))), (
-                        implementation.active.runtime(source_profile)):
-                    return implementation.capture.validate_record(root, reference)
-            return historical_validator(root, reference)
-
-        with native_replay(plan, output, proof, validate) as checked:
+        with receipt_replay(plan, output, proof, historical_validator) as checked:
             yield checked
 
     def probe(self, **keywords):

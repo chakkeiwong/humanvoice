@@ -9,10 +9,13 @@ from humanvoice.artifacts import digest, read_json
 from tools import sol_inventory_program as original
 from tools.inventory_recovery_v2 import stage_execution as historical
 from tools.inventory_recovery_v3 import (
+    claim_tail,
     dispatcher,
     execution,
     journal_binding,
+    native_consumption,
     runtime,
+    schema_replay,
     semantics,
 )
 from tools.inventory_recovery_v3.failures import RecoveryStop, failure_record
@@ -72,12 +75,13 @@ def reconcile_terminal(current, plan, authority, refresh):
                     runtime.runtime(plan, current.output, historical_validate=checked)), current.implementation.lifecycle.runtime():
                 bundle.completed_bundle(current.implementation, plan, ledger)
         with grant_stage(authority, current.output):
-            current.implementation.account.settle(current.output, account=authority.account_path)
+            native_consumption.settle(current.implementation.account.settle, current.output, authority)
         if path.read_bytes() != before:
             raise RecoveryStop("BLOCKED_ACCOUNTING", "Terminal reconciliation changed retained evidence")
         return terminal
 
 
+@schema_replay.scope()
 def execute(current, *, authority, journal, refresh):
     if not isinstance(authority, CampaignAuthority) or not callable(refresh):
         raise TypeError("Native execution requires admitted ownership and durable status publication")
@@ -85,6 +89,7 @@ def execute(current, *, authority, journal, refresh):
     journal_binding.reconcile_journal(authority, journal)
     journal_binding.require_journal(authority, journal)
     with runtime.settlement_scope():
+        claim_tail.reconcile(authority, current.output)
         plan = current.validate()
         journal_binding.require_history(current.output, plan, authority, journal)
         terminal = reconcile_terminal(current, plan, authority, refresh)
@@ -150,11 +155,11 @@ def execute(current, *, authority, journal, refresh):
                 summary["recovery_journal_checkpoint"] = digest(journal_binding.checkpoint(
                     output, plan, authority, journal, owner.check))
                 result = finalize_failure(output, summary, error, phase="native_inventory",
-                    settle=lambda folder: current.implementation.account.settle(folder, account=authority.account_path),
+                    settle=lambda folder: native_consumption.settle(current.implementation.account.settle, folder, authority),
                     owner_check=owner.check, stop_check=owner.stop_check)
                 refresh(result["terminal"])
                 return result["terminal"]
             authority.check()
-            current.implementation.account.settle(output, account=authority.account_path)
+            native_consumption.settle(current.implementation.account.settle, output, authority)
             refresh(summary)
             return summary

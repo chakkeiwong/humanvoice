@@ -1,0 +1,28 @@
+{
+  "status": "scoped-gates-pass",
+  "binding": "bf6525157a631b6918e68a7ecddd548f08796cace2a49c7ecc78274398feac28",
+  "receipts": [
+    {
+      "scope": "floors",
+      "cases": 891,
+      "receipt": "docs/audits/2026-10-05/master-program/automatic-execution/sol-inventory-failure-first-20261026-01/recovery-policy-repair-20261027-01/validation/bf6525157a631b6918e6/floors-3ca2d2557dfe/validation.json",
+      "test_seconds": 779.255,
+      "runner_seconds": 782.061,
+      "source_unchanged": true,
+      "authority_unchanged": true,
+      "release_acceptance": false
+    },
+    {
+      "scope": "executor",
+      "cases": 12,
+      "receipt": "docs/audits/2026-10-05/master-program/automatic-execution/sol-inventory-failure-first-20261026-01/recovery-policy-repair-20261027-01/validation/bf6525157a631b6918e6/executor-f4135811ea2e/validation.json",
+      "test_seconds": 850.772,
+      "runner_seconds": 852.867,
+      "source_unchanged": true,
+      "authority_unchanged": true,
+      "release_acceptance": false
+    }
+  ],
+  "production_resumed": false,
+  "release_acceptance": false
+}

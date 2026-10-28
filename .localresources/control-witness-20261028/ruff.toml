@@ -1,0 +1,5 @@
+extend = "../../pyproject.toml"
+src = ["."]
+
+[lint.isort]
+known-first-party = ["control_witness", "control_transport", "control_service", "test_control_witness", "test_control_transport", "test_control_service"]

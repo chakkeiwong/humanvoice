@@ -422,7 +422,16 @@ def test_native_bootstrap_rejects_changes_after_verified_replay(exhausted, tmp_p
 
 @pytest.mark.parametrize("codex", [900], indirect=True)
 def test_public_offline_preflight_initializes_canonical_campaign(exhausted, tmp_path, monkeypatch):
+    from test_inventory_recovery_v3_configuration import installed_for
+
     from tools import prepare_inventory_recovery_v3 as preflight
+    from tools.inventory_recovery_v3 import (
+        accounting,
+        campaign_binding,
+        claim,
+        configuration,
+    )
+    from tools.inventory_recovery_v3.failures import RecoveryStop
 
     exhausted.close_history()
     configure_cold_history(exhausted, tmp_path, monkeypatch, completed=1)
@@ -442,6 +451,10 @@ def test_public_offline_preflight_initializes_canonical_campaign(exhausted, tmp_
     seed = read_json(directory / "campaign/seed.json")
     assert report["status"] == "OFFLINE_PREPARATION_PASS"
     assert report["campaign_seed_identity"] == seed["identity"]
+    binding = read_json(directory / "campaign/campaign-binding.json")
+    assert report["campaign_binding_identity"] == binding["identity"]
+    assert binding["seed_identity"] == seed["identity"]
+    assert binding["live_execution_enabled"] is False
     assert report["recovery_journal"] == seed["journal"]
     assert report["model_calls"] == report["account_writes"] == report["grant_writes"] == 0
     assert report["live_execution_enabled"] is False
@@ -458,3 +471,35 @@ def test_public_offline_preflight_initializes_canonical_campaign(exhausted, tmp_
     assert preflight.prepare() == 0
     assert retained == immutable_membership()
     assert authority == (exhausted.account.read_bytes(), exhausted.grant.read_bytes())
+    root = directory / "campaign"
+    output = root / "generation-00"
+    plan = read_json(output / "plan.json")
+    transition = read_json(output / "transition.json")
+    installed_for(root, exhausted.account, exhausted.grant, monkeypatch)
+    warmup = tmp_path / "warmup.json"
+    warmup_before = warmup.read_bytes(), warmup.stat().st_mtime_ns
+    derived = configuration.derive()
+    assert configuration.validate(derived) == derived
+    assert warmup_before == (warmup.read_bytes(), warmup.stat().st_mtime_ns)
+    assert derived["initial_profile"] == plan["profile"]
+    assert derived["campaign_binding_identity"] == binding["identity"]
+    assert derived["policy"] == plan[stage.runtime.FIELD]["policy"]
+    assert not derived["dispatch_allowed"]
+    assert retained == immutable_membership()
+    assert authority == (exhausted.account.read_bytes(), exhausted.grant.read_bytes())
+    with accounting.document_scope(transition), grants.stage(exhausted.grant, output):
+        claim.claim(plan, output, account_path=exhausted.account,
+                    owner_check=lambda: True, stop_check=lambda: None)
+        write_json(output / "snapshot/.humanvoice/inventory/binding-test.json", {"generated": True})
+        report = campaign_binding.inspect(root, check=lambda: True)
+        assert report["binding"] == binding and report["dispatch_allowed"] is False
+    write_json(output / "execution.json", {"status": "nonpass", "plan_identity": plan["plan_identity"],
+               "required": len(plan["calls"]), "attempted": 0})
+    with accounting.document_scope(transition):
+        original.account.settle(output, account=exhausted.account)
+        assert campaign_binding.inspect(root, check=lambda: True)["binding"] == binding
+    configure_cold_history(exhausted, tmp_path, monkeypatch, completed=2)
+    source = next((output / "snapshot/source").rglob("*.tex"))
+    source.write_bytes(source.read_bytes() + b" changed")
+    with pytest.raises(RecoveryStop):
+        campaign_binding.inspect(root, check=lambda: True)

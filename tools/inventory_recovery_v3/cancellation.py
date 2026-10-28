@@ -28,9 +28,7 @@ def require_running(configuration):
         control.require_running(binding["root"], contract=binding["contract"])
 
 
-def capture(plan, output, directory, owner, failure):
-    from tools.inventory_recovery_v3.runtime_binding import bind
-
+def describe(plan, output, directory, owner, failure, *, association):
     if failure["category"] != "USER_STOPPED":
         return None
     stops = []
@@ -38,7 +36,7 @@ def capture(plan, output, directory, owner, failure):
         path = regular_path(Path(binding["root"]) / "user-stop.json")
         if not path.exists():
             continue
-        content = path.read_text()
+        content = path.read_bytes().decode("utf-8")
         if json.loads(content).get("status") != "USER_STOPPED":
             raise RecoveryStop("BLOCKED_ACCOUNTING", "Stop record lost its explicit user status")
         try:
@@ -49,13 +47,22 @@ def capture(plan, output, directory, owner, failure):
             stops.append({**binding, "stop_bytes": content, "stop_sha256": digest(content.encode())})
     if not stops:
         return None
-    association = bind(plan, output, directory, owner=owner, rejected=True)
     value = {"version": "native-zero-launch-cancellation-v1",
              "binding_identity": association["identity"], "stops": stops,
              "authority_identity": digest(owner.authority.configuration),
              "failure_identity": failure["identity"], "process_started": False}
-    proof = {**value, "identity": digest(value)}
-    persist(regular_path(Path(directory) / "local-cancellation.json"), proof)
+    return {**value, "identity": digest(value)}
+
+
+def capture(plan, output, directory, owner, failure):
+    from tools.inventory_recovery_v3.runtime_binding import bind
+
+    if failure["category"] != "USER_STOPPED":
+        return None
+    association = bind(plan, output, directory, owner=owner, rejected=True)
+    proof = describe(plan, output, directory, owner, failure, association=association)
+    if proof is not None:
+        persist(regular_path(Path(directory) / "local-cancellation.json"), proof)
     return proof
 
 
@@ -176,7 +183,7 @@ def read_authorization(binding):
     resume = regular_path(path.with_name("resume-authorization.json"))
     if not path.exists() or not resume.exists():
         raise RecoveryStop("USER_STOPPED", "Cancellation requires its retained stop and explicit resume")
-    stop_bytes, resume_bytes = path.read_text(), resume.read_text()
+    stop_bytes, resume_bytes = path.read_bytes().decode("utf-8"), resume.read_bytes().decode("utf-8")
     value = {name: binding[name] for name in ("root", "contract")}
     value.update(stop_bytes=stop_bytes, stop_sha256=digest(stop_bytes.encode()),
                  resume_bytes=resume_bytes, resume_sha256=digest(resume_bytes.encode()))

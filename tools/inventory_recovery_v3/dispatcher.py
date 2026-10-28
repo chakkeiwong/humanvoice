@@ -30,7 +30,7 @@ def require_dispatch(plan, output, owner):
     if (active is None or active["owner"] is not owner or active["plan"] != plan
             or active["output"] != Path(output).absolute()):
         raise RecoveryStop("BLOCKED_OWNERSHIP", "Provider launch requires its owned paired dispatcher")
-    owner.check()
+    owner.dispatch_check()
     ledger = active["ledger"]
     ledger.reload()
     entries = ledger.record["calls"]

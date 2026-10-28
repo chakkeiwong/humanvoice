@@ -77,7 +77,7 @@ def readiness(plan, output, *, account_path, check):
         require_ready(plan, output, account)
 
 
-def claim(plan, output, *, account_path, owner_check, stop_check):
+def claim(plan, output, *, account_path, owner_check, stop_check, consumption=None, existing_only=False):
     from tools import token_epoch_20261025 as epoch
 
     output, account_path = Path(output).absolute(), regular_path(account_path)
@@ -119,6 +119,9 @@ def claim(plan, output, *, account_path, owner_check, stop_check):
             prepared_hash = digest(execution_path.read_bytes())
         with regular_path(account_path.with_suffix(".lock")).open("a") as account_lock:
             fcntl.flock(account_lock, fcntl.LOCK_EX)
+            if consumption is not None:
+                check()
+                consumption.reconcile("account")
             account = epoch.validate_account(read_json(account_path))
             check()
             require_ready(plan, output, account)
@@ -134,7 +137,7 @@ def claim(plan, output, *, account_path, owner_check, stop_check):
                         or not ledger_path.exists() and intent.get("prepared_marker_hash") != prepared_hash):
                     raise RecoveryStop("BLOCKED_ACCOUNTING", "Native claim intent changed")
             else:
-                if matches or receipt_path.exists() or ledger_path.exists() or any(
+                if existing_only or matches or receipt_path.exists() or ledger_path.exists() or any(
                         (output / name).exists() for name in
                         ("calls", "executor.json", "allocation-seal.json")):
                     raise RecoveryStop("BLOCKED_ACCOUNTING", "Cannot invent an intent after native spending")
@@ -153,6 +156,8 @@ def claim(plan, output, *, account_path, owner_check, stop_check):
                            and event["usage"]["plan_identity"] == plan["plan_identity"]]
             if settlements or (output / "allocation-seal.json").exists():
                 raise RecoveryStop("BLOCKED_ACCOUNTING", "Settled native claim cannot resume")
+            if existing_only and matches != [entry]:
+                raise RecoveryStop("BLOCKED_ACCOUNTING", "Claim-tail repair cannot create a native reservation")
             if matches:
                 events = [event for event in account["events"] if event["kind"] == "reserve"
                           and event["entry"]["plan_identity"] == plan["plan_identity"]]
@@ -163,8 +168,13 @@ def claim(plan, output, *, account_path, owner_check, stop_check):
                 if not receipt_path.exists() or not ledger_path.exists():
                     if intent["status"] != "pending" or ledger_path.exists() or any(
                             (output / name).exists() for name in
-                            ("calls", "executor.json", "summary.json")):
+                            ("calls", "summary.json")):
                         raise RecoveryStop("BLOCKED_ACCOUNTING", "Missing native evidence is not a fresh claim tail")
+                    executor_path = regular_path(output / "executor.json")
+                    if executor_path.exists() and (set(read_json(executor_path)) != {"pid", "status"}
+                            or read_json(executor_path)["status"] != "stopped"
+                            or type(read_json(executor_path)["pid"]) is not int):
+                        raise RecoveryStop("BLOCKED_ACCOUNTING", "Claim tail has unrelated executor evidence")
                     if owner_check() is not True:
                         raise RecoveryStop("BLOCKED_OWNERSHIP", "Claim ownership changed during reconciliation")
                     stop_check()
@@ -185,10 +195,15 @@ def claim(plan, output, *, account_path, owner_check, stop_check):
             retained = native.__globals__["validate_account"](record, **keywords)
             check()
             require_ready(plan, output, retained)
+            if existing_only and [row for row in retained["plans"] if
+                    row["plan_identity"] == plan["plan_identity"] or row["output"] == str(output)] != [entry]:
+                raise RecoveryStop("BLOCKED_ACCOUNTING", "Claim-tail repair cannot create a native reservation")
             return retained
 
         def write(path, value):
             check()
+            if existing_only and regular_path(path) == account_path:
+                raise RecoveryStop("BLOCKED_ACCOUNTING", "Claim-tail repair cannot write native account authority")
             return native.__globals__["write_json"](path, value)
 
         def ledger(*arguments, **keywords):
@@ -198,6 +213,10 @@ def claim(plan, output, *, account_path, owner_check, stop_check):
         namespace.update(validate_account=validate, write_json=write, EpochLedger=ledger)
         invoke = FunctionType(native.__code__, namespace, native.__name__, native.__defaults__, native.__closure__)
         invoke.__kwdefaults__ = native.__kwdefaults__
+        if consumption is not None and not existing_only:
+            from tools.inventory_recovery_v3.native_consumption import wrap
+
+            invoke = wrap(invoke, floors=consumption, operation="reserve", check=check)
         receipt = invoke(plan, output, account_path=account_path)
         if receipt != expected:
             raise RecoveryStop("BLOCKED_ACCOUNTING", "Native claim returned changed authority")
