@@ -1,6 +1,6 @@
 # Recovery closure execution plan — 28 October 2026
 
-Current execution checkpoint, 28 October 2026: master 4.31 / ensemble 221.
+Current execution checkpoint, 28 October 2026: master 4.32 / ensemble 222.
 Crash recovery confirmed no surviving validation process and production
 inactive/disabled. Human approval remains on-request/user/workspace-write.
 The previous floors gate failed 889/890 at the native public preflight; its
@@ -21,31 +21,37 @@ workers and original deadlines were retained; both validation processes ended.
 The core source/test freeze ended after both gates and final hash verification.
 An isolated offline witness/publication candidate is retained under
 .localresources/control-witness-20261028; it is not in public runtime or release
-admission. The refreshed candidate passes 147 exact storage, transport,
-publication, initialization, native RuntimeLeaf and crash-cut cases with 16
-workers; collection and execution membership match exactly, and Ruff passes.
-The approval-policy regression passes 56 cases. The candidate fixes JSON
-`null` pending-state ambiguity and zero-sequence initialization reset in its
-offline scope. It does not close the projection TOCTOU race for writable parent
-directories: protected ownership of projection paths and a forced race
-regression are required. Protected host installation, human-request
-authentication, host-boundary review, supervisor diagnostics and
-writer/projection/factory composition remain open.
-Next are the protected host installer and initialization recovery, independent
-host-boundary review, public factory/monitor composition, then TX4–TX7,
-native multi-successor/soak and full release before live deployment.
+admission. The frozen candidate gate passes 156 exact cases with 16 workers
+in 2.702 test seconds. Separate collection and execution membership match,
+Ruff passes, and before/after hashes match across 921 source/test/config files
+and the three production account/grant authorities. The earlier 56-case
+approval-policy regression also passes. Receipt: candidate validation/
+projection-f752e96e5f7f/validation.json; release_acceptance=false.
+Protected projection checks now reject writable ancestors, symlinks, hardlinks
+and foreign-owned leaves. Review found and fixed an initialization defect:
+child-file checks attempted to traverse the not-yet-created local root. Three
+partial-initialization regressions cover absent root, root only and events
+directory. Fixture protection adapters remain explicit, not host isolation proof.
+The installer must still resolve workspace-path protection and read access for
+the native runtime without changing inherited contracts or taking ownership
+of the whole workspace. Human-request provenance, protected database bootstrap,
+socket lifecycle, supervisor diagnostics and public factory remain open.
+Next: implement/test the fixed protected host package and its native projection
+access contract, then public factory/monitor, TX4–TX7, native multi-successor/
+soak and dependency-complete release before live deployment.
 The temporary control-store prototype is not a trusted host witness.
 Production remains 166 retained / 439 unfinished, with no new ZLB receipt.
 Repair/retest/review/refresh is mandatory at each phase and interruption.
 Evidence: docs/reviews/INVENTORY_RECOVERY_CRASH_LOCK_REPAIR_2026-10-28.md.
 
-Continuation authorized: create a scoped local Git checkpoint, then implement
-the host-writer/publication slice. Preserve unrelated dirty files and frozen
-receipts; no push or live launch. Next ordered work: exact action/root/contract
-semantics and trusted stop times; witness prepare before local publication;
-crash-recoverable projections; read-only stable-witness/runtime evidence;
-adversarial regression/review, then refresh this checkpoint. Authentication
-and protected installation remain separate gates; no fixture grants authority.
+Continuation completed locally: checkpoint commits 9120868 and ad17adc
+retain the recovered core and publication candidate. The subsequent projection
+protection/initialization repair and reproducible offline validation are included
+in this checkpoint. Preserve unrelated files and frozen receipts.
+No validation remains active. Production is inactive/disabled; no model call,
+deployment, push or new ZLB receipt occurred. Review here is coordinator-only.
+Next safe work and required executable checks are in the control-publication
+plan; no fixture or source hash substitutes for the host authorization gate.
 
 
 Previous checkpoint (historical; running/closure claims below are superseded):
@@ -343,7 +349,7 @@ or live admission, and those remaining identity gates are still required.
 | Gate | Implementation and executable acceptance | State |
 | --- | --- | --- |
 | TX3a | Derive native offline seed/proposal/preparation/snapshot/journal binding; retain exact account/grant floors through crash-safe publication and read-only reopen. | Implemented; receipt-bootstrap review and actual-receipt diagnostic closed; full current-source release remains open |
-| TX3b | Derive installed predecessor chain, stops/contracts and locks from installed authority, not caller assertions. Reject rehashed omissions, older valid supervisors, root aliases, changed admission/config/source and live predecessor owners. Bind deployment command/environment/human approval/account/grant; prove cold-child inherited lock coverage. | Configuration, native floors, descriptors and provider collector are implemented. Ownership and provider P1 reviews are closed. The repaired 12-case executor gate passes in 805.56 test seconds with source/authority unchanged. Real host-authenticated monotonic control witness, public factory/monitor and complete release identity remain open. |
+| TX3b | Derive installed predecessor chain, stops/contracts and locks from installed authority, not caller assertions. Reject rehashed omissions, older valid supervisors, root aliases, changed admission/config/source and live predecessor owners. Bind deployment command/environment/human approval/account/grant; prove cold-child inherited lock coverage. | Configuration, native floors, descriptors and provider collector are implemented. Ownership and provider P1 reviews are closed. The current 891-case floors and 12-case executor receipts pass with source/authority unchanged. Isolated witness/publication/projection checks pass 156 exact cases; candidate receipt projection-f752e96e5f7f retains unchanged source/authority. Protected host installation, native projection access, public factory/monitor and complete release identity remain open. |
 | TX4 / CP3 | Both public entrypoints reconcile pending restart, campaign head, receipt and cursor transactions under common ownership before dispatch. Test real death before/after each publication, repeated reopen, corrupt/missing evidence, concurrent status and late stop. | Depends on complete TX3b; not started. |
 | TX5 | Serialize readiness through grant hold and claim; retire/reprepare stale unspent plans in a new immutable transaction without changing spent plans or renewing allowance. Test sibling reserve/settle growth, held reservations, crash and veto boundaries. | Safety slices pass; public integration open. |
 | TX6 | Only verified committed manuscript receipt membership advances business progress. Identical rewrites, mtime, diagnostics, heartbeat and pending successors do not; final-generation completion does. | Open |

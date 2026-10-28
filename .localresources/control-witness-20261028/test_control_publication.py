@@ -4,6 +4,7 @@ import json
 import multiprocessing
 import os
 import secrets
+import stat
 import threading
 import time
 from concurrent.futures import ThreadPoolExecutor
@@ -19,6 +20,7 @@ from tools.inventory_recovery_v3.failures import RecoveryStop
 import control_files as files
 import control_publication as publication
 import control_semantics as semantics
+import control_service as service
 from control_witness import Witness, WitnessError, encode
 from test_control_service import FixtureService
 from test_control_transport import FixtureReader
@@ -256,6 +258,117 @@ def test_unprivileged_production_publisher_refuses_before_mutation(case):
     with pytest.raises(WitnessError, match="protected|host"):
         publication.Publisher(case.anchor, case.witness).publish("stop", case.root, "forbidden")
     assert case.witness.path.read_bytes() == before
+
+
+def test_protected_projection_rejects_unsafe_leaf_types_and_modes(tmp_path, monkeypatch):
+    monkeypatch.setattr(service, "protected_directory", lambda _: True)
+    target = tmp_path / "projection.json"
+    target.write_text("safe")
+    target.chmod(0o600)
+    assert service.protected_projection(target, owner=os.geteuid()) == target
+    target.chmod(0o666)
+    with pytest.raises(WitnessError, match="protected regular file"):
+        service.protected_projection(target, owner=os.geteuid())
+    target.unlink()
+    target.symlink_to(tmp_path / "victim")
+    with pytest.raises(WitnessError, match="protected regular file"):
+        service.protected_projection(target, owner=os.geteuid())
+    target.unlink()
+    target.mkdir()
+    with pytest.raises(WitnessError, match="protected regular file"):
+        service.protected_projection(target, owner=os.geteuid())
+
+
+def test_protected_projection_rejects_workspace_owned_parent(tmp_path):
+    with pytest.raises(WitnessError, match="protected from workspace writers"):
+        service.protected_projection(tmp_path / "projection.json")
+
+
+def test_publisher_authority_pins_every_projection_path(case, monkeypatch):
+    observed = {"databases": [], "directories": [], "projections": []}
+    monkeypatch.setattr(publication.os, "geteuid", lambda: 0)
+    monkeypatch.setattr(publication, "protected_database",
+                        lambda path: observed["databases"].append(str(path)))
+    monkeypatch.setattr(publication, "protected_directory",
+                        lambda path: observed["directories"].append(str(path)))
+    monkeypatch.setattr(publication, "protected_projection",
+                        lambda path: observed["projections"].append(str(path)))
+    publisher = publication.Publisher(case.anchor, case.witness)
+    assert publisher._authority() is True
+    expected = {
+        str(Path(case.anchor["directory"]) / "genesis.json"),
+        str(Path(case.anchor["directory"]) / "head.json"),
+        *(str(path) for path in (Path(case.anchor["directory"]) / "events").iterdir()),
+        str(Path(case.root) / "user-stop.json"),
+        str(Path(case.root) / "resume-authorization.json"),
+        str(Path(case.configuration["stop_bindings"][1]["root"]) / "user-stop.json"),
+        str(Path(case.configuration["stop_bindings"][1]["root"]) / "resume-authorization.json"),
+    }
+    assert set(observed["projections"]) == expected
+    assert len(observed["projections"]) == len(expected)
+    assert set(observed["directories"]) == {
+        str(case.witness.path.parent),
+        str(Path(case.anchor["directory"]).parent),
+        case.anchor["directory"],
+        str(Path(case.anchor["directory"]) / "events"),
+    }
+
+
+def test_production_writer_rejects_workspace_owned_projection_ancestors(case, monkeypatch):
+    monkeypatch.setattr(publication.os, "geteuid", lambda: 0)
+    # Reach projection checks rather than failing at the unrelated fixture DB.
+    monkeypatch.setattr(publication, "protected_database", lambda _: True)
+    original = publication.protected_directory
+    monkeypatch.setattr(publication, "protected_directory",
+                        lambda path: True if Path(path) == case.witness.path.parent else original(path))
+    with pytest.raises(WitnessError, match="protected from workspace writers"):
+        publication.Publisher(case.anchor, case.witness)._authority()
+
+
+@pytest.mark.parametrize("phase", ["absent", "root", "events"])
+def test_authority_allows_fresh_projection_initialization_without_missing_parent_reads(
+        tmp_path, monkeypatch, phase):
+    case = unprovisioned(tmp_path)
+    root = Path(case.anchor["directory"])
+    if phase != "absent":
+        root.mkdir()
+    if phase == "events":
+        (root / "events").mkdir()
+    checked = []
+
+    def fixture_directory(path):
+        # Fixture ownership only: preserve real missing-parent/type failures.
+        info = Path(path).lstat()
+        assert stat.S_ISDIR(info.st_mode)
+        checked.append(str(path))
+        return Path(path)
+
+    monkeypatch.setattr(publication.os, "geteuid", lambda: 0)
+    monkeypatch.setattr(publication, "protected_database", lambda _: True)
+    monkeypatch.setattr(publication, "protected_directory", fixture_directory)
+    monkeypatch.setattr(service, "protected_directory", fixture_directory)
+    before = case.witness.path.read_bytes()
+    assert publication.Publisher(case.anchor, case.witness)._authority() is True
+    assert str(root.parent) in checked
+    assert (str(root) in checked) == (phase != "absent")
+    assert case.witness.path.read_bytes() == before
+    assert not (root / "head.json").exists()
+
+
+@pytest.mark.parametrize("fault", ["hardlink", "foreign-owner"])
+def test_protected_projection_rejects_shared_or_foreign_inode(tmp_path, monkeypatch, fault):
+    monkeypatch.setattr(service, "protected_directory", lambda _: True)
+    target = tmp_path / "projection.json"
+    target.write_bytes(b"retained")
+    target.chmod(0o600)
+    owner = os.geteuid()
+    if fault == "hardlink":
+        os.link(target, tmp_path / "alias.json")
+    else:
+        owner += 1
+    with pytest.raises(WitnessError, match="protected regular file"):
+        service.protected_projection(target, owner=owner)
+    assert target.read_bytes() == b"retained"
 
 
 def test_native_digest_and_unicode_floor_compatibility(case):

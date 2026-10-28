@@ -15,7 +15,11 @@ from pathlib import Path
 
 import control_files as files
 import control_semantics as semantics
-from control_service import protected_database, protected_directory
+from control_service import (
+    protected_database,
+    protected_directory,
+    protected_projection,
+)
 from control_witness import checksum, encode, identity, require
 
 
@@ -78,6 +82,23 @@ class Publisher:
         require(os.geteuid() == 0, "Control publication requires the protected host writer")
         protected_database(self.witness.path)
         protected_directory(self.witness.path.parent)
+        root = Path(self.anchor["directory"])
+        protected_directory(root.parent)
+        events = root / "events"
+        for selected in (root, events):
+            if os.path.lexists(selected):
+                protected_directory(selected)
+        if os.path.lexists(events):
+            for name in files.members(events):
+                protected_projection(str(events / name))
+        for binding in self.anchor["bindings"]:
+            for name in ("user-stop.json", "resume-authorization.json"):
+                protected_projection(str(Path(binding["root"]) / name))
+        # Before provision the local root may be absent. Its existing parent
+        # is already protected; only inspect child leaves once it exists.
+        if os.path.lexists(root):
+            for name in ("genesis.json", "head.json"):
+                protected_projection(str(root / name))
         return True
 
     def _clock(self):

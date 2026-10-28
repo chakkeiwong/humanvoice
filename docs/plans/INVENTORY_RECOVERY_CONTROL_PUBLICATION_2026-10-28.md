@@ -152,25 +152,49 @@ No host action or production start is required to build and test this slice.
    remain open until their own real integration evidence exists.
 
 
-## Refreshed execution checkpoint 4.31 / 221
+## Refreshed execution checkpoint 4.32 / 222
 
-The implementation and corner review completed offline. The candidate now records
-147 exact tests, including 23 real process-death cuts (18 publication and five
-initialization), native RuntimeLeaf/stop-authority integration, read-only Unix
-socket integration, concurrent publication, repeated storage failure, fsync
-retry, symlink/race, rollback, stale/forged command, JSON-null corruption, and
-monotonic initialization-reset regressions. The exact 16-worker run passed all
-147 cases in 2.63 seconds; Ruff passed; the approval-policy regression passed
-56 tests. Collection and execution membership each contain exactly 147 cases with
-no skips, deselections, collection errors, or mismatch. Evidence is retained in
-`.localresources/control-witness-20261028/publication-final-exact.xml`,
-`publication-collected.json`, `publication-executed.json`, and
-`candidate-status.json`.
+The frozen offline candidate passes 156 exact tests with 16 workers in 2.702
+test seconds; Ruff passes. Separate collection/execution membership matches
+with zero failures, errors, skips or deselections. Before/after hashes match
+for 921 source/test/config files and the three retained production authorities.
+The approval-policy regression previously passed 56 cases. Evidence is under
+.localresources/control-witness-20261028/validation/projection-f752e96e5f7f/;
+candidate-status.json points to its exact receipt. Earlier 147/150/151-case
+receipts are historical after the projection and initialization edits.
 
-The review closes the candidate-level JSON-null and zero-sequence initialization
-reset defects. The candidate remains outside public runtime admission. Protected
-host installation/database recovery, independent host-boundary review, supervisor
-diagnostics, public factory composition, bounded full-history replay, TX4–TX7,
-native multi-successor/soak, release validation, and live ZLB execution remain
-open. Production remains stopped; no model call, service start, deployment, or
-ZLB receipt was performed.
+New checks reject unsafe projection parents/inodes before production writes.
+Coordinator review found a fresh-initialization bug in the initial protection
+patch: checking child leaves traversed a root that provision had not created.
+The repaired path checks the protected existing parent first and checks child
+leaves only when their directory exists. Three regressions retain real missing
+parent/type behavior while explicitly substituting only fixture ownership.
+The ancestor-rejection test now passes the fixture database boundary so it
+actually reaches projection ancestry; additional cases reject hardlinks and
+foreign-owned leaves. The native core is unchanged.
+
+This is not full TX3b closure. The existing bound stop roots reside in a writable
+workspace, and local projection creation currently uses private root-owned files
+and directories. A host installer cannot simply chown the workspace or relocate
+inherited contract roots. It must establish an approved protected namespace and
+a native reader adapter that binds original root identities and exact stop bytes,
+with workspace edits treated as vetoes. Prove unprivileged native reading, denied
+unprivileged writes/replacement, partial-install recovery, exact initial stop/resume
+adoption, and late stops before enabling any public factory. Any change to native
+stop verification invalidates its affected core validation receipts.
+
+The fixed installer/control action must bind release, configuration and the exact
+human-approved action; effective root UID alone is insufficient provenance.
+Missing or partial protected database creation, stale socket recovery and durable
+read-service error reporting remain open. Review of this slice is coordinator-only.
+After these gates: public factory/monitor, TX4–TX7, native multi-successor/soak,
+full release and grouped host deployment approval. Production remains stopped
+with 166 retained / 439 unfinished; no new ZLB receipt or paid inference occurred.
+
+Reproduce this candidate gate with the fixed offline command:
+
+    /home/ubuntu/miniforge3/bin/python /home/ubuntu/workspace/humanvoice/.localresources/control-witness-20261028/run_validation.py run
+
+It writes a unique retained receipt, uses the established bounded child-process
+runner and cleanup, checks exact membership and final hashes, and cannot install
+a service or launch model inference. A component pass remains release_acceptance=false.

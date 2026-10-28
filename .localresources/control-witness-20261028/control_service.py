@@ -44,6 +44,28 @@ def protected_database(path):
     return path
 
 
+def protected_projection(path, *, owner=0):
+    """Require root-protected parents and, if present, a private regular leaf.
+
+    Projection publication uses a compare-before-rename sequence; it is safe
+    against untrusted writers only when those writers cannot mutate the parent
+    directory or the retained leaf between the check and replacement.
+    """
+    original = str(path)
+    path = Path(path)
+    require(path.is_absolute() and str(path) == original and ".." not in path.parts,
+            "Control projection path is not canonical")
+    protected_directory(path.parent)
+    try:
+        info = path.lstat()
+    except FileNotFoundError:
+        return path
+    require(stat.S_ISREG(info.st_mode) and info.st_uid == owner
+            and info.st_nlink == 1 and info.st_mode & 0o022 == 0,
+            "Control projection must be a protected regular file")
+    return path
+
+
 class ReadService:
     """One root-pinned read listener; bounded clients never reach writer calls."""
 

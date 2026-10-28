@@ -1,40 +1,48 @@
 {
-  "cases": 147,
-  "duration_seconds": 2.63,
-  "collection_execution": {
-    "collected": 147,
-    "collection_errors": 0,
-    "collection_mismatch": false,
-    "deselected": 0,
-    "executed": 147,
-    "exit_code": 0
-  },
-  "host_service_installed": false,
   "approval_policy_regression_cases": 56,
-  "membership_sha256": {
-    "collected": "2284414ca968ca324d7f126a7bb2f61a3b742ee366a86bab3931f15c1d9552bf",
-    "executed": "513dc671d0ef5e15f281fe850820f88c76ab6cb90f3db1456f1ef8dfcca5ea01"
+  "authority": {
+    "/home/ubuntu/workspace/humanvoice/.localresources/automatic-program/account.json": "2623e59b39023a29115694b1c6d5092dcf14f78597d108791b8987f291b48f9e",
+    "/home/ubuntu/workspace/humanvoice/docs/audits/2026-10-05/master-program/automatic-execution/authorized-2000-call-budget-20261012.json": "f4798c4a74f9a87cc17ff81f627d0a7cbb94d98fae5333f6753ee6a68c3c348c",
+    "/home/ubuntu/workspace/humanvoice/docs/audits/2026-10-05/master-program/automatic-execution/authorized-2000-call-budget-20261012.stages.json": "ccd9a010df505add3a960f718a4683715e564ea5fea0bd09e919d8a43e871a26"
   },
+  "authority_unchanged": true,
+  "cases": 156,
+  "evidence": {
+    "collected.json": "1f3a3a463f93cc6326a220b10be786659cf763123202e3982555d990b10843b3",
+    "collected.log": "5f23685a4166aeb9d538162a304ed1e7d1d7c6d0683c34463f0ed92bd0a3c5c3",
+    "executed.json": "4f309ff8122809d1fc43d71c1a108c7aa46e0a237cdb7e8d2a693b1b0ac0d5db",
+    "executed.log": "9406573e018bbf67e1a6fb216cdbfdedadab8303bbcb18f6a5492e6121ab288d",
+    "ruff.log": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18",
+    "tests.xml": "dd35fe7d15b6f884bd8835c7ccddbadaf11a3ff02c3fcf771986a15f87e07115"
+  },
+  "exact_membership": true,
+  "finished_at": 1793202018.175938,
+  "host_service_installed": false,
+  "model_calls": 0,
   "production_integration": false,
-  "refreshed_at": 1793200166.9907823,
+  "receipt": ".localresources/control-witness-20261028/validation/projection-f752e96e5f7f/validation.json",
+  "receipt_sha256": "6966f0adf384f4f2ba52f48b9f7400de4cc098cbf20e4189f016da49f907e674",
   "release_acceptance": false,
+  "review": "coordinator-only; independent host review remains open",
   "ruff_pass": true,
   "source_unchanged": true,
   "sources": {
     "conftest.py": "351127af566e6f0ae74e55aa47ea358befb9dbd587bac870ed1cdb5a6b276371",
     "control_files.py": "32298e171bce0e2864a6238b4e6630664c05e83333d692fdba068bbec2102e1b",
-    "control_publication.py": "3c31e9404a5f29c83888923f6227b1838edc9c64cc0526ff32423557302264c2",
+    "control_publication.py": "bfcfeb2ff61e7390594ddf8951766c81ec682014d31a76c2464bfdf76807b5e1",
     "control_semantics.py": "24ec684df383b1a348a2d64c142f79c22123f4bea793801755a5d94cd0044a56",
-    "control_service.py": "92830ee18a94eadf5580addb0508c89eefda65b331ef06a924253fe67b9e5f7d",
+    "control_service.py": "a0894939cee7df58317a6cbf1cdb1ca1a72864945fec5aa8f9e6b7b41e2c3f98",
     "control_transport.py": "3861743e19ef28bd699dcd3315e9ce361668e7e79de322ce4b6c78561f37dca9",
     "control_witness.py": "6b399d71a48cb5d6d496a97c4f43161a2c553370581ef53b8f611ccfc42c131a",
     "ruff.toml": "36c26b3d906316ae6d3f99046bc5c54069ead75c076c8fcdbc08724f59b3a752",
-    "test_control_publication.py": "f39962e57c2684bc8f763cde42a9e9cd7ee48b9239c6abc2c1827b75abc25ea1",
+    "run_validation.py": "58f3910daa5caf94d5bccf1b2c42d33e24e228ff119a31087eb672b1c6bbcff7",
+    "test_control_publication.py": "771c2bc895ca9428fe40063f1b9fcf5431bdabded23aea5d4f106b7be0ac8084",
     "test_control_service.py": "0c99e184db2b3aedf6013642aeade772acb5274b1c45fe725d466f8687e98def",
     "test_control_transport.py": "de1ea8e489e08af432ab4196fc970ad14ac219cb5fbd1e5a8e745734fa016a35",
     "test_control_witness.py": "ba74ebe5bd12b5c589634ef63b50da2316ed92e5f33cf7f24978b0d5328d77eb"
   },
+  "started_at": 1793202012.9730206,
   "status": "offline-candidate-tests-pass",
-  "workers": 16,
-  "xml_sha256": "6ac77eff0a16162c0facc81ab14b52c5bed4d363ec38355e1d1fcf94b67e5b7c"
+  "test_seconds": 2.702,
+  "workers": 16
 }

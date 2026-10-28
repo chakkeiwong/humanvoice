@@ -1,11 +1,34 @@
-# Prospective control witness and publication candidate — 28 October 2026
+# Offline control witness and publication candidate
 
-This is an offline implementation candidate outside the frozen recovery source/test binding. It is not imported by the public runtime, supplies no production admission, and installs no service.
+Current checkpoint: 28 October 2026, master 4.32 / ensemble 222.
 
-The slice contains durable witness storage, authenticated read-only transport, exact stop/resume semantics, crash-recoverable witness-first local publication, protected path handling, and native RuntimeLeaf evidence integration. Initialization is separately retained as a monotonic witness phase and is never recreated after completion.
+This isolated candidate implements durable witness storage, authenticated
+read-only socket transport, exact stop/resume semantics, witness-first local
+publication and native RuntimeLeaf evidence integration. It is not imported by
+the public runtime and does not install a service or authorize model calls.
 
-The candidate is not an authenticated host writer. Its production-facing publisher currently checks the effective UID and protected database, but does not validate a human approval token or authenticate the privileged request source. In particular, it must not be exposed as a root CLI or service action until a fixed host broker/installer establishes that provenance. Protected SQLite bootstrap after a process crash also remains a separate installer/recovery problem.
+The current frozen gate passes 156 exact cases with 16 workers in 2.702 test
+seconds; Ruff passes. Separate collection and execution membership match.
+The receipt retains equal before/after hashes for 921 source/test/config files
+and the three production account/grant authorities. See candidate-status.json
+and validation/projection-f752e96e5f7f/validation.json. The separate approval
+policy regression previously passed 56 cases. Earlier receipts are historical.
 
-The refreshed validation passes 147 cases with 16 workers and Ruff. Exact collection/execution membership is recorded in `candidate-status.json`; the approval-policy regression passes 56 tests.
+Reproduce the fixed offline gate with:
 
-Production remains stopped. Host installation, independent review, public factory wiring, supervisor diagnostics, long-history bounds, TX4–TX7, native soak, release admission, and live ZLB execution remain open.
+    /home/ubuntu/miniforge3/bin/python /home/ubuntu/workspace/humanvoice/.localresources/control-witness-20261028/run_validation.py run
+
+New protection checks reject unsafe projection parents and inodes; partial
+initialization tests cover missing directories without bypassing path checks.
+The production publisher still requires a fixed protected installer and an
+authenticated human-approved action. Root UID alone is not that provenance.
+Tests explicitly substitute ownership/peer fixtures and cannot prove installed
+host isolation. Review is coordinator-only.
+
+The existing workspace-bound stop roots and private projection files require
+a protected namespace/native reader design before host installation. Do not
+chown the workspace, rebind historical roots or claim unprivileged native
+read access from these fixtures. Database bootstrap recovery, stale sockets,
+supervisor diagnostics, public factory composition, TX4–TX7, native soak and
+dependency-complete release remain open. Production is stopped: 166 retained,
+439 unfinished requests, no new ZLB receipt.
