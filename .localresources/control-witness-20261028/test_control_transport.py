@@ -13,7 +13,9 @@ from control_transport import (
     MAX_BYTES,
     MAX_REQUEST_BYTES,
     TIMEOUT,
+    ClientRequestError,
     Reader,
+    WitnessReadFailure,
     endpoint,
     peer_uid,
     receive,
@@ -156,3 +158,27 @@ def test_total_read_deadline_is_bounded():
         with pytest.raises((TimeoutError, WitnessError)):
             receive(right, started + 0.02, MAX_BYTES)
         assert time.monotonic() - started < 1
+
+
+def test_recursive_malformed_request_is_a_client_error(witness):
+    raw = b"[" * 1200 + b"0" + b"]" * 1200
+    left, right = socket.socketpair()
+    before = witness.path.read_bytes()
+    with left, right:
+        left.sendall(struct.pack("!I", len(raw)) + raw)
+        with pytest.raises(ClientRequestError):
+            serve_connection(right, witness)
+    assert witness.path.read_bytes() == before
+
+
+def test_oversized_host_snapshot_is_operational_not_client_failure(witness, monkeypatch):
+    import control_transport as transport
+
+    monkeypatch.setattr(transport, "MAX_BYTES", 100)
+    left, right = socket.socketpair()
+    with left, right:
+        send(left, {"action": "snapshot", "version": VERSION,
+                   "genesis": GENESIS, "configuration": CONFIG, "nonce": NONCE},
+             time.monotonic() + TIMEOUT, MAX_REQUEST_BYTES)
+        with pytest.raises(WitnessReadFailure, match="Host witness read failed"):
+            serve_connection(right, witness)

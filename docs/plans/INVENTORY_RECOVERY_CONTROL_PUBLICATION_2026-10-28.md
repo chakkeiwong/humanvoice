@@ -152,7 +152,7 @@ No host action or production start is required to build and test this slice.
    remain open until their own real integration evidence exists.
 
 
-## Refreshed execution checkpoint 4.32 / 222
+## Historical execution checkpoint 4.32 / 222
 
 The frozen offline candidate passes 156 exact tests with 16 workers in 2.702
 test seconds; Ruff passes. Separate collection/execution membership matches
@@ -198,3 +198,42 @@ Reproduce this candidate gate with the fixed offline command:
 It writes a unique retained receipt, uses the established bounded child-process
 runner and cleanup, checks exact membership and final hashes, and cannot install
 a service or launch model inference. A component pass remains release_acceptance=false.
+
+
+## Current execution checkpoint 4.33 / 223
+
+The next offline slice closes silent read-service worker failure. Requests are
+classified at their actual boundary: malformed/disconnected clients are rejected
+without operational incidents; witness reads, protection drift, oversize snapshots
+and unexpected worker faults propagate to service ownership. A failing worker
+stops acceptance, joins workers and raises a typed ServiceFailure. Startup/listener
+failures use the same reporting path. The retained diagnostic contains no raw
+exception text, manuscript content or credentials.
+
+One bounded first-failure record is atomically written and fsynced at the fixed
+witness sibling path. Repeated faults preserve it; successful reads do not delete
+it. Fsync retries retain the established exact-byte protocol. If persistence fails,
+the original category and a diagnostic_error still reach service ownership.
+This is immutable incident evidence, not a current-health authorization; a later
+installer must define approved acknowledgement/rotation, not silently erase it.
+Native failure_record/validate_failure regressions preserve the category and
+origin evidence and never authorize retries. Real socket tests cover storage
+failure, corruption, unexpected exceptions, permission drift, healthy malformed
+clients and bounded error records. Deeply nested malformed requests remain
+client errors; oversize host snapshots are operational failures.
+
+Final frozen gate: 170 exact cases, 16 workers, 2.851 test seconds, Ruff pass.
+Collection/execution membership, source and production-authority hashes match.
+Receipt: .localresources/control-witness-20261028/validation/projection-94f51b0c4669/validation.json.
+The preceding 156-case candidate receipt is historical after this slice; native
+core source remains unchanged. No daemon is installed and no production run is
+active. Host service exit/report ingestion must still be wired and verified by
+the public factory/monitor; no complete installed supervisor claim is made.
+
+Remaining ordered work: protected namespace/native reader access, fixed human-
+approved host actions, protected SQLite bootstrap recovery and stale listener
+handling; then public factory/monitor, TX4–TX7, native multi-successor/soak and
+full release. Group host installation/deployment approvals only after the exact
+bundle and acceptance evidence are ready. Production remains 166 retained /
+439 unfinished, no new ZLB receipt. Intermediate correctness judgments remain
+automatic regression gates; final actual ZLB acceptance remains human.

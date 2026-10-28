@@ -21,6 +21,14 @@ MAX_REQUEST_BYTES = 4096
 TIMEOUT = 5.0
 
 
+class ClientRequestError(WitnessError):
+    """An invalid/disconnected client must not be treated as host storage loss."""
+
+
+class WitnessReadFailure(WitnessError):
+    """A valid read reached an unavailable or malformed host witness."""
+
+
 def canonical_json(raw):
     def pairs(items):
         result = {}
@@ -139,11 +147,22 @@ class Reader:
 def serve_connection(connection, witness):
     """One bounded request; only read-only snapshots are reachable."""
     deadline = time.monotonic() + TIMEOUT
-    request = receive(connection, deadline, MAX_REQUEST_BYTES)
-    require(isinstance(request, dict) and set(request) == {"action", "version",
-        "genesis", "configuration", "nonce"} and request["action"] == "snapshot"
-        and request["version"] == VERSION and request["genesis"] == witness.genesis
-        and request["configuration"] == witness.configuration and hash_value(request["nonce"]),
-        "Read-only witness service rejects this request")
-    response = witness.snapshot(request["nonce"])
-    send(connection, response, deadline, MAX_BYTES)
+    try:
+        request = receive(connection, deadline, MAX_REQUEST_BYTES)
+        require(isinstance(request, dict) and set(request) == {"action", "version",
+            "genesis", "configuration", "nonce"} and request["action"] == "snapshot"
+            and request["version"] == VERSION and request["genesis"] == witness.genesis
+            and request["configuration"] == witness.configuration and hash_value(request["nonce"]),
+            "Read-only witness service rejects this request")
+    except (OSError, ValueError, KeyError, TypeError, RecursionError) as error:
+        raise ClientRequestError("Read-only witness service rejects this request") from error
+    try:
+        response = witness.snapshot(request["nonce"])
+        require(len(encode(response).encode()) <= MAX_BYTES, "Witness snapshot exceeds transport bound")
+        require(time.monotonic() < deadline, "Witness snapshot exceeded read deadline")
+    except Exception as error:
+        raise WitnessReadFailure("Host witness read failed") from error
+    try:
+        send(connection, response, deadline, MAX_BYTES)
+    except (OSError, ValueError) as error:
+        raise ClientRequestError("Witness client disconnected or exceeded delivery deadline") from error

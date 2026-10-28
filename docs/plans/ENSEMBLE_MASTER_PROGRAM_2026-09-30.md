@@ -1,6 +1,6 @@
 # Ensemble implementation and evaluation master program
 
-Current execution checkpoint, 28 October 2026: master 4.32 / ensemble 222.
+Current execution checkpoint, 28 October 2026: master 4.33 / ensemble 223.
 Crash recovery confirmed no surviving validation process and production
 inactive/disabled. Human approval remains on-request/user/workspace-write.
 The previous floors gate failed 889/890 at the native public preflight; its
@@ -21,37 +21,38 @@ workers and original deadlines were retained; both validation processes ended.
 The core source/test freeze ended after both gates and final hash verification.
 An isolated offline witness/publication candidate is retained under
 .localresources/control-witness-20261028; it is not in public runtime or release
-admission. The frozen candidate gate passes 156 exact cases with 16 workers
-in 2.702 test seconds. Separate collection and execution membership match,
-Ruff passes, and before/after hashes match across 921 source/test/config files
+admission. The current frozen gate passes 170 exact cases with 16 workers
+in 2.851 test seconds. Separate collection and execution membership match,
+Ruff passes, and before/after hashes match across 922 source/test/config files
 and the three production account/grant authorities. The earlier 56-case
 approval-policy regression also passes. Receipt: candidate validation/
-projection-f752e96e5f7f/validation.json; release_acceptance=false.
-Protected projection checks now reject writable ancestors, symlinks, hardlinks
-and foreign-owned leaves. Review found and fixed an initialization defect:
-child-file checks attempted to traverse the not-yet-created local root. Three
-partial-initialization regressions cover absent root, root only and events
-directory. Fixture protection adapters remain explicit, not host isolation proof.
-The installer must still resolve workspace-path protection and read access for
-the native runtime without changing inherited contracts or taking ownership
-of the whole workspace. Human-request provenance, protected database bootstrap,
-socket lifecycle, supervisor diagnostics and public factory remain open.
-Next: implement/test the fixed protected host package and its native projection
-access contract, then public factory/monitor, TX4–TX7, native multi-successor/
-soak and dependency-complete release before live deployment.
+projection-94f51b0c4669/validation.json; release_acceptance=false.
+The preceding projection/initialization repair is committed as b8b1fec; its
+156-case receipt is historical for candidate source after the diagnostics work.
+Witness storage, protection, unexpected worker and oversized snapshot failures
+now reach the read-service owner. A bounded first incident is fsynced and retained;
+if diagnostics cannot be written, the original typed failure plus reporting
+failure reaches the owner. Malformed/disconnected clients cannot create incidents
+or kill the listener. Recursive malformed input has a dedicated regression.
+Native failure_record preserves external/accounting/engineering categories and
+incident evidence without authorizing a retry. Actual installed supervisor and
+host read access remain open; passing fixtures are not host isolation proof.
+Next: protected host package/native projection access and human-action provenance,
+protected database/bootstrap and socket recovery, public factory/monitor, TX4–TX7,
+native multi-successor/soak and dependency-complete release before live deployment.
 The temporary control-store prototype is not a trusted host witness.
 Production remains 166 retained / 439 unfinished, with no new ZLB receipt.
 Repair/retest/review/refresh is mandatory at each phase and interruption.
 Evidence: docs/reviews/INVENTORY_RECOVERY_CRASH_LOCK_REPAIR_2026-10-28.md.
 
-Continuation completed locally: checkpoint commits 9120868 and ad17adc
-retain the recovered core and publication candidate. The subsequent projection
-protection/initialization repair and reproducible offline validation are included
-in this checkpoint. Preserve unrelated files and frozen receipts.
+Continuation completed locally: 9120868/ad17adc retain recovered core and
+publication work; b8b1fec retains protected projections, initialization repair
+and the reproducible offline gate. The service diagnostics and 170-case receipt
+are included in this checkpoint. Preserve unrelated files and frozen evidence.
 No validation remains active. Production is inactive/disabled; no model call,
 deployment, push or new ZLB receipt occurred. Review here is coordinator-only.
-Next safe work and required executable checks are in the control-publication
-plan; no fixture or source hash substitutes for the host authorization gate.
+Further host integration gates and executable acceptance requirements remain in
+the control-publication plan; no fixture or hash substitutes for host approval.
 
 
 Previous checkpoint (historical; running/closure claims below are superseded):

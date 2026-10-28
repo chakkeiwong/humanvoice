@@ -22,11 +22,11 @@ local root exists. Three regressions preserve real missing-parent/type behavior
 for absent root, root-only and events-directory states. The ancestry rejection
 test now passes the fixture database boundary so it reaches the intended check.
 
-Final validation: 156 exact cases with 16 workers, 2.702 test seconds, Ruff pass,
+Final validation: 170 exact cases with 16 workers, 2.851 test seconds, Ruff pass,
 no failures/errors/skips/deselections or membership mismatch. The new fixed
-runner retains before/after hashes for 921 source/test/config files and three
+runner retains before/after hashes for 922 source/test/config files and three
 production authorities; all match. Evidence is in
-validation/projection-f752e96e5f7f/validation.json. Its source remains frozen.
+validation/projection-94f51b0c4669/validation.json. Its source remains frozen.
 The prior 56-case approval-policy suite passed. Earlier 147/150/151-case receipts
 are historical after these edits.
 
@@ -46,12 +46,23 @@ Remaining implementation boundaries:
 4. Local projection initialization recovery does not recover partially created
    protected SQLite storage. Installer-owned durable intent and fixed recovery
    actions are still required. Missing committed host state must remain a veto.
-5. Stale endpoint recovery and durable supervisor diagnostics for operational
-   read-service failures are not implemented. Full-history replay cost remains
-   an explicit TX7 gate.
+5. Operational read-service failures now retain bounded sanitized incidents
+   and propagate typed failures to the owner and native failure classifier.
+   Malformed clients cannot create incidents or terminate a healthy listener.
+   Diagnostic-storage failure also reaches the owner. Stale endpoint recovery,
+   incident acknowledgement/rotation and actual installed supervisor ingestion
+   remain open. Full-history replay cost remains an explicit TX7 gate.
 6. Public factory/monitor, TX4–TX7, native successors/soak, dependency-complete
    release and host authorization remain open. Tests use explicit fixture
    privilege adapters and do not establish production isolation or provenance.
 
 Production remains stopped with 166 retained / 439 unfinished requests.
 No new ZLB receipt, deployment or model inference occurred in this slice.
+
+Service-diagnostic follow-up review: the old catch-and-pass path silently lost
+worker failures. Boundary-specific client errors now preserve malformed-client
+isolation, while worker operational exceptions stop the listener and reach its
+owner after worker join. Recursive client input and oversized host responses
+are separately covered. Native failure categories and origin evidence survive
+classification. First-incident storage is bounded and never grants admission.
+The actual host installer, daemon exit handling and supervisor remain unverified.

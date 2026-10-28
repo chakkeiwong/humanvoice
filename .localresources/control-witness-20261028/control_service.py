@@ -12,7 +12,8 @@ import threading
 from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 
-from control_transport import serve_connection
+import control_diagnostics as diagnostics
+from control_transport import ClientRequestError, serve_connection
 from control_witness import WitnessError, require
 
 
@@ -81,7 +82,38 @@ class ReadService:
         protected_database(self.witness.path)
         return True
 
+    @property
+    def diagnostic_path(self):
+        return self.witness.path.with_name(self.witness.path.name + ".read-failure.json")
+
+    def _diagnostic_check(self):
+        # A failed database must not prevent reporting to its still-protected
+        # parent. Never redirect diagnostics to caller-selected workspace paths.
+        require(os.geteuid() == 0, "Diagnostics require the protected host identity")
+        protected_projection(self.diagnostic_path)
+
+    def _report(self, error, phase):
+        record = diagnostics.failure_record(self.witness, error, phase)
+        publication_error = None
+        try:
+            self._diagnostic_check()
+            diagnostics.retain(self.diagnostic_path, record)
+        except Exception as failure:  # noqa: BLE001 -- reporting failure must surface to the owner
+            publication_error = type(failure).__name__
+        return diagnostics.ServiceFailure(record, diagnostic_error=publication_error)
+
     def serve(self, stop):
+        phase = "startup"
+        try:
+            self._check()
+            phase = "listener"
+            self._serve(stop)
+        except diagnostics.ServiceFailure:
+            raise
+        except Exception as error:
+            raise self._report(error, phase) from error
+
+    def _serve(self, stop):
         self._check()
         # Existence is not proof of a dead listener; never unlink an old name
         # automatically. The admitted installer owns stale endpoint recovery.
@@ -94,8 +126,11 @@ class ReadService:
                 server.listen(16)
                 server.settimeout(0.1)
                 slots = threading.BoundedSemaphore(4)
+                failed = threading.Event()
+                failures = []
+                failure_lock = threading.Lock()
                 with ThreadPoolExecutor(max_workers=4) as workers:
-                    while not stop.is_set():
+                    while not stop.is_set() and not failed.is_set():
                         try:
                             connection, _ = server.accept()
                         except TimeoutError:
@@ -109,10 +144,15 @@ class ReadService:
                                 with connection:
                                     self._check()
                                     serve_connection(connection, self.witness)
-                            except (OSError, ValueError, KeyError, TypeError, sqlite3.Error):
-                                # The reader gets a closed connection and a veto.
-                                # Malformed clients cannot terminate the service.
+                            except ClientRequestError:
+                                # Bad clients cannot fill the diagnostic store
+                                # or kill a healthy host listener.
                                 pass
+                            except Exception as error:  # noqa: BLE001 -- owner observes every worker failure
+                                with failure_lock:
+                                    if not failures:
+                                        failures.append(error)
+                                failed.set()
                             finally:
                                 slots.release()
 
@@ -122,6 +162,8 @@ class ReadService:
                             connection.close()
                             slots.release()
                             raise
+                if failures:
+                    raise self._report(failures[0], "request") from failures[0]
             finally:
                 try:
                     current = self.path.lstat()
