@@ -1,5 +1,789 @@
+<!-- qualified-campaign-20261108 -->
+Current-client qualification PASS: 212 completed calls; no unresolved usage.
+Campaign continuation: RUNNING; phase: prepare.
+Completed native preparation operations: ['ownership', 'historical-scope', 'migration'].
+State: .localresources/session-campaign-current-20261108/offline-20261108/status.json.
+16 workers; no provider calls; host admission and full ZLB remain pending.
+<!-- end-qualified-campaign-20261108 -->
+
+<!-- shm-repair-20261108 -->
+Qualification COMPLETE: all 212 native calls completed and automatic regression
+evaluation passed; no unresolved allocations. Supervisor and worker exited 0,
+owned process cleanup complete. Finished 2026-11-08 04:16:45 Asia/Shanghai.
+The repaired shared-memory and grant dispatch paths passed actual systemd
+preflight and all 29 affected tests. One authentication covered the preflight,
+cleanup and restart. Existing 2,235-call grant now has 599 calls available,
+with 1,636 used and no outstanding holds; planned campaign allowance is 535.
+Next: activate verified migration, prepare/configure the campaign, complete
+changed-source release checks and exact host admission, then execute inventory
+and downstream ZLB stages. Full ZLB and final human acceptance remain pending.
+Use 16 workers; renewed execution ends November 9 01:29:40 Shanghai.
+Review: .localresources/session-qualification-shm-repair-20261108/REVIEW.md.
+<!-- end-shm-repair-20261108 -->
+
+<!-- receipt-repair-20261108 -->
+Live qualification attempt one stopped before spending: missing original archive
+receipt in the isolated home view. Separate immutable-source repair is prepared.
+Full native-history preflight passed all 229 settlements in 38.99 seconds using
+16 workers, with no model calls or account/grant changes and complete cleanup.
+16 repair and 8 restart regressions pass. The exact restart preserves the approved
+2,235-call ceiling, 276-session qualification bound, original deadline and launch
+count. The repaired final restart completed qualification successfully.
+Review: .localresources/session-qualification-resume-launch-20261108/REVIEW.md.
+<!-- end-receipt-repair-20261108 -->
+
+<!-- current-client-qualification-20261107 -->
+Current-client qualification: CURRENT_CLIENT_QUALIFICATION_VERIFIED.
+Native completed calls: 212; unresolved allocations: 0.
+Process launches: 3 of at most 3.
+Status: .localresources/session-qualification-20261107/supervisor-status.json.
+Execution window ends 2026-11-09 01:29:40 Asia/Shanghai.
+Next: publish verified migration activation and prepare the campaign.
+Production inventory is not admitted; full ZLB and final human output acceptance remain pending.
+<!-- end-current-client-qualification-20261107 -->
+
+<!-- namespace-runtime-repair-20261107 -->
+Current recovery: offline host migration, configuration parity, synthetic client
+capture, filesystem isolation and killed-child cleanup all PASS. The latest
+qualification/campaign suite passes 98 tests with 16 workers; Ruff passes.
+Repeated password requests are repaired: one authenticated helper served three
+complete probe batches with frozen permissions and unchanged expiry. All nine
+probe services cleaned up; the helper was explicitly closed and exited cleanly.
+Startup fixes: private runtime paths plus a consistent SQLite snapshot of the
+completed native index; pinned local archive receipt for the isolated view.
+Existing 48-hour renewal ends November 9 at 01:29:40 Shanghai; it is not extended.
+Grouped live approval received: 235 additional calls (2,235 total), at most
+276 qualification sessions, retained Astra/xhigh routing, existing token limits,
+16 verification workers, native recovery and human-only approval settings.
+The qualification supervisor completed all 212 calls and exited cleanly.
+Next: migrate and prepare the inventory campaign for exact host admission. Production inventory has not launched. Full ZLB output and final human acceptance remain pending.
+Review: .localresources/session-qualification-20261107/EXECUTION_REQUEST.md.
+Authentication repair: .localresources/session-qualification-20261107/OFFLINE_SESSION_REVIEW.md.
+<!-- end-namespace-runtime-repair-20261107 -->
+
+<!-- clock-session-repair-20261107 -->
+The clock fixture repair passes 120 tests; its separate successor launcher passes
+148. All 252 release regression partitions, actual configuration derivation and
+ten validation operations, aggregate release build and complete final no-call
+preflight have passed. The continuation exited and released its worker slots.
+Plan/review: docs/plans/FINALIZATION_CLOCK_AND_SESSION_REPAIR_2026-11-07.md.
+Successor manifest: .localresources/release-gates-20261029/evidence/finalization-release-repair01-20261107/manifest.json.
+The removed historical client requires migration to the active client. Retained
+routing remains Astra/xhigh. Transition, recovery-journal, campaign preparation,
+public entry, qualification and service-launch adapters are drafted outside the
+91 frozen native files. All 181 host/migration and 69 qualification/campaign
+component tests passed sequentially using 16 total slots, with complete cleanup.
+This includes crash recovery and service-launch cases; Ruff passes. Native
+integration and all three isolated client profiles pass. The user namespace
+blocked reading the live server executable; the prospective service now retains
+the host user namespace with systemd mount isolation. Its exact network-isolated
+system-service checks await grouped host approval. Review:
+.localresources/session-qualification-20261107/SYSTEM_NAMESPACE_REVIEW.md.
+Prior evidence and diagnostics are retained under session-qualification-20261107/retained.
+Native qualification is prepared offline: 212 cases, at most 276 sessions.
+Its fixed service retains native accounting and transport recovery, at most
+three process launches, and the November 9 01:29:40 Shanghai deadline.
+Qualification is charged once; the recovery pair supplies its own fresh canary.
+The exact proposed call addition remains 235: 811 required, 576 available;
+existing token headroom suffices. No additive or live execution authorization
+record exists. Qualification approval, migrated preparation/configuration,
+affected release validation and exact host admission remain open. The host draft
+must be adapted to the migrated configuration. No production launch occurred.
+<!-- end-clock-session-repair-20261107 -->
+
+<!-- host-handoff-20261107 -->
+Host handoff preparation is in progress outside the active frozen release.
+Plan: docs/plans/FINALIZATION_HOST_HANDOFF_2026-11-07.md.
+Bind the verified SSD archive mappings, native runtime and gateway prelaunch
+check, independent local reporting and cumulative deadline into one exact host
+proposal against the passing preflight. Handoff regressions passed; actual
+host validation and adaptation to the migrated configuration remain pending. Inventory verification precedes downstream manuscript stages;
+it does not establish full ZLB completion. Final output acceptance remains human.
+<!-- end-host-handoff-20261107 -->
+
+<!-- finalization-release-20261107 -->
+Current checkpoint: master 4.125 / ensemble 315.
+Finalization release continuation: offline_complete_exact_host_admission_pending; phase: None.
+Plan: docs/plans/FINALIZATION_RELEASE_INTEGRATION_2026-11-07.md.
+Renewal, historical reuse and successor launcher regressions passed.
+Review: docs/reviews/FINALIZATION_RELEASE_INTEGRATION_2026-11-07.md.
+Status: /tmp/hv-finalization-continuation-za0i2xpf/status.json.
+Recovery: not needed. Source: 5fb4a3737f3396a04e777b6f4f0ae3414ee72942ae5f8261f206eb7fc3c1b571.
+16 worker slots; authority ends 2026-11-09 01:29:40 Asia/Shanghai.
+Production calls: 0. ZLB has not started. Final output acceptance remains human.
+<!-- end-finalization-release-20261107 -->
+
+<!-- cold-finalization-20261106 -->
+Cold native finalization verification: pass.
+Evidence: /home/ubuntu/workspace/humanvoice/.localresources/release-gates-20261029/evidence/finalization-direct-20261107/cold-retry-07.
+Retained provider work is reused; 16 workers; production calls: 0.
+Release integration and actual ZLB execution remain pending.
+<!-- end-cold-finalization-20261106 -->
+
+<!-- finalization-repair-20261106 -->
+Historical checkpoint: master 4.124 / ensemble 314.
+Scaling completed 1052/1052 new logical requests; two inherited requests remain retained.
+Offline finalization: pass; phase: offline-finalization-complete.
+Retry 03 stopped after 71 checkpoints on repeated serial settlement validation; cleanup passed.
+Retry 04 stopped at native plan binding; its source edit changed the retained runtime contract.
+Retry 05 committed accounting exactly once, then timed out during independent verification.
+Retry 06 reused that committed fixture; it stopped at the 850-second native worker deadline.
+Its 102 receipt-validation blocks completed, but native campaign verification did not finish.
+Owned descendants were cleaned; cold follow-up withheld its launch.
+The bounded diagnostic confirmed serial direct usage and inventory receipt replay.
+Retry 07 routes both through bounded native workers and preserves semantic verification.
+All three retained generation plans pass native validation before launch.
+All dependency bytes and permissions are rechecked before reuse; native verdicts remain required.
+Latest checkpoint: 0; stage: pending.
+Next: complete independent cold verification; integrate the prospective public runtime and recovered-finalization release gate; run current-source release checks, actual preparation and no-call preflight before supervised ZLB.
+Plan: docs/plans/FINALIZATION_RECOVERY_2026-11-06.md.
+Starter: .localresources/finalization-repair-20261106/start.py start.
+Status: .localresources/finalization-repair-20261106/status.json.
+Evidence: /home/ubuntu/workspace/humanvoice/.localresources/release-gates-20261029/evidence/finalization-direct-20261107/combined_soak-retry-07.
+Full release and ZLB have not started. Production calls: 0.
+16 total workers; renewed authority ends 2026-11-09 01:29:40 Asia/Shanghai.
+Repair/test/review/refresh remains required at phase transitions and stops.
+Final output acceptance remains human.
+<!-- end-finalization-repair-20261106 -->
+
+<!-- execution-renewal-20261105 -->
+Historical checkpoint: master 4.116 / ensemble 306.
+Replay recovery continuation: stopped_for_diagnosis; phase: combined_soak.
+Plan: docs/plans/EXECUTION_RENEWAL_2026-11-05.md.
+Renewal, historical reuse and successor launcher regressions passed.
+Review: docs/reviews/evidence/audit-lifetime-replay-20261030/execution-renewal-review-20261105.json.
+Status: /tmp/hv-renewed-continuation-46g0c63s/status.json.
+Recovery: blocked. Source: fcf429f7c191bd1fa3b1e70a051673931229ce439b1f9fc884656f00044d8264.
+16 worker slots; authority ends 2026-11-07 01:02:34 Asia/Shanghai.
+Production calls: 0. ZLB has not started. Final output acceptance remains human.
+<!-- end-execution-renewal-20261105 -->
+
+<!-- replay-recovery-repair-20261104 -->
+Historical checkpoint: master 4.115 / ensemble 305.
+Replay repair implemented and tested. Execution stopped at its authorized end:
+4 November 2026, 17:05:59 Asia/Shanghai. No owned descendants remain.
+Compact scenario passed all 15 phases. Scaling passed 6 phases and reached
+246/1052 logical completions in the ledger; the watchdog verified 245 before
+termination, with genuine progress 17.39 seconds before its last observation.
+The stop was execution-window expiry. The full scaling/release remains incomplete.
+Recovery is blocked by expiry; its stale running summary has been reconciled
+against the child's terminal record. Frozen source and historical records remain.
+Plan: docs/plans/REPLAY_RECOVERY_REPAIR_2026-11-04.md.
+Verified: 25 replay-core, 227 source, 61 retry-binding and 144 launcher tests.
+Stop evidence: docs/reviews/evidence/audit-lifetime-replay-20261030/replay-recovery-window-stop-20261104.json.
+Source: aebb636ea7d435186275b1d102f355f3c77b997e6970deb726080b2b9b86da76.
+Next: obtain an explicit new execution window, reconcile the interrupted scaling
+phase, preserve dependency-valid compact evidence, then continue the release.
+Production calls: 0. ZLB has not started. Final output acceptance remains human.
+<!-- end-replay-recovery-repair-20261104 -->
+
+<!-- consolidation-progress-20261104 -->
+Historical failed-run checkpoint, superseded by the current repair above.
+Stopped for diagnosis at 2026-11-04T02:44:20.452978+08:00. Compact native campaign: all 15 phases passed.
+Scaling stopped after 300/1052 completed requests. Resume toward request 528
+published no new receipt checkpoint within the 850-second progress deadline.
+The failed phase lasted 890.76 seconds including shutdown. Owned cleanup completed;
+no descendants remain. Worker replay reached window 62, but replay progress was invisible to the watchdog.
+The outer runner exits on failure without an automated repair branch; the plan now
+requires verified replay-block checkpoints and tested failure-to-recovery transitions.
+ZLB has not started. Next: diagnose the restart path, repair and test, then freeze
+a reviewed successor before resuming. Preserve this failed run as evidence.
+Evidence: docs/reviews/evidence/audit-lifetime-replay-20261030/consolidation-stop-20261104.json.
+<!-- end-consolidation-progress-20261104 -->
+
+<!-- soak-consolidation-20261103 -->
+Historical checkpoint: master 4.114 / ensemble 304, 3 November 2026 Asia/Shanghai.
+The consolidation repair is implemented and reviewed. This checkpoint supersedes
+older execution snapshots below. Production remains stopped; ZLB has not started.
+The compact native campaign has 92 new requests, 18 transport incidents, selected
+storage/STOP/sibling interruptions and terminal storage-retry exhaustion. It must
+pass before the single 1,052-request scaling campaign starts. Each campaign has
+nine forced restarts instead of 89. Budget exhaustion retains separate regressions.
+Retained-prefix replay uses full checks at entry/exit and before new dispatch,
+plus exact native receipt verification for each restored response. Healthy workers
+publish durable receipt checkpoints; watchdogs verify those receipts independently.
+New work must appear within 850 seconds (895 at the parent); cold audits remain
+bounded at 850 seconds. Aggregate work stops at the existing authorization end.
+Regressions passed: 185 consolidation/native-worker checks; 129 final replay,
+mutation, sizing and ordering checks; 214 continuation/checkpoint checks. The final
+64 checkpoint checks (including actual worker death) and 36 launch checks pass.
+Execution order: compact native recovery, one measured scaling campaign, automatic
+release regressions/review, fresh preparation/configuration and preflight, exact
+host launch, then supervised 12-hour ZLB execution. Full scaling remains unverified.
+Independent tests and each sequential campaign may use all 16 worker slots.
+Repair/test/review/refresh remains required at every phase transition, failure
+and stop. Intermediate verdicts are automatic; final actual-output acceptance is
+human. Claude is optional and is not a prerequisite.
+Plan: [ZLB test consolidation](ZLB_TEST_CONSOLIDATION_2026-11-03.md).
+Successor: .localresources/consolidated-continuation-20261103/run.py.
+Manifest: /home/ubuntu/workspace/humanvoice/.localresources/release-gates-20261029/evidence/closure-uu76_k6m/manifest.json.
+Source: 607e576b08113de1c45ab5d823b14702a66f384cea896137f73ef039a2656747.
+Evidence: docs/reviews/evidence/audit-lifetime-replay-20261030/consolidation-implementation-20261103.json.
+<!-- end-soak-consolidation-20261103 -->
+
+<!-- request-replay-repair-20261102 -->
+Historical checkpoint: master4.112 / ensemble302, 2 November2026 Asia/Shanghai.
+The combined soak stopped at recovery death-0060: its native worker exceeded
+850 seconds (phase elapsed880.34 seconds). Exhaustion completed60 requests and
+was cancelled with its sibling. Both owned process trees were cleaned up.
+Both qualifications passed with33/33 actual replay observations, confirming the
+previous observer repair. Production is disabled; ZLB has not started.
+The new trace shows repeated full accounting checks during request replay and
+runtime-binding publication. Exhaustion death-0060 made883 settlement checks;
+the preceding 12-request phases add48 such checks for each growing replay prefix.
+Repair plan: use current ownership/STOP/plan guards for request and binding
+bookkeeping; preserve full checks for dispatch, reconciliation and settlement.
+Add regression coverage for replay work counts, source/lineage changes, binding
+identity, duplicate-launch rejection and mutations at publication boundaries.
+Review remaining growing ledger replay cost and measure representative execution
+before restarting the full campaign. Keep the existing deadlines and coverage.
+Then freeze a successor source, run the full release, regenerate native
+preparation/configuration, preflight, perform exact host launch and run ZLB for
+12 hours. Intermediate verdicts are automatic; final output acceptance is human.
+Repair/test/review/refresh applies at every phase, failure and stop.
+Evidence: docs/reviews/evidence/audit-lifetime-replay-20261030/request-replay-timeout-20261102.json.
+Implementation and review complete,3 November2026:239 targeted regressions pass
+in103.37s;144 continuation checks pass in5.34s; changed-file Ruff and master
+consistency pass. Both production bookkeeping sites now use owned_check, and
+the release gate includes the new regression suite. The successor also refreshes
+checkpoint and candidate status automatically on every phase outcome or stop.
+The old fixture correctly refused new-source timing reuse. Full-size timings
+remain unverified; observe the fresh soak before claiming improved duration.
+Successor: .localresources/parallel-continuation-20261103/run.py.
+Manifest: .localresources/release-gates-20261029/evidence/closure-rapunsqp/manifest.json.
+Source:ebd291c9e0480389ef0b179eaf7eecc66e67b7da61d66b3fb42bd0ef191dccf6.
+Review: docs/reviews/evidence/audit-lifetime-replay-20261030/bookkeeping-launch-review-20261103.json.
+<!-- end-request-replay-repair-20261102 -->
+
+<!-- replay-worker-repair-20261102 -->
+Current checkpoint: master4.111 / ensemble301, 2 November2026 Asia/Shanghai.
+The replacement completed all231 parallel regression tasks and native successors.
+The combined recovery soak then failed qualification after754.9977s because its
+replay directory contained only the parent measurement; all32 spawned pool workers
+were missing. Native descendant validation had passed. Exhaustion was cancelled
+with its sibling, and both owned trees were cleaned up completely. This was an
+observer propagation defect, not another900-second timeout. ZLB has not started.
+The automatic real-spawn regression reproduced the same failure in1.29s. Repair:
+capture observer configuration at each process start, install it before work in a
+fresh interpreter, preserve inherited fork wrappers without double counting, and
+flush the actual child measurement on exit. Empty worker measurements must be
+written by the actual worker. Exact process/source membership checks remain.
+Forkserver uses an indirect OS parent outside the existing contract and is rejected
+before launch. Fork/spawn, nested pools, explicit exits, stale bindings, missing
+measurements, native signal and storage boundaries are covered by regressions.
+118 observer/process/soak tests pass in21.72s;3 actual native signal/storage tests
+pass in421.75s;139 final continuation tests pass. The successor is reviewed and
+running under the approved fixed host command; combined_soak runs first.
+Manifest: .localresources/release-gates-20261029/evidence/closure-whfi_kk2/manifest.json.
+Source:906b2834f9e1ec6d1e2fe54fa92f19d5218a4dfd20fd22bcffc911e2dff2951e.
+Runner: .localresources/parallel-continuation-20261102c/run.py.
+Keep old receipts under their original manifest. Intermediate decisions remain
+automatic. Continue full release, fresh preparation/configuration, no-call preflight,
+exact host launch, and the supervised12-hour ZLB run. Final output acceptance is
+human. Repair/test/review/refresh applies at every phase, failure and stop.
+Failure evidence: docs/reviews/evidence/audit-lifetime-replay-20261030/replay-worker-failure-20261102.json.
+Actual successor qualification PASSED in both scenarios:recovery768.29s and
+exhaustion763.74s. Each retained exactly33 process measurements. Preparation
+started automatically; full soaks and ZLB remain incomplete.
+Evidence: docs/reviews/evidence/audit-lifetime-replay-20261030/replay-worker-qualification-pass-20261102.json.
+<!-- end-replay-worker-repair-20261102 -->
+
+<!-- native-batch-repair-20261102 -->
+Current checkpoint: master4.110 / ensemble300, 2 November2026 Asia/Shanghai.
+The first parallel release stopped on control p034 after880s:26 of32 cases
+reported pass before the shared batch deadline. It grouped several expensive
+native storage/recovery cases under four pytest workers.158/205 scheduler tasks
+completed; all12 executor and46 public-recovery partitions passed, as did65/66
+control partitions. The supervisor cancelled siblings and confirmed zero surviving
+descendants. These are partial results, not a complete release gate.
+Repair: each expensive native storage/recovery/worker case receives a separate
+bounded task in every gate; ordinary cases retain32-case batches, total capacity16,
+one nested verifier per pytest worker, exact membership and unchanged audit limits.
+Verbose per-case logs improve timeout diagnosis.55 scheduling/evidence/cleanup
+regressions pass in5.72s;139 continuation checks pass. The failed32-case batch
+now becomes18 tasks, including16 individually bounded native cases.
+Exact collection membership is retained; total capacity remains16.
+Runner: .localresources/parallel-continuation-20261102b/run.py.
+The native production code is unchanged by this scheduling repair. Previous
+receipts remain bound to their original source. A fresh source-bound release
+will rerun; native preparation/configuration and preflight follow automatically.
+Repair/test/review/refresh remains required at phase transitions and failures.
+No ZLB production run has started. Final human acceptance remains after actual output.
+Evidence: docs/reviews/evidence/audit-lifetime-replay-20261030/parallel-native-batch-timeout-20261102.json.
+<!-- end-native-batch-repair-20261102 -->
+
+<!-- parallel-live-20261102 -->
+Finalization release execution: offline_complete_exact_host_admission_pending; active: None; completed: combined_soak, parallel_regressions, native_successors, replay_bounds, independent_review, aggregate_inspect, preparation, configuration, aggregate, preflight. Recovery: not needed.
+Live status: /tmp/hv-finalization-continuation-za0i2xpf/status.json.
+Manifest: /home/ubuntu/workspace/humanvoice/.localresources/release-gates-20261029/evidence/finalization-release-repair01-20261107/manifest.json.
+Production calls:0. ZLB has not started; final acceptance remains pending.
+<!-- end-parallel-live-20261102 -->
+
+<!-- parallel-repair-execution-20261102 -->
+Current checkpoint: master4.109 / ensemble299, 2 November2026 Asia/Shanghai.
+The repeated-verification and parallel-execution repair is implemented. This
+checkpoint supersedes earlier execution snapshots below. Grouped host regression
+validation PASSED:288 tests in39.61s, including current ownership/STOP/plan guards,
+mutable consumption rejection, native settlement, process death/cleanup, worker
+allocation, receipt membership and preparation supervision. Ruff passes.
+Routine progress and no-op reconciliation no longer replay historical account
+floors. Provider dispatch, actual reconciliation, accounting mutation and terminal
+settlement retain full native checks; dispatch no longer reads both floors twice.
+Independent release partitions share16 worker slots; nested synthetic pools inherit
+the allocation. Both complete long-document campaigns run in separate processes
+with8 workers each. Their internal order, faults, request coverage and900-second
+individual audit limits remain. Final replay/review verdicts still require complete
+prerequisite evidence. Intermediate judgments are automatic regression tests.
+Next: freeze this source; execute the complete parallel release; regenerate actual
+preparation/configuration because native dependencies changed; aggregate and run
+completed-operation no-call preflight; complete exact host installation/launch;
+run ZLB for12 hours and obtain final human acceptance of its actual output.
+Repair/test/review/refresh remains required at every phase, failure and stop.
+Execution launch is next, using the source-bound parallel continuation.
+An additional16 cleanup and139 continuation checks pass.
+Runner: .localresources/parallel-continuation-20261102/run.py.
+Current execution status appears in the parallel-live block when launched.
+Production is disabled/stopped.
+No new measured end-to-end ETA is available. Prior timings are historical;
+source changes do not renew call/token budgets or relabel old receipts.
+Plan: docs/plans/ZLB_CHECK_PARALLELISM_2026-11-01.md.
+Focused evidence: docs/reviews/evidence/audit-lifetime-replay-20261030/parallel-repair-20261102-focused.xml.
+Work window ends4 November2026 at09:05:59 UTC. Human host approvals remain required.
+<!-- end-parallel-repair-execution-20261102 -->
+
+<!-- namespace-mock-repair-20261101 -->
+Current checkpoint: master4.108 / ensemble298, 1 November2026.
+The continuation stopped automatically after control p009:128 assertions passed,
+but19 namespace-test teardowns failed because an injected mock replaced shared
+os.path. Control p008, including the previously failing storage cases, passed
+in664.79s. Both earlier gates passed. Owned child cleanup completed.
+The mock now belongs to preflight_namespace alone;24 focused tests pass on the
+exact release Python3.13 with16 workers, and Ruff passes. Only the test file
+changed in the full source closure; native preparation/configuration are unchanged.
+Source:c135f413863e10faf00b343fbf20f4d11e7f4d6f627e42823eddfaf62a7c66ed.
+No successor release has launched. Next: simplify repeated historical settlement
+verification, retain current budget/STOP/ownership and recovery guards, and test
+the affected behavior. Then parallelize independent checks with isolated fixtures.
+The revised priority is in docs/plans/ZLB_CHECK_PARALLELISM_2026-11-01.md.
+Evidence: docs/reviews/evidence/audit-lifetime-replay-20261030/namespace-mock-failure-20261101/repair-verification.json.
+<!-- end-namespace-mock-repair-20261101 -->
+
+<!-- check-parallelism-review-20261101 -->
+Scheduling review,1 November2026: the earlier multi-day ETA extrapolated one
+865.895s probe; it is not a measured full-run duration or an unavoidable delay.
+The runner uses16 workers inside batches but serializes batches/gates and both
+long soaks. That probe made2919 settlement reads for12 requests. Prospective
+repair: isolate cold campaign reopenings, share bounded workers across independent
+checks, overlap separate campaigns, and remove redundant verified replay while
+preserving mutation/STOP/accounting checks and full test membership.
+Plan and regression review: docs/plans/ZLB_CHECK_PARALLELISM_2026-11-01.md.
+This is a reviewed plan; parallel scheduling is not implemented. The original
+master4.107 / ensemble297 execution stopped as recorded in the newer checkpoint.
+<!-- end-check-parallelism-review-20261101 -->
+
+<!-- repaired-continuation-20261101 -->
+Repaired offline continuation: stopped_for_diagnosis; active: None; completed: host_regressions.
+Status: /tmp/hv-repaired-continuation-0r4l7j_k/status.json. New-source release and fresh no-call preflight; ZLB has not started.
+<!-- end-repaired-continuation-20261101 -->
+
+<!-- configuration-ssd-repair-20261101 -->
+Current checkpoint: master4.107 / ensemble297, 1 November 2026.
+All 32 actual-data preparation phases PASSED. Native configuration derivation
+and independent validation PASSED: ten operations each,2128.36s and2089.31s
+aggregate, every individual operation below880s. Both archive checks verified
+1,215,588 files. Original preparation/configuration remain unchanged and their
+native dependency closure still matches. Fresh actual validation is required.
+The release control failure is repaired: synthetic campaigns now publish only
+to private masters through native reporting/acks. All15 focused native tests
+passed in307.51s; the two real master documents remained unchanged.
+Preflight now has completed-operation supervision, exact native return hashes,
+verified read-only SSD mapping, before/after archive verification, separately
+bound historical/release environments, owned cleanup and post-cleanup checks.
+All172 host tests passed, including real namespace and parent-death cases.
+Final grouped suite PASSED:191 tests in7.44s with16 workers. Full repaired-source
+release is RUNNING; current gate:native_floors. Live phase blocks supersede this snapshot.
+Repaired source: 31b2c229716a0b5e0ed28eef563658082992c87576d848b914795894e8d6f7f7.
+Known isolation-probe repairs are integrated. Original evidence remains historical;
+no old-source release receipt is relabeled. The prior release passed2/8 gates,
+then stopped; all8 gates must rerun on the repaired source.
+Next: finish all8 fresh gates and both long-document soaks,
+aggregate, actual completed-operation preflight, exact installation/launch,
+12-hour ZLB and final human acceptance. ZLB has NOT started.
+Runner: /tmp/humanvoice-repaired-continuation-20261101/run.py.
+Status: .localresources/repaired-continuation-current.json after launch.
+Window ends4 November2026 at09:05:59 UTC. Keep16 workers, budgets, STOP authority,
+human host approvals and individual880/895/900s operation deadlines. Automatic
+intermediate tests and repair/test/review/refresh remain mandatory at every phase.
+Plan: docs/plans/ZLB_PROJECTION_AND_PREFLIGHT_REPAIR_2026-11-01.md.
+<!-- end-configuration-ssd-repair-20261101 -->
+
+<!-- offline-followup-20261031 -->
+Offline follow-up: stopped_for_diagnosis; active: release_gates; completed: configuration.
+Status: /tmp/hv-offline-followup-h63rdjwg/status.json. No production launch or final acceptance.
+<!-- end-offline-followup-20261031 -->
+
+<!-- additional-work-window-20261101 -->
+User-authorized extension:48 additional hours, recorded1 November2026.
+Current master4.105 / ensemble295. New execution cutoff:4 November2026 at
+17:05:59 Asia/Shanghai (09:05:59 UTC), replacing2 November2026 at17:05:59.
+Spending/call/token/restart budgets, individual880/895/900-second operation
+limits, stop authority, human host approvals and final ZLB acceptance are unchanged.
+Active preparation is preserved on its frozen source. The waiting old continuation
+was stopped deliberately; the replacement binds the exact extension record and
+passes102 offline regressions. Its launch session is60806. It runs configuration,
+complete release gates, aggregate and no-call preflight after successful preparation.
+Live continuation: .localresources/approved-offline-followup-current.json.
+Authorization: docs/reviews/evidence/audit-lifetime-replay-20261030/work-window-extension-20261101.json.
+Review: docs/plans/ZLB_WORK_WINDOW_EXTENSION_2026-11-01.md.
+Repair/test/review/refresh and final actual ZLB output acceptance remain required.
+<!-- end-additional-work-window-20261101 -->
+
+<!-- recovery-status-20261101 -->
+Current recovery checkpoint: master 4.105 / ensemble 295, 1 November 2026
+(Asia/Shanghai). Authorized offline execution continues; ZLB is not launch-ready.
+Preparation progress is refreshed automatically in the offline-production block
+and /tmp/hvprepstage-whhlp3us/status.json. Its tested follow-up at
+/tmp/hv-approved-followup-8b53skki runs actual configuration, all eight release
+gates with both complete long-document soaks, aggregate verification and no-call
+preflight after complete successful preparation and cleanup.
+Private host isolation PASSED on source5ac8dbb003493d9e04c0f1e8b06725bff3a704741a9810aac07e41a9e1467603.
+Two test-harness faults were repaired: private /run was hidden by an unsafe-mode
+MountAPIVFS tmpfs; ProtectHome denial was incorrectly treated as test failure.
+The exact staged repair binds only the experiment's protected runtime directory
+and accepts only ENOENT/EACCES/EPERM for an inaccessible home. All10 regressions
+pass. The real experiment passes native installation, failing-baseline/repaired
+mount checks, read-only filesystem/network/privilege isolation, SIGKILL recovery
+with identical committed head, and cleanup of all four transient units.
+Evidence: docs/reviews/evidence/audit-lifetime-replay-20261030/systemd-runtime-isolation-pass-20261101/evidence-manifest.json.
+The repair artifacts and tests are archived; frozen repository source and bound
+follow-up scripts are unchanged. This proves private host isolation, not production
+admission. Final source/package must match this evidence or repeat the experiment.
+Next: finish32-phase preparation and its offline chain; require exact privileged
+installation/launch after all release gates and actual preflight pass. Keep16
+workers, original budgets/stops, 880/895/900-second operation limits, automatic
+intermediate judgments and final human acceptance of actual ZLB output.
+Repair/test/review/refresh remains mandatory at every phase, failure and stop.
+Work window now ends4 November2026 at17:05:59 Asia/Shanghai. Master consistency and
+human approval settings pass. No production model calls have started.
+<!-- end-recovery-status-20261101 -->
+
+<!-- desktop-sudo-authentication-20261101 -->
+Administrator authentication verified1 November2026 Asia/Shanghai: the desktop
+Zenity password dialog supplied sudo successfully; the fixed read-only check
+sudo /usr/bin/id -u returned0. Inherited editor Snap GTK/GIO settings initially
+prevented the dialog; using system GUI libraries resolved that failure.
+The password flows directly from the dialog to sudo and is not recorded by the
+runner. Future privileged actions may prompt again; the check grants no install,
+launch or release acceptance. The existing exact host approval and release gates
+remain. Evidence: docs/reviews/evidence/audit-lifetime-replay-20261030/desktop-sudo-authentication-20261101.json.
+<!-- end-desktop-sudo-authentication-20261101 -->
+
+<!-- ssd-preparation-repair-20261031 -->
+Current checkpoint: master 4.105 / ensemble 295, 1 November 2026 (Asia/Shanghai).
+The 18-phase actual-data preparation completed twelve phases, including the
+repaired successor source/probe/authority/publication and final validation.
+Initialization then reached its880s child deadline inside the final fallback
+qualification check of native ancestry verification. Complete cleanup and
+unchanged source/authority are retained. No configuration or model call started.
+Evidence: preparation-initialization-deadline-20261101 in the audit ledger.
+The repair preserves all native calls and locks, adding completed-operation
+boundaries through ancestry, preparation verification, initialization and binding.
+The fixed chain now has32 phases, each retaining880s child/895s parent/900s
+outer limits. All135 native callback/stop/mutation and receipt regressions pass
+on the host in158.82 seconds; Ruff passes. All765 expanded host tests passed
+in301.20 seconds. Fresh32-phase preparation runs at /tmp/hvprepstage-whhlp3us
+(session54329), on frozen source
+5ac8dbb003493d9e04c0f1e8b06725bff3a704741a9810aac07e41a9e1467603.
+Review: docs/plans/ZLB_INITIALIZATION_BOUNDARIES_2026-11-01.md.
+The separate follow-up crash repair passed86 regressions on the host with16
+workers. Its prior continuation correctly stopped at failed preparation.
+The rebound follow-up passed86 host tests again and waits at
+/tmp/hv-approved-followup-8b53skki (session60806) for the new preparation.
+After success it automatically continues configuration, release and preflight.
+Next: finish active32-phase preparation; verify actual configuration; run eight
+current-source release gates with both complete soaks; aggregate/preflight.
+The independent host-isolation experiment now passes on this frozen source and
+package. Retain exact test-artifact bindings; installation/launch still require
+all release checks and actual preflight. Final actual ZLB acceptance is human.
+Repair/test/refresh remains mandatory at every failure and phase boundary.
+<!-- end-ssd-preparation-repair-20261031 -->
+
+<!-- continuation-approval-20261031 -->
+User approval recorded31 October2026: continue fixed host offline validation and
+fresh verified-SSD preparation after its automated checks pass. Exact privileged
+actions remain subject to host approval; systemd isolation additionally needs
+administrator capability. Existing16-worker,900s phase, budget/restart and source
+checks remain. Intermediate correctness is automatic; final ZLB acceptance human.
+No production execution has started. Repair, test and refresh between phases and
+at every stop remain mandatory. Current work window ends4 November2026 at17:05:59
+Asia/Shanghai. Next: finish the active 32-phase preparation; then exact approved
+configuration, complete release gates, aggregate inspection and no-call preflight.
+<!-- end-continuation-approval-20261031 -->
+
+<!-- offline-production-preparation-20261031 -->
+Offline actual-data preparation: actual_data_preparation_pass_configuration_pending; completed: ownership, historical-scope, migration, capacity, transition, document-scope, successor-construction, successor-source, successor-probe, successor-authority, successor-publication, successor, initialization-ancestry-source, initialization-ancestry-authority, initialization-ancestry-bindings, initialization-ancestry-qualification, initialization-prepared, initialization-journal, initialization-history, initialization, binding-observation, binding-ancestry-source, binding-ancestry-authority, binding-ancestry-bindings, binding-ancestry-qualification, binding-prepared, binding-publication, binding, probe, recovery-ownership, verification, complete.
+Live evidence: /tmp/hvprepstage-kc1yqk7c/status.json.
+Source: 5fb4a3737f3396a04e777b6f4f0ae3414ee72942ae5f8261f206eb7fc3c1b571. No production launch or release acceptance.
+<!-- end-offline-production-preparation-20261031 -->
+
+<!-- offline-release-continuation-20261031 -->
+Offline release continuation: stopped_for_diagnosis; active phase: control; completed: native_floors, native_executor.
+Live status: /home/ubuntu/workspace/humanvoice/.localresources/release-gates-20261029/evidence/closure-wwb1wksm/continuation/status.json.
+Manifest: /home/ubuntu/workspace/humanvoice/.localresources/release-gates-20261029/evidence/closure-wwb1wksm/manifest.json. No production launch or final acceptance.
+<!-- end-offline-release-continuation-20261031 -->
+
 # Ensemble implementation and evaluation master program
 
+Current execution checkpoint: master 4.116 / ensemble 306; see the execution renewal block above.
+Historical snapshot from 1 November 2026 follows.
+
+The extended work window is authorized through November 4, 2026,
+17:05:59 Asia/Shanghai. Existing spending/restart limits, privileged host
+approvals and final human ZLB acceptance remain unchanged.
+
+Native settlement hashing now reads a nested snapshot once, derives the same
+root-relative evidence digest, and looks up the archive-aware EvidenceTree at
+call time. Source filtering keeps its original root-relative behavior. All71
+focused regressions and all66 host integration cases pass; Ruff passes.
+Independent digest tests cover empty/nested trees, same-size restored-mtime
+changes, membership, symlinks/FIFO, permission expiry and archive import lifetime.
+The first integration attempt failed in sandbox fixture setup; the exact
+host-approved rerun passed. Evidence: native-single-pass-settlement.xml and
+native-single-pass-integration-host.xml under the audit-lifetime-replay ledger.
+
+Full retained admission (158 stages) and candidate (110 stages) remain passed
+prerequisites. Fresh qualified worker /tmp/hvqualong-vc4nbehu PASSED all eight
+phases. Finish874.69s leaves only25.31s under the900s phase bound; large-document
+work still requires measurement. Fresh reproduction /tmp/hvnatreproduction-wjmooylw
+PASSED382 stages, original callback, unchanged bindings and complete cleanup.
+Receipts are archived under qualified-native-single-pass and
+reproduction-native-single-pass in the audit-lifetime-replay evidence ledger.
+The earlier nested-archive failure remains retained; its69 repair tests pass.
+
+Native signal/storage observation passed64 focused and three actual launcher
+cases. The complete soak chain passed48 cases. Replay measurements now bind
+exact process ownership, source identity and workload depth/size;88 observer
+and chain regressions pass. Both formerly missing release adapters are wired:
+combined_soak and replay_bounds. Their wiring/mutation suite passes61 cases.
+Actual launcher timing integration passed3 cases in164.93s. The final
+publication repair and all126 adapter regressions pass; Ruff passes.
+
+Replay limits are prospectively fixed per native operation: ancestry180s,
+settlement120s, layout60s and receipt-prefix120s. The unchanged900s whole-phase
+ceiling still applies. Both complete soak scenarios must measure depths1/2,
+small qualification and >1000-request plans, and ledger-size bands through1000+.
+Inclusive nested timings are never summed. Mutation regressions must pass under
+the same source manifest. These are candidate limits, not measured closure.
+
+Full-size probe /tmp/hvsize-6vowspgv passed qualification707.82s,
+preparation464.54s, fallback312.42s, split719.59s and schedule9.28s. Its first
+24-request group FAILED after879.69s at the850s worker deadline with9 requests
+completed. The native worker recorded2119 settlement reads and543.34 inclusive
+seconds checking dependency bytes. The failed fixture is retained, never resumed.
+
+Read-only profiling identified repeated hashing of hundreds of megabytes of
+copied parse evidence. Exact-byte SHA-256 reuse now reads every file in full,
+compares every byte, and preserves descriptor, membership and permission checks.
+Memory is bounded to256MiB per owned operation and released at scope exit.
+Native dependency identities match; warm profiled sweeps improve from about
+1.12–1.15s to0.74–0.76s. This is a component measurement, not a whole-run pass.
+All102 focused regressions and188 host native/archive integration cases pass.
+Fresh scenarios use prospectively fixed12-request groups, unchanged128 restart
+reservation and900s phases. All138 schedule/soak regressions pass; Ruff passes.
+
+The1338-file candidate closure-8uzb8dj0 FAILED native_floors partition p002.
+The stale injection patched automatic_call_grant.status, while capacity uses
+the retirement-aware reader. The repair proves injection ran and tests removal
+and byte changes of all six snapshot dependencies. All19 capacity tests and82
+capacity/retirement/mixed-profile regressions pass. Failed evidence remains.
+Plan: docs/plans/ZLB_CAPACITY_AND_FULL_SIZE_REPAIR_2026-10-30.md.
+Full-size probe /tmp/hvsize-jc9ddpjr PASSED all six phases. The fixed12-request
+crash/recovery segment passed865.895s, leaving34.105s under900s. This is only
+first-group feasibility; both complete long scenarios and replay bounds remain.
+Current release closure-1jsuotco failed one deliberate-corruption assertion:
+1845 other native tests passed across the original gate and retained diagnostics.
+Corrupted source is rejected correctly by an earlier native ValueError; public
+status maps both errors to BLOCKED_ACCOUNTING. The reviewed regression repair
+adds precise reason, unchanged-accounting and three corruption-mutation checks.
+All12 native executor cases PASSED632.676s, including oversized responses.
+The1654-case control gate PASSED. The two test-only repairs are applied and
+all133 focused stage/binding/public-error regressions pass in219.997s; Ruff passes.
+Nine continuation control tests pass, covering failure, stop, expiry, source
+change and cleanup. The fixed runner refreshes phase status and both masters.
+The closure-su_gpu52 continuation PASSED native_floors1846 and native_executor12
+(executor partition655.023s), then stopped deliberately at the gate boundary
+to integrate the missing production-preflight producer. Cleanup completed.
+The new producer and its50 tests are integrated;88 builder/review integration
+tests pass. Existing source receipts are historical after these source edits.
+The actual-data preparation attempt exceeded its parent deadline at886.436s.
+It completed migration and transition before interruption while entering native
+document scope; this trace alone does not identify the dominant cost. Its
+authority bytes stayed unchanged and cleanup completed. The failed directory
+is retained and must not be overwritten or blindly resumed.
+The segmented preparation stopped at its880s child deadline during successor
+validation after six completed phases (ownership0.45s, historical-scope49.63s,
+migration64.03s, capacity353.91s, transition276.43s, document-scope156.65s).
+Total elapsed1782.81s; original authority bytes are unchanged and owned-child
+cleanup is complete. Evidence is retained under preparation-successor-timeout.
+Observed reads reached the original FUSE archive; this motivates verified SSD
+mapping but does not establish a precise cost breakdown. No audit is running.
+
+The final-receipt observation race and preflight child-lifetime repairs are
+integrated. All141 earlier integrated regressions passed; actual parent-death
+integration previously passed three cases. Updated validation is recorded below.
+The next preparation uses14 completed-operation boundaries, including a separate
+successor-construction boundary, with880s child and895s parent limits within900s.
+The SSD preparer is implemented and176 focused regression cases pass. Native
+stage/binding/public-error integration passed133 cases in214.02s with16 workers.
+Archive/preparation tests passed74 cases; one namespace case was blocked by
+sandbox NETLINK_ROUTE permissions. Its host rerun approval was interrupted, and
+no host result exists. Complete namespace lifecycle validation remains pending;
+no fresh actual preparation or production execution has started.
+Do not reuse the failed preparation directory or stale configuration wrapper.
+A new complete-source release remains required after these changes.
+The work window ends2026-11-02T09:05:59Z.
+Host isolation remains blocked before staging because sudo requires administrator
+capability. Intermediate checks stay automatic; final ZLB acceptance is human.
+Actual-data preparation/configuration remain unproven. The preflight producer
+is integrated but cannot pass until actual configuration and all same-source
+release gates pass. Plan: docs/plans/ZLB_PRODUCTION_PREFLIGHT_CLOSURE_2026-10-31.md
+ZLB remains NOT launch-ready; production is disabled/inactive (MainPID=0).
+Remaining: full-size performance proof, both complete native soak scenarios,
+all eight frozen-source gates, host isolation, no-call production preflight,
+and exact approved launch with a new actual manuscript receipt.
+Repair/test/refresh remains mandatory between phases and every stop. Intermediate
+correctness uses automated regressions; final actual ZLB acceptance stays human.
+Evidence: docs/reviews/evidence/audit-lifetime-replay-20261030/checkpoint.json.
+
+Six-phase native successor audit /tmp/hvsucc-z8f4xu_w PASSED: qualification
+740.15s, preparation 506.79s, fallback 342.49s, split 652.37s, finish 618.79s,
+independent verification 214.76s. Both committed-boundary crashes recovered;
+all four manuscript receipts survived. This is incremental native evidence;
+it does not replace the complete-source release gate after subsequent repairs.
+The release successor adapter now uses these six phases and explicitly records
+source/import/child-tree evidence before an expected exit73. Other crashes and
+missing evidence still reject. Its 137 regression cases pass; native release
+execution remains pending.
+
+Product audit /tmp/hvssdprod-jk5odc_i PASSED calibration853.20s and packet570.95s.
+Admission, candidate and reproduction each exceeded895s (about896.06s wall).
+All229 historical settlements completed in each phase; warmup consumed519–583s.
+Both archive layers use verified private SSD copies. Original archive paths,
+bytes and native verifiers are unchanged. The three callback timeouts remain
+open; do not claim retained product closure.
+
+Four storage reproductions exposed two defects: campaign status ENOSPC sealed
+recoverable work; inability to publish the interruption marker blocked recovery.
+Both ledger-before/after cuts already recovered in-process; their tests now
+check exact once-only success instead of insisting on an unnecessary crash.
+Native fixes type only reviewed status writes and preserve a distinct owned
+worker storage-exit disposition for marker publication failure. That record
+permits only bounded inspection/probes under existing ownership, stop, source,
+accounting and restart checks. 147 native unit regressions pass. Four actual
+worker cases PASSED at /tmp/hvstorage-gaps-msluqqh1: 4 passed in 282.16s, with
+unchanged source, authority and environment. All eight extended actual-worker
+cases PASSED at /tmp/hvstorage-extended-3mgbsy1_ in 330.50s. The initial sibling
+fixture improperly shared an active snapshot; native separate preparation fixes
+that fixture without relaxing replay checks. Ten persistent-storage and worker
+publication cases PASSED at /tmp/hvstorage-final-21m2j_wh in 306.20s, with
+unchanged source, authority and environment. Exhausted probes stay blocked
+without spending even after capacity returns; late stops veto restart.
+Admission profiling timed out at 880.09s: warmup579.69s, callback300.37s.
+The callback spent most time repeatedly resolving archive paths during native
+baseline verification. Prospective live component lookup passes52 regressions
+and is1.85x faster in a3000-lookup microbenchmark. Admission rerun
+Admission rerun /tmp/hvadmit-repair-ttpo0ru7 completed229 settlements in523.40s
+then timed out at880.37s during assembled-review settlement dependency checks.
+Bindings remained unchanged. The segmented runner separately bounds warmup and
+native callback to900s each, with independent parent deadlines, exact receipt
+ancestry and unchanged source/authority checks. All74 focused regressions pass.
+Plan: docs/plans/ZLB_SEGMENTED_PRODUCT_AUDITS_2026-10-30.md. First admission callback timed out; see current checkpoint.
+The isolated overlay attempt failed before collection because /dev/null was
+not writable; it is preserved and not counted as a product failure or pass.
+
+Release descendant observation incorrectly rejected SystemExit(None/0) from
+successful workers. The focused regression reproduces it; the repair preserves
+the actual exit and still checks imports, children and parent-observed exit0.
+All68 observer/successor regressions pass in10.08s. Other exits still reject.
+
+Remaining: full combined soak (>1000 native requests/campaign,
+>2000 total, >16 incidents); replay_bounds/combined_soak release adapters;
+complete retained product callbacks; all eight gates on one immutable source
+and environment; actual host isolation; production-data no-call preflight;
+exact grouped privileged install/launch approval. Administrator capability is
+still required for systemd installation. Final actual ZLB acceptance is human.
+
+Review, repair, tests and checkpoint refresh remain mandatory between phases.
+Preserve16workers,900-second audit bounds,existing budgets/stops and historical
+evidence. Goal is incomplete. Evidence and current run locations are in
+docs/reviews/evidence/audit-lifetime-replay-20261030/checkpoint.json.
+
+
+Historical 4.55 closeout (superseded by the live status above): all then-pending audits had terminated. Successor attempt 4 at
+/tmp/hvseg-l4cv0bpb FAILED during execution after 483.7468 seconds (qualification
+527.9843 and preparation 381.2478 seconds passed). The repaired full audit was pending at that closeout; its fresh rerun is listed above. Three retained prerequisite audits also FAILED:
+- admission: Assembled canonical findings changed, 786.0140 seconds;
+- candidate: Located findings or supporting evidence changed, 812.9680 seconds;
+- reproduction: Identifier continuation implementation changed, 546.9338 seconds.
+Their authority/source checks remained unchanged during those audits. The exact
+canonical-record differences remain to be traced; do not replace historical
+rule-version bindings with current hashes or suppress comparisons.
+
+The small cold-recovery probe /tmp/hvlong-xl9l07g8 passed 21 native requests,
+two transport faults, real child death, public monitor recovery and separate
+verification. This is sizing evidence only, not the full combined soak.
+Timing diagnostics show repeated authority, floor and sealed-replay checks;
+retain live stop/ownership/byte checks while proving any optimization. Inclusive
+profile times overlap and must not be added as independent costs.
+
+Remaining dependency order (current progress recorded above):
+1. Rerun the fresh four-phase native successor audit; include the new canary-scope
+   regression in the fixed release test membership, preserving failure evidence.
+2. Trace admission/candidate expected-versus-actual records under the pinned
+   environment; implement a version-bound replay repair if justified, then rerun
+   all three retained product prerequisites without inference or evidence edits.
+3. Finish combined soak (>1000 native requests per campaign, >2000 scenario
+   requests, >16 incidents), including fallback/split, siblings, storage failure,
+   process death, stop/resume and exhaustion; measure bounded replay costs.
+4. Complete the combined_soak, replay_bounds and independent_review adapters,
+   descendant import evidence and actual systemd-isolation proof. The previous
+   grouped host attempt failed before staging: sudo requires a password.
+5. Freeze the complete source/environment and pass all eight automatic release
+   gates. Then run production-data no-call preflight and obtain the exact grouped
+   host installation/launch approval. Final actual ZLB output acceptance is human.
+
+Review/repair/refresh remains mandatory at phase boundaries and interruptions.
+Preserve the 16 audit workers, 900-second phase deadlines, original budgets and
+historical source-bound evidence. No broad approval, validator waiver or human
+intermediate content review is introduced. Independent release review remains
+open; historical component passes cannot admit changed source.
+Durable closeout evidence: docs/reviews/evidence/
+canary-prerequisite-checkpoint-20261029/summary.json.
+Repair plan: docs/plans/ZLB_CANARY_AND_PREREQUISITE_REPAIR_2026-10-29.md.
+
+Historical checkpoint 4.34 / 224 (superseded):
+Current execution checkpoint, 29 October 2026: master 4.34 / ensemble 224.
+The twelve-hour launch closure goal is active (01:39–13:39 Asia/Shanghai).
+Protected control namespace v2 and native control consumers pass 369 exact
+regressions with 16 workers in 72.972 test seconds; Ruff and exact independent
+collection/execution membership pass. Source and production authority hashes
+are unchanged during the gate. Receipt: .localresources/control-witness-20261028/
+validation/projection-80cf1db47212/validation.json; release_acceptance=false.
+Original stop roots/contracts remain bound. Privileged projections now stay in
+a protected namespace; runtime reads use publication-checked authenticated
+snapshots. Workspace mutations are vetoes, never resume authority. Native stage,
+zero-launch cancellation, retirement and later control history use that reader.
+No production service is installed or started and no model calls were made.
+Prior 891-floor/12-executor receipts are historical for affected native source;
+repeat those gates at the next complete source freeze, not after each small edit.
+Next: recoverable protected bootstrap, stale listener exclusion, immutable host
+package and exact approved actions; public composition; TX4–TX7; successor/soak,
+release and no-call production preflight; then grouped host deployment/launch.
+Production inventory remains 166 retained / 439 unfinished. No new ZLB receipt.
+Review: docs/reviews/INVENTORY_RECOVERY_CONTROL_NAMESPACE_2026-10-29.md.
+Repair/retest/review/refresh remains mandatory between phases and interruptions.
+
+Historical checkpoint 4.33 / 223 (superseded by the current checkpoint):
 Current execution checkpoint, 28 October 2026: master 4.33 / ensemble 223.
 Crash recovery confirmed no surviving validation process and production
 inactive/disabled. Human approval remains on-request/user/workspace-write.
@@ -778,8 +1562,8 @@ Current sequence: HISTORY_REPAIR_LIVE_ADMISSION_2026-10-26.md. Earlier operation
 paragraphs below are historical checkpoints, not current readiness claims.
 
 <!-- sol-inventory-continuation -->
-Inventory continuation: {"execution_enabled": true, "final_zlb_acceptance": false, "generation": 2, "human_evidence": false, "incident": {"action": "retain_semantic_failure_no_reroll", "automatic_repair": false, "evidence": {"incident": {"eligible": true, "eligible_after": 1793046883.943104, "provider_receipt": "codex:01a179d0-b711-7743-b31c-16f217f5ca3d", "reason": "response_free_capture_deadline", "request": {"max_tokens": null, "prompt": "Extract substantive concepts from the following source passage.\n\nA concept is a meaning-bearing proposition: definition, distinction, claim,\nmechanism, assumption, derivation step, qualification, example, counterexample,\nevidence interpretation, or teaching transition.\n\nThe inventory must jointly preserve every substantive assertion in this passage.\nWork through each sentence and clause, including abstract and introductory prose.\nRetain explicit subject scope, conditions, qualifications, comparisons, temporal\norder, list members, author assessments and statements about what the document\ncovers or derives. A list of methods and a commitment to derive their constructions\nare substantive content even when later sections explain those methods in detail.\nKeep distinct assessments distinct: usefulness and speed are separate assertions.\nDo not replace a complete inventory with selected themes or a short summary.\nReader prior knowledge does not authorize omission of stated source meaning.\n\nWhen splitting a sentence into concepts, preserve its explicit relations as well\nas its individual clauses. State each relation in a proposition, either together\nwith its related clauses or as a separate source-grounded claim. Concept array\norder and prerequisite metadata do not express a relation in proposition text.\nFor example, a hypothetical manual that introduces a sensor, then describes its\ncalibration, states an order of exposition; listing those topics separately loses\nthat order. This example is not part of the supplied source. Preserve the stated\ndirection, subject, conditions and scope of temporal, procedural and expository\nrelations. Do not turn exposition into real-world chronology, causation or logical\nnecessity. A conjunction alone does not establish order. Conditional \"if ... then\"\nstates a condition and consequence, not that either event occurred or that one\noccurred earlier. Check relations after atomizing, not just clause membership.\n\nPreserve enough explicit context in each proposition to identify its subject and\nscope; do not rely on a reader guessing them from familiar terminology. Prefer\nthe source's precise wording when paraphrasing would lose a distinction. Do not\nadd unstated definitions or interpret an incomplete fragment using outside facts.\nBefore returning, check that all substantive clauses and enumeration members are\nrepresented and that each proposition is supported by the supplied source.\n\nReader-facing titles, headings, labels, author attributions and displayed dates\ncan convey document identity or literal metadata without making a domain claim.\nRetain that explicit meaning as a claim, including the exact displayed value.\nWhen its role is unclear, state only that the source displays the quoted label;\ndo not guess whether it is the document title, an author, or a recommendation.\nA topic label does not assert a definition, finding, valuation, derivation or\nmethod's properties. Do not infer any of those from a named topic alone.\nTypography does not make readable text disposable. Preserve substantive clauses,\nnegation and qualifications alongside labels, including text inside custom macros.\nKeep formatting commands separate from the reader-facing values they surround.\n\nSource text with span IDs:\n[span-39e3a42d391dacda]: \n\n\n[span-2d0ded8b7bd6e1b0]: The hierarchy that emerges is worth stating plainly. A split or truncated\nmixture UKF is a fast, useful diagnostic and a good proposal engine. A\nbranch-corrected particle filter is the authoritative nonlinear likelihood.\nThe COPF construction of Section~\\ref{sec:copf} is the exact\npiecewise-linear benchmark. None of this, however, turns the UKF proposal\ninto an exact source of HMC gradients: an HMC scheme must target either the\ncorrected extended particle state or an explicitly acknowledged\napproximation (Sections~\\ref{sec:hmc} and~\\ref{sec:pmcmc}), and the\nshadow-rate case study of Section~\\ref{sec:shadow} shows what these\nconstructions become when the switching lives in the observation map\nrather than in the transition.\n[span-4a440fc0759dc9eb]: \n\n\n[span-8c44467b12332244]: \\section{Ordinary HMC and how the lower bound changes its geometry}\n[span-dd9c33a6fbe04148]: \\label{sec:hmc}\n[span-f65c81c412a2fde2]: \n\n\n[span-35acc78068912ab7]: Hamiltonian Monte Carlo is the natural starting point for posterior sampling\nin high-dimensional latent-variable models, and understanding precisely where\nan occasionally binding constraint breaks its assumptions is the organizing\nquestion for the rest of this survey. For a smooth posterior\n\n[span-8acfe4abd489341e]: $\\pi(q)\\propto e^{-U(q)}$\n[span-18bcf0a945d45511]: , introduce momentum \n[span-261dee1ebf146b54]: $p\\sim e^{-K(p)}$\n[span-a7bfff0e0d67f335]: , form the\nHamiltonian \n[span-643f68a21c697922]: $H=U+K$\n[span-9cef6b4b1b787a05]: , and evolve the phase point by Hamilton's equations\n(Neal 2011, Sec.~5.2)\n\n[span-dd1698b8d3952da0]: \\begin{equation}\\label{eq:54}\n \\dot q=\\nabla_pK(p),\\qquad \\dot p=-\\nabla_qU(q).\n\\end{equation}\n[span-0d60535a3e16b490]: \nWith Gaussian momentum \n[span-bbc09b38c4a97f8f]: $K(p)=\\frac12p^{\\mathsf T}M^{-1}p$\n[span-fdbffed5a84c0073]: , the leapfrog\nintegrator discretizes \\eqref{eq:54} as\n\n[span-752989d0f5b0655c]: \\begin{equation}\\label{eq:55}\n p\\leftarrow p-\\tfrac\\epsilon2\\nabla U(q),\\quad\n q\\leftarrow q+\\epsilon M^{-1}p,\\quad\n p\\leftarrow p-\\tfrac\\epsilon2\\nabla U(q).\n\\end{equation}\n[span-faa0a01dc8c59c95]: \nThe leapfrog map is reversible and volume preserving, so a final Metropolis\ncorrection with acceptance probability \n[span-1d6ada32639db26a]: $1\\wedge e^{-\\Delta H}$\n[span-0d428b290f068a6c]:  exactly\naccounts for the integration error.\n\nReader profile:\n{\n  \"role\": \"graduate economics student with econometrics training\",\n  \"prior_knowledge\": [\n    \"Bayesian inference\",\n    \"state-space models\",\n    \"Kalman filtering\",\n    \"MCMC\",\n    \"New Keynesian models\"\n  ],\n  \"reading_context\": \"Reads the complete survey without access to the source repository or the authors, deciding which sampler to use for a zero-lower-bound model.\"\n}\n\nGenre: technical survey\n\nFor each concept:\n1. Identify the proposition (what is being taught)\n2. Classify the concept type\n3. Note the teaching role (initial, repeated, expanded, contrasted)\n4. Link to source span IDs \u2014 ONLY the minimal spans that directly state this concept\n5. List supporting span IDs (for evidence, equations, citations)\n6. State confidence (0.0-1.0)\n\nMultiple concepts may share a source span. Keep distinct propositions separate.\nUse only the supplied span IDs. Prerequisites must name another concept_id from\nthis response, or an exact item from the reader's declared prior knowledge.\nDo not invent undeclared prerequisite identifiers.\n\nAbstain (return empty list) if:\n- Source contains only formatting or control syntax without reader-facing meaning\n- Cannot determine proposition boundaries\n- Ambiguous whether content is substantive\n\nThe business response payload is a JSON array of objects with these fields:\n- concept_id: string (unique identifier)\n- proposition: string (the actual concept/claim being taught)\n- concept_type: string (definition|distinction|claim|mechanism|derivation|finding|example|counterexample)\n- source_span_ids: array of strings (span IDs where this concept is directly stated)\n- teaching_roles: array of strings (initial|repeated|qualified|contrasted|example|prerequisite)\n- supporting_spans: array of strings (span IDs providing evidence/support)\n- prerequisites: array of strings (concepts reader needs first)\n- confidence: number (0.0-1.0)\n\nExample response format for the hypothetical source \"For sampled households in\n2020, spending increases with income. The survey derives filtering and sampling\nconstructions rather than merely naming them.\" These example claims are not\npart of the supplied source:\n[\n  {\n    \"concept_id\": \"concept-001\",\n    \"proposition\": \"For sampled households in 2020, spending increases with income.\",\n    \"concept_type\": \"claim\",\n    \"source_span_ids\": [\"span-001\"],\n    \"teaching_roles\": [\"initial\"],\n    \"supporting_spans\": [],\n    \"prerequisites\": [],\n    \"confidence\": 0.9\n  },\n  {\n    \"concept_id\": \"concept-002\",\n    \"proposition\": \"The survey derives filtering and sampling constructions rather than merely naming them.\",\n    \"concept_type\": \"claim\",\n    \"source_span_ids\": [\"span-002\"],\n    \"teaching_roles\": [\"initial\"],\n    \"supporting_spans\": [],\n    \"prerequisites\": [],\n    \"confidence\": 0.85\n  }\n]\n\nInventory context request: {\"policy\": \"inventory-sentence-context-v1\", \"repair_round\": 0, \"source_file\": \"zlb_source.tex\", \"window\": \"window-0054\"}", "purpose": "concept_extraction", "record_type": null, "response_schema": "extraction-response", "schema": null, "system_prompt": null}, "request_hash": "c514a74ac46e4216ee7e03685f4e01d7c80ccd35c89b76acc9d1e4926f3b84dc", "runtime_record_hash": "ac3ee7246e2100e4945b36568319f562e3c3008cf575da02cd2a7bb40c2800df"}, "output": "/home/ubuntu/workspace/humanvoice/docs/audits/2026-10-05/master-program/automatic-execution/sol-inventory-failure-first-20261026-01/campaign/generation-02", "plan_identity": "febc33c5f83ef6ced4ec2e98fe52b8d43ba971def36f791d1f69e0432ce03c3e", "terminal_sha256": "eaf770fad661e8d92434fd186bdc883c82473a1bbb26e9d0ad7fc507029b864f"}, "final_zlb_acceptance": false, "human_judgment_required": false, "identity": "6dcb206a981846867c0b46682c7d33252e4ed2d682c3120288bed1fdc70c7ebe", "mode": "request", "primary_error": "InvocationStopped: Inventory provider invocation stopped: Cumulative recovery session allowance exhausted", "status": "BLOCKED_SEMANTIC"}, "next": "Diagnose and repair from retained evidence; never reopen sealed work", "output": "/home/ubuntu/workspace/humanvoice/docs/audits/2026-10-05/master-program/automatic-execution/sol-inventory-failure-first-20261026-01/campaign/generation-02", "phase": "SOL_INVENTORY_HANDOFF", "reason": "InvocationStopped: Inventory provider invocation stopped: Cumulative recovery session allowance exhausted", "secondary_error": "RecoveryBlocked: InvocationStopped: Inventory provider invocation stopped: Cumulative recovery session allowance exhausted", "status": "BLOCKED_SEMANTIC"}
-Evidence: /home/ubuntu/workspace/humanvoice/docs/audits/2026-10-05/master-program/automatic-execution/sol-inventory-failure-first-20261026-01.
+Inventory continuation: {"allocated_calls": 3, "baseline_sha256": "8fd1ed0eb230b515215077789df2f52da8ed748cae733c91ecf69a25d0c0f24b", "final_zlb_acceptance": false, "human_evidence": false, "next": "Admit source-bound humanization and review; final acceptance remains human", "observations_hash": "1d4f0a8eb7585aa3ed72426f331133a758dfc84f3f80b5cb1f9f1afbf8b434c1", "phase": "SOL_INVENTORY_HANDOFF", "plan_identity": "54118eabcbfae564b8f141bd44a2c5d18e4e14edddf02421401a39e0abf719a0", "retained_tokens": 1632000, "status": "INVENTORY_VERIFIED"}
+Evidence: /tmp/hv-release-a9ytillr/popen-gw8/test_execution_publication_fai1/installed/new-campaign/generation-00.
 <!-- end-sol-inventory-continuation -->
 
 <!-- qualification-capture-continuation -->
@@ -1950,3 +2734,18 @@ Accepted units: 2/2
 Blocker: none
 Qualification: false; production admission: false
 <!-- standard-recovery:24d3e84669f3c2e1cc105b4218a1db6024da8b7d5635f138926087a66d55463f:end -->
+
+<!-- timing-estimate-20261101 -->
+Timing estimate,1 November2026 02:39 Asia/Shanghai: preparation23/32; allow
+30–60 additional minutes if remaining native phases pass. The prior full-size
+probe had1052 requests,12 per work group; the measured first group took865.895s.
+Both full soaks run sequentially: approximately176 groups imply42.3 hours of
+work-group time plus1.2 hours of setup at those earlier rates. Plan roughly45–55
+hours before launch readiness, then12 hours for the requested ZLB run, excluding
+new repairs and final human acceptance. This is a low-confidence extrapolation,
+not a measured full-run ETA. The authorized window ends2 November2026 17:05:59
+Asia/Shanghai, about38.4 hours after this observation; it is likely insufficient.
+The subsequent48-hour user authorization supersedes this old cutoff and shortfall.
+The runtime continuation now binds4 November2026 17:05:59 Asia/Shanghai.
+No spending or individual-operation limit changed. Active approved work continues.
+<!-- end-timing-estimate-20261101 -->

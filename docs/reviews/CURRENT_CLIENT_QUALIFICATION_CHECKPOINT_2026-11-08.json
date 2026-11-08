@@ -1,0 +1,79 @@
+{
+  "call_budget": {
+    "available": 599,
+    "maximum": 2235,
+    "reserved_remaining": 0,
+    "used": 1636
+  },
+  "campaign": {
+    "completed": [
+      "ownership",
+      "historical-scope",
+      "migration"
+    ],
+    "error": null,
+    "phase": "prepare",
+    "status": "RUNNING"
+  },
+  "cleanup": {
+    "descendants_quiescent": true,
+    "leader_and_group_complete": true
+  },
+  "evidence_sha256": {
+    ".localresources/session-qualification-20261107/qualification-host/allocation-ledger.json": "6f8982bf5dbb2d8020e7eabe7425e160fe6e92373b470857fb29f72095b242ed",
+    ".localresources/session-qualification-20261107/qualification-host/allocation-seal.json": "2250171fbcd740514c27ed2af8236a8cd6b98b4f470a07746eafb7e6c929e22b",
+    ".localresources/session-qualification-20261107/qualification-host/evaluation.json": "b1836b0deee5f84bfa8afe0c508aeeafb14bfe61c34589fdea8fb71926c64694",
+    ".localresources/session-qualification-20261107/qualification-verified.json": "4b4b76d9bc8c88667c12a037eb488ee70d045842760f720a10861bc01cb4db48",
+    ".localresources/session-qualification-20261107/shm-repair-20261108/preflight.json": "44084866e42b837a1295987af1d569c3dda511bb60d5c7cd76c1578471e174d5",
+    ".localresources/session-qualification-20261107/supervisor-status.json": "3dfd8976dc10dafcbe8b9424ecabd709c7381e817425fc1d2de3df365ab364b9"
+  },
+  "frozen_qualification_sources_unchanged": true,
+  "full_zlb_complete": false,
+  "native_evaluation": {
+    "checks": 212,
+    "human_evidence": false,
+    "status": "pass"
+  },
+  "production_admitted": false,
+  "progress": {
+    "allocated": 212,
+    "completed": 212,
+    "ledger_sha256": "6f8982bf5dbb2d8020e7eabe7425e160fe6e92373b470857fb29f72095b242ed",
+    "terminal": "pass",
+    "unresolved": 0
+  },
+  "qualification": {
+    "canary_only": false,
+    "evaluation_hash": "ac76f1caf6d20fdb7050f7567a57e0583f5a2961bc269e16cde324c7d2ea37eb",
+    "output": "/home/ubuntu/workspace/humanvoice/.localresources/session-qualification-20261107/qualification-host",
+    "plan_identity": "876f471c55f50324d443f9124197694ba8f0ca2ede93f15b3c6a5d4a34de160e",
+    "profile_hash": "e2908eb59bee13c946d1e34604188548a41d12571e2f55851ad04b677fee1e00",
+    "purposes": [
+      "concept_extraction",
+      "coverage_verification",
+      "reconstruction_verification"
+    ],
+    "settled": true,
+    "status": "QUALIFICATION_VERIFIED"
+  },
+  "recorded_at": "2026-11-08T13:01:02+08:00",
+  "status": "QUALIFICATION_PASSED_CAMPAIGN_PREPARING",
+  "tests": [
+    {
+      "errors": 0,
+      "failures": 0,
+      "path": ".localresources/session-qualification-shm-repair-20261108/tests-dispatch-nested.xml",
+      "sha256": "4100469020efc6f1cc887b10b5bd6bc34762ede1e74cc6f9cac77d72ccc6d38c",
+      "skipped": 0,
+      "tests": 29
+    },
+    {
+      "errors": 0,
+      "failures": 0,
+      "path": ".localresources/session-campaign-current-20261108/tests-successor.xml",
+      "sha256": "0aed3b5c04f9d81e84f8a24f2d173b921cf5a5910c98e89481c173ffc360ce79",
+      "skipped": 0,
+      "tests": 17
+    }
+  ]
+}
