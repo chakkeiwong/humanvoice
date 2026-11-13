@@ -1,5 +1,5 @@
 {
-  "at": "2026-11-14T04:14:26+08:00",
+  "at": "2026-11-14T04:24:33+08:00",
   "service": {
     "MainPID": "1899149",
     "Result": "success",
@@ -7,15 +7,22 @@
     "SubState": "running"
   },
   "status": {
-    "repair": "durable_settings_after_editor_reload",
-    "status": "VERIFYING_CURRENT_SETTINGS",
-    "updated_at": 1794600834.3892453,
+    "repair": "automatic_capacity_recovery",
+    "status": "NATIVE_BASELINE_READY",
+    "updated_at": 1794601410.8408291,
     "supervisor": {
-      "pid": 1899149,
-      "start_ticks": "144760566",
+      "pid": 1902391,
+      "start_ticks": "144768743",
       "boot_id": "f57317de-e249-43e8-8e8d-0ec026eae461"
     },
-    "final_zlb_acceptance": false
+    "final_zlb_acceptance": false,
+    "baseline": {
+      "elapsed_seconds": 365.92115909210406,
+      "native_replays": 1,
+      "reuse_hits": 0,
+      "runtime_references": 583,
+      "original_authorizations": 136
+    }
   },
   "allocated": 135,
   "retained": 110,

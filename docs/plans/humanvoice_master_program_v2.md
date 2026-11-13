@@ -1,5 +1,5 @@
 <!-- durable-settings-recovery-20261114 -->
-Current checkpoint, 2026-11-14T04:14:26+08:00: **VERIFYING_CURRENT_SETTINGS**.
+Current checkpoint, 2026-11-14T04:24:33+08:00: **NATIVE_BASELINE_READY**.
 User service: active/running; PID 1899149.
 Retained manuscript responses: 110; allocated slots: 135;
 remaining slots: 42 in the original 177-call pool.
@@ -268,7 +268,7 @@ this separate offline rehearsal runs. Inventory remains complete and settled.
 <!-- end-file-limit-repair-20261112 -->
 
 <!-- writing-live-20261112 -->
-Current ZLB writing: **VERIFYING_CURRENT_SETTINGS**. Retained manuscript responses: 0.
+Current ZLB writing: **NATIVE_BASELINE_READY**. Retained manuscript responses: 0.
 Native inventory is complete. This stage has one shared 177-call pool and up to 16 provider workers.
 Automatic recovery waits 15 minutes after network failure; known responses remain retained.
 Current state: `.localresources/parallel-writing-semantics-20261112/execution/status.json`.
