@@ -1,24 +1,33 @@
 <!-- durable-settings-recovery-20261114 -->
-Current checkpoint, November 14: **DURABLE_SETTINGS_RESTART_READY**.
-The previous editor reload stopped the service at 02:36:16 Shanghai before any
-new paid request. All 110 responses and 135 charges remain; 42 slots are unused.
-The refreshed capture differs only in editor PID/start time. The repair verifies
-latest session/native configuration and credential/environment hashes directly,
-without requiring the editor process to remain alive. Both configuration-reader
-and qualified request executables remain pinned. New runtime markers bind this
-verification contract. All approval/sandbox/source/account/deadline checks remain.
-Execution is authorized through November 20, 17:03:49 Shanghai, using the active
-HTTPS gateway and retained Astra/xhigh manuscript routing. Sixteen workers remain.
-All 21 regressions pass, including actual verification after editor exit;
-retained-bank/account checks pass with zero paid calls. The source-bound review
-is READY. Next: grouped focused commit/user-service restart,
-then verify real provider progress. No sudo. Five unit repairs and the subsequent
-automatic review/assembly/benchmark phases remain; final human acceptance is
-pending. See docs/plans/ZLB_DURABLE_SETTINGS_RECOVERY_2026-11-14.md.
-The first installed durable service stopped before allocation because systemd
-omitted the non-secret client-identification variable used by the interactive
-session. The corrected unit supplies that exact value. Deployment now runs its
-preflight as an actual transient user service before starting production.
+Current checkpoint, 2026-11-14T04:14:26+08:00: **VERIFYING_CURRENT_SETTINGS**.
+User service: active/running; PID 1899149.
+Retained manuscript responses: 110; allocated slots: 135;
+remaining slots: 42 in the original 177-call pool.
+
+Execution now verifies current thread/native configuration and credential/
+environment hashes directly; it does not depend on an editor process remaining
+alive. Only PID/start time are excluded from stable settings identity. Changed
+model, effort, gateway, approval, credentials, thread or pinned executable still
+blocks before a request. New receipts retain actual qualified-client profiles
+and exact gateway/session/durable-settings markers.
+
+The repair passes 21 regressions, including actual verification after editor
+exit, native success/failure accounting, restart, tamper rejection and worker
+scope restoration. Retained-bank/account checks pass with zero provider calls
+or account writes. Host/sandbox parity uses sixteen clients; the exact qualified
+executable is checked in the production namespace with networking denied.
+Ordinary-user service deployment requires no sudo.
+
+The active gateway is https://cn.origincoder.com/v1 and manuscript routing remains
+Astra/xhigh with the qualified pinned client. Sixteen workers, 900-second provider
+bounds, 1050-second scheduler attempts, 15-minute network backoff and the
+November 20, 17:03:49 Shanghai deadline remain.
+
+Remaining document work: five unit repairs and automatic independent reviews;
+assembled relationships/build/release; benchmark/regression; separately budgeted
+reproduction; final human review. Automatic recovery from assembled semantic
+rejection remains open in the preceding repair plan. No final acceptance exists.
+See docs/plans/ZLB_DURABLE_SETTINGS_RECOVERY_2026-11-14.md.
 <!-- end-durable-settings-recovery-20261114 -->
 
 <!-- renewed-session-execution-20261113 -->
@@ -259,7 +268,7 @@ this separate offline rehearsal runs. Inventory remains complete and settled.
 <!-- end-file-limit-repair-20261112 -->
 
 <!-- writing-live-20261112 -->
-Current ZLB writing: **BLOCKED_REPAIR**. Retained manuscript responses: 0.
+Current ZLB writing: **VERIFYING_CURRENT_SETTINGS**. Retained manuscript responses: 0.
 Native inventory is complete. This stage has one shared 177-call pool and up to 16 provider workers.
 Automatic recovery waits 15 minutes after network failure; known responses remain retained.
 Current state: `.localresources/parallel-writing-semantics-20261112/execution/status.json`.

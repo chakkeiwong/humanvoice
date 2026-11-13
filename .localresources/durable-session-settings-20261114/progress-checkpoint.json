@@ -1,0 +1,23 @@
+{
+  "at": "2026-11-14T04:14:26+08:00",
+  "service": {
+    "MainPID": "1899149",
+    "Result": "success",
+    "ActiveState": "active",
+    "SubState": "running"
+  },
+  "status": {
+    "repair": "durable_settings_after_editor_reload",
+    "status": "VERIFYING_CURRENT_SETTINGS",
+    "updated_at": 1794600834.3892453,
+    "supervisor": {
+      "pid": 1899149,
+      "start_ticks": "144760566",
+      "boot_id": "f57317de-e249-43e8-8e8d-0ec026eae461"
+    },
+    "final_zlb_acceptance": false
+  },
+  "allocated": 135,
+  "retained": 110,
+  "review_sha256": "daf0bc2c485041c54b2517e2267c8586aa151a83002a78fe150b8f8c0ca2e9b8"
+}
