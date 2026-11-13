@@ -1,0 +1,8 @@
+{
+  "previous_unit_sha256": "0c98cabfa70ba2c1352dd5651e72b3f71e5db5ae9221b69620b2a1e8b51bed2c",
+  "environment_key": "CODEX_INTERNAL_ORIGINATOR_OVERRIDE",
+  "environment_value": "codex_vscode",
+  "reason": "Only required environment key missing from the user service manager.",
+  "before_attempts": 135,
+  "paid_calls_before_repair": 0
+}

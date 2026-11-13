@@ -1,0 +1,13 @@
+{
+  "repair": "durable_settings_after_editor_reload",
+  "status": "BLOCKED_REPAIR",
+  "updated_at": 1794600549.5750136,
+  "supervisor": {
+    "pid": 1892381,
+    "start_ticks": "144731433",
+    "boot_id": "f57317de-e249-43e8-8e8d-0ec026eae461"
+  },
+  "final_zlb_acceptance": false,
+  "error": "ValueError: Execution credential/proxy environment changed",
+  "traceback": "Traceback (most recent call last):\n  File \"/home/ubuntu/workspace/humanvoice/.localresources/durable-session-settings-20261114/durable_program.py\", line 169, in main\n    preflight()\n    ~~~~~~~~~^^\n  File \"/home/ubuntu/workspace/humanvoice/.localresources/durable-session-settings-20261114/durable_program.py\", line 126, in preflight\n    rebind.adopt(rebind.state.load()['old_profile'])\n    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/ubuntu/workspace/humanvoice/.localresources/client-reload-continuation-20261114/session_rebind.py\", line 105, in adopt\n    return NATIVE_ADOPT(active_profile(value))\n  File \"/home/ubuntu/workspace/humanvoice/.localresources/durable-session-settings-20261114/durable_settings.py\", line 75, in adopt\n    verify(binding)\n    ~~~~~~^^^^^^^^^\n  File \"/home/ubuntu/workspace/humanvoice/.localresources/durable-session-settings-20261114/durable_settings.py\", line 62, in verify\n    checked_configuration(expected, effective, context,\n    ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n        environment_hash=base.active_environment.environment_hash(expected),\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n        credential_hash=digest(credential.read_bytes()) if credential.is_file() else None)\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/ubuntu/workspace/humanvoice/.localresources/durable-session-settings-20261114/durable_settings.py\", line 42, in checked_configuration\n    state.require(environment_hash == expected['credentials']['environment_sha256'],\n    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n                  'Execution credential/proxy environment changed')\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/ubuntu/workspace/humanvoice/.localresources/gateway-continuation-20261113/gateway_state.py\", line 23, in require\n    raise ValueError(message)\nValueError: Execution credential/proxy environment changed\n"
+}

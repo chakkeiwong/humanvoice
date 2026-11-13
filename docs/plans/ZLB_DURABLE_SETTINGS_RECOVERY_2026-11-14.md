@@ -73,3 +73,21 @@ current settings and hashes. The offline retained-bank/account check passes in
 1.35 seconds with zero model calls and accounting writes. Source-bound
 predecessor evidence remains intact. Ruff passes; the execution review is READY.
 Host/sandbox parity and isolated startup run before user-service installation.
+
+## Actual service environment correction
+
+The first durable-service launch failed before allocation because its manager
+did not supply CODEX_INTERNAL_ORIGINATOR_OVERRIDE=codex_vscode. A comparison of
+only key names and hashes established this as the sole differing environment
+entry; credentials, proxies and homes match. The unit now sets this non-secret
+client-identification value explicitly. Before production installation, a
+transient ordinary-user service runs the full preflight under that same manager
+environment. This closes the earlier shell-versus-service preflight gap.
+The installed service may be replaced only if its bytes match the exact prior
+reviewed unit or this updated unit. Failure evidence is retained separately;
+the original 135 paid attempts remain unchanged.
+
+The corrected implementation passes all 21 regressions in 52.94 seconds; the
+retained-bank/account check passes again in 1.34 seconds with zero paid calls.
+The configuration review and publication payload are refreshed for the actual
+user-service preflight and bounded replacement of the previously installed unit.

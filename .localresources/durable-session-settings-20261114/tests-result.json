@@ -1,5 +1,5 @@
 {
-  "tests": 20,
+  "tests": 21,
   "failures": 0,
   "errors": 0,
   "skipped": 0,
@@ -7,15 +7,16 @@
     "/home/ubuntu/workspace/humanvoice/.localresources/durable-session-settings-20261114/durable_bootstrap.py": "cb50e8a2e5484963c8749ee2e4318badf8c3324b64265976c35a83ac46443c34",
     "/home/ubuntu/workspace/humanvoice/.localresources/durable-session-settings-20261114/durable_settings.py": "5bc289b0e38a6787e1b72ca523c0d318d657d657039a922432ad50bde5a3c33f",
     "/home/ubuntu/workspace/humanvoice/.localresources/durable-session-settings-20261114/current-session.json": "c8950e56e8c0a924298d20a245f2b4ed92f3f266e28d652d576cf3ca0b4f1742",
-    "/home/ubuntu/workspace/humanvoice/.localresources/durable-session-settings-20261114/durable_program.py": "24d5a5231ae0c091647b49aaf3082c33818d90363470b68677ac376c43a4d854",
-    "/home/ubuntu/workspace/humanvoice/.localresources/durable-session-settings-20261114/humanvoice-zlb-durable-settings-20261114.service": "0c98cabfa70ba2c1352dd5651e72b3f71e5db5ae9221b69620b2a1e8b51bed2c"
+    "/home/ubuntu/workspace/humanvoice/.localresources/durable-session-settings-20261114/durable_program.py": "bf66c76a4672df2865a29e3b02e6e564a2aa4b15e95a7abad85f3717bc3de586",
+    "/home/ubuntu/workspace/humanvoice/.localresources/durable-session-settings-20261114/environment-repair.json": "032bc67fa06e0c1cd7722bf7ed547ef7e9cd474aad2eb9cd09adc4ef3ec1f6c7",
+    "/home/ubuntu/workspace/humanvoice/.localresources/durable-session-settings-20261114/humanvoice-zlb-durable-settings-20261114.service": "d777773b039134f706ea6d94d357e231a92414de9522cff7a86e533bea316b70"
   },
-  "elapsed_seconds": 55.07107598311268,
+  "elapsed_seconds": 53.281100154155865,
   "artifacts": {
-    "/home/ubuntu/workspace/humanvoice/.localresources/durable-session-settings-20261114/test_durable.py": "ac3b78f6c03cbf0e8db51f429ee4e0199bbf4fa8004b782134e26d82571d5136",
+    "/home/ubuntu/workspace/humanvoice/.localresources/durable-session-settings-20261114/test_durable.py": "4a45a865e5d250570641541b4640c701edeb5a964f74fbf7240b54d3e7a1c540",
     "/home/ubuntu/workspace/humanvoice/.localresources/durable-session-settings-20261114/check_durable.py": "dbb79fc28aa69a7e5d1e967eb4001e2baf717ec64225cbc1bca106cfb000d6d7",
-    "/home/ubuntu/workspace/humanvoice/.localresources/durable-session-settings-20261114/tests.xml": "c2a4e34d257f404848afddad28b5786a9756feffc4972f66638e1958d8f85032",
-    "/home/ubuntu/workspace/humanvoice/.localresources/durable-session-settings-20261114/tests.log": "f558c346863606624b7276bca33f299d4b616f86729060c421e2223c82f436d1",
+    "/home/ubuntu/workspace/humanvoice/.localresources/durable-session-settings-20261114/tests.xml": "03ddaff1574ae4e76d50d40366876d4cb1a7bae4e6eb1e446a983b3f8d184ecb",
+    "/home/ubuntu/workspace/humanvoice/.localresources/durable-session-settings-20261114/tests.log": "c5e03f499afc3a34ca17403c3f0c0d0cf8a26e0d0946d1fa011c4cc53c43e66e",
     "/home/ubuntu/workspace/humanvoice/.localresources/gateway-continuation-20261113/test_gateway.py": "ca2665341c57238703571758c4f8dbdb31c7519297164298b46c1cbf04d85d19"
   },
   "model_calls": 0

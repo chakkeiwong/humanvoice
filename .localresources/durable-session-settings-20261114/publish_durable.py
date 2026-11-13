@@ -14,7 +14,7 @@ from tools.ensemble_closure_contract import save
 ROOT = program.HERE.parents[1]
 MASTERS = [ROOT / 'docs/plans' / name for name in
            ('ENSEMBLE_MASTER_PROGRAM_2026-09-30.md', 'humanvoice_master_program_v2.md')]
-MANIFEST_SHA256 = 'f7f5ab6b70565f0ce44f2023b48e5ce945e7fafe03880dc902026850d201e9c1'
+MANIFEST_SHA256 = '07e1301af1651c74e67b5677fcfa2aaf82cbc7478c9c3f03b8f551f16b8717c1'
 
 
 def git(*args):
@@ -70,7 +70,7 @@ model, effort, gateway, approval, credentials, thread or pinned executable still
 blocks before a request. New receipts retain actual qualified-client profiles
 and exact gateway/session/durable-settings markers.
 
-The repair passes 20 regressions, including actual verification after editor
+The repair passes 21 regressions, including actual verification after editor
 exit, native success/failure accounting, restart, tamper rejection and worker
 scope restoration. Retained-bank/account checks pass with zero provider calls
 or account writes. Host/sandbox parity uses sixteen clients; the exact qualified
@@ -115,7 +115,7 @@ def publish_start():
                                      'Reviewed publication input changed: ' + relative)
     program.current_review()
     revision = commit([*files, str(manifest.relative_to(ROOT)), str(Path(__file__).relative_to(ROOT))],
-                      'Keep verified ZLB execution independent of editor process lifetime')
+                      'Match ZLB service client identification to verified settings')
     save(program.HERE / 'publication.json', {'commit': revision,
          'masters': {str(p): master_hash(p) for p in MASTERS}})
     program.install_start()

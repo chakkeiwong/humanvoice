@@ -160,3 +160,13 @@ def test_spawned_worker_and_exception_restore(fixture, synthetic, monkeypatch):
     with pytest.raises(RuntimeError), program.scope(reviewed=False):
         raise RuntimeError('interruption')
     assert prior == (durable.rebind.NATIVE_VERIFY, durable.rebind.NATIVE_ADOPT, durable.rebind.write_marker)
+
+
+def test_service_matches_verified_interactive_client_identification():
+    text = (program.HERE / program.UNIT).read_text()
+    assert text.count('Environment=CODEX_INTERNAL_ORIGINATOR_OVERRIDE=codex_vscode') == 1
+    assert 'NoNewPrivileges=yes' in text
+    assert 'EnvironmentFile=' not in text
+    record = read_json(program.HERE / 'environment-repair.json')
+    assert record['environment_key'] == 'CODEX_INTERNAL_ORIGINATOR_OVERRIDE'
+    assert record['environment_value'] == 'codex_vscode'

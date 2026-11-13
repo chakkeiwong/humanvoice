@@ -9,12 +9,16 @@ and qualified request executables remain pinned. New runtime markers bind this
 verification contract. All approval/sandbox/source/account/deadline checks remain.
 Execution is authorized through November 20, 17:03:49 Shanghai, using the active
 HTTPS gateway and retained Astra/xhigh manuscript routing. Sixteen workers remain.
-All 20 regressions pass, including actual verification after editor exit;
+All 21 regressions pass, including actual verification after editor exit;
 retained-bank/account checks pass with zero paid calls. The source-bound review
 is READY. Next: grouped focused commit/user-service restart,
 then verify real provider progress. No sudo. Five unit repairs and the subsequent
 automatic review/assembly/benchmark phases remain; final human acceptance is
 pending. See docs/plans/ZLB_DURABLE_SETTINGS_RECOVERY_2026-11-14.md.
+The first installed durable service stopped before allocation because systemd
+omitted the non-secret client-identification variable used by the interactive
+session. The corrected unit supplies that exact value. Deployment now runs its
+preflight as an actual transient user service before starting production.
 <!-- end-durable-settings-recovery-20261114 -->
 
 <!-- renewed-session-execution-20261113 -->

@@ -5,6 +5,7 @@ StartLimitBurst=3
 
 [Service]
 Type=simple
+Environment=CODEX_INTERNAL_ORIGINATOR_OVERRIDE=codex_vscode
 WorkingDirectory=/home/ubuntu/workspace/humanvoice
 ExecStart=/home/ubuntu/miniforge3/bin/python -B /home/ubuntu/workspace/humanvoice/.localresources/durable-session-settings-20261114/durable_program.py run
 Restart=on-abnormal

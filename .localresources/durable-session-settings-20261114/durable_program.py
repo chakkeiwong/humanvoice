@@ -19,7 +19,7 @@ HERE, previous = durable.HERE, durable.previous
 base, live, context = previous.base, previous.live, previous.context
 UNIT = 'humanvoice-zlb-durable-settings-20261114.service'
 FILES = ('durable_bootstrap.py', 'durable_settings.py', 'current-session.json',
-         'durable_program.py', UNIT)
+         'durable_program.py', 'environment-repair.json', UNIT)
 
 
 def sources():
@@ -135,12 +135,30 @@ def preflight():
          'probe': str(probe), 'sha256': digest(probe.read_bytes()), 'model_calls': 0})
 
 
+def service_preflight():
+    # Exercise the actual systemd environment, not just the interactive shell.
+    # The only explicitly injected value is non-secret client identification.
+    subprocess.run(['/usr/bin/systemd-run', '--user', '--wait', '--collect', '--quiet',
+        '--unit=humanvoice-zlb-durable-preflight-' + str(time.time_ns()),
+        '--property=NoNewPrivileges=yes',
+        '--setenv=CODEX_INTERNAL_ORIGINATOR_OVERRIDE=codex_vscode',
+        base.PYTHON, '-B', str(Path(__file__)), 'preflight'], check=True, timeout=240)
+
+
 def install_start():
-    preflight()
+    service_preflight()
     subprocess.run(['/usr/bin/systemd-analyze', '--user', 'verify', str(HERE / UNIT)], check=True, timeout=30)
     target = Path('/home/ubuntu/.config/systemd/user') / UNIT
-    rebind.state.require(not target.is_symlink() and (not target.exists() or target.read_bytes() == (HERE / UNIT).read_bytes()),
-                         'User service destination belongs to another payload')
+    predecessor = read_json(HERE / 'environment-repair.json')
+    rebind.state.require(predecessor == {
+        'previous_unit_sha256': '0c98cabfa70ba2c1352dd5651e72b3f71e5db5ae9221b69620b2a1e8b51bed2c',
+        'environment_key': 'CODEX_INTERNAL_ORIGINATOR_OVERRIDE', 'environment_value': 'codex_vscode',
+        'reason': 'Only required environment key missing from the user service manager.',
+        'before_attempts': 135, 'paid_calls_before_repair': 0}, 'Service environment repair scope changed')
+    rebind.state.require(not target.is_symlink() and (not target.exists()
+        or target.read_bytes() == (HERE / UNIT).read_bytes()
+        or digest(target.read_bytes()) == predecessor['previous_unit_sha256']),
+        'User service destination belongs to another payload')
     subprocess.run(['/usr/bin/systemctl', '--user', 'disable', '--now', previous.UNIT], check=True, timeout=30)
     temporary = target.with_suffix('.service.next')
     temporary.write_bytes((HERE / UNIT).read_bytes())
