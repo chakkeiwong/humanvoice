@@ -1,0 +1,40 @@
+{
+  "status": {
+    "repair": "automatic_capacity_recovery",
+    "status": "BLOCKED_REPAIR",
+    "updated_at": 1794579223.3028572,
+    "supervisor": {
+      "pid": 1250116,
+      "start_ticks": "142585032",
+      "boot_id": "f57317de-e249-43e8-8e8d-0ec026eae461"
+    },
+    "final_zlb_acceptance": false,
+    "error": "ValueError: Recovery limits or eligibility policy changed",
+    "traceback": "Traceback (most recent call last):\n  File \"/home/ubuntu/workspace/humanvoice/.localresources/gateway-continuation-20261113/gateway_program.py\", line 196, in main\n    return base.run()\n           ~~~~~~~~^^\n  File \"/home/ubuntu/workspace/humanvoice/.localresources/writer-session-binding-repair-20261113/renewal_runtime.py\", line 63, in invoke\n    return namespace[function.__name__](*args, **kwargs)\n           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^\n  File \"<reviewed-renewal:run>\", line 12, in run\n  File \"/home/ubuntu/workspace/humanvoice/.localresources/parallel-writing-semantics-20261112/native_context.py\", line 90, in prime_baseline\n    with self.consumer(SEED):\n         ~~~~~~~~~~~~~^^^^^^\n  File \"/home/ubuntu/miniforge3/lib/python3.13/contextlib.py\", line 141, in __enter__\n    return next(self.gen)\n  File \"/home/ubuntu/workspace/humanvoice/.localresources/parallel-writing-semantics-20261112/native_context.py\", line 116, in consumer\n    stack.enter_context(inventory_replay(RUN))\n    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/ubuntu/miniforge3/lib/python3.13/contextlib.py\", line 530, in enter_context\n    result = _enter(cm)\n  File \"/home/ubuntu/miniforge3/lib/python3.13/contextlib.py\", line 141, in __enter__\n    return next(self.gen)\n  File \"/home/ubuntu/workspace/humanvoice/.localresources/parallel-handoff-20261112/inventory_replay_scope.py\", line 59, in scope\n    stack.enter_context(semantics.transition_runtime(transition, validation_scope=accounting.history_scope))\n    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/ubuntu/miniforge3/lib/python3.13/contextlib.py\", line 530, in enter_context\n    result = _enter(cm)\n  File \"/home/ubuntu/miniforge3/lib/python3.13/contextlib.py\", line 141, in __enter__\n    return next(self.gen)\n  File \"/home/ubuntu/workspace/humanvoice/tools/inventory_recovery_v3/semantics.py\", line 194, in transition_runtime\n    with runtime(transition[\"rules\"], validation_scope=validation_scope, **options) as state:\n         ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/ubuntu/miniforge3/lib/python3.13/contextlib.py\", line 141, in __enter__\n    return next(self.gen)\n  File \"/home/ubuntu/workspace/humanvoice/tools/inventory_recovery_v3/semantics.py\", line 337, in runtime\n    frozen = deepcopy(validate_rules(list(rules), verify_failure, policy=policy, inherited=inherited, origin=origin))\n                      ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/ubuntu/workspace/humanvoice/tools/inventory_recovery_v3/semantics.py\", line 277, in validate_rules\n    or list(inherited) != inherited_rules(origin, policy)):\n                          ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^\n  File \"/home/ubuntu/workspace/humanvoice/tools/inventory_recovery_v3/semantics.py\", line 259, in inherited_rules\n    checked = inspect_parent(origin[\"parent\"], account_path, verify_settlement=legacy.verify_settlement,\n                             reconstruct=reconstruct, verify_qualification=qualification.verify)\n  File \"/home/ubuntu/workspace/humanvoice/tools/inventory_recovery_v3/migration.py\", line 107, in inspect_parent\n    usage = verify_settlement(output)[\"report\"]\n            ~~~~~~~~~~~~~~~~~^^^^^^^^\n  File \"/home/ubuntu/workspace/humanvoice/tools/inventory_recovery_v2/runtime.py\", line 260, in verify_settlement\n    return implementation.verify_settlement(output)\n           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^\n  File \"/home/ubuntu/workspace/humanvoice/tools/sol_inventory_runtime.py\", line 223, in verify_settlement\n    return qualified.NATIVE_PARALLEL[0](output)\n           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^\n  File \"/home/ubuntu/workspace/humanvoice/tools/parallel_verification_replay.py\", line 42, in verify_settlement\n    report = cache.read(root, completed_usage)\n  File \"/home/ubuntu/workspace/humanvoice/tools/settlement_replay_cache.py\", line 108, in read\n    report = reader(root)\n  File \"/home/ubuntu/workspace/humanvoice/.localresources/gateway-continuation-20261113/gateway_runtime.py\", line 182, in USAGE\n    return NATIVE_USAGE(output, **keywords)\n  File \"/home/ubuntu/workspace/humanvoice/src/humanvoice/automatic_settlement.py\", line 93, in completed_usage\n    layout = attempt_layout(output, plan, ledger[\"calls\"], raw=raw) if recovery else None\n             ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/ubuntu/workspace/humanvoice/tools/assembled_size_recovery.py\", line 248, in attempt_layout\n    return NATIVES[2](root, plan, entries, **keywords)\n           ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/ubuntu/workspace/humanvoice/tools/writer_size_accounting.py\", line 81, in attempt_layout\n    return NATIVE_LAYOUT(root, plan, entries, **keywords)\n  File \"/home/ubuntu/workspace/humanvoice/tools/delayed_network_runtime.py\", line 111, in attempt_layout\n    return NATIVES[1](root, plan, entries, **keywords)\n           ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/ubuntu/workspace/humanvoice/src/humanvoice/automatic_recovery.py\", line 257, in attempt_layout\n    raise ValueError(\"Recovery limits or eligibility policy changed\")\nValueError: Recovery limits or eligibility policy changed\n"
+  },
+  "installation": {
+    "installed_at": 1794579051.1801367,
+    "review": "d732f093ee6acb4efe78fd1b6bb8108bcdeb18729821b61d613194f40ceba416"
+  },
+  "environment_check": {
+    "status": "PASS",
+    "endpoint": "https://cn.origincoder.com/v1",
+    "sources": {
+      "/home/ubuntu/workspace/humanvoice/.localresources/gateway-continuation-20261113/gateway_bootstrap.py": "d717b5d7d0ad6f01653b9a1927450ba39d97f98f08222e59956fbb5bc8446eca",
+      "/home/ubuntu/workspace/humanvoice/.localresources/gateway-continuation-20261113/gateway_state.py": "43c2e87dbad57a7d97381d93df8c0ef2b8c3afd20be5a15367a46ea23b89a2ff",
+      "/home/ubuntu/workspace/humanvoice/.localresources/gateway-continuation-20261113/gateway_runtime.py": "f8129a53a9bd48f52895f5c3f5324f36d2e542b4f7bc35a07c59811893963513",
+      "/home/ubuntu/workspace/humanvoice/.localresources/gateway-continuation-20261113/gateway_program.py": "90095cfc43f7e485b1e3c1351adf26b6bb979fccca02955d68602f9ed948be9e",
+      "/home/ubuntu/workspace/humanvoice/.localresources/gateway-continuation-20261113/transition.json": "e4d42c692f1f9d62203881e018caa0314f5a797bee504390320cc90229a54ede",
+      "/home/ubuntu/workspace/humanvoice/.localresources/gateway-continuation-20261113/humanvoice-zlb-https-20261113.service": "5d314fbfa598f6c33498a98b2d615403a438a47626ddb1f20b0d8df09adb7f9a"
+    },
+    "concurrent_verification": {
+      "workers": 16,
+      "elapsed_seconds": 2.7673303538467735,
+      "maximum_client_seconds": 2.759670730214566
+    },
+    "model_calls": 0
+  },
+  "commit": "14228e27b58cf42f29d9c9bd1646dc7ea2b5efd2",
+  "allocated_attempts": 135,
+  "new_provider_calls": 0
+}

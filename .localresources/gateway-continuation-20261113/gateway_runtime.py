@@ -186,6 +186,10 @@ def USAGE(output, **keywords):
 
 
 USAGE.gateway_change = USAGE_BODY.gateway_change
+# Alias replacement excludes the replacement's defining module. functools.wraps
+# copied the native module name, leaving its public reader outside the scope
+# while other readers changed. Nested historic recovery then missed those aliases.
+USAGE.__module__ = __name__
 
 
 def changes():

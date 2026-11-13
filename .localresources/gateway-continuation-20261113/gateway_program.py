@@ -85,6 +85,9 @@ def offline():
     before = {str(path): digest(path.read_bytes()) for path in files}
     started = time.monotonic()
     with no_inference(), scope(reviewed=False), live.offline_deadline(), context.parent() as parent:
+        print('Qualified retained evidence; validating full native baseline under gateway scope.', flush=True)
+        baseline = parent.prime_baseline()
+        print(json.dumps({'baseline': baseline, 'next': '110 retained manuscript receipts'}), flush=True)
         entries = live.bank_entries()
         state.require({k: digest(v) for k, v in entries.items()} == value['original_bank'],
                       'Retained response bank changed during migration')
@@ -116,6 +119,7 @@ def offline():
     result = {'status': 'PASS', 'sources': sources(), 'retained_responses': len(entries),
               'demands': len(report['demands']), 'frontier_sha256': replay['report_sha256'],
               'endpoint': state.NEW_URL, 'elapsed_seconds': time.monotonic() - started,
+              'baseline': baseline,
               'model_calls': 0, 'account_writes': 0, 'retained_files': before}
     save(HERE / 'offline-result.json', result)
     print(json.dumps({k: v for k, v in result.items() if k not in ('sources', 'retained_files')}), flush=True)

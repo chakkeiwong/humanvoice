@@ -290,3 +290,26 @@ def test_new_route_cannot_reuse_an_old_slot(fixture):
 def test_native_adapters_refuse_source_drift():
     with pytest.raises(ValueError, match='one native'):
         gateway.adapt(native.Native.invoke, [('no such expression', 'True')])
+
+
+def test_nested_historical_settlement_wrappers_keep_all_readers_together(fixture):
+    from humanvoice import automatic_settlement
+    from tools import parallel_verification_replay, sol_inventory_runtime
+    from tools.inventory_recovery_v2 import runtime as legacy
+
+    original = automatic_settlement.completed_usage
+    assert parallel_verification_replay.completed_usage is original
+    with gateway.scope():
+        assert automatic_settlement.completed_usage is gateway.USAGE
+        assert parallel_verification_replay.completed_usage is gateway.USAGE
+        with sol_inventory_runtime.settlement_scope():
+            sol_reader = automatic_settlement.completed_usage
+            assert sol_reader is not gateway.USAGE
+            assert parallel_verification_replay.completed_usage is sol_reader
+            with legacy.settlement_dispatch():
+                assert automatic_settlement.completed_usage is parallel_verification_replay.completed_usage
+                assert automatic_settlement.completed_usage is not sol_reader
+            assert automatic_settlement.completed_usage is sol_reader
+        assert automatic_settlement.completed_usage is gateway.USAGE
+    assert automatic_settlement.completed_usage is original
+    assert parallel_verification_replay.completed_usage is original

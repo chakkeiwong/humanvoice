@@ -3,8 +3,8 @@
   "sources": {
     "/home/ubuntu/workspace/humanvoice/.localresources/gateway-continuation-20261113/gateway_bootstrap.py": "d717b5d7d0ad6f01653b9a1927450ba39d97f98f08222e59956fbb5bc8446eca",
     "/home/ubuntu/workspace/humanvoice/.localresources/gateway-continuation-20261113/gateway_state.py": "43c2e87dbad57a7d97381d93df8c0ef2b8c3afd20be5a15367a46ea23b89a2ff",
-    "/home/ubuntu/workspace/humanvoice/.localresources/gateway-continuation-20261113/gateway_runtime.py": "f8129a53a9bd48f52895f5c3f5324f36d2e542b4f7bc35a07c59811893963513",
-    "/home/ubuntu/workspace/humanvoice/.localresources/gateway-continuation-20261113/gateway_program.py": "90095cfc43f7e485b1e3c1351adf26b6bb979fccca02955d68602f9ed948be9e",
+    "/home/ubuntu/workspace/humanvoice/.localresources/gateway-continuation-20261113/gateway_runtime.py": "8909e134476d05fe400d4b643468f7778053842d9412a53d2069811286aa5dcf",
+    "/home/ubuntu/workspace/humanvoice/.localresources/gateway-continuation-20261113/gateway_program.py": "5d61efbef3ed2e808d5aa0fce057216464d4b0589c34b4882af3cb370799da0a",
     "/home/ubuntu/workspace/humanvoice/.localresources/gateway-continuation-20261113/transition.json": "e4d42c692f1f9d62203881e018caa0314f5a797bee504390320cc90229a54ede",
     "/home/ubuntu/workspace/humanvoice/.localresources/gateway-continuation-20261113/humanvoice-zlb-https-20261113.service": "5d314fbfa598f6c33498a98b2d615403a438a47626ddb1f20b0d8df09adb7f9a"
   },
@@ -12,7 +12,14 @@
   "demands": 5,
   "frontier_sha256": "e298330bf182400d7e9298b2575ddecc247f81dcfd0777a2e3e4749b4daf92ee",
   "endpoint": "https://cn.origincoder.com/v1",
-  "elapsed_seconds": 430.19535721698776,
+  "elapsed_seconds": 826.4495779359713,
+  "baseline": {
+    "elapsed_seconds": 373.68733860901557,
+    "native_replays": 1,
+    "reuse_hits": 0,
+    "runtime_references": 583,
+    "original_authorizations": 136
+  },
   "model_calls": 0,
   "account_writes": 0,
   "retained_files": {

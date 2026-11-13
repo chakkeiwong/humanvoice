@@ -64,3 +64,30 @@ The actual retained-response check PASSED in 430.20 seconds: 110 responses,
 five new HTTPS requests checked, zero model calls and zero accounting writes.
 The source-bound review is READY. Host systemd validation also passes.
 Installation/start and actual progress are the remaining deployment steps.
+
+## First live startup and repair
+
+Commit 14228e2 and the grouped user-service installation completed successfully.
+Live startup then reached baseline replay and stopped before any paid allocation.
+The failure is retained in first-launch-failure.json. The settlement adapter's
+functools.wraps metadata caused alias replacement to exclude the native module
+while changing its sibling readers. Nested inventory-history policy wrappers
+then missed the replaced reader and rejected a valid historical recovery policy.
+
+The adapter now explicitly sets its real defining module. The new regression
+exercises both Sol and v2 nested settlement wrappers and verifies all reader
+identities and restoration. All 14 gateway tests PASS in 138.85 seconds. The
+actual offline gate now includes Parent.prime_baseline under the same composed
+gateway scope; this closes the omitted integration path in the first gate.
+Historical policies and receipts remain unchanged. Source-bound review must be
+renewed against the new full-baseline result before the same service restarts.
+
+## Recovered verification result, November 14
+
+The completed full offline gate PASSED in 826.45 seconds, including native
+baseline validation in 373.69 seconds, all 110 retained manuscript responses
+and all five new HTTPS configuration/command pairs. It made zero model calls
+and zero accounting writes. All 14 gateway regressions pass. The source-bound
+review has been regenerated and is READY. The interrupted UI did not discard
+the successful durable result. Commit the concrete wrapper correction and
+restart the same approved ordinary-user service; verify actual progress.

@@ -190,3 +190,40 @@ gateway install-start action. It checks actual host/sandbox session parity and
 client startup before disabling the stopped predecessor and installing/starting
 the ordinary-user successor. No sudo, root helper change or budget reset.
 Successful installation and actual provider progress must be verified separately.
+
+## Installation checkpoint
+
+Repair commit 14228e2 completed. The approved fixed installer passed the actual
+16-client host/sandbox gateway check in 2.77 seconds and the network-isolated
+client startup in 8.04 seconds. It disabled the stopped validation predecessor
+and started humanvoice-zlb-https-20261113.service at November 13 22:10:51
+Shanghai, MainPID 1248428. The new child reached QUALIFYING. The reporting
+service remains active. No sudo was used. At installation, the ledger still
+contained 135 attempts and 42 unused slots; provider progress is a separate check.
+
+## Baseline composition correction
+
+The first HTTPS service stopped at November 13 22:13:43 Shanghai before any new
+allocation. functools.wraps copied the native settlement function's module name
+onto the adapter. replaced_aliases intentionally excludes the replacement's own
+module, so the native public reader stayed unchanged while sibling readers
+changed. A nested historical inventory wrapper then patched only one reader and
+missed the other, producing Recovery limits or eligibility policy changed.
+
+The adapter explicitly keeps its actual defining module identity. A regression
+checks native and parallel readers through both Sol and v2 settlement contexts
+and verifies restoration. The actual offline gate now primes the full native
+baseline under the same gateway scope before checking retained manuscript
+responses. The original offline gate checked receipts but omitted this baseline
+composition. The new test/replay must pass before reviewed restart. No historical
+policy, ledger, source or paid response is changed.
+
+## Recovered verification result, November 14
+
+The completed full offline gate PASSED in 826.45 seconds, including native
+baseline validation in 373.69 seconds, all 110 retained manuscript responses
+and all five new HTTPS configuration/command pairs. It made zero model calls
+and zero accounting writes. All 14 gateway regressions pass. The source-bound
+review has been regenerated and is READY. The interrupted UI did not discard
+the successful durable result. Commit the concrete wrapper correction and
+restart the same approved ordinary-user service; verify actual progress.

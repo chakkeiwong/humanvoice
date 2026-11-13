@@ -1,35 +1,39 @@
 <!-- renewed-session-execution-20261113 -->
-Current checkpoint, November 13: **HTTPS_CONTINUATION_READY_FOR_INSTALLATION**.
-The user authorized another 168 hours and continuation. The new execution stop
-is November 20, 17:03:49 Shanghai. The additive renewal preserves the original
-admission, settled inventory, all 110 saved manuscript responses and charges,
-and the shared 177-call pool (42 unused slots).
+Current checkpoint, November 14: **HTTPS_RESTART_READY**.
+The user renewed execution for 168 hours, through November 20, 17:03:49 Shanghai.
+The additive renewal preserves the original admission, settled inventory, all
+110 saved manuscript responses and charges, and the shared 177-call pool
+(135 allocated, 42 unused). The active gateway is https://cn.origincoder.com/v1.
 
-The complete real replay PASSED and produced exactly five new writer repair
-requests for units 002, 009, 012, 018 and 020. It crossed the formerly broken
-writer-to-repair transition, reused every saved response, and changed no
-accounting or source evidence. Discovery took 40m56s, plus 5m32s for its retained
-baseline. Every unit audit remained below 900 seconds. The endpoint correction
-passes 15 regressions; renewal/reservation integration passes 21; Ruff passes.
-The session repair execution review is READY and its user-service file validates.
+The complete semantic replay produced exactly five missing writer repair
+requests for units 002, 009, 012, 018 and 020. It crossed the repaired session
+validation boundary without changing paid evidence. New requests use the actual
+HTTPS profile; historical receipts retain their original destination. Endpoint
+correction: 15 regressions pass. Renewal integration: 21 pass.
 
-The active gateway is https://cn.origincoder.com/v1. Following the user's standing
-instruction to match active settings, the continuation is being migrated from
-http://144.34.149.141:8080/v1. New traffic must record the HTTPS profile and its
-actual destination; historical receipts retain their original endpoint. The
-additive migration PASSES 13 regressions, including native capture, failed-call
-charge retention, restart reconciliation, receipt tamper rejection and settlement.
-The actual offline check PASSES all 110 retained responses and all five HTTPS
-commands in 430.20 seconds, with zero model calls/account writes. Both source-bound
-execution reviews are READY. The HTTPS user-service file passes host validation.
-Production remains stopped pending commit and grouped installation/start.
-No sudo is needed for the ordinary-user successor.
+Repair commit 14228e2 was installed without sudo. Its first startup reached
+baseline replay, then stopped before new allocation because settlement-adapter
+metadata split native reader aliases across nested historical recovery scopes.
+The adapter now keeps its actual defining module. All 14 gateway regressions
+pass, including nested historical readers, failed-call charge retention, restart
+reconciliation, receipt tamper rejection and settlement. The complete actual
+offline gate PASSES in 826.45 seconds (13m46s), including native baseline replay
+in 373.69 seconds, 110 retained manuscript responses, and five exact HTTPS
+configuration/command pairs. Model calls and accounting writes: zero.
+The renewed source-bound review is READY; current Ruff and service validation pass.
 
-After gateway validation and commit: grouped host installation/start, five
-repairs with independent review, assembled relationship/build/release checks,
-benchmark/regression, separately budgeted reproduction, then final human review.
-Automatic repair after an assembled semantic rejection remains open, with its
-code path and regression requirements recorded in the repair plan.
+Next: commit this correction and restart the same ordinary-user service under the
+existing execution authorization. The installer checks the active host/sandbox
+binding and isolated client startup before launch. The first deployment passed
+these checks in 2.77 and 8.04 seconds. Sixteen worker capacity, 900-second provider
+bounds, 1050-second attempt bounds and fifteen-minute network recovery remain.
+No sudo or new budget is required. Production is stopped pending this restart.
+
+After the five repairs and their automatic independent reviews: assembled
+relationship/build/release checks, benchmark/regression, separately budgeted
+reproduction, then final human review of the actual ZLB output. Automatic repair
+after an assembled semantic rejection remains open, with its code path and
+regression requirements recorded in the repair plan. No final acceptance exists.
 See docs/plans/ZLB_SESSION_BINDING_REPAIR_2026-11-13.md.
 <!-- end-renewed-session-execution-20261113 -->
 
@@ -239,7 +243,7 @@ this separate offline rehearsal runs. Inventory remains complete and settled.
 <!-- end-file-limit-repair-20261112 -->
 
 <!-- writing-live-20261112 -->
-Current ZLB writing: **BLOCKED_REPAIR**. Retained manuscript responses: 110.
+Current ZLB writing: **BLOCKED_REPAIR**. Retained manuscript responses: 0.
 Native inventory is complete. This stage has one shared 177-call pool and up to 16 provider workers.
 Automatic recovery waits 15 minutes after network failure; known responses remain retained.
 Current state: `.localresources/parallel-writing-semantics-20261112/execution/status.json`.
