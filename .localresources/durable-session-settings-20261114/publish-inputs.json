@@ -1,0 +1,20 @@
+{
+  ".localresources/durable-session-settings-20261114/capture_session.py": "1ad6311e70abc609ad1a3271f1f0608a292faf6b33ce23d82442ddea5ed0f9cd",
+  ".localresources/durable-session-settings-20261114/check_durable.py": "dbb79fc28aa69a7e5d1e967eb4001e2baf717ec64225cbc1bca106cfb000d6d7",
+  ".localresources/durable-session-settings-20261114/current-session.json": "c8950e56e8c0a924298d20a245f2b4ed92f3f266e28d652d576cf3ca0b4f1742",
+  ".localresources/durable-session-settings-20261114/durable_bootstrap.py": "cb50e8a2e5484963c8749ee2e4318badf8c3324b64265976c35a83ac46443c34",
+  ".localresources/durable-session-settings-20261114/durable_program.py": "24d5a5231ae0c091647b49aaf3082c33818d90363470b68677ac376c43a4d854",
+  ".localresources/durable-session-settings-20261114/durable_settings.py": "5bc289b0e38a6787e1b72ca523c0d318d657d657039a922432ad50bde5a3c33f",
+  ".localresources/durable-session-settings-20261114/humanvoice-zlb-durable-settings-20261114.service": "0c98cabfa70ba2c1352dd5651e72b3f71e5db5ae9221b69620b2a1e8b51bed2c",
+  ".localresources/durable-session-settings-20261114/incident.json": "2446fcacc1738ad7dfa783ea00c639c42b291ea6fcd3abcb0032a9360016ac90",
+  ".localresources/durable-session-settings-20261114/offline-result.json": "a07f383afc1360f6e682bb3bb89d3949c866804b1118fcab354df8a205be34e2",
+  ".localresources/durable-session-settings-20261114/review.json": "ab9c2061f284615bd42e544a913757f3ff0340b4205c82978c2c93bf69052294",
+  ".localresources/durable-session-settings-20261114/status.py": "19beca135787a330a4132eb5536a2f2a142d66baeed06718dd2ef1fee2b70811",
+  ".localresources/durable-session-settings-20261114/test_durable.py": "ac3b78f6c03cbf0e8db51f429ee4e0199bbf4fa8004b782134e26d82571d5136",
+  ".localresources/durable-session-settings-20261114/tests-result.json": "976955b676eca8c2b69621273121b0fc85dd5a668b589c682c582ee9dbfadb42",
+  ".localresources/durable-session-settings-20261114/tests.log": "f558c346863606624b7276bca33f299d4b616f86729060c421e2223c82f436d1",
+  ".localresources/durable-session-settings-20261114/tests.xml": "c2a4e34d257f404848afddad28b5786a9756feffc4972f66638e1958d8f85032",
+  "docs/plans/ENSEMBLE_MASTER_PROGRAM_2026-09-30.md": "44f11ae6faf13ba28b162d22ccce94fd083f28f6f4861559336f41e9771e5e8d",
+  "docs/plans/ZLB_DURABLE_SETTINGS_RECOVERY_2026-11-14.md": "1d1e2306da6cd8f4d129f01f5511a25bc7f35c9d41289b14296b3bbd5d833c7c",
+  "docs/plans/humanvoice_master_program_v2.md": "45e9c8d6562728c91404c597f7c3d5211846318d05930e860ad9993ea84f183f"
+}

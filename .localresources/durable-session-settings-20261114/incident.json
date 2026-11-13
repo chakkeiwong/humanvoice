@@ -1,0 +1,13 @@
+{
+  "repair": "automatic_capacity_recovery",
+  "status": "BLOCKED_REPAIR",
+  "updated_at": 1794594976.1937838,
+  "supervisor": {
+    "pid": 1749628,
+    "start_ticks": "144159523",
+    "boot_id": "f57317de-e249-43e8-8e8d-0ec026eae461"
+  },
+  "final_zlb_acceptance": false,
+  "error": "ValueError: Native active session verification failed: REJECTED",
+  "traceback": "Traceback (most recent call last):\n  File \"/home/ubuntu/workspace/humanvoice/.localresources/client-reload-continuation-20261114/reload_program.py\", line 191, in main\n    return base.run()\n           ~~~~~~~~^^\n  File \"/home/ubuntu/workspace/humanvoice/.localresources/writer-session-binding-repair-20261113/renewal_runtime.py\", line 63, in invoke\n    return namespace[function.__name__](*args, **kwargs)\n           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^\n  File \"<reviewed-renewal:run>\", line 9, in run\n  File \"/home/ubuntu/workspace/humanvoice/.localresources/parallel-writing-semantics-20261112/active_environment.py\", line 101, in adopt\n    checked(binding)\n    ~~~~~~~^^^^^^^^^\n  File \"/home/ubuntu/workspace/humanvoice/.localresources/parallel-writing-semantics-20261112/active_environment.py\", line 97, in checked\n    return verify(value)\n  File \"/home/ubuntu/workspace/humanvoice/.localresources/parallel-writing-semantics-20261112/active_environment.py\", line 83, in verify\n    require(result == {'status': 'VERIFIED', 'binding_hash': digest(binding)}\n    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n            and identity(owner['pid']) == owner,\n            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n            'Native active session verification failed: ' + str(result.get('status')))\n            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/ubuntu/workspace/humanvoice/.localresources/parallel-writing-semantics-20261112/active_environment.py\", line 39, in require\n    raise ValueError(message)\nValueError: Native active session verification failed: REJECTED\n"
+}
