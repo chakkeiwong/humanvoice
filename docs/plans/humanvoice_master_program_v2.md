@@ -1,40 +1,32 @@
 <!-- renewed-session-execution-20261113 -->
-Current checkpoint, November 14: **SESSION_RELOAD_RESTART_READY**.
-Execution is authorized through November 20, 17:03:49 Shanghai. Inventory is
-complete; all 110 manuscript responses and 135 charged attempts are retained.
-The shared 177-call pool has 42 slots left. Five prepared repairs remain for
-units 002, 009, 012, 018 and 020. There is no final assembled acceptance.
+Current checkpoint, 2026-11-14T02:34:42+08:00: **QUALIFYING**.
+User service: active/running; PID 1743589.
+Durable manuscript state: 110 saved responses, 135 allocated slots,
+42 slots remaining in the original 177-call pool.
+Execution is authorized through November 20, 17:03:49 Shanghai.
 
-Commits 14228e2 and 3156161 preserve the HTTPS continuation and correct nested
-settlement-reader restoration. The full baseline/receipt gate passed in 826.45
-seconds with zero model calls or accounting writes; all 14 gateway tests pass.
-The attempted restart then detected the editor reload: the bound app-server
-exited and the interactive client upgraded from 0.164 to 0.169. Gateway,
-credentials, effective settings and thread are unchanged.
+The editor reload upgraded its control client from 0.164 to 0.169. The
+continuation explicitly binds the actual current control process while pinning
+manuscript execution to the qualified 0.164 client and its exact bytes. The
+current gateway is https://cn.origincoder.com/v1; model routing remains
+Astra/xhigh. The upgrade changes built-in instructions, so no equivalence or
+new-client qualification is claimed. Credentials and all effective settings
+are checked before launch. New receipts carry the actual executed profile
+and a separate exact control-session transition marker.
 
-The current gateway is https://cn.origincoder.com/v1. The repair explicitly
-separates the current control session from the pinned, qualified 0.164 request
-client. Both clients passed isolated local response parsing, but changed built-in
-instructions prevent an equivalence claim for 0.169. No qualification credit is
-transferred to it. New requests retain the tested executable and Astra/xhigh
-routing while verifying the actual current control session before launch.
+The reviewed repair passed 18 regressions, unchanged-command checks for all five
+prepared repairs, retained-bank/account verification, sixteen-client host/sandbox
+parity, and isolated startup of the pinned client. The earlier full baseline
+and receipt gate remains source/evidence-bound (826.45 seconds, zero calls).
+The ordinary-user continuation needs no sudo. Preserve sixteen workers,
+900-second provider bounds, 1050-second scheduler bounds, fifteen-minute network
+retry, every retained judgment, and charges for failed or unknown calls.
 
-The additive session rebind preserves historical evidence and adds an exact
-control-session marker to each new HTTPS receipt. All 18 regression checks pass, including native
-requests/receipts, replay, restart, failed-call charges, marker tampering,
-changed credentials/settings/client bytes, and worker scope reinstallation. The source-bound prior baseline can
-be reused because its execution client, semantic machinery and evidence are
-unchanged. Actual host/sandbox parity and isolated pinned-client startup remain
-mandatory. No sudo is needed. Production remains stopped during these checks.
-
-Next: commit the focused repair, verify actual host/sandbox parity and isolated
-pinned-client startup, install/start the reviewed ordinary-user successor, and
-verify actual progress.
-Sixteen workers, 900-second provider waits, 1050-second attempt bounds and
-fifteen-minute network retry remain. After the five repairs and automatic reviews:
-assembled relationship/build/release checks, benchmark/regression, separately
-budgeted reproduction, then final human review. Automatic recovery from assembled
-semantic rejection remains open in the preceding repair plan.
+Next document work: five unit repairs (002, 009, 012, 018, 020) and their automatic
+independent reviews; assembled relationships/build/release; benchmark/regression;
+separately budgeted reproduction; final human review of the actual output.
+Automatic recovery after assembled semantic rejection remains open in the
+preceding repair plan. No final ZLB acceptance exists.
 See docs/plans/ZLB_CLIENT_RELOAD_CONTINUATION_2026-11-14.md.
 <!-- end-renewed-session-execution-20261113 -->
 
@@ -244,7 +236,7 @@ this separate offline rehearsal runs. Inventory remains complete and settled.
 <!-- end-file-limit-repair-20261112 -->
 
 <!-- writing-live-20261112 -->
-Current ZLB writing: **BLOCKED_REPAIR**. Retained manuscript responses: 0.
+Current ZLB writing: **QUALIFYING**. Retained manuscript responses: 0.
 Native inventory is complete. This stage has one shared 177-call pool and up to 16 provider workers.
 Automatic recovery waits 15 minutes after network failure; known responses remain retained.
 Current state: `.localresources/parallel-writing-semantics-20261112/execution/status.json`.

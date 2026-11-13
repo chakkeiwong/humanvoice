@@ -1,0 +1,23 @@
+{
+  "at": "2026-11-14T02:34:42+08:00",
+  "service": {
+    "MainPID": "1743589",
+    "Result": "success",
+    "ActiveState": "active",
+    "SubState": "running"
+  },
+  "status": {
+    "repair": "automatic_capacity_recovery",
+    "status": "QUALIFYING",
+    "updated_at": 1794594847.3202124,
+    "supervisor": {
+      "pid": 1749628,
+      "start_ticks": "144159523",
+      "boot_id": "f57317de-e249-43e8-8e8d-0ec026eae461"
+    },
+    "final_zlb_acceptance": false
+  },
+  "allocated": 135,
+  "retained": 110,
+  "review_sha256": "cf3cb8e31df30ebc33b03de2407d1db4c9d707001954d922be351b3fc9cacea4"
+}
