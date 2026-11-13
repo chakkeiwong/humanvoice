@@ -1,0 +1,37 @@
+{
+  "status": "PASS",
+  "sources": {
+    "/home/ubuntu/workspace/humanvoice/.localresources/client-reload-continuation-20261114/reload_bootstrap.py": "07a353d017ca03f03d70cea4fa5dbe592e51e809f2192220aabfb2f924f777c7",
+    "/home/ubuntu/workspace/humanvoice/.localresources/client-reload-continuation-20261114/session_rebind.py": "70344f0e3e2b496023d3a635b2aacba97fc73c408fc5eb31daee4bdace55a243",
+    "/home/ubuntu/workspace/humanvoice/.localresources/client-reload-continuation-20261114/session-rebind.json": "d9f3acdd791911999917c80b79861b7044d3c3f30ef7ee0798785182788413ba",
+    "/home/ubuntu/workspace/humanvoice/.localresources/client-reload-continuation-20261114/reload_program.py": "58fd73b0fe06f40bb9cf7f540f43e0c8d1e739cd2be24422d74fb6fdaef63eea",
+    "/home/ubuntu/workspace/humanvoice/.localresources/client-reload-continuation-20261114/humanvoice-zlb-reloaded-20261114.service": "8bda50da45c83b5415364b2d32c238682ab1c33b244b0a8ae37c4ca041e75ad8"
+  },
+  "retained_responses": 110,
+  "demands": 5,
+  "command_hashes": [
+    "f99e52939847497b461acd759be0b1e4bea2606319a2f34b664ae89c6908eb86",
+    "f99e52939847497b461acd759be0b1e4bea2606319a2f34b664ae89c6908eb86",
+    "f99e52939847497b461acd759be0b1e4bea2606319a2f34b664ae89c6908eb86",
+    "f99e52939847497b461acd759be0b1e4bea2606319a2f34b664ae89c6908eb86",
+    "f99e52939847497b461acd759be0b1e4bea2606319a2f34b664ae89c6908eb86"
+  ],
+  "predecessor_offline": {
+    "path": "/home/ubuntu/workspace/humanvoice/.localresources/gateway-continuation-20261113/offline-result.json",
+    "sha256": "3e52aa94767f4e6f346a07216f32709cd3872a81020c802d96aae6962e55049e"
+  },
+  "baseline_revalidated_by_unchanged_source_and_evidence": true,
+  "request_client": {
+    "cli_version": "0.164.0-alpha.11.1",
+    "executable": "/home/ubuntu/.vscode/extensions/openai.chatgpt-26.1021.22027-linux-x64/bin/linux-x86_64/codex",
+    "executable_sha256": "e6d386e8822288f6d5f327e966a5a5e1de928de8795bb6149716005a410f38f2",
+    "fresh_session": true,
+    "hard_output_token_cap": null,
+    "reasoning_effort": "xhigh",
+    "requires_openai_auth": true,
+    "reservation_per_session": 544000,
+    "wire_api": "responses"
+  },
+  "model_calls": 0,
+  "account_writes": 0
+}

@@ -1,40 +1,41 @@
 <!-- renewed-session-execution-20261113 -->
-Current checkpoint, November 14: **HTTPS_RESTART_READY**.
-The user renewed execution for 168 hours, through November 20, 17:03:49 Shanghai.
-The additive renewal preserves the original admission, settled inventory, all
-110 saved manuscript responses and charges, and the shared 177-call pool
-(135 allocated, 42 unused). The active gateway is https://cn.origincoder.com/v1.
+Current checkpoint, November 14: **SESSION_RELOAD_RESTART_READY**.
+Execution is authorized through November 20, 17:03:49 Shanghai. Inventory is
+complete; all 110 manuscript responses and 135 charged attempts are retained.
+The shared 177-call pool has 42 slots left. Five prepared repairs remain for
+units 002, 009, 012, 018 and 020. There is no final assembled acceptance.
 
-The complete semantic replay produced exactly five missing writer repair
-requests for units 002, 009, 012, 018 and 020. It crossed the repaired session
-validation boundary without changing paid evidence. New requests use the actual
-HTTPS profile; historical receipts retain their original destination. Endpoint
-correction: 15 regressions pass. Renewal integration: 21 pass.
+Commits 14228e2 and 3156161 preserve the HTTPS continuation and correct nested
+settlement-reader restoration. The full baseline/receipt gate passed in 826.45
+seconds with zero model calls or accounting writes; all 14 gateway tests pass.
+The attempted restart then detected the editor reload: the bound app-server
+exited and the interactive client upgraded from 0.164 to 0.169. Gateway,
+credentials, effective settings and thread are unchanged.
 
-Repair commit 14228e2 was installed without sudo. Its first startup reached
-baseline replay, then stopped before new allocation because settlement-adapter
-metadata split native reader aliases across nested historical recovery scopes.
-The adapter now keeps its actual defining module. All 14 gateway regressions
-pass, including nested historical readers, failed-call charge retention, restart
-reconciliation, receipt tamper rejection and settlement. The complete actual
-offline gate PASSES in 826.45 seconds (13m46s), including native baseline replay
-in 373.69 seconds, 110 retained manuscript responses, and five exact HTTPS
-configuration/command pairs. Model calls and accounting writes: zero.
-The renewed source-bound review is READY; current Ruff and service validation pass.
+The current gateway is https://cn.origincoder.com/v1. The repair explicitly
+separates the current control session from the pinned, qualified 0.164 request
+client. Both clients passed isolated local response parsing, but changed built-in
+instructions prevent an equivalence claim for 0.169. No qualification credit is
+transferred to it. New requests retain the tested executable and Astra/xhigh
+routing while verifying the actual current control session before launch.
 
-Next: commit this correction and restart the same ordinary-user service under the
-existing execution authorization. The installer checks the active host/sandbox
-binding and isolated client startup before launch. The first deployment passed
-these checks in 2.77 and 8.04 seconds. Sixteen worker capacity, 900-second provider
-bounds, 1050-second attempt bounds and fifteen-minute network recovery remain.
-No sudo or new budget is required. Production is stopped pending this restart.
+The additive session rebind preserves historical evidence and adds an exact
+control-session marker to each new HTTPS receipt. All 18 regression checks pass, including native
+requests/receipts, replay, restart, failed-call charges, marker tampering,
+changed credentials/settings/client bytes, and worker scope reinstallation. The source-bound prior baseline can
+be reused because its execution client, semantic machinery and evidence are
+unchanged. Actual host/sandbox parity and isolated pinned-client startup remain
+mandatory. No sudo is needed. Production remains stopped during these checks.
 
-After the five repairs and their automatic independent reviews: assembled
-relationship/build/release checks, benchmark/regression, separately budgeted
-reproduction, then final human review of the actual ZLB output. Automatic repair
-after an assembled semantic rejection remains open, with its code path and
-regression requirements recorded in the repair plan. No final acceptance exists.
-See docs/plans/ZLB_SESSION_BINDING_REPAIR_2026-11-13.md.
+Next: commit the focused repair, verify actual host/sandbox parity and isolated
+pinned-client startup, install/start the reviewed ordinary-user successor, and
+verify actual progress.
+Sixteen workers, 900-second provider waits, 1050-second attempt bounds and
+fifteen-minute network retry remain. After the five repairs and automatic reviews:
+assembled relationship/build/release checks, benchmark/regression, separately
+budgeted reproduction, then final human review. Automatic recovery from assembled
+semantic rejection remains open in the preceding repair plan.
+See docs/plans/ZLB_CLIENT_RELOAD_CONTINUATION_2026-11-14.md.
 <!-- end-renewed-session-execution-20261113 -->
 
 <!-- session-binding-repair-20261113 -->

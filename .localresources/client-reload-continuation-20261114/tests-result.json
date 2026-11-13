@@ -1,0 +1,22 @@
+{
+  "tests": 18,
+  "failures": 0,
+  "errors": 0,
+  "skipped": 0,
+  "sources": {
+    "/home/ubuntu/workspace/humanvoice/.localresources/client-reload-continuation-20261114/reload_bootstrap.py": "07a353d017ca03f03d70cea4fa5dbe592e51e809f2192220aabfb2f924f777c7",
+    "/home/ubuntu/workspace/humanvoice/.localresources/client-reload-continuation-20261114/session_rebind.py": "70344f0e3e2b496023d3a635b2aacba97fc73c408fc5eb31daee4bdace55a243",
+    "/home/ubuntu/workspace/humanvoice/.localresources/client-reload-continuation-20261114/session-rebind.json": "d9f3acdd791911999917c80b79861b7044d3c3f30ef7ee0798785182788413ba",
+    "/home/ubuntu/workspace/humanvoice/.localresources/client-reload-continuation-20261114/reload_program.py": "58fd73b0fe06f40bb9cf7f540f43e0c8d1e739cd2be24422d74fb6fdaef63eea",
+    "/home/ubuntu/workspace/humanvoice/.localresources/client-reload-continuation-20261114/humanvoice-zlb-reloaded-20261114.service": "8bda50da45c83b5415364b2d32c238682ab1c33b244b0a8ae37c4ca041e75ad8"
+  },
+  "elapsed_seconds": 176.9466657829471,
+  "artifacts": {
+    "/home/ubuntu/workspace/humanvoice/.localresources/client-reload-continuation-20261114/test_reload.py": "275d49d0a67f12d554d9cb5d1243df60111120e1a6bf2290debd0c9e8a46d321",
+    "/home/ubuntu/workspace/humanvoice/.localresources/client-reload-continuation-20261114/check_reload.py": "aab8be8e3f65936b617664a3a142651ff467dff11bfddaacef62e713a034cc47",
+    "/home/ubuntu/workspace/humanvoice/.localresources/client-reload-continuation-20261114/tests.xml": "77d6a2019369c2ddf6e95172e34a764e0ac46234ccbcf74452c7496e651752e3",
+    "/home/ubuntu/workspace/humanvoice/.localresources/client-reload-continuation-20261114/tests.log": "32459c874db405eb0c03751aa044982e9fd31fbcff3e41f931fc0eb1fbe753c0",
+    "/home/ubuntu/workspace/humanvoice/.localresources/gateway-continuation-20261113/test_gateway.py": "ca2665341c57238703571758c4f8dbdb31c7519297164298b46c1cbf04d85d19"
+  },
+  "model_calls": 0
+}

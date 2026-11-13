@@ -1,0 +1,19 @@
+[Unit]
+Description=Humanvoice ZLB current session with qualified pinned execution client
+StartLimitIntervalSec=600
+StartLimitBurst=3
+
+[Service]
+Type=simple
+WorkingDirectory=/home/ubuntu/workspace/humanvoice
+ExecStart=/home/ubuntu/miniforge3/bin/python -B /home/ubuntu/workspace/humanvoice/.localresources/client-reload-continuation-20261114/reload_program.py run
+Restart=on-abnormal
+RestartSec=15
+KillMode=control-group
+TimeoutStopSec=30
+NoNewPrivileges=yes
+StandardOutput=append:/home/ubuntu/workspace/humanvoice/.localresources/parallel-writing-semantics-20261112/execution/run.log
+StandardError=inherit
+
+[Install]
+WantedBy=default.target

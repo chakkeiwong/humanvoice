@@ -1,0 +1,22 @@
+{
+  ".localresources/client-reload-continuation-20261114/REVIEW.md": "69d619d2c94fd566e36bdb705442b9c3efebf27c68cfe68b7405471bea0859fa",
+  ".localresources/client-reload-continuation-20261114/check_reload.py": "aab8be8e3f65936b617664a3a142651ff467dff11bfddaacef62e713a034cc47",
+  ".localresources/client-reload-continuation-20261114/client-inputs.json": "1c8366059423cc7c272a5dc09583bb97dc172bb8eb79b09a47f4ea108df1bd07",
+  ".localresources/client-reload-continuation-20261114/humanvoice-zlb-reloaded-20261114.service": "8bda50da45c83b5415364b2d32c238682ab1c33b244b0a8ae37c4ca041e75ad8",
+  ".localresources/client-reload-continuation-20261114/offline-result.json": "66aeb8f82a2fa8f376609aacebc28c062e54f8a30e84c7d994106d1298adbf1b",
+  ".localresources/client-reload-continuation-20261114/reload_bootstrap.py": "07a353d017ca03f03d70cea4fa5dbe592e51e809f2192220aabfb2f924f777c7",
+  ".localresources/client-reload-continuation-20261114/reload_program.py": "58fd73b0fe06f40bb9cf7f540f43e0c8d1e739cd2be24422d74fb6fdaef63eea",
+  ".localresources/client-reload-continuation-20261114/review.json": "cf3cb8e31df30ebc33b03de2407d1db4c9d707001954d922be351b3fc9cacea4",
+  ".localresources/client-reload-continuation-20261114/session-rebind.json": "d9f3acdd791911999917c80b79861b7044d3c3f30ef7ee0798785182788413ba",
+  ".localresources/client-reload-continuation-20261114/session_rebind.py": "70344f0e3e2b496023d3a635b2aacba97fc73c408fc5eb31daee4bdace55a243",
+  ".localresources/client-reload-continuation-20261114/status.py": "e511edff41b142bf48ef09010134c22d2d399fb34746cbd2ca69fb64dbcf383c",
+  ".localresources/client-reload-continuation-20261114/test_reload.py": "275d49d0a67f12d554d9cb5d1243df60111120e1a6bf2290debd0c9e8a46d321",
+  ".localresources/client-reload-continuation-20261114/tests-result.json": "3797e3ec077cddc2ff76c3ae27df65891a43e5c6de261f939f6c9ae6b7749fcd",
+  ".localresources/client-reload-continuation-20261114/tests.log": "32459c874db405eb0c03751aa044982e9fd31fbcff3e41f931fc0eb1fbe753c0",
+  ".localresources/client-reload-continuation-20261114/tests.xml": "77d6a2019369c2ddf6e95172e34a764e0ac46234ccbcf74452c7496e651752e3",
+  ".localresources/client-reload-continuation-20261114/wire-probe.json": "efaac5c41f68fcb29d3e4edad9f152b9b8c8881a7244bcd4f10cf44d0b74e69b",
+  ".localresources/client-reload-continuation-20261114/wire_probe.py": "11d801ddf4fd2509f82c486d83f101ff4a7ebff739e4976ee55d10c1acd22805",
+  "docs/plans/ENSEMBLE_MASTER_PROGRAM_2026-09-30.md": "adf2ed1ea118860c69eee4efd34e8e60f5affa714476087a287cd715615fd456",
+  "docs/plans/ZLB_CLIENT_RELOAD_CONTINUATION_2026-11-14.md": "de57e294e9e36eabac238a6eabca2d824fae26465e96fcaa3979a02393743932",
+  "docs/plans/humanvoice_master_program_v2.md": "cb64c89738e4f26e97c252a07b5379ba863f9201ebc8f873e0b0ee52c20061b6"
+}
