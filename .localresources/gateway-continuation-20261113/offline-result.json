@@ -1,0 +1,24 @@
+{
+  "status": "PASS",
+  "sources": {
+    "/home/ubuntu/workspace/humanvoice/.localresources/gateway-continuation-20261113/gateway_bootstrap.py": "d717b5d7d0ad6f01653b9a1927450ba39d97f98f08222e59956fbb5bc8446eca",
+    "/home/ubuntu/workspace/humanvoice/.localresources/gateway-continuation-20261113/gateway_state.py": "43c2e87dbad57a7d97381d93df8c0ef2b8c3afd20be5a15367a46ea23b89a2ff",
+    "/home/ubuntu/workspace/humanvoice/.localresources/gateway-continuation-20261113/gateway_runtime.py": "f8129a53a9bd48f52895f5c3f5324f36d2e542b4f7bc35a07c59811893963513",
+    "/home/ubuntu/workspace/humanvoice/.localresources/gateway-continuation-20261113/gateway_program.py": "90095cfc43f7e485b1e3c1351adf26b6bb979fccca02955d68602f9ed948be9e",
+    "/home/ubuntu/workspace/humanvoice/.localresources/gateway-continuation-20261113/transition.json": "e4d42c692f1f9d62203881e018caa0314f5a797bee504390320cc90229a54ede",
+    "/home/ubuntu/workspace/humanvoice/.localresources/gateway-continuation-20261113/humanvoice-zlb-https-20261113.service": "5d314fbfa598f6c33498a98b2d615403a438a47626ddb1f20b0d8df09adb7f9a"
+  },
+  "retained_responses": 110,
+  "demands": 5,
+  "frontier_sha256": "e298330bf182400d7e9298b2575ddecc247f81dcfd0777a2e3e4749b4daf92ee",
+  "endpoint": "https://cn.origincoder.com/v1",
+  "elapsed_seconds": 430.19535721698776,
+  "model_calls": 0,
+  "account_writes": 0,
+  "retained_files": {
+    "/home/ubuntu/workspace/humanvoice/.localresources/parallel-writing-semantics-20261112/native-stage/native-attempts.json": "ee80c2f932a896e465059b27a1f7488ea395613946bc6b4f69cfb3d3c0158255",
+    "/home/ubuntu/workspace/humanvoice/.localresources/parallel-writing-semantics-20261112/native-stage/allocation-ledger.json": "129f802e88ef722898562deb3235b17ee6d4f26fbe3172b7ef545099e4f4afbc",
+    "/home/ubuntu/workspace/humanvoice/.localresources/automatic-program/account.json": "5f535812f562f54971c9bfa91c4ea4bb8dd63a4c5523a5b6d568d18f3996f8ed",
+    "/home/ubuntu/workspace/humanvoice/docs/audits/2026-10-05/master-program/automatic-execution/authorized-2000-call-budget-20261012.json": "f4798c4a74f9a87cc17ff81f627d0a7cbb94d98fae5333f6753ee6a68c3c348c"
+  }
+}

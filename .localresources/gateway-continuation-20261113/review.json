@@ -1,0 +1,126 @@
+{
+  "status": "READY",
+  "sources": {
+    "/home/ubuntu/workspace/humanvoice/.localresources/gateway-continuation-20261113/gateway_bootstrap.py": "d717b5d7d0ad6f01653b9a1927450ba39d97f98f08222e59956fbb5bc8446eca",
+    "/home/ubuntu/workspace/humanvoice/.localresources/gateway-continuation-20261113/gateway_state.py": "43c2e87dbad57a7d97381d93df8c0ef2b8c3afd20be5a15367a46ea23b89a2ff",
+    "/home/ubuntu/workspace/humanvoice/.localresources/gateway-continuation-20261113/gateway_runtime.py": "f8129a53a9bd48f52895f5c3f5324f36d2e542b4f7bc35a07c59811893963513",
+    "/home/ubuntu/workspace/humanvoice/.localresources/gateway-continuation-20261113/gateway_program.py": "90095cfc43f7e485b1e3c1351adf26b6bb979fccca02955d68602f9ed948be9e",
+    "/home/ubuntu/workspace/humanvoice/.localresources/gateway-continuation-20261113/transition.json": "e4d42c692f1f9d62203881e018caa0314f5a797bee504390320cc90229a54ede",
+    "/home/ubuntu/workspace/humanvoice/.localresources/gateway-continuation-20261113/humanvoice-zlb-https-20261113.service": "5d314fbfa598f6c33498a98b2d615403a438a47626ddb1f20b0d8df09adb7f9a"
+  },
+  "transport_adapters": {
+    "native_parallel.receipt_scope": {
+      "original_sha256": "6d150bee8efe109d7856574de9c8a01f116706f28b27424fc0dc6059a06bc1c3",
+      "updated_sha256": "e04daa0eb03403ec4f751e510d543209f1d79d72dd143cfd7460e9adf00fff08",
+      "replacements": [
+        [
+          "qualified.stream.grammar_scope((profile,))",
+          "qualified.stream.grammar_scope(_gateway_trusted(profile))"
+        ],
+        [
+          "qualified.active.runtime(profile)",
+          "qualified.active.runtime(profile, historical_profiles=_gateway_trusted(profile))"
+        ]
+      ]
+    },
+    "Native.invoke": {
+      "original_sha256": "217f4e81e5a78d8a1905deb419987bca24f10bb28e208666df6c3cd2f6c6907a",
+      "updated_sha256": "fee721a4c42fa857bd3d79bfc1aab7dee91b555cdcf221e91e3667940df83f8a",
+      "replacements": [
+        [
+          "ModelConfig(**demand['config'])",
+          "ModelConfig(**_gateway_config(stage, row))"
+        ]
+      ]
+    },
+    "native_parallel.launch_scope": {
+      "original_sha256": "e60f745771e92cac639943fc66daef6429be0f536915f7a431337ad63ac79064",
+      "updated_sha256": "569bfab529afacb261e9499880d06d336fe4ab6ee242892a58052a9eb0eb87ca",
+      "replacements": [
+        [
+          "profile = stage.plan['profile']",
+          "profile = _gateway_profile(stage, row)"
+        ],
+        [
+          "min(context.deadline, stage.value['deadline'])",
+          "min(context.deadline, _renewal_deadline_for(stage.output, stage.value['deadline']))"
+        ],
+        [
+          "save(directory / 'qualification-capture.json', {**check, 'status': 'verified'})",
+          "_gateway_marker(stage, row, directory)\n                save(directory / 'qualification-capture.json', {**check, 'status': 'verified'})"
+        ]
+      ]
+    },
+    "Stage._verify_response": {
+      "original_sha256": "83a18e905310bbcb3923fe9857d916eb326b2ef03ff20338ffde49f1b93c0c4b",
+      "updated_sha256": "0f14c111b311c5a3bb48e11c55f9db09dfcbba7cb096e22ff0a0253467d3e5d8",
+      "replacements": [
+        [
+          "request['profile'] == self.plan['profile']",
+          "_gateway_matches(request['profile'], self.plan['profile'], directory)"
+        ]
+      ]
+    },
+    "Stage._unknown": {
+      "original_sha256": "27176b3ae59506c6b539dd868d62d837822084144d54ce089d661f015f656461",
+      "updated_sha256": "2e93d6fc7fcd09ff72cfa36e3853ab0d74a05d136eab63ab5166b0d39f05ca5c",
+      "replacements": [
+        [
+          "request['profile'] == self.plan['profile']",
+          "_gateway_matches(request['profile'], self.plan['profile'], runtime)"
+        ]
+      ]
+    },
+    "native_parallel.reconstruct": {
+      "original_sha256": "cf41fd1d58bd5070c5b668845577d046dadb88ac5f54c8796c33995f23560728",
+      "updated_sha256": "919becf46fb123a28129d5297d121eb683239eddb51f71d6382ebd3921648565",
+      "replacements": [
+        [
+          "api['profile'] == profile",
+          "_gateway_matches(api['profile'], profile, directory)"
+        ]
+      ]
+    },
+    "native_completion.allocation_evidence": {
+      "original_sha256": "a32f0aadcc54145463929ca615dd4924657db8d377f0646d183af0867b930ea6",
+      "updated_sha256": "f9e2302d851458ec587ae5ce8dba47199ed7ec4d0fbba90e701424b79e76b590",
+      "replacements": [
+        [
+          "request['profile'] == stage.plan['profile']",
+          "_gateway_matches(request['profile'], stage.plan['profile'], original)"
+        ]
+      ]
+    },
+    "automatic_settlement.completed_usage": {
+      "original_sha256": "344c79518bc003be3d48e2c41662a876a7d556bfa25e835a6999ad41de60111b",
+      "updated_sha256": "4c2d4c12735706fc084d0eeffaa39fb9f4499c7c1cb5b7f0561f034c0588ebd2",
+      "replacements": [
+        [
+          "request.get(\"profile\") != plan[\"profile\"]",
+          "not _gateway_matches(request.get(\"profile\"), plan[\"profile\"], output / folder)"
+        ]
+      ]
+    }
+  },
+  "artifacts": {
+    "/home/ubuntu/workspace/humanvoice/.localresources/gateway-continuation-20261113/tests-result.json": "7dd6416c4d9abc1fa8ac07a42776c527ac2278ab4a3e58162ecbed7855816478",
+    "/home/ubuntu/workspace/humanvoice/.localresources/gateway-continuation-20261113/offline-result.json": "4efd4927ad4bb0665bb5a3320b7de0d6f172fc45ddc70db0592fb736b19858b3",
+    "/home/ubuntu/workspace/humanvoice/.localresources/gateway-continuation-20261113/test_gateway.py": "9d0ab32b5ef0d004df397f406474cfa9e97d729baabe042ca7e4fdaf092f7417",
+    "/home/ubuntu/workspace/humanvoice/.localresources/gateway-continuation-20261113/check_gateway.py": "51b04490917ce1251b5218b993a086c67077215210a5b7c20b5937ca5b3c9182",
+    "/home/ubuntu/workspace/humanvoice/.localresources/gateway-continuation-20261113/tests.xml": "6c1fb7d5c773d4fb649e72b3420ef9de20198770fa70b5125d3d0861116ca9cf",
+    "/home/ubuntu/workspace/humanvoice/.localresources/gateway-continuation-20261113/tests.log": "4ed1672e120b6f47b0a3af2c8f01e3bf0a7c3104ce1172838dc54ccab89ec24a"
+  },
+  "scope": {
+    "unit": "humanvoice-zlb-https-20261113.service",
+    "disable": [
+      "humanvoice-zlb-unit-validation-20261113.service"
+    ],
+    "root_actions": 0,
+    "endpoint": "https://cn.origincoder.com/v1",
+    "workers": 16,
+    "deadline": 1795165429,
+    "shared_calls": 177,
+    "approval_policy": "on-request",
+    "approvals_reviewer": "user"
+  }
+}

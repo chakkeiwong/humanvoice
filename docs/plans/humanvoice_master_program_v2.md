@@ -1,8 +1,882 @@
+<!-- renewed-session-execution-20261113 -->
+Current checkpoint, November 13: **HTTPS_CONTINUATION_READY_FOR_INSTALLATION**.
+The user authorized another 168 hours and continuation. The new execution stop
+is November 20, 17:03:49 Shanghai. The additive renewal preserves the original
+admission, settled inventory, all 110 saved manuscript responses and charges,
+and the shared 177-call pool (42 unused slots).
+
+The complete real replay PASSED and produced exactly five new writer repair
+requests for units 002, 009, 012, 018 and 020. It crossed the formerly broken
+writer-to-repair transition, reused every saved response, and changed no
+accounting or source evidence. Discovery took 40m56s, plus 5m32s for its retained
+baseline. Every unit audit remained below 900 seconds. The endpoint correction
+passes 15 regressions; renewal/reservation integration passes 21; Ruff passes.
+The session repair execution review is READY and its user-service file validates.
+
+The active gateway is https://cn.origincoder.com/v1. Following the user's standing
+instruction to match active settings, the continuation is being migrated from
+http://144.34.149.141:8080/v1. New traffic must record the HTTPS profile and its
+actual destination; historical receipts retain their original endpoint. The
+additive migration PASSES 13 regressions, including native capture, failed-call
+charge retention, restart reconciliation, receipt tamper rejection and settlement.
+The actual offline check PASSES all 110 retained responses and all five HTTPS
+commands in 430.20 seconds, with zero model calls/account writes. Both source-bound
+execution reviews are READY. The HTTPS user-service file passes host validation.
+Production remains stopped pending commit and grouped installation/start.
+No sudo is needed for the ordinary-user successor.
+
+After gateway validation and commit: grouped host installation/start, five
+repairs with independent review, assembled relationship/build/release checks,
+benchmark/regression, separately budgeted reproduction, then final human review.
+Automatic repair after an assembled semantic rejection remains open, with its
+code path and regression requirements recorded in the repair plan.
+See docs/plans/ZLB_SESSION_BINDING_REPAIR_2026-11-13.md.
+<!-- end-renewed-session-execution-20261113 -->
+
+<!-- session-binding-repair-20261113 -->
+Current checkpoint, November 13: **STOPPED_SESSION_BINDING_FAILURE**. The service
+failed at 04:15:33 Shanghai; its execution window expired at 07:30:11. All 43
+critic requests completed, bringing the retained bank to 110 responses. All 21
+units replayed successfully within their timing bounds. Sixteen are acceptable;
+units 002, 009, 012, 018 and 020 need semantic repair. Forty-two slots remain in
+the original 177-call pool. There is no assembled candidate or final acceptance.
+
+Both repair cycles stopped before any repair action because writer and validator
+resolved the same selected endpoint differently (/v1 versus an unversioned URL).
+The generic session-change error hid this difference. An additive correction
+uses the selected runtime configuration consistently while retaining exact
+endpoint equality and all native source/profile checks. Fifteen focused offline
+regressions pass, including the native writer-to-repair transition and rejection
+of twelve altered bindings. The actual stopped ZLB session PASSES native
+validation with the correction in 661.37 seconds (11m01s). Only api_endpoint
+differed under the old resolver. Saved sessions, responses and accounting stayed
+unchanged; there were no model calls or service starts. Deployment is pending.
+
+Next: compose the verified correction into the consumer, prepare bounded repairs
+for the five units, then renew the window before paid dispatch/restart. Keep sixteen
+workers and fifteen-minute network recovery. No sudo is needed. After unit repair:
+assembled relationship/build/release checks, benchmark/regression, separately
+budgeted reproduction and final human review. Automatic repair after an assembled
+semantic rejection remains open. No dependable completion ETA is available.
+Plan: docs/plans/ZLB_SESSION_BINDING_REPAIR_2026-11-13.md.
+This checkpoint supersedes the historical installed/running checkpoints below.
+<!-- end-session-binding-repair-20261113 -->
+
+<!-- unit-validation-repair-20261113 -->
+Current checkpoint, November 13: **UNIT_VALIDATION_REPAIR_INSTALLED**. Inventory is
+complete. The full real replay has now processed all 21 source units using the
+67 retained responses, in 27m52s; the former document timer stopped after seven
+units at 15 minutes. Each source unit now shares one cumulative 900-second
+budget across repeated checks, phases and repairs. The longest actual unit took
+85.90s. Exact verified comparison reuse avoided 33 additional sandbox launches.
+All 67 focused regressions and the real sandbox startup check pass.
+
+The next complete frontier contains 43 independent critic requests for ten
+units, within the 85 remaining slots. Eight units are acceptable; units 002,
+009 and 012 retain semantic findings for the native bounded repair path.
+No paid response is repeated or negative judgment discarded. The source-bound
+review is READY. The ordinary-user successor started at 02:48:56 Shanghai
+(MainPID 3129842); the predecessor is disabled. All 76 runtime/restart/installer
+regressions pass. The writing-live block below provides current execution state.
+The original 177-call pool, 16 workers and November 13 07:30:11 stop remain.
+Remaining after critics: semantic repair, assembled relationship/build/release
+checks, benchmark/regression, separately budgeted reproduction and final human
+review. Automatic repair of an assembled relationship rejection remains open.
+See docs/plans/ZLB_UNIT_VALIDATION_REPAIR_2026-11-13.md.
+This checkpoint supersedes the dated execution checkpoints below.
+<!-- end-unit-validation-repair-20261113 -->
+
+<!-- writer-capacity-recovery-20261112 -->
+Current checkpoint, November 12, 18:03 Shanghai: **ZLB_PROVIDER_BATCH_RUNNING**.
+This checkpoint supersedes the dated startup and earlier capacity projections below.
+Inventory is complete and settled. The writer batch drained after 11 valid answers
+and five completed over-limit answers; five tasks had not yet dispatched. There
+are 36 allocated slots and 141 unused slots in the original shared 177-call stage.
+All failed/uncertain attempts retain their 544,000-token reservations.
+
+The repaired coordinator automatically retains valid answers, records immutable
+size-failure evidence, retires the drained batch, and discovers bounded children.
+It measures requests using `ceil(1.25 * local_tokens) + 16000`. Exact named defaults
+and shared literal values reduce repeated concept metadata without losing source
+requirements; every compact prompt reconstructs its original bytes. Remaining
+oversized writers split only at validated source boundaries, to depth three.
+The exact joined candidate receives independent review against its complete
+parent source. No combined candidate is represented as a provider response.
+Negative judgments remain retained; missing coverage and capacity failures have
+separate recovery rules. Recovery does not reset attempts, renew budgets, or
+repeat successful requests.
+
+The real source diagnostic reuses all 11 paid writer answers and needs 16 new
+writer requests. Both previously indivisible passages fit the planning envelope.
+The initial 334-test suite passed in 75.18s. The real replay then reached its
+900-second local phase bound after 10 units: 37 sandboxed protected-text parses
+had only 15 distinct inputs and consumed 348 seconds. The repair activates the
+existing strictly verified parse cache for the consumer pass and builds each
+writer context once within the call. That repair passed 346 regressions and
+improved the actual median unit interval from 48.90s to 28.54s (41.6%). It reached
+19 of 21 units before the old combined setup/writer timer expired. The timer now
+bounds each actual native phase at 900 seconds; nested repair steps share their
+parent timer, with at most two repair cycles and the original campaign deadline.
+The complete actual native replay PASSED: 56 requests (16 writers and 40
+independent critics), all 11 paid writer answers reused, 942.23s total with the
+native rewrite phase at 786.84s. The subsequent slot check left the required
+receipt-validation context and failed locally. Its correction has a focused
+regression and a resumable closing check that preserves the exact successful
+report and rejects any change to its consumer dependencies. The closing check
+PASSED: all 56 demands fit the 141 remaining slots, without repeating the replay.
+Final source-bound validation PASSED: 354 tests, zero failures/errors/skips,
+416.99s; Ruff passes. The fixed review action reports READY and binds the exact
+sources, tests, successful replay and closing-check evidence. Client startup
+passed in 8.04 seconds. The grouped deployment completed successfully and the
+ordinary-user successor started at 17:06:06 Shanghai. Baseline replay passed
+in 298.86s. It then stopped before any new provider call: the recovery adapter
+incorrectly compared the scheduler’s 1050s attempt allowance with the provider’s
+900s limit. An additive correction uses the existing native attempt constant
+and checks the actual saved batch before expensive startup. Its 44 regressions
+and real saved-batch check pass; Ruff passes. No accounting or consumer source
+changed. The corrected ordinary-user service started at 17:40:21 Shanghai;
+baseline passed in 300.18s, and wave 1 began at 17:57:17 Shanghai after account
+validation and immutable retirement of wave 0. All 11 paid writers are reused.
+The 56-request batch now has 3 completed responses, 16 running and 37 queued
+at 18:03 Shanghai. The first two new writers completed in 186.42s and 222.60s,
+using 67,813 and 56,534 input tokens, below the 100k limit. Worker slots refill
+automatically. Independent semantic acceptance is still pending. The saved-batch
+check took 1.18s.
+See docs/plans/ZLB_ATTEMPT_BOUND_REPAIR_2026-11-12.md.
+The repair keeps 16 workers, 15-minute network recovery and the existing deadline
+of November 13, 07:30:11 Shanghai. The reviewed deployment uses an ordinary-user
+service and requires no sudo password.
+
+Remaining phases: finish writers and independent critics, build and assembled
+relationship checks, benchmark/regression and separately budgeted reproduction,
+then final human review of the actual ZLB output. Automatic candidate repair after
+an assembled semantic rejection remains an open implementation gap. A complete
+candidate and native accounting status are distinct: earlier incomplete attempts
+remain recorded even when later semantic checks pass.
+
+Plan: docs/plans/ZLB_SIZE_RECOVERY_REPAIR_2026-11-12.md.
+Evidence: .localresources/writer-capacity-repair-20261112/.
+<!-- end-writer-capacity-recovery-20261112 -->
+
+<!-- client-startup-repair-20261112 -->
+Current repair, November 12: the writer startup failed locally with read-only
+Codex state, before any provider response. All 19 failed attempts and their
+10,336,000 reserved tokens remain retained. The original 177-call stage has
+158 unused slots. Inventory is complete and is not rerun.
+
+The reviewed repair restores private SQLite/tmp/installation-ID storage while
+keeping credentials and configuration read-only. It tests actual client
+initialization in the service namespace with networking disabled, classifies
+this local failure separately from network recovery, and records an idempotent
+transition to the next unused frozen canary. Attempt counters and charges are
+not reset. Only a successful live canary opens the 16-worker writing batch.
+
+Validation: 151 regression tests pass (zero failures/errors/skips); Ruff passes.
+The original source review remains valid. The actual offline client probe
+passes in about 8 seconds; full live writing performance is still unmeasured.
+The successor ordinary-user service started November 12 at 14:02:52 Shanghai.
+The real gateway canary PASSED in 5.64 seconds (12,590 input / 46 output tokens).
+The circuit is open for the 16-worker writing batch. The failed writer unit is
+disabled; the original stage/account/grant and all prior charges are retained.
+
+Plan: [ZLB client startup repair](ZLB_CLIENT_STARTUP_REPAIR_2026-11-12.md).
+Evidence: `.localresources/writer-startup-repair-20261112/`.
+Remaining: writing/critics, assembled checks and any candidate repair, benchmark,
+separately budgeted reproduction, and final human review of the ZLB output.
+Automated candidate repair after assembled rejection is still an open gap.
+<!-- end-client-startup-repair-20261112 -->
+
+<!-- writer-repair-current-20261112 -->
+Reviewed execution checkpoint, November 12 at 12:10:53 Shanghai: all 299 final
+regressions pass, including real ZLB baseline at NOFILE 1,024, bounded open-file
+usage, live startup binding, incomplete critic coverage splitting, negative
+retention and native terminal evidence. Source hashes remained unchanged; no
+model calls or account writes. Ruff passes. The complete actual 21-writer
+rehearsal passed in 1002.72s at the service NOFILE1,024 limit. The already
+authorized ordinary-user service restarted at12:10:53 Shanghai and entered
+live baseline replay; the writing-live block reports current progress.
+The original shared 177-call pool and November 13 07:30:11 deadline remain.
+
+Measured time difference: sixteen-client environment verification 55.258s to
+2.699s (20.48x); controlled scheduler 10.7469s to 0.9471s (11.35x); live sampled
+inventory windows median 25m59.63s to 6m05.62s (different passages). Writing uses
+124 base calls versus the earlier 341-call scenario. Full writing duration is
+not yet measured. Inventory is complete; its retained evidence is reused.
+
+Remaining phases: finish this writing/critic/relation/build/release run; benchmark
+regressions and independently budgeted reproduction; final human output review.
+Automatic repair after a final assembled relationship rejection remains open:
+the current adapter retains native findings, identifies affected units and stops.
+It never rerolls the same negative judgment. Reproduction projects 124 fresh
+calls, exceeding the ideal 53 remaining calls by 71 before retries.
+
+The writing-live block is authoritative for the service. Earlier dated blocks
+are retained execution history, superseded by this checkpoint and live state.
+Plan: [writing throughput and recovery](ZLB_WRITING_SCALABILITY_2026-11-12.md).
+Evidence: .localresources/parallel-writing-semantics-20261112/launch-repair-checks.json.
+<!-- end-writer-repair-current-20261112 -->
+
+<!-- file-limit-repair-20261112 -->
+
+## Service-limit repair checkpoint, November 12
+
+The 11:15 startup stopped at 11:18 before admission or provider allocation.
+Baseline traversal retained one directory descriptor per evidence folder; the
+service allows 1,024 open files whereas the earlier shell rehearsal allowed
+1,048,576. The repair uses an LRU of at most 32 directory descriptors while
+retaining all byte, membership, no-follow and identity checks. Both rehearsal
+and live launcher now cap the inherited soft limit at 1,024.
+
+Validation: 51 baseline regressions passed, including actual ZLB evidence at
+1,024 and 2,401 synthetic directories at 64; 101 coordinator, accounting,
+environment and launcher regressions passed. A new coordinator starts with fresh
+status, while the append-only log preserves earlier failures. Full native
+frontier validation is running before the already authorized user-service
+restart. No sudo, new provider call or budget change was needed for this repair.
+
+The writing-live block remains the service state; the service is stopped while
+this separate offline rehearsal runs. Inventory remains complete and settled.
+<!-- end-file-limit-repair-20261112 -->
+
+<!-- writing-live-20261112 -->
+Current ZLB writing: **BLOCKED_REPAIR**. Retained manuscript responses: 110.
+Native inventory is complete. This stage has one shared 177-call pool and up to 16 provider workers.
+Automatic recovery waits 15 minutes after network failure; known responses remain retained.
+Current state: `.localresources/parallel-writing-semantics-20261112/execution/status.json`.
+Original deadline: November 13, 07:30:11 Shanghai. Final human ZLB review remains pending.
+<!-- end-writing-live-20261112 -->
+
+<!-- writing-capacity-20261112 -->
+Current ZLB phase: **WRITING_INTEGRATION_AND_NATIVE_REHEARSAL** (November 12).
+Inventory and settlement are complete. No inventory inference is repeated.
+The composed native grant has 177 calls available; no writing calls are allocated
+yet. The completed inventory service stays inactive. Current execution authority
+ends November 13, 07:30:11 Shanghai.
+
+The native baseline replay succeeded. Writing failed on the count40 rule for
+32 of 92 source owners, rather than on missing inventory. Actual prompt sizing
+also exposed repeated judgments: the old word-only plan needed 341 calls before
+repairs. The reviewed prospective replacement uses 21 prose writers, 83 bounded
+independent critics and 20 relationship reviews: 124 base calls, with 53 of the
+remaining 177 slots available for repairs, splits and transport recovery.
+This is a measured planning scenario; actual generated candidates are remeasured.
+
+Preserve all 5,042 concepts, 6,888 functions, 6,208 dependency edges and atomic
+source ownership. Derive located mappings from independently verified critic
+quotes, retain every negative judgment, and reuse unit judgments only when final
+assembled bytes exactly match their reviewed replacements and unchanged gaps.
+Review all adjacency and cross-unit dependency relationships independently.
+Every real request retains its own native receipt and full 544,000-token charge.
+No deterministic aggregate may masquerade as a provider response.
+
+Status: the actual complete writer-frontier rehearsal passed: all 21 units in
+992.44s including the 305.05s baseline replay, with zero new model calls.
+Final checks passed: 89 coordinator/accounting/launcher tests, 46 baseline tests
+and nine integrated assembled-review tests; Ruff passed. The reviewed ordinary-user
+coordinator and reporter started November 12 at 10:55 Shanghai. Startup validation
+precedes provider dispatch. Native completion and settlement are integrated; final
+output review remains pending. The writing-live status block is authoritative for
+current progress.
+See [writing repair](ZLB_WRITING_SCALABILITY_2026-11-12.md).
+<!-- end-writing-capacity-20261112 -->
+
+<!-- parallel-inventory-20261112 -->
+Selected ZLB inventory: **INVENTORY_SETTLED_AND_READY_FOR_WRITING_PLAN**.
+All 180 nonempty source windows passed. All 400 actual parallel requests returned;
+582 retained responses passed full native inventory merge and automatic baseline
+review in 308.05 seconds, with zero new calls. Terminal accounting then completed
+in 127.78 seconds: 422 started sessions (22 predecessor + 400 parallel), retaining
+229,568,000 tokens; the 113 unused slots released 61,472,000 tokens. Unknown charges
+were not refunded. The completed ordinary-user inventory service is disabled and
+inactive; do not relaunch it. No final ZLB acceptance is claimed.
+
+Current work: repair writing's inventory replay scope; measure lossless prompt
+packing and capacity-based source grouping; verify composed remaining call/token
+headroom; finish restartable writer/critic batching, native build and release.
+No writer calls have started. Original authority ends November 13, 07:30:11 Shanghai.
+Evidence: `.localresources/parallel-handoff-20261112/completion.json` and
+`inventory-service-retired.json`. Timing/report:
+[parallel ZLB execution](../reviews/INVENTORY_SCALABILITY_EXECUTION_2026-11-12.md).
+<!-- end-parallel-inventory-20261112 -->
+
+<!-- inventory-scalability-20261112 -->
+Current ZLB retry, November 12: all 180 nonempty source windows passed extraction,
+independent reconstruction and coverage. All 400 actual parallel provider requests
+returned; zero remain in flight. R3 resolved four aggregate repair-cap blocks;
+R4 corrected two inherited unsupported concept types with fresh source extraction
+and both critics. Frozen responses, account, call budget and deadline are retained.
+
+The complete native inventory has zero semantic errors. Its final automatic
+baseline review exposed a local cache bug: native finalization enriches spans,
+but the size-policy cache mistook that expected change for corruption. The isolated
+handoff repair revalidates native size rules whenever spans change, while preserving
+strict checks on source, policy and failure evidence. Its 49 focused regressions
+pass. The offline full native merge retry passed in 308.05 seconds with zero new model calls;
+the earlier frozen snapshot is preserved. No sudo/service installation is needed.
+
+Measured timing: 117 fresh windows have a 6m05.62s median versus the earlier
+25m59.63s diagnostic; outside-provider time is 18.84s versus 13m51.87s. Passages
+differ. The controlled sixteen-worker fixture improved throughput 11.35x.
+See docs/reviews/INVENTORY_SCALABILITY_EXECUTION_2026-11-12.md.
+
+Next: successful native merge, independent delegated terminal settlement, actual
+native writing-unit/headroom preview, then reviewed parallel writer/review/assembly
+and build, benchmark/reproduction, and final human review of the actual ZLB output.
+The sequential one-shot writer is not admitted as a parallel restartable stage.
+The prospective demand probe collects writer/critic batches without inference;
+accounting-history composition and complete assembled-review batching are under
+regression review. No claim of full ZLB completion is made by inventory alone.
+
+Repair, verify and refresh at each phase transition, failure and stop. Use up to
+16 actual provider workers. Deadline: November 13, 07:30:11 Shanghai; existing
+call/token limits. Larger windows, combined critics and FinMarketing scaling
+remain separate optimization work after this exact-prompt scheduler retry.
+<!-- end-inventory-scalability-20261112 -->
+
+<!-- unprivileged-validation-recovery-20261111 -->
+Live checkpoint, November 12 at 03:01 Shanghai: the canary and first new manuscript
+response completed (two completed allocations). The supervisor reports 167 completed
+manuscript responses including 166 inherited; it is validating the new response.
+438 inventory requests remain after this received response; downstream phases remain.
+The monitor and reporter are active, heartbeat is current, and no blocker, cleanup
+failure or progress warning is reported. Generation-01 remains executing.
+
+Current checkpoint, November 12: the reviewed stable validator migration is installed
+and the live ZLB inventory monitor has resumed. OS authentication succeeded; the
+host action returned ADMITTED_RUNTIME_STARTED (exit 0). Installation identity:
+33fd4306ad2a15341b649abc4291b354a25146063d3e14acfb6a378a74ed946f.
+Control, inventory monitor and reporter are active; the deadline timer is active.
+The fixed `sudo -n ... verify` action returned PASSWORDLESS_MAINTENANCE_READY with
+the same six maintenance actions. Future accepted validator updates and routine
+regressions are ordinary-user work; no service/helper replacement is needed.
+Active candidate: df597ce3b373cbd8b807e14ea3d22ec57e4c3636bd9bef43c7d9c5badc367abc.
+Evidence: 333 source-bound tests and lint PASS; complete public recovery rehearsal
+PASS in 4,726.22 seconds, with native timeout reporting, one recovered crash, all
+231 original checkpoints unchanged, 166 retained responses, exact canary 439,
+independent settlement and committed account/stage floors. Zero rehearsal calls.
+Rehearsal: `.localresources/validation-recovery/campaign/rehearsals/20261112-000952-6b0c957b`.
+Regression receipt: `.localresources/validation-recovery/campaign/application-releases/20261112-000818/regressions.json`.
+Successful host attempt: `.localresources/validation-application-20261111/host-attempts/1794419092`.
+Live supervisor: supervision-validator-application-20261111, job-0001 RUNNING.
+All 231 live history checkpoints are saved. Native validation reports PASS with
+no cleanup errors; generation-01 has zero new allocations at this checkpoint.
+Startup remains expensive. Continue observing the actual first canary/request and
+receipt before estimating throughput. Service activation alone is not document progress.
+Remaining: 439 inventory requests, then writing/review/assembly/build, benchmark,
+reproduction and final human review of the actual ZLB output. Repair and refresh
+at every phase transition, failure and stop. Existing budgets and November 13,
+07:30:11 Shanghai deadline remain. Final ZLB testing is not complete.
+Authoritative plan: [Routine validation and recovery](UNPRIVILEGED_VALIDATION_RECOVERY_2026-11-11.md).
+<!-- end-unprivileged-validation-recovery-20261111 -->
+
+<!-- public-startup-closure-20261111 -->
+Current execution: BLOCKED_ENGINEERING after job-0001 hit the 900-second startup
+deadline in Stage.probe (elapsed 901.02 seconds). No campaign retry is running.
+Generation allocations remain zero; all 166 retained responses remain available.
+The control-service correction succeeded: 46 tests passed, the real namespace
+uses 44 mounts and passed in 64.11 seconds, native authenticated control and monitor
+preflight passed, and passwordless maintenance remains verified.
+The remaining test gap is combined public startup cost. The retained 767.72-second
+probe measured Stage.validate directly; real admission, ownership, floors and
+campaign reconciliation add work before that phase. The small public fixture did
+not expose the actual history cost. This is a startup computation failure, before
+provider dispatch. Do not repeat unchanged execution or claim ZLB progress.
+Next repair plan and preserved failure evidence:
+.localresources/session-public-startup-closure-20261111/PLAN.md and failure.json.
+The reviewed plan requires cumulative profiling, measured consolidation of duplicate
+immutable checks with native entry/exit validation, a real-data public-entry gate
+under 900 seconds, direct request-bound startup observation, and reliable typed
+timeout publication. Preserve live stop/ownership/spending checks and all receipts.
+Follow-up no-inference profiling: native Runtime construction takes 1.23–1.34s.
+Document semantic context entry exhausted a separate 120s diagnostic, with 77s
+in inherited-rule validation and 71s in qualification (overlapping totals). Prioritize
+repeated context/qualification/settlement replay, then prove the whole startup path.
+Diagnostics preserved authority and source hashes; none remain running.
+No prospective code repair has yet been installed for this remaining bottleneck.
+Existing budgets and stop November 13, 07:30:11 Shanghai remain. Inventory closure,
+writing/review/assembly/build, benchmark, reproduction and final human review remain.
+Refresh/repair is required at every phase transition, failure and stop.
+<!-- end-public-startup-closure-20261111 -->
+
+<!-- control-startup-repair-20261111 -->
+The control startup correction is installed after successful OS authentication.
+The real service namespace passed in 64.11 seconds with 44 mounts, zero model
+calls, and preserved restrictions. Native authenticated control startup and monitor preflight passed.
+The installer returned zero and the monitor is active. First campaign job/request
+progress is still being observed; no final ZLB completion is claimed.
+The reviewed correction uses the existing sparse root, nonrecursive read-only
+system binds, the exact existing write paths, and native authenticated ExecStartPost
+readiness. Every original control restriction and server command is retained.
+46 regression tests pass with 16 workers, including rollback after rename and no
+production publication after a failed real namespace test. Ruff, system Python,
+systemd and sudoers checks pass. The prior 272 tests and complete 166-response
+startup proof remain unchanged. No repeat of that full audit is required here.
+Plan/review/checkpoint: .localresources/session-control-startup-repair-20261111/.
+Host installation is approved and authenticated; no password is pending.
+Observe native control/monitor readiness and actual allocations/receipts. Existing budgets, 439 inventory requests,
+and November 13, 07:30:11 Shanghai deadline remain. Final ZLB acceptance is human.
+Repair/refresh remains required at phase transitions, failures and stops.
+<!-- end-control-startup-repair-20261111 -->
+
+<!-- control-readiness-20261111 -->
+The startup repair is installed, but first live preflight exposed a service readiness
+race: the Type=simple control unit is active before sandbox setup completes and its
+authenticated socket exists. No campaign job or model call launched. The installer
+cleaned up all started services. The installed payload and 272-test evidence remain valid.
+Recovery uses the existing six-action passwordless helper: start control, hold the
+monitor/reporter stopped, require native authenticated resumed-control evidence,
+then resume the monitor. The deadline timer remains active. Seven readiness regression
+cases pass; wrong peer/evidence, user stop and expired wait cannot qualify readiness.
+Plan: .localresources/session-control-readiness-20261111/PLAN.md.
+Live readiness: .localresources/session-control-readiness-20261111/state.json.
+Current state: control initializing; ZLB held stopped until authenticated readiness.
+No protected source changes or new budget/deadline authority are introduced.
+<!-- end-control-readiness-20261111 -->
+
+<!-- startup-repair-live-20261111 -->
+Current startup-repair successor: INVENTORY_SERVICE_FAILED; observed epoch 1794432322.4532845.
+Service failed/failed; PID 0.
+Inventory BLOCKED_ENGINEERING; job job-0001; generation 1.
+Allocations 22; retained document responses
+166 (166 inherited).
+Blocker: Owned campaign failed without current typed evidence: {"account_writes": null, "dispatch_allowed": false, "error": "RecoveryStop: Startup exceeded 900 seconds before provider dispatch", "execution_admitted": true, "grant_writes": null, "live_execution_enabled": true, "model_calls": null, "status": "BLOCKED_ENGINEERING", "usage_status": "REQUIRES_RECONCILIATION"}; observer error: None.
+Installation: 6cfc6524bb750b2af85fe3ef18cf70ca682f2d2a3129d5bbeb8ab8badaed4301; stop November 13, 07:30:11 Shanghai.
+Observer: .localresources/session-startup-observation-20261111/status.json.
+Startup phase, deadline and cache counters are recorded separately from document progress.
+Handoff: None; identity: None.
+Automatic refresh runs at progress/failure/phase changes. Only native INVENTORY_VERIFIED
+permits preparation of the offline downstream handoff. The observer cannot allocate
+calls, restart services, extend budgets or accept the final ZLB output.
+Writing/review/assembly/build, benchmark, reproduction and final human review remain.
+Earlier installation blocks are retained history; this block follows the active successor.
+<!-- end-startup-repair-live-20261111 -->
+
+<!-- startup-repair-20261111 -->
+Startup repair installed after successful administrator authentication.
+The protected successor is running native service startup; live request progress
+is not yet verified. A dedicated observer follows the new installation.
+Checkpoint: .localresources/session-startup-repair-20261111/checkpoint.json.
+Installation: 6cfc6524bb750b2af85fe3ef18cf70ca682f2d2a3129d5bbeb8ab8badaed4301.
+Plan and review: .localresources/session-startup-repair-20261111/PLAN.md and REVIEW.md.
+Root causes: repeated isolated parsing, nested qualification-cache replacement,
+oversized predecessor scan fallback, repeated guards and incomplete startup timing.
+Repaired scope uses native receipt/byte validation and retains isolation and authority.
+The actual retained ZLB startup passed in 767.72 seconds: 166 responses preserved,
+exact unfinished request reached, 111 parse reuses and two native sandbox launches.
+272 source-bound regression tests passed with 16 workers in 797.55 seconds; zero
+failures/skips, lint passed. Real ownership/spending preflight passed in 67.93 seconds.
+Every offline check made zero model calls; source and authority hashes were unchanged.
+Original failed probes remain preserved. Native fixture dispatch/settlement passed.
+Next: complete native service startup, then observe actual new allocations and
+receipts. All existing sandbox controls, six passwordless maintenance actions,
+spending limits and execution deadline are retained.
+Budgets and 439 remaining inventory requests are unchanged. Stop remains November 13,
+2026, 07:30:11 Shanghai (1794526211). Final ZLB output acceptance remains human.
+Successor observer: .localresources/session-startup-observation-20261111/observer.py.
+Writing/review/assembly/build, benchmark and reproduction follow inventory closure.
+Refresh/repair is required at each phase transition, failure and stop.
+<!-- end-startup-repair-20261111 -->
+
+<!-- validation-performance-live-20261110 -->
+Current performance successor: INVENTORY_SERVICE_STOPPED; observed UTC epoch 1794329773.0908217.
+Service inactive/dead; PID 0.
+Native inventory RUNNING; job job-0001; generation
+1; allocations 0; retained
+document responses 166 (166 inherited).
+Blocker: None; observer error: None.
+Validation progress is separate from document progress and recorded in status.json.
+Installation: 765d8f6d85b7b616b95975770e6932c3d77cb26488c2eca90d110c826ebb92e6; fixed stop November 13, 07:30:11 Shanghai.
+Observer: .localresources/session-validation-performance-observation-20261110/status.json.
+Handoff: None; identity: None.
+Automatic observer refreshes all three masters on phase/failure/progress changes
+and prepares an offline handoff only after native INVENTORY_VERIFIED. It cannot
+allocate calls, restart services, change budgets or accept final ZLB output.
+Writing/review/assembly/build, benchmark, reproduction and final human review remain.
+Earlier installation blocks are retained history; this block follows the successor.
+<!-- end-validation-performance-live-20261110 -->
+
+<!-- validation-cost-diagnosis-20261110 -->
+Current checkpoint: SERVICE_RESUMED_FIRST_PROVIDER_REQUEST_PENDING; November 11, 00:29:02 Shanghai.
+The performance repair and both archive compatibility corrections are installed.
+Authentication succeeded; host action returned zero; no password is pending.
+All six passwordless maintenance actions verified after installation.
+Production preflight passed six read-only mappings, 231 visible plans, actual
+16-worker capability, native consumption floors and ownership. History replay
+verified 231/231 stages in 40.02 seconds. Tests: 270 performance/native,
+38 image-location, 24 mapping/installer passed; Ruff/systemd/sudoers passed.
+Service active/running. Job job-0001 acknowledged; monitor 498155, worker
+516048, campaign 517775 identities and current request bindings/heartbeat verified.
+Offline probe replayed 166 retained responses and reached the unfinished request.
+Actual generation-01 allocations: 0; retained document responses: 166.
+No current native blocker. First provider allocation remains unverified; startup
+has taken about 24.8 minutes since dispatch. Keep the performance completion gate
+open until actual new allocations/receipts and useful throughput are observed.
+Evidence: .localresources/session-performance-archive-bindings-20261110/production-resume.json.
+One live observer refreshes all three masters on phase/failure/progress changes.
+Runtime sources remain frozen. Existing call/token/retry limits and fixed stop
+November 13, 07:30:11 Shanghai remain. Installation:
+765d8f6d85b7b616b95975770e6932c3d77cb26488c2eca90d110c826ebb92e6.
+Writing/review/assembly/build, benchmark, reproduction and final actual ZLB review
+remain. Intermediate checks are automatic; final actual-output review is human.
+<!-- end-validation-cost-diagnosis-20261110 -->
+
+<!-- root-access-repair-20261110 -->
+Current repair: COMPLETE; production NATIVE_JOB_RUNNING as of November 10, 17:40:28 Shanghai.
+Production capability/archive/native prelaunch and exact failed-job resume passed.
+Job job-0002 has a live monitor, acknowledged worker, campaign process and fresh
+heartbeat. Exactly one native restart is committed; no transaction is pending.
+All three process identities and their request binding were checked live.
+The campaign is validating retained inventory before new calls. 166 document
+responses remain retained; 439 inventory requests remain at this checkpoint.
+The native no-response-progress warning remains visible until receipts advance;
+it is not a new startup failure. Use the live observer below for later progress.
+
+The real service test passed in 121.2 seconds: 88 mounts, readonly home masks,
+exact writable roots, runtime/control/DNS, privileges, 16 actual workers and
+archives. 45 regressions, Ruff/systemd/sudoers pass. Passwordless maintenance
+verify/start/diagnose passed using sudo -n -k. No authentication is pending.
+Fixed stop: November 13, 07:30:11 Shanghai; existing call/token/retry limits apply.
+Evidence: .localresources/session-root-path-repair-20261110/production-resume.json.
+Live observer: .localresources/session-archive-extension-20261110/status.json.
+Next: inventory reconciliation and new receipts, verified inventory handoff,
+writing/review/assembly/build, benchmark, reproduction and final actual-output review.
+Refresh at repairs/failures/phase boundaries; intermediate judgments are automatic.
+Final ZLB acceptance remains pending and human.
+<!-- end-root-access-repair-20261110 -->
+
+<!-- explicit-mask-repair-20261110 -->
+Current repair: explicit tmpfs masks prepared and reviewed,42 regressions pass
+with16 workers; Ruff/systemd/sudoers pass. The prior bounded-root service reached
+Python after about103 seconds, then failed its readonly home mask assertion.
+Systemd249.11 static mask construction drops its declared readonly/mode flags.
+Use explicit readonly/nosuid/nodev masks with0755 home/runtime and0700 root.
+All original native commands, input/write limits, accounting and deadline remain.
+The grouped installer runs a180-second real environment/worker/archive test;
+only a passing result permits monitor/helper/sudoers publication together.
+Plan/review/checkpoint: .localresources/session-root-mask-repair-20261110/.
+166 retained responses;439 inventory requests remain; production still stopped.
+Next: install, passwordless verify/start, native admission and actual progression.
+Refresh after this repair and at each phase/failure; final actual-output review
+remains human. Inventory, writing/assembly and full ZLB evaluation remain.
+<!-- end-explicit-mask-repair-20261110 -->
+
+<!-- bounded-root-repair-20261110 -->
+Current repair: AUTHENTICATED_PREFLIGHT_MASK_FAILURE. The previous installer
+authenticated, but its namespace test timed out before Python; production was
+not changed. The successor uses an empty protected RootDirectory and explicit
+nonrecursive runtime/archive bindings, retaining the original home masking,
+write limits, native accounting and fixed November 13 07:30:11 deadline.
+37 tests pass with 16 workers; Ruff, systemd and sudoers validation pass.
+The grouped installation must pass its real 120-second environment/16-worker/
+archive probe before publishing monitor and maintenance updates together.
+Plan/review/evidence: .localresources/session-root-startup-repair-20261110/.
+166 responses retained; 439 inventory requests remain. No new model calls.
+Authentication succeeded. The real test reached Python after about 103 seconds,
+then rejected the home tmpfs read-only check. Production monitor/helper/sudoers
+remain unchanged and stopped; scaffold/probe artifacts were installed. Trace
+systemd mask flags and prepare a prospective explicit-masking correction.
+Writing, assembly and full ZLB test follow inventory.
+<!-- end-bounded-root-repair-20261110 -->
+
+<!-- passwordless-maintenance-20261110 -->
+Passwordless maintenance: INSTALLED_AND_LIVE_VERIFIED November 10, 13:20 Shanghai.
+The corrected root-owned helper is installed. verify, diagnose (including timer),
+start from inactive, and stop all passed with sudo -n -k, ignoring cached
+credentials. None prompted for a password. 52 regressions passed with 16 workers;
+Ruff and visudo validation passed. Policy scope remains six exact actions.
+Review and live evidence: .localresources/session-passwordless-maintenance-fix-20261110/.
+The campaign start was requested, then stopped for targeted namespace repair.
+Systemd had copied over 6,000 host mounts into its private root and was removing
+archive mounts one by one to implement ProtectHome=tmpfs. The namespace exceeded
+12,000 mounts; application Python had not started. No new model calls occurred.
+Keep deadline/control active; prepare an equivalent restricted home view that
+avoids repeated whole-mount-table scans, and test actual namespace behavior.
+Next repair plan: .localresources/session-namespace-startup-repair-20261110/PLAN.md.
+Namespace implementation is reviewed: 25 tests with 16 workers, Ruff, systemd
+and sudoers validation pass. The grouped installer must run a real bounded
+namespace/capability/archive preflight before changing the production unit.
+It also updates the maintenance checksum in the same action, retaining the six
+passwordless actions. Review: .localresources/session-namespace-startup-repair-20261110/REVIEW.md.
+Stopped native failure/account/grant evidence is unchanged: no new calls or
+restart credits. 166 responses retained; 439 inventory requests remain.
+Namespace installer authenticated November 10 at 14:43 Shanghai. Its real test
+timed out after 120 seconds before Python executed: systemd still cloned/scanned
+13,840 mounts. Production monitor/helper/policy remain unchanged and stopped;
+ancillary probe artifacts were installed. Do not retry this frozen candidate.
+Prepare a prospective root-view repair to omit unrelated host archive mounts,
+then require real namespace/capability/archive success before publication.
+Checkpoint: .localresources/session-namespace-startup-repair-20261110/checkpoint.json.
+<!-- end-passwordless-maintenance-20261110 -->
+
+<!-- shared-memory-repair-20261110 -->
+Current execution: STOPPED_DURING_SERVICE_STARTUP; shared-memory fix INSTALLED.
+The archive repair passed, but job-0001 stopped November 10 at 02:15:33 Shanghai
+while multiprocessing created a semaphore for the 16-worker verification pool.
+No new generation allocations were made. 166 responses remain retained and
+439 inventory requests remain. This supersedes the earlier running checkpoint.
+
+The reviewed repair gives the private /dev/shm tmpfs explicit mode 1777 and runs
+an actual 16-worker spawn/queue/lock capability check before native prelaunch.
+It retains the existing installation and resumes the exact failed job through
+one native restart receipt. Account/grant, sealed generation, failed-job evidence,
+cumulative retry limits and the existing 16-worker setting remain preserved.
+48 regression tests passed with 16 workers; Ruff and systemd validation passed.
+Authentication succeeded on the second attempt. The corrected unit and protected
+helpers are installed, but startup spent 900 seconds in the systemd condition
+phase and ended without entering the application. The installer stopped the
+runtime and reporter; the deadline remains active. No new calls or native restart
+credit were consumed. Inspect service namespace setup before another full audit.
+Production capability verification and resumed worker progression are pending.
+
+Review: .localresources/session-shared-memory-repair-20261110/REVIEW.md.
+Plan: .localresources/session-shared-memory-repair-20261110/PLAN.md.
+Checkpoint: .localresources/session-shared-memory-repair-20261110/checkpoint.json.
+One grouped host action applies the exact unit/helper correction and restarts
+under the current authority; AGENTS.md requires approval for this new privileged
+scope. The execution window remains November 13, 07:30:11 Shanghai (1794526211).
+Use one sudo authentication across installation and unprivileged prestart checks.
+
+Repair/refresh automatically at failures and phase boundaries. After verified
+inventory: derive writing membership, execute writing/review/build, benchmark,
+independent reproduction, then final human review of actual ZLB output.
+Intermediate correctness judgments remain automatic regression checks.
+<!-- end-shared-memory-repair-20261110 -->
+
+<!-- archive-extension-20261110 -->
+Historical storage checkpoint: ARCHIVE_REPAIR_COMPLETE; subsequent execution
+stopped on the shared-memory failure described above. The archive namespace
+check passed at 01:32:23 Shanghai, native prelaunch at 01:40:28, and job-0001's
+heartbeat at 01:56. These observations do not establish current running status.
+Archive repair: 44 passing regressions, 16 workers, Ruff and systemd validation;
+43 read-only mappings cover all 41 current Humanvoice FUSE roots.
+Review: .localresources/session-archive-extension-20261110/REVIEW.md.
+Live observer: .localresources/session-archive-extension-20261110/status.json.
+The successful archive installer must not be rerun for the new semaphore failure.
+<!-- end-archive-extension-20261110 -->
+
+<!-- deadline-extension-72h-20261109 -->
+
+<!-- approval-simplification-20261109 -->
+Approval workflow clarification: offline tests, local repairs and intermediate
+reviews proceed automatically within the existing authorized scope. Reuse the
+approved execution deadline, budgets and fixed host actions; request grouped
+approval only for a material expansion of privileged scope. OS password prompts
+are authentication, not renewed task approval. Future restarts should use one
+bounded privileged invocation with unprivileged validation between its fixed host
+steps, preventing repeated passwords after long audits. Keep on-request/user
+review, sandbox restrictions and final actual-output human review.
+Plan: docs/plans/EXECUTION_APPROVAL_SIMPLIFICATION_2026-11-09.md.
+<!-- end-approval-simplification-20261109 -->
+
+
+<!-- campaign-floor-repair-20261109 -->
+Latest repair status: INSTALLED_STARTUP_BLOCKED_BY_ARCHIVE_NAMESPACE.
+Installation 9cb0ab71ec7e5834fac633b7dff772d9cb5e48bc4e6c2684a0c9fc2448cc62ea
+was installed successfully. Its startup audit failed November 10 at 01:09:33
+Shanghai before the native supervisor or any new provider call started.
+The November 9 storage cleanup moved eight retained evidence roots into user
+FUSE mounts. The service hides these nested mounts, so accounting replay cannot
+read zlb-inventory-context-20261022-01-snapshot/manifest.json. Host copies exist.
+
+The campaign constructor repair passed 86 regressions and its actual retained
+floor audit. No need to regenerate that release. Prospective storage correction:
+.localresources/session-archive-extension-20261110/PLAN.md. It preserves the
+installed configuration and adds a verified read-only kernel archive plus eight
+explicit service bindings and an early namespace check. Prepare and test locally;
+apply the new privileged mount scope as one reviewed host action with one sudo.
+Do not rerun the predecessor replacement installer for this storage failure.
+
+166 paid document responses remain retained; 439 logical inventory requests remain.
+Account/grant and the empty generation ledger are preserved. Fixed authorized stop:
+November 13, 2026, 07:30:11 Shanghai (1794526211); descriptor limit 65536:65536.
+No new budget, execution-window renewal or final acceptance is requested.
+
+Repair/refresh at failures and phase boundaries; intermediate judgments automatic.
+ZLB writing/review/build, benchmark, independent reproduction and final review of
+actual output remain downstream. Current observer status appears in its own block.
+<!-- end-campaign-floor-repair-20261109 -->
+
+November 9, 22:20 Shanghai: the user's 72-hour extension is APPLIED_AND_VERIFIED.
+The enforced stop is November 13, 2026, 07:30:11 Shanghai (1794526211), exactly
+72 hours after the previous November 10 stop. The protected launch deadline,
+monitor startup condition/checksum and active calendar timer all agree.
+Existing call/token/retry budgets and per-operation timeouts remain unchanged.
+The offline observer has restarted with the verified new deadline and refreshes
+both master programs automatically. Extension: 32 regression passes; observer:
+28 passes; 16 workers; Ruff and systemd validation pass.
+Deployment: .localresources/session-deadline-extension-72h-20261109/deployment.json.
+
+Inventory remains stopped after its 20:34:19 accounting-consistency failure:
+Native consumption floors differ from campaign authority. The dispatch adapter
+handles the replacement configuration, but the native campaign constructor still
+expects the original configuration digest. The extension made no provider call,
+changed no budget and restarted no production monitor. 166 responses are retained;
+439 requests remain, with zero new generation allocations. Concrete repair:
+.localresources/session-deadline-extension-72h-20261109/accounting-diagnosis.json.
+Repaired execution must retain native accounting checks, failed-job history and
+cumulative restart limits. No blind restart of the terminal supervisor is planned.
+Historical accepted responses averaged 182.62 seconds, implying about 22.27 hours
+of provider time for the sequential remaining inventory after repair. Failed
+requests, verification, writing/review/build and reproduction are additional;
+current end-to-end completion time is not established.
+<!-- end-deadline-extension-72h-20261109 -->
+
+<!-- inventory-policy-repair-20261109 -->
+Latest inventory status: FOLLOWUP_NEEDS_REPAIR; observed UTC epoch: 1794513904.0070848.
+Native inventory: None; service:
+None/None; PID: None.
+Job: None; generation: None;
+generation allocations: None; retained document
+responses: None (166 inherited).
+Blocker: None; observer error: TimeoutExpired: Command '['/usr/bin/systemctl', 'show', 'humanvoice-zlb-9cb0ab71ec7e5834fac6.service', '--property=LoadState,ActiveState,SubState,MainPID,ControlPID,Result,LimitNOFILESoft']' timed out after 10 seconds.
+Archive extension applied: None.
+
+Installation: 9cb0ab71ec7e5834fac633b7dff772d9cb5e48bc4e6c2684a0c9fc2448cc62ea.
+Fixed stop: November 13, 07:30:11 Shanghai (1794526211).
+The storage correction preserves native accounting, paid responses, restart
+history, sandbox and budgets. Inventory service startup is not inventory completion.
+The offline observer refreshes both master programs on meaningful changes and
+prepares handoff.json only after native INVENTORY_VERIFIED. It makes no calls.
+Observer: .localresources/session-archive-extension-20261110/status.json.
+Handoff: None; identity: None.
+Writing/review/build, benchmark, reproduction and final actual-output review remain.
+Repair/refresh at failures and phase boundaries; intermediate review is automatic.
+Final ZLB is pending. Older continuation blocks are historical checkpoints.
+<!-- end-inventory-policy-repair-20261109 -->
+
+<!-- current-continuation-20261108 -->
+Current continuation: EXECUTION_WINDOW_ENDED.
+Native inventory status: BLOCKED_ENGINEERING; job: job-0003;
+generation: 0; generation allocations: 0;
+retained document responses: 166 (166 predate this restart).
+Observed UTC epoch: 1794199822.4865782. Worker heartbeat: 1794182480.350975.
+Archive namespace and native prelaunch passed; service restarted November 9 at
+04:04:03 Shanghai. Current state comes from native supervision and generation receipts.
+Existing deadline: November 9 12:49:57 Shanghai (1794199797); unchanged budgets.
+Installation: dc783488a41725ea55fc9c7c9885933a15c44da1359b06ab873a936164f61c86.
+Adapter: 209 passing regressions with 16 workers; Ruff passes; test-result-25.json.
+Native nested qualification replay: 212/212, 101.11 seconds, no model/account/grant writes.
+All 166 inherited receipts verified in their original formats. Real receipt routing
+and archive access pass inside the composed manuscript runtime. The wrapper installs
+historical grant/archive adapters once per process; native validators remain in use.
+Automatic offline follow-up: .localresources/session-manuscript-followup-20261109/status.json.
+At INVENTORY_VERIFIED it derives exact inherited/current membership and handoff.json;
+it excludes canaries and preserves sparse retry indices. It makes no provider calls.
+Inventory blocker: Inventory provider invocation stopped: 'policy'.
+Follow-up error: None.
+Remaining: actual source/unit/call/grant preparation; admitted downstream entry and
+durable recovery; minimal production/reproduction check; full ZLB writing/review/build,
+held-out benchmark and independent reproduction; final human review of actual output.
+Inventory success alone is not ZLB completion. Repair/refresh at failures and phase
+boundaries. Retained Astra/xhigh; active-client parity before launch; 16 offline workers.
+Plan: docs/plans/ZLB_DOWNSTREAM_HANDOFF_2026-11-08.md. Older checkpoints are history.
+<!-- end-current-continuation-20261108 -->
+
+<!-- adapter-release-20261108 -->
+Current-client adapter release: ADAPTER_RELEASE_PASS_PREFLIGHT_PENDING.
+Phase: complete; completed: ['regressions', 'native-gates'].
+Original native gates retain their source identity; added adapters have bound regression evidence.
+State: .localresources/session-release-inputs-repair-20261108/offline-20261108/status.json.
+Plan: .localresources/session-release-inputs-repair-20261108/REPAIR_PLAN.md.
+16 workers; zero provider calls; unchanged budgets/window.
+Preflight, exact host admission, inventory and downstream ZLB document work remain pending.
+<!-- end-adapter-release-20261108 -->
+
+<!-- installed-units-repair-20261108 -->
+Installed-service namespace repair: PREFLIGHT_PASS_HOST_ADMISSION_PENDING.
+Completed native configuration operations: ['binding-initial', 'plan', 'ownership', 'installation-initial', 'handover', 'closure-capture', 'installation-final', 'binding-final', 'closure-verify', 'complete'].
+Current operation: preflight.
+Prior ownership verification passed; private home had hidden the two installed service inputs.
+Repair mounts only those exact files read-only and checks them before expensive replay.
+32 preparation operations retained; 16 workers; 15-minute operation limits; zero provider calls.
+State: .localresources/session-release-inputs-repair-20261108/preflight-20261108/status.json.
+Next: complete and review the exact protected host proposal before admission.
+Downstream plan: docs/plans/ZLB_DOWNSTREAM_HANDOFF_2026-11-08.md.
+<!-- end-installed-units-repair-20261108 -->
+
+<!-- qualification-layout-repair-20261108 -->
+Qualification PASS (212/212); all 32 preparation operations PASS.
+Qualification layout repair: STOPPED_FOR_DIAGNOSIS.
+Completed configuration operations: ['binding-initial', 'plan', 'ownership'].
+Current operation: installation-initial.
+Failure: ValueError: FileNotFoundError: [Errno 2] No such file or directory: '/home/ubuntu/.config/systemd/user/humanvoice-inventory-history.service'.
+Cause: a manuscript runtime replaced the qualification attempt-selection function.
+Repair: a separate qualification dispatch slot preserves the unchanged native evaluator.
+State: .localresources/session-qualification-layout-repair-20261108/offline-20261108/status.json.
+Review: .localresources/session-qualification-layout-repair-20261108/REPAIR_REVIEW.md.
+16 workers; 15 minutes per native operation; zero provider calls; unchanged budgets/window.
+After configuration: automatic adapter release and preflight, then exact protected host admission.
+Inventory, downstream ZLB document work and final human output acceptance remain pending.
+<!-- end-qualification-layout-repair-20261108 -->
+
+<!-- host-handoff-20261108 -->
+Current-client host handoff includes exact installed-service and archive/policy file mounts;
+all 81 current host-handoff tests pass. Completed configuration is retained.
+The active release → no-call preflight continuation must finish
+before its exact host proposal can be built and admitted.
+Review: .localresources/session-host-handoff-20261108/REPAIR_REVIEW.md.
+Tests: .localresources/session-host-handoff-20261108/test-result-04.json.
+The handoff carries the repaired public entry, qualified private client state,
+actual mount/ownership checks, bounded supervision and existing deadline.
+Host installation/live launch is pending its separate exact grouped approval.
+After inventory: adapt the current-client writer/reproduction path, reuse the
+completed four-critic qualification, then ZLB and held-out benchmarks,
+automatic benchmark reproduction and final human acceptance of actual ZLB.
+Concrete sequence and regression coverage:
+docs/plans/ZLB_DOWNSTREAM_HANDOFF_2026-11-08.md.
+<!-- end-host-handoff-20261108 -->
+
+<!-- history-runtime-repair-20261108 -->
+Qualification PASS (212/212); all 32 preparation operations PASS.
+Historical runtime repair: STOPPED_FOR_DIAGNOSIS.
+Completed configuration operations: ['binding-initial', 'plan'].
+Current operation: ownership.
+Failure: ValueError: KeyError: 'policy'.
+Cause proved: nested active-session alias replacement changed historical xhigh command to max.
+Repair: isolate command dispatch; preserve native command/receipt checks and all prepared evidence.
+State: .localresources/session-history-runtime-repair-20261108/offline-20261108/status.json.
+Review: .localresources/session-history-runtime-repair-20261108/REPAIR_REVIEW.md.
+16 workers; completed-operation deadlines; zero provider calls; unchanged budgets/window.
+Release checks, protected host admission and full ZLB remain pending.
+<!-- end-history-runtime-repair-20261108 -->
+
+<!-- configuration-resume-20261108 -->
+Qualification PASS (212/212); all 32 native preparation operations PASS.
+Configuration resume: STOPPED_FOR_DIAGNOSIS.
+Completed configuration operations: ['binding-initial', 'plan'].
+Active operation: ownership.
+Failure: ValueError: ValueError: Qualification request, permission, response or runtime evidence differs.
+State: .localresources/session-configuration-resume-20261108/offline-20261108/status.json.
+Each native operation retains its 15-minute bound; only completed operations renew it.
+One process-owned native cache; 16 workers; zero provider calls.
+Review: .localresources/session-configuration-resume-20261108/REPAIR_REVIEW.md.
+Release checks, host admission and full ZLB remain pending.
+<!-- end-configuration-resume-20261108 -->
+
+<!-- campaign-device-repair-20261108 -->
+Campaign runtime repair: original preparation could not open /dev/null; the
+first early preflight repaired devices but caught read-only /proc preventing
+nested user-namespace setup. Both failed attempts are retained and cleaned up,
+with zero provider calls and unchanged account/grant authority.
+Final successor adds native procfs, private standard devices and writable
+shared memory. Actual ZLB parser preflight precedes activation/history replay.
+All 24 affected tests pass with 16 workers; Ruff passes. Grouped host action
+approved and running. Actual native ZLB parser preflight passed at 14:40 Shanghai,
+with verified isolation, device/stdio/lock checks and unchanged source/policy.
+The continuation is verifying retained qualification before native preparation.
+State: .localresources/session-campaign-runtime-repair-20261108/offline-20261108/status.json.
+Review: .localresources/session-campaign-runtime-repair-20261108/REPAIR_REVIEW.md.
+Qualification remains PASS (212/212). Production admission and full ZLB remain
+pending. Source/authority checks and November 9 01:29:40 deadline remain.
+<!-- end-campaign-device-repair-20261108 -->
+
 <!-- qualified-campaign-20261108 -->
 Current-client qualification PASS: 212 completed calls; no unresolved usage.
-Campaign continuation: RUNNING; phase: prepare.
-Completed native preparation operations: ['ownership', 'historical-scope', 'migration'].
-State: .localresources/session-campaign-current-20261108/offline-20261108/status.json.
+Campaign continuation: STOPPED_FOR_DIAGNOSIS; phase: configure.
+Completed native preparation operations: [].
+Failure: ValueError: configure child failed: TimeoutError: Native operation exceeded 880 seconds.
+State: .localresources/session-campaign-runtime-repair-20261108/offline-20261108/status.json.
+Private devices/proc and native ZLB parser preflight precede activation and preparation.
 16 workers; no provider calls; host admission and full ZLB remain pending.
 <!-- end-qualified-campaign-20261108 -->
 
@@ -1562,6 +2436,7 @@ Current sequence: HISTORY_REPAIR_LIVE_ADMISSION_2026-10-26.md. Earlier operation
 paragraphs below are historical checkpoints, not current readiness claims.
 
 <!-- sol-inventory-continuation -->
+Historical test-generated projection; this is not current production progress.
 Inventory continuation: {"allocated_calls": 3, "baseline_sha256": "8fd1ed0eb230b515215077789df2f52da8ed748cae733c91ecf69a25d0c0f24b", "final_zlb_acceptance": false, "human_evidence": false, "next": "Admit source-bound humanization and review; final acceptance remains human", "observations_hash": "1d4f0a8eb7585aa3ed72426f331133a758dfc84f3f80b5cb1f9f1afbf8b434c1", "phase": "SOL_INVENTORY_HANDOFF", "plan_identity": "54118eabcbfae564b8f141bd44a2c5d18e4e14edddf02421401a39e0abf719a0", "retained_tokens": 1632000, "status": "INVENTORY_VERIFIED"}
 Evidence: /tmp/hv-release-a9ytillr/popen-gw8/test_execution_publication_fai1/installed/new-campaign/generation-00.
 <!-- end-sol-inventory-continuation -->

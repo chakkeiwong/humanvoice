@@ -1,0 +1,60 @@
+{
+  "status": "PASS",
+  "checked_at": 1794549983.792518,
+  "sources": {
+    "/home/ubuntu/workspace/humanvoice/.localresources/writer-session-binding-repair-20261113/diagnose.py": "0c66cb7aaa120c0d1977634543225c92ceec66ecb764e419c6eadeebb432d222",
+    "/home/ubuntu/workspace/humanvoice/.localresources/writer-session-binding-repair-20261113/session_endpoint.py": "03da4ce602d360e2e31076369850a5d8eb482600abd0234ee2ca5d5b893101cd",
+    "/home/ubuntu/workspace/humanvoice/tests/test_zlb_session_endpoint_binding.py": "428ad1568a571a1be5cd923e1b140712271e78916073daf2a8c63443bf996c44"
+  },
+  "elapsed_seconds": 661.3673563550692,
+  "baseline": {
+    "native_replays": 1,
+    "reuse_hits": 4,
+    "runtime_references": 583,
+    "original_authorizations": 136
+  },
+  "original_error": "Session source, baseline, plan or brief changed",
+  "differing_keys": [
+    "api_endpoint"
+  ],
+  "session_path": "/home/ubuntu/workspace/humanvoice/.localresources/parallel-manuscript-20261112/execution-frontier-1794512046911131230/snapshot",
+  "retained_files": {
+    "/home/ubuntu/workspace/humanvoice/.localresources/parallel-manuscript-20261112/execution-frontier-1794512046911131230/report.json": "1114f0228e9d6061e200990e85208c421f837c332e1891a3d18d595efe75e302",
+    "/home/ubuntu/workspace/humanvoice/.localresources/parallel-writing-semantics-20261112/execution/admission.json": "f0ea8cca908e27e09063444450820423b685e38926749cc8bf95bc65b878aaf6",
+    "/home/ubuntu/workspace/humanvoice/.localresources/parallel-writing-semantics-20261112/native-stage/native-attempts.json": "ee80c2f932a896e465059b27a1f7488ea395613946bc6b4f69cfb3d3c0158255",
+    "/home/ubuntu/workspace/humanvoice/.localresources/parallel-writing-semantics-20261112/native-stage/allocation-ledger.json": "129f802e88ef722898562deb3235b17ee6d4f26fbe3172b7ef545099e4f4afbc",
+    "/home/ubuntu/workspace/humanvoice/.localresources/automatic-program/account.json": "5f535812f562f54971c9bfa91c4ea4bb8dd63a4c5523a5b6d568d18f3996f8ed",
+    "/home/ubuntu/workspace/humanvoice/docs/audits/2026-10-05/master-program/automatic-execution/authorized-2000-call-budget-20261012.json": "f4798c4a74f9a87cc17ff81f627d0a7cbb94d98fae5333f6753ee6a68c3c348c"
+  },
+  "retained_rewrites_sha256": "7f289f2629f9e71ee6d23aa14b339a35a00fda8f2181eaf9e216a2d5f09bdfce",
+  "accepted_units": [
+    "unit-001",
+    "unit-003",
+    "unit-004",
+    "unit-005",
+    "unit-006",
+    "unit-007",
+    "unit-008",
+    "unit-010",
+    "unit-011",
+    "unit-013",
+    "unit-014",
+    "unit-015",
+    "unit-016",
+    "unit-017",
+    "unit-019",
+    "unit-021"
+  ],
+  "failed_units": [
+    "unit-002",
+    "unit-009",
+    "unit-012",
+    "unit-018",
+    "unit-020"
+  ],
+  "model_calls": 0,
+  "account_writes": 0,
+  "service_started": false,
+  "execution_deadline": 1794526211,
+  "final_zlb_acceptance": false
+}

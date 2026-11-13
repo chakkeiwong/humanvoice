@@ -1,0 +1,22 @@
+{
+  "tests": 21,
+  "failures": 0,
+  "errors": 0,
+  "skipped": 0,
+  "sources": {
+    "/home/ubuntu/workspace/humanvoice/.localresources/writer-session-binding-repair-20261113/session_bootstrap.py": "120fcc1e52731449cb43fbfc4aff0892795532f8c621da3afa823b47523b321a",
+    "/home/ubuntu/workspace/humanvoice/.localresources/writer-session-binding-repair-20261113/session_program.py": "4adc62a38f8cf2109a6dc679c6356c97efb943ea63d288989f9c87ea28f03498",
+    "/home/ubuntu/workspace/humanvoice/.localresources/writer-session-binding-repair-20261113/renewal_runtime.py": "1ba28546d31cf1a08ff80898de66a5c76a2d587a347cc7b60a9034acb0cffc3e",
+    "/home/ubuntu/workspace/humanvoice/.localresources/writer-session-binding-repair-20261113/renewal.json": "f70fed164d97e9ddefb5de936d01e9afc27bce2d43cb77019e2b545f8181f641",
+    "/home/ubuntu/workspace/humanvoice/.localresources/writer-session-binding-repair-20261113/session_endpoint.py": "03da4ce602d360e2e31076369850a5d8eb482600abd0234ee2ca5d5b893101cd",
+    "/home/ubuntu/workspace/humanvoice/.localresources/writer-session-binding-repair-20261113/humanvoice-zlb-session-repair-20261113.service": "6742150908ba20778e57fba83ec954d897530f1be083059b3bc475fa1efdff18"
+  },
+  "elapsed_seconds": 1.3389092339202762,
+  "artifacts": {
+    "/home/ubuntu/workspace/humanvoice/.localresources/writer-session-binding-repair-20261113/test_session_program.py": "84f43adcc29ef4f563b326bdd2882e0f00eaafb3c5e3c81099c38fa8d56fd042",
+    "/home/ubuntu/workspace/humanvoice/.localresources/writer-session-binding-repair-20261113/check_execution.py": "c18248c3ba5c35279175da711bc3c26f3e441a8565b5bd92f45da1d66ed16aba",
+    "/home/ubuntu/workspace/humanvoice/.localresources/writer-session-binding-repair-20261113/execution-tests.xml": "d58f188efee1ad22ee7abda7707152301331c075a7d3e448fab9a182cf01f13a",
+    "/home/ubuntu/workspace/humanvoice/.localresources/writer-session-binding-repair-20261113/execution-tests.log": "26e5d2f95298ca0367065dec682d1b1bb8f0a395dbf4e238c313146b9c283c63"
+  },
+  "model_calls": 0
+}

@@ -1,0 +1,22 @@
+{
+  "tests": 13,
+  "failures": 0,
+  "errors": 0,
+  "skipped": 0,
+  "sources": {
+    "/home/ubuntu/workspace/humanvoice/.localresources/gateway-continuation-20261113/gateway_bootstrap.py": "d717b5d7d0ad6f01653b9a1927450ba39d97f98f08222e59956fbb5bc8446eca",
+    "/home/ubuntu/workspace/humanvoice/.localresources/gateway-continuation-20261113/gateway_state.py": "43c2e87dbad57a7d97381d93df8c0ef2b8c3afd20be5a15367a46ea23b89a2ff",
+    "/home/ubuntu/workspace/humanvoice/.localresources/gateway-continuation-20261113/gateway_runtime.py": "f8129a53a9bd48f52895f5c3f5324f36d2e542b4f7bc35a07c59811893963513",
+    "/home/ubuntu/workspace/humanvoice/.localresources/gateway-continuation-20261113/gateway_program.py": "90095cfc43f7e485b1e3c1351adf26b6bb979fccca02955d68602f9ed948be9e",
+    "/home/ubuntu/workspace/humanvoice/.localresources/gateway-continuation-20261113/transition.json": "e4d42c692f1f9d62203881e018caa0314f5a797bee504390320cc90229a54ede",
+    "/home/ubuntu/workspace/humanvoice/.localresources/gateway-continuation-20261113/humanvoice-zlb-https-20261113.service": "5d314fbfa598f6c33498a98b2d615403a438a47626ddb1f20b0d8df09adb7f9a"
+  },
+  "elapsed_seconds": 127.28883395693265,
+  "artifacts": {
+    "/home/ubuntu/workspace/humanvoice/.localresources/gateway-continuation-20261113/test_gateway.py": "9d0ab32b5ef0d004df397f406474cfa9e97d729baabe042ca7e4fdaf092f7417",
+    "/home/ubuntu/workspace/humanvoice/.localresources/gateway-continuation-20261113/check_gateway.py": "51b04490917ce1251b5218b993a086c67077215210a5b7c20b5937ca5b3c9182",
+    "/home/ubuntu/workspace/humanvoice/.localresources/gateway-continuation-20261113/tests.xml": "6c1fb7d5c773d4fb649e72b3420ef9de20198770fa70b5125d3d0861116ca9cf",
+    "/home/ubuntu/workspace/humanvoice/.localresources/gateway-continuation-20261113/tests.log": "4ed1672e120b6f47b0a3af2c8f01e3bf0a7c3104ce1172838dc54ccab89ec24a"
+  },
+  "model_calls": 0
+}

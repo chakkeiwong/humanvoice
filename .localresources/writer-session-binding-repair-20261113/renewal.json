@@ -1,0 +1,16 @@
+{
+  "version": "zlb-execution-renewal-v1",
+  "authorization": "you have 168 hours more.   refresh the master program.  git commit.  continue the execution.",
+  "authorized_at": 1794560629,
+  "hours": 168,
+  "deadline": 1795165429,
+  "prior_deadline": 1794526211,
+  "admission_sha256": "f0ea8cca908e27e09063444450820423b685e38926749cc8bf95bc65b878aaf6",
+  "stage": "/home/ubuntu/workspace/humanvoice/.localresources/parallel-writing-semantics-20261112/native-stage",
+  "shared_calls": 177,
+  "additional_calls": 0,
+  "workers": 16,
+  "provider_seconds": 900,
+  "attempt_seconds": 1050,
+  "network_backoff_seconds": 900
+}

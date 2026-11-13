@@ -1,0 +1,94 @@
+{
+  "status": "READY",
+  "sources": {
+    "/home/ubuntu/workspace/humanvoice/.localresources/writer-session-binding-repair-20261113/session_bootstrap.py": "120fcc1e52731449cb43fbfc4aff0892795532f8c621da3afa823b47523b321a",
+    "/home/ubuntu/workspace/humanvoice/.localresources/writer-session-binding-repair-20261113/session_program.py": "4adc62a38f8cf2109a6dc679c6356c97efb943ea63d288989f9c87ea28f03498",
+    "/home/ubuntu/workspace/humanvoice/.localresources/writer-session-binding-repair-20261113/renewal_runtime.py": "1ba28546d31cf1a08ff80898de66a5c76a2d587a347cc7b60a9034acb0cffc3e",
+    "/home/ubuntu/workspace/humanvoice/.localresources/writer-session-binding-repair-20261113/renewal.json": "f70fed164d97e9ddefb5de936d01e9afc27bce2d43cb77019e2b545f8181f641",
+    "/home/ubuntu/workspace/humanvoice/.localresources/writer-session-binding-repair-20261113/session_endpoint.py": "03da4ce602d360e2e31076369850a5d8eb482600abd0234ee2ca5d5b893101cd",
+    "/home/ubuntu/workspace/humanvoice/.localresources/writer-session-binding-repair-20261113/humanvoice-zlb-session-repair-20261113.service": "6742150908ba20778e57fba83ec954d897530f1be083059b3bc475fa1efdff18"
+  },
+  "deadline_changes": {
+    "live_program.guard": {
+      "original_sha256": "f363782a8546788d048cb235ffdf8a870ccf6757f10a74841a125eb7b670e3cc",
+      "updated_sha256": "1f4f92e1f34d0ad13f1060dd674b136aeb903b6d2ec2ef90e100c9c9e04b32ea",
+      "replacements": [
+        [
+          "time.time() < value['deadline']",
+          "time.time() < _renewal_deadline_for(OUTPUT, value['deadline'])"
+        ]
+      ]
+    },
+    "Stage.check": {
+      "original_sha256": "568a176b8992a58c63b321de693350108090a3d3a2140faf044e0909ec97cf27",
+      "updated_sha256": "5fe305a1d810f9eccdd2808d9abf7c9295e3dfb42369c3a6c566a5a3e9d4719d",
+      "replacements": [
+        [
+          "time.time() < value['deadline']",
+          "time.time() < _renewal_deadline_for(self.output, value['deadline'])"
+        ]
+      ]
+    },
+    "native_parallel.reservation": {
+      "original_sha256": "aca9504c8a81cde6185b74667c6a6921180a08c2391918cef3605809918a89aa",
+      "updated_sha256": "82ae2698c22318f1fbff7bf09cbce068734b92b9eec53b3a7abe63f2a24be308",
+      "replacements": [
+        [
+          "deadline > time.time()",
+          "_renewal_deadline_for(output, deadline) > time.time()"
+        ]
+      ]
+    },
+    "native_parallel.launch_scope": {
+      "original_sha256": "e60f745771e92cac639943fc66daef6429be0f536915f7a431337ad63ac79064",
+      "updated_sha256": "07eeee71fe9fb683b8de740c34a5b5d2d007785ee30bf37d7702ef85cbf37b6f",
+      "replacements": [
+        [
+          "min(context.deadline, stage.value['deadline'])",
+          "min(context.deadline, _renewal_deadline_for(stage.output, stage.value['deadline']))"
+        ]
+      ]
+    },
+    "Stage.attach_batch": {
+      "original_sha256": "1c9748a2621cb51bb61524b1fdb042b537129deec3d98c5f9dc75ad3e77958f2",
+      "updated_sha256": "a4a9f907365ff5e9ba90e6a1ebab05451c4e090ba3e7b3418913a1bec09970ff",
+      "replacements": [
+        [
+          "policy['deadline'] == self.value['deadline']",
+          "policy['deadline'] == _renewal_deadline_for(self.output, self.value['deadline'])"
+        ]
+      ]
+    },
+    "capacity_program.run": {
+      "original_sha256": "64935558085f8e7a4b1b01952dbef3a21921b43605391a6f99c00081ba93518a",
+      "updated_sha256": "9bdc894d2e86be2a5d63223d84adc497c7d6130c156ddd94e0cab0ed44ee3b8d",
+      "replacements": [
+        [
+          "batch_store.Policy(value['deadline'],",
+          "batch_store.Policy(_renewal_deadline_for(live.OUTPUT, value['deadline']),"
+        ]
+      ]
+    }
+  },
+  "artifacts": {
+    "/home/ubuntu/workspace/humanvoice/.localresources/writer-session-binding-repair-20261113/execution-tests.json": "914e5f29facc790423b768f4cd28669d5192a18e7d4759c8f7ed17205f78dfe9",
+    "/home/ubuntu/workspace/humanvoice/.localresources/writer-session-binding-repair-20261113/rehearsal.json": "89b8b63af733d18aca3a1a07f37e140a638a2fdd66e74813b488cbdd114c84d0",
+    "/home/ubuntu/workspace/humanvoice/.localresources/parallel-manuscript-20261112/execution-frontier-1794562041227893725/report.json": "e298330bf182400d7e9298b2575ddecc247f81dcfd0777a2e3e4749b4daf92ee",
+    "/home/ubuntu/workspace/humanvoice/.localresources/writer-session-binding-repair-20261113/tests-result.json": "b96b211c5e3de4d5780319006755cfcf1de33e00a9a922f2ab7eba5b9acab258",
+    "/home/ubuntu/workspace/humanvoice/.localresources/writer-session-binding-repair-20261113/actual-session-check.json": "38d32ee226052433af476c8e3b91ca029bb51fadcf901c791c66df883b84b267",
+    "/home/ubuntu/workspace/humanvoice/.localresources/writer-session-binding-repair-20261113/test_session_program.py": "84f43adcc29ef4f563b326bdd2882e0f00eaafb3c5e3c81099c38fa8d56fd042",
+    "/home/ubuntu/workspace/humanvoice/.localresources/writer-session-binding-repair-20261113/check_execution.py": "c18248c3ba5c35279175da711bc3c26f3e441a8565b5bd92f45da1d66ed16aba",
+    "/home/ubuntu/workspace/humanvoice/.localresources/writer-session-binding-repair-20261113/execution-tests.xml": "d58f188efee1ad22ee7abda7707152301331c075a7d3e448fab9a182cf01f13a",
+    "/home/ubuntu/workspace/humanvoice/.localresources/writer-session-binding-repair-20261113/execution-tests.log": "26e5d2f95298ca0367065dec682d1b1bb8f0a395dbf4e238c313146b9c283c63"
+  },
+  "scope": {
+    "unit": "humanvoice-zlb-session-repair-20261113.service",
+    "disable": "humanvoice-zlb-unit-validation-20261113.service",
+    "root_actions": 0,
+    "workers": 16,
+    "shared_calls": 177,
+    "deadline": 1795165429,
+    "approval_policy": "on-request",
+    "approvals_reviewer": "user"
+  }
+}

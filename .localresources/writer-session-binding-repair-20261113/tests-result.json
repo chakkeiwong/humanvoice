@@ -1,0 +1,19 @@
+{
+  "tests": 15,
+  "failures": 0,
+  "errors": 0,
+  "skipped": 0,
+  "sources": {
+    "/home/ubuntu/workspace/humanvoice/.localresources/writer-session-binding-repair-20261113/session_endpoint.py": "03da4ce602d360e2e31076369850a5d8eb482600abd0234ee2ca5d5b893101cd",
+    "/home/ubuntu/workspace/humanvoice/.localresources/writer-session-binding-repair-20261113/diagnose.py": "0c66cb7aaa120c0d1977634543225c92ceec66ecb764e419c6eadeebb432d222",
+    "/home/ubuntu/workspace/humanvoice/.localresources/writer-session-binding-repair-20261113/run_checks.py": "d35506d65dbff9b14921f225edec3c5b552110c149279393bcf449385e5be33a",
+    "/home/ubuntu/workspace/humanvoice/tests/test_zlb_session_endpoint_binding.py": "428ad1568a571a1be5cd923e1b140712271e78916073daf2a8c63443bf996c44",
+    "/home/ubuntu/workspace/humanvoice/tests/test_zlb_session_endpoint_integrity.py": "cc1e5b419d4d9a946acadb3623da6382c0c8964fa12afef951fc99cfe58e4eac"
+  },
+  "elapsed_seconds": 137.4569055698812,
+  "artifacts": {
+    "/home/ubuntu/workspace/humanvoice/.localresources/writer-session-binding-repair-20261113/regression-tests.xml": "23dabb6cc830a104dda9f5dcf3e477dce481c4bf169b20f131d93473a37f9cf6",
+    "/home/ubuntu/workspace/humanvoice/.localresources/writer-session-binding-repair-20261113/regression-tests.log": "d4c1d9cfe579a168b4831110a7ecb043973f05e1dccdb853cfdd941ee55976df"
+  },
+  "model_calls": 0
+}
