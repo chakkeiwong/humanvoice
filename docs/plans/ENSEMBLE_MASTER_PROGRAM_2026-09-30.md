@@ -1,6 +1,6 @@
 <!-- gateway-worker-recovery-20261114 -->
-Current checkpoint, 2026-11-14T13:48:34+08:00: **READY_TO_RESUME**.
-Successor user service: inactive/dead; PID 0.
+Current checkpoint, 2026-11-14T13:54:40+08:00: **QUALIFYING**.
+Successor user service: active/running; PID 2420688.
 Allocated calls: 140; remaining: 37 of 177.
 Known native responses: 112; imported bank entries: 110.
 
@@ -264,7 +264,7 @@ this separate offline rehearsal runs. Inventory remains complete and settled.
 <!-- end-file-limit-repair-20261112 -->
 
 <!-- writing-live-20261112 -->
-Current ZLB writing: **BLOCKED_REPAIR**. Retained manuscript responses: 110.
+Current ZLB writing: **QUALIFYING**. Retained manuscript responses: 0.
 Native inventory is complete. This stage has one shared 177-call pool and up to 16 provider workers.
 Automatic recovery waits 15 minutes after network failure; known responses remain retained.
 Current state: `.localresources/parallel-writing-semantics-20261112/execution/status.json`.
