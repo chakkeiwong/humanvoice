@@ -1,34 +1,30 @@
-<!-- durable-settings-recovery-20261114 -->
-Current checkpoint, 2026-11-14T04:24:33+08:00: **NATIVE_BASELINE_READY**.
-User service: active/running; PID 1899149.
-Retained manuscript responses: 110; allocated slots: 135;
-remaining slots: 42 in the original 177-call pool.
+<!-- gateway-worker-recovery-20261114 -->
+Current checkpoint, 2026-11-14T13:48:34+08:00: **READY_TO_RESUME**.
+Successor user service: inactive/dead; PID 0.
+Allocated calls: 140; remaining: 37 of 177.
+Known native responses: 112; imported bank entries: 110.
 
-Execution now verifies current thread/native configuration and credential/
-environment hashes directly; it does not depend on an editor process remaining
-alive. Only PID/start time are excluded from stable settings identity. Changed
-model, effort, gateway, approval, credentials, thread or pinned executable still
-blocks before a request. New receipts retain actual qualified-client profiles
-and exact gateway/session/durable-settings markers.
+The previous run survived editor reload and started five HTTPS requests. One
+completed; worker cleanup then compared its new gateway profile against the
+old plan and failed, cancelling the other four. The repair verifies actual
+admitted transport/session evidence in the worker ownership check. Sixteen
+regressions pass, including real worker exit and interrupted native retry.
+The actual five-capture offline check passes in 25.92 seconds with no model
+calls or accounting writes.
 
-The repair passes 21 regressions, including actual verification after editor
-exit, native success/failure accounting, restart, tamper rejection and worker
-scope restoration. Retained-bank/account checks pass with zero provider calls
-or account writes. Host/sandbox parity uses sixteen clients; the exact qualified
-executable is checked in the production namespace with networking denied.
-Ordinary-user service deployment requires no sudo.
+Only the four verified interrupted tasks are reopened in the same batch.
+Original failed outcomes/charges, known answers, attempt counters and limits
+remain. No sudo is needed. The gateway is https://cn.origincoder.com/v1 with
+the qualified pinned client and Astra/xhigh manuscript routing. Sixteen workers,
+900-second provider limits, 1050-second scheduler limits, 15-minute network
+retry and the November 20, 17:03:49 Shanghai execution window remain.
 
-The active gateway is https://cn.origincoder.com/v1 and manuscript routing remains
-Astra/xhigh with the qualified pinned client. Sixteen workers, 900-second provider
-bounds, 1050-second scheduler attempts, 15-minute network backoff and the
-November 20, 17:03:49 Shanghai deadline remain.
-
-Remaining document work: five unit repairs and automatic independent reviews;
-assembled relationships/build/release; benchmark/regression; separately budgeted
-reproduction; final human review. Automatic recovery from assembled semantic
-rejection remains open in the preceding repair plan. No final acceptance exists.
-See docs/plans/ZLB_DURABLE_SETTINGS_RECOVERY_2026-11-14.md.
-<!-- end-durable-settings-recovery-20261114 -->
+Next: finish unit repairs and automatic independent reviews; assembled
+relationships/build/release; benchmark/regression; separately budgeted
+reproduction; final human review. Assembled semantic-rejection recovery is
+still an implementation gap. No final ZLB acceptance is claimed.
+See docs/plans/ZLB_GATEWAY_WORKER_RECOVERY_2026-11-14.md.
+<!-- end-gateway-worker-recovery-20261114 -->
 
 <!-- renewed-session-execution-20261113 -->
 Current checkpoint, 2026-11-14T02:34:42+08:00: **QUALIFYING**.
@@ -268,7 +264,7 @@ this separate offline rehearsal runs. Inventory remains complete and settled.
 <!-- end-file-limit-repair-20261112 -->
 
 <!-- writing-live-20261112 -->
-Current ZLB writing: **NATIVE_BASELINE_READY**. Retained manuscript responses: 0.
+Current ZLB writing: **BLOCKED_REPAIR**. Retained manuscript responses: 110.
 Native inventory is complete. This stage has one shared 177-call pool and up to 16 provider workers.
 Automatic recovery waits 15 minutes after network failure; known responses remain retained.
 Current state: `.localresources/parallel-writing-semantics-20261112/execution/status.json`.

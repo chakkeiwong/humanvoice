@@ -1,0 +1,27 @@
+{
+  "status": "PASS",
+  "sources": {
+    "/home/ubuntu/workspace/humanvoice/.localresources/gateway-worker-recovery-20261114/recovery_bootstrap.py": "464a909fc7f76ff2649e2ee5489e2ab67c83095bff086984e854827dc77c0e43",
+    "/home/ubuntu/workspace/humanvoice/.localresources/gateway-worker-recovery-20261114/capture_recovery.py": "ed40c8646fb0174e091551c50bb78e710a0799ef02a5f04c3a6d184302b27b81",
+    "/home/ubuntu/workspace/humanvoice/.localresources/gateway-worker-recovery-20261114/interrupted_batch.py": "92d0edadc1d05c18dd16fcae05bf81b36efd3502754d0612e9b44d048e38e783",
+    "/home/ubuntu/workspace/humanvoice/.localresources/gateway-worker-recovery-20261114/recovery_program.py": "3b4c70538a8d29ce2a22118cd301e7721b96a6a9e85e98ef2815118c52ea3917",
+    "/home/ubuntu/workspace/humanvoice/.localresources/gateway-worker-recovery-20261114/incident.json": "534e807797b43ff67ba2370fce692a287f68a662798b0e9ad5d969c90ae448e3",
+    "/home/ubuntu/workspace/humanvoice/.localresources/gateway-worker-recovery-20261114/humanvoice-zlb-worker-recovery-20261114.service": "444b46e2d1556273fc4dfe915852a7fbee451802dcf4cf1360a743a13037fe67"
+  },
+  "elapsed_seconds": 25.916056626010686,
+  "retained_bank": 110,
+  "new_known": 1,
+  "interrupted": 4,
+  "allocated": 140,
+  "remaining": 37,
+  "model_calls": 0,
+  "account_writes": 0,
+  "retained_files": {
+    "/home/ubuntu/workspace/humanvoice/.localresources/parallel-writing-semantics-20261112/native-stage/native-attempts.json": "85b7e4ad831e62eb7176f82d74d8277db8a5394c05fad833dd61011bb4232ff3",
+    "/home/ubuntu/workspace/humanvoice/.localresources/parallel-writing-semantics-20261112/native-stage/allocation-ledger.json": "e464bb9c31aa4b1d26acee3723ddd84f8ec7b96d451f1d92180acedb794c2ba4",
+    "/home/ubuntu/workspace/humanvoice/.localresources/automatic-program/account.json": "5f535812f562f54971c9bfa91c4ea4bb8dd63a4c5523a5b6d568d18f3996f8ed",
+    "/home/ubuntu/workspace/humanvoice/docs/audits/2026-10-05/master-program/automatic-execution/authorized-2000-call-budget-20261012.json": "f4798c4a74f9a87cc17ff81f627d0a7cbb94d98fae5333f6753ee6a68c3c348c",
+    "/home/ubuntu/workspace/humanvoice/.localresources/parallel-writing-semantics-20261112/execution/wave-003/batch.sqlite": "e2a49470feac73fa56fd4f11f102fbc08e42516ecf90f3744c6320cecd1c4b91",
+    "/home/ubuntu/workspace/humanvoice/.localresources/parallel-writing-semantics-20261112/execution/coordinator.json": "d9125a101d0919102cdc6a23d813a06c81a8e2a5560bca007f2799e6cb71291e"
+  }
+}

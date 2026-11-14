@@ -1,0 +1,37 @@
+{
+  "at": "2026-11-14T13:48:34+08:00",
+  "service": {
+    "MainPID": "0",
+    "Result": "success",
+    "ActiveState": "inactive",
+    "SubState": "dead"
+  },
+  "status": {
+    "repair": "automatic_capacity_recovery",
+    "status": "BLOCKED_REPAIR",
+    "updated_at": 1794602976.67656,
+    "supervisor": {
+      "pid": 1902391,
+      "start_ticks": "144768743",
+      "boot_id": "f57317de-e249-43e8-8e8d-0ec026eae461"
+    },
+    "final_zlb_acceptance": false,
+    "baseline": {
+      "elapsed_seconds": 365.92115909210406,
+      "native_replays": 1,
+      "reuse_hits": 0,
+      "runtime_references": 583,
+      "original_authorizations": 136
+    },
+    "wave": 3,
+    "retained_responses": 110,
+    "database": "/home/ubuntu/workspace/humanvoice/.localresources/parallel-writing-semantics-20261112/execution/wave-003/batch.sqlite",
+    "error": "Blocked: Captured launch evidence changed",
+    "traceback": "Traceback (most recent call last):\n  File \"/home/ubuntu/workspace/humanvoice/.localresources/parallel-writing-20261112/batch_scheduler.py\", line 140, in run\n    _recover(store, [attempt], execute)\n    ~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/ubuntu/workspace/humanvoice/.localresources/parallel-writing-20261112/batch_scheduler.py\", line 101, in _recover\n    recover(str(store.path), attempts)\n    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/ubuntu/workspace/humanvoice/.localresources/durable-session-settings-20261114/durable_program.py\", line 57, in recover\n    return super().recover(database, attempts)\n           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^\n  File \"/home/ubuntu/workspace/humanvoice/.localresources/writer-capacity-repair-20261112/recovery_state.py\", line 179, in recover\n    stage.recover_workers(database, attempts)\n    ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^\n  File \"/home/ubuntu/workspace/humanvoice/.localresources/parallel-writing-20261112/native_parallel.py\", line 580, in recover_workers\n    require(read_json(directory / 'qualification-capture.json') == {**row['capture_binding'], 'status': 'verified'}\n    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n            and row['capture_binding']['contract'] == self.value['contract']\n            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n            and row['capture_binding']['profile_hash'] == digest(self.plan['profile'])\n            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n            and digest(read_json(directory / 'command.json')['argv']) == row['capture_binding']['argv_hash'],\n            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n            'Captured launch evidence changed')\n            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/ubuntu/workspace/humanvoice/.localresources/parallel-writing-20261112/native_parallel.py\", line 68, in require\n    raise Blocked(message)\nbatch_store.Blocked: Captured launch evidence changed\n\nDuring handling of the above exception, another exception occurred:\n\nTraceback (most recent call last):\n  File \"/home/ubuntu/workspace/humanvoice/.localresources/durable-session-settings-20261114/durable_program.py\", line 192, in main\n    return base.run()\n           ~~~~~~~~^^\n  File \"/home/ubuntu/workspace/humanvoice/.localresources/writer-session-binding-repair-20261113/renewal_runtime.py\", line 63, in invoke\n    return namespace[function.__name__](*args, **kwargs)\n           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^\n  File \"<reviewed-renewal:run>\", line 45, in run\n  File \"/home/ubuntu/workspace/humanvoice/.localresources/parallel-writing-20261112/batch_scheduler.py\", line 186, in run\n    _recover(store, [attempt], execute)\n    ~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/ubuntu/workspace/humanvoice/.localresources/parallel-writing-20261112/batch_scheduler.py\", line 101, in _recover\n    recover(str(store.path), attempts)\n    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/ubuntu/workspace/humanvoice/.localresources/durable-session-settings-20261114/durable_program.py\", line 57, in recover\n    return super().recover(database, attempts)\n           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^\n  File \"/home/ubuntu/workspace/humanvoice/.localresources/writer-capacity-repair-20261112/recovery_state.py\", line 179, in recover\n    stage.recover_workers(database, attempts)\n    ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^\n  File \"/home/ubuntu/workspace/humanvoice/.localresources/parallel-writing-20261112/native_parallel.py\", line 580, in recover_workers\n    require(read_json(directory / 'qualification-capture.json') == {**row['capture_binding'], 'status': 'verified'}\n    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n            and row['capture_binding']['contract'] == self.value['contract']\n            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n            and row['capture_binding']['profile_hash'] == digest(self.plan['profile'])\n            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n            and digest(read_json(directory / 'command.json')['argv']) == row['capture_binding']['argv_hash'],\n            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n            'Captured launch evidence changed')\n            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/ubuntu/workspace/humanvoice/.localresources/parallel-writing-20261112/native_parallel.py\", line 68, in require\n    raise Blocked(message)\nbatch_store.Blocked: Captured launch evidence changed\n"
+  },
+  "allocated": 140,
+  "remaining": 37,
+  "bank": 110,
+  "known_native_responses": 112,
+  "review_sha256": "0e3ff10f35b2d2e3ecb37696c4a36e4dfa94c41944761c7352c8eb24f6d686ac"
+}

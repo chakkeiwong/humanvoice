@@ -1,0 +1,20 @@
+[Unit]
+Description=Humanvoice ZLB gateway-aware worker recovery
+StartLimitIntervalSec=600
+StartLimitBurst=3
+
+[Service]
+Type=simple
+Environment=CODEX_INTERNAL_ORIGINATOR_OVERRIDE=codex_vscode
+WorkingDirectory=/home/ubuntu/workspace/humanvoice
+ExecStart=/home/ubuntu/miniforge3/bin/python -B /home/ubuntu/workspace/humanvoice/.localresources/gateway-worker-recovery-20261114/recovery_program.py run
+Restart=on-abnormal
+RestartSec=15
+KillMode=control-group
+TimeoutStopSec=30
+NoNewPrivileges=yes
+StandardOutput=append:/home/ubuntu/workspace/humanvoice/.localresources/parallel-writing-semantics-20261112/execution/run.log
+StandardError=inherit
+
+[Install]
+WantedBy=default.target

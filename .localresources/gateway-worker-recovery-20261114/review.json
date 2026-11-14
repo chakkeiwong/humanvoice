@@ -1,0 +1,50 @@
+{
+  "status": "READY",
+  "sources": {
+    "/home/ubuntu/workspace/humanvoice/.localresources/gateway-worker-recovery-20261114/recovery_bootstrap.py": "464a909fc7f76ff2649e2ee5489e2ab67c83095bff086984e854827dc77c0e43",
+    "/home/ubuntu/workspace/humanvoice/.localresources/gateway-worker-recovery-20261114/capture_recovery.py": "ed40c8646fb0174e091551c50bb78e710a0799ef02a5f04c3a6d184302b27b81",
+    "/home/ubuntu/workspace/humanvoice/.localresources/gateway-worker-recovery-20261114/interrupted_batch.py": "92d0edadc1d05c18dd16fcae05bf81b36efd3502754d0612e9b44d048e38e783",
+    "/home/ubuntu/workspace/humanvoice/.localresources/gateway-worker-recovery-20261114/recovery_program.py": "3b4c70538a8d29ce2a22118cd301e7721b96a6a9e85e98ef2815118c52ea3917",
+    "/home/ubuntu/workspace/humanvoice/.localresources/gateway-worker-recovery-20261114/incident.json": "534e807797b43ff67ba2370fce692a287f68a662798b0e9ad5d969c90ae448e3",
+    "/home/ubuntu/workspace/humanvoice/.localresources/gateway-worker-recovery-20261114/humanvoice-zlb-worker-recovery-20261114.service": "444b46e2d1556273fc4dfe915852a7fbee451802dcf4cf1360a743a13037fe67"
+  },
+  "changes": {
+    "original_sha256": "415fdb3a894f8e448dcdb9ae01b3a99238e67be114e0e0677f65b55c1d1b40ac",
+    "updated_sha256": "fc427c9c9a2101b619193c3470078d57e3f4adbdcb80d454ea3148daa7d2ff0d",
+    "replacements": [
+      [
+        "row['capture_binding']['profile_hash'] == digest(self.plan['profile'])",
+        "row['capture_binding']['profile_hash'] == _captured_profile_hash(self, row, directory)"
+      ]
+    ],
+    "dispatch_original_sha256": "288ae7629fd6906647784dd52332af1e6da4abd8425a7850d7e912148dd539dc",
+    "dispatch_updated_sha256": "9b7f8bdf397ea838a62d9acc5c1e37db2ed94e9deedefdfaa533bffe0d01fa64",
+    "dispatch_replacements": [
+      [
+        "if outcome.kind != 'unknown':",
+        "if outcome.kind != 'unknown' and not _interrupted_retry(self, previous, outcome, context):"
+      ]
+    ]
+  },
+  "artifacts": {
+    "/home/ubuntu/workspace/humanvoice/.localresources/gateway-worker-recovery-20261114/tests-result.json": "ed86ac7c3e19dbcd64c9e9b81e7ad9194ce64fa609a5f1209fb81933390a4456",
+    "/home/ubuntu/workspace/humanvoice/.localresources/gateway-worker-recovery-20261114/offline-result.json": "80ec4370c0a32d9d961cba768a7705cadfcbed84b04c5c5695a891c3cf5e5d35",
+    "/home/ubuntu/workspace/humanvoice/.localresources/gateway-worker-recovery-20261114/test_recovery.py": "80c0ac37c7bdec839a1c80b7e64fb20c1da7599af8d38dc8870076920c15d9ed",
+    "/home/ubuntu/workspace/humanvoice/.localresources/gateway-worker-recovery-20261114/check_recovery.py": "e6251225d061c1bb70b9fac134b73a3f522105b25e4d770566cef79e161b58cc",
+    "/home/ubuntu/workspace/humanvoice/.localresources/gateway-worker-recovery-20261114/tests.xml": "79dd945b6598816ae8e38c990d61e5560803597e9ebdbdb790a703dcb1f0c3ca",
+    "/home/ubuntu/workspace/humanvoice/.localresources/gateway-worker-recovery-20261114/tests.log": "241b1411b02bcde3b4fd1d9862ae130b661f80e638039216089873f2048bbdd7",
+    "/home/ubuntu/workspace/humanvoice/.localresources/durable-session-settings-20261114/test_durable.py": "4a45a865e5d250570641541b4640c701edeb5a964f74fbf7240b54d3e7a1c540",
+    "/home/ubuntu/workspace/humanvoice/.localresources/gateway-continuation-20261113/test_gateway.py": "ca2665341c57238703571758c4f8dbdb31c7519297164298b46c1cbf04d85d19"
+  },
+  "scope": {
+    "unit": "humanvoice-zlb-worker-recovery-20261114.service",
+    "disable": "humanvoice-zlb-durable-settings-20261114.service",
+    "root_actions": 0,
+    "workers": 16,
+    "shared_calls": 177,
+    "deadline": 1795165429,
+    "approval_policy": "on-request",
+    "approvals_reviewer": "user",
+    "final_zlb_acceptance": false
+  }
+}

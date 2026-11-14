@@ -1,0 +1,19 @@
+{
+  ".localresources/gateway-worker-recovery-20261114/recovery_bootstrap.py": "464a909fc7f76ff2649e2ee5489e2ab67c83095bff086984e854827dc77c0e43",
+  ".localresources/gateway-worker-recovery-20261114/capture_recovery.py": "ed40c8646fb0174e091551c50bb78e710a0799ef02a5f04c3a6d184302b27b81",
+  ".localresources/gateway-worker-recovery-20261114/interrupted_batch.py": "92d0edadc1d05c18dd16fcae05bf81b36efd3502754d0612e9b44d048e38e783",
+  ".localresources/gateway-worker-recovery-20261114/recovery_program.py": "3b4c70538a8d29ce2a22118cd301e7721b96a6a9e85e98ef2815118c52ea3917",
+  ".localresources/gateway-worker-recovery-20261114/incident.json": "534e807797b43ff67ba2370fce692a287f68a662798b0e9ad5d969c90ae448e3",
+  ".localresources/gateway-worker-recovery-20261114/test_recovery.py": "80c0ac37c7bdec839a1c80b7e64fb20c1da7599af8d38dc8870076920c15d9ed",
+  ".localresources/gateway-worker-recovery-20261114/check_recovery.py": "e6251225d061c1bb70b9fac134b73a3f522105b25e4d770566cef79e161b58cc",
+  ".localresources/gateway-worker-recovery-20261114/tests-result.json": "ed86ac7c3e19dbcd64c9e9b81e7ad9194ce64fa609a5f1209fb81933390a4456",
+  ".localresources/gateway-worker-recovery-20261114/tests.xml": "79dd945b6598816ae8e38c990d61e5560803597e9ebdbdb790a703dcb1f0c3ca",
+  ".localresources/gateway-worker-recovery-20261114/tests.log": "241b1411b02bcde3b4fd1d9862ae130b661f80e638039216089873f2048bbdd7",
+  ".localresources/gateway-worker-recovery-20261114/offline-result.json": "80ec4370c0a32d9d961cba768a7705cadfcbed84b04c5c5695a891c3cf5e5d35",
+  ".localresources/gateway-worker-recovery-20261114/review.json": "0e3ff10f35b2d2e3ecb37696c4a36e4dfa94c41944761c7352c8eb24f6d686ac",
+  ".localresources/gateway-worker-recovery-20261114/progress-checkpoint.json": "0d1ee6c90760629eda99f01c397127ecd5e359dd926aa7dc93114be1fb2fff38",
+  ".localresources/gateway-worker-recovery-20261114/humanvoice-zlb-worker-recovery-20261114.service": "444b46e2d1556273fc4dfe915852a7fbee451802dcf4cf1360a743a13037fe67",
+  "docs/plans/ZLB_GATEWAY_WORKER_RECOVERY_2026-11-14.md": "cf20af45bf6c1c94902dc5fda52692d9041f05ce2187c29b86a760c92ade83ba",
+  "docs/plans/ENSEMBLE_MASTER_PROGRAM_2026-09-30.md": "5aab8c2caa9efdefbed32a4a765ef4d0e90207449618ae5fdfcc4d71043bdc37",
+  "docs/plans/humanvoice_master_program_v2.md": "78526c6712e3c36f78ced2822115ad9ce7e2e0f4a40a3219642d85a6f1339fb7"
+}
