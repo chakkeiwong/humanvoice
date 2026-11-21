@@ -7,7 +7,7 @@ Humanvoice takes an immutable, finished AI-drafted LaTeX manuscript and produces
 a separate child revision that a declared trained reader can understand
 comfortably. The source is never edited in place. Before any prose changes, the
 system inventories every substantive concept the source carries and freezes that
-inventory as a human-reviewed baseline; every rewritten passage is then measured
+inventory as a reviewed baseline; every rewritten passage is then measured
 against it. Retention is exactly 1.0: a concept may be paraphrased, expanded,
 merged, split, or reordered, but not dropped, and naming a concept does not count
 as explaining it.
@@ -17,9 +17,15 @@ section length target anywhere in the release path — an adequate explanation
 often needs more words, an intermediate derivation, an example, or a slower
 pace than the source used.
 
-**Status:** the v2 contract is specified. Nothing beyond specification is
-claimed: no v2 implementation, benchmark result, independent replay, or reader
-acceptance. See [`docs/plans/humanvoice_master_program_v2.md`](docs/plans/humanvoice_master_program_v2.md).
+**Status:** The [scientific master program](docs/plans/ENSEMBLE_MASTER_PROGRAM_2026-09-30.md)
+is the current roadmap. The ZLB candidate completed November 18, 2026, with all
+21 units, 5,042 concept mappings, 20 relationship reviews and 14 release gates
+passing. The user accepted the revised text on November 22. The
+[accepted reader files](releases/zlb-2026-11-18/README.md) include the manuscript,
+blackline, LaTeX and separate source erratum. The
+[completion memo](docs/RESET_MEMO_2026-11-17.md) records the native release.
+Next are clean-environment reproduction, a held-out manuscript pilot and
+measured scale-up; the source erratum decision remains open.
 
 ## Start here
 
@@ -120,27 +126,53 @@ result actually reads better.
 ## The production path
 
 ```bash
-hv humanize manuscript/ --brief brief.yaml
+python -m pip install -e .
+hv humanize manuscript/ --brief brief.json --output runs/revision-001
 ```
 
-That orchestrates eight resumable phases, each runnable directly for inspection
-or recovery:
+The brief is JSON. A live release requires the structured `HumanizationBrief`
+defined in `schemas/humanization-brief.schema.json`, including its reader and
+remote-inference authorization. Install `pdflatex` and `latexdiff` separately;
+BibTeX or Biber is also required when the manuscript uses it. Select the declared model runtime before initialization. For the user-selected
+Codex path, set `HUMANVOICE_MODEL_RUNTIME=codex` and use the installed authenticated
+CLI pinned in `security/inference_profile.json`. The brief and corpus permission
+must explicitly cover VisionCoder and its declared Responses destination. The
+legacy Anthropic path uses `ANTHROPIC_API_KEY`. Each fresh workflow binds its
+selected profile, and live admission requires matching critic calibration.
 
-```
-hv init        snapshot the immutable source; refuse an incomplete brief
-hv inventory   partition every reader-facing span; build the concept baseline
-hv plan        assign obligations and rewrite units in dependency order
-hv rewrite     rewrite one source passage; publish nothing on truncation
-hv preflight   verify the assembled candidate, not just the source
-hv repair      apply one named causal repair; stop on oscillation
-hv assemble    patch a copy of the source tree; build revision and blackline
-hv release     produce the reader packet only when every result is a pass
-```
+The command runs initialization, independently checked inventory, planning,
+rewriting, semantic preflight, bounded repair, compilation, comparison, and local
+reader-packet creation. Each phase is also available through `hv --help`.
+`hv pipeline` is an alias for this v2 workflow; v1 commands use `hv legacy`.
 
-A missing result is a failure, not a pass, and there is no generic release
-exception. Greenfield authoring from a brief — the v1 product — remains
-available only under an explicit `hv legacy` namespace and cannot satisfy a
-release gate.
+Use `--mock --skip-blackline` for a source-preserving simulation. Simulation
+artifacts cannot authorize release. `--skip-blackline` on a live run permits an
+assembled preview, but release still requires a compiled comparison.
+
+A failed rewrite saves each attempt and a current session. Repeating the same
+command resumes accepted units only when source, baseline, plan, brief, policy,
+and implementation identities match. Use `hv repair SNAPSHOT --baseline-id ID
+--plan-id ID` for failed writer or critic units. After a code or plan change,
+`hv rewrite ... --no-resume` starts a fresh session. Decrease `hv plan
+SNAPSHOT --max-unit-size N` to split separable units; an indivisible concept needs
+adjudication if it exceeds the model budget. Truncated output is retained as
+failure evidence and never accepted.
+
+Each unit owns one complete interval in one file. Output evidence must locate
+in the actual replacement, and a separate critic must approve every proposition
+and required explanation function. Missing evidence, changed equations or
+labels, incomplete sessions, stale reviews, and compiler failures block release.
+The reader packet records reader acceptance as pending.
+
+The writer receives selected prose sections from the frozen policies. Full policy
+bytes and hashes remain part of runtime validation. Custom policies must provide
+a `## Writer Guidance` section; missing, duplicate or empty selections block the
+request before inference. Coding workflows and alternative response formats stay
+outside the writer context. See `docs/plans/WRITER_POLICY_CONTEXT_REPAIR_2026-10-12.md`.
+
+Historical snapshots made with character offsets must be reinitialized from
+source. Their baselines and rewrites cannot be silently reused under the repaired
+byte-based artifact format.
 
 ## Implementation surface
 
@@ -167,7 +199,8 @@ Verify the current state with:
 ```bash
 python tools/check_implementation_contract.py
 python tools/check_program_consistency.py --require-g0-ready
-python -m pytest tests/ -q
+python -m pytest tests/ -q -m "not requires_model"
+python -m pytest tools/test_implementation_contract.py tools/test_program_consistency.py -q
 ```
 
 Non-goal: detector evasion. humanvoice improves prose under disclosure norms

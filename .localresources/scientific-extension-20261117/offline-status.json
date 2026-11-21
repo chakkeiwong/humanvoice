@@ -1,0 +1,16 @@
+{
+  "status": "CANDIDATE_READY",
+  "updated_at": 1794989304.630144,
+  "supervisor": {
+    "pid": 2223904,
+    "start_ticks": "183191434",
+    "boot_id": "f57317de-e249-43e8-8e8d-0ec026eae461"
+  },
+  "deadline": 1795683829,
+  "total_call_cap": 277,
+  "execution_mode": "offline",
+  "phase": "native_release",
+  "demands": 0,
+  "accepted_units": 21,
+  "rejected_units": []
+}

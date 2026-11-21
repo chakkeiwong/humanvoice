@@ -1,0 +1,40 @@
+{
+  "status": "PASS",
+  "verified_at": "2026-11-18T08:08:55.813393+00:00",
+  "packet": "/home/ubuntu/workspace/humanvoice/.localresources/scientific-extension-20261117/working-snapshot/release/20261117T235022.984126Z-8dc3251b",
+  "manifest_sha256": "da8a3110639a01d51fec3ec2394218275dc60d8defd9a2c9035f9a3603ea4d19",
+  "files": 27214,
+  "key_files": {
+    "reader/revision.pdf": "27b518c59be810b1d4e7aa79e97ffb7d563a80015860e1d463794460a5915754",
+    "reader/comparison.pdf": "9d716e6f7f73ff90a242512a897983b144b2dbf2b575055f8883cf6da8697500",
+    "reader/revision/zlb_source.tex": "0ccc3ad083aab9e91df3747183e10d08538d3bf5e3cb8ec127ccf97a11714334",
+    "audit/evidence/rewrites/SOURCE_ERRATUM.md": "e1a3cb8a477830bbaeabd32893bb0f9ce95528285733fb0acf14c38da71ec575"
+  },
+  "canonical_types": {
+    "Revision": 1,
+    "ConceptCorrespondence": 5042,
+    "SemanticPreflightResult": 1
+  },
+  "semantic_status": "pass",
+  "relationships": 20,
+  "runtime_admission": "pass",
+  "retained_runtime_records": 1902,
+  "reader_acceptance": "pending",
+  "external_release_authorized": false,
+  "gate_status": {
+    "baseline_complete": "pass",
+    "concept_correspondence": "pass",
+    "active_obligations": "pass",
+    "dependency_order": "pass",
+    "unsupported_additions": "pass",
+    "scaffolding": "pass",
+    "exact_objects": "pass",
+    "source_integrity": "pass",
+    "assembly_integrity": "pass",
+    "revised_build": "pass",
+    "blackline_build": "pass",
+    "transmission": "pass",
+    "policy_manifest": "pass",
+    "runtime_manifest": "pass"
+  }
+}

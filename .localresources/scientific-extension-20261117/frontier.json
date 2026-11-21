@@ -1,0 +1,9 @@
+{
+  "status": "CANDIDATE_READY",
+  "phase": "native_release",
+  "demands": [],
+  "accepted_units": 21,
+  "relationship_reviews": 20,
+  "snapshot": "/home/ubuntu/workspace/humanvoice/.localresources/scientific-extension-20261117/working-snapshot",
+  "reader_candidate": "/home/ubuntu/workspace/humanvoice/.localresources/scientific-extension-20261117/working-snapshot/release/20261117T235022.984126Z-8dc3251b"
+}

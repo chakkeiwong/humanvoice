@@ -1,0 +1,38 @@
+{
+  "session_id": "20261117T235022.984126Z-8dc3251b",
+  "source_packet": ".localresources/scientific-extension-20261117/working-snapshot/release/20261117T235022.984126Z-8dc3251b",
+  "source_packet_manifest_sha256": "da8a3110639a01d51fec3ec2394218275dc60d8defd9a2c9035f9a3603ea4d19",
+  "scope": "Reader files and historical verification summary; full audit evidence remains in the source packet.",
+  "files": {
+    "SOURCE_ERRATUM.md": {
+      "sha256": "e1a3cb8a477830bbaeabd32893bb0f9ce95528285733fb0acf14c38da71ec575",
+      "bytes": 1925
+    },
+    "comparison.pdf": {
+      "sha256": "9d716e6f7f73ff90a242512a897983b144b2dbf2b575055f8883cf6da8697500",
+      "bytes": 849851
+    },
+    "original/zlb_source.tex": {
+      "sha256": "ff582d8aa7352b2de6f6e3b3cafc8ab0cfb74119a5ca6e5c575baff0ce1f89bf",
+      "bytes": 189841
+    },
+    "revision/zlb_source.tex": {
+      "sha256": "0ccc3ad083aab9e91df3747183e10d08538d3bf5e3cb8ec127ccf97a11714334",
+      "bytes": 231749
+    },
+    "revision.pdf": {
+      "sha256": "27b518c59be810b1d4e7aa79e97ffb7d563a80015860e1d463794460a5915754",
+      "bytes": 683473
+    },
+    "verification-2026-11-18.json": {
+      "sha256": "118b84ad06f8aea0d6f68f9ea7fd85d431406569ca0518ab37ce71c8d3244ad2",
+      "bytes": 1550
+    }
+  },
+  "acceptance_record": {
+    "path": "README.md",
+    "date": "2026-11-22",
+    "scope": "User acceptance of revised text and Git publication",
+    "sha256": "c87c28ce495d73229d6f8b4decf1c1155d9f948bd906811a5ec11544b129de03"
+  }
+}

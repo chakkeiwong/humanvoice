@@ -1,0 +1,422 @@
+{
+  "policy_id": "HV-INTERMEDIATE-REGRESSION-2026-10-04",
+  "master_version": "2.53",
+  "ensemble_version": 43,
+  "transport_recovery": {
+    "status": "implemented-regression-consumer-and-live-development-verified",
+    "plan": "docs/plans/TRANSPORT_RECOVERY_REPAIR_2026-10-06.md",
+    "maximum_per_case": 1,
+    "maximum_total": 16,
+    "unknown_usage": "retain-full-reservation",
+    "semantic_rerolls": false,
+    "policy_rejection_retries": false,
+    "changed_implementation_requalification": "one-frozen-full-run-unchanged-corpus-no-whole-run-restarts",
+    "development_version": "automatic-qualification-development-v2",
+    "qualification_version": "automatic-qualification-v3"
+  },
+  "intermediate_mode": "automatic-regression",
+  "final_human_phase": "E7-H",
+  "final_human_scope": "immutable-final-ZLB-output",
+  "runtime_migration": "implemented",
+  "rules": {
+    "intermediate_human_labels": "forbidden",
+    "intermediate_human_signatures": "forbidden",
+    "second_human_operator": "not-required",
+    "held_out_reader_review": "not-required",
+    "expected_results": "frozen-independent-evidence-before-production-evaluation",
+    "fixture_reuse": "reuse-unchanged-input-oracle-rubric",
+    "changed_production": "rerun-affected-execution-not-human-relabelling",
+    "changed_oracle": "version-rebuild-and-verify-affected-expectations-automatically",
+    "model_semantics": "independent-references-and-source-bound-rubrics-with-optional-cross-family-guardrail",
+    "code_audit": "supplementary-never-substitutes-for-behavior-tests",
+    "claude_review": "optional-manual-consolidated-markdown-no-admission-dependency",
+    "claude_followup": "exceptional-unresolved-substantive-issue-not-routine-reapproval",
+    "disagreement": "automatic-diagnosis-repair-and-regression",
+    "unavailable_or_unsupported": "explicit-nonpass-no-human-queue",
+    "retries": "fixed-technical-retries-no-verdict-rerolls",
+    "membership": "frozen-full-denominator-no-postresult-exclusions",
+    "replay": "saved-responses-test-plumbing-fresh-model-calls-test-behavior",
+    "reproduction": "isolated-execution-plus-separate-verifier",
+    "phase_boundary": "execute-review-repair-verify-refresh-continue",
+    "final_acceptance": "actual-human-decision-bound-to-immutable-ZLB-candidate"
+  },
+  "case_contract": [
+    "case_id",
+    "case_version",
+    "scope",
+    "source_hash",
+    "candidate_or_inventory_hash",
+    "oracle_kind",
+    "oracle_version",
+    "rubric_hash",
+    "expected_outcome_or_relation",
+    "independent_witness_or_reference",
+    "required_membership",
+    "invalidation_dependencies"
+  ],
+  "result_contract": [
+    "case_identity",
+    "implementation_identity",
+    "evaluator_identity",
+    "prompt_profile_schema_identity",
+    "observed_outcome",
+    "raw_evidence_hashes",
+    "expected_vs_observed",
+    "coverage_and_denominators",
+    "failure_or_abstention_reason",
+    "attempts_and_usage",
+    "dependency_bindings"
+  ],
+  "acceptance": {
+    "required_membership_complete": true,
+    "critical_false_acceptances": 0,
+    "faithful_control_false_rejections": 0,
+    "unresolved_required_cases": 0,
+    "unknown_as_pass": false,
+    "model_agreement_is_proof": false,
+    "allow_golden_update_to_match_observed": false
+  },
+  "suites": [
+    {
+      "id": "R0",
+      "name": "Program policy and evidence roles",
+      "producer": "A0",
+      "basis": "canonical policy, typed-record rules and rejected record mutations",
+      "positive": [
+        "automatic intermediate phase admitted",
+        "only final ZLB acceptance attributed to a person"
+      ],
+      "negative": [
+        "intermediate human gate",
+        "automatic final acceptance",
+        "stale or fake evaluator role",
+        "canonical gate exit drift"
+      ],
+      "consumer": "authority checkers and typed admission",
+      "status": "required"
+    },
+    {
+      "id": "R1",
+      "name": "Four-critic semantic calibration",
+      "producer": "A1",
+      "basis": "independent formal references, verified transformations and frozen blind challenge rubrics",
+      "positive": [
+        "equivalent paraphrase",
+        "useful repetition",
+        "exact numeric equivalence"
+      ],
+      "negative": [
+        "omission",
+        "negation or quantifier reversal",
+        "unsupported addition",
+        "qualification loss",
+        "reject-all or accept-all critic"
+      ],
+      "consumer": "reconstruction, coverage, unit semantic and assembled critic consumers",
+      "status": "required"
+    },
+    {
+      "id": "R2",
+      "name": "Sensitivity and benchmark adequacy",
+      "producer": "A1",
+      "basis": "predeclared coverage matrix and verified meaning-preserving transformations",
+      "positive": [
+        "independent inventory reorder",
+        "supported equivalent verbosity"
+      ],
+      "negative": [
+        "changed dependent order",
+        "changed qualification under verbosity",
+        "empty critic stratum",
+        "missing required production arm",
+        "dropped failing member"
+      ],
+      "consumer": "calibration completeness and sensitivity diagnostics",
+      "status": "required"
+    },
+    {
+      "id": "R3",
+      "name": "Baseline and ambiguity adjudication",
+      "producer": "A2",
+      "basis": "complete immutable source-span mapping, concepts, obligations, dependency and protected-object assertions",
+      "positive": [
+        "complete source-bound inventory admitted",
+        "inapplicable obligation removed with located proof and lineage"
+      ],
+      "negative": [
+        "omitted source span",
+        "unresolved ambiguity",
+        "stale baseline hash",
+        "active obligation waived",
+        "baseline self-certified from writer output"
+      ],
+      "consumer": "actual inventory freeze, planner and rewrite admission",
+      "status": "required"
+    },
+    {
+      "id": "R4",
+      "name": "Rewrite, repair and assembly",
+      "producer": "A5",
+      "basis": "concept and obligation correspondence plus independent exact-object and byte comparisons",
+      "positive": [
+        "faithful replacement",
+        "useful teaching repetition",
+        "bounded repair preserves parent"
+      ],
+      "negative": [
+        "mention without explanation",
+        "dependency order failure",
+        "unsupported scaffolding removal",
+        "truncation",
+        "assembly gap",
+        "exact-object change",
+        "no-op or oscillating repair"
+      ],
+      "consumer": "rewrite, preflight, repair and assembled admission",
+      "status": "required"
+    },
+    {
+      "id": "R5",
+      "name": "Independent automated reproduction",
+      "producer": "A3",
+      "basis": "separate clean execution and independent content, build and evidence verifier",
+      "comparison_contracts": {
+        "exact-content-v1": "Default deterministic and simulation content-hash equality",
+        "qualified-source-fidelity-v1": "Preregistered fresh inference: both candidates pass actual qualified source-bound unit/assembled reviews against identical source/baseline/obligations, exact objects and builds; preserve every byte difference and verify every fresh child allocation"
+      },
+      "positive": [
+        "fresh environment reproduces frozen artifact content and correspondence"
+      ],
+      "negative": [
+        "shared output directory",
+        "copied old success without execution",
+        "missing runtime receipt",
+        "unresolved content divergence",
+        "replay claimed as fresh inference"
+      ],
+      "consumer": "small and benchmark reproduction admission",
+      "status": "required"
+    },
+    {
+      "id": "R6",
+      "name": "Release and final output boundary",
+      "producer": "A4",
+      "basis": "immutable candidate identity and typed automatic versus human decision records",
+      "positive": [
+        "intermediate and held-out gates consume automatic results",
+        "valid final ZLB human decision permits release after all gates"
+      ],
+      "negative": [
+        "missing or negative final decision",
+        "withdrawn decision",
+        "stale output hash",
+        "held-out packet presented as ZLB",
+        "model impersonates final reader",
+        "extra human intermediate signature"
+      ],
+      "consumer": "actual release validation and decision journal",
+      "status": "required"
+    },
+    {
+      "id": "R7",
+      "name": "Evidence, invalidation and execution recovery",
+      "producer": "A5",
+      "basis": "frozen identities, single-use allocations and exact attempt/evidence multiplicity",
+      "positive": [
+        "unchanged fixture expectations reused",
+        "changed critic receives fresh execution",
+        "crash resumes without duplicate allocation"
+      ],
+      "negative": [
+        "cached verdict for changed model",
+        "oracle updated to match failure",
+        "missing or invented raw evidence",
+        "hidden timeout",
+        "overspent or duplicated allocation",
+        "permission mismatch"
+      ],
+      "consumer": "orchestration, runtime admission, phase runner and allocation ledger",
+      "status": "required"
+    }
+  ],
+  "phases": [
+    {
+      "id": "A0",
+      "depends_on": [],
+      "judgment": "automatic-regression",
+      "suites": [
+        "R0"
+      ]
+    },
+    {
+      "id": "A1",
+      "depends_on": [
+        "A0"
+      ],
+      "judgment": "automatic-regression",
+      "suites": [
+        "R1",
+        "R2",
+        "R7"
+      ]
+    },
+    {
+      "id": "A2",
+      "depends_on": [
+        "A0",
+        "A1"
+      ],
+      "judgment": "automatic-regression",
+      "suites": [
+        "R3",
+        "R7"
+      ]
+    },
+    {
+      "id": "A3",
+      "depends_on": [
+        "A0"
+      ],
+      "judgment": "automatic-regression",
+      "suites": [
+        "R5",
+        "R7"
+      ]
+    },
+    {
+      "id": "A4",
+      "depends_on": [
+        "A0",
+        "A2",
+        "A3"
+      ],
+      "judgment": "automatic-regression",
+      "suites": [
+        "R0",
+        "R6"
+      ]
+    },
+    {
+      "id": "A5",
+      "depends_on": [
+        "A1",
+        "A2",
+        "A3",
+        "A4"
+      ],
+      "judgment": "automatic-regression",
+      "suites": [
+        "R0",
+        "R1",
+        "R2",
+        "R3",
+        "R4",
+        "R5",
+        "R6",
+        "R7"
+      ]
+    },
+    {
+      "id": "A6",
+      "depends_on": [
+        "A5"
+      ],
+      "judgment": "automatic-regression",
+      "suites": [
+        "R1",
+        "R2",
+        "R3",
+        "R4",
+        "R5",
+        "R7"
+      ]
+    },
+    {
+      "id": "E4-Q",
+      "depends_on": [
+        "A5"
+      ],
+      "judgment": "automatic-regression",
+      "suites": [
+        "R1",
+        "R2",
+        "R7"
+      ]
+    },
+    {
+      "id": "E2-R",
+      "depends_on": [
+        "E4-Q"
+      ],
+      "judgment": "automatic-regression",
+      "suites": [
+        "R3",
+        "R7"
+      ]
+    },
+    {
+      "id": "E5-Q",
+      "depends_on": [
+        "E2-R"
+      ],
+      "judgment": "automatic-regression",
+      "suites": [
+        "R3",
+        "R4",
+        "R7"
+      ]
+    },
+    {
+      "id": "E7-RS",
+      "depends_on": [
+        "E5-Q"
+      ],
+      "judgment": "automatic-regression",
+      "suites": [
+        "R5"
+      ]
+    },
+    {
+      "id": "E6-B",
+      "depends_on": [
+        "E7-RS"
+      ],
+      "judgment": "automatic-regression",
+      "suites": [
+        "R3",
+        "R4",
+        "R7"
+      ]
+    },
+    {
+      "id": "E7-RB",
+      "depends_on": [
+        "E6-B"
+      ],
+      "judgment": "automatic-regression",
+      "suites": [
+        "R5"
+      ]
+    },
+    {
+      "id": "E7-H",
+      "depends_on": [
+        "E7-RB",
+        "A4"
+      ],
+      "judgment": "human-final-output",
+      "suites": [
+        "R6"
+      ]
+    }
+  ],
+  "gate_exits": {
+    "V2-G0": "authority artifacts agree; R1–R29 and v2 records are specified; v1 cannot satisfy v2 release. Passing G0 establishes specification only.",
+    "V2-G1": "every schema has valid and invalid examples; rewriting rejects uncovered spans, unresolved classification, dangling dependencies, missing obligations, and invalid exact-object links.",
+    "V2-G2": "all source spans have dispositions; all substantive concepts pass bidirectional checks; ambiguities are adjudicated; every concept has obligations and a unit assignment; dependencies are acyclic or explicitly resolved.",
+    "V2-G3": "mutations deleting a concept or qualification, mentioning without explaining, adding unsupported content, using a concept before teaching it, removing unapproved scaffolding, changing an exact object, or truncating output block acceptance.",
+    "V2-G4": "deterministic semantic mutations are caught or unresolved; every admitted model critic has current automatic calibration using independent reference evidence, blind challenges and automatic sensitivity diagnostics; repair converges without regression or stops with intact parents and a concrete technical disposition.",
+    "V2-G5": "untouched regions are byte-stable; revised and comparison PDFs build cleanly; every semantic, exact-object, privacy, policy, and assembly gate passes; an independently launched clean environment and verifier reproduce the frozen artifacts with actual execution evidence.",
+    "V2-G6": "requires V2-G0–V2-G5, automatically verified ZLB and held-out packets, automatic independent reproduction and actual named human reader acceptance of the final immutable ZLB candidate. Only V2-G6 can authorize production/external promotion. Missing human evidence for that final ZLB test cannot be waived; no human intermediate or held-out verdict is required."
+  }
+}
