@@ -10,7 +10,9 @@ The momentum/velocity source correction remains a separate scientific decision.
 
 Use the [scientific master](ENSEMBLE_MASTER_PROGRAM_2026-09-30.md) for the
 verified reader packet, scientific results, remaining milestones and resources.
-The [completion memo](../RESET_MEMO_2026-11-17.md) records the exact release
+The [full reset memo](../RESET_MEMO_2026-11-22.md) records the current handoff,
+Git checkpoint, local implementation gaps and execution limits. The
+[completion memo](../RESET_MEMO_2026-11-17.md) records the exact native release
 and recovery evidence. The [archived plan](history-20261115/humanvoice_master_program_v2.md)
 is historical. Do not repeat accepted ZLB work.
 

@@ -26,6 +26,7 @@ blackline, LaTeX and separate source erratum. The
 [completion memo](docs/RESET_MEMO_2026-11-17.md) records the native release.
 Next are clean-environment reproduction, a held-out manuscript pilot and
 measured scale-up; the source erratum decision remains open.
+For a new session, start with [RESET_MEMO.md](RESET_MEMO.md) and its full handoff.
 
 ## Start here
 

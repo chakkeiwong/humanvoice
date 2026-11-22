@@ -9,7 +9,8 @@ gates pass. The 66-page manuscript and 71-page blackline are packaged and verifi
 - [Blackline](releases/zlb-2026-11-18/comparison.pdf)
 - [Acceptance, source and verification](releases/zlb-2026-11-18/README.md)
 - [Scientific master](docs/plans/ENSEMBLE_MASTER_PROGRAM_2026-09-30.md)
-- [Completion and recovery memo](docs/RESET_MEMO_2026-11-17.md)
+- [Full session reset memo](docs/RESET_MEMO_2026-11-22.md)
+- [Native completion record](docs/RESET_MEMO_2026-11-17.md)
 - [Authoritative completion status](.localresources/scientific-extension-20261117/offline-status.json)
 
 Next: make the successful execution reproducible from a clean checkout, test a

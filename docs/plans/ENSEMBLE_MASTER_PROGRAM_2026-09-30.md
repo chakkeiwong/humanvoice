@@ -190,7 +190,7 @@ Retain historical R0–R7 and A0–A6/E4-Q/E2-R/E5-Q/E6-B/E7 evidence at its ori
 scope; see the [regression contract](intermediate_regression_contract.json) and
 [archived master](history-20261115/ENSEMBLE_MASTER_PROGRAM_2026-09-30.md).
 
-[Reset memo](../RESET_MEMO_2026-11-17.md) · [Progress](../../MASTER_PROGRAM_PROGRESS.md)
+[Full reset memo](../RESET_MEMO_2026-11-22.md) · [Native completion record](../RESET_MEMO_2026-11-17.md) · [Progress](../../MASTER_PROGRAM_PROGRESS.md)
 
 ## Historical live-service status
 
